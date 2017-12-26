@@ -55,8 +55,8 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 //import { LoginComponent } from './views/authentication/login.component';
 //import { RegisterComponent } from './views/authentication/register.component';
 import { ModalDialog } from './views/controls/modaldialog.component';
-//import { ProcessMessagesComponent } from './views/controls/process-messages.component';
-//import { PageTitleComponent } from './views/controls/pagetitle.component';
+import { ProcessMessagesComponent } from './views/controls/process-messages.component';
+import { PageTitleComponent } from './views/controls/pagetitle.component';
 
 import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } from './helpers/classes';
 
@@ -76,7 +76,7 @@ export class AppComponent implements OnDestroy, OnInit {
   //******************************************************
   // set child components handles
   @ViewChild(ModalDialog) modal: ModalDialog;
-  //@ViewChild(ProcessMessagesComponent) messagesComponent: ProcessMessagesComponent;
+  @ViewChild(ProcessMessagesComponent) messagesComponent: ProcessMessagesComponent;
   //@ViewChild(PageTitleComponent) pageTitleComponent: PageTitleComponent;
 
   // this is a reference to itself passed to the child ModalDialog

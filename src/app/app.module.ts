@@ -20,7 +20,7 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
 //import { ROUTER_PROVIDERS } from '@angular/router';
 //import { FORM_PROVIDERS } from '@angular/common';
 //import { HTTP_PROVIDERS } from '@angular/http';
-import { IDLE_PROVIDERS } from '@ng-idle/core';
+import { Idle } from '@ng-idle/core';
 
 import { AuthenticationService } from './services/authentication.service';
 import { ProcessMessageService } from './services/processmessage.service';
@@ -51,9 +51,9 @@ import { LoggerService } from './services/logger.service';
   ],
   providers: [ HeroService, MessageService],
   bootstrap: [AppComponent,
-                  HTTP_PROVIDERS, FORM_PROVIDERS,
-                  ROUTER_PROVIDERS, IDLE_PROVIDERS,
-                  AuthenticationService, ProcessMessageService,
+                  //HTTP_PROVIDERS, FORM_PROVIDERS,
+                  //ROUTER_PROVIDERS, 
+                  Idle, AuthenticationService, ProcessMessageService,
                   PageTitleService, LoggerService]
 })
 
