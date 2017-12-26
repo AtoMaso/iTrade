@@ -1,12 +1,12 @@
 ﻿import { Component, Host, Input } from '@angular/core';
-import { NgFormModel } from '@angular/common';
+import { NgForm, NgModel} from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'modal-dialog',
   inputs: ['controlName: control'],
-  templateUrl: './app/views/controls/modaldialog.component.html'
+  templateUrl: './modaldialog.component.html'
 })
 
 export class ModalDialog {
