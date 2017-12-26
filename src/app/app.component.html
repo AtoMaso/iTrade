@@ -1,7 +1,152 @@
-<h1>{{title}}</h1>
+<!--<h1>{{title}}</h1>
 <nav>
  <a routerLink="/dashboard">Dashboard</a>
   <a routerLink="/heroes">Heroes</a>
 </nav>
-<router-outlet></router-outlet>
+<router-outlet></router-outlet>-->
 
+<div style="height:100%; width:100%;">
+
+  <header class="container">
+    <div id="menu" class="navbar navbar-default navbar-fixed-top">
+      <div class="navbar-header">
+        <!-- make the navigation to disapear when screen too small with
+        the class nab-vbar-toggle and introducing the 2 new attributes
+        'data-toggle' and 'data-target' targeting the navigation and colapse event
+        -->
+        <div id="logo">
+          <h4><i style="margin-left:20px" class="textgray">EST Loud Whisperer</i></h4>
+        </div>
+        <button class="btn btn-success navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="glyphicon glyphicon-chevron-down"></span>
+        </button>
+      </div>
+      <!-- make the menu hidden when the screen is too small with class "navbar-collapse collapse" -->
+      <div id="nav" class="navbar-collapse collapse  navbar-right">
+        <ul class="nav navbar-nav" style="margin-right:20px">
+          <li class="nav"><a href="" [routerLink]="['Dashboard']"><span class="textgray"><i>Dashboard</i></span></a></li>
+          <li class="nav"><a href="" [routerLink]="['Articles']"><span class="textgray"><i>Articles</i></span></a></li>
+          <li class="nav"><a href="" [routerLink]="['Authors']"><span class="textgray"><i>Authors</i></span></a></li>
+          <li class="nav"><a href="" [routerLink]="['Teams']"><span class="textgray"><i>Teams</i></span></a></li>
+          <!--<li class="nav"><a href="" [routerLink]="['Upload']"><span class="textgray"><i>File Upload</i></span></a></li>-->
+          <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" [routerLink]="['Users']">Users</a></li>-->
+          <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" [routerLink]="['Admin']">Admin</a></li>-->
+          <li class="nav" *ngIf="!_isUserAuthenticated"><a href="" [routerLink]="['Login']"><span class="textgray"><i>Login</i></span></a></li>
+          <li class="nav" *ngIf="_isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  <div class="container">
+    <div *ngIf="_isUserAuthenticated">
+      <label class="text-info">Logged on as:  {{ _userSession.userIdentity.name }}</label>
+    </div>
+  </div>
+
+
+  <main class="container">
+
+    <page-title #pageTitleComponent></page-title>
+
+    <process-messages #messagesComponent></process-messages>
+
+    <section>
+      <router-outlet></router-outlet>
+    </section>
+
+  </main>
+
+
+  <br />
+  <br />
+  <br />
+  <div class="backgroundimg">
+    <div class="row">
+      <div class="smalltextcentred" style="background:transparent; width:75%; margin:0 auto;">
+        <hr class="hrstyle" />
+      </div>
+      <table style="background:transparent; width:75%; margin:auto;">
+        <thead>
+          <tr>
+            <th class="col-md-3 extrasmalltextcentred textgray">Information</th>
+            <th class="col-md-3 extrasmalltextcentred textgray">Help</th>
+            <th class="col-md-3 extrasmalltextcentred textgray">Contact</th>
+            <th class="col-md-3 extrasmalltextcentred textgray">Miscelenius</th>
+          </tr>
+        </thead>
+        <br />
+        <tr class="">
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">About</a>
+          </td>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">Help</a>
+          </td>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['Contact']">Contact</a>
+          </td>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">About</a>
+          </td>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">Help</a>
+          </td>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['Contact']">Contact</a>
+          </td>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">About</a>
+          </td>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">Help</a>
+          </td>
+          <td class="col-md-3 extrasmalltextcentred"></td>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">About</a>
+          </td>
+          <td class="col-md-3 extrasmalltextcentred"></td>
+          <td class="col-md-3 extrasmalltextcentred"></td>
+          <td class="col-md-3 extrasmalltextcentred">
+            <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <br />
+    <div class="row">
+      <div class="extrasmalltextcentred" style="background:transparent; width:75%; margin:0 auto;">
+        <hr class="hrstyle" />
+        <strong>
+          <span>
+            <i class="glyphicon glyphicon-copyright-mark"></i>
+          </span>&nbsp; Australian Taxation Office 2016
+        </strong>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- MODAL form to show it when add member is clicked -and user not allowed -->
+  <modal-dialog #modal [app]="itself"></modal-dialog>
+  <!-- MODAL end of modal form -->
+
+</div>
