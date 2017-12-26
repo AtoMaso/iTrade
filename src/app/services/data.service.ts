@@ -12,7 +12,7 @@ export class DataService {
 
 
   changeGoal(goal) {
-    // change
+    // second change
     this.goals.next(goal);    
   }
   
