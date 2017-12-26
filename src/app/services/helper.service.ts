@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
 import { LoggerService } from './logger.service';
-import {Image } from '../helpers/interfaces';
+import {Image } from '../helpers/classes';
 
 @Injectable()
 export class HelperService {
