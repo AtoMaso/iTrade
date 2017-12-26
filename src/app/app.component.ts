@@ -64,8 +64,7 @@ import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } 
   templateUrl: './app/app.component.html',
   //directives: [ROUTER_DIRECTIVES], // moved to main
   encapsulation: ViewEncapsulation.None,
-  directives: [AuthCheck, RouterLink, ModalDialog,
-    ProcessMessagesComponent, PageTitleComponent]
+  directives: [AuthCheck, RouterLink, ModalDialog, ProcessMessagesComponent, PageTitleComponent]
   //providers: [ROUTER_PROVIDERS] // moved to main
 })
 
@@ -73,25 +72,25 @@ import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } 
 
   { path: '/views/dashbord', name: 'Dashboard', component: DashboardComponent, useAsDefault: true },
 
-  { path: '/views/articles', name: 'Articles', component: ArticleListComponent },
-  { path: '/views/article/:id', name: 'Article', component: ArticleComponent },
-  { path: '/views/addarticle', name: 'AddArticle', component: AddArticleComponent },
+  //{ path: '/views/articles', name: 'Articles', component: ArticleListComponent },
+  //{ path: '/views/article/:id', name: 'Article', component: ArticleComponent },
+  //{ path: '/views/addarticle', name: 'AddArticle', component: AddArticleComponent },
 
-  { path: '/views/authors', name: 'Authors', component: AuthorListComponent },
-  { path: '/views/author/:id', name: 'Author', component: AuthorComponent },
-  { path: '/view/addauthor', name: 'AddAuthor', component: AddAuthorComponent },
+  //{ path: '/views/authors', name: 'Authors', component: AuthorListComponent },
+  //{ path: '/views/author/:id', name: 'Author', component: AuthorComponent },
+  //{ path: '/view/addauthor', name: 'AddAuthor', component: AddAuthorComponent },
 
-  { path: '/views/teams', name: 'Teams', component: TeamListComponent },
-  { path: '/views/team/:id', name: 'Team', component: TeamComponent },
-  { path: '/views/addteam', name: 'AddTeam', component: AddTeamComponent },
+  //{ path: '/views/teams', name: 'Teams', component: TeamListComponent },
+  //{ path: '/views/team/:id', name: 'Team', component: TeamComponent },
+  //{ path: '/views/addteam', name: 'AddTeam', component: AddTeamComponent },
 
-  { path: '/views/members', name: 'Members', component: MemberListComponent },
-  { path: '/views/members/:id', name: 'TeamMembers', component: MemberListComponent },
-  { path: '/views/member/:id', name: 'Member', component: MemberComponent },
-  { path: '/views/addmember', name: 'AddMember', component: AddMemberComponent },
+  //{ path: '/views/members', name: 'Members', component: MemberListComponent },
+  //{ path: '/views/members/:id', name: 'TeamMembers', component: MemberListComponent },
+  //{ path: '/views/member/:id', name: 'Member', component: MemberComponent },
+  //{ path: '/views/addmember', name: 'AddMember', component: AddMemberComponent },
 
-  { path: '/views/info/about', name: 'About', component: AboutComponent },
-  { path: '/views/info/contact', name: 'Contact', component: ContactComponent },
+  //{ path: '/views/info/about', name: 'About', component: AboutComponent },
+  //{ path: '/views/info/contact', name: 'Contact', component: ContactComponent },
 
   { path: '/views/authentication/login', name: 'Login', component: LoginComponent },
   { path: '/views/authentication/register', name: 'Register', component: RegisterComponent },
