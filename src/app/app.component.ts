@@ -14,7 +14,7 @@
 
 
 import { Component, ViewChild, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-i/*mport { RouteParams, Router, RouteConfig, RouterLink, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';*/
+/*import { RouteParams, Router, RouteConfig, RouterLink, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';*/
 import { Router, RouterLink, RouterLinkActive} from '@angular/router';
 //import { RouteSegment, OnActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -61,8 +61,9 @@ import { PageTitleComponent } from './views/controls/pagetitle.component';
 import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } from './helpers/classes';
 
 @Component({
-  selector: 'my-app',
-  templateUrl: './app/app.component.html',
+   selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
   //directives: [ROUTER_DIRECTIVES], // moved to main
   encapsulation: ViewEncapsulation.None
   //directives: [AuthCheck, RouterLink, ModalDialog, ProcessMessagesComponent, PageTitleComponent]

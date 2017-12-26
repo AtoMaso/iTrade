@@ -16,7 +16,7 @@ export class AuthCheck extends RouterOutlet {
     constructor(_elementRef: ViewContainerRef, _loader: DynamicComponentLoader,
                     _parentRouter: Router, @Attribute('name') nameAttr: string) {
 
-        super(_elementRef, _loader, _parentRouter, nameAttr);
+        super(_elementRef, _loader, _parentRouter, nameAttr, null); // check the last argument is tem there for the moment
     
         this.parentRouter = _parentRouter;
         this.publicRoutes = {
