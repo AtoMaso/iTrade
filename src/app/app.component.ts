@@ -14,14 +14,15 @@
 
 
 import { Component, ViewChild, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-import { RouteParams, Router, RouteConfig, RouterLink, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
-import { RouteSegment, OnActivate } from '@angular/router';
+i/*mport { RouteParams, Router, RouteConfig, RouterLink, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';*/
+import { Router, RouterLink, RouterLinkActive} from '@angular/router';
+//import { RouteSegment, OnActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import './rxjs-operators';
 
 import { AuthCheck } from './services/authcheck';
-import { Idle, DEFAULT_INTERRUPTSOURCES } from 'ng2-idle/core';
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { AuthenticationService } from './services/authentication.service';
 import { ProcessMessageService } from './services/processmessage.service';
 import { PageTitleService } from './services/pagetitle.service';
@@ -53,7 +54,7 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 //import { ContactComponent } from './views/info/contact.component';
 //import { LoginComponent } from './views/authentication/login.component';
 //import { RegisterComponent } from './views/authentication/register.component';
-//import { ModalDialog } from './views/controls/modaldialog.component';
+import { ModalDialog } from './views/controls/modaldialog.component';
 //import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 //import { PageTitleComponent } from './views/controls/pagetitle.component';
 
@@ -63,44 +64,10 @@ import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } 
   selector: 'my-app',
   templateUrl: './app/app.component.html',
   //directives: [ROUTER_DIRECTIVES], // moved to main
-  encapsulation: ViewEncapsulation.None,
-  directives: [AuthCheck, RouterLink, ModalDialog, ProcessMessagesComponent, PageTitleComponent]
+  encapsulation: ViewEncapsulation.None
+  //directives: [AuthCheck, RouterLink, ModalDialog, ProcessMessagesComponent, PageTitleComponent]
   //providers: [ROUTER_PROVIDERS] // moved to main
 })
-
-@RouteConfig([
-
-  { path: '/views/dashbord', name: 'Dashboard', component: DashboardComponent, useAsDefault: true },
-
-  //{ path: '/views/articles', name: 'Articles', component: ArticleListComponent },
-  //{ path: '/views/article/:id', name: 'Article', component: ArticleComponent },
-  //{ path: '/views/addarticle', name: 'AddArticle', component: AddArticleComponent },
-
-  //{ path: '/views/authors', name: 'Authors', component: AuthorListComponent },
-  //{ path: '/views/author/:id', name: 'Author', component: AuthorComponent },
-  //{ path: '/view/addauthor', name: 'AddAuthor', component: AddAuthorComponent },
-
-  //{ path: '/views/teams', name: 'Teams', component: TeamListComponent },
-  //{ path: '/views/team/:id', name: 'Team', component: TeamComponent },
-  //{ path: '/views/addteam', name: 'AddTeam', component: AddTeamComponent },
-
-  //{ path: '/views/members', name: 'Members', component: MemberListComponent },
-  //{ path: '/views/members/:id', name: 'TeamMembers', component: MemberListComponent },
-  //{ path: '/views/member/:id', name: 'Member', component: MemberComponent },
-  //{ path: '/views/addmember', name: 'AddMember', component: AddMemberComponent },
-
-  //{ path: '/views/info/about', name: 'About', component: AboutComponent },
-  //{ path: '/views/info/contact', name: 'Contact', component: ContactComponent },
-
-  { path: '/views/authentication/login', name: 'Login', component: LoginComponent },
-  { path: '/views/authentication/register', name: 'Register', component: RegisterComponent },
-  { path: '/views/authentication/home', name: 'Home', component: HomeComponent },
-
-  //{ path: '/views/file-upload/ng2-file-upload', name: 'Upload', component: NG2FileUploadComponent }
-
-  { path: '/**', redirectTo: ['Dashboard'] },
-])
-
 
 export class AppComponent implements OnDestroy, OnInit {
 
@@ -109,8 +76,8 @@ export class AppComponent implements OnDestroy, OnInit {
   //******************************************************
   // set child components handles
   @ViewChild(ModalDialog) modal: ModalDialog;
-  @ViewChild(ProcessMessagesComponent) messagesComponent: ProcessMessagesComponent;
-  @ViewChild(PageTitleComponent) pageTitleComponent: PageTitleComponent;
+  //@ViewChild(ProcessMessagesComponent) messagesComponent: ProcessMessagesComponent;
+  //@ViewChild(PageTitleComponent) pageTitleComponent: PageTitleComponent;
 
   // this is a reference to itself passed to the child ModalDialog
   private itself: AppComponent = this;
@@ -130,55 +97,51 @@ export class AppComponent implements OnDestroy, OnInit {
   //CONSTRUCTOR AND CICLE METHODS
   //******************************************************
   constructor(private _authenticationService: AuthenticationService,
-    private _pmService: ProcessMessageService,
-    private _titleService: PageTitleService,
-    private _router: Router, private idle: Idle) {
-
-    sessionStorage['UserSession'] = "null";
-  }
+      private _pmService: ProcessMessageService,
+      private _titleService: PageTitleService,
+      private _router: Router, private idle: Idle) { sessionStorage['UserSession'] = "null"; }
 
 
 
   public ngOnInit() {
 
-    this._subscriptionSession =
-      this._authenticationService._behaviorSessionStore
-        .subscribe((session: UserSession) => {
-          // this needs to be check otherwise the app component fails on session not created yet
-          if (session !== null) {
-            this._userSession = session,
-              this._isUserAuthenticated = session.authentication.isAuthenticated;
-            this.IsAllowed();
-            this.IdleSetup(session.userIdentity.accessTokenExpiresIn);
-          }
-        });
+        this._subscriptionSession =
+          this._authenticationService._behaviorSessionStore
+                .subscribe((session: UserSession) => {
+                  // this needs to be check otherwise the app component fails on session not created yet
+                  if (session !== null) {
+                    this._userSession = session,
+                      this._isUserAuthenticated = session.authentication.isAuthenticated;
+                    this.IsAllowed();
+                    this.IdleSetup(session.userIdentity.accessTokenExpiresIn);
+                  }
+            });
 
-    this._subscriptionMessages =
-      this._pmService._behaviorProcessMessageStore
-        .subscribe((message: ProcessMessage) => {
-          // this needs to be check otherwise the app component fails on pmComponent not created yet
-          if (message) {
-            this.messagesComponent.displayProcessMessage(message)
-          }
-        });
+        this._subscriptionMessages =
+          this._pmService._behaviorProcessMessageStore
+                .subscribe((message: ProcessMessage) => {
+                  // this needs to be check otherwise the app component fails on pmComponent not created yet
+                  if (message) {
+                    //this.messagesComponent.displayProcessMessage(message)
+                  }
+            });
 
-    this._subscriptionTitle =
-      this._titleService._behaviorTitleStore
-        .subscribe((page: PageTitle) => {
-          // this needs to be check otherwise the app component fails on pmComponent not created yet
-          if (page) {
-            this.pageTitleComponent.displayPageTitle(page)
-          }
-        });
+        this._subscriptionTitle =
+            this._titleService._behaviorTitleStore
+              .subscribe((page: PageTitle) => {
+                // this needs to be check otherwise the app component fails on pmComponent not created yet
+                if (page) {
+                 // this.pageTitleComponent.displayPageTitle(page)
+                }
+            });
 
-    this._subscriptionRouter =
-      this._pmService._behaviorRouteStore
-        .subscribe(() => {
-          if (this.messagesComponent) {
-            this.messagesComponent.displayProcessMessage(null);
-          }
-        });
-
+        this._subscriptionRouter =
+          this._pmService._behaviorRouteStore
+            .subscribe(() => {
+              if (this.messagesComponent) {
+               this.messagesComponent.displayProcessMessage(null);
+              }
+            });
   }
 
   public ngOnDestroy() {
@@ -203,7 +166,7 @@ export class AppComponent implements OnDestroy, OnInit {
   //*******************************************************
   // PRIVATE METHODS
   //*******************************************************
-  private IdleSetup(sessiontimeout: number) {
+  public IdleSetup(sessiontimeout: number) {
 
     // sets an idle timeout , in this case this is returned from webapi as 2 minutes
     // and we are giving a minute he user to refresh the session token before is logged out.

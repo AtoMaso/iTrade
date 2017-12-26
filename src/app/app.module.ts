@@ -17,6 +17,16 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { InMemoryDataService }  from './services//in-memory-data.service';
 import { HeroSearchComponent } from './views/hero-search/hero-search.component';
 
+//import { ROUTER_PROVIDERS } from '@angular/router';
+//import { FORM_PROVIDERS } from '@angular/common';
+//import { HTTP_PROVIDERS } from '@angular/http';
+import { IDLE_PROVIDERS } from '@ng-idle/core';
+
+import { AuthenticationService } from './services/authentication.service';
+import { ProcessMessageService } from './services/processmessage.service';
+import { PageTitleService } from './services/pagetitle.service';
+import { LoggerService } from './services/logger.service';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +50,11 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
     )
   ],
   providers: [ HeroService, MessageService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,
+                  HTTP_PROVIDERS, FORM_PROVIDERS,
+                  ROUTER_PROVIDERS, IDLE_PROVIDERS,
+                  AuthenticationService, ProcessMessageService,
+                  PageTitleService, LoggerService]
 })
 
 export class AppModule { }
