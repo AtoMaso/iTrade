@@ -78,7 +78,7 @@ export class AppComponent implements OnDestroy, OnInit {
   // set child components handles
   @ViewChild(ModalDialog) modal: ModalDialog;
   @ViewChild(ProcessMessagesComponent) messagesComponent: ProcessMessagesComponent;
-  //@ViewChild(PageTitleComponent) pageTitleComponent: PageTitleComponent;
+  @ViewChild(PageTitleComponent) pageTitleComponent: PageTitleComponent;
 
   // this is a reference to itself passed to the child ModalDialog
   private itself: AppComponent = this;
