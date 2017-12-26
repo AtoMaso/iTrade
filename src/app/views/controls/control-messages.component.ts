@@ -1,5 +1,5 @@
 ﻿import { Component, Host } from '@angular/core';
-//import { NgFormModel } from '@angular/common';
+import { NgFormModel } from '@angular/common';
 import { NgForm, NgModel } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
 
@@ -12,7 +12,7 @@ import { ValidationService } from '../../services/validation.service';
 export class ControlMessages {
   controlName: string;
   // this is the host where this message control is used
-  constructor( @Host() private _formDir: NgForm) { }
+  constructor( @Host() private _formDir: NgFormModel) { }
 
   get errorMessage() {
     // Find the control in the Host (Parent) form
