@@ -30,13 +30,14 @@ import { LoggerService } from './services/logger.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeroesComponent,
-    HeroDetailComponent,
-    MessagesComponent,
-    DashboardComponent,
-    HeroSearchComponent,
-  ],
+        AppComponent,
+        HeroesComponent,
+        HeroDetailComponent,
+        MessagesComponent,
+        DashboardComponent,
+        HeroSearchComponent,
+  ],  
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -49,12 +50,61 @@ import { LoggerService } from './services/logger.service';
       InMemoryDataService, { dataEncapsulation: false }
     )
   ],
-  providers: [ HeroService, MessageService],
+
+  providers: [HeroService, MessageService,
+                  AuthenticationService, Idle, ProcessMessageService,
+                  PageTitleService, LoggerService],
   bootstrap: [AppComponent,
                   //HTTP_PROVIDERS, FORM_PROVIDERS,
                   //ROUTER_PROVIDERS, 
-                  Idle, AuthenticationService, ProcessMessageService,
-                  PageTitleService, LoggerService]
+                ]
 })
 
 export class AppModule { }
+
+
+
+
+//import { BrowserModule } from '@angular/platform-browser';
+
+//import { NgModule } from '@angular/core';
+
+
+//import { DataService } from './services/data.service';
+
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//import { FormsModule } from '@angular/forms';
+
+//import { AppRoutingModule } from './app-routing.module';
+
+//import { AppComponent } from './app.component';
+
+//import { HomeComponent } from './views/home/home.component';
+
+//import { AboutComponent } from './views/about/about.component';
+
+
+
+
+//@NgModule({
+
+//  declarations: [
+//    AppComponent,
+//    HomeComponent,
+//    AboutComponent
+//  ],
+
+//  imports: [
+//    BrowserModule,
+//    AppRoutingModule,
+//    FormsModule,
+//    BrowserAnimationsModule
+//  ],
+
+//  providers: [DataService],
+//  bootstrap: [AppComponent]
+//})
+
+
+//export class AppModule { }
