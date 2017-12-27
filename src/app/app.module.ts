@@ -20,6 +20,7 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
 //import { ROUTER_PROVIDERS } from '@angular/router';
 //import { FORM_PROVIDERS } from '@angular/common';
 //import { HTTP_PROVIDERS } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { Idle } from '@ng-idle/core';
 
 import { AuthenticationService } from './services/authentication.service';
@@ -43,11 +44,12 @@ import { LoggerService } from './services/logger.service';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    HttpModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
+         InMemoryDataService, { dataEncapsulation: false }
     )
   ],
 
