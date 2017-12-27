@@ -23,11 +23,11 @@ export class ProcessMessagesComponent {
   // display the message text 
   public displayProcessMessage(message: ProcessMessage) {
     try {
-      if (message === null) { this.errorMessage = null; }
-      else {
-        
-        this.errorMessage = this.getThePrefix(message.type) + message.text;
-        this.getControlStyle(message.type);
+      if (message === null)
+          { this.errorMessage = null; }
+      else {        
+           this.errorMessage = this.getThePrefix(message.type) + message.text;
+           this.getControlStyle(message.type);
       }
     }
     catch (error) {

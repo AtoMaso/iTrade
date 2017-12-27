@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Hero } from '../../helpers/hero';
 import { HeroService } from '../../services/hero.service';
 
+
+import { SpinnerOneComponent } from '../../blocks/spinner/spinnerone.component';
+import { LoggerService } from '../../services/logger.service';
+import { ProcessMessageService } from '../../services/processmessage.service';
+import { PageTitleService } from '../../services/pagetitle.service';
+
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,8 +18,10 @@ import { HeroService } from '../../services/hero.service';
 export class DashboardComponent implements OnInit {
 
   heroes: Hero[] = [];
+  private itself: DashboardComponent = this;
 
-  constructor(private heroService: HeroService) { }
+  constructor(private heroService: HeroService,
+                   private _pageTitleService: PageTitleService) { }
 
   ngOnInit() {
     this.getHeroes();
