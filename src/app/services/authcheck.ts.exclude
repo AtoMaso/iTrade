@@ -1,6 +1,5 @@
-﻿import { Directive, Attribute, ElementRef, ViewContainerRef, DynamicComponentLoader } from  '@angular/core';
-import { Router, RouterOutlet, ComponentInstruction } from '@angular/router';
-
+﻿import { Directive, Attribute, ElementRef, ViewContainerRef, ChangeDetectorRef, ComponentFactoryResolver } from '@angular/core'; //DynamicComponentLoader
+import { Router, RouterOutlet, ComponentInstruction } from '@angular/router'; 
 import { AuthenticationService } from './authentication.service';
 
 @Directive({
@@ -11,13 +10,16 @@ export class AuthCheck extends RouterOutlet {
 
     public publicRoutes: any;
     public parentRouter: Router;
-    private _authenticationService: AuthenticationService;
+    private _authenticationService: AuthenticationService;    
 
-    constructor(_elementRef: ViewContainerRef, _loader: DynamicComponentLoader,
-                    _parentRouter: Router, @Attribute('name') nameAttr: string) {
+  constructor(_elementRef: ViewContainerRef,
+                  _loader: ComponentFactoryResolver,
+                  _parentRouter: Router, @Attribute('name') nameAttr: string,
+                 _changeDetectorRef: ChangeDetectorRef) {
 
-        super(_elementRef, _loader, _parentRouter, nameAttr, null); // check the last argument is tem there for the moment
-    
+    super(null, _elementRef, _loader, name, _changeDetectorRef); // check the last argument is tem there for the moment
+     //super(_elementRef, _loader, _parentRouter, nameAttr);     the old one 
+
         this.parentRouter = _parentRouter;
         this.publicRoutes = {
            'Dashboard': true,
@@ -46,7 +48,8 @@ export class AuthCheck extends RouterOutlet {
     activate(instruction: ComponentInstruction) {
         let url = instruction.routeName;              
 
-        if (!this.publicRoutes[url] && sessionStorage.getItem('UserSession') == 'null') {          
+      if (!this.publicRoutes[url] && sessionStorage.getItem('UserSession') == 'null') {       
+             
             this.parentRouter.navigateByUrl('/views/authentication/login');  
             return super.activate(instruction);         
         }

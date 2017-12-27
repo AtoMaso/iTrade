@@ -14,14 +14,14 @@
 
 
 import { Component, ViewChild, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-/*import { RouteParams, Router, RouteConfig, RouterLink, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';*/
+//import { RouteParams, Router, RouteConfig, RouterLink, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
 import { Router, RouterLink, RouterLinkActive} from '@angular/router';
 //import { RouteSegment, OnActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import './rxjs-operators';
+//import './rxjs-operators';
 
-import { AuthCheck } from './services/authcheck';
+//import { AuthCheck } from './services/authcheck';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { AuthenticationService } from './services/authentication.service';
 import { ProcessMessageService } from './services/processmessage.service';
@@ -66,7 +66,7 @@ import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } 
   styleUrls: ['./app.component.scss'],
   //directives: [ROUTER_DIRECTIVES], // moved to main
   encapsulation: ViewEncapsulation.None
-  //directives: [AuthCheck, RouterLink, ModalDialog, ProcessMessagesComponent, PageTitleComponent]
+  //directives: [AuthCheck, RouterLink, ModalDialog, ProcessMessagesComponent, PageTitleComponent],
   //providers: [ROUTER_PROVIDERS] // moved to main
 })
 
