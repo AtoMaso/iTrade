@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Hero } from '../helpers/hero';
+import { Hero } from '../helpers/classes';
 import { MessageService } from './message.service';
 
 const httpOptions = {

@@ -5,20 +5,19 @@ import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'modal-dialog',
-  inputs: ['controlName: control'],
+  moduleId:module.id,
   templateUrl: './modaldialog.component.html'
 })
 
-export class ModalDialog {
+export class ModalDialogComponent {
      // the host is passed as a input partameter, also check the app component html where 
      // the host app component is passed as [app] = "itself"
-      @Input() app: AppComponent;
-
+    @Input() app: AppComponent;
+     
       constructor( ) { }
 
       private modalMessage: string;
-      public modalIsVisible: boolean;
-
+      public modalIsVisible: boolean;      
 
       public showModalDialog(msg: string) {     
           this.modalMessage = msg;

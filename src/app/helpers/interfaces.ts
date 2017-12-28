@@ -1,4 +1,11 @@
 ﻿
+
+interface HeroInterface {
+  id: number;
+  name: string;
+
+}
+
 interface ArticleInterface{
     //Id: number;
     ArticleId: string;
@@ -158,7 +165,7 @@ interface RoleInterface {
  }
 
 
-export { ArticleInterface, LocalityInterface,
+export { ArticleInterface, LocalityInterface, HeroInterface,
           TeamInterface, CategoryInterface, ContentInterface,
           BusinessLineInterface, ApplicationUserInterface,
           LevelInterface, PositionInterface,

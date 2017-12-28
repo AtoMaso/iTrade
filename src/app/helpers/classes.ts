@@ -1,10 +1,15 @@
-﻿import { ArticleInterface, LocalityInterface,
+﻿import { ArticleInterface, LocalityInterface, HeroInterface,
             TeamInterface, CategoryInterface, ContentInterface,
             ApplicationUserInterface, BusinessLineInterface, LevelInterface,
             PositionInterface, AuthenticationInterface, UserIdentityInterface,
             UserSessionInterface, RoleInterface, ImageInterface, ProcessMessageInterface,
             PageTitleInterface, AttachementInterface, TeamMemberInterface } from './interfaces';
 
+
+class Hero implements HeroInterface {
+  id: number;
+  name: string;
+}
 
 class Article implements ArticleInterface {
     //Id: number;
@@ -491,7 +496,8 @@ class Guid {
 
 
 
-export {Article, Team, Locality, Category, Content,
+export {
+  Article, Team, Locality, Category, Content, Hero,
             BusinessLine, Level, Position, ApplicationUser,
             Authentication, UserIdentity, UserSession, Role, Image,
             ProcessMessage, PageTitle, Attachement, Guid, TeamMember};

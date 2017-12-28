@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Hero } from '../../helpers/hero';
+import { Hero } from '../../helpers/classes';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
