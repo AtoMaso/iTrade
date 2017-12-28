@@ -1,5 +1,4 @@
 ﻿import { Component, Host } from '@angular/core';
-import { NgForm, NgModel, } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 

@@ -17,14 +17,14 @@
       <!-- make the menu hidden when the screen is too small with class "navbar-collapse collapse" -->
       <div id="nav" class="navbar-collapse collapse  navbar-right">
         <ul class="nav navbar-nav" style="margin-right:20px">
-          <li class="nav"><a href="" [routerLink]="['Dashboard']"><span class="textgray"><i>Dashboard</i></span></a></li>
-          <li class="nav"><a href="" [routerLink]="['Heroes']"><span class="textgray"><i>Heroes</i></span></a></li>
+          <li class="nav"><a href="" routerLink="/dashboard"><span class="textgray"><i>Dashboard</i></span></a></li>
+          <li class="nav"><a href="" routerLink="/Heroes"><span class="textgray"><i>Heroes</i></span></a></li>
           <!--<li class="nav"><a href="" [routerLink]="['Authors']"><span class="textgray"><i>Authors</i></span></a></li>
           <li class="nav"><a href="" [routerLink]="['Teams']"><span class="textgray"><i>Teams</i></span></a></li>-->
           <!--<li class="nav"><a href="" [routerLink]="['Upload']"><span class="textgray"><i>File Upload</i></span></a></li>-->
           <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" [routerLink]="['Users']">Users</a></li>-->
           <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" [routerLink]="['Admin']">Admin</a></li>-->
-          <li class="nav" *ngIf="!_isUserAuthenticated"><a href="" [routerLink]="['Login']"><span class="textgray"><i>Login</i></span></a></li>
+          <li class="nav" *ngIf="!_isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>
           <li class="nav" *ngIf="_isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
         </ul>
       </div>

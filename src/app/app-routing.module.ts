@@ -15,8 +15,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, 
   { path: 'dashboard', component: DashboardComponent},
   { path: 'detail/:id', component: HeroDetailComponent, canActivate: [AuthGuard] },
-  { path: 'heroes', component: HeroesComponent,  canActivate: [AuthGuard] },
-  { path: '/views/authentication/login', component: LoginComponent },
+  { path: 'heroes', component: HeroesComponent },
+  { path: 'login', component: LoginComponent }
 
   //{ path: '/views/articles', name: 'Articles', component: ArticleListComponent },
   //{ path: '/views/article/:id', name: 'Article', component: ArticleComponent },

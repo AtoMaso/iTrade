@@ -7,6 +7,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { MomentModule } from 'angular2-moment';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core 
                                                                                          //NgIdleModule but includes keepalive providers for easy wireup
 
@@ -47,8 +48,8 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
         PageTitleComponent,
         ProcessMessagesComponent,
         ModalComponent,
-    LoginComponent,
-    ControlMessages
+        LoginComponent,
+        ControlMessages
   ],  
 
   imports: [
@@ -58,6 +59,7 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
     HttpClientModule,    
     HttpModule,
     MomentModule,
+    ReactiveFormsModule,
     NgIdleKeepaliveModule.forRoot(),
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
@@ -70,6 +72,7 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
   providers: [HeroService, MessageService, 
                   AuthenticationService, ProcessMessageService,
                   PageTitleService, LoggerService],
+
   bootstrap: [AppComponent]
                
 })

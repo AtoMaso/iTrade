@@ -4,12 +4,14 @@
         <form novalidate  [formGroup]="loginGroup" (ngSubmit)="login(loginGroup)" >
 
             <div class="row">
-                <div class="col-md-3 col-md-offset-1">                              
+
+                <div class="col-md-3 col-md-offset-1">      
+                                          
                     <div class="row">
                         <div class="form-group smalltext textgray">
                             <label for="Email">Email</label>
                             <input type="text" formControlName="Email"  required  class="form-control inputtext" maxlength="70" placeholder="Your email address....">
-                            <control-messages control="Email" class="text-danger"></control-messages>
+                            <!--<control-messages control="Email" class="text-danger"></control-messages>-->
                         </div>
                     </div>
 
@@ -17,9 +19,10 @@
                         <div class="form-group smalltext textgray">
                             <label for="Password">Password</label>
                             <input type="password" formControlName="Password" required class="form-control inputtext" maxlength="10" placeholder="Your password...">
-                            <control-messages control="Password" class="text-danger"></control-messages>
+                            <!--<control-messages control="Password" class="text-danger"></control-messages>-->
                         </div>
                     </div>
+
                     <br />
                     <div class="row">
                         <button class="btn btn-md btn-success btn-block" type="submit" [disabled]="!loginForm.valid">Login</button>
@@ -45,34 +48,6 @@
             </div>
 
         </form>
-
-
-
-
-      <form novalidate [formGroup]="loginForm">
-        <label>
-          <span>Full name</span>
-          <input type="text"
-                 placeholder="Your full name"
-                 formControlName="name">
-        </label>
-        <div formGroupName="account">
-          <label>
-            <span>Email address</span>
-            <input type="email"
-                   placeholder="Your email address"
-                   formControlName="email">
-          </label>
-          <label>
-            <span>Confirm address</span>
-            <input type="email"
-                   placeholder="Confirm your email address"
-                   formControlName="confirm">
-          </label>
-        </div>
-        <button type="submit">Sign up</button>
-      </form>
-    </div>
 
 
 

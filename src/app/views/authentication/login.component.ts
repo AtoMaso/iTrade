@@ -1,7 +1,7 @@
 ﻿import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, } from '@angular/router';
 import { Http, Response } from '@angular/http';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { ValidationService } from '../../services/validation.service';
@@ -44,11 +44,6 @@ export class LoginComponent implements OnInit {
       Email: new FormControl('', [Validators.required, ValidationService.emailValidator, ValidationService.emailDomainValidator]),
       Password: new FormControl('', Validators.compose([Validators.required, ValidationService.passwordValidator]))
     });
-
-    //this.loginGroup = new FormGroup({
-    //          Email: new FormControl('', [Validators.required, ValidationService.emailValidator, ValidationService.emailDomainValidator]),
-    //          Password: new FormControl('', Validators.compose([Validators.required, ValidationService.passwordValidator]))
-    //    });
   }
 
 
