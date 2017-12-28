@@ -15,7 +15,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, 
   { path: 'dashboard', component: DashboardComponent},
   { path: 'detail/:id', component: HeroDetailComponent, canActivate: [AuthGuard] },
-  { path: 'heroes', component: HeroesComponent,  canActivate: [AuthGuard] }
+  { path: 'heroes', component: HeroesComponent,  canActivate: [AuthGuard] },
+  { path: '/views/authentication/login', component: LoginComponent },
 
   //{ path: '/views/articles', name: 'Articles', component: ArticleListComponent },
   //{ path: '/views/article/:id', name: 'Article', component: ArticleComponent },
@@ -37,7 +38,7 @@ const routes: Routes = [
   //{ path: '/views/info/about', name: 'About', component: AboutComponent },
   //{ path: '/views/info/contact', name: 'Contact', component: ContactComponent },
 
-  { path: '/views/authentication/login', component: LoginComponent },
+
   //{ path: '/views/authentication/register', component: RegisterComponent },
   //{ path: '/views/authentication/home', name: 'Home', component: HomeComponent },
 

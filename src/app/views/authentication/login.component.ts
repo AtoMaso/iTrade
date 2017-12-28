@@ -1,7 +1,7 @@
 ﻿import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, } from '@angular/router';
 import { Http, Response } from '@angular/http';
-import { FormBuilder, Validators } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder} from '@angular/forms';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { ValidationService } from '../../services/validation.service';
@@ -14,14 +14,14 @@ import { ControlMessages } from '../controls/control-messages.component';
 
 @Component({
     selector: 'login-view',
-    templateUrl: 'app/views/authentication/login.component.html',
+    templateUrl: './login.component.html',
     //directives: [ControlMessages, ROUTER_DIRECTIVES]
 })
 
 
-export class LoginComponent {
-  private _account: ApplicationUser = new ApplicationUser();
-  private loginForm: any;
+export class LoginComponent implements OnInit {
+  private account: ApplicationUser = new ApplicationUser();
+  private loginGroup: FormGroup;
   private isRequesting: boolean;
 
   //*****************************************************
@@ -34,24 +34,34 @@ export class LoginComponent {
                     private _pageTitleService: PageTitleService,
                     private _loggerService: LoggerService) {
 
-        this.loginForm = this._formBuilder.group({
-          //'UserName': ['', Validators.compose([Validators.required, ValidationService.usernameValidator])],
-          'Email': ['', Validators.compose([Validators.required, ValidationService.emailValidator, ValidationService.emailDomainValidator])],
-          'Password': ['', Validators.compose([Validators.required, ValidationService.passwordValidator])],
-        });
-
-        _pageTitleService.emitPageTitle(new PageTitle("Login"));
-        _pmService.emitRoute("nill");
+    _pageTitleService.emitPageTitle(new PageTitle("Login"));
+    _pmService.emitRoute("nill");
+    
   }
+
+  ngOnInit() {
+    this.loginGroup = this._formBuilder.group({
+      Email: new FormControl('', [Validators.required, ValidationService.emailValidator, ValidationService.emailDomainValidator]),
+      Password: new FormControl('', Validators.compose([Validators.required, ValidationService.passwordValidator]))
+    });
+
+    //this.loginGroup = new FormGroup({
+    //          Email: new FormControl('', [Validators.required, ValidationService.emailValidator, ValidationService.emailDomainValidator]),
+    //          Password: new FormControl('', Validators.compose([Validators.required, ValidationService.passwordValidator]))
+    //    });
+  }
+
 
   //****************************************************
   // GET ACCOUNT
   //****************************************************
   private login() {
-      this._authenticationService.login(this._account.Email, this._account.Password)
+    this._authenticationService.login(this.loginGroup.controls.Email.value, this.loginGroup.controls.Password.value)
           .subscribe(res => this.onLoginSuccess(res)
           , error =>  this.onError(error));
   }
+
+
 
   //****************************************************
   // PRIVATE METHODS

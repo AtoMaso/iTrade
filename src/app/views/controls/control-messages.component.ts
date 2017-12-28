@@ -1,7 +1,8 @@
 ﻿import { Component, Host } from '@angular/core';
-import { NgFormModel } from '@angular/common';
-import { NgForm, NgModel } from '@angular/forms';
+import { NgForm, NgModel, } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'control-messages',
@@ -12,11 +13,11 @@ import { ValidationService } from '../../services/validation.service';
 export class ControlMessages {
   controlName: string;
   // this is the host where this message control is used
-  constructor( @Host() private _formDir: NgFormModel) { }
+  constructor( @Host() private _formGroup: FormGroup) { }
 
   get errorMessage() {
     // Find the control in the Host (Parent) form
-    let c = this._formDir.form.find(this.controlName);
+    let c = this._formGroup.get(this.controlName);
 
     for (let propertyName in c.errors) {
       // If control has a error

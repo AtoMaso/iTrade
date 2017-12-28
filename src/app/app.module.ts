@@ -20,6 +20,8 @@ import { MessageService } from './services/message.service';
 //import { AuthCheck } from './services/authcheck';
 
 //components
+import { LoginComponent } from './views/authentication/login.component';
+import { ControlMessages } from './views/controls/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle.component';
 import { ModalComponent } from './views/controls/modal.component';
@@ -44,7 +46,9 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
         HeroSearchComponent,
         PageTitleComponent,
         ProcessMessagesComponent,
-        ModalComponent    
+        ModalComponent,
+    LoginComponent,
+    ControlMessages
   ],  
 
   imports: [
