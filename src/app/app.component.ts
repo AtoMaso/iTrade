@@ -75,40 +75,40 @@ export class AppComponent implements OnDestroy, OnInit {
 
         this._subscriptionSession =
           this._authenticationService._behaviorSessionStore
-                .subscribe((session: UserSession) => {
-                  // this needs to be check otherwise the app component fails on session not created yet
-                  if (session !== null) {
-                    this._userSession = session,
-                    this._isUserAuthenticated = session.authentication.isAuthenticated;
-                    this.IsAllowed();
-                    this.IdleSetup(session.userIdentity.accessTokenExpiresIn);
-                  }
+                    .subscribe((session: UserSession) => {
+                      // this needs to be check otherwise the app component fails on session not created yet
+                      if (session !== null) {
+                            this._userSession = session,
+                            this._isUserAuthenticated = session.authentication.isAuthenticated;
+                            this.IsAllowed();
+                            this.IdleSetup(session.userIdentity.accessTokenExpiresIn);
+                      }
             });
 
         this._subscriptionMessages =
-          this._pmService._behaviorProcessMessageStore
-                .subscribe((message: ProcessMessage) => {
-                  // this needs to be check otherwise the app component fails on pmComponent not created yet
-                  if (message) {
-                    this.messagesComponent.displayProcessMessage(message)
-                  }
+                this._pmService._behaviorProcessMessageStore
+                      .subscribe((message: ProcessMessage) => {
+                        // this needs to be check otherwise the app component fails on pmComponent not created yet
+                        if (message) {
+                                this.messagesComponent.displayProcessMessage(message)
+                        }
             });
 
         this._subscriptionTitle =
             this._titleService._behaviorTitleStore
-              .subscribe((page: PageTitle) => {
-                // this needs to be check otherwise the app component fails on pmComponent not created yet
-                if (page) {
-                  this.pageTitleComponent.displayPageTitle(page)
-                }
+                        .subscribe((page: PageTitle) => {
+                          // this needs to be check otherwise the app component fails on pmComponent not created yet
+                          if (page) {
+                                  this.pageTitleComponent.displayPageTitle(page)
+                          }
             });
 
         this._subscriptionRouter =
-          this._pmService._behaviorRouteStore
-            .subscribe(() => {
-              if (this.messagesComponent) {
-               this.messagesComponent.displayProcessMessage(null);
-              }
+                  this._pmService._behaviorRouteStore
+                    .subscribe(() => {
+                      if (this.messagesComponent) {
+                            this.messagesComponent.displayProcessMessage(null);
+                      }
             });
   }
 

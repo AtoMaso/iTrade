@@ -20,7 +20,7 @@ export class AuthenticationService implements OnDestroy {
   private timer: any = null;
   private _authentication: Authentication;
   private _userIdentity: UserIdentity;
-  private _userSession: UserSession;
+  public _userSession: UserSession;
 
   public _subjectSessionStore = new Subject<UserSession>();
   public _subjectSessionObserver$ = this._subjectSessionStore.asObservable();
