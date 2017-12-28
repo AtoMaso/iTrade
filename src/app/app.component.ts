@@ -9,16 +9,16 @@ import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationService } from './services/authentication.service';
 import { ProcessMessageService } from './services/processmessage.service';
 import { PageTitleService } from './services/pagetitle.service';
-import { DashboardComponent } from './views/dashboard/dashboard.component';
 
 
 //components
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 //import { LoginComponent } from './views/authentication/login.component';
 //import { RegisterComponent } from './views/authentication/register.component';
-import { ModalDialogComponent } from './views/controls/modaldialog.component';
+import { ModalComponent } from './views/controls/modal.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle.component';
 import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } from './helpers/classes';
@@ -40,9 +40,10 @@ export class AppComponent implements OnDestroy, OnInit {
   // PROPERTIES
   //******************************************************
   // set child components handles
-  @ViewChild(ModalDialogComponent) modalComponent: ModalDialogComponent;
+ 
   @ViewChild(ProcessMessagesComponent) messagesComponent: ProcessMessagesComponent;
   @ViewChild(PageTitleComponent) pageTitleComponent: PageTitleComponent;
+  @ViewChild(ModalComponent) modalComponent: ModalComponent;
 
   // this is a reference to itself passed to the child ModalDialog
   private itself: AppComponent = this;
@@ -147,7 +148,7 @@ export class AppComponent implements OnDestroy, OnInit {
   // called from the session modal dialog when session needs to be closed
   public onCloseSession() {
     this.logOut();
-  this._isUserAuthenticated = false;
+    this._isUserAuthenticated = false;
     this._isUserAllowed = false;
   }
 
@@ -192,6 +193,7 @@ export class AppComponent implements OnDestroy, OnInit {
       // when the timeout has been kill the modal and kill the session
       this.idle.onTimeout.subscribe(() => {
         this.modalComponent.closeSession();
+        this.onCloseSession();   
       });
 
       // start watching for idleness right away.

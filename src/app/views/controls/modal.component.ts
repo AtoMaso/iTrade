@@ -2,10 +2,10 @@
 
 @Component({
   selector: 'modal-dialog',
-  templateUrl: './modaldialog.component.html'
+  templateUrl: './app/views/controls/modal.component.html'
 })
 
-export class ModalDialogComponent {
+export class ModalComponent {
       
       constructor( ) { }
 

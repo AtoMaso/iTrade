@@ -9,6 +9,7 @@ import { PageTitle } from '../../helpers/classes';
 })
 
 export class PageTitleComponent {
+
       private pageTitle: string = "";
       private pageValue: string = "";
 

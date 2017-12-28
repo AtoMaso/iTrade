@@ -2,7 +2,7 @@
 import {Component} from '@angular/core';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { NgClass, NgStyle} from '@angular/common';
-import {FILE_UPLOAD_DIRECTIVES, FileSelectDirective,FileDropDirective, FileUploader} from 'ng2-file-upload';
+import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload'; // FILE_UPLOAD_DIRECTIVES
 import { CONFIG } from '../../config';
 
 import { ProcessMessageService } from '../../services/processmessage.service';

@@ -45,13 +45,15 @@
 
     <process-messages #messagesComponent></process-messages>
 
+    <modal-componet #modalComponent></modal-componet>
+
     <section>
       <router-outlet></router-outlet>
     </section>
 
   </main>
 
- 
+  
 
   <br />
   <br />
@@ -139,8 +141,6 @@
   </div>
 
   
-  <!-- MODAL form to show it when is somtething is clicked and user not allowed -->
-  <modal-dialog #modalComponent  [app]="itself"></modal-dialog>
-  <!-- MODAL end of modal form--> 
+ 
 
 </div>
