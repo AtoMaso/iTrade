@@ -18,12 +18,9 @@
       <div id="nav" class="navbar-collapse collapse  navbar-right">
         <ul class="nav navbar-nav" style="margin-right:20px">
           <li class="nav"><a href="" routerLink="/dashboard"><span class="textgray"><i>Dashboard</i></span></a></li>
-          <li class="nav"><a href="" routerLink="/Heroes"><span class="textgray"><i>Heroes</i></span></a></li>
-          <!--<li class="nav"><a href="" [routerLink]="['Authors']"><span class="textgray"><i>Authors</i></span></a></li>
-          <li class="nav"><a href="" [routerLink]="['Teams']"><span class="textgray"><i>Teams</i></span></a></li>-->
-          <!--<li class="nav"><a href="" [routerLink]="['Upload']"><span class="textgray"><i>File Upload</i></span></a></li>-->
-          <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" [routerLink]="['Users']">Users</a></li>-->
-          <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" [routerLink]="['Admin']">Admin</a></li>-->
+          <li class="nav"><a href="" routerLink="/heroes"><span class="textgray"><i>Heroes</i></span></a></li>          
+          <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" routerLink="'/users">Users</a></li>-->
+          <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" routerLink="'/admin">Admin</a></li>-->
           <li class="nav" *ngIf="!_isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>
           <li class="nav" *ngIf="_isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
         </ul>
@@ -40,20 +37,16 @@
 
     
   <main class="container">
-
+    <!-- the page title control -->
     <page-title #pageTitleComponent></page-title>
-
+    <!-- the process message control -->
     <process-messages #messagesComponent></process-messages>
-
-    <modal-component #modalComponent></modal-component>
 
     <section>
       <router-outlet></router-outlet>
     </section>
 
   </main>
-
-  
 
   <br />
   <br />
@@ -141,6 +134,7 @@
   </div>
 
   
- 
+ <!-- modal component which will need to come up when user not authenticated and not allowed-->
+  <modal-component #modalComponent></modal-component>
 
 </div>

@@ -10,22 +10,31 @@
                     <div class="row">
                         <div class="form-group smalltext textgray">
                             <label for="Email">Email</label>
-                            <input type="text" formControlName="Email"  required  class="form-control inputtext" maxlength="70" placeholder="Your email address....">
-                            <!--<control-messages control="Email" class="text-danger"></control-messages>-->
+                            <input type="email" formControlName="Email"  class="form-control inputtext" maxlength="70" placeholder="Your email address...." required>                        
                         </div>
+                        <!--<div class="text-danger"
+                             *ngIf="loginGroup.get('Email').hasError('required') && user.get('name').touched">Email is required
+                        </div>
+                        <div class="text-danger"
+                             *ngIf="loginGroup.get('Email').hasError('minlength') && user.get('name').touched">Minimum of 2 characters
+                        </div>--> 
+                      <control-messages control="Email" class="text-danger"></control-messages>
                     </div>
 
                     <div class="row">
                         <div class="form-group smalltext textgray">
                             <label for="Password">Password</label>
-                            <input type="password" formControlName="Password" required class="form-control inputtext" maxlength="10" placeholder="Your password...">
+                            <input type="password" formControlName="Password"  class="form-control inputtext" maxlength="10" placeholder="Your password..." required>
                             <!--<control-messages control="Password" class="text-danger"></control-messages>-->
                         </div>
+                        <!--<div class="text-danger"
+                             *ngIf="loginGroup.get('Password').hasError('required') && user.get('name').touched">Pasword is required
+                        </div>-->
                     </div>
 
                     <br />
                     <div class="row">
-                        <button class="btn btn-md btn-success btn-block" type="submit" [disabled]="!loginForm.valid">Login</button>
+                        <button class="btn btn-md btn-success btn-block" type="submit" >Login</button>
                     </div>
                     <br />
 
