@@ -13,10 +13,10 @@
                             <input type="email" formControlName="Email"  class="form-control inputtext" maxlength="70" placeholder="Your email address...." required  minlength>                        
                         </div>
                         <div class="text-danger"
-                             *ngIf="loginGroup.get('Email').hasError('required') && user.get('Email').touched">Email is required
+                             *ngIf="loginGroup.get('Email').hasError('required') && loginGroup.get('Email').touched">Email is required
                         </div>
                         <div class="text-danger"
-                             *ngIf="loginGroup.get('Email').hasError('minlength') && user.get('Email').touched">Minimum of 2 characters
+                             *ngIf="loginGroup.get('Email').hasError('minlength') && loginGroup.get('Email').touched">Minimum of 2 characters
                         </div>                  
                       <!--<control-messages control="Email" class="text-danger"></control-messages>-->
                     </div>
