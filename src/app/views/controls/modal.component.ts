@@ -1,8 +1,8 @@
 ﻿import { Component, Host, Input } from '@angular/core';
 
 @Component({
-  selector: 'modal-dialog',
-  templateUrl: './app/views/controls/modal.component.html'
+  selector: 'modal-component',
+  templateUrl: './modal.component.html'
 })
 
 export class ModalComponent {

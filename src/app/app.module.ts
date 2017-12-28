@@ -21,7 +21,7 @@ import { MessageService } from './services/message.service';
 //components
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle.component';
-import { ModalDialogComponent } from './views/controls/modaldialog.component';
+import { ModalComponent } from './views/controls/modal.component';
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './views//heroes/heroes.component';
 import { HeroDetailComponent } from './views/hero-detail/hero-detail.component';
@@ -42,7 +42,8 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
         DashboardComponent,
         HeroSearchComponent,
         PageTitleComponent,
-        ProcessMessagesComponent     
+        ProcessMessagesComponent,
+        ModalComponent    
   ],  
 
   imports: [
