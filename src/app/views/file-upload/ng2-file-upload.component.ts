@@ -1,7 +1,7 @@
-﻿/// <reference path="../../../typings/tsd.d.ts" />
+﻿///// <reference path="../../../typings/tsd.d.ts" />
 import {Component} from '@angular/core';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgStyle} from '@angular/common';
+import { NgClass, NgStyle} from '@angular/common';
 import {FILE_UPLOAD_DIRECTIVES, FileSelectDirective,FileDropDirective, FileUploader} from 'ng2-file-upload';
 import { CONFIG } from '../../config';
 
@@ -13,8 +13,8 @@ let uploadsAttachUrl = CONFIG.baseUrls.uploadsattach;
 
 @Component({
   selector: 'ng2-file-upload',
-  templateUrl: './app/views/file-upload/ng2-file-upload.component.html',
-  directives: [FILE_UPLOAD_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES]
+  templateUrl: './app/views/file-upload/ng2-file-upload.component.html'
+  //directives: [FILE_UPLOAD_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
 
 export class NG2FileUploadComponent {

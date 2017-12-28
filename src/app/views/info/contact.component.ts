@@ -7,7 +7,7 @@ import { PageTitle } from '../../helpers/classes';
 
 @Component({
     selector: 'contact-view',
-    templateUrl: 'app/views/info/contact.component.html'
+    templateUrl: './contact.component.html'
 })
 
 

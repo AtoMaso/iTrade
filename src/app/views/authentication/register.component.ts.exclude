@@ -1,6 +1,6 @@
 ﻿import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { RouteParams, Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
-import { Http, Response, HTTP_PROVIDERS } from '@angular/http';
+import { RouteParams, Router } from '@angular/router';
+import { Http, Response } from '@angular/http';
 import { FormBuilder, Validators } from '@angular/common';
 
 import { ApplicationUser, PageTitle } from '../../helpers/classes';

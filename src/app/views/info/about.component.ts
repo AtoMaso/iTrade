@@ -7,7 +7,7 @@ import { PageTitle } from '../../helpers/classes';
 
 @Component({
     selector: 'about-view',
-    templateUrl: 'app/views/info/about.component.html'
+    templateUrl: './about.component.html'
 })
 export class AboutComponent {
   constructor(private _pmService: ProcessMessageService,
