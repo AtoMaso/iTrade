@@ -41,8 +41,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginGroup = this._formBuilder.group({
-      Email: new FormControl('', [Validators.required,Validators.email]),
-      Password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)))
+      email: new FormControl('', [Validators.required, Validators.email, ValidationService.emailValidator]]),
+      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])
     });
   }
 
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
   //****************************************************
   private login() {
      
-    this._authenticationService.login(this.loginGroup.controls.Email.value, this.loginGroup.controls.Password.value)
+    this._authenticationService.login(this.loginGroup.controls.email.value, this.loginGroup.controls.password.value)
           .subscribe(res => this.onLoginSuccess(res)
           , error =>  this.onError(error));
   }

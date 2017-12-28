@@ -18,6 +18,7 @@ import { PageTitleService } from './services/pagetitle.service';
 import { LoggerService } from './services/logger.service';
 import { HeroService } from './services/hero.service';
 import { MessageService } from './services/message.service';
+import { ValidationService } from './services/validation.service';
 //import { AuthCheck } from './services/authcheck';
 
 //components
@@ -69,7 +70,7 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
     )
   ],
 
-  providers: [HeroService, MessageService, 
+  providers: [HeroService, MessageService, ValidationService,
                   AuthenticationService, ProcessMessageService,
                   PageTitleService, LoggerService],
 
