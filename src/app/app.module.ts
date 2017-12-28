@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
-import { MomentModule } from 'angular2-moment'; 
+import { MomentModule } from 'angular2-moment';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core 
                                                                                          //NgIdleModule but includes keepalive providers for easy wireup
 
@@ -17,8 +17,6 @@ import { PageTitleService } from './services/pagetitle.service';
 import { LoggerService } from './services/logger.service';
 import { HeroService } from './services/hero.service';
 import { MessageService } from './services/message.service';
-// Import the AuthGuard
-import { AuthGuard } from './services/auth.guard';
 //import { AuthCheck } from './services/authcheck';
 
 //components
@@ -53,7 +51,8 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
+    HttpClientModule,    
+    HttpErrorResponse,
     HttpModule,
     MomentModule,
     NgIdleKeepaliveModule.forRoot(),
@@ -65,7 +64,7 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
     )
   ],
 
-  providers: [HeroService, MessageService, AuthGuard,
+  providers: [HeroService, MessageService, 
                   AuthenticationService, ProcessMessageService,
                   PageTitleService, LoggerService],
   bootstrap: [AppComponent]

@@ -1,8 +1,7 @@
 import { Component, ViewChild, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive} from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, Routes, RouterModule, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-
 
 //services
 //import { AuthCheck } from './services/authcheck';
