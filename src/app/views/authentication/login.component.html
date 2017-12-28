@@ -1,7 +1,7 @@
 ﻿
     <div class="container col-md-12">
 
-        <form novalidate  [formGroup]="loginGroup" (ngSubmit)="login(loginGroup)" >
+        <form novalidate (ngSubmit)="login(loginGroup)"   [formGroup]="loginGroup" >
 
             <div class="row">
 
@@ -10,15 +10,12 @@
                     <div class="row">
                         <div class="form-group smalltext textgray">
                             <label for="Email">Email</label>
-                            <input type="email" formControlName="Email"  class="form-control inputtext" maxlength="70" placeholder="Your email address...." required  minlength>                        
+                            <input type="email" formControlName="Email"  class="form-control inputtext" maxlength="70" placeholder="Your email address...." required  minlength >   
+                             <!--<control-messages control="Email" class="text-danger"></control-messages> -->             
                         </div>
                         <div class="text-danger"
                              *ngIf="loginGroup.get('Email').hasError('required') && loginGroup.get('Email').touched">Email is required
-                        </div>
-                        <div class="text-danger"
-                             *ngIf="loginGroup.get('Email').hasError('minlength') && loginGroup.get('Email').touched">Minimum of 2 characters
-                        </div>                  
-                      <!--<control-messages control="Email" class="text-danger"></control-messages>-->
+                        </div>                                                     
                     </div>
 
                     <div class="row">
@@ -27,14 +24,14 @@
                             <input type="password" formControlName="Password"  class="form-control inputtext" maxlength="10" placeholder="Your password..." required>
                             <!--<control-messages control="Password" class="text-danger"></control-messages>-->
                         </div>
-                        <!--<div class="text-danger"
-                             *ngIf="loginGroup.get('Password').hasError('required') && user.get('Password').touched">Pasword is required
-                        </div>-->
+                        <div class="text-danger"
+                             *ngIf="loginGroup.get('Password').hasError('required') && loginGroup.get('Password').touched">Pasword is required
+                        </div>
                     </div>
 
                     <br />
                     <div class="row">
-                        <button class="btn btn-md btn-success btn-block" type="submit" >Login</button>
+                        <button class="btn btn-md btn-success btn-block" type="submit" [disabled]="loginGroup.invalid">Login</button>
                     </div>
                     <br />
 
@@ -58,5 +55,5 @@
 
         </form>
 
-
+      </div>
 
