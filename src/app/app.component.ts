@@ -15,8 +15,7 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
-//import { LoginComponent } from './views/authentication/login.component';
-//import { RegisterComponent } from './views/authentication/register.component';
+
 import { ModalComponent } from './views/controls/modal.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle.component';

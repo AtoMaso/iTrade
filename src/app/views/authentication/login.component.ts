@@ -1,6 +1,6 @@
 ﻿import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { RouteParams, Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
-import { Http, Response, HTTP_PROVIDERS } from '@angular/http';
+import { Router, } from '@angular/router';
+import { Http, Response } from '@angular/http';
 import { FormBuilder, Validators } from '@angular/common';
 
 import { AuthenticationService } from '../../services/authentication.service';
@@ -15,7 +15,7 @@ import { ControlMessages } from '../controls/control-messages.component';
 @Component({
     selector: 'login-view',
     templateUrl: 'app/views/authentication/login.component.html',
-    directives: [ControlMessages, ROUTER_DIRECTIVES]
+    //directives: [ControlMessages, ROUTER_DIRECTIVES]
 })
 
 
@@ -27,7 +27,7 @@ export class LoginComponent {
   //*****************************************************
   // CONSTRUCTOR IMPLEMENTAION
   //*****************************************************
-  constructor(private _routeParams: RouteParams, private _router: Router,
+  constructor( private _router: Router,
                     private _formBuilder: FormBuilder,
                     private _authenticationService: AuthenticationService,
                     private _pmService: ProcessMessageService,

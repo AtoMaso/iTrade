@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -52,7 +52,6 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,    
-    HttpErrorResponse,
     HttpModule,
     MomentModule,
     NgIdleKeepaliveModule.forRoot(),
