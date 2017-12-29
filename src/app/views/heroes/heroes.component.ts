@@ -19,8 +19,8 @@ export class HeroesComponent implements OnInit {
   heroes: Hero[];
 
   constructor(private heroService: HeroService,
-                    private pagetitleService: PageTitleService;
-                    private processMessageService: ProcessMessageService;
+                    private pagetitleService: PageTitleService,
+                    private processMessageService: ProcessMessageService,
                     private messageService: MessageService) { }
 
   ngOnInit() {

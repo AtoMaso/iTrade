@@ -33,8 +33,7 @@ export class RegisterComponent implements OnInit {
                     private authenticationService: AuthenticationService,
                     private processMessageService: ProcessMessageService,
                     private pageTitleService: PageTitleService,
-                    private loggerService: LoggerService) {       
-    }
+                    private loggerService: LoggerService) {  }
 
 
   ngOnInit() {
@@ -44,10 +43,10 @@ export class RegisterComponent implements OnInit {
     this.user.Role = this.route.snapshot.params['role'];
 
     this.registerForm = this.formBuilder.group({
-      name: new FormControl(['', Validators.required, ValidationService.nameValidator]),
-      mail: new FormControl(['', Validators.required, ValidationService.emailValidator, ValidationService.emailDomainValidator]),
-      password: new FormControl(['', Validators.required, ValidationService.passwordValidator]),
-      confirmpassword: new FormControl(['', Validators.required, ValidationService.confirmPasswordValidator])
+          name: new FormControl(['', Validators.required, ValidationService.nameValidator]),
+          email: new FormControl(['', Validators.required, ValidationService.emailValidator, ValidationService.emailDomainValidator]),
+          password: new FormControl(['', Validators.required, ValidationService.passwordValidator]),
+          confirmpassword: new FormControl(['', Validators.required, ValidationService.confirmPasswordValidator])
     });
 
 
@@ -65,7 +64,7 @@ export class RegisterComponent implements OnInit {
 
     if (this.ComparePasswords(this.user)) {
             this.authenticationService.register(this.user)
-                .subscribe(res => this.onSucessRegistering(res)
+                .subscribe(res => this.onSucessRegistering(res)              
                 , (err: Response) => this.onError(err));
         }
     }

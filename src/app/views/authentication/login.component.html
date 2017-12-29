@@ -1,7 +1,6 @@
-﻿
-    <div class="container">
+﻿  <div class="container">
 
-        <form novalidate  [formGroup]="loginGroup" (submit)="login(loginGroup)" >
+        <form novalidate  [formGroup]="loginGroup" (submit)="login()" >
 
             <div class="row">
 
@@ -15,7 +14,7 @@
 
                           <div class="row">
                             <div class="form-group smalltext textgray">
-                              <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address....">
+                              <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
                               <control-messages [control]="loginGroup.controls.email" class="text-danger"></control-messages>
                             </div>
                           </div>
@@ -28,7 +27,7 @@
                  
                           <div class="row">
                             <div class="form-group smalltext textgray">
-                              <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password...">
+                              <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
                               <control-messages [control]="loginGroup.controls.password" class="text-danger"></control-messages>
                             </div>
                           </div>

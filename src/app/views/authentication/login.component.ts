@@ -21,7 +21,7 @@ import { ControlMessages } from '../controls/control-messages.component';
 
 export class LoginComponent implements OnInit {
   private user: ApplicationUser;
-  private loginGroup: FormGroup;
+  private loginGroup: any;
   private isRequesting: boolean;
 
   //*****************************************************
@@ -32,10 +32,7 @@ export class LoginComponent implements OnInit {
                     private authenticationService: AuthenticationService,
                     private processMessageService: ProcessMessageService,
                     private pageTitleService: PageTitleService,
-                    private loggerService: LoggerService) {
-
-  
-  }
+                    private loggerService: LoggerService) {}
 
   ngOnInit() {
 
