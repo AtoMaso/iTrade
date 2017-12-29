@@ -1,39 +1,31 @@
 ﻿
     <div class="container col-md-12">
 
-        <form novalidate (ngSubmit)="login(loginGroup)"   [formGroup]="loginGroup" >
+        <form novalidate    [formGroup]="loginGroup" (submit)="login(loginGroup)" >
 
             <div class="row">
 
                 <div class="col-md-3 col-md-offset-1">      
                                           
                     <div class="row">
-                              <div class="form-group smalltext textgray">
-                                  <label for="Email">Email</label>
-                                  <input type="email" formControlName="email"  #email="ngControl" class="form-control inputtext" maxlength="70" placeholder="Your email address...." required >   
-                                  <control-messages [control]="loginGroup.controls.email"></control-messages>   
-                              </div>
-                              <div class="text-danger"
-                                   *ngIf="loginGroup.get('email').hasError('required') && loginGroup.get('email').touched">Email is required
-                              </div>     
-                              <!--<div [hidden]="email.valid"  class="text-danger">Invalid</div>-->                                                
+                            <div class="form-group smalltext textgray">
+                                <label for="Email">Email</label>
+                                <input type="email" formControlName="email"  id="email" class="form-control inputtext" maxlength="40" placeholder="Your email address....">   
+                                <control-messages [control]="loginGroup.controls.email"></control-messages>   
+                            </div>                                                              
                     </div>
 
                      <div class="row">
-                                <div class="form-group smalltext textgray">
-                                    <label for="Password">Password</label>
-                                    <input type="password" formControlName="password"  #password="ngControl" class="form-control inputtext" maxlength="10" placeholder="Your password..." required>
-                                   <control-messages [control]="loginGroup.controls.password"></control-messages>   
-                                </div>
-                                <div class="text-danger"
-                                     *ngIf="loginGroup.get('password').hasError('required') && loginGroup.get('password').touched">Pasword is required
-                                </div>
-                                <!--<div [hidden]="password.valid" class="text-danger">Invalid</div>-->                       
+                              <div class="form-group smalltext textgray">
+                                  <label for="Password">Password</label>
+                                  <input type="password" formControlName="password"  id ="password" class="form-control inputtext" maxlength="20" placeholder="Your password...">
+                                  <control-messages [control]="loginGroup.controls.password"></control-messages>   
+                              </div>                                              
                     </div>
 
                     <br />
                     <div class="row">
-                        <button class="btn btn-md btn-success btn-block" type="submit" [disabled]="loginGroup.invalid">Login</button>
+                        <button class="btn btn-md btn-success btn-block" type="submit" [disabled]="!loginGroup.valid">Login</button> 
                     </div>
                     <br />
 

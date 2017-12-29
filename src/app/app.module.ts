@@ -2,12 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { MomentModule } from 'angular2-moment';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core 
                                                                                          //NgIdleModule but includes keepalive providers for easy wireup
 
@@ -19,22 +18,23 @@ import { LoggerService } from './services/logger.service';
 import { HeroService } from './services/hero.service';
 import { MessageService } from './services/message.service';
 import { ValidationService } from './services/validation.service';
+import { InMemoryDataService } from './services//in-memory-data.service';
+
 //import { AuthCheck } from './services/authcheck';
 
 //components
 import { LoginComponent } from './views/authentication/login.component';
+import { AppComponent } from './app.component';
+import { HeroesComponent } from './views//heroes/heroes.component';
+import { HeroDetailComponent } from './views/hero-detail/hero-detail.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { HeroSearchComponent } from './views/hero-search/hero-search.component';
+import { MessagesComponent } from './views/messages/messages.component';
+
 import { ControlMessages } from './views/controls/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle.component';
 import { ModalComponent } from './views/controls/modal.component';
-import { AppComponent } from './app.component';
-import { HeroesComponent } from './views//heroes/heroes.component';
-import { HeroDetailComponent } from './views/hero-detail/hero-detail.component';
-import { MessagesComponent } from './views/messages/messages.component';
-import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { InMemoryDataService } from './services//in-memory-data.service';
-import { HeroSearchComponent } from './views/hero-search/hero-search.component';
-
 
 
 @NgModule({
@@ -49,17 +49,17 @@ import { HeroSearchComponent } from './views/hero-search/hero-search.component';
         PageTitleComponent,
         ProcessMessagesComponent,
         ModalComponent,
-        LoginComponent,
+        LoginComponent,        
         ControlMessages
   ],  
 
-  imports: [
+  imports: [    
     BrowserModule,
-    AppRoutingModule,
-    FormsModule,
+    AppRoutingModule,  
     HttpClientModule,    
     HttpModule,
     MomentModule,
+    FormsModule,
     ReactiveFormsModule,
     NgIdleKeepaliveModule.forRoot(),
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests

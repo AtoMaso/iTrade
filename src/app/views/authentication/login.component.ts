@@ -1,4 +1,5 @@
 ﻿import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Router, } from '@angular/router';
 import { Http, Response } from '@angular/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
@@ -9,19 +10,17 @@ import { LoggerService } from '../../services/logger.service';
 import { ProcessMessageService } from '../../services/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle.service';
 
-import { ApplicationUser, Authentication, UserSession, UserIdentity, Role, PageTitle } from '../../helpers/classes';
+import { UserSession, UserIdentity, Role, PageTitle } from '../../helpers/classes';
 import { ControlMessages } from '../controls/control-messages.component';
 
 @Component({
     selector: 'login-view',
     templateUrl: './login.component.html',
-    //directives: [ControlMessages, ROUTER_DIRECTIVES]
 })
 
 
 export class LoginComponent implements OnInit {
-  private account: ApplicationUser = new ApplicationUser();
-  private loginGroup: FormGroup;
+  private loginGroup: any;
   private isRequesting: boolean;
 
   //*****************************************************
@@ -30,19 +29,19 @@ export class LoginComponent implements OnInit {
   constructor( private _router: Router,
                     private _formBuilder: FormBuilder,
                     private _authenticationService: AuthenticationService,
-                    private _pmService: ProcessMessageService,
+                    private _processMessageService: ProcessMessageService,
                     private _pageTitleService: PageTitleService,
                     private _loggerService: LoggerService) {
 
     _pageTitleService.emitPageTitle(new PageTitle("Login"));
-    _pmService.emitRoute("nill");
+    _processMessageService.emitRoute("nill");
     
   }
 
   ngOnInit() {
     this.loginGroup = this._formBuilder.group({
-      email: new FormControl('', [Validators.required, Validators.email, ValidationService.emailValidator]]),
-      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])
+      email: new FormControl('', [Validators.required, ValidationService.emailValidator]]),
+      password: new FormControl('', [Validators.required, ValidationService.passwordValidator]])
     });
   }
 
@@ -51,10 +50,11 @@ export class LoginComponent implements OnInit {
   // GET ACCOUNT
   //****************************************************
   private login() {
-     
-    this._authenticationService.login(this.loginGroup.controls.email.value, this.loginGroup.controls.password.value)
-          .subscribe(res => this.onLoginSuccess(res)
-          , error =>  this.onError(error));
+    if (this.loginGroup.dirty && this.loginGroup.valid) {
+            this._authenticationService.login(this.loginGroup.controls.email.value, this.loginGroup.controls.password.value)
+                  .subscribe(res => this.onLoginSuccess(res)
+                  , error => this.onError(error));
+    }  
   }
 
 
@@ -94,10 +94,10 @@ export class LoginComponent implements OnInit {
         if (data.error) {
               // login user
               message = data.error;
-              this._pmService.emitProcessMessage("PME", message);
+              this._processMessageService.emitProcessMessage("PME", message);
         }
         else {
-                this._pmService.emitProcessMessage("PMG");
+              this._processMessageService.emitProcessMessage("PMG");
         }
       }      
   }

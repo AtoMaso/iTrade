@@ -1,31 +1,33 @@
 <div style="height:100%; width:100%;">
 
   <header class="container">
+
     <div id="menu" class="navbar navbar-default navbar-fixed-top">
-      <div class="navbar-header">
-        <!-- make the navigation to disapear when screen too small with
-        the class nab-vbar-toggle and introducing the 2 new attributes
-        'data-toggle' and 'data-target' targeting the navigation and colapse event
-        -->
-        <div id="logo">
-          <h4><i style="margin-left:20px" class="textgray">iTrade</i></h4>
-        </div>
-        <button class="btn btn-success navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="glyphicon glyphicon-chevron-down"></span>
-        </button>
-      </div>
+          <div class="navbar-header">
+            <!-- make the navigation to disapear when screen too small with
+            the class nab-vbar-toggle and introducing the 2 new attributes
+            'data-toggle' and 'data-target' targeting the navigation and colapse event
+            -->
+            <div id="logo">
+              <h4><i style="margin-left:20px" class="textgray">iTrade</i></h4>
+            </div>
+            <button class="btn btn-success navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+          </div>
       <!-- make the menu hidden when the screen is too small with class "navbar-collapse collapse" -->
       <div id="nav" class="navbar-collapse collapse  navbar-right">
-        <ul class="nav navbar-nav" style="margin-right:20px">
-          <li class="nav"><a href="" routerLink="/dashboard"><span class="textgray"><i>Dashboard</i></span></a></li>
-          <li class="nav"><a href="" routerLink="/heroes"><span class="textgray"><i>Heroes</i></span></a></li>          
-          <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" routerLink="'/users">Users</a></li>-->
-          <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" routerLink="'/admin">Admin</a></li>-->
-          <li class="nav" *ngIf="!_isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>
-          <li class="nav" *ngIf="_isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
-        </ul>
-      </div>
+            <ul class="nav navbar-nav" style="margin-right:20px">
+              <li class="nav"><a href="" routerLink="/dashboard"><span class="textgray"><i>Dashboard</i></span></a></li>
+              <li class="nav"><a href="" routerLink="/heroes"><span class="textgray"><i>Heroes</i></span></a></li>          
+              <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" routerLink="'/users">Users</a></li>-->
+              <!--<li class="nav" *ngIf="_isUserAllowed"><a href="" routerLink="'/admin">Admin</a></li>-->
+              <li class="nav" *ngIf="!_isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>
+              <li class="nav" *ngIf="_isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
+            </ul>
+          </div>
     </div>
+
   </header>
 
 
@@ -41,85 +43,92 @@
     <page-title #pageTitleComponent></page-title>
     <!-- the process message control -->
     <process-messages #messagesComponent></process-messages>
-
+     <!-- the views slot -->
     <section>
       <router-outlet></router-outlet>
     </section>
 
   </main>
 
+
+  <!-- the bottom part of the web site-->
   <br />
   <br />
   <br />
   <div class="backgroundimg">
+
     <div class="row">
-      <div class="smalltextcentred" style="background:transparent; width:75%; margin:0 auto;">
-        <hr class="hrstyle" />
-      </div>
-      <table style="background:transparent; width:75%; margin:auto;">
-        <thead>
-          <tr>
-            <th class="col-md-3 extrasmalltextcentred textgray">Information</th>
-            <th class="col-md-3 extrasmalltextcentred textgray">Help</th>
-            <th class="col-md-3 extrasmalltextcentred textgray">Contact</th>
-            <th class="col-md-3 extrasmalltextcentred textgray">Miscelenius</th>
-          </tr>
-        </thead>
-        <br />
-        <tr class="">
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">About</a>
-          </td>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">Help</a>
-          </td>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['Contact']">Contact</a>
-          </td>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
-          </td>
-        </tr>
-        <tr>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">About</a>
-          </td>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">Help</a>
-          </td>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['Contact']">Contact</a>
-          </td>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
-          </td>
-        </tr>
-        <tr>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">About</a>
-          </td>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">Help</a>
-          </td>
-          <td class="col-md-3 extrasmalltextcentred"></td>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
-          </td>
-        </tr>
-        <tr>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">About</a>
-          </td>
-          <td class="col-md-3 extrasmalltextcentred"></td>
-          <td class="col-md-3 extrasmalltextcentred"></td>
-          <td class="col-md-3 extrasmalltextcentred">
-            <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
-          </td>
-        </tr>
-      </table>
+
+              <div class="smalltextcentred" style="background:transparent; width:75%; margin:0 auto;">
+                <hr class="hrstyle" />
+              </div>
+
+              <table style="background:transparent; width:75%; margin:auto;">
+                <thead>
+                  <tr>
+                    <th class="col-md-3 extrasmalltextcentred textgray">Information</th>
+                    <th class="col-md-3 extrasmalltextcentred textgray">Help</th>
+                    <th class="col-md-3 extrasmalltextcentred textgray">Contact</th>
+                    <th class="col-md-3 extrasmalltextcentred textgray">Miscelenius</th>
+                  </tr>
+                </thead>
+                <br />
+                <tr class="">
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">About</a>
+                  </td>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">Help</a>
+                  </td>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['Contact']">Contact</a>
+                  </td>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">About</a>
+                  </td>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">Help</a>
+                  </td>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['Contact']">Contact</a>
+                  </td>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">About</a>
+                  </td>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">Help</a>
+                  </td>
+                  <td class="col-md-3 extrasmalltextcentred"></td>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">About</a>
+                  </td>
+                  <td class="col-md-3 extrasmalltextcentred"></td>
+                  <td class="col-md-3 extrasmalltextcentred"></td>
+                  <td class="col-md-3 extrasmalltextcentred">
+                    <a class="textgray" href="" [routerLink]="['About']">Miscelenius</a>
+                  </td>
+                </tr>
+              </table>
+
     </div>
 
     <br />
+
     <div class="row">
       <div class="extrasmalltextcentred" style="background:transparent; width:75%; margin:0 auto;">
         <hr class="hrstyle" />
