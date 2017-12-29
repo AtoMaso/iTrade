@@ -3,17 +3,13 @@
 }
 
 input {
-     background-color:#656565;
-     color:white;
+     background-color:wheat;
+     color:black;
+     height:auto;
 }
 
 .linkcolor {
     color:lightseagreen;
-}
-
-.inputtext {
-     background-color:#656565;
-     color:white;
 }
 
 /*text styles*/

@@ -7,17 +7,12 @@ import { ValidationService } from '../../services/validation.service';
   template: `<div *ngIf="errorMessage !== null" class='text-denger'>{{errorMessage}}</div>`
 })
 
-export class ControlMessages implements OnInit {
+export class ControlMessages  {
 
-  errorMessage: string;
+  //errorMessage: string;
   @Input() control: FormControl;
 
   constructor() { }
-
-  ngOnInit() {
-    //this.errorMessage = this.geterrorMessage();
-  }
-
 
   get errorMessage() {
     for (let propertyName in this.control.errors) {

@@ -1,53 +1,65 @@
 ﻿
-    <div class="container panel-body">
+    <div class="container">
 
-        <form     [formGroup]="loginGroup" (submit)="login(loginGroup)" >
+        <form novalidate  [formGroup]="loginGroup" (submit)="login(loginGroup)" >
 
             <div class="row">
 
-                <div class="col-md-3 col-md-offset-1">      
-                                          
-                    <div class="row">
+                  <div class="col-md-3 col-md-offset-1">
+
+                          <div class="row">
                             <div class="form-group smalltext textgray">
-                                <label for="Email">Email</label>
-                                <input type="email" formControlName="email"  id="email" class="form-control inputtext" maxlength="40" placeholder="Your email address....">   
-                                <control-messages [control]="loginGroup.controls.email" class="text-danger"></control-messages>   
-                            </div>                                                              
-                    </div>
+                              <label for="Email">Username - Email</label>
+                              </div>
+                          </div>
 
-                     <div class="row">
-                              <div class="form-group smalltext textgray">
-                                  <label for="Password">Password</label>
-                                  <input type="password" formControlName="password"  id ="password" class="form-control inputtext" maxlength="20" placeholder="Your password...">
-                                  <control-messages [control]="loginGroup.controls.password" class="text-danger"></control-messages>   
-                              </div>                                              
-                    </div>
-                   
-                    <div class="row" style="margin-top:20px;">
-                        <button class="btn btn-md btn-success btn-block" type="submit" [disabled]="!loginGroup.valid">Login</button> 
-                    </div>
-                    <br />
+                          <div class="row">
+                            <div class="form-group smalltext textgray">
+                              <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address....">
+                              <control-messages [control]="loginGroup.controls.email" class="text-danger"></control-messages>
+                            </div>
+                          </div>
 
-                </div>
+                          <div class="row">
+                            <div class="form-group smalltext textgray">
+                              <label for="Password">Password</label>
+                            </div>
+                          </div>
+                 
+                          <div class="row">
+                            <div class="form-group smalltext textgray">
+                              <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password...">
+                              <control-messages [control]="loginGroup.controls.password" class="text-danger"></control-messages>
+                            </div>
+                          </div>
 
-                <div class="col-md-6 col-md-offset-1">
-                    <br />
-                    <div class="row panel panel-heading panel-info textgray">
-                        <p><strong>Help</strong></p>                    
-                        Please provide your credentials to login into the application. Use the coresponding links bellow
-                        to get your forgotten application password or to register yourself.                    
-                    </div>
+                          <div class="row" style="margin-top:20px;">
+                            <button class="btn-warning" type="submit" [disabled]="!loginGroup.valid">Login</button>
+                          </div>
 
-                    <br />
-                    <div class="row">
-                        <!--TODO sending the passowrd functionality-->
-                        <a href="" class="extrasmalltextbold text-success" style="text-decoration:underline">Forgot your password.</a> &nbsp;&nbsp;&nbsp;&nbsp;                     
-                        <a href="" class="extrasmalltextbold text-success" style="text-decoration:underline" [routerLink]="['Register', {role:'Author'}]">Register</a>
-                    </div>
-                </div>
-            </div>
+                      </div>
 
-        </form>
 
-      </div>
+                  <div class="col-md-6 col-md-ofsset-1">
+
+                          <div class="row panel panel-body textgray" style="margin-top:20px;">
+                            <p><strong>Help</strong></p>
+                            Please provide your credentials to login into the application. Use the coresponding links bellow
+                            to get your forgotten application password or to register yourself.
+
+                          </div>
+
+                        <div class="row" style="margin-top:20px;">
+                          <!--<span style="color:red">TODO sending the passoword functionality</span>-->
+                          <a href="" class="smalltext text-success" style="text-decoration:underline">Forgot your password.</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                          <a href="" class="smalltext text-success" style="text-decoration:underline" [routerLink]="['Register', {role:'Author'}]">Register</a>
+                        </div>
+
+                  </div>
+
+           </div>
+
+    </form>
+
+</div>
 
