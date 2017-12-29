@@ -44,9 +44,9 @@ export class AuthenticationService implements OnDestroy {
   //******************************************************
   // Login/Get token
   //******************************************************
-  public login(UserName: string, Password: string) {
+  public login(user: ApplicationUser) {
 
-    var data = "grant_type=password&username=" + UserName + "&password=" + Password;
+    var data = "grant_type=password&username=" + user.Email + "&password=" + user.Password;
       let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' })    
 
       return this._http.post(serviceBase + "Token", data, { headers: headers })       

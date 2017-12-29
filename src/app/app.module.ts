@@ -30,6 +30,7 @@ import { HeroDetailComponent } from './views/hero-detail/hero-detail.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { HeroSearchComponent } from './views/hero-search/hero-search.component';
 import { MessagesComponent } from './views/messages/messages.component';
+import { RegisterComponent } from './views/authentication/register.component';
 
 import { ControlMessages } from './views/controls/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
@@ -49,7 +50,8 @@ import { ModalComponent } from './views/controls/modal.component';
         PageTitleComponent,
         ProcessMessagesComponent,
         ModalComponent,
-        LoginComponent,        
+        LoginComponent,     
+        RegisterComponent,   
         ControlMessages
   ],  
 

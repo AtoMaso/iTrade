@@ -34,10 +34,11 @@
                           </div>
 
                           <div class="row" style="margin-top:20px;">
-                            <button class="btn-warning" type="submit" [disabled]="!loginGroup.valid">Login</button>
+                            <button class="btn-success" type="submit" [disabled]="!loginGroup.valid">Login</button>
                           </div>
 
                       </div>
+
 
 
                   <div class="col-md-6 col-md-ofsset-1">
@@ -52,7 +53,7 @@
                         <div class="row" style="margin-top:20px;">
                           <!--<span style="color:red">TODO sending the passoword functionality</span>-->
                           <a href="" class="smalltext text-success" style="text-decoration:underline">Forgot your password.</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                          <a href="" class="smalltext text-success" style="text-decoration:underline" [routerLink]="['Register', {role:'Author'}]">Register</a>
+                          <a href="" class="smalltext text-success" style="text-decoration:underline" [routerLink]="['/register', {role:'Member'}]">Register</a>
                         </div>
 
                   </div>

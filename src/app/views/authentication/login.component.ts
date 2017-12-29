@@ -10,7 +10,7 @@ import { LoggerService } from '../../services/logger.service';
 import { ProcessMessageService } from '../../services/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle.service';
 
-import { UserSession, UserIdentity, Role, PageTitle } from '../../helpers/classes';
+import { ApplicationUser, UserSession, UserIdentity, Role, PageTitle } from '../../helpers/classes';
 import { ControlMessages } from '../controls/control-messages.component';
 
 @Component({
@@ -20,26 +20,29 @@ import { ControlMessages } from '../controls/control-messages.component';
 
 
 export class LoginComponent implements OnInit {
-  private loginGroup: any;
+  private user: ApplicationUser;
+  private loginGroup: FormGroup;
   private isRequesting: boolean;
 
   //*****************************************************
   // CONSTRUCTOR IMPLEMENTAION
   //*****************************************************
-  constructor( private _router: Router,
-                    private _formBuilder: FormBuilder,
-                    private _authenticationService: AuthenticationService,
-                    private _processMessageService: ProcessMessageService,
-                    private _pageTitleService: PageTitleService,
-                    private _loggerService: LoggerService) {
+  constructor( private router: Router,
+                    private formBuilder: FormBuilder,
+                    private authenticationService: AuthenticationService,
+                    private processMessageService: ProcessMessageService,
+                    private pageTitleService: PageTitleService,
+                    private loggerService: LoggerService) {
 
-    _pageTitleService.emitPageTitle(new PageTitle("Login"));
-    _processMessageService.emitRoute("nill");
-    
+  
   }
 
   ngOnInit() {
-    this.loginGroup = this._formBuilder.group({
+
+    this.pageTitleService.emitPageTitle(new PageTitle("Login"));
+    this.processMessageService.emitRoute("nill");
+
+    this.loginGroup = this.formBuilder.group({
       email: new FormControl('', [Validators.required, ValidationService.emailValidator]),
       password: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
     });
@@ -50,13 +53,15 @@ export class LoginComponent implements OnInit {
   // GET ACCOUNT
   //****************************************************
   private login() {
+    this.user.Email = this.loginGroup.controls.email.value;
+    this.user.Password = this.loginGroup.controls.password.value;
+
     if (this.loginGroup.dirty && this.loginGroup.valid) {
-            this._authenticationService.login(this.loginGroup.controls.email.value, this.loginGroup.controls.password.value)
+      this.authenticationService.login(this.user)
                   .subscribe(res => this.onLoginSuccess(res)
                   , error => this.onError(error));
     }  
   }
-
 
 
   //****************************************************
@@ -64,14 +69,14 @@ export class LoginComponent implements OnInit {
   //****************************************************
   private onLoginSuccess(res:any) {    
       if (sessionStorage["UserSession"] != "null") {               
-          this._router.navigate(['Home']);
+          this.router.navigate(['Home']);
           this.emitUserSession(res);
       }    
   }
 
   // get the next session from the session observable
   private emitUserSession(res:any) {
-        this._authenticationService.emitUserSession(this._authenticationService.getUserSession());
+        this.authenticationService.emitUserSession(this.authenticationService.getUserSession());
   }
 
 
@@ -86,7 +91,7 @@ export class LoginComponent implements OnInit {
       this.isRequesting = false;
       // we will log the error in the server side by calling the logger, or that is already 
       // done on the server side if the error has been caught
-      this._loggerService.logErrors(err, "login");
+      this.loggerService.logErrors(err, "login");
 
       // we will display a fiendly process message using the process message service        
       if (err.status !== 200 || err.status !== 300) {
@@ -94,10 +99,10 @@ export class LoginComponent implements OnInit {
         if (data.error) {
               // login user
               message = data.error;
-              this._processMessageService.emitProcessMessage("PME", message);
+              this.processMessageService.emitProcessMessage("PME", message);
         }
         else {
-              this._processMessageService.emitProcessMessage("PMG");
+              this.processMessageService.emitProcessMessage("PMG");
         }
       }      
   }
