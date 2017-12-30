@@ -13,11 +13,16 @@ import { PageTitle } from '../../helpers/classes';
 
 export class HomeComponent {
 
-      constructor(private _pmService: ProcessMessageService,
-                       private _pageTitleService: PageTitleService) {
+       private pagetitle: PageTitle;
+
+       constructor(private messagesService: ProcessMessageService,
+                       private titleService: PageTitleService) {
       
-                      _pageTitleService.emitPageTitle(new PageTitle("Members Home"));
-                      _pmService.emitRoute("nill");
+        this.pagetitle = new PageTitle();
+        this.pagetitle.title = "Register";
+         this.titleService.emitPageTitle(this.pagetitle);
+
+        messagesService.emitRoute("nill");
       }
 }
 

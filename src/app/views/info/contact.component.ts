@@ -13,11 +13,16 @@ import { PageTitle } from '../../helpers/classes';
 
 export class ContactComponent {
 
-  constructor(private _pmService: ProcessMessageService,
-                   private _pageTitleService: PageTitleService) {
+  private pagetitle: PageTitle;
 
-    this._pageTitleService.emitPageTitle(new PageTitle("Contact Us Page"));
-    this._pmService.emitRoute("nill");
+  constructor(private messagesService: ProcessMessageService,
+                   private titleService: PageTitleService) {
+
+    this.pagetitle = new PageTitle();
+    this.pagetitle.title = "Contact";
+    this.titleService.emitPageTitle(this.pagetitle);
+
+    this.messagesService.emitRoute("nill");
 
   }
 

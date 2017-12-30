@@ -15,22 +15,18 @@ import { AuthenticationService } from './services/authentication.service';
 import { ProcessMessageService } from './services/processmessage.service';
 import { PageTitleService } from './services/pagetitle.service';
 import { LoggerService } from './services/logger.service';
-import { HeroService } from './services/hero.service';
+import { TradeService } from './services/trade.service';
 import { MessageService } from './services/message.service';
 import { ValidationService } from './services/validation.service';
 import { InMemoryDataService } from './services//in-memory-data.service';
 //import { AuthCheck } from './services/authcheck';
 
 //components
+import { AppComponent } from './app.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { LoginComponent } from './views/authentication/login.component';
 import { RegisterComponent } from './views/authentication/register.component';
-import { AppComponent } from './app.component';
-import { HeroesComponent } from './views//heroes/heroes.component';
-import { HeroDetailComponent } from './views/hero-detail/hero-detail.component';
-import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { HeroSearchComponent } from './views/hero-search/hero-search.component';
 import { MessagesComponent } from './views/messages/messages.component';
-
 import { ControlMessages } from './views/controls/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle.component';
@@ -40,18 +36,15 @@ import { ModalComponent } from './views/controls/modal.component';
 @NgModule({
 
   declarations: [
-        AppComponent,
-        HeroesComponent,
-        HeroDetailComponent,
-        MessagesComponent,
-        DashboardComponent,
-        HeroSearchComponent,
-        PageTitleComponent,
-        ProcessMessagesComponent,
-        ModalComponent,
-        LoginComponent,     
-        RegisterComponent,   
-        ControlMessages
+    AppComponent,         
+    DashboardComponent,        
+    LoginComponent,     
+    RegisterComponent,   
+    MessagesComponent,
+    ControlMessages,   
+    ProcessMessagesComponent,
+    PageTitleComponent,
+    ModalComponent
   ],  
 
   imports: [    
@@ -71,7 +64,7 @@ import { ModalComponent } from './views/controls/modal.component';
     )
   ],
 
-  providers: [HeroService, MessageService, ValidationService,
+  providers: [TradeService, MessageService, ValidationService,
                   AuthenticationService, ProcessMessageService,
                   PageTitleService, LoggerService],
 

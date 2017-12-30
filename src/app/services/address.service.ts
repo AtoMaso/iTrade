@@ -5,36 +5,35 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
 import { LoggerService } from './logger.service';
+import { Address } from '../helpers/classes';
 
-import { Locality } from '../helpers/classes';
-
-let localitiesUrl = CONFIG.baseUrls.localities;
+let addressesUrl = CONFIG.baseUrls.addresses;
 
 
-@Injectable()export class LocationService {
+@Injectable()export class AddressService {
 
     private localUrl: string;
 
-    constructor(private _http: Http, private _loggerService:LoggerService) { };
+    constructor(private httpService: Http, private loggerService:LoggerService) { };
 
 
     //******************************************************
     // GET LOCATION
     //******************************************************
-    public getLocalities(id?: number):Observable<Locality[]> {
-        return this._http.get(localitiesUrl)
+    public getAddresses(id?: number):Observable<Address[]> {
+        return this.httpService.get(addressesUrl)
             .map((res: Response) => res.json())
-            .catch((error:Response) => this.onError(error, "GetLocalities"));
+            .catch((error:Response) => this.onError(error, "GetAddresses"));
     }
 
 
     //******************************************************
-    // GET LOCALITY
+    // GET Address
     //******************************************************
-    public getLocality(id:number):Observable<Locality> {
-        return this._http.get(`${localitiesUrl}/${id}`)
-            .map((res: Response) => <Locality>res.json()) 
-            .catch((error:Response) => this.onError(error, "GetLocality"));
+    public getAddress(id:number):Observable<Address> {
+        return this.httpService.get(`${addressesUrl}/${id}`)
+            .map((res: Response) => <Address>res.json()) 
+            .catch((error:Response) => this.onError(error, "GetAddress"));
     }
 
 
@@ -57,7 +56,7 @@ let localitiesUrl = CONFIG.baseUrls.localities;
     // PRIVATE METHODS
     //******************************************************  
     private onError(err: any, method: string) {
-      this._loggerService.logErrors(err, "location.service had an error in the method " + method);
+      this.loggerService.logErrors(err, "location.service had an error in the method " + method);
       return Observable.throw(err);   
     }
 }

@@ -6,9 +6,6 @@
 } from './interfaces';
 
 
-
-
-
 class Trader implements TraderInterface {
   TraderId: string;
   Name: string;
@@ -20,6 +17,7 @@ class Trader implements TraderInterface {
 class Trade implements TradeInterface {
   TradeId: number;
   TraderId: number;
+  TraderName: string;
   Title: string;
   Flash: string;
   Content: string;
@@ -56,7 +54,6 @@ class Image implements ImageInterface {
   url: string;
 }
 
-
 class Category implements CategoryInterface {
   CategoryId: number;
   CategoryType: string;
@@ -88,8 +85,8 @@ class UserIdentity implements UserIdentityInterface {
   name: string;
   userId: string;
   roles: string[];
+  //isInRole(rolename: string): boolean
 }
-
 
 class ProcessMessage implements ProcessMessageInterface {
   id: string;
@@ -109,7 +106,6 @@ class Attachement implements AttachementInterface {
   Name: string;
 }
 
-
 class Guid {
   static newGuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -118,7 +114,6 @@ class Guid {
     });
   }
 }
-
 
 
 export {

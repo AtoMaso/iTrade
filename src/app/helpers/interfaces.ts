@@ -10,6 +10,7 @@ interface TraderInterface {
 interface TradeInterface {
   TradeId: number;
   TraderId: number;
+  TraderName: string;
   Title: string;
   Flash: string;
   Content: string;
@@ -79,7 +80,7 @@ interface UserIdentityInterface {
     name: string;
     userId: string;
     roles: string[];
-    isInRole(rolename: string):boolean;
+  //isInRole(rolename: string): boolean;
 }
 
 

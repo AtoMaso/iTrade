@@ -6,20 +6,20 @@ import { Observer } from 'rxjs/Observer';
 
 import { LoggerService } from './logger.service';
 import { AuthenticationService } from './authentication.service';
-import { ApplicationUser, UserSession} from '../helpers/classes';
+import { Trader, UserSession} from '../helpers/classes';
 
-let usersUrl = CONFIG.baseUrls.users;
-let userUrl = CONFIG.baseUrls.user;
-let updateUserUrl = CONFIG.baseUrls.updateuser;
-let addUserUrl = CONFIG.baseUrls.adduser;
-let removeUserUrl = CONFIG.baseUrls.removeuser;
+let tradersUrl = CONFIG.baseUrls.traders;
+let traderUrl = CONFIG.baseUrls.trader;
+let updateTraderUrl = CONFIG.baseUrls.updatetrader;
+let addTraderUrl = CONFIG.baseUrls.addtrader;
+let removeTraderUrl = CONFIG.baseUrls.removetrader;
 
 @Injectable()
 export class UserService {
     private localUrl: string;
     private session: UserSession;
 
-    constructor(private _http: Http, private _loggerService: LoggerService, private _authenticationService:AuthenticationService) {
+    constructor(private httpService: Http, private loggerService: LoggerService, private authenticationService:AuthenticationService) {
 
         if (sessionStorage["UserSession"] != "null") {
             this.session = JSON.parse(sessionStorage["UserSession"]);
@@ -29,48 +29,48 @@ export class UserService {
     //******************************************************
     // GET USERS
     //******************************************************
-    public getUsers(id?: number): any {
+    public getTraders(id?: number): any {
         let localUrl: string;
-        if (id != undefined) { localUrl = `${usersUrl}?teamid=${id}`}
-        else { localUrl = usersUrl; }
+        if (id != undefined) { localUrl = `${traderUrl}?TraderId=${id}`}
+        else { localUrl = traderUrl; }
 
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');      
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-        return this._http.get(localUrl, { headers: headers })           
+      return this.httpService.get(localUrl, { headers: headers })           
             .map((res: Response) => res.json())  
-            .catch((err: Response) => this.logError(err, "GetUsers"));
+            .catch((err: Response) => this.logError(err, "GetTraders"));
     }
 
     // page of members
-    public getPageOfUsers(page: number, perpage: number) {
+    public getPageOfTraders(page: number, perpage: number) {
 
-        let localUrl = usersUrl + "?page=" + page + "&perpage=" + perpage;
+        let localUrl = tradersUrl + "?page=" + page + "&perpage=" + perpage;
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');   
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-        return this._http.get(localUrl, {headers: headers})          
+      return this.httpService.get(localUrl, {headers: headers})          
             .map((res: Response) => res.json())   
-            .catch((err: Response) => this.logError(err, "GetUsers"));
+            .catch((err: Response) => this.logError(err, "GetTraders"));
     }
 
 
     //******************************************************
     // GET USER
     //******************************************************
-    public getUser(id: string): any {
+    public getTrader(id: string): any {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-        return this._http.get(`${userUrl}?id=${id}`, { headers: headers })            
+      return this.httpService.get(`${traderUrl}?TraderId=${id}`, { headers: headers })            
             .map((res: Response) => res.json())  
-            .catch((err: Response) => this.logError(err, "GetUser"));
+            .catch((err: Response) => this.logError(err, "GetTrader"));
     }
 
 
@@ -84,33 +84,33 @@ export class UserService {
     //******************************************************
     // ADD USER
     //******************************************************
-    public addUser(user: ApplicationUser): any {
+    public addTrader(trader: Trader): any {
 
-        let body = JSON.stringify(user);
+      let body = JSON.stringify(trader);
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-        return this._http.post(addUserUrl, body, { headers: headers })                  
+        return this.httpService.post(addTraderUrl, body, { headers: headers })                  
                   .map((res: Response) => res.json())
-                  .catch((err: Response) => this.logError(err, "AddUser"));
+                  .catch((err: Response) => this.logError(err, "AddTrader"));
     }
 
 
     //******************************************************
     // REMOVE USER
     //******************************************************
-    public removeUser(userId: string) {
-      let localUrl = removeUserUrl + "?id=" + userId;
+    public removeTrader(traderId: string) {
+      let localUrl = removeTraderUrl + "?TraderId=" + traderId;
       let headers = new Headers();
       headers.append('Accept', 'application/json');
       headers.append('Content-Type', 'application/json');
       headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-      return this._http.delete(localUrl, { headers: headers })         
+      return this.httpService.delete(localUrl, { headers: headers })         
               .map((res: Response) => res.json())
-              .catch(( error:Response) => this.logError(error, "RemoveUser"));
+              .catch(( error:Response) => this.logError(error, "RemoveTrader"));
     }
 
 
@@ -118,7 +118,7 @@ export class UserService {
     // PRIVATE METHODS
     //******************************************************
     private logError(err: any, method:string) {
-      this._loggerService.logErrors(err, "user.service had an error in the method " + method);   
+      this.loggerService.logErrors(err, "user.service had an error in the method " + method);   
       return Observable.throw(err);
     }
 

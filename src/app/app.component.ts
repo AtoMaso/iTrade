@@ -12,12 +12,9 @@ import { ProcessMessageService } from './services/processmessage.service';
 import { PageTitleService } from './services/pagetitle.service';
 
 //components
-//import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 import { ModalComponent } from './views/controls/modal.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle.component';
-
 import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } from './helpers/classes';
 
 
@@ -116,7 +113,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
 
   private IsAllowed() {
-    if (this._isUserAuthenticated && this._userSession.userIdentity.isInRole("Admin")) {
+    if (this._isUserAuthenticated ) { // && this._userSession.userIdentity.isInRole("Admin")) {
       this._isUserAllowed = true;
     }
   }

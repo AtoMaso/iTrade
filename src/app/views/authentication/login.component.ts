@@ -10,7 +10,7 @@ import { LoggerService } from '../../services/logger.service';
 import { ProcessMessageService } from '../../services/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle.service';
 
-import { ApplicationUser, UserSession, UserIdentity, Role, PageTitle } from '../../helpers/classes';
+import { Trader, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
 import { ControlMessages } from '../controls/control-messages.component';
 
 @Component({
@@ -20,24 +20,26 @@ import { ControlMessages } from '../controls/control-messages.component';
 
 
 export class LoginComponent implements OnInit {
-  private user: ApplicationUser;
+  private trader: Trader;
   private loginGroup: any;
   private isRequesting: boolean;
-
+  private pagetitle: PageTitle;
   //*****************************************************
   // CONSTRUCTOR IMPLEMENTAION
   //*****************************************************
   constructor( private router: Router,
                     private formBuilder: FormBuilder,
                     private authenticationService: AuthenticationService,
-                    private processMessageService: ProcessMessageService,
-                    private pageTitleService: PageTitleService,
+                    private messageService: ProcessMessageService,
+                    private titleService: PageTitleService,
                     private loggerService: LoggerService) {}
 
   ngOnInit() {
-
-    this.pageTitleService.emitPageTitle(new PageTitle("Login"));
-    this.processMessageService.emitRoute("nill");
+   
+    this.pagetitle = new PageTitle();
+    this.pagetitle.title = "Login";
+    this.titleService.emitPageTitle(this.pagetitle);
+    this.messageService.emitRoute("nill");
 
     this.loginGroup = this.formBuilder.group({
       email: new FormControl('', [Validators.required, ValidationService.emailValidator]),
@@ -50,11 +52,11 @@ export class LoginComponent implements OnInit {
   // GET ACCOUNT
   //****************************************************
   private login() {
-    this.user.Email = this.loginGroup.controls.email.value;
-    this.user.Password = this.loginGroup.controls.password.value;
+    this.trader.Email = this.loginGroup.controls.email.value;
+    this.trader.Password = this.loginGroup.controls.password.value;
 
     if (this.loginGroup.dirty && this.loginGroup.valid) {
-      this.authenticationService.login(this.user)
+      this.authenticationService.login(this.trader)
                   .subscribe(res => this.onLoginSuccess(res)
                   , error => this.onError(error));
     }  
@@ -96,10 +98,10 @@ export class LoginComponent implements OnInit {
         if (data.error) {
               // login user
               message = data.error;
-              this.processMessageService.emitProcessMessage("PME", message);
+              this.messageService.emitProcessMessage("PME", message);
         }
         else {
-              this.processMessageService.emitProcessMessage("PMG");
+              this.messageService.emitProcessMessage("PMG");
         }
       }      
   }
