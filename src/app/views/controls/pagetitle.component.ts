@@ -3,10 +3,9 @@ import { PageTitle } from '../../helpers/classes';
 
 @Component({
   selector: 'page-title',
-  template: ` <div class="navbar-default">
-
-                      <h4 style="margin-left:10px; color:grey;"><i>{{ pageTitle }} {{ pageValue }} </i></h4>
-                    </div>`
+  template: ` <div class="navbar-default container">
+                      <h4 style="margin-left:10px; color:grey;"><i>{{ pageTitle }} {{ pageValue }} </i></h4>                    
+                   </div>`
 })
 
 export class PageTitleComponent {

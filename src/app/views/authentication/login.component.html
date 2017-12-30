@@ -1,61 +1,55 @@
-﻿  <div class="container">
+﻿
+  <div class="navbar-default container" style="padding-bottom:30px;padding-top:30px;" >
 
-        <form  [formGroup]="loginGroup" (submit)="login()" >
+        <form  [formGroup]="loginGroup" (submit)="login()"  class="form-horizontal">
 
             <div class="row">
 
-                  <div class="col-md-3 col-md-offset-1">
-
-                          <div class="row">
-                            <div class="form-group smalltext textgray">
-                              <label for="Email">Username - Email</label>
-                              </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="form-group smalltext textgray">
+                     <div class="col-md-4 col-md-offset-1">
+                       
+                           <div class="row smalltext textgray">
+                              <label for="Email">Email</label>
+                           </div>
+                                                    
+                            <div class="row form-group smalltext textgray">
                               <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
                               <control-messages [control]="loginGroup.controls.email" class="text-danger"></control-messages>
-                            </div>
-                          </div>
+                            </div>                         
 
-                          <div class="row">
-                            <div class="form-group smalltext textgray">
+                         
+                           <div class="row smalltext textgray">
                               <label for="Password">Password</label>
-                            </div>
-                          </div>
-                 
-                          <div class="row">
-                            <div class="form-group smalltext textgray">
+                           </div>                         
+                                           
+                           <div class="row form-group smalltext textgray">
                               <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
                               <control-messages [control]="loginGroup.controls.password" class="text-danger"></control-messages>
-                            </div>
-                          </div>
+                           </div>                         
 
-                          <div class="row" style="margin-top:20px;">
-                            <button class="btn-success" type="submit" [disabled]="!loginGroup.valid">Login</button>
+                          <div class="row form-group" style="margin-top:40px;">
+                              <button class="btn-success" type="submit" [disabled]="!loginGroup.valid">Login</button>
                           </div>
 
                       </div>
 
 
 
-                  <div class="col-md-4 col-md-ofsset-1">
+                    <div class="col-md-5 col-md-offset-1">
 
-                          <div class="row panel panel-body textgray" style="margin-top:20px;">
-                            <p><strong>Help</strong></p>
-                            Please provide your credentials to login into the application. Use the coresponding links bellow
-                            to get your forgotten application password or to register yourself.
+                            <div class="row panel panel-heading textgray">
+                              <p><strong>Help</strong></p>
+                              Please provide your credentials to login into the application. Use the coresponding links bellow
+                              to get your forgotten application password or to register yourself.
 
+                            </div>
+
+                          <div class="row" style="margin-top:20px;">
+                            <!--<span style="color:red">TODO sending the passoword functionality</span>-->
+                            <a href="" class="smalltext text-success" style="text-decoration:underline">Forgot your password.</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="" class="smalltext text-success" style="text-decoration:underline" [routerLink]="['/register', {role:'Member'}]">Register</a>
                           </div>
 
-                        <div class="row" style="margin-top:20px;">
-                          <!--<span style="color:red">TODO sending the passoword functionality</span>-->
-                          <a href="" class="smalltext text-success" style="text-decoration:underline">Forgot your password.</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                          <a href="" class="smalltext text-success" style="text-decoration:underline" [routerLink]="['/register', {role:'Member'}]">Register</a>
-                        </div>
-
-                  </div>
+                    </div>
 
            </div>
 

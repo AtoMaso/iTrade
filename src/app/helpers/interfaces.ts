@@ -1,49 +1,26 @@
 ﻿
-
-interface HeroInterface {
-  id: number;
-  name: string;
-
+interface TraderInterface {
+  TraderId: string;
+  Name: string;
+  Email: string;
+  Password: string;
+  ConfirmPassword: string;
 }
 
-interface ArticleInterface{
-    //Id: number;
-    ArticleId: string;
-    Title: string;
-    Flash: string;
-    Content: string;
-    DatePublished: Date;
-    CategoryName: string;
-    ContentText: string;
-    AuthorId: string;
-    AuthorName: string;
+interface TradeInterface {
+  TradeId: number;
+  TraderId: number;
+  Title: string;
+  Flash: string;
+  Content: string;
+  DatePublished: Date;
+  CategoryType: string;
+  ContentText: string;
 }
 
-
-interface TeamInterface {
-  TeamId: number;
-  TeamName: string;
-  TeamDescription: string;
-  TeamLeadId: string;
-  TeamLead: string;
-  ProjectDirectorId: string;
-  ProjectDirector: string;
-  ProjectManagerId: string;
-  ProjectManager: string;
-  BusinessLineId: number;
-  BusinessLineName: string;
-  LocalityId: number;
-  LocalityNumber: number;
-  LocalityStreet: string;
-  LocalitySuburb: string;
-  LocalityCity: string;
-  LocalityPostcode: number;
-  LocalityState: string;
-}
-
-
-interface LocalityInterface {
-  LocalityId: number;
+interface AddressInterface {
+  AddressId: number;
+  TraderId: number; 
   Number: number;
   Street: string;
   Suburb: string;
@@ -52,56 +29,33 @@ interface LocalityInterface {
   State: string;
 }
 
+interface PhoneInterface {
+  PhoneId: number;
+  TraderId: number;
+  CountryCode: string;
+  CityCode: string;
+  Home: string;
+  Business: string;
+  Mobile: string;
+}
+
+
+interface ImageInterface {
+  ImageId: number;
+  TradeId: number;
+  title: string;
+  url: string;
+}
+
+
 interface CategoryInterface {
-    CategoryId: number;
-    CategoryName: string;
+  CategoryId: number;
+  CategoryType: string;
 }
 
 interface ContentInterface {
     ContentId: number;
     ContentText: string;
-}
-
-interface BusinessLineInterface {
-    BusinessLineId: number;
-    BusinessLineName: string;
-}
-
-interface LevelInterface {
-    LevelId: number;
-    LevelTitle: string;
-}
-
-interface PositionInterface {
-    PositionId: number;
-    PositionTitle: string;
-}
-
-
-interface ApplicationUserInterface {
-  Id: string;
-  Name: string;
-  AtoUsername: string;
-  Email: string;
-  Role: string;
-  Password: string;
-  ConfirmPassword: string;
-  PhoneNumber: string;
-  Workpoint: string;
-  Manager: string;
-  LevelId: number;
-  LevelTitle: string;
-  PositionId: number;
-  PositionTitle: string
-  LocalityId: number;
-  LocalityNumber: number;
-  LocalityStreet: string;
-  LocalitySuburb: string;
-  LocalityCity: string;
-  LocalityPostcode: number;
-  LocalityState: string;
-  TeamId: number;
-  TeamName: string;
 }
 
 interface UserSessionInterface {
@@ -128,16 +82,6 @@ interface UserIdentityInterface {
     isInRole(rolename: string):boolean;
 }
 
-interface RoleInterface {
-    roleName: string;
-    roleId: number;
-}
-
-
- interface ImageInterface {
-  title: string;
-  url: string;
-}
 
  interface ProcessMessageInterface {
   id: string;
@@ -150,7 +94,6 @@ interface RoleInterface {
   value: string;
 }
 
-
  interface AttachementInterface {
    AttachementId: number;
    ArticleId: string;
@@ -158,18 +101,8 @@ interface RoleInterface {
    Name: string;
  }
 
-
- interface TeamMemberInterface {
-   teamid: number;
-   id: string;
- }
-
-
-export { ArticleInterface, LocalityInterface, HeroInterface,
-          TeamInterface, CategoryInterface, ContentInterface,
-          BusinessLineInterface, ApplicationUserInterface,
-          LevelInterface, PositionInterface,
-          UserSessionInterface, AuthenticationInterface,
-          UserIdentityInterface, RoleInterface,
-          ImageInterface, ProcessMessageInterface,
-          PageTitleInterface, AttachementInterface, TeamMemberInterface};
+export {
+  TraderInterface, TradeInterface, AddressInterface,          
+  PhoneInterface, ImageInterface, CategoryInterface, ContentInterface,
+  UserSessionInterface, AuthenticationInterface, UserIdentityInterface, 
+  ProcessMessageInterface, PageTitleInterface, AttachementInterface };

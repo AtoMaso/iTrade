@@ -1,74 +1,58 @@
-﻿<div class="container">
+﻿<div class="navbar-default container" style="padding-bottom:30px;padding-top:30px;">
 
-        <form [formGroup]="registerGroup" (submit)="register()">
+        <form [formGroup]="registerGroup" (submit)="register()" *ngIf="!submited">
 
           <div class="row">
 
                 <div class="col-md-4 col-md-offset-1">
 
-                        <div class="row">
-                          <div class="form-group smalltext textgray">
+                       
+                          <div class="row smalltext textgray">
                             <label for="name">Name</label>
                           </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="form-group smalltext textgray">
+                                                
+                          <div class="row form-group smalltext textgray">
                             <input type="text" formControlName="name" id="name" maxlength="40" placeholder="Your name...." required>
                             <control-messages [control]="registerGroup.controls.name" class="text-danger"></control-messages>
-                          </div>
-                        </div>
+                          </div>                        
 
-                        <div class="row">
-                          <div class="form-group smalltext textgray">
+                          <div class="row smalltext textgray">
                             <label for="email">Email</label>
                           </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="form-group smalltext textgray">
+                                          
+                          <div class="row form-group smalltext textgray">
                             <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
                             <control-messages [control]="registerGroup.controls.email" class="text-danger"></control-messages>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="form-group smalltext textgray">
+                         </div>
+                                     
+                         <div class="row smalltext textgray">
                             <label for="password">Password</label>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="form-group smalltext textgray">
+                         </div>
+                                              
+                          <div class="row form-group smalltext textgray">
                             <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
                             <control-messages [control]="registerGroup.controls.password" class="text-danger"></control-messages>
-                          </div>
-                        </div>            
-
-                        <div class="row">
-                          <div class="form-group smalltext textgray">
+                          </div>                           
+                        
+                          <div class="row smalltext textgray">
                             <label for="confirmpassword">Confirm Password</label>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="form-group smalltext textgray">
+                          </div>                       
+                        
+                          <div class="row form-group smalltext textgray">
                             <input type="password" formControlName="confirmpassword" id="confirmpassword" maxlength="40" placeholder="Your password again...." required>
                             <control-messages [control]="registerGroup.controls.confirmpassword" class="text-danger"></control-messages>
-                          </div>
-                        </div>
-
+                          </div>                       
                       
-                        <div class="row" style="margin-top:20px;">                          
-                            <button class="btn-success"  type="submit" [disabled]="!registerGroup.valid">Register</button>                       
-                        </div>                
+                          <div class="row" style="margin-top:40px;">                          
+                              <button class="btn-success"  type="submit" [disabled]="!registerGroup.valid">Register</button>                       
+                          </div>                
                 </div>
 
                 
 
                 <div class="col-md-5">
              
-                        <div class="row panel panel-body textgray" style="margin-top:20px;">
+                        <div class="row panel panel-body textgray">
                                 <p><strong>Help</strong></p>
                                 Please provide all required information needed (marked in red) to register to the application.
                                 <ul>                  

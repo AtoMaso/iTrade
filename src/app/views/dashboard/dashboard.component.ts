@@ -38,13 +38,13 @@ export class DashboardComponent implements OnInit {
   // GET Heroes
   //*****************************************************
   getHeroes(): void {
-    this.heroService.getHeroes()
-      .subscribe(
-      (res: Hero[]) => {
-        this.heroes = res.slice(1, 5),
-          this.isRequesting = false
-      }
-      , (res: Response) => this.onError(res));
+          this.heroService.getHeroes()
+                .subscribe(
+                (res: Hero[]) => {
+                  this.heroes = res.slice(1, 5),
+                    this.isRequesting = false
+                }
+                , (res: Response) => this.onError(res));
   }
 
 

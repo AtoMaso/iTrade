@@ -6,6 +6,12 @@ input {
      background-color:wheat;
      color:black;
      height:auto;
+     font-family:Arial;
+     font-size:small;
+}
+
+button {
+    width:150px;
 }
 
 .linkcolor {
