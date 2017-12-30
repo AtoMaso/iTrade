@@ -15,7 +15,7 @@ import { ApplicationUser, UserSession, UserIdentity, Role, PageTitle } from '../
 import { ControlMessages } from '../controls/control-messages.component';
 
 @Component({
-    selector: 'sign-in-view',
+    selector: 'register-view',
     templateUrl: './register.component.html'   
 })
 
@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
     
     private user: ApplicationUser = new ApplicationUser();    
     private submitted = false;
-    private registerForm: any;
+    private registerGroup: any;
 
     //*****************************************************
     // CONSTRUCTOR IMPLEMENTAION
@@ -42,13 +42,12 @@ export class RegisterComponent implements OnInit {
     this.processMessageService.emitRoute("nill");
     this.user.Role = this.route.snapshot.params['role'];
 
-    this.registerForm = this.formBuilder.group({
-          name: new FormControl(['', Validators.required, ValidationService.nameValidator]),
-          email: new FormControl(['', Validators.required, ValidationService.emailValidator, ValidationService.emailDomainValidator]),
-          password: new FormControl(['', Validators.required, ValidationService.passwordValidator]),
-          confirmpassword: new FormControl(['', Validators.required, ValidationService.confirmPasswordValidator])
+    this.registerGroup = this.formBuilder.group({
+          name: new FormControl('', [Validators.required, ValidationService.nameValidator]),
+          email: new FormControl('', [Validators.required, ValidationService.emailValidator]),
+          password: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
+          confirmpassword: new FormControl('', [Validators.required, ValidationService.confirmPasswordValidator]),
     });
-
 
   }
 
@@ -57,10 +56,10 @@ export class RegisterComponent implements OnInit {
     //****************************************************
   private register() {        
 
-      this.user.Name = this.registerForm.controls.name.value;
-      this.user.Email = this.registerForm.controls.email.value;
-      this.user.Password = this.registerForm.controls.password.value;
-      this.user.ConfirmPassword = this.registerForm.controls.confirmpassword.value;
+    this.user.Name = this.registerGroup.controls.name.value;
+    this.user.Email = this.registerGroup.controls.email.value;
+    this.user.Password = this.registerGroup.controls.password.value;
+    this.user.ConfirmPassword = this.registerGroup.controls.confirmpassword.value;
 
     if (this.ComparePasswords(this.user)) {
             this.authenticationService.register(this.user)
@@ -82,9 +81,9 @@ export class RegisterComponent implements OnInit {
         this.processMessageService.emitProcessMessage("PMRS");
     }
 
-    // toggles the submitted flag which should disable the form and
-    // show the succes small form
-    private onSubmit() { this.submitted = true; }
+    //// toggles the submitted flag which should disable the form and
+    //// show the succes small form
+    //private onSubmit() { this.submitted = true; }
 
 
     //****************************************************

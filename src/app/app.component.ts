@@ -2,6 +2,8 @@ import { Component, ViewChild, ViewEncapsulation, OnInit, OnDestroy } from '@ang
 import { Router, RouterLink, RouterLinkActive, Routes, RouterModule, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 
 //services
 //import { AuthCheck } from './services/authcheck';
@@ -9,19 +11,15 @@ import { AuthenticationService } from './services/authentication.service';
 import { ProcessMessageService } from './services/processmessage.service';
 import { PageTitleService } from './services/pagetitle.service';
 
-
 //components
-import { DashboardComponent } from './views/dashboard/dashboard.component';
+//import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
-import { AboutComponent } from './views/info/about.component';
-import { ContactComponent } from './views/info/contact.component';
-
 import { ModalComponent } from './views/controls/modal.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle.component';
+
 import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } from './helpers/classes';
-import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
-import { Keepalive } from '@ng-idle/keepalive';
+
 
 @Component({
   selector: 'app-root',
@@ -66,7 +64,6 @@ export class AppComponent implements OnDestroy, OnInit {
                   private _titleService: PageTitleService,                  
                   private _router: Router,
                   private idle: Idle) { sessionStorage['UserSession'] = "null"; }
-
 
 
   public ngOnInit() {

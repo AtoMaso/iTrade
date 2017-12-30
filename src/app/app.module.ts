@@ -19,18 +19,17 @@ import { HeroService } from './services/hero.service';
 import { MessageService } from './services/message.service';
 import { ValidationService } from './services/validation.service';
 import { InMemoryDataService } from './services//in-memory-data.service';
-
 //import { AuthCheck } from './services/authcheck';
 
 //components
 import { LoginComponent } from './views/authentication/login.component';
+import { RegisterComponent } from './views/authentication/register.component';
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './views//heroes/heroes.component';
 import { HeroDetailComponent } from './views/hero-detail/hero-detail.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { HeroSearchComponent } from './views/hero-search/hero-search.component';
 import { MessagesComponent } from './views/messages/messages.component';
-import { RegisterComponent } from './views/authentication/register.component';
 
 import { ControlMessages } from './views/controls/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';

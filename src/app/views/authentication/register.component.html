@@ -1,6 +1,6 @@
 ﻿<div class="container">
 
-        <form novalidate  [formGroup]="registerForm" (submit)="register()">
+        <form [formGroup]="registerGroup" (submit)="register()">
 
           <div class="row">
 
@@ -15,7 +15,7 @@
                         <div class="row">
                           <div class="form-group smalltext textgray">
                             <input type="text" formControlName="name" id="name" maxlength="40" placeholder="Your name...." required>
-                            <control-messages [control]="registerForm.controls.name" class="text-danger"></control-messages>
+                            <control-messages [control]="registerGroup.controls.name" class="text-danger"></control-messages>
                           </div>
                         </div>
 
@@ -28,7 +28,7 @@
                         <div class="row">
                           <div class="form-group smalltext textgray">
                             <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
-                            <control-messages [control]="registerForm.controls.email" class="text-danger"></control-messages>
+                            <control-messages [control]="registerGroup.controls.email" class="text-danger"></control-messages>
                           </div>
                         </div>
 
@@ -41,7 +41,7 @@
                         <div class="row">
                           <div class="form-group smalltext textgray">
                             <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
-                            <control-messages [control]="registerForm.controls.password" class="text-danger"></control-messages>
+                            <control-messages [control]="registerGroup.controls.password" class="text-danger"></control-messages>
                           </div>
                         </div>            
 
@@ -54,29 +54,27 @@
                         <div class="row">
                           <div class="form-group smalltext textgray">
                             <input type="password" formControlName="confirmpassword" id="confirmpassword" maxlength="40" placeholder="Your password again...." required>
-                            <control-messages [control]="registerForm.controls.confirmpassword" class="text-danger"></control-messages>
+                            <control-messages [control]="registerGroup.controls.confirmpassword" class="text-danger"></control-messages>
                           </div>
                         </div>
 
                       
                         <div class="row" style="margin-top:20px;">                          
-                            <button class="btn-success"  type="submit" [disabled]="!registerForm.valid">Register</button>                       
-                        </div>
+                            <button class="btn-success"  type="submit" [disabled]="!registerGroup.valid">Register</button>                       
+                        </div>                
                 </div>
 
                 
 
-                <div class="col-md-6">
+                <div class="col-md-5">
              
-                        <div class="panel panel-heading panel-info textgray">
+                        <div class="row panel panel-body textgray" style="margin-top:20px;">
                                 <p><strong>Help</strong></p>
                                 Please provide all required information needed (marked in red) to register to the application.
                                 <ul>                  
                                         <li>The name should contain your first and second name only and with maximum of 50 characters in length. </li>
-                                        <li>Your username should be your ATONET account username. </li>
-                                        <li>Your email will be your ATO emaill account.The application will not accept domain other then "ato.gov.au".</li>
-                                        <li>The application will allow email of 70 characters in length".</li>
-                                        <li>Your password SHOULD NOT be your ATONET account password.</li>
+                                        <li>Your username will be your email account. </li>                                      
+                                        <li>The application will allow email of 70 characters in length".</li>                                      
                                         <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>                       
                                 </ul>
                         </div>
