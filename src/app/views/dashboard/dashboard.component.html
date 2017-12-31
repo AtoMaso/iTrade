@@ -1,11 +1,57 @@
 
 <div class="navbar-default container" style="padding-bottom:30px;padding-top:30px;">
 
+
+
+
   <a *ngFor="let trade of trades" class="col-1-4" routerLink="/detail/{{trade.id}}">
-          <div class="module hero">
+          <div class="module trade">
                     <h4>{{trade.title}}</h4>
           </div>
   </a>
+
+
+  <!--<css-carousel id="One" [dash]="itself"></css-carousel>-->
+
+  <div id="accordion" class="panel-group col-md-4" *ngFor="let trade of trades | SortTradeByDate: D  | TopTradesPipe: 6">
+
+    <div class="panel panel-info">
+      <!-- heading section-->
+      <div class="panel-heading">
+        <div class="panel-title">
+          <div class="label label-default textgray">
+            {{ trade.Title }}
+          </div>
+        </div>
+      </div>
+
+      <!-- body section-->
+      <div id="{{ trade.tradeId }}">
+        <div class="panel-body">
+          <div>
+            <strong class="textgray">Category: </strong><span class="textgray">{{ trade.categoryName }}</span>
+          </div>
+          <div>
+            <strong class="textgray">Trader:</strong>
+            <a href="" [routerLink]="['Trader', {id: trade.traderId}]" class="text-info" style="text-decoration:underline"><strong>{{ trade.traderName }}</strong></a>
+          </div>
+          <div>
+            <strong class="textgray">Flash Info:</strong><span class="textgray">{{ trade.Flash }}</span>
+            <a href="" [routerLink]="['Trade', {id: trade.tradeId}]" class="text-info" style="text-decoration:underline"><strong>Read more...</strong></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- the footer -->
+      <div class="panel-footer">
+        <strong class="textgray">Date Published: </strong><span class="textgray">{{ trade.datePublished  }}</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--<my-spinner [isRunning]="isRequesting"></my-spinner>-->
 
 </div>
 

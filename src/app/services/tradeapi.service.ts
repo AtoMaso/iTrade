@@ -8,8 +8,6 @@ import { LoggerService } from './logger.service';
 import { AuthenticationService } from './authentication.service';
 import { Trade, UserSession, UserIdentity} from '../helpers/classes';
 
-
-let tradesUrlLocal = CONFIG.tradeslocal;
 let tradesUrl = CONFIG.baseUrls.trades;
 let tradeUrl = CONFIG.baseUrls.trade;
 let updateTradeUrl = CONFIG.baseUrls.updatetrader
@@ -35,8 +33,10 @@ export class TradeApiService {
   public getTradesLocal(): any {
 
     return this.httpService.get('../assets/trades.json')
-      .map((res: Response) => res.json())
-      .catch((err: Response) => this.logError(err, "GetTrade"));
+
+      .map((response: Response) => response.json().data)
+      .catch((response: Response) => this.logError(response, "GetTradesLocally"));
+
   }
 
 

@@ -6,6 +6,7 @@ import { ProcessMessageService } from '../../services/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle.service';
 
 import { SpinnerOneComponent } from '../../blocks/spinner/spinnerone.component';
+import { CSSCarouselComponent } from '../controls/carousel.component';
 import { TopTradesPipe, SortTradeByDatePipe } from '../../helpers/pipes';
 import { PageTitle, Trade } from '../../helpers/classes';
 
@@ -18,7 +19,7 @@ import { PageTitle, Trade } from '../../helpers/classes';
 export class DashboardComponent implements OnInit {
 
   private pagetitle: PageTitle;
-  private trades: Trade[] = [];
+  private trades: Trade[]  = [];
   private isRequesting: boolean;
   private itself: DashboardComponent = this;
 
@@ -45,8 +46,8 @@ export class DashboardComponent implements OnInit {
   getTrades() {
           this.tradeapiService.getTradesLocal()
             .subscribe(
-               (res: Trade[]) => { this.trades = res, this.isRequesting = false }
-                , (res: Response) => this.onError(res));
+                (data: Trade[]) => { this.trades = data, this.isRequesting = false }
+                , (data: Response) => this.onError(data));
   }
 
 
@@ -54,14 +55,14 @@ export class DashboardComponent implements OnInit {
   // PRIVATE METHODS
   //******************************************************
   // an error has occured
-  private onError(res: any) {
+  private onError(data: any) {
 
     // stop the spinner
     this.isRequesting = false;
 
     // we will log the error in the server side by calling the logger, or that is already 
     // done on the server side if the error has been caught
-    this.loggerService.logErrors(res, "dashboard page");
+    this.loggerService.logErrors(data, "dashboard page");
 
     // we will display a fiendly process message using the process message service             
     this.messagesService.emitProcessMessage("PMGA");

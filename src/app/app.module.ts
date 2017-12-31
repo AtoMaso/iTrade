@@ -31,6 +31,9 @@ import { ControlMessages } from './views/controls/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle.component';
 import { ModalComponent } from './views/controls/modal.component';
+import { SpinnerOneComponent } from './blocks/spinner/spinnerone.component';
+import { CSSCarouselComponent } from './views/controls/carousel.component';
+import { TopTradesPipe, SortTradeByDatePipe } from './helpers/pipes';
 
 
 @NgModule({
@@ -44,7 +47,11 @@ import { ModalComponent } from './views/controls/modal.component';
     ControlMessages,   
     ProcessMessagesComponent,
     PageTitleComponent,
-    ModalComponent
+    ModalComponent,
+    SpinnerOneComponent,
+    CSSCarouselComponent,
+    TopTradesPipe,
+    SortTradeByDatePipe
   ],  
 
   imports: [    

@@ -4,7 +4,7 @@ import {Component, Input, OnDestroy} from '@angular/core';
 
 @Component({
   selector: 'my-spinner',
-    templateUrl: './app/blocks/spinner/spinnerone.component.html'
+    templateUrl: './spinnerone.component.html'
 })
 export class SpinnerOneComponent implements OnDestroy {
 

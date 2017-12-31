@@ -9,12 +9,10 @@
       totalNumberOfImages: 50
     },
 
-    tradeslocal: 'http://localhost:4200/api/trades.json', 
 
     baseUrls: {
         servicebase: 'http://localhost:5700/',
         accounts: 'http://localhost:5700/api/account/',
-
      
         trades: 'http://localhost:5700/api/trades',
         trade: 'http://localhost:5700/api/trade',
