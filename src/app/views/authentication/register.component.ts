@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
           name: new FormControl('', [Validators.required, ValidationService.nameValidator]),
           email: new FormControl('', [Validators.required, ValidationService.emailValidator]),
           password: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
-          confirmpassword: new FormControl('', [Validators.required, ValidationService.confirmPasswordValidator]),
+          confirmPassword: new FormControl('', [Validators.required, ValidationService.confirmPasswordValidator]),
     });
 
   }

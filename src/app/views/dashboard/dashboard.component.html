@@ -1,50 +1,52 @@
 
-<div class="navbar-default container" style="padding-bottom:30px;padding-top:30px;">
+<!--<div class="container navbar navbar-default col-md-10 col-md-offset-1" style="padding-bottom:30px;padding-top:30px;border-width:medium;">-->
 
 
+    <div class="row container col-md-12">
 
-  <css-carousel id="One"></css-carousel> <!--  [dash]="itself" -->
+      <div id="accordion" class="panel-group col-md-4" *ngFor="let trade of trades | SortTradesByDatePipe: D  | TopTradesPipe: 9">
 
-  <div id="accordion" class="panel-group col-md-4" *ngFor="let trade of trades | SortTradesByDatePipe: D  | TopTradesPipe: 6">
+        <div class="panel panel-info" style="border-width:medium;">
 
-    <div class="panel panel-info">
-      <!-- heading section-->
-      <div class="panel-heading">
-        <div class="panel-title">
-          <div class="label label-default textgray">
-            {{ trade.title }}
+          <!-- heading section-->
+          <div class="panel-heading">
+            <div class="panel-title">
+              <div class="label label-default textgray">
+                {{ trade.title }}
+              </div>
+            </div>
           </div>
+
+          <!-- body section-->
+          <div id="{{ trade.tradeId }}">
+            <div class="panel-body">
+              <div>
+                <strong class="textgray">Category: </strong><span class="textgray">{{ trade.categoryType }}</span>
+              </div>
+              <div>
+                <strong class="textgray">Trader:</strong>
+                <a href="" [routerLink]="['Trader', {id: trade.traderId}]" class="text-info" style="text-decoration:underline"><strong>{{ trade.traderName }}</strong></a>
+              </div>
+              <div>
+                <strong class="textgray">Flash Info:</strong><span class="textgray">{{ trade.flash }}</span>
+                <a href="" [routerLink]="['Trade', {id: trade.tradeId}]" class="text-info" style="text-decoration:underline"><strong>Read more...</strong></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- the footer -->
+          <div class="panel-footer">
+            <strong class="textgray">Date Published: </strong><span class="textgray">{{ trade.datePublished  }}</span>
+          </div>
+
         </div>
-      </div>
 
-      <!-- body section-->
-      <div id="{{ trade.tradeId }}">
-        <div class="panel-body">
-          <div>
-            <strong class="textgray">Category: </strong><span class="textgray">{{ trade.categoryType }}</span>
-          </div>
-          <div>
-            <strong class="textgray">Trader:</strong>
-            <a href="" [routerLink]="['Trader', {id: trade.traderId}]" class="text-info" style="text-decoration:underline"><strong>{{ trade.traderName }}</strong></a>
-          </div>
-          <div>
-            <strong class="textgray">Flash Info:</strong><span class="textgray">{{ trade.flash }}</span>
-            <a href="" [routerLink]="['Trade', {id: trade.tradeId}]" class="text-info" style="text-decoration:underline"><strong>Read more...</strong></a>
-          </div>
-        </div>
-      </div>
-
-      <!-- the footer -->
-      <div class="panel-footer">
-        <strong class="textgray">Date Published: </strong><span class="textgray">{{ trade.datePublished  }}</span>
       </div>
 
     </div>
 
-  </div>
+    <!--<my-spinner [isRunning]="isRequesting"></my-spinner>-->
 
-  <!--<my-spinner [isRunning]="isRequesting"></my-spinner>-->
-
-</div>
+  <!--</div>-->
 
 

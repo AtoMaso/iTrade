@@ -18,22 +18,29 @@ button {
     color:lightseagreen;
 }
 
-/*text styles*/
+/*extra small text*/
 .extrasmalltext {
   font-family:Verdana;
+  font-size:small;
+}
+
+
+.extrasmalltextbold {
+  font-family:Verdana;
   font-size:x-small;
+  font-weight:bold;
 }
 
 .extrasmalltextcentred {
   font-family:Verdana;
-  font-size:11px;
+  font-size:x-small;
   text-align:center;
 }
 
-
+/* small text */
 .smalltext {
   font-family:Verdana;
-  font-size:small;
+  font-size:small;  
 }
 
 .smalltextbold {
@@ -48,16 +55,17 @@ button {
   text-align:center;
 }
 
-.textgray {
-    color:darkgray;
-}
-
-
+/* nedium text */
 .mediumtext {
   font-family:Verdana;
   font-size:medium;
 }
 
+.mediumtextbold {
+  font-family:Verdana;
+  font-size:medium;
+  font-weight:bold;
+}
 
 .mediumtextcentered {
   font-family:Verdana;
@@ -65,8 +73,14 @@ button {
   text-align:center;
 }
 
-
+/* large text*/
 .largetext {
+  font-family:Verdana;
+  font-size:large;
+  font-weight:bold;
+}
+
+.largetextbold {
   font-family:Verdana;
   font-size:large;
 }
@@ -76,6 +90,21 @@ button {
   font-family:Verdana;
   font-size:large;
   text-align:center;
+}
+
+
+.textgray {
+    color:darkgray;
+}
+.textblack {
+    color:black;
+}
+.textwhite {
+    color:white;
+}
+
+.textdarkgray {
+    color:darkgray;
 }
 
 

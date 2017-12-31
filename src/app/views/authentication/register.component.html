@@ -1,10 +1,11 @@
-﻿<div class="navbar-default container" style="padding-bottom:30px;padding-top:30px;">
+﻿
+<!--<div class="container navbar navbar-default col-sm-10 col-sm-offset-1" style="padding-bottom:30px;padding-top:30px; border-width:medium">-->
 
-        <form [formGroup]="registerGroup" (submit)="register()" *ngIf="!submited">
+        <form [formGroup]="registerGroup" (submit)="register()" *ngIf="!submited" class="container col-md-offset-1">
 
-          <div class="row">
+          <div class="row container">
 
-                <div class="col-md-4 col-md-offset-1">
+                <div class="col-md-3 col-md-offset-1">
 
                        
                           <div class="row smalltext textgray">
@@ -50,7 +51,7 @@
 
                 
 
-                <div class="col-md-5">
+                <div class="col-md-7">
              
                         <div class="row panel panel-body textgray">
                                 <p><strong>Help</strong></p>
@@ -92,7 +93,7 @@
                   </div>
         </div>
 
- </div>
+ <!--</div>-->
 
 
 

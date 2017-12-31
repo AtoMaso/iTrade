@@ -22,7 +22,6 @@ export class DashboardComponent implements OnInit {
   private trades: Trade[]  = [];
   private isRequesting: boolean;
   private itself: DashboardComponent = this;
-  private itself: this;
 
   constructor(private tradeapiService: TradeApiService,
                     private titleService: PageTitleService,
