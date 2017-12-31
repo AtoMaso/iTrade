@@ -6,18 +6,16 @@ import { Observer } from 'rxjs/Observer';
 
 import { LoggerService } from './logger.service';
 import { AuthenticationService } from './authentication.service';
-import { Trade, UserSession, UserIdentity} from '../helpers/classes';
+import { Trader, UserSession} from '../helpers/classes';
 
-
-let tradesUrlLocal = CONFIG.tradeslocal;
-let tradesUrl = CONFIG.baseUrls.trades;
-let tradeUrl = CONFIG.baseUrls.trade;
-let updateTradeUrl = CONFIG.baseUrls.updatetrader
-let addTradeUrl = CONFIG.baseUrls.addtrade;
-let removeTradeUrl = CONFIG.baseUrls.removetrade;
+let tradersUrl = CONFIG.baseUrls.traders;
+let traderUrl = CONFIG.baseUrls.trader;
+let updateTraderUrl = CONFIG.baseUrls.updatetrader;
+let addTraderUrl = CONFIG.baseUrls.addtrader;
+let removeTraderUrl = CONFIG.baseUrls.removetrader;
 
 @Injectable()
-export class TradeApiService {
+export class TraderService {
     private localUrl: string;
     private session: UserSession;
 
@@ -28,36 +26,28 @@ export class TradeApiService {
         }  
     };
 
-
-  //******************************************************
-  // GET TRADES
-  //******************************************************
-  public getTradesLocal(): any {
-
-    return this.httpService.get(tradesUrlLocal)
-      .map((res: Response) => res.json())
-      .catch((err: Response) => this.logError(err, "GetTrade"));
-  }
-
     //******************************************************
-    // GET TRADES
+    // GET USERS
     //******************************************************
-    public getTrades(): any {
-      
+    public getTraders(id?: number): any {
+        let localUrl: string;
+        if (id != undefined) { localUrl = `${traderUrl}?TraderId=${id}`}
+        else { localUrl = traderUrl; }
+
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');      
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-      return this.httpService.get(tradesUrl, { headers: headers })           
+      return this.httpService.get(localUrl, { headers: headers })           
             .map((res: Response) => res.json())  
-            .catch((err: Response) => this.logError(err, "GetTrade"));
+            .catch((err: Response) => this.logError(err, "GetTraders"));
     }
 
     // page of members
-    public getPageOfTrader(page: number, perpage: number) {
+    public getPageOfTraders(page: number, perpage: number) {
 
-        let localUrl = tradesUrl + "?page=" + page + "&perpage=" + perpage;
+        let localUrl = tradersUrl + "?page=" + page + "&perpage=" + perpage;
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');   
@@ -65,22 +55,22 @@ export class TradeApiService {
 
       return this.httpService.get(localUrl, {headers: headers})          
             .map((res: Response) => res.json())   
-            .catch((err: Response) => this.logError(err, "GetTrades"));
+            .catch((err: Response) => this.logError(err, "GetTraders"));
     }
 
 
     //******************************************************
     // GET USER
     //******************************************************
-    public getTradeById(id: string): any {
+    public getTrader(id: string): any {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-      return this.httpService.get(`${tradeUrl}?TradeId=${id}`, { headers: headers })            
+      return this.httpService.get(`${traderUrl}?TraderId=${id}`, { headers: headers })            
             .map((res: Response) => res.json())  
-            .catch((err: Response) => this.logError(err, "GetTrade"));
+            .catch((err: Response) => this.logError(err, "GetTrader"));
     }
 
 
@@ -94,25 +84,25 @@ export class TradeApiService {
     //******************************************************
     // ADD USER
     //******************************************************
-    public addTrader(trade: Trade): any {
+    public addTrader(trader: Trader): any {
 
-      let body = JSON.stringify(trade);
+      let body = JSON.stringify(trader);
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-        return this.httpService.post(addTradeUrl, body, { headers: headers })                  
+        return this.httpService.post(addTraderUrl, body, { headers: headers })                  
                   .map((res: Response) => res.json())
-                  .catch((err: Response) => this.logError(err, "AddTrade"));
+                  .catch((err: Response) => this.logError(err, "AddTrader"));
     }
 
 
     //******************************************************
     // REMOVE USER
     //******************************************************
-    public removeTrade(tradeId: string) {
-      let localUrl = removeTradeUrl + "?TradeId=" + tradeId;
+    public removeTrader(traderId: string) {
+      let localUrl = removeTraderUrl + "?TraderId=" + traderId;
       let headers = new Headers();
       headers.append('Accept', 'application/json');
       headers.append('Content-Type', 'application/json');
@@ -120,7 +110,7 @@ export class TradeApiService {
 
       return this.httpService.delete(localUrl, { headers: headers })         
               .map((res: Response) => res.json())
-              .catch(( error:Response) => this.logError(error, "RemoveTrade"));
+              .catch(( error:Response) => this.logError(error, "RemoveTrader"));
     }
 
 

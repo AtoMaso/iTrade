@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable()
 export class TradeService {
 
-  private TradesUrl = './api/trades';  // URL to web api
+  private TradesUrl = 'app/api/trades.json';  // URL to web api
 
   constructor(
     private httpService: HttpClient,
@@ -24,11 +24,14 @@ export class TradeService {
 
   /** GET heroes from the server */
   getTrades (): Observable<Trade[]> {
-    return this.httpService.get<Trade[]>(this.TradesUrl)
-      .pipe(
-        tap(Trade => this.log(`fetched Trade`)),
-        catchError(this.handleError('getTrade', []))
-      );
+    return this.httpService.get(this.TradesUrl)
+
+          .map(response => response.json().data)
+
+          .pipe(
+                  tap(Trade => this.log(`fetched Trade`)),
+                  catchError(this.handleError('getTrade', []))
+          );
   }
 
 
@@ -120,4 +123,5 @@ export class TradeService {
   private log(message: string) {
     this.messageService.add('TradeService: ' + message);
   }
+
 }

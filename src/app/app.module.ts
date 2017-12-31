@@ -15,7 +15,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { ProcessMessageService } from './services/processmessage.service';
 import { PageTitleService } from './services/pagetitle.service';
 import { LoggerService } from './services/logger.service';
-import { TradeService } from './services/trade.service';
+import { TradeApiService } from './services/tradeapi.service';
 import { MessageService } from './services/message.service';
 import { ValidationService } from './services/validation.service';
 import { InMemoryDataService } from './services//in-memory-data.service';
@@ -64,7 +64,7 @@ import { ModalComponent } from './views/controls/modal.component';
     )
   ],
 
-  providers: [TradeService, MessageService, ValidationService,
+  providers: [TradeApiService, MessageService, ValidationService,
                   AuthenticationService, ProcessMessageService,
                   PageTitleService, LoggerService],
 

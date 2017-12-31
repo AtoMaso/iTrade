@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TradeService } from '../../services/trade.service';
+import { TradeApiService } from '../../services/tradeapi.service';
 import { LoggerService } from '../../services/logger.service';
 import { ProcessMessageService } from '../../services/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle.service';
@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   private isRequesting: boolean;
   private itself: DashboardComponent = this;
 
-  constructor(private tradeService: TradeService,
+  constructor(private tradeService: TradeApiService,
                     private titleService: PageTitleService,
                     private messagesService: ProcessMessageService,
                     private loggerService: LoggerService) { }
@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
 
     this.titleService.emitPageTitle(this.pagetitle);  
     this.isRequesting = true;    
-    this.getTrades();
+    this.getTradesLocal();
   }
 
  
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   //*****************************************************
   // GET Trades here TODO
   //*****************************************************
-  getTrades(): void {
+  getTradesLocal(): void {
           this.tradeService.getTrades()
                 .subscribe(
                 (res: Trade[]) => {
