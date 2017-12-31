@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   private isRequesting: boolean;
   private itself: DashboardComponent = this;
 
-  constructor(private tradeService: TradeApiService,
+  constructor(private tradeapiService: TradeApiService,
                     private titleService: PageTitleService,
                     private messagesService: ProcessMessageService,
                     private loggerService: LoggerService) { }
@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
 
     this.titleService.emitPageTitle(this.pagetitle);  
     this.isRequesting = true;    
-    this.getTradesLocal();
+    this.getTrades();
   }
 
  
@@ -42,13 +42,10 @@ export class DashboardComponent implements OnInit {
   //*****************************************************
   // GET Trades here TODO
   //*****************************************************
-  getTradesLocal(): void {
-          this.tradeService.getTrades()
-                .subscribe(
-                (res: Trade[]) => {
-                  this.trades = res.slice(1, 6),
-                    this.isRequesting = false
-                }
+  getTrades() {
+          this.tradeapiService.getTradesLocal()
+            .subscribe(
+               (res: Trade[]) => { this.trades = res, this.isRequesting = false }
                 , (res: Response) => this.onError(res));
   }
 

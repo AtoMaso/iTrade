@@ -41,6 +41,7 @@ export class RegisterComponent implements OnInit {
     this.pagetitle = new PageTitle();
     this.pagetitle.title = "Register";
     this.titleService.emitPageTitle(this.pagetitle);
+
     this.messageService.emitRoute("nill");
     //this.user.Role = this.route.snapshot.params['role'];
 
@@ -58,10 +59,10 @@ export class RegisterComponent implements OnInit {
     //****************************************************
   private register() {        
 
-    this.trader.Name = this.registerGroup.controls.name.value;
-    this.trader.Email = this.registerGroup.controls.email.value;
-    this.trader.Password = this.registerGroup.controls.password.value;
-    this.trader.ConfirmPassword = this.registerGroup.controls.confirmpassword.value;
+    this.trader.name = this.registerGroup.controls.name.value;
+    this.trader.email = this.registerGroup.controls.email.value;
+    this.trader.password = this.registerGroup.controls.password.value;
+    this.trader.confirmPassword = this.registerGroup.controls.confirmpassword.value;
 
     if (this.ComparePasswords(this.trader)) {
       this.authenticationService.register(this.trader)
@@ -71,7 +72,7 @@ export class RegisterComponent implements OnInit {
     }
   
     private ComparePasswords(passedtrader:Trader): boolean {
-      if (passedtrader.Password === passedtrader.ConfirmPassword) { return true; }
+      if (passedtrader.password === passedtrader.confirmPassword) { return true; }
         else {
             this.messageService.emitProcessMessage("PMPNE");
             return false;

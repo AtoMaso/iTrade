@@ -9,7 +9,10 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        {"glob": "trades.json", "input": "./", "output": "./assets/" },
+        {"glob": "images.json", "input": "./", "output": "./assets/" },
+        {"glob": "processmessages.json", "input": "./", "output": "./assets/"}
       ],
       "index": "index.html",
       "main": "main.ts",

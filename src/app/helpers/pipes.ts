@@ -13,15 +13,15 @@ class SortTradeByTitlePipe implements PipeTransform {
         if (args !== null) {
             if (args[0] === 'A') {
                 return value.sort((a: Trade, b: Trade) => {
-                    if (a.Title < b.Title) { return -1; }
-                    if (a.Title > b.Title) { return 1; }
+                    if (a.title < b.title) { return -1; }
+                    if (a.title > b.title) { return 1; }
                     return 0;
                 });
             }
             else {
               return value.sort((a: Trade, b: Trade) => {
-                    if (a.Title > b.Title) { return -1; }
-                    if (a.Title < b.Title) { return 1; }
+                    if (a.title > b.title) { return -1; }
+                    if (a.title < b.title) { return 1; }
                     return 0;
                 });
             }
@@ -42,16 +42,16 @@ class SortTradeByCategoryPipe implements PipeTransform {
             if (args === 'A') {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.CategoryType < b.CategoryType) { return -1; }
-                if (a.CategoryType > b.CategoryType) { return 1; }
+                if (a.categoryType < b.categoryType) { return -1; }
+                if (a.categoryType > b.categoryType) { return 1; }
                     return 0;
                 });
             }
             else {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.CategoryType > b.CategoryType) { return -1; }
-                if (a.CategoryType < b.CategoryType) { return 1; }
+                if (a.categoryType > b.categoryType) { return -1; }
+                if (a.categoryType < b.categoryType) { return 1; }
                     return 0;
                 });
             }
@@ -73,16 +73,16 @@ class SortTradeByTraderNamePipe implements PipeTransform {
             if (args === 'A') {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.TraderName < b.TraderName) { return -1; }
-                if (a.TraderName > b.TraderName) { return 1; }
+                if (a.traderName < b.traderName) { return -1; }
+                if (a.traderName > b.traderName) { return 1; }
                     return 0;
                 });
             }
             else {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.TraderName > b.TraderName) { return -1; }
-                if (a.TraderName < b.TraderName) { return 1; }
+                if (a.traderName > b.traderName) { return -1; }
+                if (a.traderName < b.traderName) { return 1; }
                     return 0;
                 });
             }
@@ -104,16 +104,16 @@ class SortTradeByDatePipe implements PipeTransform {
             if (args === 'A') {
 
               return value.sort((a: Trade, b: Trade) => {
-                  if (a.DatePublished < b.DatePublished) { return -1; }
-                  if (a.DatePublished > b.DatePublished) { return 1; }
+                  if (a.datePublished < b.datePublished) { return -1; }
+                  if (a.datePublished > b.datePublished) { return 1; }
                     return 0;
                 });
             }
             else {
 
               return value.sort((a: Trade, b: Trade) => {
-                  if (a.DatePublished > b.DatePublished) { return -1; }
-                  if (a.DatePublished < b.DatePublished) { return 1; }
+                  if (a.datePublished > b.datePublished) { return -1; }
+                  if (a.datePublished < b.datePublished) { return 1; }
                     return 0;
                 });
             }
@@ -146,8 +146,8 @@ class SortTradersByNamePipe implements PipeTransform {
         if (!value || !value.sort) { return value; }
 
         return value.sort((a: Trader, b: Trader) => {
-            if (a.Name < b.Name) { return -1; }
-            if (a.Name > b.Name) { return 1; }
+            if (a.name < b.name) { return -1; }
+            if (a.name > b.name) { return 1; }
             return 0;
         });
     }

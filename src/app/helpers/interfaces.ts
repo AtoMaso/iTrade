@@ -1,62 +1,62 @@
 ﻿
 interface TraderInterface {
-  TraderId: string;
-  Name: string;
-  Email: string;
-  Password: string;
-  ConfirmPassword: string;
+  traderId: string;
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
 interface TradeInterface {
-  TradeId: number;
-  TraderId: number;
-  TraderName: string;
-  Title: string;
-  Flash: string;
-  Content: string;
-  DatePublished: Date;
-  CategoryType: string;
-  ContentText: string;
+  tradeId: number;
+  traderId: number;
+  traderName: string;
+  title: string;
+  flash: string;
+  content: string;
+  datePublished: Date;
+  categoryType: string;
+  contentText: string;
 }
 
 interface AddressInterface {
-  AddressId: number;
-  TraderId: number; 
-  Number: number;
-  Street: string;
-  Suburb: string;
-  City: string;
-  Postcode: number;
-  State: string;
+  addressId: number;
+  traderId: number; 
+  number: number;
+  street: string;
+  suburb: string;
+  city: string;
+  postcode: number;
+  state: string;
 }
 
 interface PhoneInterface {
-  PhoneId: number;
-  TraderId: number;
-  CountryCode: string;
-  CityCode: string;
-  Home: string;
-  Business: string;
-  Mobile: string;
+  phoneId: number;
+  traderId: number;
+  countryCode: string;
+  cityCode: string;
+  home: string;
+  business: string;
+  mobile: string;
 }
 
 
 interface ImageInterface {
-  ImageId: number;
-  TradeId: number;
+  imageId: number;
+  tradeId: number;
   title: string;
   url: string;
 }
 
 
 interface CategoryInterface {
-  CategoryId: number;
-  CategoryType: string;
+  categoryId: number;
+  categoryType: string;
 }
 
 interface ContentInterface {
-    ContentId: number;
-    ContentText: string;
+    contentId: number;
+    contentText: string;
 }
 
 interface UserSessionInterface {

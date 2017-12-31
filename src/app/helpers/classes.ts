@@ -7,61 +7,61 @@
 
 
 class Trader implements TraderInterface {
-  TraderId: string;
-  Name: string;
-  Email: string;
-  Password: string;
-  ConfirmPassword: string;
+  traderId: string;
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
 class Trade implements TradeInterface {
-  TradeId: number;
-  TraderId: number;
-  TraderName: string;
-  Title: string;
-  Flash: string;
-  Content: string;
-  DatePublished: Date;
-  CategoryType: string;
-  ContentText: string;
+  tradeId: number;
+  traderId: number;
+  traderName: string;
+  title: string;
+  flash: string;
+  content: string;
+  datePublished: Date;
+  categoryType: string;
+  contentText: string;
 }
 
 class Address implements AddressInterface {
-  AddressId: number;
-  TraderId: number;
-  Number: number;
-  Street: string;
-  Suburb: string;
-  City: string;
-  Postcode: number;
-  State: string;
+  addressId: number;
+  traderId: number;
+  number: number;
+  street: string;
+  suburb: string;
+  city: string;
+  postcode: number;
+  state: string;
 }
 
 class Phone implements PhoneInterface {
-  PhoneId: number;
-  TraderId: number;
-  CountryCode: string;
-  CityCode: string;
-  Home: string;
-  Business: string;
-  Mobile: string;
+  phoneId: number;
+  traderId: number;
+  countryCode: string;
+  cityCode: string;
+  home: string;
+  business: string;
+  mobile: string;
 }
 
 class Image implements ImageInterface {
-  ImageId: number;
-  TradeId: number;
+  imageId: number;
+  tradeId: number;
   title: string;
   url: string;
 }
 
 class Category implements CategoryInterface {
-  CategoryId: number;
-  CategoryType: string;
+  categoryId: number;
+  categoryType: string;
 }
 
 class Content implements ContentInterface {
-  ContentId: number;
-  ContentText: string;
+  contentId: number;
+  contentText: string;
 }
 
 class UserSession implements UserSessionInterface {

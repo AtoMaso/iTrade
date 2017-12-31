@@ -1,0 +1,85 @@
+﻿{
+  "data": 
+  [
+    {
+      "tradeId": 1,
+      "title": "Baloon",
+      "traderName": "Mirko Srbinovski",
+      "datePublished": "11/10/2017",
+      "categoryType": "toy",
+      "contentText": "Explantion for trade"
+    },
+    {
+      "tradeId": 2,
+      "title": "TV",
+      "traderName": "Mirko Srbinovski",
+      "datePublished": "11/10/2017",
+      "categoryType": "toy",
+      "contentText": "Explantion for trade"
+    },
+    {
+      "tradeId": 3,
+      "title": "TV for Video",
+      "traderName": "Mirko Srbinovski",
+      "datePublished": "11/10/2017",
+      "categoryType": "toy",
+      "contentText": "Explantion for trade"
+    },
+    {
+      "tradeId": 4,
+      "title": "Bike",
+      "traderName": "Mirko Srbinovski",
+      "datePublished": "11/10/2017",
+      "categoryType": "toy",
+      "contentText": "Explantion for trade"
+    },
+    {
+      "tradeId": 5,
+      "title": "Bike  Mountain",
+      "traderName": "Mirko Srbinovski",
+      "datePublished": "11/10/2017",
+      "categoryType": "toy",
+      "contentText": "Explantion for trade"
+    },
+    {
+      "tradeId": 6,
+      "title": "Car Ford",
+      "traderName": "Mirko Srbinovski",
+      "datePublished": "11/10/2017",
+      "categoryType": "toy",
+      "contentText": "Explantion for trade"
+    },
+    {
+      "tradeId": 7,
+      "title": "Car Toyota",
+      "traderName": "Mirko Srbinovski",
+      "datePublished": "11/10/2017",
+      "categoryType": "toy",
+      "contentText": "Explantion for trade"
+    },
+    {
+      "tradeId": 8,
+      "title": "Track",
+      "traderName": "Mirko Srbinovski",
+      "datePublished": "11/10/2017",
+      "categoryType": "toy",
+      "contentText": "Explantion for trade"
+    },
+    {
+      "tradeId": 9,
+      "title": "Plain",
+      "traderName": "Mirko Srbinovski",
+      "datePublished": "11/10/2017",
+      "categoryType": "toy",
+      "contentText": "Explantion for trade"
+    },
+    {
+      "tradeId": 10,
+      "title": "Horse",
+      "traderName": "Mirko Srbinovski",
+      "datePublished": "11/10/2017",
+      "categoryType": "toy",
+      "contentText": "Explantion for trade"
+    }
+  ]
+}

@@ -30,14 +30,16 @@ export class TradeApiService {
 
 
   //******************************************************
-  // GET TRADES
+  // GET TRADES LOCALLY 
   //******************************************************
   public getTradesLocal(): any {
 
-    return this.httpService.get(tradesUrlLocal)
+    return this.httpService.get('../assets/trades.json')
       .map((res: Response) => res.json())
       .catch((err: Response) => this.logError(err, "GetTrade"));
   }
+
+
 
     //******************************************************
     // GET TRADES
@@ -128,7 +130,7 @@ export class TradeApiService {
     // PRIVATE METHODS
     //******************************************************
     private logError(err: any, method:string) {
-      this.loggerService.logErrors(err, "user.service had an error in the method " + method);   
+      this.loggerService.logErrors(err, "trade.service had an error in the method " + method);   
       return Observable.throw(err);
     }
 

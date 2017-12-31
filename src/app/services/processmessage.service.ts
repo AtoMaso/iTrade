@@ -39,7 +39,7 @@ export class ProcessMessageService {
     // get the process messages from the json repository
     public getProcessMessagesFromRepository() {
 
-      return this._http.get("app/api/processmessages.json")
+      return this._http.get("../assets/processmessages.json")
         .map((response: Response) => <ProcessMessage[]>response.json().data)
         .catch((error:Response) => this.onError(error, "GetProcessmessageFromRepository"));
     }
