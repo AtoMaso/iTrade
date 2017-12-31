@@ -6,7 +6,7 @@ import { ProcessMessage } from '../../helpers/classes';
 
 @Component({
   selector: 'process-messages',
-  template: ` <div class="navbar-default navbar-danger"  *ngIf="errorMessage">
+  template: ` <div class="container navbar-default navbar-danger"  *ngIf="errorMessage">
                           <span [class]="style">{{ errorMessage }}</span>
                     </div>`
                   

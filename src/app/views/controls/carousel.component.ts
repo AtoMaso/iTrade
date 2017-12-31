@@ -12,8 +12,8 @@ let totalNumberOfImages = CONFIG.appKeys.totalNumberOfImages;
 
 @Component({
     selector: 'css-carousel',   
-    templateUrl: './app/views/controls/carousel.component.html',
-    styleUrls: ['assets/css/carousel.component.css'],
+    templateUrl: './carousel.component.html',
+    styleUrls: ['../../../assets/css/carousel.component.css'],
     providers: [ImageService]
 })
 
@@ -30,16 +30,16 @@ export class CSSCarouselComponent {
     private setNumber: number = 0;
     private isVisible: boolean = true;
 
-    constructor(private _imageService: ImageService,
-                     private _loggerService: LoggerService,
-                     private _pmService: ProcessMessageService) {            
+    constructor(private  imageService: ImageService,
+                     private loggerService: LoggerService,
+                     private messagesService: ProcessMessageService) {            
         this.getImages();         
     }  
     
     // gets the images data from the local json file
     public getImages() {
 
-      this._imageService.getImages()
+      this.imageService.getImages()
             .subscribe(
                   (images: Image[]) => this.onSuccessGetImage(images)
                  ,(error:any) => this.onError(error));
@@ -96,10 +96,10 @@ export class CSSCarouselComponent {
 
       // we will log the error in the server side by calling the logger, or that is already 
       // done on the server side if the error has been caught
-      this._loggerService.logErrors(err, "carousel control");
+      this.loggerService.logErrors(err, "carousel control");
 
       // we will display a fiendly process message using the process message service             
-      this._pmService.emitProcessMessage("PMGI");       
+      this.messagesService.emitProcessMessage("PMGI");       
     
     }
 }

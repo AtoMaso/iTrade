@@ -7,7 +7,7 @@ import { PageTitleService } from '../../services/pagetitle.service';
 
 import { SpinnerOneComponent } from '../../blocks/spinner/spinnerone.component';
 import { CSSCarouselComponent } from '../controls/carousel.component';
-import { TopTradesPipe, SortTradeByDatePipe } from '../../helpers/pipes';
+import { TopTradesPipe, SortTradesByDatePipe } from '../../helpers/pipes';
 import { PageTitle, Trade } from '../../helpers/classes';
 
 @Component({
@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   private trades: Trade[]  = [];
   private isRequesting: boolean;
   private itself: DashboardComponent = this;
+  private itself: this;
 
   constructor(private tradeapiService: TradeApiService,
                     private titleService: PageTitleService,

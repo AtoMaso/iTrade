@@ -4,8 +4,8 @@ import { Trade, Trader, } from './classes';
 
 
 // articles pipes
-@Pipe({ name: 'SortTradeByTitlePipe'})
-class SortTradeByTitlePipe implements PipeTransform {
+@Pipe({ name: 'SortTradesByTitlePipe'})
+class SortTradesByTitlePipe implements PipeTransform {
     transform(value: Trade[], args: any[]) {
 
         if (!value || !value.sort) { return value; }
@@ -32,8 +32,8 @@ class SortTradeByTitlePipe implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'SortTradeByCategoryPipe' })
-class SortTradeByCategoryPipe implements PipeTransform {
+@Pipe({ name: 'SortTradesByCategoryPipe' })
+class SortTradesByCategoryPipe implements PipeTransform {
   transform(value: Trade[], args: any) {
 
         if (!value || !value.sort) { return value; }
@@ -63,8 +63,8 @@ class SortTradeByCategoryPipe implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'SortTradeByTraderNamePipe' })
-class SortTradeByTraderNamePipe implements PipeTransform {
+@Pipe({ name: 'SortTradesByTraderNamePipe' })
+class SortTradesByTraderNamePipe implements PipeTransform {
   transform(value: Trade[], args: any) {
 
         if (!value || !value.sort) { return value; }
@@ -94,8 +94,8 @@ class SortTradeByTraderNamePipe implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'SortTradeByDatePipe' })
-class SortTradeByDatePipe implements PipeTransform {
+@Pipe({ name: 'SortTradesByDatePipe' })
+class SortTradesByDatePipe implements PipeTransform {
   transform(value: Trade[], args: any) {
 
         if (!value || !value.sort) { return value; }
@@ -189,10 +189,10 @@ class CapsPipe implements PipeTransform {
 
 export {
 
-  SortTradeByTitlePipe,    
-  SortTradeByCategoryPipe,
-  SortTradeByTraderNamePipe,
-  SortTradeByDatePipe,
+  SortTradesByTitlePipe,    
+  SortTradesByCategoryPipe,
+  SortTradesByTraderNamePipe,
+  SortTradesByDatePipe,
   TopTradesPipe,
   SortTradersByNamePipe,
   InitCapsPipe,

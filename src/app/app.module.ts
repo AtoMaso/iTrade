@@ -33,7 +33,7 @@ import { PageTitleComponent } from './views/controls/pagetitle.component';
 import { ModalComponent } from './views/controls/modal.component';
 import { SpinnerOneComponent } from './blocks/spinner/spinnerone.component';
 import { CSSCarouselComponent } from './views/controls/carousel.component';
-import { TopTradesPipe, SortTradeByDatePipe } from './helpers/pipes';
+import { TopTradesPipe, SortTradesByDatePipe } from './helpers/pipes';
 
 
 @NgModule({
@@ -51,7 +51,7 @@ import { TopTradesPipe, SortTradeByDatePipe } from './helpers/pipes';
     SpinnerOneComponent,
     CSSCarouselComponent,
     TopTradesPipe,
-    SortTradeByDatePipe
+    SortTradesByDatePipe
   ],  
 
   imports: [    

@@ -18,7 +18,7 @@ export class ImageService {
     //******************************************************
     public getImages() {
        
-        return this._http.get("app/api/images.json")
+        return this._http.get("../assets/images.json")
           .map((response: Response) => <Image[]>response.json().data)        
           .catch(error => this.onError(error, "GetImages"));
     }

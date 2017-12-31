@@ -3,24 +3,16 @@
 
 
 
+  <css-carousel id="One"></css-carousel> <!--  [dash]="itself" -->
 
-  <a *ngFor="let trade of trades" class="col-1-4" routerLink="/detail/{{trade.id}}">
-          <div class="module trade">
-                    <h4>{{trade.title}}</h4>
-          </div>
-  </a>
-
-
-  <!--<css-carousel id="One" [dash]="itself"></css-carousel>-->
-
-  <div id="accordion" class="panel-group col-md-4" *ngFor="let trade of trades | SortTradeByDate: D  | TopTradesPipe: 6">
+  <div id="accordion" class="panel-group col-md-4" *ngFor="let trade of trades | SortTradesByDatePipe: D  | TopTradesPipe: 6">
 
     <div class="panel panel-info">
       <!-- heading section-->
       <div class="panel-heading">
         <div class="panel-title">
           <div class="label label-default textgray">
-            {{ trade.Title }}
+            {{ trade.title }}
           </div>
         </div>
       </div>
@@ -29,14 +21,14 @@
       <div id="{{ trade.tradeId }}">
         <div class="panel-body">
           <div>
-            <strong class="textgray">Category: </strong><span class="textgray">{{ trade.categoryName }}</span>
+            <strong class="textgray">Category: </strong><span class="textgray">{{ trade.categoryType }}</span>
           </div>
           <div>
             <strong class="textgray">Trader:</strong>
             <a href="" [routerLink]="['Trader', {id: trade.traderId}]" class="text-info" style="text-decoration:underline"><strong>{{ trade.traderName }}</strong></a>
           </div>
           <div>
-            <strong class="textgray">Flash Info:</strong><span class="textgray">{{ trade.Flash }}</span>
+            <strong class="textgray">Flash Info:</strong><span class="textgray">{{ trade.flash }}</span>
             <a href="" [routerLink]="['Trade', {id: trade.tradeId}]" class="text-info" style="text-decoration:underline"><strong>Read more...</strong></a>
           </div>
         </div>

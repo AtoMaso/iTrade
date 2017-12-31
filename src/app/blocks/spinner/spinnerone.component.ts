@@ -3,9 +3,10 @@
 import {Component, Input, OnDestroy} from '@angular/core';
 
 @Component({
-  selector: 'my-spinner',
+    selector: 'my-spinner',
     templateUrl: './spinnerone.component.html'
 })
+
 export class SpinnerOneComponent implements OnDestroy {
 
   private str: string;
