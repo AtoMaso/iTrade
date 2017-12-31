@@ -6,14 +6,15 @@ import { ProcessMessage } from '../../helpers/classes';
 
 @Component({
   selector: 'process-messages',
-  template: ` <div class="container navbar navbar-default col-md-12" style="margin-bottom:10px;border-width:midium; border-color:datkgray;" *ngIf="errorMessage">
-                          <span [class]="style">{{ errorMessage }}</span>
+  template: ` <div [class] = "style"  style="border-width: midium; border-color: darkgray;" *ngIf="errorMessage" >                    
+                          <span [class]= "stylespan"> {{ errorMessage }}</span>
                     </div>`
                   
 })
 
 export class ProcessMessagesComponent {
-  private style: string;
+  public style: string = "container panel panel -default col-md-10 col-md-offset-1";
+  public stylespan = "smalltext;"
   private errorMessage: string;
 
   // this is the host where this message control is used
@@ -50,20 +51,23 @@ export class ProcessMessagesComponent {
   }
 
   // gets the style of the control depending on the type of the message
-  public getControlStyle(type: string) {
-
+  public getControlStyle(type: string) {  
     switch (type) {
-        case "error":
-            this.style = "text-danger smalltext";
-            break;
+      case "error":
+            this.style = this.style + " redbackground";          
+            this.stylespan = this.stylespan + " textwhite";
+        break;
         case "warning":
-            this.style = "text-warning smalltext";
+            this.style = this.style + " okerbackground";      
+            this.stylespan = this.stylespan + " textwhite";
             break;
         case "information":
-            this.style = "text-info smalltext";
+            this.style = this.style + " yellowbackground";      
+            this.stylespan = this.stylespan + " textblack";
             break;    
         case "success":
-            this.style = "text-success smalltext";
+            this.style = this.style + " greenbackground";     
+            this.stylespan = this.stylespan + " textwhite"; 
             break;      
           }
   }

@@ -21,7 +21,7 @@ button {
 /*extra small text*/
 .extrasmalltext {
   font-family:Verdana;
-  font-size:small;
+  font-size:x-small;
 }
 
 
@@ -107,6 +107,21 @@ button {
     color:darkgray;
 }
 
+.redbackground {
+     background-color:red;
+}
+
+.okerbackground {
+     background-color:orange
+}
+
+.yellowbackground {
+     background-color:yellow;
+}
+
+.greenbackground {
+     background-color:green;
+}
 
 .ng-valid[required] {
   border-left: 7px solid #42A948; /* green */

@@ -1,7 +1,4 @@
 
-<!--<div class="container navbar navbar-default col-md-10 col-md-offset-1" style="padding-bottom:30px;padding-top:30px;border-width:medium;">-->
-
-
     <div class="row container col-md-12">
 
       <div id="accordion" class="panel-group col-md-4" *ngFor="let trade of trades | SortTradesByDatePipe: D  | TopTradesPipe: 9">
@@ -12,7 +9,7 @@
           <div class="panel-heading">
             <div class="panel-title">
               <div class="label label-default textgray">
-                {{ trade.title }}
+                Title : {{ trade.title }}
               </div>
             </div>
           </div>
@@ -36,6 +33,9 @@
 
           <!-- the footer -->
           <div class="panel-footer">
+            <strong class="textgray">Trade For: </strong><span class="textgray">{{ trade.datePublished  }}</span>
+          </div>
+          <div class="panel-footer">
             <strong class="textgray">Date Published: </strong><span class="textgray">{{ trade.datePublished  }}</span>
           </div>
 
@@ -46,7 +46,4 @@
     </div>
 
     <!--<my-spinner [isRunning]="isRequesting"></my-spinner>-->
-
-  <!--</div>-->
-
 

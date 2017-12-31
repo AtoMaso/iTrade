@@ -44,17 +44,17 @@
       <main class="row container col-md-10 col-md-offset-1" style="margin-top:30px;">
  
           <!-- the page title control -->
-        <div class="container navbar navbar-default col-sm-10 col-sm-offset-1" style="border-width:medium; border-color:darkgray;margin-top:10px;">
+        <div class="container navbar navbar-default col-sm-10 col-md-offset-1" style="border-width:medium; border-color:darkgray;margin-top:10px;">
               <page-title #pageTitleComponent></page-title>
         </div>
 
           <!-- the process message control -->
-        <div style="margin-top:10px;">
+        <!--<div style="margin-top:10px;">-->
                 <process-messages #messagesComponent></process-messages>
-          </div>
+          <!--</div>-->
 
           <!-- the views slot -->
-          <div class="container navbar navbar-default col-sm-10 col-sm-offset-1" style="padding-bottom:30px;padding-top:30px; border-width:medium; border-color:darkgray;">
+          <div class="container navbar navbar-default col-md-10 col-md-offset-1" style="padding-bottom:30px;padding-top:30px; border-width:medium; border-color:darkgray;">
             <router-outlet></router-outlet>
           </div>
 

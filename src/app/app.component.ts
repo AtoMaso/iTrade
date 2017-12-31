@@ -56,17 +56,17 @@ export class AppComponent implements OnDestroy, OnInit {
   //******************************************************
   //CONSTRUCTOR AND CICLE METHODS
   //******************************************************
-  constructor(private _authenticationService: AuthenticationService,
-                  private _pmService: ProcessMessageService,
-                  private _titleService: PageTitleService,                  
-                  private _router: Router,
+  constructor(private authenticationService: AuthenticationService,
+                  private  messagesService: ProcessMessageService,
+                  private titleService: PageTitleService,                  
+                  private router: Router,
                   private idle: Idle) { sessionStorage['UserSession'] = "null"; }
 
 
   public ngOnInit() {
 
         this._subscriptionSession =
-          this._authenticationService._behaviorSessionStore
+          this.authenticationService._behaviorSessionStore
                     .subscribe((session: UserSession) => {
                       // this needs to be check otherwise the app component fails on session not created yet
                       if (session !== null) {
@@ -78,7 +78,7 @@ export class AppComponent implements OnDestroy, OnInit {
             });
 
         this._subscriptionMessages =
-                this._pmService._behaviorProcessMessageStore
+                this.messagesService._behaviorProcessMessageStore
                       .subscribe((message: ProcessMessage) => {
                         // this needs to be check otherwise the app component fails on pmComponent not created yet
                         if (message) {
@@ -87,7 +87,7 @@ export class AppComponent implements OnDestroy, OnInit {
             });
 
         this._subscriptionTitle =
-            this._titleService._behaviorTitleStore
+            this.titleService._behaviorTitleStore
                         .subscribe((page: PageTitle) => {
                           // this needs to be check otherwise the app component fails on pmComponent not created yet
                           if (page) {
@@ -96,7 +96,7 @@ export class AppComponent implements OnDestroy, OnInit {
             });
 
         this._subscriptionRouter =
-                  this._pmService._behaviorRouteStore
+                  this.messagesService._behaviorRouteStore
                     .subscribe(() => {
                       if (this.messagesComponent) {
                             this.messagesComponent.displayProcessMessage(null);
@@ -119,9 +119,9 @@ export class AppComponent implements OnDestroy, OnInit {
   }
 
   private logOut() {
-    this._authenticationService.logOut();
+    this.authenticationService.logOut();
     let route = ['Dashboard']
-    this._router.navigate(route);
+    this.router.navigate(route);
   }
 
   static getParameterByName(name: string, url: string) {
@@ -169,7 +169,7 @@ export class AppComponent implements OnDestroy, OnInit {
       // the client has decided to continue, so refresh the token
       this.idle.onIdleEnd.subscribe(() => {
         // call the referesh token method to get the refresh token from the webapi        
-        this._authenticationService.refreshToken();
+        this.authenticationService.refreshToken();
         //console.log("refresh from IDLE has happened");
         this.modalComponent.modalIsVisible = false;
       });
