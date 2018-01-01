@@ -2,12 +2,12 @@
 .componentcarousel{  
     overflow:hidden;
     width:100%;
-    height:120px; 
+    height:165px; 
 }
 
 .componetslides{
 
-    height:120px;
+    height:165px;
     left:-40px;  
     list-style:none;
     position:relative;
@@ -26,7 +26,7 @@
 }
 
 .componentcarousel img{  
-    height:120px;  
+    height:165px;  
     display:block;
     width:100%;
     max-width:100%;
