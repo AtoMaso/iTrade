@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { CONFIG } from '../../config';
 
@@ -7,8 +7,6 @@ import { LoggerService } from '../../services/logger.service';
 import { ProcessMessageService } from '../../services/processmessage.service';
 import { Image } from '../../helpers/classes';
 
-let numberOfImages = CONFIG.appKeys.numberOfImages;
-let totalNumberOfImages = CONFIG.appKeys.totalNumberOfImages;
 
 @Component({
     selector: 'css-carousel',   
@@ -17,77 +15,87 @@ let totalNumberOfImages = CONFIG.appKeys.totalNumberOfImages;
     providers: [ImageService]
 })
 
-export class CSSCarouselComponent {
+export class CSSCarouselComponent implements OnInit {
   
-    public allImages: Image[] = [];  
-    public selectedNumbers: number[] = [];
-    public showImages1: Image[] = [];
-    public showImages2: Image[] = [];
-    public showImages3: Image[] = [];
-    public showImages4: Image[] = [];
-    public showImages5: Image[] = [];
-    public showImages6: Image[] = [];
-    private setNumber: number = 0;
-    private isVisible: boolean = true;
+  public allImages: Image[] = [];
+  public tradeImages: Image[] = []; 
+
+  private isVisible: boolean = true;
+  private image1Url: string;
+  private image2Url: string;
+  private image3Url: string;
+  private image1Title: string;
+  private image2Title: string;
+  private image3Titlel: string;
+
+    @Input() tradeId: number;
 
     constructor(private  imageService: ImageService,
-                     private loggerService: LoggerService,
-                     private messagesService: ProcessMessageService) {            
-        this.getImages();         
-    }  
+                     private  loggerService: LoggerService,
+                     private  messagesService: ProcessMessageService) {            
+             
+  }  
+
+  public ngOnInit() {
+    this.getImages();  
+  }
     
     // gets the images data from the local json file
     public getImages() {
 
       this.imageService.getImages()
             .subscribe(
-                  (images: Image[]) => this.onSuccessGetImage(images)
+                  (images: Image[]) => this.getImagesById(this.tradeId, images)
                  ,(error:any) => this.onError(error));
     }
 
-    //**************************************************************
-    // PRIVATE METHODS ARTICLES
-    //**************************************************************
-    // on success of the http call
-    private onSuccessGetImage(passedImages:Image[]) {
-      this.allImages = passedImages;
-      this.showImages1 = this.getRandomImages();      
-      this.showImages2 = this.getRandomImages();  
-      this.showImages3 = this.getRandomImages();  
-      this.showImages4 = this.getRandomImages();  
-      this.showImages5 = this.getRandomImages();  
-      this.showImages6 = this.getRandomImages();  
-    }
+    ////**************************************************************
+    //// PRIVATE METHODS ARTICLES
+    ////**************************************************************
+    //// on success of the http call
+    //private onSuccessGetImage(passedImages:Image[]) {
+    //  this.getImagesById(this.tradeId, passedImages);      
+    // }
 
-    // get the random images to display
-    private getRandomImages() {
 
-      let img: Image[] = [];
-      for (let x = 0; x < numberOfImages; x++) {
-            
-            this.getUniqueRandomSet();
-            // img.push(IMAGES[this.selectedNumbers[x]]);
-            img.push(this.allImages[this.selectedNumbers[x + this.setNumber * 5]]);         
-      }
-      this.setNumber++;
-      return img;
-    }
-
-    // gets the random numbers for different sets
-    private getUniqueRandomSet() {
-
-      let num = Math.floor(Math.random() * totalNumberOfImages);
-      if (num < 1) {
-        num = 1;
-      }
-      this.selectedNumbers.push(num);
-      for (let x = 0; x < this.selectedNumbers.length - 1; x++) {
-        if (num === this.selectedNumbers[x]) {
-          this.selectedNumbers.pop();
-          this.getUniqueRandomSet();
+  public getImagesById(passedId, passedImages) {
+    
+    for (let x = 0; x < passedImages.length-1; x++) {
+      if (+passedImages[x].tradeId === passedId) { 
+                this.tradeImages.push(passedImages[x]);
         }
-      }
-    }
+      }    
+  }
+
+    //// get the random images to display
+    //private getRandomImages() {
+
+    //  let img: Image[] = [];
+    //  for (let x = 0; x < numberOfImages; x++) {
+            
+    //        //this.getUniqueRandomSet();
+    //        // img.push(IMAGES[this.selectedNumbers[x]]);
+    //        img.push(this.allImages[this.selectedNumbers[x + this.setNumber * 5]]);         
+    //  }
+    //  this.setNumber++;
+    //  return img;
+    //}
+
+    //// gets the random numbers for different sets
+    //private getUniqueRandomSet() {
+
+    //  let num = Math.floor(Math.random() * totalNumberOfImages);
+    //  if (num < 1) {
+    //    num = 1;
+    //  }
+    //  this.selectedNumbers.push(num);
+    //  for (let x = 0; x < this.selectedNumbers.length - 1; x++) {
+    //    if (num === this.selectedNumbers[x]) {
+    //      this.selectedNumbers.pop();
+    //      this.getUniqueRandomSet();
+    //    }
+    //  }
+    //}
 
     // on error of http call
     private onError(err: any) {

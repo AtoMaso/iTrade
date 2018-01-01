@@ -21,9 +21,9 @@ class Trade implements TradeInterface {
   title: string;
   flash: string;
   content: string;
+  willTradeFor: string;
   datePublished: Date;
   categoryType: string;
-  contentText: string;
 }
 
 class Address implements AddressInterface {

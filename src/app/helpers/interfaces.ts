@@ -14,9 +14,9 @@ interface TradeInterface {
   title: string;
   flash: string;
   content: string;
+  willTradeFor: string;
   datePublished: Date;
   categoryType: string;
-  contentText: string;
 }
 
 interface AddressInterface {

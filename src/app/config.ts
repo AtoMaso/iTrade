@@ -4,10 +4,10 @@
       debugOn: false,   
     },
 
-    appKeys: {   
-      numberOfImages: 5,
-      totalNumberOfImages: 50
-    },
+    //appKeys: {   
+    //  numberOfImages: 5,
+    //  totalNumberOfImages: 50
+    //},
 
 
     baseUrls: {

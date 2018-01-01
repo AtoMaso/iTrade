@@ -3,83 +3,100 @@
   [
     {
       "tradeId": 1,
-      "title": "Baloon",
+      "title": "Baloon for coffee table",
+      "traderId": 1,
       "traderName": "Mirko Srbinovski",
       "datePublished": "11/10/2017",
-      "categoryType": "toy",
-      "contentText": "Explantion for trade"
+      "categoryType": "Toy",
+      "content": "Explantion for trade"
     },
     {
       "tradeId": 2,
-      "title": "TV",
-      "traderName": "Mirko Srbinovski",
+      "title": "TV for a push bike",
+      "traderId": 2,
+      "traderName": "Nenad Srbinovski",
       "datePublished": "11/10/2017",
-      "categoryType": "toy",
-      "contentText": "Explantion for trade"
+      "categoryType": "Electronics",
+      "content": "Explantion for trade"
     },
     {
       "tradeId": 3,
-      "title": "TV for Video",
-      "traderName": "Mirko Srbinovski",
+      "title": "TV for DVD recorder",
+      "traderId": 3,
+      "traderName": "Dana Srbinovska",
       "datePublished": "11/10/2017",
-      "categoryType": "toy",
-      "contentText": "Explantion for trade"
+      "categoryType": "Electronics",
+      "content": "Explantion for trade"
     },
     {
       "tradeId": 4,
-      "title": "Bike",
-      "traderName": "Mirko Srbinovski",
+      "title": "Bike for push bike",
+      "traderId": 4,
+      "traderName": "Monika Srbinovska",
       "datePublished": "11/10/2017",
-      "categoryType": "toy",
-      "contentText": "Explantion for trade"
+      "categoryType": "Exersize",
+      "willTradeFor": "123456789012",
+      "content": "Explantion for trade"
     },
     {
       "tradeId": 5,
-      "title": "Bike  Mountain",
+      "title": "Mountain bike for a  trailer xxxxxxxx",
+      "traderId": 1,
       "traderName": "Mirko Srbinovski",
       "datePublished": "11/10/2017",
-      "categoryType": "toy",
-      "contentText": "Explantion for trade"
+      "categoryType": "Exersize",
+      "willTradeFor": "",
+      "content": "Explantion for trade"
     },
     {
       "tradeId": 6,
-      "title": "Car Ford",
-      "traderName": "Mirko Srbinovski",
+      "title": "Car Ford for car toyota",
+      "traderId": 2,
+      "traderName": "Nenad Srbinovski",
       "datePublished": "11/10/2017",
-      "categoryType": "toy",
-      "contentText": "Explantion for trade"
+      "categoryType": "Vehicle",
+      "willTradeFor": "",
+      "content": "Explantion for trade"
     },
     {
       "tradeId": 7,
-      "title": "Car Toyota",
-      "traderName": "Mirko Srbinovski",
+      "title": "Car Toyota for car ford",
+      "traderId": 3,
+      "traderName": "Dana Srbinovska",
       "datePublished": "11/10/2017",
-      "categoryType": "toy",
-      "contentText": "Explantion for trade"
+      "categoryType": "Vehicle",
+      "willTradeFor": "",
+      "content": "Explantion for trade"
     },
     {
       "tradeId": 8,
-      "title": "Track",
-      "traderName": "Mirko Srbinovski",
+      "title": "Track for cars",
+      "traderId": 4,
+      "traderName": "Monika Srbinovska",
       "datePublished": "11/10/2017",
-      "categoryType": "toy",
-      "contentText": "Explantion for trade"
+      "categoryType": "Vehicle",
+      "willTradeFor": "",
+      "content": "Explantion for trade"
     },
     {
       "tradeId": 9,
-      "title": "Plain",
+      "title": "Airoplain for a track ",
+      "traderId": 1,
       "traderName": "Mirko Srbinovski",
       "datePublished": "11/10/2017",
-      "categoryType": "toy",
-      "contentText": "Explantion for trade"
+      "categoryType": "Vehicle",
+      "willTradeFor": "",
+      "content": "Explantion for trade"
     },
     {
       "tradeId": 10,
-      "title": "Horse",
-      "traderName": "Mirko Srbinovski",
+      "title": "Horse for car",
+      "traderId": 2,
+      "traderName": "Nenad Srbinovski",
       "datePublished": "11/10/2017",
-      "categoryType": "toy",
-      "contentText": "Explantion for trade"
+      "categoryType": "Animal",
+      "willTradeFor": "",
+      "content": "Explantion for trade"
     }
   ]
 }

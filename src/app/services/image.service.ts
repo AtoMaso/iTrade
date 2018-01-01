@@ -23,6 +23,15 @@ export class ImageService {
           .catch(error => this.onError(error, "GetImages"));
     }
 
+
+  public getImagesById(id:number) {
+
+    return this._http.get("../assets/images.json/tradeId =" + id)
+      .map((response: Response) => <Image[]>response.json().data)
+      .catch(error => this.onError(error, "GetImages"));
+  }
+
+
     //******************************************************
     // PRIVATE METHODS
     //******************************************************
