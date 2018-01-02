@@ -21,13 +21,20 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "styles": [      
+      "styles": [
+        "../../assets/css/bootstrap3.3.7.min.cs",
+        "../../assets/css/slate-bootstrap-theme.min.css",
+        "../../assets/css/carousel.css",
+        "../../assets/css/carousel.component.css",
+        "../../assets/css/spinnerone.component.css",
+        "../../assets/css/site.css",
         "styles.scss"
       ],
       "scripts": [
+        "../../assets/js/site.js",
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/tether/dist/js/tether.min.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.min.js"      
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

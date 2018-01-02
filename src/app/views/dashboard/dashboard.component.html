@@ -1,19 +1,21 @@
 
  <div class="container col-md-12">
 
-      <div class="container justify-content-md-center col-md-12">
+      <div class="container justify-content-md-center col-md-12 ">
 
               <div id="accordion" class="panel-group col-4" *ngFor="let trade of trades | SortTradesByDatePipe: D  | TopTradesPipe: 10">
 
                        <div class="panel panel-info" style="border-width:medium;">
 
                             <!-- heading section--> 
-                            <div class="panel-heading">
-                              <div class="panel-title">
-                                <!--<div class="label label-default textgray">-->                                  
-                                  <label class="label label-default textgray" style="width :180px;overflow:hidden;display:inline-block;text-overflow: ellipsis;white-space: nowrap; text-align:center;">  Title : {{ trade.title }}</label>
-                                <!--</div>-->
-                              </div>
+                            <div class="panel-heading" style="background-color:dimgray;">
+                              <!--<div class="panel-title" >-->         
+                                <strong>                                
+                                  <label class="textwhite" style="width :180px;overflow:hidden;display:inline-block;text-overflow: ellipsis;white-space: nowrap; text-align:left;vertical-align:middle;">
+                                    Title: {{ trade.title }}
+                                  </label>
+                                </strong>                            
+                              <!--</div>-->
                             </div>
 
                             <!-- body section-->
@@ -27,7 +29,7 @@
                                           <a href="" [routerLink]="['Trader', {id: trade.traderId}]" class="text-info" style="text-decoration:underline;max-width:200px;"><strong>{{ trade.traderName }}</strong></a>
                                 </div>
                                
-                                <div style="align-content:center; width:165px; margin-left:8px; margin-top:15px;">
+                                <div style="align-content:center;  margin-left:8px; margin-top:15px;">
                                         <css-carousel  style="align-content:center;" id="{{ trade.tradeId }}" [tradeId] ="trade.tradeId"></css-carousel>
                                 </div>
                               </div>
