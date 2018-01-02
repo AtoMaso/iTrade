@@ -19,6 +19,8 @@ export class CSSCarouselComponent implements OnInit {
   
   public allImages: Image[] = [];
   public tradeImages: Image[] = []; 
+  public cariouselId: string = "myCarousel";
+  public leftRight: string = "#myCarousel";
 
   private isVisible: boolean = true;
   private image1Url: string;
@@ -59,7 +61,11 @@ export class CSSCarouselComponent implements OnInit {
 
 
   public getImagesById(passedId, passedImages) {
-    
+
+    this.cariouselId = this.cariouselId + String( passedId );
+    this.leftRight = this.leftRight + String( passedId );
+
+
     for (let x = 0; x < passedImages.length-1; x++) {
       if (+passedImages[x].tradeId === passedId) { 
                 this.tradeImages.push(passedImages[x]);
