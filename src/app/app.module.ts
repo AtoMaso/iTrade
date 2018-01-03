@@ -36,6 +36,11 @@ import { CSSCarouselComponent } from './views/controls/carousel.component';
 import { TopTradesPipe, SortTradesByDatePipe } from './helpers/pipes';
 
 
+export function init_app(processMessageService: ProcessMessageService) {
+  return () => processMessageService.getProcessMessage();
+}
+
+
 @NgModule({
 
   declarations: [
