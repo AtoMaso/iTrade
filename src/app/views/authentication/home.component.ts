@@ -7,7 +7,7 @@ import { PageTitle } from '../../helpers/classes';
 
 @Component({
     selector: 'userhome-app',
-    templateUrl: './app/views/authentication/home.component.html',
+    templateUrl: './home.component.html',
 })
 
 

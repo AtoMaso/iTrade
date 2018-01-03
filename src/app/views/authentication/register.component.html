@@ -1,43 +1,43 @@
 ﻿
-        <form [formGroup]="registerGroup" (submit)="register()" *ngIf="!submited" class="container col-md-offset-1">
+        <form [formGroup]="registerGroup" (submit)="register()" *ngIf="!submited" class="container col-md-12">
 
-          <div class="row container">
+          <div class="container col-md-12">
 
                 <div class="col-md-3 col-md-offset-1">
 
                        
-                          <div class="row smalltext textgray">
+                          <div class="row">
                             <label for="name">Name</label>
                           </div>
                                                 
-                          <div class="row form-group smalltext textgray">
+                          <div class="row form-group">
                             <input type="text" formControlName="name" id="name" maxlength="40" placeholder="Your name...." required>
                             <control-messages [control]="registerGroup.controls.name" class="text-danger"></control-messages>
                           </div>                        
 
-                          <div class="row smalltext textgray">
+                          <div class="row">
                             <label for="email">Email</label>
                           </div>
                                           
-                          <div class="row form-group smalltext textgray">
+                          <div class="row form-group">
                             <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
                             <control-messages [control]="registerGroup.controls.email" class="text-danger"></control-messages>
                          </div>
                                      
-                         <div class="row smalltext textgray">
+                         <div class="row">
                             <label for="password">Password</label>
                          </div>
                                               
-                          <div class="row form-group smalltext textgray">
+                          <div class="row form-group">
                             <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
                             <control-messages [control]="registerGroup.controls.password" class="text-danger"></control-messages>
                           </div>                           
                         
-                          <div class="row smalltext textgray">
+                          <div class="row">
                             <label for="confirmPassword">Confirm Password</label>
                           </div>                       
                         
-                          <div class="row form-group smalltext textgray">
+                          <div class="row form-group">
                             <input type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="40" placeholder="Your password again...." required>
                             <control-messages [control]="registerGroup.controls.confirmPassword" class="text-danger"></control-messages>
                           </div>                       
@@ -49,7 +49,7 @@
 
                 
 
-                <div class="col-md-7">
+                <div class="col-md-7 col-md-offset-1">
              
                         <div class="row panel panel-body textgray">
                                 <p><strong>Help</strong></p>

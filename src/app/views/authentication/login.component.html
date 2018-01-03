@@ -1,27 +1,27 @@
 ﻿
-        <form  [formGroup]="loginGroup" (submit)="login()" class="container col-md-offset-1">
+        <form  [formGroup]="loginGroup" (submit)="login()" class="container col-md-12">
 
-            <div class="row container" >
+            <div class="container col-md-12" >
 
                      <div class="col-sm-3 col-sm-offset-1">
                        
-                           <div class="row smalltext textgray">
+                           <div class="row">
                               <label for="email">Email</label>
                            </div>
                                                     
-                            <div class="row form-group smalltext textgray">
+                            <div class="row form-group">
                               <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
                               <control-messages [control]="loginGroup.controls.email" class="text-danger"></control-messages>
                             </div>                         
 
                          
-                           <div class="row smalltext textgray">
+                           <div class="row">
                               <label for="password">Password</label>
                            </div>                         
                                            
-                           <div class="row form-group smalltext textgray">
-                              <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
-                              <control-messages [control]="loginGroup.controls.password" class="text-danger"></control-messages>
+                           <div class="row form-group">
+                             <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
+                             <control-messages [control]="loginGroup.controls.password" class="text-danger"></control-messages>
                            </div>                         
 
                           <div class="row form-group" style="margin-top:40px;">
@@ -32,7 +32,7 @@
 
 
 
-                    <div class="col-sm-7">
+                    <div class="col-sm-7 col-md-offset-1">
 
                             <div class="row panel panel-heading textgray">
                                   <p><strong>Help</strong></p>
