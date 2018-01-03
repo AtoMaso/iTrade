@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule, JsonpModule } from '@angular/http';
 //import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -35,8 +35,8 @@ import { SpinnerOneComponent } from './blocks/spinner/spinnerone.component';
 import { CSSCarouselComponent } from './views/controls/carousel.component';
 import { TopTradesPipe, SortTradesByDatePipe } from './helpers/pipes';
 
-
-export function init_app(processMessageService: ProcessMessageService) {
+//initialises the process message service to get all process messages 
+export function getprocessmessages(processMessageService: ProcessMessageService) {
   return () => processMessageService.getProcessMessage();
 }
 
@@ -79,7 +79,10 @@ export function init_app(processMessageService: ProcessMessageService) {
 
   providers: [TradeApiService, MessageService, ValidationService,
                   AuthenticationService, ProcessMessageService,
-                  PageTitleService, LoggerService],
+                  PageTitleService, LoggerService,
+                   // to initialise a service when application starts in this case to get all process messages when starts
+                { provide: APP_INITIALIZER, useFactory: getprocessmessages, deps: [ProcessMessageService], multi: true } 
+  ],  
 
   bootstrap: [AppComponent]
                

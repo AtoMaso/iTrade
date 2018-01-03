@@ -11,7 +11,7 @@ import {ProcessMessage } from '../helpers/classes';
 
 
 @Injectable()
-export class ProcessMessageService implements OnInit {
+export class ProcessMessageService {
 
     public allProcessMessages: ProcessMessage[]= [];
     public _behaviorProcessMessageStore: BehaviorSubject<ProcessMessage> = new BehaviorSubject(null);
@@ -20,17 +20,13 @@ export class ProcessMessageService implements OnInit {
     public _behaviorRouteStore: BehaviorSubject<string> = new BehaviorSubject(null);
     public _behaviorRouteObserver$: Observable<string> = this._behaviorRouteStore.asObservable(); 
 
-    constructor(private httpService: Http, private loggerService: LoggerService) {};
-
-  ngOnInit() {
-        this.getProcessMessage();
-  }
+  constructor(private httpService: Http, private loggerService: LoggerService) { };
 
 
   //******************************************************
   // GET PROCESS MESSAGE
   //******************************************************
-  // method called in the contructor to initialis all process messages
+  // method called from the appmodule to initialis all process messages
   public getProcessMessage() {
 
     this.getProcessMessagesFromRepository().subscribe(
@@ -42,8 +38,8 @@ export class ProcessMessageService implements OnInit {
   public getProcessMessagesFromRepository(): Observable<ProcessMessage[]> {
 
     return this.httpService.get("../assets/processmessages.json")
-      .map((messages: Response) => <ProcessMessage[]>messages.json().data)
-      .catch((error: Response) => this.onError(error, "GetProcessmessageFromRepository"));
+            .map((messages: Response) => <ProcessMessage[]>messages.json().data)
+            .catch((error: Response) => this.onError(error, "GetProcessmessageFromRepository"));
   }
 
   
@@ -55,19 +51,9 @@ export class ProcessMessageService implements OnInit {
           if (id == "PME") {
               pm.text = message;
           }
-
           this._behaviorProcessMessageStore.next(pm);
-
     }
-
-  
-  // // get process message based on the message id
-  //public getProcessMessageById(id: string): ProcessMessage {         
-  //        return this.allProcessMessages.find(pm => pm.id === id);   
-  //  }
    
- 
-  
 
     // raises the event which the app component is subcribed to
     // and the messageis passed to the child control on the app component
@@ -78,14 +64,12 @@ export class ProcessMessageService implements OnInit {
     //******************************************************
     // PRIVATE METHODS
     //******************************************************
-  
-
     // logs errors to the web api side
-    private onError(err: any, method:string) {      
-      this.loggerService.logErrors(err, "processmessage.service had an error in the method " + method);
-      return Observable.throw(err);
-      //this._loggerService.logErrors(error, "processmessage.service");            
-      //return Observable.throw(error.json().error || 'Server error');
+  private onError(err: any, method: string) {
+    this.loggerService.logErrors(err, "processmessage.service had an error in the method " + method);
+    return Observable.throw(err.json().error || 'Server error');
+      //this.loggerService.logErrors(err, "processmessage.service");            
+      //return Observable.throw(err.json().error || 'Server error');
     }
 
 }
