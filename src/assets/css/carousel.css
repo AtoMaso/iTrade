@@ -12,8 +12,8 @@ body {
 
 /* Carousel base class */
 .carousel {
-  height: 165px;
-  width: 165px;
+  height: 250px;
+  width: auto;
 
 }
 /* Since positioning the image, we need to help out the caption */
@@ -23,8 +23,8 @@ body {
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 165px;
-  width: 165px;
+  height: 250px;
+  width: auto;
 
   /*background-color: #777;*/
 }
@@ -32,10 +32,12 @@ body {
   position: absolute;
   top: 0;
   min-width: 100%;
-  height: 165px;
-  width: 165px;
-
+  height: 250px;
+  width: auto;
+  transition:ease-in-out 
 }
+
+
 
  /* Bump up size of carousel content */
   .carousel-caption p {    
@@ -48,11 +50,31 @@ body {
   }  
 
 
-
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
 @media (min-width: 500px) {  
 
  
+}
+
+.carousel.fade {
+     opacity: 1;
+}
+.carousel.fade .item {
+    transition: opacity ease-out 2.0s;  
+    left: 0;
+    opacity: 0; /* hide all slides */
+    top: 0;
+    position: absolute;
+    width: 100%;
+    display: block;
+}
+.carousel.fade .item:first-child {
+    top: auto;
+    opacity: 1; /* show first slide */
+    position: relative;
+}
+.carousel.fade .item.active {
+    opacity: 1;
 }

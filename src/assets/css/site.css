@@ -3,15 +3,50 @@
 }
 
 input {
-     background-color:wheat;
-     color:black;
+     background-color:blanchedalmond;     
+     color:gray;
      height:auto;
-     font-family:Arial;
+     font-family:Verdana;
      font-size:small;
+     width:200px;
 }
 
 button {
+    font-family:Verdana;
+    font-size:medium;
     width:150px;
+}
+
+label {
+    font-family:Verdana;
+    font-size:small;
+    color:gray;
+}
+
+.restriction {
+        width:250px;      
+        overflow:hidden;
+        display:inline-block;
+        text-overflow: ellipsis;
+        white-space: nowrap; 
+        text-align:left;
+        vertical-align:middle;
+}
+
+.restrictionname {
+        text-decoration:underline;
+        width:250px;
+        overflow:hidden;
+        display:inline-block;
+        text-overflow: ellipsis;
+        white-space: nowrap; 
+        text-align:left;
+        vertical-align:middle;
+}
+
+.messagespan {
+    font-family:Verdana;
+    font-size:x-small;
 }
 
 .linkcolor {
@@ -101,7 +136,6 @@ button {
     color:forestgreen;
 }
 
-
 .textgray {
     color:darkgray;
 }
@@ -110,6 +144,10 @@ button {
 }
 .textwhite {
     color:white;
+}
+
+.textdimgrey{
+    color:dimgrey;
 }
 
 .textdarkgray {
@@ -131,6 +169,12 @@ button {
 .greenbackground {
      background-color:green;
 }
+
+.dimgreybackground {
+    background-color:dimgrey;
+}
+
+
 
 .ng-valid[required] {
   border-left: 7px solid #42A948; /* green */
@@ -182,7 +226,7 @@ button {
 	background: linear-gradient(to top right,Gray, Lightgray, Gray);
 }
 
-
+.col-mirko-4 { width: 33.333333%; }
 
 
 
