@@ -35,7 +35,7 @@ label {
 
 .restrictionname {
         text-decoration:underline;
-        width:250px;
+        width:170px;
         overflow:hidden;
         display:inline-block;
         text-overflow: ellipsis;

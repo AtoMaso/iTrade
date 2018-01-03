@@ -33,9 +33,8 @@ export class TradeApiService {
   public getTradesLocal(): any {
 
     return this.httpService.get('../assets/trades.json')
-
-      .map((response: Response) => response.json().data)
-      .catch((response: Response) => this.logError(response, "GetTradesLocally"));
+                .map((response: Response) => response.json().data)
+                .catch((response: Response) => this.logError(response, "GetTradesLocally"));
 
   }
 

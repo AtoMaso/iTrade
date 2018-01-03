@@ -45,9 +45,9 @@ export class DashboardComponent implements OnInit {
   //*****************************************************
   getTrades() {
           this.tradeapiService.getTradesLocal()
-            .subscribe(
-                (data: Trade[]) => { this.trades = data, this.isRequesting = false }
-                , (data: Response) => this.onError(data));
+              .subscribe(
+                    (data: Trade[]) => { this.trades = data, this.isRequesting = false }
+                    , (data: Response) => this.onError(data));
   }
 
 

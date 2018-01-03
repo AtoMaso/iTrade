@@ -16,7 +16,7 @@ import { ControlMessages } from '../controls/control-messages.component';
 
 @Component({
     selector: 'register-view',
-    templateUrl: './register.component.html'   
+    templateUrl: './register.component.html'
 })
 
 export class RegisterComponent implements OnInit {
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
     this.trader.name = this.registerGroup.controls.name.value;
     this.trader.email = this.registerGroup.controls.email.value;
     this.trader.password = this.registerGroup.controls.password.value;
-    this.trader.confirmPassword = this.registerGroup.controls.confirmpassword.value;
+    this.trader.confirmPassword = this.registerGroup.controls.confirmPassword.value;
 
     if (this.ComparePasswords(this.trader)) {
       this.authenticationService.register(this.trader)
@@ -84,9 +84,9 @@ export class RegisterComponent implements OnInit {
         this.messageService.emitProcessMessage("PMRS");
     }
 
-    //// toggles the submitted flag which should disable the form and
-    //// show the succes small form
-    //private onSubmit() { this.submitted = true; }
+    // toggles the submitted flag which should disable the form and
+    // show the succes small form
+    private onSubmit() { this.submitted = true; }
 
 
     //****************************************************

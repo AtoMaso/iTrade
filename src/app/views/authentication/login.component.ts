@@ -15,7 +15,7 @@ import { ControlMessages } from '../controls/control-messages.component';
 
 @Component({
     selector: 'login-view',
-    templateUrl: './login.component.html',
+     templateUrl: './login.component.html'
 })
 
 

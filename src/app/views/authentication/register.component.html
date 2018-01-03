@@ -1,72 +1,73 @@
 ﻿
-        <form [formGroup]="registerGroup" (submit)="register()" *ngIf="!submited" class="container col-md-12">
+       <div *ngIf="!submitted">
+  <form  [formGroup]="registerGroup" (submit)="register()" *ngIf="!submited" class="container col-md-12">
 
-          <div class="container col-md-12">
+    <div class="container col-md-12">
 
-                <div class="col-md-3 col-md-offset-1">
+      <div class="col-md-3 col-md-offset-1">
 
-                       
-                          <div class="row">
-                            <label for="name">Name</label>
-                          </div>
-                                                
-                          <div class="row form-group">
-                            <input type="text" formControlName="name" id="name" maxlength="40" placeholder="Your name...." required>
-                            <control-messages [control]="registerGroup.controls.name" class="text-danger"></control-messages>
-                          </div>                        
 
-                          <div class="row">
-                            <label for="email">Email</label>
-                          </div>
-                                          
-                          <div class="row form-group">
-                            <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
-                            <control-messages [control]="registerGroup.controls.email" class="text-danger"></control-messages>
-                         </div>
-                                     
-                         <div class="row">
-                            <label for="password">Password</label>
-                         </div>
-                                              
-                          <div class="row form-group">
-                            <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
-                            <control-messages [control]="registerGroup.controls.password" class="text-danger"></control-messages>
-                          </div>                           
-                        
-                          <div class="row">
-                            <label for="confirmPassword">Confirm Password</label>
-                          </div>                       
-                        
-                          <div class="row form-group">
-                            <input type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="40" placeholder="Your password again...." required>
-                            <control-messages [control]="registerGroup.controls.confirmPassword" class="text-danger"></control-messages>
-                          </div>                       
-                      
-                          <div class="row" style="margin-top:40px;">                          
-                              <button class="btn-success"  type="submit" [disabled]="!registerGroup.valid">Register</button>                       
-                          </div>                
-                </div>
+        <div class="row">
+          <label for="name">Name</label>
+        </div>
 
-                
+        <div class="row form-group">
+          <input type="text" formControlName="name" id="name" maxlength="40" placeholder="Your name...." required>
+          <control-messages [control]="registerGroup.controls.name" class="text-danger"></control-messages>
+        </div>
 
-                <div class="col-md-7 col-md-offset-1">
-             
-                        <div class="row panel panel-body textgray">
-                                <p><strong>Help</strong></p>
-                                Please provide all required information needed (marked in red) to register to the application.
-                                <ul>                  
-                                        <li>The name should contain your first and second name only and with maximum of 50 characters in length. </li>
-                                        <li>Your username will be your email account. </li>                                      
-                                        <li>The application will allow email of 70 characters in length".</li>                                      
-                                        <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>                       
-                                </ul>
-                        </div>
-     
-                </div>
+        <div class="row">
+          <label for="email">Email</label>
+        </div>
 
-          </div>
-        
-        </form>
+        <div class="row form-group">
+          <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
+          <control-messages [control]="registerGroup.controls.email" class="text-danger"></control-messages>
+        </div>
+
+        <div class="row">
+          <label for="password">Password</label>
+        </div>
+
+        <div class="row form-group">
+          <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
+          <control-messages [control]="registerGroup.controls.password" class="text-danger"></control-messages>
+        </div>
+
+        <div class="row">
+          <label for="confirmPassword">Confirm Password</label>
+        </div>
+
+        <div class="row form-group">
+          <input type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="40" placeholder="Your password again...." required>
+          <control-messages [control]="registerGroup.controls.confirmPassword" class="text-danger"></control-messages>
+        </div>
+
+        <div class="row" style="margin-top:40px;">
+          <button class="btn-success" type="submit" [disabled]="!registerGroup.valid">Register</button>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-7 col-md-offset-1" style="margin-top:30px;">
+
+        <div class="row panel panel-body textgray">
+          <p><strong>Help</strong></p>
+          Please provide all required information needed (marked in red) to register to the application.
+          <ul>
+            <li>The name should contain your first and second name only and with maximum of 50 characters in length. </li>
+            <li>Your username will be your email account. </li>
+            <li>The application will allow email of 70 characters in length".</li>
+            <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+</div>
 
 
         <div *ngIf="submitted">
@@ -93,7 +94,29 @@
 
 
 
-
-
+<!-- expandable help -->
+<!--<div class="row panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-body">
+   
+    <h4 class="panel-title">
+      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        Expand for Help
+      </a>
+    </h4>
+   
+    <div id="collapseOne" class="panel textgray panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+      
+        Please provide all required information needed (marked in red) to register to the application.
+        <ul>
+          <li>The name should contain your first and second name only and with maximum of 50 characters in length. </li>
+          <li>Your username will be your email account. </li>
+          <li>The application will allow email of 70 characters in length".</li>
+          <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>-->
 
 
