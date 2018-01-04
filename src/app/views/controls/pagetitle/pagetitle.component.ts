@@ -1,5 +1,5 @@
 ﻿import { Component, Input} from '@angular/core';
-import { PageTitle } from '../../helpers/classes';
+import { PageTitle } from '../../../helpers/classes';
 
 @Component({
   selector: 'page-title',

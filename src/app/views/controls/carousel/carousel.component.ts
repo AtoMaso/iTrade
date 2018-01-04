@@ -1,17 +1,17 @@
 ﻿import { Component, Input, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
-import { CONFIG } from '../../config';
+import { CONFIG } from '../../../config';
 
-import { ImageService } from '../../services/image.service';
-import { LoggerService } from '../../services/logger.service';
-import { ProcessMessageService } from '../../services/processmessage.service';
-import { Image } from '../../helpers/classes';
+import { ImageService } from '../../../services/image.service';
+import { LoggerService } from '../../../services/logger.service';
+import { ProcessMessageService } from '../../../services/processmessage.service';
+import { Image } from '../../../helpers/classes';
 
 
 @Component({
     selector: 'css-carousel',   
     templateUrl: './carousel.component.html',
-    styleUrls: ['../../../assets/css/carousel.component.css'],
+    styleUrls: ['../../../../assets/css/carousel.component.css'],
     providers: [ImageService]
 })
 

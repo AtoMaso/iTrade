@@ -27,12 +27,12 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { LoginComponent } from './views/authentication/login.component';
 import { RegisterComponent } from './views/authentication/register.component';
 import { MessagesComponent } from './views/messages/messages.component';
-import { ControlMessages } from './views/controls/control-messages.component';
-import { ProcessMessagesComponent } from './views/controls/process-messages.component';
-import { PageTitleComponent } from './views/controls/pagetitle.component';
-import { ModalComponent } from './views/controls/modal.component';
-import { SpinnerOneComponent } from './blocks/spinner/spinnerone.component';
-import { CSSCarouselComponent } from './views/controls/carousel.component';
+import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
+import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
+import { PageTitleComponent } from './views/controls/pagetitle/pagetitle.component';
+import { ModalComponent } from './views/controls/modal/modal.component';
+import { SpinnerOneComponent } from './views/controls/spinner/spinnerone.component';
+import { CSSCarouselComponent } from './views/controls/carousel/carousel.component';
 import { TopTradesPipe, SortTradesByDatePipe } from './helpers/pipes';
 import { ExpandapanelComponent } from './views/expandapanel/expandapanel.component';
 

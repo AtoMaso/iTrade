@@ -12,7 +12,7 @@ import { ProcessMessageService } from './services/processmessage.service';
 import { PageTitleService } from './services/pagetitle.service';
 
 //components
-import { ModalComponent } from './views/controls/modal.component';
+import { ModalComponent } from './views/controls/modal/modal.component';
 import { ProcessMessagesComponent } from './views/controls/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle.component';
 import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } from './helpers/classes';

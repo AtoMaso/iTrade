@@ -11,16 +11,16 @@ export class SpinnerOneComponent implements OnDestroy {
 
   private str: string;
     private currentTimeout: number;
-    private isDelayedRunning: boolean = true;
+    private isDelayedRunning: boolean = false;
 
     @Input()
-    public delay: number = 3000;    
+    public delay: number = 300;    
 
     @Input()
     public set isRunning(value: boolean) {
         if (!value) {
             this.cancelTimeout();   
-            this.isDelayedRunning = true;                           
+            this.isDelayedRunning = false;                           
         }
 
         if (this.currentTimeout) {

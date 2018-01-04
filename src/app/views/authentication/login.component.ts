@@ -11,7 +11,7 @@ import { ProcessMessageService } from '../../services/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle.service';
 
 import { Trader, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
-import { ControlMessages } from '../controls/control-messages.component';
+import { ControlMessages } from '../controls/controlmessages/control-messages.component';
 
 @Component({
     selector: 'login-view',

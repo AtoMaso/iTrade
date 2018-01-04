@@ -5,8 +5,8 @@ import { LoggerService } from '../../services/logger.service';
 import { ProcessMessageService } from '../../services/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle.service';
 
-import { SpinnerOneComponent } from '../../blocks/spinner/spinnerone.component';
-import { CSSCarouselComponent } from '../controls/carousel.component';
+import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
+import { CSSCarouselComponent } from '../controls/carousel//carousel.component';
 import { TopTradesPipe, SortTradesByDatePipe } from '../../helpers/pipes';
 import { PageTitle, Trade } from '../../helpers/classes';
 
