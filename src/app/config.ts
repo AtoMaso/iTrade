@@ -4,12 +4,6 @@
       debugOn: false,   
     },
 
-    //appKeys: {   
-    //  numberOfImages: 5,
-    //  totalNumberOfImages: 50
-    //},
-
-
     baseUrls: {
         servicebase: 'http://localhost:5700/',
         accounts: 'http://localhost:5700/api/account/',

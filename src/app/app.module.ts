@@ -34,7 +34,7 @@ import { ModalComponent } from './views/controls/modal.component';
 import { SpinnerOneComponent } from './blocks/spinner/spinnerone.component';
 import { CSSCarouselComponent } from './views/controls/carousel.component';
 import { TopTradesPipe, SortTradesByDatePipe } from './helpers/pipes';
-import { ExpandapanelComponent } from './expandapanel/expandapanel.component';
+import { ExpandapanelComponent } from './views/expandapanel/expandapanel.component';
 
 //initialises the process message service to get all process messages 
 export function getprocessmessages(processMessageService: ProcessMessageService) {
