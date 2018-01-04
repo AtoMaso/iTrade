@@ -13,8 +13,8 @@ import { PageTitleService } from './services/pagetitle.service';
 
 //components
 import { ModalComponent } from './views/controls/modal/modal.component';
-import { ProcessMessagesComponent } from './views/controls/process-messages.component';
-import { PageTitleComponent } from './views/controls/pagetitle.component';
+import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
+import { PageTitleComponent } from './views/controls/pagetitle/pagetitle.component';
 import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } from './helpers/classes';
 
 

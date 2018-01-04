@@ -11,6 +11,7 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the
                                                                                          //NgIdleModule but includes keepalive providers for easy wireup
 
 //services
+import { AuthGuard } from  './services/auth.guard';
 import { AuthenticationService } from './services/authentication.service';
 import { ProcessMessageService } from './services/processmessage.service';
 import { PageTitleService } from './services/pagetitle.service';
@@ -77,11 +78,12 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     //)
   ],
 
-  providers: [TradeApiService, MessageService, ValidationService,
-                  AuthenticationService, ProcessMessageService,
-                  PageTitleService, LoggerService,
-                   // to initialise a service when application starts in this case to get all process messages when starts
-                { provide: APP_INITIALIZER, useFactory: getprocessmessages, deps: [ProcessMessageService], multi: true } 
+  providers: [
+    TradeApiService, MessageService, ValidationService,
+    AuthenticationService, ProcessMessageService,
+    PageTitleService, LoggerService, AuthGuard,
+     // to initialise a service when application starts in this case to get all process messages when starts
+    { provide: APP_INITIALIZER, useFactory: getprocessmessages, deps: [ProcessMessageService], multi: true } 
   ],  
 
   bootstrap: [AppComponent]
