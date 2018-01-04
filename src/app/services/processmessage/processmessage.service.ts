@@ -6,8 +6,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { LoggerService } from './logger.service';
-import {ProcessMessage } from '../helpers/classes';
+import { LoggerService } from '../logger/logger.service';
+import {ProcessMessage } from '../../helpers/classes';
 
 
 @Injectable()

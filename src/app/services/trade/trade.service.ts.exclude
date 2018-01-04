@@ -7,7 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Trade } from '../helpers/classes';
 import { MessageService } from './message.service';
-import { ProcessMessageService } from './processmessage.service';
+import { ProcessMessageService } from '../processmessage/processmessage.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

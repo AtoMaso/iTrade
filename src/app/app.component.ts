@@ -7,9 +7,9 @@ import { Keepalive } from '@ng-idle/keepalive';
 
 //services
 //import { AuthCheck } from './services/authcheck';
-import { AuthenticationService } from './services/authentication.service';
-import { ProcessMessageService } from './services/processmessage.service';
-import { PageTitleService } from './services/pagetitle.service';
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { ProcessMessageService } from './services/processmessages/processmessage.service';
+import { PageTitleService } from './services/pagetitle/pagetitle.service';
 
 //components
 import { ModalComponent } from './views/controls/modal/modal.component';

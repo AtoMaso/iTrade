@@ -1,6 +1,6 @@
 ﻿import { Directive, Attribute, ElementRef, ViewContainerRef, ChangeDetectorRef, ComponentFactoryResolver } from '@angular/core'; //DynamicComponentLoader
 import { Router, RouterOutlet, ComponentInstruction } from '@angular/router'; 
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../services/authentication/authentication.service';
 
 @Directive({
     selector: 'router-outlet'

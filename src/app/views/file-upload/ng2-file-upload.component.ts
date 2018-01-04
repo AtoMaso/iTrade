@@ -5,7 +5,7 @@ import { NgClass, NgStyle} from '@angular/common';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload'; // FILE_UPLOAD_DIRECTIVES
 import { CONFIG } from '../../config';
 
-import { ProcessMessageService } from '../../services/processmessage.service';
+import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
 import { UserSession, UserIdentity, Authentication} from '../../helpers/classes';
 
 let uploadsUrl = CONFIG.baseUrls.uploads;

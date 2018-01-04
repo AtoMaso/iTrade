@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TradeApiService } from '../../services/tradeapi.service';
-import { LoggerService } from '../../services/logger.service';
-import { ProcessMessageService } from '../../services/processmessage.service';
-import { PageTitleService } from '../../services/pagetitle.service';
+import { TradeApiService } from '../../services/tradeapi/tradeapi.service';
+import { LoggerService } from '../../services/logger/logger.service';
+import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
+import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
 import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
 import { CSSCarouselComponent } from '../controls/carousel//carousel.component';

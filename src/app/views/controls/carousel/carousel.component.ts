@@ -2,9 +2,9 @@
 import { Response } from '@angular/http';
 import { CONFIG } from '../../../config';
 
-import { ImageService } from '../../../services/image.service';
-import { LoggerService } from '../../../services/logger.service';
-import { ProcessMessageService } from '../../../services/processmessage.service';
+import { ImageService } from '../../../services/image/image.service';
+import { LoggerService } from '../../../services/logger/logger.service';
+import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { Image } from '../../../helpers/classes';
 
 

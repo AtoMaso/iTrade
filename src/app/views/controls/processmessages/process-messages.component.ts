@@ -1,6 +1,6 @@
 ﻿import { Component, Input} from '@angular/core';
 
-import { ProcessMessageService } from '../../../services/processmessage.service';
+import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { ProcessMessage } from '../../../helpers/classes';
 
 

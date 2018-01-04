@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { PageTitle } from '../helpers/classes';
+import { PageTitle } from '../../helpers/classes';
 
 @Injectable()
 export class PageTitleService {

@@ -11,15 +11,14 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the
                                                                                          //NgIdleModule but includes keepalive providers for easy wireup
 
 //services
-import { AuthGuard } from  './services/auth.guard';
-import { AuthenticationService } from './services/authentication.service';
-import { ProcessMessageService } from './services/processmessage.service';
-import { PageTitleService } from './services/pagetitle.service';
-import { LoggerService } from './services/logger.service';
-import { TradeApiService } from './services/tradeapi.service';
-import { MessageService } from './services/message.service';
-import { ValidationService } from './services/validation.service';
-import { InMemoryDataService } from './services//in-memory-data.service';
+import { AuthGuard } from  './helpers/auth.guard';
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { ProcessMessageService } from './services/processmessages/processmessage.service';
+import { PageTitleService } from './services/pagetitle/pagetitle.service';
+import { LoggerService } from './services/logger/logger.service';
+import { TradeApiService } from './services/tradeapi/tradeapi.service';
+import { MessageService } from './services/message/message.service';
+import { ValidationService } from './services/validation/validation.service';
 //import { AuthCheck } from './services/authcheck';
 
 //components

@@ -1,11 +1,11 @@
 ﻿import { Inject, Injectable, EventEmitter } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { CONFIG } from '../config';
+import { CONFIG } from '../../config';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
-import { LoggerService } from './logger.service';
-import { Address } from '../helpers/classes';
+import { LoggerService } from '../logger/logger.service';
+import { Address } from '../../helpers/classes';
 
 let addressesUrl = CONFIG.baseUrls.addresses;
 

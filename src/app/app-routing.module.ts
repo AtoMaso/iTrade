@@ -5,7 +5,7 @@ import { DashboardComponent }   from './views/dashboard/dashboard.component';
 import { LoginComponent } from './views/authentication/login.component';
 import { RegisterComponent } from './views/authentication/register.component';
 // Import the AuthGuard
-import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './helpers/auth.guard';
 
 
 const routes: Routes = [

@@ -1,12 +1,12 @@
 ﻿import { Inject, Injectable, EventEmitter } from '@angular/core';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import { CONFIG } from '../config';
+import { CONFIG } from '../../config';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
-import { LoggerService } from './logger.service';
-import { AuthenticationService } from './authentication.service';
-import { Trade, UserSession, UserIdentity} from '../helpers/classes';
+import { LoggerService } from '../logger/logger.service';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { Trade, UserSession, UserIdentity} from '../../helpers/classes';
 
 let tradesUrl = CONFIG.baseUrls.trades;
 let tradeUrl = CONFIG.baseUrls.trade;

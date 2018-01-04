@@ -4,11 +4,11 @@ import { Router, } from '@angular/router';
 import { Http, Response } from '@angular/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 
-import { AuthenticationService } from '../../services/authentication.service';
-import { ValidationService } from '../../services/validation.service';
-import { LoggerService } from '../../services/logger.service';
-import { ProcessMessageService } from '../../services/processmessage.service';
-import { PageTitleService } from '../../services/pagetitle.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { ValidationService } from '../../services/validation/validation.service';
+import { LoggerService } from '../../services/logger/logger.service';
+import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
+import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
 import { Trader, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
 import { ControlMessages } from '../controls/controlmessages/control-messages.component';

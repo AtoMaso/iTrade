@@ -3,14 +3,14 @@ import { Inject, Injectable, EventEmitter, OnDestroy} from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 
 import * as moment from 'moment';
-import { CONFIG } from '../config';
+import { CONFIG } from '../../config';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject }    from 'rxjs/Subject';
 
-import { LoggerService } from './logger.service';
-import { Trader, UserSession, Authentication, UserIdentity } from '../helpers/classes';
+import { LoggerService } from '../logger/logger.service';
+import { Trader, UserSession, Authentication, UserIdentity } from '../../helpers/classes';
 
 let serviceBase = CONFIG.baseUrls.servicebase;
 let serviceBaseAccount = CONFIG.baseUrls.accounts;

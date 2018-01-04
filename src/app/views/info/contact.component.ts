@@ -1,7 +1,7 @@
 ﻿import {Component} from '@angular/core';
 
-import { ProcessMessageService } from '../../services/processmessage.service';
-import { PageTitleService } from '../../services/pagetitle.service';
+import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
+import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
 import { PageTitle } from '../../helpers/classes';
 
