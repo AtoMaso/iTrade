@@ -6,15 +6,16 @@ import { ProcessMessage } from '../../helpers/classes';
 
 @Component({
   selector: 'process-messages',
-  template: ` <div [class] = "style"  style="border-width: midium; border-color: darkgray;" *ngIf="errorMessage" >                    
-                          <span [class]= "stylespan"> {{ errorMessage }}</span>
-                    </div>`
-                  
+  template: ` 
+                    <div *ngIf="errorMessage" [class] = "style">                    
+                      <span [class]= "stylespan"> {{ errorMessage }}</span>
+                    </div>
+                `      
 })
 
 export class ProcessMessagesComponent {
-  public style: string = "container panel panel -default col-md-10 col-md-offset-1";
-  public stylespan = "smalltext;"
+  public style: string = "container panel panel-default col-md-10 col-md-offset-1";
+  public stylespan = "messagespan;"
   private errorMessage: string;
 
   // this is the host where this message control is used

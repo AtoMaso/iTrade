@@ -8,7 +8,8 @@ input {
      height:auto;
      font-family:Verdana;
      font-size:small;
-     width:200px;
+     width:250px;
+     height:35px;
 }
 
 button {
@@ -46,7 +47,7 @@ label {
 
 .messagespan {
     font-family:Verdana;
-    font-size:x-small;
+    font-size:small
 }
 
 .linkcolor {

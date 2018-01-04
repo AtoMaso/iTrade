@@ -13,7 +13,7 @@
 
         <div class="row form-group">
           <input type="text" formControlName="name" id="name" maxlength="40" placeholder="Your name...." required>
-          <control-messages [control]="registerGroup.controls.name" class="text-danger"></control-messages>
+          <control-messages [control]="registerGroup.controls.name"></control-messages>
         </div>
 
         <div class="row">
@@ -22,7 +22,7 @@
 
         <div class="row form-group">
           <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
-          <control-messages [control]="registerGroup.controls.email" class="text-danger"></control-messages>
+          <control-messages [control]="registerGroup.controls.email"></control-messages>
         </div>
 
         <div class="row">
@@ -31,7 +31,7 @@
 
         <div class="row form-group">
           <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
-          <control-messages [control]="registerGroup.controls.password" class="text-danger"></control-messages>
+          <control-messages [control]="registerGroup.controls.password"></control-messages>
         </div>
 
         <div class="row">
@@ -40,7 +40,7 @@
 
         <div class="row form-group">
           <input type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="40" placeholder="Your password again...." required>
-          <control-messages [control]="registerGroup.controls.confirmPassword" class="text-danger"></control-messages>
+          <control-messages [control]="registerGroup.controls.confirmPassword"></control-messages>
         </div>
 
         <div class="row" style="margin-top:40px;">
@@ -50,7 +50,7 @@
 
 
 
-      <div class="col-md-7 col-md-offset-1" style="margin-top:30px;">
+      <div class="col-md-7 col-md-offset-1" style="margin-top:40px;">
 
         <div class="row panel panel-body textgray">
           <p><strong>Help</strong></p>
@@ -62,33 +62,58 @@
             <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>
           </ul>
         </div>
-      </div>
 
+        <!-- expandable help -->
+        <!--<div class="row panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-body">
 
-      <!-- expandable help -->
-      <div class="row panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-body">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Expand for Help
+              </a>
+            </h4>
 
-          <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              Expand for Help
-            </a>
-          </h4>
+            <div id="collapseOne" class="panel textgray panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
 
-          <div id="collapseOne" class="panel textgray panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-
-              Please provide all required information needed (marked in red) to register to the application.
-              <ul>
-                <li>The name should contain your first and second name only and with maximum of 50 characters in length. </li>
-                <li>Your username will be your email account. </li>
-                <li>The application will allow email of 70 characters in length".</li>
-                <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>
-              </ul>
+                Please provide all required information needed (marked in red) to register to the application.
+                <ul>
+                  <li>The name should contain your first and second name only and with maximum of 50 characters in length. </li>
+                  <li>Your username will be your email account. </li>
+                  <li>The application will allow email of 70 characters in length".</li>
+                  <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+
+          <div class="panel panel-body">
+
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Expand for Help
+              </a>
+            </h4>
+
+            <div id="collapseTwo" class="panel textgray panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+              <div class="panel-body">
+
+                Please provide all required information needed (marked in red) to register to the application.
+                <ul>
+                  <li>The name should contain your first and second name only and with maximum of 50 characters in length. </li>
+                  <li>Your username will be your email account. </li>
+                  <li>The application will allow email of 70 characters in length".</li>
+                  <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>-->
       </div>
+
+
+     
 
 
     </div>
@@ -97,27 +122,27 @@
 </div>
 
 
-        <div *ngIf="submitted">
+  <div *ngIf="submitted">
 
-                <div class="row">
-                          <div class="col-md-5 col-md-offset-1">
-                            <div class="panel panel-heading textgray">
-                              An account with the application author's permissions containing your credentials has been created.
-                              As an author you will able to add articles and remove your articles from the application.
-                              To add an articles select "Add New" button on the All Articles view.
-                              Please use the "Login" button to log into the application with your newly created credentials.
-                            </div>
-                          </div>
-                 </div>
+          <div class="row">
+                    <div class="col-md-5 col-md-offset-1">
+                      <div class="panel panel-heading textgray">
+                        An account with the application author's permissions containing your credentials has been created.
+                        As an author you will able to add articles and remove your articles from the application.
+                        To add an articles select "Add New" button on the All Articles view.
+                        Please use the "Login" button to log into the application with your newly created credentials.
+                      </div>
+                    </div>
+            </div>
                    
-                  <div class="row">
-                        <div class="col-md-5 col-md-offset-1">
-                          <div class="smalltext" style="text-align:center">
-                            <button [routerLink]="['/login']" class="btn btn-success">Login</button>
-                          </div>
-                        </div>
+            <div class="row">
+                  <div class="col-md-5 col-md-offset-1">
+                    <div class="smalltext" style="text-align:center">
+                      <button [routerLink]="['/login']" class="btn btn-success">Login</button>
+                    </div>
                   </div>
-        </div>
+            </div>
+  </div>
 
 
 

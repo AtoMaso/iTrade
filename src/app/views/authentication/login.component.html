@@ -11,7 +11,7 @@
                                                     
                             <div class="row form-group">
                               <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
-                              <control-messages [control]="loginGroup.controls.email" class="text-danger"></control-messages>
+                              <control-messages [control]="loginGroup.controls.email"></control-messages>
                             </div>                         
 
                          
@@ -21,7 +21,7 @@
                                            
                            <div class="row form-group">
                              <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
-                             <control-messages [control]="loginGroup.controls.password" class="text-danger"></control-messages>
+                             <control-messages [control]="loginGroup.controls.password"></control-messages>
                            </div>                         
 
                           <div class="row form-group" style="margin-top:40px;">
@@ -32,9 +32,9 @@
 
 
 
-                    <div class="col-sm-7 col-md-offset-1">
+                    <div class="col-sm-7 col-md-offset-1" style="margin-top:30px;">
 
-                            <div class="row panel panel-heading textgray">
+                            <div class="row panel panel-body textgray">
                                   <p><strong>Help</strong></p>
                                   Please provide your credentials to login into the application. Use the coresponding links bellow
                                   to get your forgotten application credentials if you are already a trader or to register yourself as a trader.
@@ -43,8 +43,8 @@
 
                           <div class="row" style="margin-top:20px;">
                                   <!--<span style="color:red">TODO sending the passoword functionality</span>-->
-                                  <a href="" class="smalltext text-success" style="text-decoration:underline">Forgot your password.</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                                  <a href="" class="smalltext text-success" style="text-decoration:underline" [routerLink]="['/register', {role:'Member'}]">Register</a>
+                                  <a href="" class="mediumtext text-info">Forgot your password.</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                  <a href="" class="mediumtext text-info" [routerLink]="['/register', {role:'Member'}]">Register</a>
                           </div>
 
                     </div>
