@@ -4,6 +4,7 @@ import { Observable , SubscribableOrPromise} from 'rxjs/Observable';
 import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import  'rxjs/add/operator/toPromise';
 
 import { UserSession, UserIdentity, Authentication } from '../helpers/classes';
 
@@ -19,7 +20,7 @@ export class AuthGuard implements CanActivate {
 
       next: ActivatedRouteSnapshot,
 
-      state: RouterStateSnapshot): Observable<boolean>  | boolean {
+      state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
     if (!this.authenticationService._userSession.authentication.isAuthenticated) {
 
