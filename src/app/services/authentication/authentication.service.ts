@@ -17,28 +17,31 @@ let serviceBaseAccount = CONFIG.baseUrls.accounts;
 
 @Injectable()
 export class AuthenticationService implements OnDestroy {
+
   private timer: any = null;
-  private _authentication: Authentication;
-  private _userIdentity: UserIdentity;
-  public _userSession: UserSession;
+  private authentication: Authentication;
+  private userIdentity: UserIdentity;
+  public userSession: UserSession = new UserSession();
 
-  public _subjectSessionStore = new Subject<UserSession>();
-  public _subjectSessionObserver$ = this._subjectSessionStore.asObservable();
+  public subjectSessionStore = new Subject<UserSession>();
+  public subjectSessionObserver$ = this.subjectSessionStore.asObservable();
 
-  public _behaviorSessionStore: BehaviorSubject<UserSession> = new BehaviorSubject(null);
-  public _behaviorSessionObserver$: Observable<UserSession> = this._behaviorSessionStore.asObservable(); 
+  public behaviorSessionStore: BehaviorSubject<UserSession> = new BehaviorSubject(null);
+  public behaviorSessionObserver$: Observable<UserSession> = this.behaviorSessionStore.asObservable(); 
 
-  constructor(private _http: Http,   private _loggerService: LoggerService) { }
+  constructor(private httpService: Http, private loggerService: LoggerService) {
+
+  }
 
 
   public ngOnDestroy() {
-    this._authentication = null;
-    this._userIdentity = null;
-    this._userSession = null;
-    this._subjectSessionStore = null;
-    this._subjectSessionObserver$ = null;
-    this._behaviorSessionStore = null;
-    this._behaviorSessionObserver$ = null;
+    this.authentication = null;
+    this.userIdentity = null;
+    this.userSession = null ;
+    this.subjectSessionStore = null;
+    this.subjectSessionObserver$ = null;
+    this.behaviorSessionStore = null;
+    this.behaviorSessionObserver$ = null;
   }
 
   //******************************************************
@@ -49,7 +52,7 @@ export class AuthenticationService implements OnDestroy {
     var data = "grant_type=password&username=" + user.email + "&password=" + user.password;
       let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' })    
 
-      return this._http.post(serviceBase + "Token", data, { headers: headers })       
+      return this.httpService.post(serviceBase + "Token", data, { headers: headers })       
           .map(res => this.onLoginSuccess(res) // this should be .map as the component is subscribing for it
           , (error:Response) => this.onLoginError(error, "Login"));
         
@@ -57,10 +60,10 @@ export class AuthenticationService implements OnDestroy {
 
   // grabs the refresh token when IDLE requires or WORKING session is close to expiry
   public refreshToken() {
-    var data = "grant_type=refresh_token&refresh_token=" + this._userIdentity.refreshToken + "&client_id=";  
+    var data = "grant_type=refresh_token&refresh_token=" + this.userIdentity.refreshToken + "&client_id=";  
     let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' })
 
-    return this._http.post(serviceBase + "Token", data, { headers: headers })
+    return this.httpService.post(serviceBase + "Token", data, { headers: headers })
         .subscribe(res => this.onLoginSuccess(res) // this should be subscibe as we need to run onLoginSuccess
         ,(error:any) => this.onLoginError(error, "RefreshToken")); 
   }
@@ -76,7 +79,7 @@ export class AuthenticationService implements OnDestroy {
       headers.append('Accept', 'application/json'); 
       headers.append('Content-Type', 'application/json');
 
-      return this._http.post(serviceBaseAccount + "Register", body, { headers: headers })
+      return this.httpService.post(serviceBaseAccount + "Register", body, { headers: headers })
                 .map((res: Response) => this.onSucessRegistering(res)
                 , (error: Response) => this.onRegisterError(error, "Register"));
   }
@@ -98,32 +101,32 @@ export class AuthenticationService implements OnDestroy {
   //****************************************************** 
   private onLoginSuccess(res: Response) {
       let body = res.json();
-      this._userIdentity = new UserIdentity();
-      this._authentication = new Authentication();
-      this._userSession = new UserSession();
+      //this.userIdentity = new UserIdentity();
+      //this.authentication = new Authentication();
+      //this.userSession = new UserSession();
 
       // identity
-      this._userIdentity.accessToken = body.access_token;
-      this._userIdentity.refreshToken = body.refresh_token;
-      this._userIdentity.accessTokenType = body.token_type;      
-      this._userIdentity.accessTokenExpiresIn = body.expires_in;   
-      this._userIdentity.accessTokenExpiresDate = this.tokenExpiresInDate(this._userIdentity.accessTokenExpiresIn)
-      this._userIdentity.userName = body.userName;
-      this._userIdentity.userId = body.id;
-      this._userIdentity.name = body.name;
-      this._userIdentity.roles = body.roles.split(",");
+      this.userIdentity.accessToken = body.access_token;
+      this.userIdentity.refreshToken = body.refresh_token;
+      this.userIdentity.accessTokenType = body.token_type;      
+      this.userIdentity.accessTokenExpiresIn = body.expires_in;   
+      this.userIdentity.accessTokenExpiresDate = this.tokenExpiresInDate(this.userIdentity.accessTokenExpiresIn)
+      this.userIdentity.userName = body.userName;
+      this.userIdentity.userId = body.id;
+      this.userIdentity.name = body.name;
+      this.userIdentity.roles = body.roles.split(",");
 
       // authentication
-      this._authentication.isAuthenticated = true;
-      this._authentication.authenticationType = this._userIdentity.accessTokenType;
+      this.authentication.isAuthenticated = true;
+      this.authentication.authenticationType = this.userIdentity.accessTokenType;
 
       // session
-      this._userSession.authentication = this._authentication;
-      this._userSession.userIdentity = this._userIdentity;
+      this.userSession.authentication = this.authentication;
+      this.userSession.userIdentity = this.userIdentity;
 
-      this.storeUserIdentity(this._userIdentity);
-      this.storeAuthData(this._authentication);
-      this.storeUsersSession(this._userSession);   
+      this.storeUserIdentity(this.userIdentity);
+      this.storeAuthData(this.authentication);
+      this.storeUsersSession(this.userSession);   
 
       // we do emit from the login component as we do not need to emit new session every time is created
       // if we are planning to pass different sesssion values of expiry values then we need the following line
@@ -134,12 +137,12 @@ export class AuthenticationService implements OnDestroy {
       this.clearSessionTimer();
 
       // start the webapi session timer
-      this.startSessionTimer(this._userIdentity.accessTokenExpiresIn);
+      this.startSessionTimer(this.userIdentity.accessTokenExpiresIn);
   }
 
 
   public emitUserSession(passedSession: UserSession) {
-    this._behaviorSessionStore.next(passedSession);
+    this.behaviorSessionStore.next(passedSession);
   } 
  
   private onSucessRegistering(response: any) {
@@ -165,7 +168,7 @@ export class AuthenticationService implements OnDestroy {
     // to get the refresh token before the original expires so we don't get UnAuthorized error.
     // We have WORKING refresh token happening 1 minute after the IDLE would have happened
     // if we were IDLE for session -2 minutes. So we would have have session cleared.
-    if (this._userSession !== null) {       
+    if (this.userSession !== null) {       
            this.timer = setTimeout(() => {
                     this.refreshToken();
                     //console.log("refresh from working has happend");
@@ -193,8 +196,8 @@ export class AuthenticationService implements OnDestroy {
   // the IDLE situation is handled by the IDLE methods on the app
   // component
   public refreshTokenWhenNotIdle() {
-        if (this._userSession != null) {
-              if (moment().isAfter(this._userIdentity.accessTokenExpiresDate)) {
+        if (this.userSession != null) {
+              if (moment().isAfter(this.userIdentity.accessTokenExpiresDate)) {
                     this.refreshToken();
               }
         }
@@ -206,17 +209,17 @@ export class AuthenticationService implements OnDestroy {
   }
 
   private getUserIdentity() {
-      return this._userIdentity;
+      return this.userIdentity;
   }
 
   private removeUserIdentity() {
-      this._userIdentity = null;
+      this.userIdentity = null;
       sessionStorage["UserIdentity"] = "null";
   }
 
   private init() {
       if (sessionStorage["UserIdentity"] != "null")  {
-          this._userIdentity = JSON.parse(sessionStorage["UserIdentity"]);
+          this.userIdentity = JSON.parse(sessionStorage["UserIdentity"]);
       }
   }
 
@@ -226,17 +229,17 @@ export class AuthenticationService implements OnDestroy {
   }
 
   private getAuthData() {
-    return this._authentication;
+    return this.authentication;
   }
 
   private removeAuthData() {
-    this._authentication = null;    
+    this.authentication = null;    
     sessionStorage["Authentication"] = "null";
   }
 
   private initAuthData() {
     if (sessionStorage["Authentication"] != "null") {
-      this._authentication = JSON.parse(sessionStorage["Authentication"]);
+      this.authentication = JSON.parse(sessionStorage["Authentication"]);
     }
   }
 
@@ -246,17 +249,17 @@ export class AuthenticationService implements OnDestroy {
   }
 
   public getUserSession() {
-      return this._userSession;
+      return this.userSession;
   }
 
   private removeUserSession() {
-      this._userSession = null;
+      this.userSession = null;
       sessionStorage["UserSession"] = "null";
   }
 
   private initUserSession() {
       if (sessionStorage["UserSession"] != "null") {
-          this._userSession = JSON.parse(sessionStorage["UserSession"]);
+          this.userSession = JSON.parse(sessionStorage["UserSession"]);
       }
   }
 
@@ -265,14 +268,14 @@ export class AuthenticationService implements OnDestroy {
   // LOGGING METHODS
   //****************************************************
   private onLoginError(err: Response, method:string) {
-        this._authentication.isAuthenticated = false;
-        this._authentication.authenticationType = "";      
-        this._loggerService.logErrors(err, "authentication.service had error in the method " + method);
+        this.authentication.isAuthenticated = false;
+        this.authentication.authenticationType = "";      
+        this.loggerService.logErrors(err, "authentication.service had error in the method " + method);
         return Observable.throw(err);
   }
 
   private onRegisterError(err: Response, method:string) {       
-        this._loggerService.logErrors(err, "authentication.service had error in the method " + method);
+        this.loggerService.logErrors(err, "authentication.service had error in the method " + method);
         return Observable.throw(err);
   }
 

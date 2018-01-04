@@ -23,8 +23,7 @@ import { UserSession, UserIdentity, Authentication, ProcessMessage, PageTitle } 
   moduleId:module.id,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'], 
-  encapsulation: ViewEncapsulation.None, 
-  //directives: [AuthCheck, RouterLink],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class AppComponent implements OnDestroy, OnInit {
@@ -41,16 +40,16 @@ export class AppComponent implements OnDestroy, OnInit {
   // this is a reference to itself passed to the child ModalDialog
   private itself: AppComponent = this;
 
-  private _subscriptionSession: Subscription;
-  private _subscriptionMessages: Subscription;
-  private _subscriptionTitle: Subscription;
-  private _subscriptionRouter: Subscription;
+  private subscriptionSession: Subscription;
+  private subscriptionMessages: Subscription;
+  private subscriptionTitle: Subscription;
+  private subscriptionRouter: Subscription;
 
-  private _authentication: Authentication = new Authentication();
-  private _userSession: UserSession = new UserSession();
-  private _userIdentity: UserIdentity = new UserIdentity();
-  private _isUserAuthenticated: boolean = false;
-  private _isUserAllowed: boolean = false;
+  private authentication: Authentication;
+  private userSession: UserSession;
+  private userIdentity: UserIdentity;
+  private isUserAuthenticated: boolean = false;
+  private isUserAllowed: boolean = false;
 
 
   //******************************************************
@@ -65,20 +64,20 @@ export class AppComponent implements OnDestroy, OnInit {
 
   public ngOnInit() {
 
-        this._subscriptionSession =
-          this.authenticationService._behaviorSessionStore
+        this.subscriptionSession =
+          this.authenticationService.behaviorSessionStore
                     .subscribe((session: UserSession) => {
                       // this needs to be check otherwise the app component fails on session not created yet
                       if (session !== null) {
-                            this._userSession = session,
-                            this._isUserAuthenticated = session.authentication.isAuthenticated;
+                            this.userSession = session,
+                            this.isUserAuthenticated = session.authentication.isAuthenticated;
                             this.IsAllowed();
                             this.IdleSetup(session.userIdentity.accessTokenExpiresIn);
                       }
             });
 
-        this._subscriptionMessages =
-                this.messagesService._behaviorProcessMessageStore
+        this.subscriptionMessages =
+                this.messagesService.behaviorProcessMessageStore
                       .subscribe((message: ProcessMessage) => {
                         // this needs to be check otherwise the app component fails on pmComponent not created yet
                         if (message) {
@@ -86,8 +85,8 @@ export class AppComponent implements OnDestroy, OnInit {
                         }
             });
 
-        this._subscriptionTitle =
-            this.titleService._behaviorTitleStore
+        this.subscriptionTitle =
+            this.titleService.behaviorTitleStore
                         .subscribe((page: PageTitle) => {
                           // this needs to be check otherwise the app component fails on pmComponent not created yet
                           if (page) {
@@ -95,8 +94,8 @@ export class AppComponent implements OnDestroy, OnInit {
                           }
             });
 
-        this._subscriptionRouter =
-                  this.messagesService._behaviorRouteStore
+        this.subscriptionRouter =
+                  this.messagesService.behaviorRouteStore
                     .subscribe(() => {
                       if (this.messagesComponent) {
                             this.messagesComponent.displayProcessMessage(null);
@@ -105,16 +104,16 @@ export class AppComponent implements OnDestroy, OnInit {
   }
 
   public ngOnDestroy() {
-    this._subscriptionSession.unsubscribe();
-    this._subscriptionMessages.unsubscribe();
-    this._subscriptionTitle.unsubscribe();
-    this._subscriptionRouter.unsubscribe();
+    this.subscriptionSession.unsubscribe();
+    this.subscriptionMessages.unsubscribe();
+    this.subscriptionTitle.unsubscribe();
+    this.subscriptionRouter.unsubscribe();
   }
 
 
   private IsAllowed() {
-    if (this._isUserAuthenticated ) { // && this._userSession.userIdentity.isInRole("Admin")) {
-      this._isUserAllowed = true;
+    if (this.isUserAuthenticated ) { // && this._userSession.userIdentity.isInRole("Admin")) {
+      this.isUserAllowed = true;
     }
   }
 
@@ -140,8 +139,8 @@ export class AppComponent implements OnDestroy, OnInit {
   // called from the session modal dialog when session needs to be closed
   public onCloseSession() {
     this.logOut();
-    this._isUserAuthenticated = false;
-    this._isUserAllowed = false;
+    this.isUserAuthenticated = false;
+    this.isUserAllowed = false;
   }
 
 

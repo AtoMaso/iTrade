@@ -65,14 +65,24 @@ class Content implements ContentInterface {
 }
 
 class UserSession implements UserSessionInterface {
-  authentication: AuthenticationInterface;
+  authentication: AuthenticationInterface ;
   userIdentity: UserIdentityInterface;
   sessionCookie: string;
+  constructor() {
+    this.authentication = new Authentication();
+    this.userIdentity = new UserIdentity();
+    this.sessionCookie = "";
+  }
+
 }
 
 class Authentication implements AuthenticationInterface {
-  isAuthenticated: boolean;
-  authenticationType: string;
+      isAuthenticated: boolean;
+      authenticationType: string;
+      constructor() {
+              this.isAuthenticated = false;
+              this.authenticationType = "anonimous";
+      } 
 }
 
 class UserIdentity implements UserIdentityInterface {
@@ -85,6 +95,16 @@ class UserIdentity implements UserIdentityInterface {
   name: string;
   userId: string;
   roles: string[];
+  constructor() {
+    this.accessToken = "";
+    this.refreshToken = "";
+    this.accessTokenType = "";
+    this.accessTokenExpiresDate = new Date();
+    this.accessTokenExpiresIn = 0;
+    this.userName = "";
+    this.userId = "";
+    this.roles = [];
+  }
   //isInRole(rolename: string): boolean
 }
 

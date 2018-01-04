@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, 
   { path: 'dashboard', component: DashboardComponent},  // canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }//, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent , canActivate: [AuthGuard] },
   
   //{ path: '/views/info/about', name: 'About', component: AboutComponent },
   //{ path: '/views/info/contact', name: 'Contact', component: ContactComponent },

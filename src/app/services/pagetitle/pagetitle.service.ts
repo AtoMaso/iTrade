@@ -8,8 +8,8 @@ import { PageTitle } from '../../helpers/classes';
 @Injectable()
 export class PageTitleService {
 
-    public _behaviorTitleStore: BehaviorSubject<PageTitle> = new BehaviorSubject(null);
-    public _behaviorTitleObserver$: Observable<PageTitle> = this._behaviorTitleStore.asObservable(); 
+    public behaviorTitleStore: BehaviorSubject<PageTitle> = new BehaviorSubject(null);
+    public behaviorTitleObserver$: Observable<PageTitle> = this.behaviorTitleStore.asObservable(); 
 
     constructor() {};
 
@@ -19,6 +19,6 @@ export class PageTitleService {
     //*****************************************************
     // raises the event which the app component is subcribed to
     public emitPageTitle(page: PageTitle) {  
-            this._behaviorTitleStore.next(page);
+            this.behaviorTitleStore.next(page);
     }
 }

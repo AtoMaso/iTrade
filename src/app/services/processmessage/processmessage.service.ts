@@ -14,11 +14,11 @@ import {ProcessMessage } from '../../helpers/classes';
 export class ProcessMessageService {
 
     public allProcessMessages: ProcessMessage[]= [];
-    public _behaviorProcessMessageStore: BehaviorSubject<ProcessMessage> = new BehaviorSubject(null);
-    public _behaviorMessageObserver$: Observable<ProcessMessage> = this._behaviorProcessMessageStore.asObservable(); 
+    public behaviorProcessMessageStore: BehaviorSubject<ProcessMessage> = new BehaviorSubject(null);
+    public behaviorMessageObserver$: Observable<ProcessMessage> = this.behaviorProcessMessageStore.asObservable(); 
 
-    public _behaviorRouteStore: BehaviorSubject<string> = new BehaviorSubject(null);
-    public _behaviorRouteObserver$: Observable<string> = this._behaviorRouteStore.asObservable(); 
+    public behaviorRouteStore: BehaviorSubject<string> = new BehaviorSubject(null);
+    public behaviorRouteObserver$: Observable<string> = this.behaviorRouteStore.asObservable(); 
 
   constructor(private httpService: Http, private loggerService: LoggerService) { };
 
@@ -51,14 +51,14 @@ export class ProcessMessageService {
           if (id == "PME") {
               pm.text = message;
           }
-          this._behaviorProcessMessageStore.next(pm);
+          this.behaviorProcessMessageStore.next(pm);
     }
    
 
     // raises the event which the app component is subcribed to
     // and the messageis passed to the child control on the app component
     public emitRoute(id: string) {     
-      this._behaviorRouteStore.next(id);
+      this.behaviorRouteStore.next(id);
     }
 
     //******************************************************
