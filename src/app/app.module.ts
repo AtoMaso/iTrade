@@ -13,7 +13,7 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the
 //services
 import { AuthGuard } from  './helpers/auth.guard';
 import { AuthenticationService } from './services/authentication/authentication.service';
-import { ProcessMessageService } from './services/processmessages/processmessage.service';
+import { ProcessMessageService } from './services/processmessage/processmessage.service';
 import { PageTitleService } from './services/pagetitle/pagetitle.service';
 import { LoggerService } from './services/logger/logger.service';
 import { TradeApiService } from './services/tradeapi/tradeapi.service';

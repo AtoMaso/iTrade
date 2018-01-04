@@ -8,7 +8,7 @@ import { Keepalive } from '@ng-idle/keepalive';
 //services
 //import { AuthCheck } from './services/authcheck';
 import { AuthenticationService } from './services/authentication/authentication.service';
-import { ProcessMessageService } from './services/processmessages/processmessage.service';
+import { ProcessMessageService } from './services/processmessage/processmessage.service';
 import { PageTitleService } from './services/pagetitle/pagetitle.service';
 
 //components

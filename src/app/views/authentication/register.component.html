@@ -12,17 +12,23 @@
         </div>
 
         <div class="row form-group">
-          <input type="text" formControlName="name" id="name" maxlength="40" placeholder="Your name...." required>
-          <control-messages [control]="registerGroup.controls.name"></control-messages>
-        </div>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>           
+              <input type="text" formControlName="name" id="name" maxlength="40" placeholder="Your full name..." required class="form-control">
+              <control-messages [control]="registerGroup.controls.name"></control-messages>
+              </div>
+          </div>
 
         <div class="row">
           <label for="email">Email</label>
         </div>
 
         <div class="row form-group">
-          <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
-          <control-messages [control]="registerGroup.controls.email"></control-messages>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+            <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email account..." required class="form-control">
+            <control-messages [control]="registerGroup.controls.email"></control-messages>
+          </div>
         </div>
 
         <div class="row">
@@ -30,18 +36,24 @@
         </div>
 
         <div class="row form-group">
-          <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
-          <control-messages [control]="registerGroup.controls.password"></control-messages>
-        </div>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Choose your password..." required class="form-control">
+              <control-messages [control]="registerGroup.controls.password"></control-messages>
+            </div>
+          </div>
 
         <div class="row">
           <label for="confirmPassword">Confirm Password</label>
         </div>
 
         <div class="row form-group">
-          <input type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="40" placeholder="Your password again...." required>
-          <control-messages [control]="registerGroup.controls.confirmPassword"></control-messages>
-        </div>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="40" placeholder="Confirm your password..." required class="form-control">
+              <control-messages [control]="registerGroup.controls.confirmPassword"></control-messages>
+            </div>
+          </div>
 
         <div class="row" style="margin-top:40px;">
           <button class="btn-success" type="submit" [disabled]="!registerGroup.valid">Register</button>

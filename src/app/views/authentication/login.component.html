@@ -9,20 +9,35 @@
                               <label for="email">Email</label>
                            </div>
                                                     
-                            <div class="row form-group">
+                            <!--<div class="row form-group">
                               <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email address...." required>
                               <control-messages [control]="loginGroup.controls.email"></control-messages>
-                            </div>                         
+                            </div>-->                         
 
+                           <div class="row form-group">
+                             <div class="input-group">
+                               <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                               <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email account..." required class="form-control">                             
+                             </div>
+                              <control-messages [control]="loginGroup.controls.email"></control-messages>
+                           </div>
                          
                            <div class="row">
                               <label for="password">Password</label>
                            </div>                         
                                            
-                           <div class="row form-group">
+                           <!--<div class="row form-group">
                              <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required>
                              <control-messages [control]="loginGroup.controls.password"></control-messages>
-                           </div>                         
+                           </div>-->         
+                       
+                         <div class="row form-group">
+                           <div class="input-group">
+                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                             <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your password..." required class="form-control">                             
+                           </div>
+                           <control-messages [control]="loginGroup.controls.password"></control-messages>
+                         </div>                
 
                           <div class="row form-group" style="margin-top:40px;">
                               <button class="btn-success" type="submit" [disabled]="!loginGroup.valid">Login</button>
@@ -44,7 +59,7 @@
                           <div class="row" style="margin-top:20px;">
                                   <!--<span style="color:red">TODO sending the passoword functionality</span>-->
                                   <a href="" class="mediumtext text-info">Forgot your password.</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                                  <a href="" class="mediumtext text-info" [routerLink]="['/register', {role:'Member'}]">Register</a>
+                                  <a href="" class="mediumtext text-info" [routerLink]="['/register']">Register</a>
                           </div>
 
                     </div>
