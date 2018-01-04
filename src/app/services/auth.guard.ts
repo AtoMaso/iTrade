@@ -5,7 +5,6 @@ import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-
 import { UserSession, UserIdentity, Authentication } from '../helpers/classes';
 
 @Injectable()
@@ -20,7 +19,7 @@ export class AuthGuard implements CanActivate {
 
       next: ActivatedRouteSnapshot,
 
-      state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+      state: RouterStateSnapshot): Observable<boolean>  | boolean {
 
     if (!this.authenticationService._userSession.authentication.isAuthenticated) {
 
