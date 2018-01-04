@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
 
       state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    if (this.authenticationService.userSession.sessionCookie === "" ){
+    if (this.authenticationService.userSession.authentication.isAuthenticated === false ){
 
               this.router.navigate(['/dashboard']);
               return false;

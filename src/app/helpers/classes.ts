@@ -68,6 +68,7 @@ class UserSession implements UserSessionInterface {
   authentication: AuthenticationInterface ;
   userIdentity: UserIdentityInterface;
   sessionCookie: string;
+
   constructor() {
     this.authentication = new Authentication();
     this.userIdentity = new UserIdentity();
@@ -76,9 +77,10 @@ class UserSession implements UserSessionInterface {
 
 }
 
-class Authentication implements AuthenticationInterface {
-      isAuthenticated: boolean;
-      authenticationType: string;
+class Authentication implements AuthenticationInterface {     
+  isAuthenticated: boolean;
+  authenticationType: string;
+
       constructor() {
               this.isAuthenticated = false;
               this.authenticationType = "anonimous";
@@ -95,15 +97,16 @@ class UserIdentity implements UserIdentityInterface {
   name: string;
   userId: string;
   roles: string[];
+
   constructor() {
-    this.accessToken = "";
-    this.refreshToken = "";
-    this.accessTokenType = "";
-    this.accessTokenExpiresDate = new Date();
-    this.accessTokenExpiresIn = 0;
-    this.userName = "";
-    this.userId = "";
-    this.roles = [];
+          this.accessToken = "";
+          this.refreshToken = "";
+          this.accessTokenType = "";
+          this.accessTokenExpiresDate = new Date();
+          this.accessTokenExpiresIn = 0;
+          this.userName = "";
+          this.userId = "";
+          this.roles = [];
   }
   //isInRole(rolename: string): boolean
 }

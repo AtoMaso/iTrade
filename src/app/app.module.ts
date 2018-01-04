@@ -7,11 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { MomentModule } from 'angular2-moment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core 
-                                                                                         //NgIdleModule but includes keepalive providers for easy wireup
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+
+//helpers
+import { AuthGuard } from './helpers/auth.guard';
+import { TopTradesPipe, SortTradesByDatePipe } from './helpers/pipes';
 
 //services
-import { AuthGuard } from  './helpers/auth.guard';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { ProcessMessageService } from './services/processmessage/processmessage.service';
 import { PageTitleService } from './services/pagetitle/pagetitle.service';
@@ -19,7 +21,6 @@ import { LoggerService } from './services/logger/logger.service';
 import { TradeApiService } from './services/tradeapi/tradeapi.service';
 import { MessageService } from './services/message/message.service';
 import { ValidationService } from './services/validation/validation.service';
-//import { AuthCheck } from './services/authcheck';
 
 //components
 import { AppComponent } from './app.component';
@@ -32,10 +33,15 @@ import { PageTitleComponent } from './views/controls/pagetitle/pagetitle.compone
 import { ModalComponent } from './views/controls/modal/modal.component';
 import { SpinnerOneComponent } from './views/controls/spinner/spinnerone.component';
 import { CSSCarouselComponent } from './views/controls/carousel/carousel.component';
-import { TopTradesPipe, SortTradesByDatePipe } from './helpers/pipes';
 import { ExpandapanelComponent } from './views/expandapanel/expandapanel.component';
+import { TradeComponent } from './views/trade/trade.component';
+import { AboutComponent } from './views/info/about.component';
+import { ContactComponent } from './views/info/contact.component';
+import { WelcomeComponent } from './views/authentication/welcome.component';
+//import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
-//initialises the process message service to get all process messages 
+
+//initialises the process message service to get all process messages on start of the application
 export function getprocessmessages(processMessageService: ProcessMessageService) {
   return () => processMessageService.getProcessMessage();
 }
@@ -56,7 +62,12 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     CSSCarouselComponent,
     TopTradesPipe,
     SortTradesByDatePipe,
-    ExpandapanelComponent
+    ExpandapanelComponent,
+    TradeComponent,
+    AboutComponent,
+    ContactComponent,
+    WelcomeComponent,
+    //NG2FileUploadComponent
   ],  
 
   imports: [    

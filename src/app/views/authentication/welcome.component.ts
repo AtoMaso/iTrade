@@ -6,12 +6,12 @@ import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 import { PageTitle } from '../../helpers/classes';
 
 @Component({
-    selector: 'userhome-app',
-    templateUrl: './home.component.html',
+    selector: 'welcome-app',
+    templateUrl: './welcome.component.html',
 })
 
 
-export class HomeComponent {
+export class WelcomeComponent {
 
        private pagetitle: PageTitle;
 
