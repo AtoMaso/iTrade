@@ -26,7 +26,6 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { LoginComponent } from './views/authentication/login.component';
 import { RegisterComponent } from './views/authentication/register.component';
-import { MessagesComponent } from './views/messages/messages.component';
 import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle/pagetitle.component';
@@ -49,7 +48,6 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     DashboardComponent,        
     LoginComponent,     
     RegisterComponent,   
-    MessagesComponent,
     ControlMessages,   
     ProcessMessagesComponent,
     PageTitleComponent,
