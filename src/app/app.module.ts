@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule, JsonpModule } from '@angular/http';
-//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { MomentModule } from 'angular2-moment';
@@ -21,6 +21,8 @@ import { LoggerService } from './services/logger/logger.service';
 import { TradeApiService } from './services/tradeapi/tradeapi.service';
 import { MessageService } from './services/message/message.service';
 import { ValidationService } from './services/validation/validation.service';
+import { InMemoryDataService }  from './services/inmemory/in-memory-data.service'; //
+
 
 //components
 import { AppComponent } from './app.component';
@@ -38,6 +40,8 @@ import { TradeComponent } from './views/trade/trade.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 import { WelcomeComponent } from './views/authentication/welcome.component';
+
+
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
 
@@ -83,9 +87,9 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
-    //HttpClientInMemoryWebApiModule.forRoot(
-    //     InMemoryDataService, { dataEncapsulation: false }
-    //)
+    HttpClientInMemoryWebApiModule.forRoot(
+         InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
 
   providers: [

@@ -35,10 +35,16 @@ export class DashboardComponent implements OnInit {
 
     this.titleService.emitPageTitle(this.pagetitle);  
     this.isRequesting = true;    
-    this.getTrades();
+    //this.getTrades();
+    this.getTradesApi()
   }
 
  
+  getTradesApi(): void {
+    this.tradeapiService.getTradesApi()
+      .subscribe(response => { this.trades = response, this.isRequesting = false });
+  }
+
 
   //*****************************************************
   // GET Trades here TODO

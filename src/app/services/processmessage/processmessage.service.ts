@@ -6,6 +6,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { of } from 'rxjs/observable/of';
+import { catchError, map, tap } from 'rxjs/operators';
+
+
 import { LoggerService } from '../logger/logger.service';
 import {ProcessMessage } from '../../helpers/classes';
 
@@ -20,7 +25,13 @@ export class ProcessMessageService {
     public behaviorRouteStore: BehaviorSubject<string> = new BehaviorSubject(null);
     public behaviorRouteObserver$: Observable<string> = this.behaviorRouteStore.asObservable(); 
 
-  constructor(private httpService: Http, private loggerService: LoggerService) { };
+
+    private processMessagesUrl = 'api/processmessages';  // URL to web api in our case will be using in memory service object 'trades'
+
+
+    constructor(private httpService: Http,
+      private httpClientService: HttpClient,
+      private loggerService: LoggerService) { };
 
 
   //******************************************************
@@ -36,12 +47,17 @@ export class ProcessMessageService {
 
   // get the process messages from the json repository
   public getProcessMessagesFromRepository(): Observable<ProcessMessage[]> {
-
-    return this.httpService.get("../assets/processmessages.json")
-            .map((messages: Response) => <ProcessMessage[]>messages.json().data)
-            .catch((error: Response) => this.onError(error, "GetProcessmessageFromRepository"));
+      // using HTTPClient module
+      return this.httpClientService.get<ProcessMessage[]>(this.processMessagesUrl)
+                        .pipe(
+                              tap(processmessages => this.log(`fetched process messages`)),
+                              catchError(this.handleError('getProcessMessagesFromRepository', []))
+      );
+          // using HTTP module
+            //return this.httpService.get("../assets/processmessages.json")
+            //        .map((messages: Response) => <ProcessMessage[]>messages.json().data)
+            //        .catch((error: Response) => this.onError(error, "GetProcessmessageFromRepository"));
   }
-
   
     // raises the event which the app component is subcribed to
     // and the message id passed to the child control on the app component
@@ -71,5 +87,31 @@ export class ProcessMessageService {
       //this.loggerService.logErrors(err, "processmessage.service");            
       //return Observable.throw(err.json().error || 'Server error');
     }
+
+
+  /**
+ * Handle Http operation that failed.
+ * Let the app continue.
+ * @param operation - name of the operation that failed
+ * @param result - optional value to return as the observable result
+ */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+
+  /** Log a HeroService message with the MessageService */
+  private log(message: string) {
+    //this.messageService.add('HeroService: ' + message);
+  }
 
 }

@@ -4,6 +4,12 @@ import { CONFIG } from '../../config';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { of } from 'rxjs/observable/of';
+import { catchError, map, tap } from 'rxjs/operators';
+
+
 import { LoggerService } from '../logger/logger.service';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Trade, UserSession, UserIdentity} from '../../helpers/classes';
@@ -19,12 +25,28 @@ export class TradeApiService {
     private localUrl: string;
     private session: UserSession;
 
-    constructor(private httpService: Http, private loggerService: LoggerService, private authenticationService:AuthenticationService) {
+
+    private tradesUrl = 'api/trades';  // URL to web api in our case will be using in memory service object 'trades'
+
+    constructor(private httpService: Http,
+      private httpClientService: HttpClient,
+      private loggerService: LoggerService,
+      private authenticationService: AuthenticationService) {
 
         if (sessionStorage["UserSession"] != "null") {
             this.session = JSON.parse(sessionStorage["UserSession"]);
         }  
     };
+
+
+    /** GET heroes from the server */
+    getTradesApi(): Observable<Trade[]> {
+      return this.httpClientService.get<Trade[]>(this.tradesUrl)
+        .pipe(
+                tap(trades => this.log(`fetched trades`)),
+                catchError(this.handleError('getTrades', []))
+        );
+    }
 
 
   //******************************************************
@@ -131,6 +153,32 @@ export class TradeApiService {
     private logError(err: any, method:string) {
       this.loggerService.logErrors(err, "trade.service had an error in the method " + method);   
       return Observable.throw(err);
+    }
+
+
+    /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+    private handleError<T>(operation = 'operation', result?: T) {
+      return (error: any): Observable<T> => {
+
+        // TODO: send the error to remote logging infrastructure
+        console.error(error); // log to console instead
+
+        // TODO: better job of transforming error for user consumption
+        this.log(`${operation} failed: ${error.message}`);
+
+        // Let the app keep running by returning an empty result.
+        return of(result as T);
+      };
+    }
+
+    /** Log a HeroService message with the MessageService */
+    private log(message: string) {
+      //this.messageService.add('HeroService: ' + message);
     }
 
 }
