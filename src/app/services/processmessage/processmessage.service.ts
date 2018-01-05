@@ -29,7 +29,8 @@ export class ProcessMessageService {
     private processMessagesUrl = 'api/processmessages';  // URL to web api in our case will be using in memory service object 'trades'
 
 
-    constructor(private httpService: Http,
+    constructor(
+      private httpService: Http,
       private httpClientService: HttpClient,
       private loggerService: LoggerService) { };
 
@@ -45,18 +46,14 @@ export class ProcessMessageService {
           , (error: Response) => this.onError(error, "GetProcessMessage"));
   }
 
-  // get the process messages from the json repository
+  // get the process messages from the api json repository
   public getProcessMessagesFromRepository(): Observable<ProcessMessage[]> {
       // using HTTPClient module
       return this.httpClientService.get<ProcessMessage[]>(this.processMessagesUrl)
                         .pipe(
                               tap(processmessages => this.log(`fetched process messages`)),
                               catchError(this.handleError('getProcessMessagesFromRepository', []))
-      );
-          // using HTTP module
-            //return this.httpService.get("../assets/processmessages.json")
-            //        .map((messages: Response) => <ProcessMessage[]>messages.json().data)
-            //        .catch((error: Response) => this.onError(error, "GetProcessmessageFromRepository"));
+      );         
   }
   
     // raises the event which the app component is subcribed to
