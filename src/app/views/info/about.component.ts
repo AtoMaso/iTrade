@@ -16,10 +16,10 @@ export class AboutComponent {
                    private titleService: PageTitleService) {
 
           this.pagetitle = new PageTitle();
-          this.pagetitle.title = "Contact";
+          this.pagetitle.title = "About";
           this.titleService.emitPageTitle(this.pagetitle);
 
-          this.messagesService.emitRoute("nill");
+          this.messagesService.emitRoute("null");
     }
 
 }
