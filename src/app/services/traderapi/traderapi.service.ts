@@ -118,7 +118,7 @@ export class TraderService {
     // PRIVATE METHODS
     //******************************************************
     private logError(err: any, method:string) {
-      this.loggerService.logErrors(err, "user.service had an error in the method " + method);   
+      this.loggerService.addError(err, "user.service had an error in the method " + method);   
       return Observable.throw(err);
     }
 

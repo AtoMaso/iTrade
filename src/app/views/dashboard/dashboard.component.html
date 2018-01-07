@@ -1,5 +1,5 @@
                                      
-<div class="panel-group col-md-3" *ngFor="let trade of trades | SortTradesByDatePipe: D  | TopTradesPipe: 8">
+<div class="panel-group col-md-4 col-lg-3 col-sm-5" *ngFor="let trade of trades | SortTradesByDatePipe: D  | TopTradesPipe: 8">
 
           <div class="panel-heading" style="background-color:dimgray;">
               <strong>
@@ -15,20 +15,20 @@
                 </div>
                 <div>
                   <strong class="textgray">Trader:</strong>
-                  <a href="" [routerLink]="['Trader', {id: trade.traderId}]"><label class="text-info restrictionname">{{ trade.traderName }}</label></a>
+                  <a href="" [routerLink]="['Trader', {traderId: trade.traderId}]" class="text-info smalltextbold restrictionname" style="text-decoration:underline">{{ trade.traderName }}</a>
                 </div>
                 <div style="margin-top:15px;">
-                  <css-carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId"></css-carousel>
+                  <css-carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]=trade.tradeId  (onErrorPicked)="ChangeIsRequesting($event)"></css-carousel>
                 </div>
           </div>
 
           <div class="panel-footer">
-                <div> <strong class="textgray">Published: </strong><span class="textgray">{{ trade.datePublished  }}</span></div>
-                <div> <a href="" [routerLink]="['Trade', {id: trade.tradeId}]" class="text-info" style="text-decoration:underline">Go to trade...</a></div>
+                <div> <strong class="textgray">Published: </strong><span class="textgray">{{ trade.tradeId  }}</span></div>
+                <div> <a href="" [routerLink]="['Trade', {tradeId: trade.tradeId}]" class="text-info smalltextbold" style="text-decoration:underline">Go to trade...</a></div>
           </div>
 </div>
  
                       
-   <my-spinner [isRunning]="isRequesting"></my-spinner>
+<my-spinner [isRunning]="isRequesting"></my-spinner>
 
                 

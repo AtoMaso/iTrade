@@ -97,7 +97,7 @@ export class RegisterComponent implements OnInit {
 
           // we will log the error in the server side by calling the logger, or that is already 
           // done on the server side if the error has been caught
-          this.loggerService.logErrors(err, "register");      
+          this.loggerService.addError(err, "register");      
 
           // we will display a fiendly process message using the process message service   
           if (err.status !== 200) {

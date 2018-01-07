@@ -1,164 +1,183 @@
+
 <div style="height:100%; width:100%;">
 
-            <div  class="container">
-                    <header class="row pager">
-                            <div id="menu" class="navbar navbar-default navbar-fixed-top col-md-10 col-md-offset-1" style="border-width:medium;border-color:darkgray;">
-                              <div class="navbar-header text-center">
-                                  <!-- make the navigation to disapear when screen too small with the class nab-vbar-toggle and introducing
-                                     the 2 new attributes 'data-toggle' and 'data-target' targeting the navigation and colapse event
-                                  -->
-                                  <div id="logo">
-                                          <h4><i style="margin-left:20px;">iTrade</i></h4>
-                                  </div>
-                                  <button class="btn-success navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="width:60px;">
+          <!-- COMPLETE PAGE BODY -->
+          <div class="container col-md-12">
+
+                        <!-- MENU -->
+                        <header class="row pager">
+                              <div id="menu" class="navbar navbar-default navbar-fixed-top col-md-10 col-md-offset-1" style="border-width:medium;border-color:darkgray;">
+
+                                    <div class="navbar-header text-center">
+                                      <!-- make the navigation to disapear when screen too small with the class nab-vbar-toggle and introducing
+                                         the 2 new attributes 'data-toggle' and 'data-target' targeting the navigation and colapse event
+                                      -->
+                                      <div id="logo">
+                                        <h4><i style="margin-left:20px;">iTrade</i></h4>
+                                      </div>
+                                      <button class="btn-success navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="width:60px;">
                                         <span class="glyphicon glyphicon-chevron-down"></span>
-                                  </button>
-                              </div>
-                              <!-- make the menu hidden when the screen is too small with class "navbar-collapse collapse" -->
-                              <div id="nav" class="navbar-collapse collapse  navbar-right">
-                                    <ul class="nav navbar-nav">                                           
-                                            <li class="nav"><a href="" routerLink="/dashboard"><span class="textgray"><i>Dashboard</i></span></a></li>                                         
-                                            <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>
-                                            <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/register"><span class="textgray"><i>Register</i></span></a></li>
-                                            <li class="nav" *ngIf="isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
-                                    </ul>
-                              </div>
-                            </div>
-                    </header>
-            </div>
+                                      </button>
+                                    </div>
 
+                                    <!-- make the menu hidden when the screen is too small with class "navbar-collapse collapse" -->
+                                    <div id="nav" class="navbar-collapse collapse  navbar-right">
+                                      <ul class="nav navbar-nav">
+                                        <li class="nav"><a href="" routerLink="/dashboard"><span class="textgray"><i>Dashboard</i></span></a></li>
+                                        <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>
+                                        <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/register"><span class="textgray"><i>Register</i></span></a></li>
+                                        <li class="nav" *ngIf="isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
+                                      </ul>
+                                    </div>
 
-            <!-- logged in user section -->
-            <div class="container col-md-10 col-md-offset-1">
-              <div class="row ">
-                    <div *ngIf="_isUserAuthenticated">
-                          <label class="text-info">Logged on as:  {{ _userSession.userIdentity.name }}</label>
-                    </div>
-              </div>
-            </div>
+                                </div>
+                        </header>
+           
 
-
-            <main class="container col-md-10 col-md-offset-1">
- 
-              <div class="row">
-                      <!-- the page title control -->
-                      <div class="navbar navbar-default col-md-10 col-md-offset-1" style="border-width:medium; border-color:darkgray;">
-                              <page-title #pageTitleComponent></page-title>
-                      </div>
-                      <!-- the process message control -->
-                      <!--<div style="margin-top:10px;">-->
-                            <process-messages #messagesComponent></process-messages>
-                      <!--</div>-->
-                      <!-- the views slot -->
-                      <div class="navbar navbar-default col-md-10 col-md-offset-1" style="padding-bottom:30px;padding-top:30px; border-width:medium; border-color:darkgray;">
-                                <router-outlet></router-outlet>
-                     </div>
-              </div>
-
-          </main>
-
-
-              <!-- the bottom part of the web site-->  
-            <div class="container panel panel-default  col-md-10 col-md-offset-1"  style="border-width:medium;border-color:darkgray;">
-
-                    <div class="row" style="margin-top:30px;">
-
-                              <!--<div class="smalltextcentred textdarkgray" style="background:transparent;">
-                                      <hr class="hrstyle" />
-                              </div>-->
-
-                              <table style="background:transparent; width:75%; margin:auto;">
-                                <thead>
-                                  <tr>
-                                    <th class="col-md-3 smalltextcentred textdarkgray"><i>Information</i></th>
-                                    <th class="col-md-3 smalltextcentred textdarkgray"><i>Contact</i></th>
-                                    <th class="col-md-3 smalltextcentred textdarkgray"><i>Help</i></th>
-                                    <th class="col-md-3 smalltextcentred textdarkgray"><i>Miscelenius</i></th>
-                                  </tr>                          
-                                </thead>
-                        
-
-                                <br />
-                                <tr class="">
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                      <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>                                 
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>  
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>  
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>  
-                                  </td>
-                                </tr>
-
-                                <tr class="">
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
-                                  </td>
-                                </tr>
-
-                                <tr class="">
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
-                                  </td>
-                                </tr>
-
-                                <tr class="">
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
-                                  </td>
-                                  <td class="col-md-3 smalltextcentred textdarkgray">
-                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
-                                  </td>
-                                </tr>
-
-                              </table>
-
-                    </div>
-        
-
-                    <div class="container"  style="padding-bottom:20px; padding-top:40px;">
-                        <div class="extrasmalltextcentred textdarkgray" style="background:transparent; margin:0 auto;">
-                            <hr class="hrstyle" />
-                            <strong>
-                              <span>
-                                <i class="glyphicon glyphicon-copyright-mark"></i>
-                              </span>&nbsp; Mirko Srbinovski 2018
-                            </strong>
+                        <!-- LOGGED ON USER -->
+                        <div class="container col-md-10 col-md-offset-1">
+                        <div class="row ">
+                          <div *ngIf="_isUserAuthenticated">
+                            <label class="text-info">Logged on as:  {{ _userSession.userIdentity.name }}</label>
+                          </div>
                         </div>
-                    </div>
+                      </div>
 
-              </div>
 
-  
-           <!-- modal component which will need to come up when user not authenticated and not allowed-->
-            <modal-component #modalComponent></modal-component>
+                         <!-- MASTER PAGE -->
+                        <main class="container col-md-10 col-md-offset-1">
+
+                            <div class="row">
+
+                                  <!-- the page title control -->
+                                  <div class="navbar navbar-default col-md-10 col-md-offset-1" style="border-width:medium; border-color:darkgray;">
+                                    <page-title #pageTitleComponent></page-title>
+                                  </div>
+
+                                  <!-- the process message control -->              
+                                  <process-messages #messagesComponent></process-messages>            
+                
+                 
+                                  <!-- the views slot -->
+                                  <div class="navbar navbar-default col-md-10 col-md-offset-1" style="padding-bottom:30px;padding-top:30px; border-width:medium; border-color:darkgray; border-radius:4px;">
+                                    <router-outlet></router-outlet>
+                                  </div>
+                            </div>
+
+                      </main>
+
+
+                        <!-- PAGE FOOTER-->
+                        <div class="container panel panel-default col-md-10 col-md-offset-1" style="border-width:medium;border-color:darkgray;">
+
+                                <div class="row" style="margin-top:10px;">
+
+                                        <table class="table-responsive table-condensed" style="background:transparent; width:50%; margin:auto;">
+
+                                                <thead>
+                                                  <tr>
+                                                    <th class="col-md-3 smalltextcentred textdarkgray"><i>Information</i></th>
+                                                    <th class="col-md-3 smalltextcentred textdarkgray"><i>Contact</i></th>
+                                                    <th class="col-md-3 smalltextcentred textdarkgray"><i>Help</i></th>
+                                                    <th class="col-md-3 smalltextcentred textdarkgray"><i>Miscelenius</i></th>
+                                                  </tr>
+                                                </thead>
+
+                                                <!--<tr>
+                                                  <td class="col-md-3">
+                                                    <hr class="hrstyle" />
+                                                  </td>
+                                                  <td class="col-md-3">
+                                                    <hr class="hrstyle" />
+                                                  </td>
+                                                  <td class="col-md-3">
+                                                    <hr class="hrstyle" />
+                                                  </td>
+                                                  <td class="col-md-3">
+                                                    <hr class="hrstyle" />
+                                                  </td>
+                                                </tr>-->
+
+                                                <tr>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
+                                                  </td>
+                                                </tr>
+
+                                                <tr>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
+                                                  </td>
+                                                </tr>
+
+                                                <tr>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contsct</i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/about"><span class="textgray"><i></i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
+                                                  </td>
+                                                </tr>
+
+                                                <tr>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/about"><span class="textgray"><i>About</i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/contact"><span class="textgray"><i></i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/about"><span class="textgray"><i></i></span></a>
+                                                  </td>
+                                                  <td class="col-md-3 smalltextcentred textdarkgray">
+                                                    <a href="" routerLink="/contact"><span class="textgray"><i>Contact</i></span></a>
+                                                  </td>
+                                                </tr>
+
+                                         </table>
+
+                     
+                                        <div class="container extrasmalltextcentred textdarkgray" style="background:transparent; width:60%; margin:auto;padding-bottom:10px;">
+                                              <hr class="hrstyle" />
+                                              <strong>
+                                                <span>
+                                                  <i class="glyphicon glyphicon-copyright-mark"></i>
+                                                </span>&nbsp; Mirko Srbinovski 2018
+                                              </strong>
+                                        </div>
+
+
+                                </div>
+
+                      </div>
+        
+          </div>
 
 </div>
+
+<!-- modal component which will need to come up when user not authenticated and not allowed-->
+<modal-component #modalComponent></modal-component>

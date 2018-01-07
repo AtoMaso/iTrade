@@ -1,22 +1,23 @@
-﻿import { Component, Input, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
-import { CONFIG } from '../../../config';
+﻿import { Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
+import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ImageService } from '../../../services/image/image.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { Image } from '../../../helpers/classes';
 
 
+
 @Component({
     selector: 'css-carousel',   
     templateUrl: './carousel.component.html',
-    styleUrls: ['../../../../assets/css/carousel.component.css'],
+    styleUrls: ['../../../../assets/css/carousel.css'],
     providers: [ImageService]
 })
 
 export class CSSCarouselComponent implements OnInit {
-  
+
   public allImages: Image[] = [];
   public tradeImages: Image[] = []; 
   public cariouselId: string = "myCarousel";
@@ -30,7 +31,8 @@ export class CSSCarouselComponent implements OnInit {
   private image2Title: string;
   private image3Titlel: string;
 
-    @Input() tradeId: number;
+  @Input() tradeId: number;
+  @Output() onErrorPicked: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private  imageService: ImageService,
                      private  loggerService: LoggerService,
@@ -38,47 +40,78 @@ export class CSSCarouselComponent implements OnInit {
              
   }  
 
+
   public ngOnInit() {
-    this.getImages();  
-  }
     
-    // gets the images data from the local json file
-    public getImages() {
+    //this.getImagesLocally();
+    //this.getImagesApi();  
+    this.getImagesApiByTradeId(this.tradeId)
+  }
 
-      this.imageService.getImages()
-            .subscribe(
-                  (images: Image[]) => this.getImagesById(this.tradeId, images)
-                 ,(error:any) => this.onError(error));
+
+
+  //**************************************************************
+  // GET IMAGES METHODS 
+  //**************************************************************
+  // gets the images data from the local json file
+  public getImagesApi():void {
+
+      try {
+
+        this.imageService.getImagesApi()
+          .subscribe(
+          (images: Image[]) => { this.getImagesByTradeId(images, this.tradeId) });
+      }
+      catch (err) {
+        this.handleError("getImages method", err);
+      }
+  }
+
+
+  public getImagesApiByTradeId(id:number): void {
+
+    try {
+
+      this.imageService.getImagesApiByTradeId(id).subscribe((images: Image[]) => this.tradeImages = images);
+
     }
-
-    //**************************************************************
-    // PRIVATE METHODS ARTICLES
-    //**************************************************************
-  public getImagesById(passedId, passedImages) {
-
-        this.cariouselId = this.cariouselId + String( passedId );
-        this.leftRight = this.leftRight + String( passedId );
-
-
-        for (let x = 0; x < passedImages.length-1; x++) {
-            if (+passedImages[x].tradeId === passedId) { 
-                      this.tradeImages.push(passedImages[x]);
-              }
-         }    
+    catch (err) {
+      this.handleError("getImagesApiById method", err);
+    }
   }
 
-  // on error of http call
-  private onError(err: any) {
-    // toggle visibility when error is raised
-    this.isVisible = false;   
 
-    // we will log the error in the server side by calling the logger, or that is already 
-    // done on the server side if the error has been caught
-    this.loggerService.logErrors(err, "carousel control");
 
-    // we will display a fiendly process message using the process message service             
-    this.messagesService.emitProcessMessage("PMGI");       
-    
+  public getImagesByTradeId(passedImages, passedId) {
+
+    this.cariouselId = this.cariouselId + String(passedId);
+    this.leftRight = this.leftRight + String(passedId);
+
+    for (let x = 0; x < passedImages.length - 1; x++) {
+      if (+passedImages[x].tradeId === passedId) {
+        this.tradeImages.push(passedImages[x]);
+      }
+    }
+  }
+
+  
+  //**************************************************************
+  // PRIVATE METHODS ARTICLES
+  //**************************************************************
+  //@param operation - name of the operation that failed
+  //@param result - optional value to return as the observable result
+  private handleError(operation, err: HttpErrorResponse) {
+
+       // write a message to the console
+    console.error(`Backend returned code in getImages component method calling the image service!, ${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`); 
+  
+      //// audit log the error on the server side
+      this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
+  
+
+    this.onErrorPicked.emit(false);
+
+    // images can not be retrieved, so friendly message to be displayed
+    this.messagesService.emitProcessMessage("PMGI");
   }
 }
-

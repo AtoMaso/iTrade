@@ -13,8 +13,7 @@ export class SpinnerOneComponent implements OnDestroy {
     private currentTimeout: number;
     private isDelayedRunning: boolean = false;
 
-    @Input()
-    public delay: number = 300;    
+    @Input() public delay: number = 300;    
 
     @Input()
     public set isRunning(value: boolean) {

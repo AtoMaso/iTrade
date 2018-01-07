@@ -15,9 +15,17 @@ export class LoggerService {
     constructor(private _http: Http) { };
 
     //TODO audit logging and usage logging to be performed here
-    public logErrors(err: any, passedservicecomp: string) {
-        // call web api to log the error on the server side
-    }
+  public addError(err: any, passedservicecomp: string) {
 
+        // call web api to log the error on the server side
+
+  }
+
+  //TODO audit logging and usage logging to be performed here
+  public addEventLog(err: any, passedservicecomp: string) {
+
+    // call web api to log the error on the server side
+
+  }
 
 }

@@ -102,8 +102,9 @@ interface UserIdentityInterface {
    Name: string;
  }
 
+
 export {
-  TraderInterface, TradeInterface, AddressInterface,          
+  TraderInterface, TradeInterface, AddressInterface,    
   PhoneInterface, ImageInterface, CategoryInterface, ContentInterface,
   UserSessionInterface, AuthenticationInterface, UserIdentityInterface, 
   ProcessMessageInterface, PageTitleInterface, AttachementInterface };

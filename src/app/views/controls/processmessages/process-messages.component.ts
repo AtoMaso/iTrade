@@ -1,6 +1,6 @@
 ﻿import { Component, Input} from '@angular/core';
 
-import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
+
 import { ProcessMessage } from '../../../helpers/classes';
 
 
@@ -13,13 +13,17 @@ import { ProcessMessage } from '../../../helpers/classes';
                 `      
 })
 
+
+
 export class ProcessMessagesComponent {
+
   public style: string = "container panel panel-default col-md-10 col-md-offset-1";
   public stylespan = "messagespan;"
   private errorMessage: string;
 
   // this is the host where this message control is used
-  constructor(private _pmService: ProcessMessageService) {}
+  constructor() {}
+
 
   // display the message text 
   public displayProcessMessage(message: ProcessMessage) {
@@ -34,9 +38,11 @@ export class ProcessMessagesComponent {
     catch (error) {
       // Display friendly client message in case the error message can not be displayed
       this.errorMessage = "An error has occured. Please contact the application administration.";
+      this.getThePrefix("error");
       this.getControlStyle("error");
     }
   }
+
 
   private getThePrefix(type: string): string {    
          switch (type) {
@@ -50,6 +56,7 @@ export class ProcessMessagesComponent {
               return "SUCCESS: ";  
       }
   }
+
 
   // gets the style of the control depending on the type of the message
   public getControlStyle(type: string) {  

@@ -1,12 +1,12 @@
 ﻿import { Inject, Injectable, OnInit} from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
@@ -18,97 +18,102 @@ import {ProcessMessage } from '../../helpers/classes';
 @Injectable()
 export class ProcessMessageService {
 
-    public allProcessMessages: ProcessMessage[]= [];
-    public behaviorProcessMessageStore: BehaviorSubject<ProcessMessage> = new BehaviorSubject(null);
-    public behaviorMessageObserver$: Observable<ProcessMessage> = this.behaviorProcessMessageStore.asObservable(); 
+  public allProcessMessages: ProcessMessage[]= [];
+  public behaviorProcessMessageStore: BehaviorSubject<ProcessMessage> = new BehaviorSubject(null);
+  public behaviorMessageObserver$: Observable<ProcessMessage> = this.behaviorProcessMessageStore.asObservable();
+  public behaviorRouteStore: BehaviorSubject<string> = new BehaviorSubject(null);
+  public behaviorRouteObserver$: Observable<string> = this.behaviorRouteStore.asObservable(); 
 
-    public behaviorRouteStore: BehaviorSubject<string> = new BehaviorSubject(null);
-    public behaviorRouteObserver$: Observable<string> = this.behaviorRouteStore.asObservable(); 
+  private processMessagesUrl = 'api/processmessages';  // URL to web api in our case will be using in memory service object 'trades'
+  
 
-
-    private processMessagesUrl = 'api/processmessages';  // URL to web api in our case will be using in memory service object 'trades'
-
-
-    constructor(
-      private httpService: Http,
+  constructor(     
       private httpClientService: HttpClient,
       private loggerService: LoggerService) { };
 
 
   //******************************************************
-  // GET PROCESS MESSAGE
+  // GET PROCESS MESSAGE USING HTTPCLIENT MODULE
   //******************************************************
   // method called from the appmodule to initialis all process messages
   public getProcessMessage() {
 
     this.getProcessMessagesFromRepository().subscribe(
-          (messages: ProcessMessage[]) => this.allProcessMessages = messages
-          , (error: Response) => this.onError(error, "GetProcessMessage"));
+      (messages: ProcessMessage[]) => this.allProcessMessages = messages);
   }
+
+
 
   // get the process messages from the api json repository
   public getProcessMessagesFromRepository(): Observable<ProcessMessage[]> {
-      // using HTTPClient module
-      return this.httpClientService.get<ProcessMessage[]>(this.processMessagesUrl)
-                        .pipe(
-                              tap(processmessages => this.log(`fetched process messages`)),
-                              catchError(this.handleError('getProcessMessagesFromRepository', []))
-      );         
+     // using HTTPClient module
+    return this.httpClientService.get<ProcessMessage[]>(this.processMessagesUrl)  
+      .retry(3)
+      .catch((err: HttpErrorResponse, result) => {
+
+        if (err.error instanceof Error) {
+
+          // A client-side or network error occurred. Handle it accordingly.
+          console.error('Backend returned code in getTadeApiService method:', err.error.message);
+
+          this.handleError("getTradesApi method in the tradeapi service error", err);
+
+        } else {
+          // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
+          console.error(`Backend returned code in getProcessMessagesFromRepository service method. Status code was ${err.status}, body was: ${err.error.message} , the ${err.url}, was ${err.statusText}`);
+
+          this.handleError("getTradesApi method in the tradeapi service error", err);
+
+        }
+        // return Observable.of<any>;
+        // or simply an empty observable
+        return Observable.throw(err);
+
+      });
   }
-  
-    // raises the event which the app component is subcribed to
-    // and the message id passed to the child control on the app component
+
+
+
+  // raises the event which the app component is subcribed to
+  // and the message id passed to the child control on the app component
   public emitProcessMessage(id: string, message?: string) {
 
-          let pm: ProcessMessage = this.allProcessMessages.find(pm => pm.id === id); 
-          if (id == "PME") {
-              pm.text = message;
-          }
-          this.behaviorProcessMessageStore.next(pm);
-    }
+    let localProcessMessage: ProcessMessage 
+    localProcessMessage = this.allProcessMessages.find(pm => pm.id === id); 
+
+    if (localProcessMessage === undefined || localProcessMessage === null ) {
+            localProcessMessage = new ProcessMessage();
+            localProcessMessage.text = "Unexprected error has occured. Please contact the application administration!";
+            localProcessMessage.type = "error"
+      }
+    this.behaviorProcessMessageStore.next(localProcessMessage);
+  }
    
 
-    // raises the event which the app component is subcribed to
-    // and the messageis passed to the child control on the app component
-    public emitRoute(id: string) {     
+  // raises the event which the app component is subcribed to
+  // and the messageis passed to the child control on the app component
+  public emitRoute(id: string) {     
       this.behaviorRouteStore.next(id);
-    }
-
-    //******************************************************
-    // PRIVATE METHODS
-    //******************************************************
-    // logs errors to the web api side
-  private onError(err: any, method: string) {
-    this.loggerService.logErrors(err, "processmessage.service had an error in the method " + method);
-    return Observable.throw(err.json().error || 'Server error');
-      //this.loggerService.logErrors(err, "processmessage.service");            
-      //return Observable.throw(err.json().error || 'Server error');
-    }
-
-
-  /**
- * Handle Http operation that failed.
- * Let the app continue.
- * @param operation - name of the operation that failed
- * @param result - optional value to return as the observable result
- */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
   }
 
-  /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    //this.messageService.add('HeroService: ' + message);
-  }
 
+
+
+  //*****************************************************
+  // PRIVATE METHODS
+  //*****************************************************
+  //@param operation - name of the operation that failed
+  //@param result - optional value to return as the observable result
+  private handleError(operation, err: HttpErrorResponse) {
+
+   
+      // audit log the error on the server side
+      this.loggerService.addError(err, `${operation} failed: ${err.error.message},  the URL: ${err.url}, was:  ${err.statusText}`);
+    
+
+    // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
+    throw (err);
+  };
 }
+
+

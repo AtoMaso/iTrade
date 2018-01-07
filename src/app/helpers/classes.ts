@@ -115,6 +115,11 @@ class ProcessMessage implements ProcessMessageInterface {
   id: string;
   type: string;
   text: string;
+  constructor() {
+    this.id = "";
+    this.type = "Undefined";
+    this.text = "Undefined";
+  }
 }
 
 class PageTitle implements PageTitleInterface {
@@ -137,6 +142,7 @@ class Guid {
     });
   }
 }
+
 
 
 export {

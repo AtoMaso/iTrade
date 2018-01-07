@@ -2,16 +2,6 @@
     margin-top: 70px;    
 }
 
-input {
-     background-color:blanchedalmond;     
-     color:gray;
-     height:auto;
-     font-family:Verdana;
-     font-size:small;
-     width:250px;
-     height:35px;
-}
-
 button {
     font-family:Verdana;
     font-size:medium;
@@ -25,7 +15,7 @@ label {
 }
 
 .restriction {
-        width:250px;      
+        width:200px;      
         overflow:hidden;
         display:inline-block;
         text-overflow: ellipsis;
@@ -35,8 +25,7 @@ label {
 }
 
 .restrictionname {
-        text-decoration:underline;
-        width:170px;
+        width:160px;
         overflow:hidden;
         display:inline-block;
         text-overflow: ellipsis;
@@ -283,4 +272,27 @@ label {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
+}
+
+//TOBE USED
+.customFooter
+{
+    width: 80%;
+    height:10%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: transparent;
+}
+
+.customBody
+{
+    width: 100%;
+    height:70%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: transparent;
 }

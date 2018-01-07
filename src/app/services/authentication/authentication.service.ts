@@ -270,12 +270,12 @@ export class AuthenticationService implements OnDestroy {
   private onLoginError(err: Response, method:string) {
         this.authentication.isAuthenticated = false;
         this.authentication.authenticationType = "";      
-        this.loggerService.logErrors(err, "authentication.service had error in the method " + method);
+        this.loggerService. addError(err, "authentication.service had error in the method " + method);
         return Observable.throw(err);
   }
 
   private onRegisterError(err: Response, method:string) {       
-        this.loggerService.logErrors(err, "authentication.service had error in the method " + method);
+        this.loggerService.addError(err, "authentication.service had error in the method " + method);
         return Observable.throw(err);
   }
 

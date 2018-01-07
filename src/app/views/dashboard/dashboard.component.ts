@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { of } from 'rxjs/observable/of';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { TradeApiService } from '../../services/tradeapi/tradeapi.service';
 import { LoggerService } from '../../services/logger/logger.service';
@@ -18,10 +22,10 @@ import { PageTitle, Trade } from '../../helpers/classes';
 
 export class DashboardComponent implements OnInit {
 
+  private itSelf: DashboardComponent = this;
   private pagetitle: PageTitle;
   private trades: Trade[]  = [];
-  private isRequesting: boolean;
-  private itself: DashboardComponent = this;
+  public isRequesting: boolean;
 
   constructor(private tradeapiService: TradeApiService,
                     private titleService: PageTitleService,
@@ -33,46 +37,52 @@ export class DashboardComponent implements OnInit {
     this.pagetitle.title = "Latest trades";
     this.messagesService.emitRoute("nill");
 
-    this.titleService.emitPageTitle(this.pagetitle);  
-    this.isRequesting = true;    
-    //this.getTrades();
+    this.titleService.emitPageTitle(this.pagetitle);   
+    this.isRequesting = true;      
     this.getTradesApi()
   }
 
- 
-  getTradesApi(): void {
-    this.tradeapiService.getTradesApi()
-      .subscribe(response => { this.trades = response, this.isRequesting = false });
-  }
+
+  //*****************************************************
+  //  GET THE TOP TRADES
+  //*****************************************************
+  public getTradesApi(): void {
+
+    try {
+
+      this.tradeapiService.getTradesApi().subscribe((response: Trade[]) => { this.trades = response, this.isRequesting = false });
+       
+    }
+    catch (err) {
+      this.handleError("getTradesApi method", err);
+    }
+  } 
+
 
 
   //*****************************************************
-  // GET Trades here TODO
-  //*****************************************************
-  getTrades() {
-          this.tradeapiService.getTradesLocal()
-              .subscribe(
-                    (data: Trade[]) => { this.trades = data, this.isRequesting = false }
-                    , (data: Response) => this.onError(data));
-  }
-
-
-  //******************************************************
   // PRIVATE METHODS
-  //******************************************************
-  // an error has occured
-  private onError(data: any) {
+  //*****************************************************
+  //@param operation - name of the operation that failed
+  //@param result - optional value to return as the observable result
+  private handleError(operation, err: HttpErrorResponse) {
 
-    // stop the spinner
+    // write a message to the console
+    console.error(`Backend returned code in getImages component method calling the image service!`);
+    
+    // audit log the error on the server side
+    this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
+   
     this.isRequesting = false;
 
-    // we will log the error in the server side by calling the logger, or that is already 
-    // done on the server side if the error has been caught
-    this.loggerService.logErrors(data, "dashboard page");
-
-    // we will display a fiendly process message using the process message service             
-    this.messagesService.emitProcessMessage("PMGA");
+    // images can not be retrieved, so friendly message to be displayed
+    this.messagesService.emitProcessMessage("PMGI");
+  }
 
 
-  } 
+  // an event from the child saying that was an error in it
+  private ChangeIsRequesting() {
+    this.isRequesting = false;
+  }
+
 }
