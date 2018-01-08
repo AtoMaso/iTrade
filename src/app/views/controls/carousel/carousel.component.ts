@@ -72,8 +72,7 @@ export class CarouselComponent implements OnInit {
     try {
       this.imageService.getImagesApiByTradeId(id).
             subscribe((images: Image[]) => {
-              this.tradeImages = images;
-              this.getImagesLength(images);
+              this.tradeImages = images;            
               this.getCrouselIds(this.tradeId);
            });
     }
@@ -81,7 +80,6 @@ export class CarouselComponent implements OnInit {
       this.handleError("getImagesApiById method", err);
     }
   }
-
 
 
   public getImagesByTradeId(passedImages, passedId) {
@@ -95,13 +93,10 @@ export class CarouselComponent implements OnInit {
     }
   }
 
+
   public getCrouselIds(passedId) {
     this.cariouselId = this.cariouselId + String(passedId);
     this.leftRight = this.leftRight + String(passedId);
-  }
-
-  public getImagesLength(images) {
-
   }
 
 

@@ -71,12 +71,17 @@ export class ImageService {
 
           if (err.error instanceof Error) {
 
+            console.log("Client-side error occured.");
+
             // A client-side or network error occurred. Handle it accordingly.
             console.log('Backend returned code in getImagesApiByTradeId method:', err.status);
 
             this.handleError("getImagesApiByTradeId method in the image service error", err);
 
           } else {
+
+            console.log("Server-side error occured.");
+
             // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
             console.log(`Backend returned code in getImagesApiByTradeId service method. Status code was ${err.status} , the ${err.url}, was ${err.statusText}`);
 
@@ -106,4 +111,5 @@ export class ImageService {
     // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
     throw (err);
   };
+
 }
