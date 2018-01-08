@@ -10,13 +10,13 @@ import { Image } from '../../../helpers/classes';
 
 
 @Component({
-    selector: 'css-carousel',   
+    selector: 'carousel',   
     templateUrl: './carousel.component.html',
-    styleUrls: ['../../../../assets/css/carousel.css'],
+    styleUrls: ['./carousel.component.scss'],
     providers: [ImageService]
 })
 
-export class CSSCarouselComponent implements OnInit {
+export class CarouselComponent implements OnInit {
 
   public allImages: Image[] = [];
   public tradeImages: Image[] = []; 
@@ -30,6 +30,8 @@ export class CSSCarouselComponent implements OnInit {
   private image1Title: string;
   private image2Title: string;
   private image3Titlel: string;
+
+  private haveImages: boolean = true;
 
   @Input() tradeId: number;
   @Output() onErrorPicked: EventEmitter<any> = new EventEmitter<any>();
@@ -56,11 +58,8 @@ export class CSSCarouselComponent implements OnInit {
   // gets the images data from the local json file
   public getImagesApi():void {
 
-      try {
-
-        this.imageService.getImagesApi()
-          .subscribe(
-          (images: Image[]) => { this.getImagesByTradeId(images, this.tradeId) });
+      try {     
+        this.imageService.getImagesApi().subscribe((images: Image[]) => { this.getImagesByTradeId(images, this.tradeId) });
       }
       catch (err) {
         this.handleError("getImages method", err);
@@ -71,9 +70,12 @@ export class CSSCarouselComponent implements OnInit {
   public getImagesApiByTradeId(id:number): void {
 
     try {
-
-      this.imageService.getImagesApiByTradeId(id).subscribe((images: Image[]) => this.tradeImages = images);
-
+      this.imageService.getImagesApiByTradeId(id).
+            subscribe((images: Image[]) => {
+              this.tradeImages = images;
+              this.getImagesLength(images);
+              this.getCrouselIds(this.tradeId);
+           });
     }
     catch (err) {
       this.handleError("getImagesApiById method", err);
@@ -84,8 +86,7 @@ export class CSSCarouselComponent implements OnInit {
 
   public getImagesByTradeId(passedImages, passedId) {
 
-    this.cariouselId = this.cariouselId + String(passedId);
-    this.leftRight = this.leftRight + String(passedId);
+    this.getCrouselIds(passedId);
 
     for (let x = 0; x < passedImages.length - 1; x++) {
       if (+passedImages[x].tradeId === passedId) {
@@ -93,6 +94,16 @@ export class CSSCarouselComponent implements OnInit {
       }
     }
   }
+
+  public getCrouselIds(passedId) {
+    this.cariouselId = this.cariouselId + String(passedId);
+    this.leftRight = this.leftRight + String(passedId);
+  }
+
+  public getImagesLength(images) {
+
+  }
+
 
   
   //**************************************************************
@@ -102,13 +113,15 @@ export class CSSCarouselComponent implements OnInit {
   //@param result - optional value to return as the observable result
   private handleError(operation, err: HttpErrorResponse) {
 
+    this.haveImages = false;
+
        // write a message to the console
-    console.error(`Backend returned code in getImages component method calling the image service!, ${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`); 
+      console.log(`Backend returned code in getImagesApiByTradeId method in carousel component method calling the image service!, ${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`); 
   
       //// audit log the error on the server side
       this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
   
-
+    // this is emiting the isRequesting value for the parent dashboard component child spinner component
     this.onErrorPicked.emit(false);
 
     // images can not be retrieved, so friendly message to be displayed

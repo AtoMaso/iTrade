@@ -65,19 +65,28 @@ export class AppComponent implements OnDestroy, OnInit {
   public ngOnInit() {
 
         this.subscriptionSession =
-          this.authenticationService.behaviorSessionStore
-                    .subscribe((session: UserSession) => {
-                      // this needs to be check otherwise the app component fails on session not created yet
-                      if (session !== null) {
-                            this.userSession = session,
-                            this.isUserAuthenticated = session.authentication.isAuthenticated;
-                            this.IsAllowed();
-                            this.IdleSetup(session.userIdentity.accessTokenExpiresIn);
-                      }
+                this.authenticationService.behaviorSessionStore
+                      .subscribe((session: UserSession) => {
+                        // this needs to be check otherwise the app component fails on session not created yet
+                        if (session !== null) {
+                              this.userSession = session,
+                              this.isUserAuthenticated = session.authentication.isAuthenticated;
+                              this.IsAllowed();
+                              this.IdleSetup(session.userIdentity.accessTokenExpiresIn);
+                        }
             });
 
+        this.subscriptionTitle =
+                this.titleService.behaviorTitleStore
+                  .subscribe((page: PageTitle) => {
+                    // this needs to be check otherwise the app component fails on pmComponent not created yet
+                    if (page) {
+                      this.pageTitleComponent.displayPageTitle(page)
+                    }
+          });
+
         this.subscriptionMessages =
-                this.messagesService.behaviorProcessMessageStore
+                  this.messagesService.behaviorProcessMessageStore
                       .subscribe((message: ProcessMessage) => {
                         // this needs to be check otherwise the app component fails on pmComponent not created yet
                         if (message) {
@@ -85,21 +94,14 @@ export class AppComponent implements OnDestroy, OnInit {
                         }
             });
 
-        this.subscriptionTitle =
-            this.titleService.behaviorTitleStore
-                        .subscribe((page: PageTitle) => {
-                          // this needs to be check otherwise the app component fails on pmComponent not created yet
-                          if (page) {
-                                  this.pageTitleComponent.displayPageTitle(page)
-                          }
-            });
+       
 
         this.subscriptionRouter =
                   this.messagesService.behaviorRouteStore
-                    .subscribe(() => {
-                      if (this.messagesComponent) {
-                            this.messagesComponent.displayProcessMessage(null);
-                      }
+                       .subscribe(() => {
+                          if (this.messagesComponent) {
+                                this.messagesComponent.displayProcessMessage(null);
+                          }
             });
   }
 
@@ -123,14 +125,14 @@ export class AppComponent implements OnDestroy, OnInit {
     this.router.navigate(route);
   }
 
-  static getParameterByName(name: string, url: string) {
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-  }
+  //static getParameterByName(name: string, url: string) {
+  //  name = name.replace(/[\[\]]/g, "\\$&");
+  //  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
+  //    results = regex.exec(url);
+  //  if (!results) return null;
+  //  if (!results[2]) return '';
+  //  return decodeURIComponent(results[2].replace(/\+/g, " "));
+  //}
 
 
   //*******************************************************

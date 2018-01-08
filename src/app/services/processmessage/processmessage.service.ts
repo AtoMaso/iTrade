@@ -18,9 +18,11 @@ import {ProcessMessage } from '../../helpers/classes';
 @Injectable()
 export class ProcessMessageService {
 
-  public allProcessMessages: ProcessMessage[]= [];
+  public allProcessMessages: ProcessMessage[] = [];
+
   public behaviorProcessMessageStore: BehaviorSubject<ProcessMessage> = new BehaviorSubject(null);
   public behaviorMessageObserver$: Observable<ProcessMessage> = this.behaviorProcessMessageStore.asObservable();
+
   public behaviorRouteStore: BehaviorSubject<string> = new BehaviorSubject(null);
   public behaviorRouteObserver$: Observable<string> = this.behaviorRouteStore.asObservable(); 
 
@@ -43,7 +45,6 @@ export class ProcessMessageService {
   }
 
 
-
   // get the process messages from the api json repository
   public getProcessMessagesFromRepository(): Observable<ProcessMessage[]> {
      // using HTTPClient module
@@ -54,13 +55,13 @@ export class ProcessMessageService {
         if (err.error instanceof Error) {
 
           // A client-side or network error occurred. Handle it accordingly.
-          console.error('Backend returned code in getTadeApiService method:', err.error.message);
+          console.log('Backend returned code in getTadeApiService method:', err.message);
 
           this.handleError("getTradesApi method in the tradeapi service error", err);
 
         } else {
           // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
-          console.error(`Backend returned code in getProcessMessagesFromRepository service method. Status code was ${err.status}, body was: ${err.error.message} , the ${err.url}, was ${err.statusText}`);
+          console.log(`Backend returned code in getProcessMessagesFromRepository service method. Status code was ${err.status}, body was: ${err.message} , the ${err.url}, was ${err.statusText}`);
 
           this.handleError("getTradesApi method in the tradeapi service error", err);
 
@@ -71,7 +72,6 @@ export class ProcessMessageService {
 
       });
   }
-
 
 
   // raises the event which the app component is subcribed to
@@ -85,18 +85,18 @@ export class ProcessMessageService {
             localProcessMessage = new ProcessMessage();
             localProcessMessage.text = "Unexprected error has occured. Please contact the application administration!";
             localProcessMessage.type = "error"
-      }
+    }
+    this.behaviorProcessMessageStore.getValue();
     this.behaviorProcessMessageStore.next(localProcessMessage);
   }
    
 
   // raises the event which the app component is subcribed to
   // and the messageis passed to the child control on the app component
+  // this is done to remove any process message displayed and we move to the next route
   public emitRoute(id: string) {     
       this.behaviorRouteStore.next(id);
   }
-
-
 
 
   //*****************************************************
@@ -108,7 +108,7 @@ export class ProcessMessageService {
 
    
       // audit log the error on the server side
-      this.loggerService.addError(err, `${operation} failed: ${err.error.message},  the URL: ${err.url}, was:  ${err.statusText}`);
+      this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
     
 
     // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed

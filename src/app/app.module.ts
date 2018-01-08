@@ -34,12 +34,13 @@ import { ProcessMessagesComponent } from './views/controls/processmessages/proce
 import { PageTitleComponent } from './views/controls/pagetitle/pagetitle.component';
 import { ModalComponent } from './views/controls/modal/modal.component';
 import { SpinnerOneComponent } from './views/controls/spinner/spinnerone.component';
-import { CSSCarouselComponent } from './views/controls/carousel/carousel.component';
+import { CarouselComponent } from './views/controls/carousel/carousel.component';
 import { ExpandapanelComponent } from './views/expandapanel/expandapanel.component';
 import { TradeComponent } from './views/trade/trade.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 import { WelcomeComponent } from './views/authentication/welcome.component';
+import { CarouseloneComponent } from './views/controls/carouselone/carouselone.component';
 
 
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
@@ -63,7 +64,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     PageTitleComponent,
     ModalComponent,
     SpinnerOneComponent,
-    CSSCarouselComponent,
+    CarouselComponent,
     TopTradesPipe,
     SortTradesByDatePipe,
     ExpandapanelComponent,
@@ -71,6 +72,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     AboutComponent,
     ContactComponent,
     WelcomeComponent,
+    CarouseloneComponent,
     //NG2FileUploadComponent
   ],  
 

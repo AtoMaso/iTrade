@@ -41,14 +41,14 @@ export class ImageService {
         if (err.error instanceof Error) {
 
           // A client-side or network error occurred. Handle it accordingly.
-          console.error('Backend returned code in getImagesApi method:');
+          console.log('Backend returned code in getImagesApi method:');
 
           this.handleError("getImagesApi method in the image service error", err);
 
         } else {
           console.error('Backend returned code in getImagesApi method:');
           // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
-          //console.error(`Backend returned code in getImagesApi service method. Status code was ${err.status}, body was: ${err.error} , the ${err.url}, was ${err.statusText}`);
+          //console.log(`Backend returned code in getImagesApi service method. Status code was ${err.status}, body was: ${err.error} , the ${err.url}, was ${err.statusText}`);
 
           this.handleError("getImagesApi method in the image service error", err);
 
@@ -72,13 +72,13 @@ export class ImageService {
           if (err.error instanceof Error) {
 
             // A client-side or network error occurred. Handle it accordingly.
-            console.error('Backend returned code in getImagesApiByTradeId method:', err.status);
+            console.log('Backend returned code in getImagesApiByTradeId method:', err.status);
 
             this.handleError("getImagesApiByTradeId method in the image service error", err);
 
           } else {
             // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
-            console.error(`Backend returned code in getImagesApiByTradeId service method. Status code was ${err.status} , the ${err.url}, was ${err.statusText}`);
+            console.log(`Backend returned code in getImagesApiByTradeId service method. Status code was ${err.status} , the ${err.url}, was ${err.statusText}`);
 
             this.handleError("getImagesApiByTradeId method in the image service error", err);
 

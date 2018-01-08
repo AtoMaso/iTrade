@@ -1,6 +1,4 @@
 ﻿import { Component, Input} from '@angular/core';
-
-
 import { ProcessMessage } from '../../../helpers/classes';
 
 
@@ -10,9 +8,8 @@ import { ProcessMessage } from '../../../helpers/classes';
                     <div *ngIf="errorMessage" [class] = "style">                    
                       <span [class]= "stylespan"> {{ errorMessage }}</span>
                     </div>
-                `      
+               `      
 })
-
 
 
 export class ProcessMessagesComponent {
@@ -30,16 +27,15 @@ export class ProcessMessagesComponent {
     try {
       if (message === null)
           { this.errorMessage = null; }
-      else {        
-           this.errorMessage = this.getThePrefix(message.type) + message.text;
+      else {                   
            this.getControlStyle(message.type);
+           this.errorMessage = this.getThePrefix(message.type)  + message.text ;           
       }
     }
     catch (error) {
-      // Display friendly client message in case the error message can not be displayed
-      this.errorMessage = "An error has occured. Please contact the application administration.";
-      this.getThePrefix("error");
+      // Display friendly client message in case the error message can not be displayed          
       this.getControlStyle("error");
+      this.errorMessage = this.getThePrefix("error") + "An error has occured. Please contact the application administration.";
     }
   }
 

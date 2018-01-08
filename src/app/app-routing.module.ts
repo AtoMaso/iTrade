@@ -9,6 +9,7 @@ import { TradeComponent } from './views/trade/trade.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 import { WelcomeComponent } from './views/authentication/welcome.component';
+import { CarouseloneComponent } from './views/controls/carouselone/carouselone.component';
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
 // cmport the AuthGuard helper
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },    
   { path: 'about', component: AboutComponent },
-  { path: 'contact', component: ContactComponent},
+  { path: 'contact', component: ContactComponent },
+  { path: 'carousel', component: CarouseloneComponent },
   { path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard] },
   { path: 'trade', component: TradeComponent, canActivate: [AuthGuard] }
   //{ path: 'ng2-file-upload', component: NG2FileUploadComponent, canActivate: [AuthGuard] },

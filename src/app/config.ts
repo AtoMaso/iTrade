@@ -33,7 +33,7 @@
     addaddress: 'http://localhost:4200/api/localities/PostAddress',
     removeaddress: 'http://localhost:4200/api/localities/DeleteAddress',
 
-    images: 'http://localhost:4200/api/imagess',
+    images: 'http://localhost:4200/api/images',
     image: 'http://localhost:4200/api/image',
     updateimage: 'http://localhost:4200/api/localities/PutImage',
     addimage: 'http://localhost:4200/api/localities/PostImage',

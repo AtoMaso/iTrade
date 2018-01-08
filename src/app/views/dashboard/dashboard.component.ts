@@ -10,7 +10,7 @@ import { ProcessMessageService } from '../../services/processmessage/processmess
 import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
 import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
-import { CSSCarouselComponent } from '../controls/carousel//carousel.component';
+import { CarouselComponent } from '../controls/carousel//carousel.component';
 import { TopTradesPipe, SortTradesByDatePipe } from '../../helpers/pipes';
 import { PageTitle, Trade } from '../../helpers/classes';
 
@@ -22,10 +22,9 @@ import { PageTitle, Trade } from '../../helpers/classes';
 
 export class DashboardComponent implements OnInit {
 
-  private itSelf: DashboardComponent = this;
   private pagetitle: PageTitle;
   private trades: Trade[]  = [];
-  public isRequesting: boolean;
+  public isGettingData: boolean;
 
   constructor(private tradeapiService: TradeApiService,
                     private titleService: PageTitleService,
@@ -38,7 +37,7 @@ export class DashboardComponent implements OnInit {
     this.messagesService.emitRoute("nill");
 
     this.titleService.emitPageTitle(this.pagetitle);   
-    this.isRequesting = true;      
+    this.isGettingData = true;      
     this.getTradesApi()
   }
 
@@ -50,7 +49,11 @@ export class DashboardComponent implements OnInit {
 
     try {
 
-      this.tradeapiService.getTradesApi().subscribe((response: Trade[]) => { this.trades = response, this.isRequesting = false });
+      this.tradeapiService.getTradesApi().subscribe(
+        (response: Trade[]) => {
+          this.trades = response;
+          this.isGettingData = false;
+        });
        
     }
     catch (err) {
@@ -73,16 +76,18 @@ export class DashboardComponent implements OnInit {
     // audit log the error on the server side
     this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
    
-    this.isRequesting = false;
+    this.isGettingData = false; 
 
     // images can not be retrieved, so friendly message to be displayed
-    this.messagesService.emitProcessMessage("PMGI");
+    this.messagesService.emitProcessMessage("PMGTs");
   }
 
 
-  // an event from the child saying that was an error in it
-  private ChangeIsRequesting() {
-    this.isRequesting = false;
+  // an event from the child carousel component saying that encountered an error
+  private ChangeIsRequesting(bool) {
+    
+    this.isGettingData = false;
+
   }
 
 }
