@@ -4,10 +4,10 @@ import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router'
 import {  NgClass, NgIf } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 // third party
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { NG_TABLE_DIRECTIVES } from 'ng2-table';
-import { PaginatePipe, PaginationService, PaginationInstance, PaginationControlsDirective } from 'ng2-pagination';
-import { PaginationModule, PaginationConfig, PaginationComponent} from 'ngx-bootstrap';
+import { NG_TABLE_DIRECTIVES, } from 'ng2-table';
+import { PaginationInstance, PaginatePipe, PaginationControlsDirective  } from 'ngx-pagination';
+//import { PaginationModule, PaginationConfig, PaginationComponent } from 'ngx-bootstrap';
+
 // services
 import { TradeApiService } from '../../services/tradeapi/tradeapi.service';
 import { LoggerService } from '../../services/logger/logger.service';
@@ -83,7 +83,6 @@ export class TradeslistComponent implements OnInit {
   }
 
 
-
   public ngAfterViewInit() {
     //// ONE WAY OF PASSING VALUES TO MODAL    TODO find out how to replace this
     ////triggered when modal is about to be shown
@@ -109,6 +108,7 @@ export class TradeslistComponent implements OnInit {
     }
   }
 
+
   private IsAllowedToAddTrade() {
     // in TYPESCRIPT call to class methods containing call to "this" have to be created
     // and relevant parameters passed (roles in thsi case) and then method called on
@@ -118,6 +118,7 @@ export class TradeslistComponent implements OnInit {
       this.isAllowedToAddTrade = true;
     }
   }
+
 
   private IsAllowedToRemoveTrade() {
     // in TYPESCRIPT call to class methods containing call to "this" have to be created
@@ -129,6 +130,7 @@ export class TradeslistComponent implements OnInit {
     }
   }
 
+
   //*****************************************************
   // GET TRADES
   //*****************************************************
@@ -137,9 +139,9 @@ export class TradeslistComponent implements OnInit {
     this.tradeApiService.getTradesApi(id)
       .subscribe((returnedTrades: any) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-        this.data = returnedTrades,
-          this.isRequesting = false,
-          this.ChangeTable(this.configTwo)
+            this.data = returnedTrades,
+            this.isRequesting = false,
+            this.ChangeTable(this.configTwo)
       }, (res: Response) => this.onError(res, "getTrades"));
   }
 
@@ -236,7 +238,7 @@ export class TradeslistComponent implements OnInit {
 
 
   /**********************************************/
-  //ng2-pagination methods
+  //ngx-pagination methods
   /***********************************************/
   private isTitleAsc = true;
   private isCategoryAsc = true;
@@ -246,24 +248,29 @@ export class TradeslistComponent implements OnInit {
   private sortCategory: string = 'desc';
   private sortName: string = 'desc';
   private sortDate: string = 'desc';
-  public maxSize: number = 5;
-  //public directionLinks: boolean = true;
-  //public autoHide: boolean = true;
-
-  public config: PaginationInstance = {
-    id: 'advanced',
-    itemsPerPage: 5,
-    currentPage: 1
-  };
-  public numPages: number = 1;
-  public length: number = 0;
   private data: Array<any> = [];
   public rows: Array<any> = [];
   public columns: Array<any> = [];
+
+  //public directionLinks: boolean = true;
+  //public autoHide: boolean = true;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
+
+
+  public config: PaginationInstance = {
+    id: 'pag',
+    itemsPerPage: 5,
+    currentPage: 1,
+    totalItems: this.length
+  };
+
+
   public configTwo: any = {
     paging: true,
     sorting: { columns: [] },
-    filtering: { filterString: '', columnName: 'Title' }
+    filtering: { filterString: '', columnName: 'title' }
   };
 
 
@@ -277,26 +284,26 @@ export class TradeslistComponent implements OnInit {
     // reset the array of columns
     this.configTwo.sorting.columns = [];
     switch (column) {
-      case 'Title':
-        this.configTwo.sorting.columns = [{ name: 'Title', sort: this.sortTitle }];
+      case 'title':
+        this.configTwo.sorting.columns = [{ name: 'title', sort: this.sortTitle }];
         this.ChangeTable(this.configTwo);
         this.isTitleAsc = !this.isTitleAsc;
         this.sortTitle = this.isTitleAsc ? 'desc' : 'asc';
         break;
-      case 'CategoryName':
-        this.configTwo.sorting.columns = [{ name: 'CategoryName', sort: this.sortCategory }];
+      case 'categoryName':
+        this.configTwo.sorting.columns = [{ name: 'categoryType', sort: this.sortCategory }];
         this.ChangeTable(this.configTwo);
         this.isCategoryAsc = !this.isCategoryAsc;
         this.sortCategory = this.isCategoryAsc ? 'desc' : 'asc';
         break;
-      case 'TraderName':
-        this.configTwo.sorting.columns = [{ name: 'TraderName', sort: this.sortName }];
+      case 'traderName':
+        this.configTwo.sorting.columns = [{ name: 'traderName', sort: this.sortName }];
         this.ChangeTable(this.configTwo);
         this.isNameAsc = !this.isNameAsc;
         this.sortName = this.isNameAsc ? 'desc' : 'asc';
         break;
-      case 'DatePublished':
-        this.configTwo.sorting.columns = [{ name: 'DatePublished', sort: this.sortDate }];
+      case 'satePublished':
+        this.configTwo.sorting.columns = [{ name: 'datePublished', sort: this.sortDate }];
         this.ChangeTable(this.configTwo);
         this.isDateAsc = !this.isDateAsc;
         this.sortDate = this.isDateAsc ? 'desc' : 'asc';
@@ -325,6 +332,7 @@ export class TradeslistComponent implements OnInit {
       return data;
     }
 
+
     // simple sorting
     return data.sort((previous: any, current: any) => {
       if (previous[columnName] > current[columnName]) {
@@ -336,6 +344,7 @@ export class TradeslistComponent implements OnInit {
     });
   }
 
+
   // filtering of array of any data by column name
   private changeFilter(data: any, config: any): any {
     if (!config.filtering) {
@@ -346,6 +355,7 @@ export class TradeslistComponent implements OnInit {
 
     return filteredData;
   }
+
 
   // filter the removed user from the list
   private changeRemove(data: any, config: any): any {
@@ -370,9 +380,11 @@ export class TradeslistComponent implements OnInit {
     let removedData = this.changeRemove(this.data, this.configTwo);
     let filteredData = this.changeFilter(removedData, this.configTwo);
     let sortedData = this.changeSort(filteredData, this.configTwo);
-    this.rows = sortedData;
-    this.length = sortedData.length;
+    this.rows = removedData; 
+    this.length = removedData.length; 
   }
 
 }
+
+
 

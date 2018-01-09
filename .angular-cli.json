@@ -29,10 +29,10 @@
         "../node_modules/tether/dist/js/tether.min.js",
         "../node_modules/bootstrap/dist/js/bootstrap.min.js",
         "../node_modules/ngx-bootstrap/bundles/ngx-bootstrap.umd.min.js",
+        "../node_modules/ngx-pagination/dist/ngx-pagination.umd.js",
         "../node_modules/ng2-table/bundles/ng2-table.min.js",
-        "../node_modules/ng2-pagination/dist/ng2-pagination-bundle.js",
         "../node_modules/ng2-smart-table/bundles/table.umd.js",
-        "../node_modules/ng2-file-upload/bundles/ng2-file-upload.umd.min.js"
+        "../node_modules/ng2-file-upload/bundles/ng2-file-upload.umd.min.js"       
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

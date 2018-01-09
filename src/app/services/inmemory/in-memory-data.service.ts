@@ -3,17 +3,17 @@
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     const trades = [
-      { tradeId: 1, title: 'Baloon for coffee table', traderId: 1, traderName: 'Mirko Srbinovski123456789', datePublished: '11/02/2017', categoryType: 'Toy', content: 'Explantion for trade' },
-      { tradeId: 2, title: 'TV for a push bike', traderId: 2, traderName: 'Nenad Srbinovski', datePublished: '11/01/2017', categoryType: 'Electronics', content: 'Explantion for trade' },
-      { tradeId: 1, title: 'Baloon for coffee table sdsadsdsd', traderId: 1, traderName: 'Mirko Srbinovski123456789', datePublished: '11/02/2017', categoryType: 'Toy', content: 'Explantion for trade' },
-      { tradeId: 3, title: 'Baloon for coffee table', traderId: 1, traderName: 'Nenad Srbinovski', datePublished: '11/10/2017', categoryType: 'Toy', content: 'Explantion for trade' },
-      { tradeId: 4, title: 'TV for a push bike adadadadada', traderId: 2, traderName: 'Nenad Srbinovski', datePublished: '11/09/2017', categoryType: 'Electronics', content: 'Explantion for trade' },
-      { tradeId: 5, title: 'Baloon for coffee table', traderId: 1, traderName: 'Mirko Srbinovski123456789', datePublished: '11/08/2017', categoryType: 'Toy', content: 'Explantion for trade' },
-      { tradeId: 6, title: 'TV for a push bike', traderId: 2, traderName: 'Nenad Srbinovski', datePublished: '11/07/2017', categoryType: 'Electronics', content: 'Explantion for trade' },
-      { tradeId: 7, title: 'Baloon for coffee table', traderId: 1, traderName: 'Mirko Srbinovski123456789', datePublished: '11/06/2017', categoryType: 'Toy', content: 'Explantion for trade' },
-      { tradeId: 8, title: 'TV for a push bike', traderId: 2, traderName: 'Nenad Srbinovski', datePublished: '11/05/2017', categoryType: 'Electronics', content: 'Explantion for trade' },
-      { tradeId: 9, title: 'Baloon for coffee table', traderId: 1, traderName: 'Mirko Srbinovski123456789', datePublished: '11/04/2017', categoryType: 'Toy', content: 'Explantion for trade' },
-      { tradeId: 10, title: 'TV for a push bike', traderId: 2, traderName: 'Nenad Srbinovski', datePublished: '11/03/2017', categoryType: 'Electronics', content: 'Explantion for trade' }
+      { tradeId: 1,  title: 'Baloon for coffee table',                 traderId: 1, traderName: 'Mirko Srbinovski',  datePublished: '11/02/2017', categoryType: 'Toy',           content: 'Explantion for trade' },
+      { tradeId: 2,  title: 'TV for a push bike',                       traderId: 2, traderName: 'Nenad Srbinovski', datePublished: '11/01/2017', categoryType: 'Electronics', content: 'Explantion for trade' },
+      { tradeId: 1,  title: 'Baloon for coffee table sdsadsdsd', traderId: 1, traderName: 'Mirko Srbinovski',  datePublished: '11/02/2017', categoryType: 'Toy',            content: 'Explantion for trade' },
+      { tradeId: 3,  title: 'Baloon for coffee table',                 traderId: 1, traderName: 'Nenad Srbinovski', datePublished: '11/10/2017', categoryType: 'Toy',           content: 'Explantion for trade' },
+      { tradeId: 4,  title: 'TV for a push bike adadadadada',   traderId: 2, traderName: 'Nenad Srbinovski', datePublished: '11/09/2017', categoryType: 'Electronics', content: 'Explantion for trade' },
+      { tradeId: 5,  title: 'Baloon for coffee table',                 traderId: 1, traderName: 'Mirko Srbinovski',  datePublished: '11/08/2017', categoryType: 'Toy',            content: 'Explantion for trade' },
+      { tradeId: 6,  title: 'TV for a push bike',                       traderId: 2, traderName: 'Nenad Srbinovski', datePublished: '11/07/2017', categoryType: 'Electronics', content: 'Explantion for trade' },
+      { tradeId: 7,  title: 'Baloon for coffee table',                 traderId: 1, traderName: 'Mirko Srbinovski',  datePublished: '11/06/2017', categoryType: 'Toy',            content: 'Explantion for trade' },
+      { tradeId: 8,  title: 'TV for a push bike',                       traderId: 2, traderName: 'Nenad Srbinovski', datePublished: '11/05/2017', categoryType: 'Electronics', content: 'Explantion for trade' },
+      { tradeId: 9,  title: 'Baloon for coffee table',                 traderId: 1, traderName: 'Mirko Srbinovski',  datePublished: '11/04/2017', categoryType: 'Toy',            content: 'Explantion for trade' },
+      {tradeId: 10, title: 'TV for a push bike',                       traderId: 2, traderName: 'Nenad Srbinovski', datePublished: '11/03/2017', categoryType: 'Electronics',  content: 'Explantion for trade' }
     ];
    
     const images = [

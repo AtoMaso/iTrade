@@ -10,9 +10,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { Ng2TableModule } from 'ng2-table';
-import { Ng2PaginationModule } from 'ng2-pagination';
 import { FileUploadModule } from 'ng2-file-upload';
-
+//import { PaginationModule, TabsModule } from 'ngx-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 //helpers
 import { AuthGuard } from './helpers/auth.guard';
@@ -44,7 +44,7 @@ import { ExpandapanelComponent } from './views/expandapanel/expandapanel.compone
 import { TradeComponent } from './views/trade/trade.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
-//import { TradeslistComponent } from './views/tradeslist/tradeslist.component';
+import { TradeslistComponent } from './views/tradeslist/tradeslist.component';
 import { SmarttableComponent } from './views/smarttable/smarttable.component';
 //import { TraderlistComponent } from './views/trader/traderlist/traderlist.component';
 //import { TraderComponent } from './views/trader/trader/trader.component';
@@ -81,7 +81,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     AboutComponent,
     ContactComponent,
     TradeComponent,
-    //TradeslistComponent,
+    TradeslistComponent,
     SmarttableComponent
     //TraderlistComponent,
     //TraderComponent,
@@ -102,8 +102,10 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     ReactiveFormsModule,
     Ng2SmartTableModule,
     Ng2TableModule,
-    Ng2PaginationModule,
     FileUploadModule,
+    NgxPaginationModule,
+    //PaginationModule,
+    //TabsModule,
     NgIdleKeepaliveModule.forRoot(),
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.

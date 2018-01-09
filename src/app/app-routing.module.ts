@@ -6,6 +6,8 @@ import { DashboardComponent }   from './views/dashboard/dashboard.component';
 import { LoginComponent } from './views/authentication/login.component';
 import { RegisterComponent } from './views/authentication/register.component';
 import { TradeComponent } from './views/trade/trade.component';
+import { TradeslistComponent } from './views/tradeslist/tradeslist.component';
+
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 import { SmarttableComponent } from './views/smarttable/smarttable.component';
@@ -23,7 +25,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },    
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
-  {path: 'smarttable' , component: SmarttableComponent},
+  { path: 'smarttable', component: SmarttableComponent },
+  { path: 'trades', component: TradeslistComponent },
   //{ path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard] },
   { path: 'trade', component: TradeComponent, canActivate: [AuthGuard] }
   //{ path: 'ng2-file-upload', component: NG2FileUploadComponent, canActivate: [AuthGuard] },

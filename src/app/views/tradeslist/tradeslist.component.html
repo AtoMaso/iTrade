@@ -1,6 +1,5 @@
 
-
-<div class="container col-md-12">
+<div class="container">
   <br />
   <label id="here"></label>
 
@@ -10,18 +9,22 @@
       <span>Filter by Title</span>
       <input *ngIf="configTwo.filtering" placeholder="Filter" [ngTableFiltering]="configTwo.filtering" (tableChanged)="ChangeTable(configTwo)" />
     </div>
+
     <div class="col-md-2 textgray">
       <span>Items Per Page</span>
       <input type="number" min="0" [(ngModel)]="config.itemsPerPage">
     </div>
+
     <div class="col-md-2 textgray">
       <span>Current Page</span>
       <input type="number" min="0" [(ngModel)]="config.currentPage">
     </div>
+
     <div class="col-md-1 textgray">
       <span>Max Size</span>
       <input type="number" min="5" max="100" [(ngModel)]="maxSize">
     </div>
+
     <div class="col-md-2 col-md-offset-3 text-right">
       <br />
       <!-- MODAL buttons -->
@@ -44,35 +47,37 @@
   <br />
 
   <div class="row">
+
     <div class="table-responsive">
+
       <table class="table table-striped table-hover table-condensed">
 
         <thead>
           <tr>
-            <th class="col-md-4 smalltext" style="vertical-align:middle;">
+            <th class="col-md-3 smalltext" style="vertical-align:middle;">
               <span class="textgray text-uppercase" style="vertical-align:middle;margin-left:10px">Title</span>
-              <button class="btn btn-sm btn-info" (click)="sortTable('Title')">
+              <button class="btn btn-sm btn-info" (click)="sortTable('title')" style="width:40px;">
                 <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
                 <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
               </button>
             </th>
             <th class="col-md-2 smalltext" style="vertical-align:middle">
               <span class="textgray text-uppercase" style="vertical-align:middle"> Category</span>
-              <button class="btn btn-sm btn-info" (click)="sortTable('CategoryName')">
+              <button class="btn btn-sm btn-info" (click)="sortTable('categoryType')" style="width:40px;">
                 <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
                 <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
               </button>
             </th>
             <th class="col-md-2 smalltext" style="vertical-align:middle">
               <span class="textgray text-uppercase" style="vertical-align:middle">Trader</span>
-              <button class="btn btn-sm btn-info" (click)="sortTable('TraderName')">
+              <button class="btn btn-sm btn-info" (click)="sortTable('traderName')" style="width:40px;">
                 <span *ngIf="isNameAsc" class="glyphicon glyphicon-chevron-down"></span>
                 <span *ngIf="!isNameAsc" class="glyphicon glyphicon-chevron-up"></span>
               </button>
             </th>
             <th class="col-md-2 smalltext" style="vertical-align:middle">
-              <span class="textgray text-uppercase" style="vertical-align:middle"> Date Published</span>
-              <button class="btn btn-sm btn-info" (click)="sortTable('DatePublished')">
+              <span class="textgray text-uppercase" style="vertical-align:middle"> Published</span>
+              <button class="btn btn-sm btn-info" (click)="sortTable('datePublished')" style="width:40px;">
                 <span *ngIf="isDateAsc" class="glyphicon glyphicon-chevron-down"></span>
                 <span *ngIf="!isDateAsc" class="glyphicon glyphicon-chevron-up"></span>
               </button>
@@ -81,21 +86,28 @@
           </tr>
         </thead>
 
+
+
         <tr *ngFor="let trade of rows  | paginate:config ">
-          <td class="col-md-4" style="vertical-align:middle">
-            <a href="" [routerLink]="['Trade', {id: trade.tradeId}]" style="margin-left:10px" class="smalltext text-success text-uppercase">
-              <span>{{ trade.Title  }}</span>
+
+          <td style="vertical-align:middle" class="col-md-3">
+            <a href="" [routerLink]="['Trade', {id: trade.tradeId}]" style="margin-left:10px" class="smalltext text-success">
+              <span>{{ trade.title  }}</span>
             </a>
           </td>
-          <td class="col-md-2 smalltext textgray text-uppercase" style="vertical-align:middle">{{ trade.CategoryName  }}</td>
+
+          <td  style="vertical-align:middle" class="col-md-2 smalltext textgray">{{ trade.categoryType  }}</td>
+
           <td class="col-md-2" style="vertical-align:middle">
-            <a href="" [routerLink]="['Trader', {id: trade.traderId}]" class="smalltext text-success text-uppercase">
+            <a href="" [routerLink]="['Trader', {id: trade.traderId}]" class="smalltext text-success">
               <span>{{ trade.traderName }}</span>
             </a>
           </td>
-          <td class="col-md-2 smalltext textgray text-uppercase" style="vertical-align:middle">{{ trade.DatePublished }}</td>
 
-          <td class="col-md-2 text-center" style="vertical-align:middle;">
+          <td  style="vertical-align:middle" class="col-md-2 smalltext textgray">{{ trade.datePublished }}</td>
+
+
+          <td style="vertical-align:middle;" class="col-md-2 text-center" >
             <!-- MODAL buttons -->
             <button *ngIf="!isAuthenticated" type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-sm btn-danger">
               <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
@@ -115,18 +127,37 @@
         </tr>
 
       </table>
-      <!-- this is ng2-table pagination-->
-      <pagination-controls *ngIf="configTwo.paging"
+
+      <!-- this is ng2-pagination pagination-->
+      <!--<pagination *ngIf="configTwo.paging"
                   disable="authoHide"
                   class="pagination-sm"
                   [(ngModel)]="config.currentPage"
-                  [totalItems]="length"
+                 [totalItems]="length"
                   [itemsPerPage]="config.itemsPerPage"
                   [maxSize]="maxSize"
                   [boundaryLinks]="true"
                   (pageChanged)="ChangeTable(configTwo, $event)"
                   (numPages)="numPages = $event">
+      </pagination>-->
+
+
+      <pagination-controls id="pag" class="pagination-sm" *ngIf="configTwo.paging"
+                           (pageChange)="ChangeTable(configTwo, $event)"
+                           maxSize="9"
+                           directionLinks="true"
+                           autoHide="true"                       
+                           previousLabel="Previous"
+                           nextLabel="Next"                          
+                           screenReaderPaginationLabel="Pagination"
+                           screenReaderPageLabel="page"
+                           screenReaderCurrentLabel="You're on page"                        
+                           [(ngModel)]="config.currentPage"
+                           (numPages) ="numPages = $event"                                  
+                           [maxSize]="maxSize">
       </pagination-controls>
+
+
     </div>
   </div>
 
