@@ -1,0 +1,378 @@
+import { Component, Input, OnInit, Inject, Injectable, AfterViewInit } from '@angular/core';
+import { Response } from '@angular/http';
+import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import {  NgClass, NgIf } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
+// third party
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NG_TABLE_DIRECTIVES } from 'ng2-table';
+import { PaginatePipe, PaginationService, PaginationInstance, PaginationControlsDirective } from 'ng2-pagination';
+import { PaginationModule, PaginationConfig, PaginationComponent} from 'ngx-bootstrap';
+// services
+import { TradeApiService } from '../../services/tradeapi/tradeapi.service';
+import { LoggerService } from '../../services/logger/logger.service';
+import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
+import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
+// components
+import { CapsPipe } from '../../helpers/pipes';
+import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../helpers/classes';
+import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
+
+
+@Component({
+  selector: 'app-tradeslist',
+  templateUrl: './tradeslist.component.html',
+  styleUrls: ['./tradeslist.component.scss']
+})
+export class TradeslistComponent implements OnInit {
+
+  private traderId: number;
+  private removedTradeId: number;
+  private tradeIdToBeRemoved: number;
+  private tradeToRemove: Trade;
+
+  private session: UserSession;
+  private identity: UserIdentity = new UserIdentity;
+
+  private isRequesting: boolean = false;
+  private isAuthenticated: boolean = false;
+  private isAllowedToAddTrade: boolean = false;
+  private isAllowedToRemoveTrade: boolean = false;
+  private isOwner: boolean = false;
+
+  // constructor which injects the services
+  constructor(
+    private route: ActivatedRoute,
+    private tradeApiService: TradeApiService,
+    private messagesService: ProcessMessageService,
+    private pageTitleService: PageTitleService,
+    private router: Router,
+    private loggerService: LoggerService) {
+
+  };
+
+  // implement OnInit to get the initial list of articles
+  public ngOnInit() {
+
+    if (sessionStorage["UserSession"] != "null") {
+      try {
+        this.session = JSON.parse(sessionStorage["UserSession"])
+        this.isAuthenticated = this.session.authentication.isAuthenticated;
+        this.identity.roles = this.session.userIdentity.roles;
+        this.IsAllowedToAddTrade();
+        this.IsAllowedToRemoveTrade();
+      }
+      catch (ex) {
+        this.messagesService.emitProcessMessage("PMG");
+      }
+    }
+    this.messagesService.emitRoute("nill");
+    this.isRequesting = true;
+    this.traderId = +this.route.snapshot.paramMap.get('id');  // TODO check this 
+
+    // set proper title depending of what we displaying
+    if (this.traderId) {
+      this.pageTitleService.emitPageTitle(new PageTitle("Trader's Trades"));
+    }
+    else {
+      this.pageTitleService.emitPageTitle(new PageTitle("All Trades"));
+    }
+    // get all or author's articles
+    this.getTrades(this.traderId);
+
+  }
+
+
+
+  public ngAfterViewInit() {
+    //// ONE WAY OF PASSING VALUES TO MODAL    TODO find out how to replace this
+    ////triggered when modal is about to be shown
+    //$('#removeAllowed').on('show.bs.modal', function (event) {
+    //  //get data-articleid attribute of the clicked element
+    //  var artId = $(event.relatedTarget).data('tradeId');
+    //  var modal = $(this)
+    //  //populate the textbox
+    //  modal.find('input[name="tradeId"]').val(artId);
+    //  //modal.find('.modal-body input').val(artId);
+    //});
+  }
+
+
+  private passToModal(trade: Trade) {
+    if (trade.traderId === +this.session.userIdentity.userId) {
+      this.isOwner = true;
+      this.tradeIdToBeRemoved = trade.tradeId;
+    }
+    else {
+      this.isOwner = false;
+      this.tradeIdToBeRemoved = null;
+    }
+  }
+
+  private IsAllowedToAddTrade() {
+    // in TYPESCRIPT call to class methods containing call to "this" have to be created
+    // and relevant parameters passed (roles in thsi case) and then method called on
+    // that instance of the class, in this instance "identity" object. The reason for this is
+    // the "this" keyword is the one of the object calling the method
+    if (this.isAuthenticated) {
+      this.isAllowedToAddTrade = true;
+    }
+  }
+
+  private IsAllowedToRemoveTrade() {
+    // in TYPESCRIPT call to class methods containing call to "this" have to be created
+    // and relevant parameters passed (roles in thsi case) and then method called on
+    // that instance of the class, in this instance "identity" object. The reason for this is
+    // the "this" keyword is the one of the object calling the method
+    if (this.isAuthenticated) {
+      this.isAllowedToRemoveTrade = true;
+    }
+  }
+
+  //*****************************************************
+  // GET TRADES
+  //*****************************************************
+  private getTrades(id: number) {
+
+    this.tradeApiService.getTradesApi(id)
+      .subscribe((returnedTrades: any) => {
+        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
+        this.data = returnedTrades,
+          this.isRequesting = false,
+          this.ChangeTable(this.configTwo)
+      }, (res: Response) => this.onError(res, "getTrades"));
+  }
+
+
+  // get set of records of articles service method
+  private getPageOfTrades(id: number, page: number, total: number) {
+
+    this.tradeApiService.getPageOfTrades(id, page, total)
+      .subscribe((returnedTrades: Trade[]) => {
+        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
+        this.data = returnedTrades,
+          this.isRequesting = false,
+          this.ChangeTable(this.configTwo);
+      }, (res: Response) => this.onError(res, "getPageOfTradesArticles"));
+  }
+
+
+  //****************************************************
+  // ADD TRADE
+  //****************************************************
+  private addTrade() {
+    this.router.navigate(['AddTrade']);
+  }
+
+
+  //****************************************************
+  // REMOVE TRADE
+  //****************************************************
+  //private removeTrade(tradeId: string) {
+  //  this.tradeApiService.removeTrade(tradeId)
+  //    .subscribe((removedTrade: Trade) => this.onSuccessRemoveTrade(removedTrade)
+  //    , error => this.onError(error, "removeArticle"));
+  //}
+
+  //*****************************************************
+  // PRIVATE METHODS ARTICLES
+  //*****************************************************
+  private onSuccessRemoveTrade(trade: Trade) {
+    if (trade) {
+      this.removedTradeId = trade.tradeId;
+      this.ChangeTable(this.configTwo);
+      // reset the removed article after the data has been updated
+      // so it is ready for the next filtering or sorting of the list
+      this.removedTradeId = null;
+
+      this.messagesService.emitProcessMessage("PMRAS"); // TODO change the process message code to reflect the trades
+    }
+    else {
+      this.messagesService.emitProcessMessage("PMRA"); // TODO change the process message code to reflect the trades
+    }
+  }
+
+
+  // an error has occured
+  private onError(err: any, type: string) {
+    // stop the spinner
+    this.isRequesting = false;
+    let message: string = "";
+
+    // we will log the error in the server side by calling the logger, or that is already 
+    // done on the server side if the error has been caught
+    this.loggerService.addError(err, "article list page");
+
+    // we will display a fiendly process message using the process message service   
+    if (err.status !== 200 || err.status !== 300) {
+      let data = err.json();
+
+      if (data.ModelState) {
+        for (var key in data.ModelState) {
+          for (var i = 0; i < data.ModelState[key].length; i++) {
+            //errors.push(data.modelState[key][i]);
+            if (message == null) { message = data.ModelState[key][i]; }
+            else { message = message + data.ModelState[key][i]; } // end if else
+          }// end for
+        } // end for
+        this.messagesService.emitProcessMessage("PME", message);   // TODO change the process message code to reflect the trades
+      } // end if
+      else {
+        // we will display a fiendly process message using the process message service    
+        switch (type) {
+          case "removeTrade":
+            this.messagesService.emitProcessMessage("PMRA");  // TODO change the process message code to reflect the trades
+            break;
+          case "getTrades":
+            this.messagesService.emitProcessMessage("PMGAs"); // TODO change the process message code to reflect the trades
+            break;
+          default:
+            this.messagesService.emitProcessMessage("PMG"); // TODO change the process message code to reflect the trades
+        }
+      }
+    } //end if              
+  }
+
+
+
+  /**********************************************/
+  //ng2-pagination methods
+  /***********************************************/
+  private isTitleAsc = true;
+  private isCategoryAsc = true;
+  private isNameAsc = true;
+  private isDateAsc = true;
+  private sortTitle: string = 'desc';
+  private sortCategory: string = 'desc';
+  private sortName: string = 'desc';
+  private sortDate: string = 'desc';
+  public maxSize: number = 5;
+  //public directionLinks: boolean = true;
+  //public autoHide: boolean = true;
+
+  public config: PaginationInstance = {
+    id: 'advanced',
+    itemsPerPage: 5,
+    currentPage: 1
+  };
+  public numPages: number = 1;
+  public length: number = 0;
+  private data: Array<any> = [];
+  public rows: Array<any> = [];
+  public columns: Array<any> = [];
+  public configTwo: any = {
+    paging: true,
+    sorting: { columns: [] },
+    filtering: { filterString: '', columnName: 'Title' }
+  };
+
+
+  // method on page change of the pagination controls
+  private onPageChange(passedpage: number) {
+    this.config.currentPage = passedpage;
+  }
+
+  // method to toggle the desc and asc sorting of date
+  private sortTable(column: string) {
+    // reset the array of columns
+    this.configTwo.sorting.columns = [];
+    switch (column) {
+      case 'Title':
+        this.configTwo.sorting.columns = [{ name: 'Title', sort: this.sortTitle }];
+        this.ChangeTable(this.configTwo);
+        this.isTitleAsc = !this.isTitleAsc;
+        this.sortTitle = this.isTitleAsc ? 'desc' : 'asc';
+        break;
+      case 'CategoryName':
+        this.configTwo.sorting.columns = [{ name: 'CategoryName', sort: this.sortCategory }];
+        this.ChangeTable(this.configTwo);
+        this.isCategoryAsc = !this.isCategoryAsc;
+        this.sortCategory = this.isCategoryAsc ? 'desc' : 'asc';
+        break;
+      case 'TraderName':
+        this.configTwo.sorting.columns = [{ name: 'TraderName', sort: this.sortName }];
+        this.ChangeTable(this.configTwo);
+        this.isNameAsc = !this.isNameAsc;
+        this.sortName = this.isNameAsc ? 'desc' : 'asc';
+        break;
+      case 'DatePublished':
+        this.configTwo.sorting.columns = [{ name: 'DatePublished', sort: this.sortDate }];
+        this.ChangeTable(this.configTwo);
+        this.isDateAsc = !this.isDateAsc;
+        this.sortDate = this.isDateAsc ? 'desc' : 'asc';
+        break;
+      default:
+    }
+  }
+
+  // sorting of any array of any
+  private changeSort(data: any, config: any) {
+    if (!config.sorting) {
+      return data;
+    }
+
+    let columns = this.configTwo.sorting.columns || [];
+    let columnName: string = null;
+    let sort: string = null;
+
+    for (let i = 0; i < columns.length; i++) {
+      if (columns[i].sort != '') {
+        columnName = columns[i].name;
+        sort = columns[i].sort;
+      }
+    }
+    if (!columnName) {
+      return data;
+    }
+
+    // simple sorting
+    return data.sort((previous: any, current: any) => {
+      if (previous[columnName] > current[columnName]) {
+        return sort === 'desc' ? -1 : 1;
+      } else if (previous[columnName] < current[columnName]) {
+        return sort === 'asc' ? -1 : 1;
+      }
+      return 0;
+    });
+  }
+
+  // filtering of array of any data by column name
+  private changeFilter(data: any, config: any): any {
+    if (!config.filtering) {
+      return data;
+    }
+    let filteredData: Array<any> = data.filter((item: any) =>
+      item[config.filtering.columnName].match(this.configTwo.filtering.filterString));
+
+    return filteredData;
+  }
+
+  // filter the removed user from the list
+  private changeRemove(data: any, config: any): any {
+    if (this.removedTradeId == null) { return data; }
+
+    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedTradeId);
+    this.data = null;
+    this.data = removedData;
+    return this.data;
+  }
+
+
+  // change of the table due to filtering and sorting
+  private ChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
+    if (config.filtering) {
+      Object.apply(this.configTwo.filtering, config.filtering);
+    }
+    if (config.sorting) {
+      Object.assign(this.configTwo.sorting, config.sorting);
+    }
+
+    let removedData = this.changeRemove(this.data, this.configTwo);
+    let filteredData = this.changeFilter(removedData, this.configTwo);
+    let sortedData = this.changeSort(filteredData, this.configTwo);
+    this.rows = sortedData;
+    this.length = sortedData.length;
+  }
+
+}
+

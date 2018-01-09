@@ -8,6 +8,11 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { MomentModule } from 'angular2-moment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Ng2TableModule } from 'ng2-table';
+import { Ng2PaginationModule } from 'ng2-pagination';
+import { FileUploadModule } from 'ng2-file-upload';
+
 
 //helpers
 import { AuthGuard } from './helpers/auth.guard';
@@ -39,8 +44,13 @@ import { ExpandapanelComponent } from './views/expandapanel/expandapanel.compone
 import { TradeComponent } from './views/trade/trade.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
-import { WelcomeComponent } from './views/authentication/welcome.component';
-import { CarouseloneComponent } from './views/controls/carouselone/carouselone.component';
+//import { TradeslistComponent } from './views/tradeslist/tradeslist.component';
+import { SmarttableComponent } from './views/smarttable/smarttable.component';
+//import { TraderlistComponent } from './views/trader/traderlist/traderlist.component';
+//import { TraderComponent } from './views/trader/trader/trader.component';
+//import { PersonaldetailsComponent } from './views/trader/personaldetails/personaldetails.component';
+//import { SecuritydetailsComponent } from './views/trader/securitydetails/securitydetails.component';
+//import { TraderaccountComponent } from './views/trader/traderaccount/traderaccount.component';
 
 
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
@@ -68,11 +78,16 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     TopTradesPipe,
     SortTradesByDatePipe,
     ExpandapanelComponent,
-    TradeComponent,
     AboutComponent,
     ContactComponent,
-    WelcomeComponent,
-    CarouseloneComponent,
+    TradeComponent,
+    //TradeslistComponent,
+    SmarttableComponent
+    //TraderlistComponent,
+    //TraderComponent,
+    //PersonaldetailsComponent,
+    //SecuritydetailsComponent,
+    //TraderaccountComponent
     //NG2FileUploadComponent
   ],  
 
@@ -85,6 +100,10 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     MomentModule,
     FormsModule,
     ReactiveFormsModule,
+    Ng2SmartTableModule,
+    Ng2TableModule,
+    Ng2PaginationModule,
+    FileUploadModule,
     NgIdleKeepaliveModule.forRoot(),
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.

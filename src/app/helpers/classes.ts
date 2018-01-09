@@ -125,6 +125,9 @@ class ProcessMessage implements ProcessMessageInterface {
 class PageTitle implements PageTitleInterface {
   title: string;
   value: string;
+  constructor(pagetitle) {
+    this.title = pagetitle;
+  }
 }
 
 class Attachement implements AttachementInterface {

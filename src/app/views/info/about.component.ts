@@ -10,14 +10,12 @@ import { PageTitle } from '../../helpers/classes';
 })
 
 export class AboutComponent {
-  private pagetitle: PageTitle;
 
   constructor(private messagesService: ProcessMessageService,
                    private titleService: PageTitleService) {
 
-          this.pagetitle = new PageTitle();
-          this.pagetitle.title = "About";
-          this.titleService.emitPageTitle(this.pagetitle);
+       
+          this.titleService.emitPageTitle(new PageTitle("About Us"));
 
           this.messagesService.emitRoute("null");
     }

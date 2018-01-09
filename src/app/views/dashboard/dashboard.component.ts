@@ -22,7 +22,6 @@ import { PageTitle, Trade } from '../../helpers/classes';
 
 export class DashboardComponent implements OnInit {
 
-  private pagetitle: PageTitle;
   private trades: Trade[]  = [];
   public isGettingData: boolean;
 
@@ -32,11 +31,10 @@ export class DashboardComponent implements OnInit {
                     private loggerService: LoggerService) { }
 
   ngOnInit() {
-    this.pagetitle = new PageTitle();
-    this.pagetitle.title = "Latest trades";
+
+    this.titleService.emitPageTitle(new PageTitle("Latest trades"));   
     this.messagesService.emitRoute("nill");
 
-    this.titleService.emitPageTitle(this.pagetitle);   
     this.isGettingData = true;      
     this.getTradesApi()
   }

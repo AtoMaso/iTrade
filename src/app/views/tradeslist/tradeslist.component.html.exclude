@@ -1,0 +1,243 @@
+
+
+<div class="container col-md-12">
+  <br />
+  <label id="here"></label>
+
+  <div class="row">
+    <div class="col-md-2 textgray">
+      <!-- this is ng2-table filtering directive usage -->
+      <span>Filter by Title</span>
+      <input *ngIf="configTwo.filtering" placeholder="Filter" [ngTableFiltering]="configTwo.filtering" (tableChanged)="ChangeTable(configTwo)" />
+    </div>
+    <div class="col-md-2 textgray">
+      <span>Items Per Page</span>
+      <input type="number" min="0" [(ngModel)]="config.itemsPerPage">
+    </div>
+    <div class="col-md-2 textgray">
+      <span>Current Page</span>
+      <input type="number" min="0" [(ngModel)]="config.currentPage">
+    </div>
+    <div class="col-md-1 textgray">
+      <span>Max Size</span>
+      <input type="number" min="5" max="100" [(ngModel)]="maxSize">
+    </div>
+    <div class="col-md-2 col-md-offset-3 text-right">
+      <br />
+      <!-- MODAL buttons -->
+      <button *ngIf="!isAuthenticated" type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-sm btn-danger">
+        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
+      </button>
+
+      <div *ngIf="isAuthenticated">
+        <button *ngIf="!IsAllowedToAddTrade" class="btn btn-sm btn-success" data-target="#addDialog" data-toggle="modal">
+          <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
+        </button>
+        <button *ngIf="IsAllowedToAddTrade" class="btn btn-sm btn-success" (click)="addTrade()">
+          <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
+        </button>
+      </div>
+      <!-- END MODAL buttons -->
+    </div>
+  </div>
+
+  <br />
+
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-condensed">
+
+        <thead>
+          <tr>
+            <th class="col-md-4 smalltext" style="vertical-align:middle;">
+              <span class="textgray text-uppercase" style="vertical-align:middle;margin-left:10px">Title</span>
+              <button class="btn btn-sm btn-info" (click)="sortTable('Title')">
+                <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
+                <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
+              </button>
+            </th>
+            <th class="col-md-2 smalltext" style="vertical-align:middle">
+              <span class="textgray text-uppercase" style="vertical-align:middle"> Category</span>
+              <button class="btn btn-sm btn-info" (click)="sortTable('CategoryName')">
+                <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
+                <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
+              </button>
+            </th>
+            <th class="col-md-2 smalltext" style="vertical-align:middle">
+              <span class="textgray text-uppercase" style="vertical-align:middle">Trader</span>
+              <button class="btn btn-sm btn-info" (click)="sortTable('TraderName')">
+                <span *ngIf="isNameAsc" class="glyphicon glyphicon-chevron-down"></span>
+                <span *ngIf="!isNameAsc" class="glyphicon glyphicon-chevron-up"></span>
+              </button>
+            </th>
+            <th class="col-md-2 smalltext" style="vertical-align:middle">
+              <span class="textgray text-uppercase" style="vertical-align:middle"> Date Published</span>
+              <button class="btn btn-sm btn-info" (click)="sortTable('DatePublished')">
+                <span *ngIf="isDateAsc" class="glyphicon glyphicon-chevron-down"></span>
+                <span *ngIf="!isDateAsc" class="glyphicon glyphicon-chevron-up"></span>
+              </button>
+            </th>
+            <th class="col-md-2 smalltext textgray text-uppercase text-center" style="vertical-align:middle;">Remove Trade</th>
+          </tr>
+        </thead>
+
+        <tr *ngFor="let trade of rows  | paginate:config ">
+          <td class="col-md-4" style="vertical-align:middle">
+            <a href="" [routerLink]="['Trade', {id: trade.tradeId}]" style="margin-left:10px" class="smalltext text-success text-uppercase">
+              <span>{{ trade.Title  }}</span>
+            </a>
+          </td>
+          <td class="col-md-2 smalltext textgray text-uppercase" style="vertical-align:middle">{{ trade.CategoryName  }}</td>
+          <td class="col-md-2" style="vertical-align:middle">
+            <a href="" [routerLink]="['Trader', {id: trade.traderId}]" class="smalltext text-success text-uppercase">
+              <span>{{ trade.traderName }}</span>
+            </a>
+          </td>
+          <td class="col-md-2 smalltext textgray text-uppercase" style="vertical-align:middle">{{ trade.DatePublished }}</td>
+
+          <td class="col-md-2 text-center" style="vertical-align:middle;">
+            <!-- MODAL buttons -->
+            <button *ngIf="!isAuthenticated" type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-sm btn-danger">
+              <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
+            </button>
+
+            <div *ngIf="isAuthenticated">
+              <a *ngIf="!isAllowedToRemoveTrade" href="#removeDialog" class="btn btn-sm btn-danger" data-toggle="modal">
+                <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
+              </a>
+              <button type="button" *ngIf="isAllowedToRemoveTrade" data-target="#removeAllowed" data-articleid=(trade.tradeId) data-toggle="modal"
+                      class="btn btn-sm btn-danger" (click)="passToModal(trade)">
+                <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
+              </button>
+            </div>
+            <!-- END MODAL buttons -->
+          </td>
+        </tr>
+
+      </table>
+      <!-- this is ng2-table pagination-->
+      <pagination-controls *ngIf="configTwo.paging"
+                  disable="authoHide"
+                  class="pagination-sm"
+                  [(ngModel)]="config.currentPage"
+                  [totalItems]="length"
+                  [itemsPerPage]="config.itemsPerPage"
+                  [maxSize]="maxSize"
+                  [boundaryLinks]="true"
+                  (pageChanged)="ChangeTable(configTwo, $event)"
+                  (numPages)="numPages = $event">
+      </pagination-controls>
+    </div>
+  </div>
+
+  <my-spinner [isRunning]="isRequesting"></my-spinner>
+
+</div>
+
+
+<!-- MODAL form to show when add/remove trade is clicked and user is not logged in-->
+<div class="modal fade" id="addremoveLogin" tabindex="-1" role="dialog" aria-labelledby="AddRemoveLogin">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Login Warning!</h4>
+        <!--<h5 class="modal-title text-warning" id="AddRemoveLogin">Login Dialog</h5>-->
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>You need to login to do that action. Do you want to log-in/sign-in?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" [routerLink]="['Login']" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- MODAL end of modal form -->
+<!-- MODAL form to show it when add trade is clicked -and user not allowed -->
+<div class="modal" id="addDialog" [hidden]="hideModal" tabindex="-1" role="dialog" aria-labelledby="AddWarning">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 *ngIf="!isAllowed" class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Add Trade Warning!</h4>
+        <!--<h4 class="modal-title" id="AddWarning">Add Trade Warning</h4>-->
+      </div>
+      <div *ngIf="!isAllowed" class="modal-body text-warning">
+        <p>You have no privileges to add new trade!</p>
+      </div>
+      <div *ngIf="!isAllowed" class="modal-footer">
+        <button class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL end of modal form -->
+<!-- MODAL form to show it when remove trade is clicked when user not allowed -->
+<div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="RemoveWarning">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 *ngIf="!isAllowed" class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Trade Warning!</h4>
+        <!--<h4 class="modal-title" id="RemoveWarning"> Remove Trade Warning</h4>-->
+      </div>
+      <div *ngIf="!isAllowed" class="modal-body text-warning">
+        <p>You have no privileges to remove the trade!</p>
+      </div>
+      <div *ngIf="!isAllowed" class="modal-footer">
+        <button class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL end of modal form -->
+<!-- MODAL form to show it when remove trade is clicked when user is allowed -->
+<div class="modal fade" id="removeAllowed" tabindex="-1" role="dialog" aria-labelledby="Remove">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Trade Warning!</h4>
+        <!--<h5 class="modal-title text-warning" id="Remove">Remove Trade Warning</h5>-->
+      </div>
+
+      <div class="modal-body text-warning">
+        <div *ngIf="isOwner"><p>Are you sure you want to delete this trade? All associated images will also deleted!!!</p></div>
+        <div *ngIf="!isOwner"><p>Only the owner of the trade can delete the trade!</p></div>
+      </div>
+
+      <div class="modal-footer">
+        <div *ngIf="!isOwner">
+          <button class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        <div *ngIf="isOwner">
+          <button class="btn btn-danger" data-dismiss="modal">No</button>
+          <button class="btn btn-success" (click)="removeTrade(tradeIdToBeRemoved)" data-dismiss="modal">Yes</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL end of modal form -->
+<!-- this is an option the individual trade to show up on the list page -->
+<!--<trade-view *ngIf="selectedTrade" class="col-md-12"
+                [trade]="selectedTrade">
+</trade-view>-->
+<!-- date picker -->
+<!--<alert type="info">Hello from ng2-bootstrap  {{ date.toDateString() }}</alert>
+<div style="display:inline-block; min-height:290px;">
+    <datepicker [(ngModel)]="date" showWeeks="true"></datepicker>
+</div>-->

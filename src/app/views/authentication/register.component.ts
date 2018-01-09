@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     private trader: Trader = new Trader();    
     private submitted = false;
     private registerGroup: any;
-    private pagetitle; PageTitle;
+    
 
     //*****************************************************
     // CONSTRUCTOR IMPLEMENTAION
@@ -38,9 +38,8 @@ export class RegisterComponent implements OnInit {
 
 
   ngOnInit() {
-    this.pagetitle = new PageTitle();
-    this.pagetitle.title = "Register";
-    this.titleService.emitPageTitle(this.pagetitle);
+   
+    this.titleService.emitPageTitle(new PageTitle("Register"));
 
     this.messageService.emitRoute("nill");
     //this.user.Role = this.route.snapshot.params['role'];

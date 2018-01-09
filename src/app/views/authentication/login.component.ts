@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   private trader: Trader;
   private loginGroup: any;
   private isRequesting: boolean;
-  private pagetitle: PageTitle;
+ 
   //*****************************************************
   // CONSTRUCTOR IMPLEMENTAION
   //*****************************************************
@@ -35,10 +35,8 @@ export class LoginComponent implements OnInit {
                     private loggerService: LoggerService) {}
 
   ngOnInit() {
-   
-    this.pagetitle = new PageTitle();
-    this.pagetitle.title = "Login";
-    this.titleService.emitPageTitle(this.pagetitle);
+      
+    this.titleService.emitPageTitle(new PageTitle("Login"));
     this.messageService.emitRoute("nill");
 
     this.loginGroup = this.formBuilder.group({
