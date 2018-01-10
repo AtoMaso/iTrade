@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router'
 import {  NgClass, NgIf } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 // third party
-import { NG_TABLE_DIRECTIVES, } from 'ng2-table';
+import { NG_TABLE_DIRECTIVES, NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table';
 import { PaginationInstance, PaginatePipe, PaginationControlsDirective  } from 'ngx-pagination';
 //import { PaginationModule, PaginationConfig, PaginationComponent } from 'ngx-bootstrap';
 
@@ -17,6 +17,10 @@ import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 import { CapsPipe } from '../../helpers/pipes';
 import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../helpers/classes';
 import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
+
+
+
+import { TableData } from './table-data';
 
 
 @Component({
@@ -48,7 +52,7 @@ export class TradeslistComponent implements OnInit {
     private pageTitleService: PageTitleService,
     private router: Router,
     private loggerService: LoggerService) {
-
+    this.length = this.data.length;
   };
 
   // implement OnInit to get the initial list of articles
@@ -79,6 +83,8 @@ export class TradeslistComponent implements OnInit {
     }
     // get all or author's articles
     this.getTrades(this.traderId);
+
+     //this.ChangeTable(this.config);
 
   }
 
@@ -141,20 +147,20 @@ export class TradeslistComponent implements OnInit {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
             this.data = returnedTrades,
             this.isRequesting = false,
-            this.ChangeTable(this.configTwo)
+            this.onChangeTable(this.config)
       }, (res: Response) => this.onError(res, "getTrades"));
   }
 
 
-  // get set of records of articles service method
+  //get set of records of articles service method
   private getPageOfTrades(id: number, page: number, total: number) {
 
     this.tradeApiService.getPageOfTrades(id, page, total)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-        this.data = returnedTrades,
+          this.data = returnedTrades,
           this.isRequesting = false,
-          this.ChangeTable(this.configTwo);
+          this.onChangeTable(this.config);
       }, (res: Response) => this.onError(res, "getPageOfTradesArticles"));
   }
 
@@ -182,7 +188,7 @@ export class TradeslistComponent implements OnInit {
   private onSuccessRemoveTrade(trade: Trade) {
     if (trade) {
       this.removedTradeId = trade.tradeId;
-      this.ChangeTable(this.configTwo);
+      this.onChangeTable(this.config);
       // reset the removed article after the data has been updated
       // so it is ready for the next filtering or sorting of the list
       this.removedTradeId = null;
@@ -248,63 +254,87 @@ export class TradeslistComponent implements OnInit {
   private sortCategory: string = 'desc';
   private sortName: string = 'desc';
   private sortDate: string = 'desc';
-  private data: Array<any> = [];
-  public rows: Array<any> = [];
-  public columns: Array<any> = [];
-
-  //public directionLinks: boolean = true;
-  //public autoHide: boolean = true;
+  private data: Array<any> = [];     // full data from the server
+  public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
   public numPages: number = 1;
   public length: number = 0;
+  public page: number = 1;
 
+ 
+  public columns: Array<any> = [
+    { title: 'Title', name: 'title', sort: true, filtering: { filterString: '', placeholder: 'Filter by title' }},
+    { title: 'Category', name: 'categoryType', sort: true, filtering: { filterString: '', placeholder: 'Filter by category' }},
+    { title: 'Trader', name: 'traderName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader name.' }},
+    { title: 'Published', name: 'datePublished', sort: true; filtering: { filterString: '', placeholder: 'Filter by trader date.' }}  
+   ];
 
-  public config: PaginationInstance = {
-    id: 'pag',
+  public config: any = {
+    id: 'pagination',
     itemsPerPage: 5,
     currentPage: 1,
-    totalItems: this.length
-  };
-
-
-  public configTwo: any = {
+    totalItems: this.length,
     paging: true,
-    sorting: { columns: [] },
-    filtering: { filterString: '', columnName: 'title' }
+    sorting: { columns: this.columns },
+    filtering: { filterString: '' },
+    className: ['table-striped', 'table-bordered']
   };
 
-
-  // method on page change of the pagination controls
   private onPageChange(passedpage: number) {
     this.config.currentPage = passedpage;
   }
 
-  // method to toggle the desc and asc sorting of date
+  // new 
+  public changePage(page: any, data: Array<any> = this.data): Array<any> {
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    return data.slice(start, end);
+  }
+
+ 
+
+  private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
+    if (config.filtering) {
+      Object.apply(this.config.filtering, config.filtering);
+    }
+    if (config.sorting) {
+      Object.assign(this.config.sorting, config.sorting);
+    }
+
+    let removedData = this.changeRemove(this.data, this.config);
+    let filteredData = this.changeFilter(removedData, this.config);
+    let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = sortedData; 
+    this.length = sortedData.length; 
+    this.config.totalItems = this.length;
+  }
+
+
   private sortTable(column: string) {
     // reset the array of columns
-    this.configTwo.sorting.columns = [];
+    this.config.sorting.columns = [];
     switch (column) {
       case 'title':
-        this.configTwo.sorting.columns = [{ name: 'title', sort: this.sortTitle }];
-        this.ChangeTable(this.configTwo);
+        this.config.sorting.columns = [{ name: 'title', sort: this.sortTitle }];
+        this.onChangeTable(this.config);
         this.isTitleAsc = !this.isTitleAsc;
         this.sortTitle = this.isTitleAsc ? 'desc' : 'asc';
         break;
-      case 'categoryName':
-        this.configTwo.sorting.columns = [{ name: 'categoryType', sort: this.sortCategory }];
-        this.ChangeTable(this.configTwo);
+      case 'categoryType':
+        this.config.sorting.columns = [{ name: 'categoryType', sort: this.sortCategory }];
+        this.onChangeTable(this.config);
         this.isCategoryAsc = !this.isCategoryAsc;
         this.sortCategory = this.isCategoryAsc ? 'desc' : 'asc';
         break;
       case 'traderName':
-        this.configTwo.sorting.columns = [{ name: 'traderName', sort: this.sortName }];
-        this.ChangeTable(this.configTwo);
+        this.config.sorting.columns = [{ name: 'traderName', sort: this.sortName }];
+        this.onChangeTable(this.config);
         this.isNameAsc = !this.isNameAsc;
         this.sortName = this.isNameAsc ? 'desc' : 'asc';
         break;
       case 'satePublished':
-        this.configTwo.sorting.columns = [{ name: 'datePublished', sort: this.sortDate }];
-        this.ChangeTable(this.configTwo);
+        this.config.sorting.columns = [{ name: 'datePublished', sort: this.sortDate }];
+        this.onChangeTable(this.config);
         this.isDateAsc = !this.isDateAsc;
         this.sortDate = this.isDateAsc ? 'desc' : 'asc';
         break;
@@ -312,13 +342,62 @@ export class TradeslistComponent implements OnInit {
     }
   }
 
-  // sorting of any array of any
+
+  private changeRemove(data: any, config: any): any {
+    if (this.removedTradeId == null) { return data; }
+
+    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedTradeId);
+    this.data = null;
+    this.data = removedData;
+    return this.data;
+  }
+
+
+  public changeFilter(data: any, config: any): any {
+
+    let filteredData: Array<any> = data;
+
+    this.columns.forEach((column: any) => {
+      if (column.filtering) {
+        filteredData = filteredData.filter((item: any) => {
+          return item[column.name].match(column.filtering.filterString);
+        });
+      }
+    });
+
+    if (!config.filtering) {
+      return filteredData;
+    }
+
+    if (config.filtering.columnName) {
+      return filteredData.filter((item: any) =>
+        item[config.filtering.columnName].match(this.config.filtering.filterString));
+    }
+
+    let tempArray: Array<any> = [];
+    filteredData.forEach((item: any) => {
+      let flag = false;
+      this.columns.forEach((column: any) => {
+        if (item[column.name].toString().match(this.config.filtering.filterString)) {
+          flag = true;
+        }
+      });
+      if (flag) {
+        tempArray.push(item);
+      }
+    });
+    filteredData = tempArray;
+
+    return filteredData;
+  }
+
+
   private changeSort(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }
 
-    let columns = this.configTwo.sorting.columns || [];
+    let columns = this.config.sorting.columns || [];
     let columnName: string = null;
     let sort: string = null;
 
@@ -332,8 +411,6 @@ export class TradeslistComponent implements OnInit {
       return data;
     }
 
-
-    // simple sorting
     return data.sort((previous: any, current: any) => {
       if (previous[columnName] > current[columnName]) {
         return sort === 'desc' ? -1 : 1;
@@ -344,47 +421,11 @@ export class TradeslistComponent implements OnInit {
     });
   }
 
-
-  // filtering of array of any data by column name
-  private changeFilter(data: any, config: any): any {
-    if (!config.filtering) {
-      return data;
-    }
-    let filteredData: Array<any> = data.filter((item: any) =>
-      item[config.filtering.columnName].match(this.configTwo.filtering.filterString));
-
-    return filteredData;
-  }
-
-
-  // filter the removed user from the list
-  private changeRemove(data: any, config: any): any {
-    if (this.removedTradeId == null) { return data; }
-
-    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedTradeId);
-    this.data = null;
-    this.data = removedData;
-    return this.data;
-  }
-
-
-  // change of the table due to filtering and sorting
-  private ChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
-    if (config.filtering) {
-      Object.apply(this.configTwo.filtering, config.filtering);
-    }
-    if (config.sorting) {
-      Object.assign(this.configTwo.sorting, config.sorting);
-    }
-
-    let removedData = this.changeRemove(this.data, this.configTwo);
-    let filteredData = this.changeFilter(removedData, this.configTwo);
-    let sortedData = this.changeSort(filteredData, this.configTwo);
-    this.rows = removedData; 
-    this.length = removedData.length; 
-  }
-
 }
+
+
+
+
 
 
 
