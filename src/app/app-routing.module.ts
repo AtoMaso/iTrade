@@ -11,6 +11,7 @@ import { TradeslistComponent } from './views/tradeslist/tradeslist.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 import { SmarttableComponent } from './views/smarttable/smarttable.component';
+import { AdvancedExamplesCustomEditorComponent } from './views/controls/custom-edit-view/advanced-example-custom-editor.component';
 //import { WelcomeComponent } from './views/authentication/welcome.component';
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
@@ -27,6 +28,8 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'smarttable', component: SmarttableComponent },
   { path: 'trades', component: TradeslistComponent },
+  { path: 'custom', component: AdvancedExamplesCustomEditorComponent }, 
+
   //{ path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard] },
   { path: 'trade', component: TradeComponent, canActivate: [AuthGuard] }
   //{ path: 'ng2-file-upload', component: NG2FileUploadComponent, canActivate: [AuthGuard] },

@@ -46,13 +46,15 @@ import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 import { TradeslistComponent } from './views/tradeslist/tradeslist.component';
 import { SmarttableComponent } from './views/smarttable/smarttable.component';
+import { CustomRenderComponent } from './views/controls/custom-edit-view/custom-render.component';
+import { CustomEditorComponent } from './views/controls/custom-edit-view/custom-editor.component';
+import { AdvancedExamplesCustomEditorComponent } from './views/controls/custom-edit-view/advanced-example-custom-editor.component';
+
 //import { TraderlistComponent } from './views/trader/traderlist/traderlist.component';
 //import { TraderComponent } from './views/trader/trader/trader.component';
 //import { PersonaldetailsComponent } from './views/trader/personaldetails/personaldetails.component';
 //import { SecuritydetailsComponent } from './views/trader/securitydetails/securitydetails.component';
 //import { TraderaccountComponent } from './views/trader/traderaccount/traderaccount.component';
-
-
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
 
@@ -82,7 +84,10 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     ContactComponent,
     TradeComponent,
     TradeslistComponent,
-    SmarttableComponent
+    SmarttableComponent,
+    AdvancedExamplesCustomEditorComponent,
+    CustomRenderComponent,
+    CustomEditorComponent
     //TraderlistComponent,
     //TraderComponent,
     //PersonaldetailsComponent,
