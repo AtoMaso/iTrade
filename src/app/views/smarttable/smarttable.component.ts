@@ -10,8 +10,7 @@ import { TradeApiService } from '../../services/tradeapi/tradeapi.service';
 import { LoggerService } from '../../services/logger/logger.service';
 
 import { PageTitle, Trade } from '../../helpers/classes';
-import { CustomEditorComponent } from '../controls/custom-edit-view/custom-editor.component';
-import { CustomRenderComponent } from '../controls/custom-edit-view//custom-render.component';
+import { RenderComponent } from './render.component';
 
 
 @Component({
@@ -51,7 +50,7 @@ export class SmarttableComponent implements OnInit {
   settings = {    
     columns: {
         title: { title: 'Title', filter:true },
-        traderName: { title: 'Trader Name', filter: true, type: 'custom', renderComponent: CustomRenderComponent},
+        traderName: { title: 'Trader Name', filter: true},
         categoryType: { title: 'Category', filter: true },
         datePublished: { title: 'Published', filter: true }
     }

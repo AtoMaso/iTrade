@@ -28,8 +28,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'smarttable', component: SmarttableComponent },
   { path: 'trades', component: TradeslistComponent },
-  { path: 'custom', component: AdvancedExamplesCustomEditorComponent }, 
-
+  //{ path: 'custom', component: AdvancedExamplesCustomEditorComponent }, 
   //{ path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard] },
   { path: 'trade', component: TradeComponent, canActivate: [AuthGuard] }
   //{ path: 'ng2-file-upload', component: NG2FileUploadComponent, canActivate: [AuthGuard] },
