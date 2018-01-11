@@ -13,6 +13,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { PaginationModule, TabsModule } from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination'
 import { NgDatepickerModule } from 'ng2-datepicker';
+import { MyDatePickerModule } from 'mydatepicker';
 
 //helpers
 import { AuthGuard } from './helpers/auth.guard';
@@ -102,6 +103,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     TabsModule,
     //DatepickerModule,
     NgDatepickerModule,
+    MyDatePickerModule,
     NgIdleKeepaliveModule.forRoot(),
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
