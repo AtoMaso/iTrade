@@ -1,20 +1,29 @@
 <div class="container col-md-12">
+<!-- example of reactive forms -->
+  <form [formGroup]="myForm"  novalidate>
 
-  <div class="columns is-multiline">
-    <div class="column is-6 is-offset-3">
-      <div class="datepicker-container">
-        model value: {{ date }}
-      </div>
+    <div class="form-group">
+      <!-- other input fields here ......-->
+
+      <my-date-picker name="mydate" formControlName="mydate"
+                      #startDatePicker
+                      placeholder="Select a date..."
+                      [options]="myDatePickerOptions"
+                      (dateChanged)="onDateChanged($event)"
+                      [locale]="currentLocale">
+
+      </my-date-picker>
+
+      <!-- other input fields here ......-->
     </div>
 
-    <div class="row">
-      <div class="col-md-6">
-        <!--<div class="datepicker-container">-->
-        <ng-datepicker [(ngModel)]="date" [options]="options" class="datapickerchange" isOpened="true" headless="true" posiition="top-left"></ng-datepicker>
-        <!--</div>-->
-      </div>
-    </div>
-  </div>
 
-</div>
+    <!-- example of calculating selected date and how is taken from the control properrty  startDatePicker.selectedDate -->
+    <!--<label>startDatePicker.selectedDate:</label>
+    <pre>{{ startDatePicker.selectedDate | json }}</pre>
+    <label>Observed startDateValue$:</label>
+    <pre>{{ (this.startDateValue$ | async) | json }}</pre>-->
+
+  </form>
+
 

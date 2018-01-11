@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { DatepickerOptions } from 'ng2-datepicker';
 import * as enLocale from 'date-fns/locale/en';
+import { Observable } from 'rxjs/Observable';
+import { IMyDpOptions, IMyDateModel, IMyDayLabels, IMyMonthLabels, IMyDate} from 'mydatepicker';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
+
+interface WriteModel {
+  firstName: string;
+  startDate: IMyDate;
+}
 
 
 @Component({
@@ -12,26 +19,64 @@ import * as enLocale from 'date-fns/locale/en';
 
 export class TradeComponent implements OnInit {
 
-  constructor() {
-    this.date = new Date();
-  }
+  //public months: IMyMonthLabels =  { 1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec' };
+  //public days: IMyDayLabels = { su: 'Sun', mo: 'Mon', tu: 'Tue', we: 'Wed', th: 'Thu', fr: 'Fri', sa: 'Sat' };
+  private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
+  public myForm: FormGroup;
+  public myDatePickerOptions: IMyDpOptions;
+  public currentLocale: string;
+  //public startDateValue$: Observable<any>;
 
-  date: Date;
-
-  options: DatepickerOptions = {
-   
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: 'MMM D[,] YYYY',
-    barTitleFormat: 'MMMM YYYY',
-    firstCalendarDay: 1, // 0 - Sunday, 1 - Monday
-    locale: enLocale,
-    minDate: new Date(Date.now()), // Minimal selectable date
-    maxDate: new Date(Date.now())  // Maximal selectable date
-  };
-
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+
+    this.myForm = this.formBuilder.group({
+      // Empty string or null means no initial value. Can be also specific date
+      myDate: [null, Validators.required]
+      // other controls are here...
+    });
+
+
+    this.currentLocale = 'en';
+
+    this.myDatePickerOptions = {
+    
+      dateFormat: 'dd/mm/yyyy',
+      firstDayOfWeek: 'mo',        
+      selectorWidth: '300px',
+      width: '300px',
+      minYear: 1900,
+      maxYear: 2100
+    };
+
+
+    this.setDate();
+
+  }
+
+  setDate(): void {
+    // Set today date using the patchValue function
+    let date = new Date();
+    this.myForm.patchValue({
+      myDate: { date: {year: date.getFullYear(),  month: date.getMonth() + 1, day: date.getDate() } }
+    });
+
+  }
+
+
+
+
+  onDateChanged(event: IMyDateModel) {
+    // Update value of selDate variable
+    this.selectDate = event.date;
+  }
+
+
+
+  clearDate(): void {
+    // Clear the date using the patchValue function
+    this.myForm.patchValue({ myDate: null });
   }
 
 }
