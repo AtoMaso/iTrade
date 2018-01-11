@@ -1,11 +1,11 @@
 
 
 
-<div class="container">
+<div class="container col-md-12">
 
   <div class="row">
     <div class="col-md-2 textgray">
-      <!-- this is ng2-table filtering section used by rest of it is independent table done by me-->
+      <!-- this is ng2-table filtering section used but the rest of it is independent table done by me-->
       <span>Filter in all columns</span>
       <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
     </div>
@@ -50,23 +50,43 @@
 
     <div class="table-responsive">
 
-      <table class="table table-striped table-hover table-condensed">
+      <table class="table table-bordered table-hover table-condensed">
 
         <thead>
           <tr>
             <th class="col-md-3 smalltext" style="vertical-align:middle;">
-              <span style="vertical-align:middle;margin-left:10px;"><a (click)="sortTable('title')" class="text-info btn btn-info text-uppercase textbeige" style="width:100px">Title</a></span>
+              <span style="vertical-align:middle;margin-left:10px;">
+                    <a (click)="sortTable('title')" class="text-info btn btn-info text-uppercase textbeige" style="width:auto">Title
+                      <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
+                      <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+              </span>
             </th>
             <th class="col-md-2 smalltext" style="vertical-align:middle">
-              <span style="vertical-align:middle"><a (click)="sortTable('categoryType')" class="text-info btn btn-info text-uppercase textbeige" style="width:100px">Category</a></span>
+              <span style="vertical-align:middle">
+                        <a (click)="sortTable('categoryType')" class="text-info btn btn-info text-uppercase textbeige" style="width:auto">Category
+                            <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
+                            <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
+                      </a>
+              </span>
             </th>
             <th class="col-md-2 smalltext" style="vertical-align:middle">
-              <span style="vertical-align:middle"><a (click)="sortTable('traderName')" class="text-info btn btn-info text-uppercase textbeige" style="width:100px">Trader</a></span>
+                <span style="vertical-align:middle">
+                        <a (click)="sortTable('traderName')" class="text-info btn btn-info text-uppercase textbeige" style="width:auto">Trader
+                          <span *ngIf="isNameAsc" class="glyphicon glyphicon-chevron-down"></span>
+                          <span *ngIf="!isNameAsc" class="glyphicon glyphicon-chevron-up"></span>
+                        </a>
+                </span>
             </th>
             <th class="col-md-2 smalltext" style="vertical-align:middle">
-              <span style="vertical-align:middle"><a (click)="sortTable('datePublished')" class="text-info btn btn-info text-uppercase textbeige" style="width:100px">Published</a></span>
+              <span style="vertical-align:middle">
+                    <a (click)="sortTable('datePublished')" class="text-info btn btn-info text-uppercase textbeige" style="width:auto">Published
+                      <span *ngIf="isPublishedAsc" class="glyphicon glyphicon-chevron-down"></span>
+                      <span *ngIf="!isPublishedAsc" class="glyphicon glyphicon-chevron-up"></span>
+                    </a>
+              </span>
             </th>
-            <th class="col-md-2 smalltext textgray text-uppercase text-center" style="vertical-align:middle;">Remove Trade</th>
+            <th class="col-md-2 smalltext textgray text-uppercase text-center" style="vertical-align:middle;">Actions</th>
           </tr>
         </thead>
 
@@ -74,16 +94,16 @@
 
         <tr *ngFor="let trade of rows  | paginate:config ">
 
-          <td class="col-md-3" style="vertical-align:middle" >
-            <a href="" [routerLink]="['Trade', {id: trade.tradeId}]" style="margin-left:10px" class="smalltext text-success">
-              <span>{{ trade.title  }}</span>
-            </a>
+          <td class="col-md-3" style="vertical-align:middle" >            
+              <a  [routerLink]="['/trade']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltext text-success">
+                <span>{{ trade.title  }}</span>
+              </a>
           </td>
 
           <td class="col-md-2 smalltext textgray" style="vertical-align:middle">{{ trade.categoryType  }}</td>
 
           <td class="col-md-2" style="vertical-align:middle">
-            <a href="" [routerLink]="['Trader', {id: trade.traderId}]" class="smalltext text-success">
+            <a [routerLink]="['/trader']" [queryParams]="{id: trade.traderId}" class="smalltext text-success">
               <span>{{ trade.traderName }}</span>
             </a>
           </td>
@@ -113,11 +133,10 @@
       </table>
 
 
-
-      <pagination-controls id="pagination" class="pagination-sm" *ngIf="config.paging"
-                           (pageChange)="onChangeTable(config, $event)"
+      <pagination-controls id="pagination" class="pagination-controls links" *ngIf="config.paging"
+                           (pageChange)="onPageChange($event)"                                                
                            maxSize="9"
-                           directionLinks="true"
+                           directionLinks="false"
                            autoHide="true"
                            previousLabel="Previous"
                            nextLabel="Next"
@@ -129,12 +148,9 @@
                            [maxSize]="maxSize">
       </pagination-controls>
 
-      <!--<pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>-->
 
     </div>
   </div>
-
-
 </div>
 
 
@@ -241,3 +257,4 @@
     </div>
   </div>
 </div>
+

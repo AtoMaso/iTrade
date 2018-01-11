@@ -1,0 +1,15 @@
+.pagination-controls /deep/ .ngx-pagination li {
+ font-size:large;
+}
+
+ .links /deep/ .ngx-pagination a,  .ngx-pagination button {  
+      color:green;
+      display: block;    
+      padding: 0.1875rem 0.625rem;
+      border-radius: 0;
+}
+
+
+
+
+

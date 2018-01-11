@@ -249,7 +249,7 @@ export class TradeslistComponent implements OnInit {
   private isTitleAsc = true;
   private isCategoryAsc = true;
   private isNameAsc = true;
-  private isDateAsc = true;
+  private isPublishedAsc = true;
   private sortTitle: string = 'desc';
   private sortCategory: string = 'desc';
   private sortName: string = 'desc';
@@ -266,7 +266,7 @@ export class TradeslistComponent implements OnInit {
     { title: 'Title', name: 'title', sort: true, filtering: { filterString: '', placeholder: 'Filter by title' }},
     { title: 'Category', name: 'categoryType', sort: true, filtering: { filterString: '', placeholder: 'Filter by category' }},
     { title: 'Trader', name: 'traderName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader name.' }},
-    { title: 'Published', name: 'datePublished', sort: true; filtering: { filterString: '', placeholder: 'Filter by trader date.' }}  
+    { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader date.' }} 
    ];
 
   public config: any = {
@@ -280,17 +280,10 @@ export class TradeslistComponent implements OnInit {
     className: ['table-striped', 'table-bordered']
   };
 
+
   private onPageChange(passedpage: number) {
     this.config.currentPage = passedpage;
   }
-
-  // new 
-  public changePage(page: any, data: Array<any> = this.data): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
-    return data.slice(start, end);
-  }
-
  
 
   private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
@@ -298,7 +291,7 @@ export class TradeslistComponent implements OnInit {
       Object.apply(this.config.filtering, config.filtering);
     }
     if (config.sorting) {
-      Object.assign(this.config.sorting, config.sorting);
+      (<any>Object).assign(this.config.sorting, config.sorting);
     }
 
     let removedData = this.changeRemove(this.data, this.config);
@@ -335,8 +328,8 @@ export class TradeslistComponent implements OnInit {
       case 'satePublished':
         this.config.sorting.columns = [{ name: 'datePublished', sort: this.sortDate }];
         this.onChangeTable(this.config);
-        this.isDateAsc = !this.isDateAsc;
-        this.sortDate = this.isDateAsc ? 'desc' : 'asc';
+        this.isPublishedAsc = !this.isPublishedAsc;
+        this.sortDate = this.isPublishedAsc ? 'desc' : 'asc';
         break;
       default:
     }

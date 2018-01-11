@@ -26,8 +26,9 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },    
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'smarttable', component: SmarttableComponent },
   { path: 'trades', component: TradeslistComponent },
+  { path: 'trade', component: TradeComponent },
+  //{ path: 'smarttable', component: SmarttableComponent },
   //{ path: 'custom', component: AdvancedExamplesCustomEditorComponent }, 
   //{ path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard] },
   { path: 'trade', component: TradeComponent, canActivate: [AuthGuard] }
