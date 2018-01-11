@@ -301,6 +301,7 @@ export class TradeslistComponent implements OnInit {
   }
 
 
+
   private sortTable(column: string) {
     // reset the array of columns
     this.config.sorting.columns = [];
@@ -334,6 +335,7 @@ export class TradeslistComponent implements OnInit {
   }
 
 
+
   private changeRemove(data: any, config: any): any {
     if (this.removedTradeId == null) { return data; }
 
@@ -342,6 +344,7 @@ export class TradeslistComponent implements OnInit {
     this.data = removedData;
     return this.data;
   }
+
 
 
   public changeFilter(data: any, config: any): any {
@@ -381,6 +384,7 @@ export class TradeslistComponent implements OnInit {
 
     return filteredData;
   }
+
 
 
   private changeSort(data: any, config: any) {
