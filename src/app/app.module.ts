@@ -8,11 +8,11 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { MomentModule } from 'angular2-moment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { Ng2TableModule } from 'ng2-table';
 import { FileUploadModule } from 'ng2-file-upload';
-//import { PaginationModule, TabsModule } from 'ngx-bootstrap';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginationModule, TabsModule } from 'ngx-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination'
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 //helpers
 import { AuthGuard } from './helpers/auth.guard';
@@ -34,28 +34,23 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { LoginComponent } from './views/authentication/login.component';
 import { RegisterComponent } from './views/authentication/register.component';
-import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
-import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
 import { PageTitleComponent } from './views/controls/pagetitle/pagetitle.component';
 import { ModalComponent } from './views/controls/modal/modal.component';
 import { SpinnerOneComponent } from './views/controls/spinner/spinnerone.component';
 import { CarouselComponent } from './views/controls/carousel/carousel.component';
 import { ExpandapanelComponent } from './views/expandapanel/expandapanel.component';
-import { TradeComponent } from './views/trade/trade.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
+import { TradeComponent } from './views/trade/trade.component';
 import { TradeslistComponent } from './views/tradeslist/tradeslist.component';
-import { SmarttableComponent } from './views/smarttable/smarttable.component';
-import { RenderComponent } from './views/smarttable/render.component';
-//import { CustomEditorComponent } from './views/controls/custom-edit-view/custom-editor.component';
-import { AdvancedExamplesCustomEditorComponent } from './views/controls/custom-edit-view/advanced-example-custom-editor.component';
-
-//import { TraderlistComponent } from './views/trader/traderlist/traderlist.component';
 //import { TraderComponent } from './views/trader/trader/trader.component';
 //import { PersonaldetailsComponent } from './views/trader/personaldetails/personaldetails.component';
 //import { SecuritydetailsComponent } from './views/trader/securitydetails/securitydetails.component';
 //import { TraderaccountComponent } from './views/trader/traderaccount/traderaccount.component';
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
+
+import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
+import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
 
 
 //initialises the process message service to get all process messages on start of the application
@@ -84,12 +79,6 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     ContactComponent,
     TradeComponent,
     TradeslistComponent,
-    SmarttableComponent,
-    RenderComponent,
-    AdvancedExamplesCustomEditorComponent
-    
-    //CustomEditorComponent
-    //TraderlistComponent,
     //TraderComponent,
     //PersonaldetailsComponent,
     //SecuritydetailsComponent,
@@ -106,12 +95,13 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     MomentModule,
     FormsModule,
     ReactiveFormsModule,
-    Ng2SmartTableModule,
     Ng2TableModule,
     FileUploadModule,
     NgxPaginationModule,
-    //PaginationModule,
-    //TabsModule,
+    PaginationModule,       
+    TabsModule,
+    //DatepickerModule,
+    NgDatepickerModule,
     NgIdleKeepaliveModule.forRoot(),
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.

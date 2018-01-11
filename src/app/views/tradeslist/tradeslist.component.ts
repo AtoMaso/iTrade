@@ -5,8 +5,7 @@ import {  NgClass, NgIf } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 // third party
 import { NG_TABLE_DIRECTIVES, NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table';
-import { PaginationInstance, PaginatePipe, PaginationControlsDirective  } from 'ngx-pagination';
-//import { PaginationModule, PaginationConfig, PaginationComponent } from 'ngx-bootstrap';
+
 
 // services
 import { TradeApiService } from '../../services/tradeapi/tradeapi.service';
@@ -17,10 +16,6 @@ import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 import { CapsPipe } from '../../helpers/pipes';
 import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../helpers/classes';
 import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
-
-
-
-import { TableData } from './table-data';
 
 
 @Component({
@@ -54,6 +49,9 @@ export class TradeslistComponent implements OnInit {
     private loggerService: LoggerService) {
     this.length = this.data.length;
   };
+
+
+ 
 
   // implement OnInit to get the initial list of articles
   public ngOnInit() {

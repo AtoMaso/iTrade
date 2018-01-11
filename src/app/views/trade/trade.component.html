@@ -1,3 +1,20 @@
-<p>
-  trade works!
-</p>
+<div class="container col-md-12">
+
+  <div class="columns is-multiline">
+    <div class="column is-6 is-offset-3">
+      <div class="datepicker-container">
+        model value: {{ date }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <!--<div class="datepicker-container">-->
+        <ng-datepicker [(ngModel)]="date" [options]="options" class="datapickerchange" isOpened="true" headless="true" posiition="top-left"></ng-datepicker>
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+
+</div>
+
