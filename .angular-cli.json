@@ -32,7 +32,8 @@
         "../node_modules/ngx-pagination/dist/ngx-pagination.js",
         "../node_modules/ng2-table/bundles/ng2-table.min.js",
         "../node_modules/ng2-file-upload/bundles/ng2-file-upload.umd.min.js",
-        "../node_modules/ng2-datepicker/bundles/ng2-datepicker.umd.js"        
+        "../node_modules/ng2-datepicker/bundles/ng2-datepicker.umd.js",
+        "../node_modules/mydatepicker/bundles/mydatepicker.umd.js" 
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
