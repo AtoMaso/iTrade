@@ -95,7 +95,7 @@
                         <tr *ngFor="let trade of rows  | paginate:config ">
 
                           <td class="col-md-3" style="vertical-align:middle" >            
-                              <a  [routerLink]="['/trade']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltextbold text-success">
+                              <a  [routerLink]="['/tradeinfo']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltextbold text-success">
                                 <span>{{ trade.title  }}</span>
                               </a>
                           </td>

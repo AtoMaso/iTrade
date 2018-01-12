@@ -9,17 +9,17 @@ import { PageTitleService } from '../../../services/pagetitle/pagetitle.service'
 import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../../helpers/classes';
 
 @Component({
-  selector: 'app-tradeinfo',
-  templateUrl: './traderinfo.component.html',
-  styleUrls: ['./traderinfo.component.scss']
+  selector: 'app-addtrade',
+  templateUrl: './addtrade.component.html',
+  styleUrls: ['./addtrade.component.scss']
 })
-export class TraderInfoComponent implements OnInit {
+export class AddTradeComponent implements OnInit {
 
   private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
   public myForm: FormGroup;
   public datePickerOptions: IMyOptions;
   public currentLocale: string;
-  public traderId: number;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,9 +37,8 @@ export class TraderInfoComponent implements OnInit {
   }
 
   private setupPage() {
-    this.pageTitleService.emitPageTitle(new PageTitle("Trader Info"));
+    this.pageTitleService.emitPageTitle(new PageTitle("Add Trade"));
     this.messagesService.emitRoute("nill");
-    this.traderId = +this.route.snapshot.paramMap.get('id');  // TODO check this 
   }
 
   private setDate(): void {

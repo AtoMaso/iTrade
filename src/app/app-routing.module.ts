@@ -10,6 +10,8 @@ import { ContactComponent } from './views/info/contact.component';
 
 import { TradeListComponent } from './views/trade/tradelist/tradelist.component';
 import { TradeInfoComponent } from './views/trade/tradeinfo/tradeinfo.component';
+import { AddTradeComponent } from './views/trade/addtrade/addtrade.component';
+
 
 import { TraderListComponent } from './views/trader/traderlist/traderlist.component';
 import { TraderInfoComponent } from './views/trader/traderinfo/traderinfo.component';
@@ -29,9 +31,10 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'tradelist', component: TradeListComponent },
   { path: 'tradeinfo', component: TradeInfoComponent },
+  { path: 'addtrade', component: AddTradeComponent },
 
   { path: 'traderlist', component: TraderListComponent },
-  { path: 'traderinfo', component: TraderInfoComponent},
+  { path: 'traderinfo', component: TraderInfoComponent },
   { path: 'traderaccount', component: TraderAccountComponent, canActivate: [AuthGuard] },  
   //{ path: 'ng2-file-upload', component: NG2FileUploadComponent, canActivate: [AuthGuard] },
 

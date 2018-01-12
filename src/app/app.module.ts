@@ -10,7 +10,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { Ng2TableModule } from 'ng2-table';
 import { FileUploadModule } from 'ng2-file-upload';
-//import { PaginationModule, TabsModule } from 'ngx-bootstrap';
+import { PaginationModule, TabsModule } from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MyDatePickerModule } from 'mydatepicker';
 
@@ -55,6 +55,7 @@ import { TraderAccountComponent } from './views/trader/traderaccount/traderaccou
 
 import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
+import { AddTradeComponent } from './views/trade/addtrade/addtrade.component';
 
 
 //initialises the process message service to get all process messages on start of the application
@@ -83,10 +84,10 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     ContactComponent,
     TradeListComponent,
     TradeInfoComponent,
-
     TraderListComponent,
     TraderInfoComponent,
-    TraderAccountComponent
+    TraderAccountComponent,
+    AddTradeComponent
     //PersonaldetailsComponent,
     //SecuritydetailsComponent,
     //TraderaccountComponent
@@ -105,8 +106,8 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     Ng2TableModule,
     FileUploadModule,
     NgxPaginationModule,
-    //PaginationModule,       
-    //TabsModule,  
+    PaginationModule,       
+    TabsModule,  
     MyDatePickerModule,
     NgIdleKeepaliveModule.forRoot(),
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests

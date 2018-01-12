@@ -21,10 +21,7 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "styles": [
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "../node_modules/bootstrap/dist/css/slate-bootstrap-theme.min.css",
-        "assets/css/site.css",
+      "styles": [       
         "styles.scss"
       ],
       "scripts": [

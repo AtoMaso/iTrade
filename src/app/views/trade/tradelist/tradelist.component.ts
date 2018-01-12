@@ -167,7 +167,7 @@ export class TradeListComponent implements OnInit {
   // ADD TRADE
   //****************************************************
   private addTrade() {
-    this.router.navigate(['AddTrade']);
+    this.router.navigate(['/addtrade']);
   }
 
 
