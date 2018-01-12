@@ -1,13 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import * as enLocale from 'date-fns/locale/en';
-import { Observable } from 'rxjs/Observable';
-import { IMyDpOptions, IMyDateModel, IMyDayLabels, IMyMonthLabels, IMyDate} from 'mydatepicker';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
-
-interface WriteModel {
-  firstName: string;
-  startDate: IMyDate;
-}
+import { Component, OnInit, NgModule, VERSION, AfterViewInit} from '@angular/core';
+import { IMyDpOptions, IMyDateModel, IMyDayLabels, IMyMonthLabels, IMyDate, IMyOptions} from 'mydatepicker';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder, FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -19,13 +12,11 @@ interface WriteModel {
 
 export class TradeComponent implements OnInit {
 
-  //public months: IMyMonthLabels =  { 1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec' };
-  //public days: IMyDayLabels = { su: 'Sun', mo: 'Mon', tu: 'Tue', we: 'Wed', th: 'Thu', fr: 'Fri', sa: 'Sat' };
   private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
   public myForm: FormGroup;
-  public myDatePickerOptions: IMyDpOptions;
+  public datePickerOptions: IMyOptions;
   public currentLocale: string;
-  //public startDateValue$: Observable<any>;
+
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -39,17 +30,16 @@ export class TradeComponent implements OnInit {
 
 
     this.currentLocale = 'en';
-
-    this.myDatePickerOptions = {
-    
+    this.datePickerOptions = {    
       dateFormat: 'dd/mm/yyyy',
       firstDayOfWeek: 'mo',        
       selectorWidth: '300px',
       width: '300px',
       minYear: 1900,
-      maxYear: 2100
+      maxYear: 2100, 
+      editableDateField: false,
+      
     };
-
 
     this.setDate();
 
@@ -62,9 +52,13 @@ export class TradeComponent implements OnInit {
       myDate: { date: {year: date.getFullYear(),  month: date.getMonth() + 1, day: date.getDate() } }
     });
 
+    this.selectDate = {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate()
+    } 
+
   }
-
-
 
 
   onDateChanged(event: IMyDateModel) {

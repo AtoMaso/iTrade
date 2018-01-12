@@ -6,29 +6,29 @@
             <div class="row">
               <div class="col-md-2 textgray">
                 <!-- this is ng2-table filtering section used but the rest of it is independent table done by me-->
-                <span>Filter in all columns</span>
+                <span class="smalltextbold">Filter in all columns</span>
                 <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
               </div>
 
               <div class="col-md-2 textgray">
-                <span>Items Per Page</span>
+                <span class="smalltextbold">Items Per Page</span>
                 <input type="number" min="0" [(ngModel)]="config.itemsPerPage" class="form-control">
               </div>
 
               <div class="col-md-2 textgray">
-                <span>Current Page</span>
+                <span class="smalltextbold">Current Page</span>
                 <input type="number" min="0" [(ngModel)]="config.currentPage" class="form-control">
               </div>
 
               <div class="col-md-1 textgray">
-                <span>Max Size</span>
+                <span class="smalltextbold">Max Size</span>
                 <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
               </div>
 
               <div class="col-md-2 col-md-offset-3 text-right">
                 <br />
 
-                <button *ngIf="!isAuthenticated" type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-sm btn-danger">
+                <button *ngIf="!isAuthenticated" type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-sm btn-danger smalltextbold">
                   <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
                 </button>
 
@@ -54,39 +54,39 @@
 
                         <thead>
                           <tr>
-                            <th class="col-md-3 smalltext" style="vertical-align:middle;">
+                            <th class="col-md-3" style="vertical-align:middle;">
                               <span style="vertical-align:middle;margin-left:10px;">
-                                    <a (click)="sortTable('title')" class="text-info btn btn-info text-uppercase textbeige" style="width:auto">Title
+                                    <a (click)="sortTable('title')" class="text-info btn btn-info text-uppercase buttonclass textwhite smalltextbold" style="width:auto">Title
                                       <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
                                       <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
                                     </a>
                               </span>
                             </th>
-                            <th class="col-md-2 smalltext" style="vertical-align:middle">
+                            <th class="col-md-2" style="vertical-align:middle">
                               <span style="vertical-align:middle">
-                                        <a (click)="sortTable('categoryType')" class="text-info btn btn-info text-uppercase textbeige" style="width:auto">Category
+                                        <a (click)="sortTable('categoryType')" class="text-info btn btn-info text-uppercase buttonclass textwhite smalltextbold" style="width:auto">Category
                                             <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
                                             <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
                                       </a>
                               </span>
                             </th>
-                            <th class="col-md-2 smalltext" style="vertical-align:middle">
+                            <th class="col-md-2" style="vertical-align:middle">
                                 <span style="vertical-align:middle">
-                                        <a (click)="sortTable('traderName')" class="text-info btn btn-info text-uppercase textbeige" style="width:auto">Trader
+                                        <a (click)="sortTable('traderName')" class="text-info btn btn-info text-uppercase buttonclass textwhite smalltextbold" style="width:auto">Trader
                                           <span *ngIf="isNameAsc" class="glyphicon glyphicon-chevron-down"></span>
                                           <span *ngIf="!isNameAsc" class="glyphicon glyphicon-chevron-up"></span>
                                         </a>
                                 </span>
                             </th>
-                            <th class="col-md-2 smalltext" style="vertical-align:middle">
+                            <th class="col-md-2" style="vertical-align:middle">
                               <span style="vertical-align:middle">
-                                    <a (click)="sortTable('datePublished')" class="text-info btn btn-info text-uppercase textbeige" style="width:auto">Published
+                                    <a (click)="sortTable('datePublished')" class="text-info btn btn-info text-uppercase buttonclass textwhite smalltextbold" style="width:auto">Published
                                       <span *ngIf="isPublishedAsc" class="glyphicon glyphicon-chevron-down"></span>
                                       <span *ngIf="!isPublishedAsc" class="glyphicon glyphicon-chevron-up"></span>
                                     </a>
                               </span>
                             </th>
-                            <th class="col-md-2 smalltext textgray text-uppercase text-center" style="vertical-align:middle;">Actions</th>
+                            <th class="col-md-2 smalltextbold textgray text-uppercase text-center" style="vertical-align:middle;">Actions</th>
                           </tr>
                         </thead>
 
@@ -95,20 +95,20 @@
                         <tr *ngFor="let trade of rows  | paginate:config ">
 
                           <td class="col-md-3" style="vertical-align:middle" >            
-                              <a  [routerLink]="['/trade']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltext text-success">
+                              <a  [routerLink]="['/trade']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltextbold text-success">
                                 <span>{{ trade.title  }}</span>
                               </a>
                           </td>
 
-                          <td class="col-md-2 smalltext textgray" style="vertical-align:middle">{{ trade.categoryType  }}</td>
+                          <td class="col-md-2 smalltextbold textgray" style="vertical-align:middle">{{ trade.categoryType  }}</td>
 
                           <td class="col-md-2" style="vertical-align:middle">
-                            <a [routerLink]="['/trader']" [queryParams]="{id: trade.traderId}" class="smalltext text-success">
+                            <a [routerLink]="['/trader']" [queryParams]="{id: trade.traderId}" class="smalltextbold text-success">
                               <span>{{ trade.traderName }}</span>
                             </a>
                           </td>
 
-                          <td class="col-md-2 smalltext textgray" style="vertical-align:middle">{{ trade.datePublished }}</td>
+                          <td class="col-md-2 smalltextbold textgray" style="vertical-align:middle">{{ trade.datePublished }}</td>
 
 
                           <td class="col-md-2 text-center" style="vertical-align:middle;">
@@ -118,11 +118,11 @@
                             </button>
 
                             <div *ngIf="isAuthenticated">
-                              <a *ngIf="!isAllowedToRemoveTrade" href="#removeDialog" class="btn btn-sm btn-danger" data-toggle="modal">
+                              <a *ngIf="!isAllowedToRemoveTrade" href="#removeDialog" class="btn btn-sm btn-danger smalltextbold" data-toggle="modal">
                                 <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
                               </a>
                               <button type="button" *ngIf="isAllowedToRemoveTrade" data-target="#removeAllowed" data-articleid=(trade.tradeId) data-toggle="modal"
-                                      class="btn btn-sm btn-danger" (click)="passToModal(trade)">
+                                      class="btn btn-sm btn-danger smalltextbold" (click)="passToModal(trade)">
                                 <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
                               </button>
                             </div>
@@ -133,7 +133,8 @@
                       </table>
 
 
-                      <pagination-controls id="pagination" class="pagination-controls links" *ngIf="config.paging"
+                      <!-- the stylesheet of the pagination is overwritten in the host component sass -->
+                      <pagination-controls id="pagination" *ngIf="config.paging"
                                            (pageChange)="onPageChange($event)"                                                
                                            maxSize="9"
                                            directionLinks="false"

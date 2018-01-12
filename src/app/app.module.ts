@@ -10,9 +10,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { Ng2TableModule } from 'ng2-table';
 import { FileUploadModule } from 'ng2-file-upload';
-import { PaginationModule, TabsModule } from 'ngx-bootstrap';
-import { NgxPaginationModule } from 'ngx-pagination'
-import { NgDatepickerModule } from 'ng2-datepicker';
+//import { PaginationModule, TabsModule } from 'ngx-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { MyDatePickerModule } from 'mydatepicker';
 
 //helpers
@@ -28,7 +27,6 @@ import { TradeApiService } from './services/tradeapi/tradeapi.service';
 import { MessageService } from './services/message/message.service';
 import { ValidationService } from './services/validation/validation.service';
 import { InMemoryDataService }  from './services/inmemory/in-memory-data.service'; //
-
 
 //components
 import { AppComponent } from './app.component';
@@ -99,10 +97,8 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     Ng2TableModule,
     FileUploadModule,
     NgxPaginationModule,
-    PaginationModule,       
-    TabsModule,
-    //DatepickerModule,
-    NgDatepickerModule,
+    //PaginationModule,       
+    //TabsModule,  
     MyDatePickerModule,
     NgIdleKeepaliveModule.forRoot(),
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests

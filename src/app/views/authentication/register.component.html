@@ -8,7 +8,7 @@
 
 
         <div class="row">
-          <label for="name">Name</label>
+          <label class="textgray smalltext" for="name">Name</label>
         </div>
 
         <div class="row form-group">
@@ -20,7 +20,7 @@
           </div>
 
         <div class="row">
-          <label for="email">Email</label>
+          <label class="textgray smalltext" for="email">Email</label>
         </div>
 
         <div class="row form-group">
@@ -32,7 +32,7 @@
         </div>
 
         <div class="row">
-          <label for="password">Password</label>
+          <label class="textgray smalltext" for="password">Password</label>
         </div>
 
         <div class="row form-group">
@@ -44,7 +44,7 @@
           </div>
 
         <div class="row">
-          <label for="confirmPassword">Confirm Password</label>
+          <label class="textgray smalltext" for="confirmPassword">Confirm Password</label>
         </div>
 
         <div class="row form-group">
@@ -56,7 +56,7 @@
           </div>
 
         <div class="row" style="margin-top:40px;">
-          <button class="btn-success" type="submit" [disabled]="!registerGroup.valid">Register</button>
+          <button class="btn-success buttonclass" type="submit" [disabled]="!registerGroup.valid">Register</button>
         </div>
       </div>
 
@@ -150,7 +150,7 @@
             <div class="row">
                   <div class="col-md-5 col-md-offset-1">
                     <div class="smalltext" style="text-align:center">
-                      <button [routerLink]="['/login']" class="btn btn-success">Login</button>
+                      <button class="btn-success  buttonclass" [routerLink]="['/login']">Login</button>
                     </div>
                   </div>
             </div>

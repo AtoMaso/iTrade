@@ -2,25 +2,25 @@
 <form>
     <div class="row">
         <div class="col-md-3">
-            <label for="exampleInputEmail1">Email address</label>
+            <labe class="smalltext textgray" l for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" [(ngModel)]="email">
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
-            <label for="exampleInputPassword1">Password</label>
+            <label class="smalltext textgray" for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="password">
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
-            <label for="exampleInputFile">File input</label>
+            <label class="smalltext textgray" for="exampleInputFile">File input</label>
             <input type="file" id="fileInput" name="fileInput" (change)="selectFile($event)" />
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
-            <button type="submit" class="btn btn-default" (click)="upload();">Submit</button>
+            <button type="submit" class="btn btn-default buttonclass" (click)="upload();">Submit</button>
         </div>
     </div>
 

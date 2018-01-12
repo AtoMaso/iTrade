@@ -2,36 +2,32 @@
     margin-top: 70px;    
 }
 
-button {
+.buttonclass {
     font-family:Verdana;
     font-size:medium;
     width:150px;
 }
 
-label {
-    font-family:Verdana;
-    font-size:small;
-    color:gray;
-}
 
 .restriction {
-        width:200px;      
-        overflow:hidden;
-        display:inline-block;
-        text-overflow: ellipsis;
-        white-space: nowrap; 
-        text-align:left;
-        vertical-align:middle;
+    width:200px;      
+    overflow:hidden;
+    display:inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+    text-align:left;
+    vertical-align:middle;
 }
 
+
 .restrictionname {
-        width:160px;
-        overflow:hidden;
-        display:inline-block;
-        text-overflow: ellipsis;
-        white-space: nowrap; 
-        text-align:left;
-        vertical-align:middle;
+    width:160px;
+    overflow:hidden;
+    display:inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+    text-align:left;
+    vertical-align:middle;
 }
 
 .messagespan {

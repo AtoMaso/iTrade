@@ -1,9 +1,11 @@
-.pagination-controls /deep/ .ngx-pagination li {
- font-size:large;
+:host /deep/ .ngx-pagination li {
+     font-family:Verdana;
+     font-size:small;
+     font-weight:bold;
 }
 
- .links /deep/ .ngx-pagination a,  .ngx-pagination button {  
-      color:green;
+:host /deep/ .ngx-pagination a,  .ngx-pagination button {  
+      color:lightgreen;
       display: block;    
       padding: 0.1875rem 0.625rem;
       border-radius: 0;

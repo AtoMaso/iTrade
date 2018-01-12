@@ -1,22 +1,20 @@
 <div class="container col-md-12">
-<!-- example of reactive forms -->
-  <form [formGroup]="myForm"  novalidate>
-
-    <div class="form-group">
+  <!-- example of reactive forms -->
+  <form [formGroup]="myForm" novalidate>
       <!-- other input fields here ......-->
 
-      <my-date-picker name="mydate" formControlName="mydate"
+      <my-date-picker name="mydate" formControlName="mydate" 
+                     visibleMonth.monthTxt="Mirko"
                       #startDatePicker
                       placeholder="Select a date..."
-                      [options]="myDatePickerOptions"
+                      [options]="datePickerOptions"
                       (dateChanged)="onDateChanged($event)"
-                      [locale]="currentLocale">
+                      [locale]="en"
+                      [selDate]="selectDate">
 
       </my-date-picker>
 
       <!-- other input fields here ......-->
-    </div>
-
 
     <!-- example of calculating selected date and how is taken from the control properrty  startDatePicker.selectedDate -->
     <!--<label>startDatePicker.selectedDate:</label>
@@ -27,3 +25,5 @@
   </form>
 
 
+
+  
