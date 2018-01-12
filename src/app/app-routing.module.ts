@@ -5,11 +5,15 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { DashboardComponent }   from './views/dashboard/dashboard.component';
 import { LoginComponent } from './views/authentication/login.component';
 import { RegisterComponent } from './views/authentication/register.component';
-import { TradeComponent } from './views/trade/trade.component';
-import { TradeslistComponent } from './views/tradeslist/tradeslist.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
-//import { WelcomeComponent } from './views/authentication/welcome.component';
+
+import { TradeListComponent } from './views/trade/tradelist/tradelist.component';
+import { TradeInfoComponent } from './views/trade/tradeinfo/tradeinfo.component';
+
+import { TraderListComponent } from './views/trader/traderlist/traderlist.component';
+import { TraderInfoComponent } from './views/trader/traderinfo/traderinfo.component';
+import { TraderAccountComponent } from './views/trader/traderaccount/traderaccount.component';
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
 // cmport the AuthGuard helper
@@ -23,10 +27,12 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },    
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'trades', component: TradeslistComponent },
-  { path: 'trade', component: TradeComponent },  
-  //{ path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard] },
-  { path: 'trade', component: TradeComponent, canActivate: [AuthGuard] }
+  { path: 'tradelist', component: TradeListComponent },
+  { path: 'tradeinfo', component: TradeInfoComponent },
+
+  { path: 'traderlist', component: TraderListComponent },
+  { path: 'traderinfo', component: TraderInfoComponent},
+  { path: 'traderaccount', component: TraderAccountComponent, canActivate: [AuthGuard] },  
   //{ path: 'ng2-file-upload', component: NG2FileUploadComponent, canActivate: [AuthGuard] },
 
 ];

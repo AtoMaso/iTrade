@@ -15,7 +15,7 @@
                 </div>
                 <div>
                   <strong class="textgray">Trader:</strong>
-                  <a href="" [routerLink]="['Trader', {traderId: trade.traderId}]" class="text-info smalltextbold restrictionname" style="text-decoration:underline">{{ trade.traderName }}</a>
+                  <a href="" [routerLink]="['/traderinfo']" [queryParams]="{traderId: trade.traderId}" class="text-info smalltextbold restrictionname" style="text-decoration:underline">{{ trade.traderName }}</a>
                 </div>
                 <div style="margin-top:15px;">
                   <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId"  (onErrorPicked)="ChangeIsRequesting($event)"></carousel>               
@@ -24,8 +24,8 @@
 
           <div class="panel-footer">
                 <div> <strong class="textgray">Published: </strong><span class="textgray">{{ trade.datePublished  }}</span></div>
-                <div> <a href="" [routerLink]="['Trade', {tradeId: trade.tradeId}]" class="text-info smalltextbold" style="text-decoration:underline">Go to trade...</a></div>
-          </div>
+                <div> <a [routerLink]="['/tradeinfo']" [queryParams]= "{tradeId: trade.tradeId}" class="text-info smalltextbold" style="text-decoration:underline">Go to trade...</a></div>                         
+</div>
 </div>
  
                       

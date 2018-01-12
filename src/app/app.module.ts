@@ -40,9 +40,14 @@ import { CarouselComponent } from './views/controls/carousel/carousel.component'
 import { ExpandapanelComponent } from './views/expandapanel/expandapanel.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
-import { TradeComponent } from './views/trade/trade.component';
-import { TradeslistComponent } from './views/tradeslist/tradeslist.component';
-//import { TraderComponent } from './views/trader/trader/trader.component';
+
+import { TradeListComponent } from './views/trade/tradelist/tradelist.component';
+import { TradeInfoComponent } from './views/trade/tradeinfo/tradeinfo.component';
+
+import { TraderListComponent } from './views/trader/traderlist/traderlist.component';
+import { TraderInfoComponent } from './views/trader/traderinfo/traderinfo.component';
+import { TraderAccountComponent } from './views/trader/traderaccount/traderaccount.component';
+
 //import { PersonaldetailsComponent } from './views/trader/personaldetails/personaldetails.component';
 //import { SecuritydetailsComponent } from './views/trader/securitydetails/securitydetails.component';
 //import { TraderaccountComponent } from './views/trader/traderaccount/traderaccount.component';
@@ -76,9 +81,12 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     ExpandapanelComponent,
     AboutComponent,
     ContactComponent,
-    TradeComponent,
-    TradeslistComponent,
-    //TraderComponent,
+    TradeListComponent,
+    TradeInfoComponent,
+
+    TraderListComponent,
+    TraderInfoComponent,
+    TraderAccountComponent
     //PersonaldetailsComponent,
     //SecuritydetailsComponent,
     //TraderaccountComponent

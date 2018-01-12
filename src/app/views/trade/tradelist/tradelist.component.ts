@@ -8,22 +8,22 @@ import { NG_TABLE_DIRECTIVES, NgTableComponent, NgTableFilteringDirective, NgTab
 
 
 // services
-import { TradeApiService } from '../../services/tradeapi/tradeapi.service';
-import { LoggerService } from '../../services/logger/logger.service';
-import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
-import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
+import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
+import { LoggerService } from '../../../services/logger/logger.service';
+import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
+import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
-import { CapsPipe } from '../../helpers/pipes';
-import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../helpers/classes';
-import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
+import { CapsPipe } from '../../../helpers/pipes';
+import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../../helpers/classes';
+import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
 @Component({
   selector: 'app-tradeslist',
-  templateUrl: './tradeslist.component.html',
-  styleUrls: ['./tradeslist.component.scss']
+  templateUrl: './tradelist.component.html',
+  styleUrls: ['./tradelist.component.scss']
 })
-export class TradeslistComponent implements OnInit {
+export class TradeListComponent implements OnInit {
 
   private traderId: number;
   private removedTradeId: number;

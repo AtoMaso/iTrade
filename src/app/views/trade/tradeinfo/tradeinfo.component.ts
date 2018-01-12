@@ -4,13 +4,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder, F
 
 
 @Component({
-  selector: 'app-trade',
-  templateUrl: './trade.component.html',
-  styleUrls: ['./trade.component.scss']
+  selector: 'app-tradeinfo',
+  templateUrl: './tradeinfo.component.html',
+  styleUrls: ['./tradeinfo.component.scss']
 })
 
 
-export class TradeComponent implements OnInit {
+export class TradeInfoComponent implements OnInit {
 
   private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
   public myForm: FormGroup;
