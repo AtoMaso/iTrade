@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
   // GET ACCOUNT
   //****************************************************
   private login() {
-    this.trader.email = this.loginGroup.controls.email.value;
-    this.trader.password = this.loginGroup.controls.password.value;
+    this.trader.contactDetails.email = this.loginGroup.controls.email.value;
+    this.trader.securityDetails.password = this.loginGroup.controls.password.value;
 
     if (this.loginGroup.dirty && this.loginGroup.valid) {
       this.authenticationService.login(this.trader)

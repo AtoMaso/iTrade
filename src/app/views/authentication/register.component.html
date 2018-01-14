@@ -8,25 +8,34 @@
 
 
         <div class="row">
-          <label class="textgray smalltext" for="name">Name</label>
+          <label class="textgray smalltext" for="name">First Name</label>
         </div>
-
         <div class="row form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>           
-              <input type="text" formControlName="name" id="name" maxlength="40" placeholder="Your full name..." required class="form-control">
-              <control-messages [control]="registerGroup.controls.name"></control-messages>
+              <input type="text" formControlName="firstname" id="firstname" maxlength="20" placeholder="Your first name..." required class="form-control">
+              <control-messages [control]="registerGroup.controls.firstname"></control-messages>
               </div>
           </div>
 
         <div class="row">
-          <label class="textgray smalltext" for="email">Email</label>
+          <label class="textgray smalltext" for="secondname">Second Name</label>
+        </div>
+        <div class="row form-group">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input type="text" formControlName="secondname" id="secondname" maxlength="40" placeholder="Your second name..." required class="form-control">
+            <control-messages [control]="registerGroup.controls.secondname"></control-messages>
+          </div>
         </div>
 
+        <div class="row">
+          <label class="textgray smalltext" for="email">Email</label>
+        </div>
         <div class="row form-group">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-            <input type="email" formControlName="email" id="email" maxlength="40" placeholder="Your email account..." required class="form-control">
+            <input type="email" formControlName="email" id="email" maxlength="70" placeholder="Your email account..." required class="form-control">
             <control-messages [control]="registerGroup.controls.email"></control-messages>
           </div>
         </div>
@@ -34,7 +43,6 @@
         <div class="row">
           <label class="textgray smalltext" for="password">Password</label>
         </div>
-
         <div class="row form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
@@ -46,11 +54,10 @@
         <div class="row">
           <label class="textgray smalltext" for="confirmPassword">Confirm Password</label>
         </div>
-
         <div class="row form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <input type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="40" placeholder="Confirm your password..." required class="form-control">
+              <input type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="20" placeholder="Confirm your password..." required class="form-control">
               <control-messages [control]="registerGroup.controls.confirmPassword"></control-messages>
             </div>
           </div>
@@ -68,8 +75,9 @@
           <p><strong>Help</strong></p>
           Please provide all required information needed (marked in red) to register to the application.
           <ul>
-            <li>The name should contain your first and second name only and with maximum of 50 characters in length. </li>
-            <li>Your username will be your email account. </li>
+            <li>Your first name can be maximum of 20 characters in length. </li>
+            <li>Your second name can be maximum of 40 characters in length. </li>
+            <li>Your email account provide will become your username. </li>
             <li>The application will allow email of 70 characters in length".</li>
             <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>
           </ul>

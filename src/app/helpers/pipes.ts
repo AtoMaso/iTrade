@@ -146,8 +146,8 @@ class SortTradersByNamePipe implements PipeTransform {
         if (!value || !value.sort) { return value; }
 
         return value.sort((a: Trader, b: Trader) => {
-            if (a.name < b.name) { return -1; }
-            if (a.name > b.name) { return 1; }
+          if (a.personalDetails.firstName < b.personalDetails.firstName) { return -1; }
+          if (a.personalDetails.firstName > b.personalDetails.firstName) { return 1; }
             return 0;
         });
     }

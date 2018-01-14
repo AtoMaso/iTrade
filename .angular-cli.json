@@ -24,10 +24,7 @@
       "styles": [       
         "styles.scss"
       ],
-      "scripts": [
-        "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/tether/dist/js/tether.min.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+      "scripts": [     
         "../node_modules/ngx-bootstrap/bundles/ngx-bootstrap.umd.min.js",
         "../node_modules/ngx-pagination/dist/ngx-pagination.js",
         "../node_modules/ng2-table/bundles/ng2-table.min.js",

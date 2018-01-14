@@ -45,7 +45,8 @@ export class RegisterComponent implements OnInit {
     //this.user.Role = this.route.snapshot.params['role'];
 
     this.registerGroup = this.formBuilder.group({
-          name: new FormControl('', [Validators.required, ValidationService.nameValidator]),
+          firstname: new FormControl('', [Validators.required, ValidationService.nameValidator]),
+          secondname: new FormControl('', [Validators.required, ValidationService.nameValidator]),
           email: new FormControl('', [Validators.required, ValidationService.emailValidator]),
           password: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
           confirmPassword: new FormControl('', [Validators.required, ValidationService.confirmPasswordValidator]),
@@ -58,10 +59,11 @@ export class RegisterComponent implements OnInit {
     //****************************************************
   private register() {        
 
-    this.trader.name = this.registerGroup.controls.name.value;
-    this.trader.email = this.registerGroup.controls.email.value;
-    this.trader.password = this.registerGroup.controls.password.value;
-    this.trader.confirmPassword = this.registerGroup.controls.confirmPassword.value;
+    this.trader.personalDetails.firstName = this.registerGroup.controls.firstname.value;
+    this.trader.personalDetails.secondName = this.registerGroup.controls.secondname.value;
+    this.trader.contactDetails.email = this.registerGroup.controls.email.value;
+    this.trader.securityDetails.password = this.registerGroup.controls.password.value;
+    this.trader.securityDetails.confirmPassword = this.registerGroup.controls.confirmPassword.value;
 
     if (this.ComparePasswords(this.trader)) {
       this.authenticationService.register(this.trader)
@@ -71,7 +73,7 @@ export class RegisterComponent implements OnInit {
     }
   
     private ComparePasswords(passedtrader:Trader): boolean {
-      if (passedtrader.password === passedtrader.confirmPassword) { return true; }
+      if (passedtrader.securityDetails.password === passedtrader.securityDetails.confirmPassword) { return true; }
         else {
             this.messageService.emitProcessMessage("PMPNE");
             return false;

@@ -1,25 +1,56 @@
 ﻿
-interface TraderInterface {
-  traderId: string;
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
+interface ITrader {
+  traderId: number;
+  personalDetails: IPersonalDetails;
+  contactDetails: IContacDetails
+  securityDetails: ISecurityDetails;
 }
 
-interface TradeInterface {
-  tradeId: number;
+interface IPersonalDetails {
+  pdId: number;
   traderId: number;
-  traderName: string;
-  title: string;
-  flash: string;
+  firstName: string;
+  secondName: string;
+  dateOfBirth: Date;
+}
+
+interface IContacDetails {
+  cdId: number;
+  traderId: number;
+  homeAddressId: number;
+  postalAddressId: number;
+  businessAddressId: number;
+  homePhoneId: number;
+  businessPhoneId: number;
+  mobilePhoneId: number;
+  email: string;
+  facebook: string;
+  twitter: string;
+  instagram: string;
+}
+
+
+interface ISecurityDetails {
+  sdId: number;
+  traderId: number;
+  userName: string;
+  password: string;
+  confirmPassword: string;
+  securityQuestion: string;
+  securityAnswer: string;
+}
+
+interface ITrade {
+  tradeId: number; 
+  traderId: number;
+  title: string; 
   content: string;
-  willTradeFor: string;
+  tradingFor: string[];
   datePublished: Date;
   categoryType: string;
 }
 
-interface AddressInterface {
+interface IAddress {
   addressId: number;
   traderId: number; 
   number: number;
@@ -28,20 +59,24 @@ interface AddressInterface {
   city: string;
   postcode: number;
   state: string;
+  country: string;
 }
 
-interface PhoneInterface {
+interface IPhone {
   phoneId: number;
   traderId: number;
+  phoneNumber: number;
   countryCode: string;
   cityCode: string;
-  home: string;
-  business: string;
-  mobile: string;
+  phoneTypeId: number;
 }
 
+interface IPhoneType {
+  phoneTypeId: number;
+  phoneType: string;
+}
 
-interface ImageInterface {
+interface IImage {
   imageId: number;
   tradeId: number;
   title: string;
@@ -49,28 +84,28 @@ interface ImageInterface {
 }
 
 
-interface CategoryInterface {
+interface ICategory {
   categoryId: number;
   categoryType: string;
 }
 
-interface ContentInterface {
+interface IContent {
     contentId: number;
     contentText: string;
 }
 
-interface UserSessionInterface {
-    authentication: AuthenticationInterface;
-    userIdentity: UserIdentityInterface;
+interface IUserSession {
+    authentication: IAuthentication;
+    userIdentity: IUserIdentity;
     sessionCookie: string;
 }
 
-interface AuthenticationInterface {
+interface IAuthentication {
     isAuthenticated: boolean;
     authenticationType: string;
 }
 
-interface UserIdentityInterface {
+interface IUserIdentity {
     accessToken: any;
     refreshToken: any;
     accessTokenType: string;
@@ -80,31 +115,30 @@ interface UserIdentityInterface {
     name: string;
     userId: string;
     roles: string[];
-  //isInRole(rolename: string): boolean;
+   isInRole(rolename: string, roles: string[]): boolean;
 }
 
 
- interface ProcessMessageInterface {
+ interface IProcessMessage {
   id: string;
   type: string;
   text: string;
 }
 
- interface PageTitleInterface {
+ interface IPageTitle {
   title: string;
   value: string;
 }
 
- interface AttachementInterface {
-   AttachementId: number;
-   ArticleId: string;
-   PhysicalPath: string;
-   Name: string;
+ interface IAttachement {
+   attachementId: number;
+   tradeId: number;
+   physicalPath: string;
+   name: string;
  }
 
 
 export {
-  TraderInterface, TradeInterface, AddressInterface,    
-  PhoneInterface, ImageInterface, CategoryInterface, ContentInterface,
-  UserSessionInterface, AuthenticationInterface, UserIdentityInterface, 
-  ProcessMessageInterface, PageTitleInterface, AttachementInterface };
+  ITrader, ITrade, IAddress, IPersonalDetails, ISecurityDetails, IContacDetails, IPhoneType,
+  IPhone, IImage, ICategory, IContent, IUserSession, IAuthentication, IUserIdentity, 
+  IProcessMessage, IPageTitle, IAttachement };

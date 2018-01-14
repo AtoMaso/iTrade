@@ -49,7 +49,7 @@ export class AuthenticationService implements OnDestroy {
   //******************************************************
   public login(user: Trader) {
 
-    var data = "grant_type=password&username=" + user.email + "&password=" + user.password;
+    var data = "grant_type=password&username=" + user.contactDetails.email + "&password=" + user.securityDetails.password;
       let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' })    
 
       return this.httpService.post(serviceBase + "Token", data, { headers: headers })       
