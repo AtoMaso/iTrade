@@ -1,6 +1,12 @@
 ﻿import {
-  ITraderList, ITraderDetails, ITrade, IAddress, IPersonalDetails, ISecurityDetails, IContacDetails, IPhoneType,
-  IPhone, IImage, ICategory, IContent, IUserSession, IAuthentication, IUserIdentity,
+  ITraderList, ITraderDetails, ITrade,
+  IPersonalDetails, ISecurityDetails, IContactDetails,
+  IAddress, IAddressType,
+  IPhone, IPhoneType,
+  ISecurityAnswer, ISecurityQuestions,
+  ISocialNetwork, ISocialNetworkType,
+  IImage, ICategory,
+  IUserSession, IAuthentication, IUserIdentity,
   IProcessMessage, IPageTitle, IAttachement } from './interfaces';
 
 
@@ -54,74 +60,181 @@ class PersonalDetails implements IPersonalDetails {
     this.firstName = "";
     this.lastName = "";
     this.dateOfBirth = new Date(1900, 1, 1);
+    this.addresses = [];
   }
 }
+
 
 class ContactDetails implements IContactDetails {
-  cdId: number;
-  traderId: number;
-  homeAddressId: number;
-  homeAddress: IAddress;
-  postalAddressId: number;
-  postalAddress: IAddress;
-  businessAddressId: number;
-  bussinessAddress: IAddress;
 
-  homePhoneId: number;
-  homePhone: IPhone;
-  businessPhoneId: number;
-  businessPhone: IPhone;
-  mobilePhoneId: number;
-  mobilePhone: IPhone;
-
-  email: string;
-  facebook: string;
-  twitter: string;
-  instagram: string;
+  contactDetailsId: number;
+  traderId: string;
+  phones: IPhone[];
+  socialNetworks: ISocialNetwork[];  
 
   constructor() {
-    this.cdId = 0;
-    this.traderId = 0;
-    this.homeAddressId = 0;
-    this.homeAddress = new Address();
-    this.postalAddressId = 0;
-    this.postalAddress = new Address;
-    this.businessAddressId = 0;
-    this.bussinessAddress =new Address();
-    this.homePhoneId = 0;
-
-    this.homePhone = new Phone();
-
-    this.businessPhoneId = 0;
-    this.businessPhone = new Phone();
-    this.mobilePhoneId = 0;
-    this.mobilePhone = new Phone();
-    this.email = "";
-    this.facebook = "";
-    this.twitter = "";
-    this.instagram = "";
+    this.contactDetailsId = 0;
+    this.traderId = "";
+    this.phones =  [] ;
+    this.socialNetworks = [];
   }
 }
+
 
 class SecurityDetails implements ISecurityDetails {
-  sdId: number;
-  traderId: number;
+
+  securityDetailsId: number;
   userName: string;
   password: string;
-  confirmPassword: string;
-  securityQuestion: string;
-  securityAnswer: string;
+  securityAnswers: SecurityAnswer [];
+  traderId: string;
 
   constructor() {
-    this.sdId = 0;
-    this.traderId = 0;
+    this.securityDetailsId = 0;   
     this.userName = "";
-    this.password = "Apple";   
-    this.confirmPassword = "Apple";
-    this.securityQuestion = "";
-    this.securityAnswer = "";
+    this.password = "";   
+    this.securityAnswers = [];
+    this.traderId = "";
   }
 }
+
+
+class Address implements IAddress {
+
+  addressId: number;
+  traderId: number;
+  addressNumber: number;
+  addressStreet: string;
+  addressSuburb: string;
+  addressPostcode: number;
+  addressCity: string;
+  addressState: string;
+  addressCountry: string;
+  addressTypeId: number;
+  addressTypeDescription: string
+  personalDetailsId: number;
+
+  constructor() {
+    this.addressId = 0;
+    this.addressNumber = 0;
+    this.addressStreet = "";
+    this.addressSuburb = "";
+    this.addressCity = "";
+    this.addressPostcode = 0;
+    this.addressState = "";
+    this.addressCountry = "";
+    this.addressTypeId = 0;
+    this.addressTypeDescription = "";
+    this.personalDetailsId = 0;
+  }
+}
+
+
+class AddressType implements IAddressType {
+  addressTypeId: number;
+  addressTypeDescription: string;
+
+  constructor() {
+    this.addressTypeId = 0;
+    this.addressTypeDescription = "";
+  }
+}
+
+
+class Phone implements IPhone {
+
+  phoneId: number; 
+  phoneNumber: number;
+  phoneCityCode: string;
+  phoneCountryCode: string;
+  phoneTypeId: number;
+  phoneTypeDescription: string;
+  contactDetailsId: number;
+
+  constructor() {
+    this.phoneId = 0;
+    this.phoneNumber = 0;
+    this.phoneCityCode = "";
+    this.phoneCountryCode = "";
+    this.phoneTypeId = 0;
+    this.phoneTypeDescription = "";
+    this.contactDetailsId = 0;
+  }
+
+}
+
+
+class PhoneType implements IPhoneType {
+  phoneTypeId: number;
+  phoneType: string;
+
+  constructor() {
+    this.phoneTypeId = 0;
+    this.phoneType = "";
+  }
+}
+
+
+class SocialNetwork implements ISocialNetwork {
+  socialNetworkId: number;
+  socialNetworkAccount: string; 
+  socialNetworkTypId: number;
+  socialNetworkTypeText: string;
+  contactDetailsId: number;
+
+  constructor() {
+    this.socialNetworkId = 0;
+    this.socialNetworkAccount = "";
+    this.socialNetworkTypId = 0;
+    this.socialNetworkTypeText = "";
+  }
+}
+
+
+class SocialNetworkType implements ISocialNetworkType {
+  socialNetworkTypeId: number;
+  socialNetworkTypeText: string;
+
+  constructor() {
+    this.socialNetworkTypeId = 0;
+    this.socialNetworkTypeText = "";
+  }
+}
+
+
+class SecurityAnswer implements ISecurityAnswer {
+  answerId: number;
+  questionId: number;
+  questionText: string;
+  questionAnswer: string;
+  securityDetailsId: number;
+
+  constructor() {
+    this.answerId = 0;
+    this.questionAnswer = "";
+    this.questionId = 0;
+    this.questionText = "";
+    this.securityDetailsId = 0;
+  }
+  
+}
+
+
+class SecurityQuestion implements ISecurityQuestions {
+  questionId: number;
+  questionText: string;
+
+  constructor() {
+    this.questionId = 0;
+    this.questionText = "";
+  }
+
+}
+
+
+
+
+
 
 class Trade implements ITrade {
 
@@ -141,63 +254,6 @@ class Trade implements ITrade {
     this.title = "";
     this.content = "";
     this.tradingFor = [];
-  }
-}
-
-class Address implements IAddress {
-  sdId = 0;
-  addressId: number;
-  traderId: number;
-  number: number;
-  street: string;
-  suburb: string;
-  city: string;
-  postcode: number;
-  state: string;
-  country: string;
-
-  constructor() {
-    this.addressId = 0;
-    this.traderId = 0;
-    this.number = 0;
-    this.street = "";
-    this.suburb = "";
-    this.city = "";
-    this.postcode = 0;
-    this.state = "";
-    this.country = "";
-  }
-}
-
-class Phone implements IPhone{
-
-  phoneId: number;
-  traderId: number;
-  phoneNumber: number;
-  countryCode: string;
-  cityCode: string;
-  phoneTypeId: number;
-  type: IPhoneType
-
-  constructor() {
-    this.phoneId = 0;
-    this.traderId = 0;
-    this.phoneNumber = 0;
-    this.countryCode = "";
-    this.cityCode = "";
-    this.phoneTypeId = 0;
-    this.type = new PhoneType();
-  }
-
-}
-
-class PhoneType implements IPhoneType {
-  phoneTypeId: number;
-  phoneType: string;
-
-  constructor() {  
-    this.phoneTypeId = 0;
-    this.phoneType = "";
   }
 }
 
@@ -225,15 +281,8 @@ class Category implements ICategory {
   }
 }
 
-class Content implements IContent {
-  contentId: number;
-  contentText: string;
 
-  constructor() {
-    this.contentId = 0;
-    this.contentText = "";
-  }
-}
+
 
 class UserSession implements IUserSession {
   authentication: Authentication ;

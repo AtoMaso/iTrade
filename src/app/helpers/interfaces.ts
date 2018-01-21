@@ -45,24 +45,33 @@ interface ISecurityDetails {
 
 
 interface IAddress {
-  addressId: number;
-  traderId: number;
-  number: number;
-  street: string;
-  suburb: string;
-  city: string;
-  postcode: number;
-  state: string;
-  country: string;
+  addressId: number; 
+  addressNumber: number;
+  addressStreet: string;
+  addressSuburb: string;
+  addressCity: string;
+  addressPostcode: number;
+  addressState: string;
+  addressCountry: string;
+  addressTypeId: number;
+  addressTypeDescription: string;
+  personalDetailsId: number;
 }
 
+interface IAddressType {
+  addressTypeId: number;
+  addressTypeDescription: string;
+}
+
+
 interface IPhone {
-  phoneId: number;
-  traderId: number;
+  phoneId: number; 
   phoneNumber: number;
-  countryCode: string;
-  cityCode: string;
-  phoneTypeId: number;
+  phoneCityCode: string;
+  phoneCountryCode: string;
+  phoneTypeId: number; 
+  phoneTypeDescription: string;
+  contactDetailsId: number;
 }
 
 interface IPhoneType {
@@ -74,8 +83,13 @@ interface ISocialNetwork {
   socialNetworkId: number;
   socialNetworkAccount: string;
   socialNetworkTypId: number;
-  socialNetworkTypetext: string;
+  socialNetworkTypeText: string;
   contactDetailsId: number;
+}
+
+interface ISocialNetworkType {
+  socialNetworkTypeId: number;
+  socialNetworkTypeText: string;
 }
 
 
@@ -92,6 +106,10 @@ interface ISecurityQuestions {
   questionText: string;
 }
 
+
+
+
+
 interface ITrade {
   tradeId: number; 
   traderId: number;
@@ -101,9 +119,6 @@ interface ITrade {
   datePublished: Date;
   categoryType: string;
 }
-
-
-
 
 
 interface IImage {
@@ -169,6 +184,11 @@ interface IUserIdentity {
 
 
 export {
-  ITraderList, ITraderDetails, ITrade, IAddress, IPersonalDetails, ISecurityDetails, IContacDetails, IPhoneType,
-  IPhone, IImage, ICategory, IContent, IUserSession, IAuthentication, IUserIdentity, 
+  ITraderList, ITraderDetails, ITrade,
+  IPersonalDetails, ISecurityDetails, IContactDetails,
+  IAddress, IAddressType, IPhone, IPhoneType,
+  ISecurityAnswer, ISecurityQuestions,
+  ISocialNetwork, ISocialNetworkType,
+  IImage, ICategory,
+  IUserSession, IAuthentication, IUserIdentity, 
   IProcessMessage, IPageTitle, IAttachement };
