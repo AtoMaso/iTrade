@@ -1,40 +1,63 @@
 ﻿import {
-  ITrader, ITrade, IAddress, IPersonalDetails, ISecurityDetails, IContacDetails, IPhoneType,
+  ITraderList, ITraderDetails, ITrade, IAddress, IPersonalDetails, ISecurityDetails, IContacDetails, IPhoneType,
   IPhone, IImage, ICategory, IContent, IUserSession, IAuthentication, IUserIdentity,
   IProcessMessage, IPageTitle, IAttachement } from './interfaces';
 
 
-class Trader implements ITrader {
-  traderId: number;
-  personalDetails:IPersonalDetails;
-  contactDetails: ContactDetails;
-  securityDetails: SecurityDetails;
+class Trader implements ITraderList {
+  traderId: string;
+  traderFirstName: string;
+  traderMiddleName: string;
+  traderLastName: string;
+  traderContactEmail: string;
+  traderContactPhone: string;
 
   constructor() {    
-      this.traderId = 0;
-      this.personalDetails = new PersonalDetails();
-      this.contactDetails = new ContactDetails();
-      this.securityDetails = new SecurityDetails();
+    this.traderId = ""
+    this.traderFirstName = "";
+    this.traderMiddleName = "";
+    this.traderLastName = " ";
+    this.traderContactEmail = "";  
+    this.traderContactPhone = "";
   }
 }
 
-class PersonalDetails implements IPersonalDetails {
-  pdId: number;
-  traderId: number;
-  firstName: string;
-  secondName: string;
-  dateOfBirth: Date;
+
+class TraderDetails implements ITraderDetails {
+  traderId: string;
+  personalDetails: PersonalDetails;
+  contactDetails: ContactDetails;
+  securityDetails: SecurityDetails;
 
   constructor() {
-    this.pdId = 0;
-    this.traderId = 0;
+    this.traderId = "";
+    this.personalDetails = new PersonalDetails();
+    this.contactDetails = new ContactDetails();
+    this.securityDetails = new SecurityDetails();
+  }
+}
+
+
+class PersonalDetails implements IPersonalDetails {
+
+  personalDetailsId: number;
+  traderId: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  dateOfBirth: Date;
+  addresses: Address[];
+
+  constructor() {
+    this.personalDetailsId = 0;
+    this.traderId = "";
     this.firstName = "";
-    this.secondName = "";
+    this.lastName = "";
     this.dateOfBirth = new Date(1900, 1, 1);
   }
 }
 
-class ContactDetails implements IContacDetails {
+class ContactDetails implements IContactDetails {
   cdId: number;
   traderId: number;
   homeAddressId: number;

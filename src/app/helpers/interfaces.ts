@@ -1,6 +1,6 @@
 ﻿
 interface ITraderList {
-  traderId: number,
+  traderId: string,
   traderFirstName: string,
   traderMiddleName: string,
   traderLastName: string,
@@ -9,9 +9,9 @@ interface ITraderList {
 }
 
 interface ITraderDetails {
-  traderId: number;
+  traderId: string;
   personalDetails: IPersonalDetails;
-  contactDetails: IContacDetails
+  contactDetails: IContactDetails
   securityDetails: ISecurityDetails;
 }
 
@@ -19,43 +19,34 @@ interface ITraderDetails {
 
 interface IPersonalDetails {
   personalDetailsId: number;
-  traderId: number;
+  traderId: string;
   firstName: string;
-
+  middleName: string;
   lastName: string;
   dateOfBirth: Date;
+  addresses: IAddress[]
 }
 
-interface IContacDetails {
-  cdId: number;
-  traderId: number;
-  
+interface IContactDetails {
+  contactDetailsId: number;
+  traderId: string;
+  phones: IPhone[];
+  socialNetworks: ISocialNetwork[];  
 }
 
 
 interface ISecurityDetails {
-  sdId: number;
-  traderId: number;
+  securityDetailsId: number;
+  traderId: string;
   userName: string;
   password: string;
-  confirmPassword: string;
-  securityQuestion: string;
-  securityAnswer: string;
+  securityAnswers: ISecurityAnswer[];
 }
 
-interface ITrade {
-  tradeId: number; 
-  traderId: number;
-  title: string; 
-  content: string;
-  tradingFor: string[];
-  datePublished: Date;
-  categoryType: string;
-}
 
 interface IAddress {
   addressId: number;
-  traderId: number; 
+  traderId: number;
   number: number;
   street: string;
   suburb: string;
@@ -78,6 +69,42 @@ interface IPhoneType {
   phoneTypeId: number;
   phoneType: string;
 }
+
+interface ISocialNetwork {
+  socialNetworkId: number;
+  socialNetworkAccount: string;
+  socialNetworkTypId: number;
+  socialNetworkTypetext: string;
+  contactDetailsId: number;
+}
+
+
+interface ISecurityAnswer {
+  answerId: number;
+  questionId: number;
+  questionText: string;
+  questionAnswer: string;
+  securityDetailsId: number;
+}
+
+interface ISecurityQuestions {
+  questionId: number;
+  questionText: string;
+}
+
+interface ITrade {
+  tradeId: number; 
+  traderId: number;
+  title: string; 
+  content: string;
+  tradingFor: string[];
+  datePublished: Date;
+  categoryType: string;
+}
+
+
+
+
 
 interface IImage {
   imageId: number;
@@ -142,6 +169,6 @@ interface IUserIdentity {
 
 
 export {
-  ITrader, ITrade, IAddress, IPersonalDetails, ISecurityDetails, IContacDetails, IPhoneType,
+  ITraderList, ITraderDetails, ITrade, IAddress, IPersonalDetails, ISecurityDetails, IContacDetails, IPhoneType,
   IPhone, IImage, ICategory, IContent, IUserSession, IAuthentication, IUserIdentity, 
   IProcessMessage, IPageTitle, IAttachement };
