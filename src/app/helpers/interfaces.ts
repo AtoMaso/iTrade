@@ -1,32 +1,35 @@
 ﻿
-interface ITrader {
+interface ITraderList {
+  traderId: number,
+  traderFirstName: string,
+  traderMiddleName: string,
+  traderLastName: string,
+  traderContactEmail: string;
+  traderContactPhone: string
+}
+
+interface ITraderDetails {
   traderId: number;
   personalDetails: IPersonalDetails;
   contactDetails: IContacDetails
   securityDetails: ISecurityDetails;
 }
 
+
+
 interface IPersonalDetails {
-  pdId: number;
+  personalDetailsId: number;
   traderId: number;
   firstName: string;
-  secondName: string;
+
+  lastName: string;
   dateOfBirth: Date;
 }
 
 interface IContacDetails {
   cdId: number;
   traderId: number;
-  homeAddressId: number;
-  postalAddressId: number;
-  businessAddressId: number;
-  homePhoneId: number;
-  businessPhoneId: number;
-  mobilePhoneId: number;
-  email: string;
-  facebook: string;
-  twitter: string;
-  instagram: string;
+  
 }
 
 
