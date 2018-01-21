@@ -11,7 +11,7 @@ import { LoggerService } from '../../services/logger/logger.service';
 import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
-import { Trader, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
+import { TraderDetails, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
 import { ControlMessages } from '../controls/controlmessages/control-messages.component';
 
 @Component({
@@ -21,7 +21,7 @@ import { ControlMessages } from '../controls/controlmessages/control-messages.co
 
 export class RegisterComponent implements OnInit {
     
-    private trader: Trader = new Trader();    
+    private trader: TraderDetails = new TraderDetails();    
     private submitted = false;
     private registerGroup: any;
     
@@ -59,9 +59,10 @@ export class RegisterComponent implements OnInit {
     //****************************************************
   private register() {        
 
+    // TODO do we need first name and last name when user is trying to register??????
     this.trader.personalDetails.firstName = this.registerGroup.controls.firstname.value;
-    this.trader.personalDetails.secondName = this.registerGroup.controls.secondname.value;
-    this.trader.contactDetails.email = this.registerGroup.controls.email.value;
+    this.trader.personalDetails.lastName = this.registerGroup.controls.secondname.value;
+    this.trader.securityDetails.email = this.registerGroup.controls.email.value;
     this.trader.securityDetails.password = this.registerGroup.controls.password.value;
     this.trader.securityDetails.confirmPassword = this.registerGroup.controls.confirmPassword.value;
 
@@ -72,7 +73,7 @@ export class RegisterComponent implements OnInit {
         }
     }
   
-    private ComparePasswords(passedtrader:Trader): boolean {
+    private ComparePasswords(passedtrader:TraderDetails): boolean {
       if (passedtrader.securityDetails.password === passedtrader.securityDetails.confirmPassword) { return true; }
         else {
             this.messageService.emitProcessMessage("PMPNE");

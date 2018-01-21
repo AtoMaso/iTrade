@@ -39,7 +39,9 @@ interface ISecurityDetails {
   securityDetailsId: number;
   traderId: string;
   userName: string;
+  email: string;
   password: string;
+  confirmPassword: string;
   securityAnswers: ISecurityAnswer[];
 }
 
@@ -134,10 +136,9 @@ interface ICategory {
   categoryType: string;
 }
 
-interface IContent {
-    contentId: number;
-    contentText: string;
-}
+
+
+
 
 interface IUserSession {
     authentication: IAuthentication;
@@ -184,11 +185,12 @@ interface IUserIdentity {
 
 
 export {
-  ITraderList, ITraderDetails, ITrade,
+  ITraderList, ITraderDetails,
   IPersonalDetails, ISecurityDetails, IContactDetails,
   IAddress, IAddressType, IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
+  ITrade,
   IImage, ICategory,
   IUserSession, IAuthentication, IUserIdentity, 
   IProcessMessage, IPageTitle, IAttachement };

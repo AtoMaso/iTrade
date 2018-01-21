@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject }    from 'rxjs/Subject';
 
 import { LoggerService } from '../logger/logger.service';
-import { Trader, UserSession, Authentication, UserIdentity } from '../../helpers/classes';
+import { TraderDetails, UserSession, Authentication, UserIdentity } from '../../helpers/classes';
 
 let serviceBase = CONFIG.baseUrls.servicebase;
 let serviceBaseAccount = CONFIG.baseUrls.accounts;
@@ -47,9 +47,9 @@ export class AuthenticationService implements OnDestroy {
   //******************************************************
   // Login/Get token
   //******************************************************
-  public login(user: Trader) {
+  public login(user: TraderDetails) {
 
-    var data = "grant_type=password&username=" + user.contactDetails.email + "&password=" + user.securityDetails.password;
+    var data = "grant_type=password&username=" + user.securityDetails.email + "&password=" + user.securityDetails.password;
       let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' })    
 
       return this.httpService.post(serviceBase + "Token", data, { headers: headers })       
@@ -72,7 +72,7 @@ export class AuthenticationService implements OnDestroy {
   //******************************************************
   // Register new account
   //******************************************************
-  public register(user: Trader) {      
+  public register(user: TraderDetails) {      
   
       let body = JSON.stringify(user);
       let headers = new Headers();

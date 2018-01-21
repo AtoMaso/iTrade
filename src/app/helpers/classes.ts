@@ -1,10 +1,11 @@
 ﻿import {
-  ITraderList, ITraderDetails, ITrade,
+  ITraderList, ITraderDetails,
   IPersonalDetails, ISecurityDetails, IContactDetails,
   IAddress, IAddressType,
   IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
+  ITrade,
   IImage, ICategory,
   IUserSession, IAuthentication, IUserIdentity,
   IProcessMessage, IPageTitle, IAttachement } from './interfaces';
@@ -85,14 +86,18 @@ class SecurityDetails implements ISecurityDetails {
 
   securityDetailsId: number;
   userName: string;
+  email: string;
   password: string;
+  confirmPassword: string;
   securityAnswers: SecurityAnswer [];
   traderId: string;
 
   constructor() {
     this.securityDetailsId = 0;   
     this.userName = "";
+    this.email = "";
     this.password = "";   
+    this.confirmPassword = "";
     this.securityAnswers = [];
     this.traderId = "";
   }
@@ -381,5 +386,12 @@ class Guid {
 
 
 export {
-  Trader, Trade, Address, PersonalDetails, ContactDetails, SecurityDetails, Phone, Image, Category
-  , Content, UserSession, Authentication, UserIdentity, ProcessMessage, PageTitle, Attachement};
+  Trader, TraderDetails,
+   PersonalDetails, ContactDetails, SecurityDetails,
+  Address, AddressType, Phone, PhoneType,
+  SocialNetwork, SocialNetworkType,
+  SecurityAnswer, SecurityQuestion,
+  Trade, Image, Category,
+  UserSession, Authentication, UserIdentity,
+  ProcessMessage, PageTitle, Attachement
+};

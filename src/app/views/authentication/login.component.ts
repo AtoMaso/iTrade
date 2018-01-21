@@ -10,7 +10,7 @@ import { LoggerService } from '../../services/logger/logger.service';
 import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
-import { Trader, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
+import { TraderDetails, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
 import { ControlMessages } from '../controls/controlmessages/control-messages.component';
 
 @Component({
@@ -20,7 +20,7 @@ import { ControlMessages } from '../controls/controlmessages/control-messages.co
 
 
 export class LoginComponent implements OnInit {
-  private trader: Trader;
+  private trader: TraderDetails;
   private loginGroup: any;
   private isRequesting: boolean;
  
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
   // GET ACCOUNT
   //****************************************************
   private login() {
-    this.trader.contactDetails.email = this.loginGroup.controls.email.value;
+    this.trader.securityDetails.userName = this.loginGroup.controls.email.value;
     this.trader.securityDetails.password = this.loginGroup.controls.password.value;
 
     if (this.loginGroup.dirty && this.loginGroup.valid) {
