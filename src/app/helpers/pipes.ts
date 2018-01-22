@@ -13,15 +13,15 @@ class SortTradesByTitlePipe implements PipeTransform {
         if (args !== null) {
             if (args[0] === 'A') {
                 return value.sort((a: Trade, b: Trade) => {
-                    if (a.title < b.title) { return -1; }
-                    if (a.title > b.title) { return 1; }
+                  if (a.tradeTitle < b.tradeTitle) { return -1; }
+                  if (a.tradeTitle > b.tradeTitle) { return 1; }
                     return 0;
                 });
             }
             else {
               return value.sort((a: Trade, b: Trade) => {
-                    if (a.title > b.title) { return -1; }
-                    if (a.title < b.title) { return 1; }
+                if (a.tradeTitle > b.tradeTitle) { return -1; }
+                if (a.tradeTitle < b.tradeTitle) { return 1; }
                     return 0;
                 });
             }
@@ -42,16 +42,16 @@ class SortTradesByCategoryPipe implements PipeTransform {
             if (args === 'A') {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.categoryType < b.categoryType) { return -1; }
-                if (a.categoryType > b.categoryType) { return 1; }
+                if (a.tradeCategoryType < b.tradeCategoryType) { return -1; }
+                if (a.tradeCategoryType > b.tradeCategoryType) { return 1; }
                     return 0;
                 });
             }
             else {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.categoryType > b.categoryType) { return -1; }
-                if (a.categoryType < b.categoryType) { return 1; }
+                if (a.tradeCategoryType > b.tradeCategoryType) { return -1; }
+                if (a.tradeCategoryType < b.tradeCategoryType) { return 1; }
                     return 0;
                 });
             }
@@ -73,16 +73,16 @@ class SortTradesByTraderNamePipe implements PipeTransform {
             if (args === 'A') {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.traderName < b.traderName) { return -1; }
-                if (a.traderName > b.traderName) { return 1; }
+                if (a.traderLastName < b.traderLastName) { return -1; }
+                if (a.traderLastName > b.traderLastName) { return 1; }
                     return 0;
                 });
             }
             else {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.traderName > b.traderName) { return -1; }
-                if (a.traderName < b.traderName) { return 1; }
+                if (a.traderLastName > b.traderLastName) { return -1; }
+                if (a.traderLastName < b.traderLastName) { return 1; }
                     return 0;
                 });
             }
@@ -104,16 +104,16 @@ class SortTradesByDatePipe implements PipeTransform {
             if (args === 'A') {
 
               return value.sort((a: Trade, b: Trade) => {
-                  if (a.datePublished < b.datePublished) { return -1; }
-                  if (a.datePublished > b.datePublished) { return 1; }
+                if (a.tradeDatePublished < b.tradeDatePublished) { return -1; }
+                if (a.tradeDatePublished > b.tradeDatePublished) { return 1; }
                     return 0;
                 });
             }
             else {
 
               return value.sort((a: Trade, b: Trade) => {
-                  if (a.datePublished > b.datePublished) { return -1; }
-                  if (a.datePublished < b.datePublished) { return 1; }
+                if (a.tradeDatePublished > b.tradeDatePublished) { return -1; }
+                if (a.tradeDatePublished < b.tradeDatePublished) { return 1; }
                     return 0;
                 });
             }

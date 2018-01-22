@@ -13,6 +13,13 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { LoggerService } from '../logger/logger.service';
 import {ProcessMessage } from '../../helpers/classes';
+import { CONFIG } from '../../config';
+
+let messagessUrl = CONFIG.baseUrls.messages;
+let messageUrl = CONFIG.baseUrls.message;
+let updateMessageUrl = CONFIG.baseUrls.updatemessage;
+let addMessageUrl = CONFIG.baseUrls.addmessage;
+let removeMessageUrl = CONFIG.baseUrls.removemessage;
 
 
 @Injectable()
@@ -26,7 +33,7 @@ export class ProcessMessageService {
   public behaviorRouteStore: BehaviorSubject<string> = new BehaviorSubject(null);
   public behaviorRouteObserver$: Observable<string> = this.behaviorRouteStore.asObservable(); 
 
-  private processMessagesUrl = 'api/processmessages';  // URL to web api in our case will be using in memory service object 'trades'
+  //private processMessagesUrl = 'api/processmessages';  // URL to web api in our case will be using in memory service object 'trades'
   
 
   constructor(     
@@ -48,7 +55,7 @@ export class ProcessMessageService {
   // get the process messages from the api json repository
   public getProcessMessagesFromRepository(): Observable<ProcessMessage[]> {
      // using HTTPClient module
-    return this.httpClientService.get<ProcessMessage[]>(this.processMessagesUrl)  
+    return this.httpClientService.get<ProcessMessage[]>(messagessUrl)  
       .retry(3)
       .catch((err: HttpErrorResponse, result) => {
 
@@ -76,15 +83,15 @@ export class ProcessMessageService {
 
   // raises the event which the app component is subcribed to
   // and the message id passed to the child control on the app component
-  public emitProcessMessage(id: string, message?: string) {
+  public emitProcessMessage(code: string, message?: string) {
 
     let localProcessMessage: ProcessMessage 
-    localProcessMessage = this.allProcessMessages.find(pm => pm.id === id); 
+    localProcessMessage = this.allProcessMessages.find(pm => pm.messageCode === code); 
 
     if (localProcessMessage === undefined || localProcessMessage === null ) {
             localProcessMessage = new ProcessMessage();
-            localProcessMessage.text = "Unexprected error has occured. Please contact the application administration!";
-            localProcessMessage.type = "error"
+            localProcessMessage.messageText = "Unexprected error has occured. Please contact the application administration!";
+            localProcessMessage.messageType = "error"
     }
     this.behaviorProcessMessageStore.getValue();
     this.behaviorProcessMessageStore.next(localProcessMessage);

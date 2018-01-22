@@ -114,20 +114,22 @@ interface ISecurityQuestions {
 
 interface ITrade {
   tradeId: number; 
-  traderId: number;
-  title: string; 
-  content: string;
+  tradeTitle: string; 
   tradingFor: string[];
-  datePublished: Date;
-  categoryType: string;
+  tradeDatePublished: Date;
+  tradeCategoryType: string;
+  traderId: number;
+  traderFirstName: string;
+  traderMiddleName: string;
+  traderLastName: string;
 }
 
 
 interface IImage {
-  imageId: number;
+  imageId: number; 
+  imageTitle: string;
+  imageUrl: string;
   tradeId: number;
-  title: string;
-  url: string;
 }
 
 
@@ -165,10 +167,11 @@ interface IUserIdentity {
 }
 
 
- interface IProcessMessage {
-  id: string;
-  type: string;
-  text: string;
+interface IProcessMessage {
+  messageId: number;
+  messageCode: string;
+  messageType: string;
+  messageText: string;
 }
 
  interface IPageTitle {

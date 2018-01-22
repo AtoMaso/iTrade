@@ -244,35 +244,40 @@ class SecurityQuestion implements ISecurityQuestions {
 class Trade implements ITrade {
 
   tradeId: number;
-  traderId: number;
-  traderName: string;
-  title: string;
-  content: string;
+  tradeTitle: string;
   tradingFor: string[];
-  datePublished: Date;
-  categoryType: string;
+  tradeDatePublished: Date;
+  tradeCategoryType: string;
+  traderId: number;
+  traderFirstName: string;
+  traderMiddleName: string;
+  traderLastName: string;
+
 
   constructor() {    
     this.tradeId = 0;
-    this.traderId = 0;
-    this.traderName = "";   //????? check how we are going to pass this
-    this.title = "";
-    this.content = "";
+    this.tradeTitle = "";
+    this.tradeCategoryType = "";
+    this.tradeDatePublished = new Date(1900, 1, 1);
     this.tradingFor = [];
+    this.traderFirstName = "";   
+    this.traderMiddleName = "";
+    this.traderLastName = ""
+    this.traderId = 0;
   }
 }
 
 class Image implements IImage {
   imageId: number;
+  imageTitle: string;
+  imageUrl: string;
   tradeId: number;
-  title: string;
-  url: string;
 
   constructor() {
     this.imageId = 0;
     this.tradeId = 0;
-    this.title = "";
-    this.url = "";
+    this.imageTitle = "";
+    this.imageUrl = "";
   }
 }
 
@@ -340,13 +345,16 @@ class UserIdentity implements IUserIdentity {
 }
 
 class ProcessMessage implements IProcessMessage {
-  id: string;
-  type: string;
-  text: string;
+  messageId: number;
+  messageCode: string;
+  messageType: string;
+  messageText: string;
+
   constructor() {
-    this.id = "";
-    this.type = "Undefined";
-    this.text = "Undefined";
+    this.messageId = 0;
+    this.messageCode = "Undefined";
+    this.messageType = "Undefined";
+    this.messageText = "Undefined";
   }
 }
 

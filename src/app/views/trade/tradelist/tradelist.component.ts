@@ -260,11 +260,12 @@ export class TradeListComponent implements OnInit {
   public page: number = 1;
 
  
-  public columns: Array<any> = [
-    { title: 'Title', name: 'title', sort: true, filtering: { filterString: '', placeholder: 'Filter by title' }},
-    { title: 'Category', name: 'categoryType', sort: true, filtering: { filterString: '', placeholder: 'Filter by category' }},
-    { title: 'Trader', name: 'traderName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader name.' }},
-    { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader date.' }} 
+  public columns: Array<any> =
+  [
+    { title: 'Title', name: 'tradeTitle', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade title' }},
+    { title: 'Category', name: 'tradeCategoryType', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade category' }},
+    { title: 'Trader', name: 'traderLastName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader last name.' }},
+    { title: 'Published', name: 'tradeDatePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' }} 
    ];
 
   public config: any = {
@@ -306,26 +307,26 @@ export class TradeListComponent implements OnInit {
     // reset the array of columns
     this.config.sorting.columns = [];
     switch (column) {
-      case 'title':
-        this.config.sorting.columns = [{ name: 'title', sort: this.sortTitle }];
+      case 'tradeTitle':
+        this.config.sorting.columns = [{ name: 'tradeTitle', sort: this.sortTitle }];
         this.onChangeTable(this.config);
         this.isTitleAsc = !this.isTitleAsc;
         this.sortTitle = this.isTitleAsc ? 'desc' : 'asc';
         break;
-      case 'categoryType':
-        this.config.sorting.columns = [{ name: 'categoryType', sort: this.sortCategory }];
+      case 'tradeCategoryType':
+        this.config.sorting.columns = [{ name: 'tradeCategoryType', sort: this.sortCategory }];
         this.onChangeTable(this.config);
         this.isCategoryAsc = !this.isCategoryAsc;
         this.sortCategory = this.isCategoryAsc ? 'desc' : 'asc';
         break;
-      case 'traderName':
-        this.config.sorting.columns = [{ name: 'traderName', sort: this.sortName }];
+      case 'traderLastName':
+        this.config.sorting.columns = [{ name: 'traderLastName', sort: this.sortName }];
         this.onChangeTable(this.config);
         this.isNameAsc = !this.isNameAsc;
         this.sortName = this.isNameAsc ? 'desc' : 'asc';
         break;
-      case 'satePublished':
-        this.config.sorting.columns = [{ name: 'datePublished', sort: this.sortDate }];
+      case 'tradeDatePublished':
+        this.config.sorting.columns = [{ name: 'tradeDatePublished', sort: this.sortDate }];
         this.onChangeTable(this.config);
         this.isPublishedAsc = !this.isPublishedAsc;
         this.sortDate = this.isPublishedAsc ? 'desc' : 'asc';

@@ -24,12 +24,12 @@ export class CarouselComponent implements OnInit {
   public leftRight: string = "#myCarousel";
 
   private isVisible: boolean = true;
-  private image1Url: string;
-  private image2Url: string;
-  private image3Url: string;
-  private image1Title: string;
-  private image2Title: string;
-  private image3Titlel: string;
+  //private image1Url: string;
+  //private image2Url: string;
+  //private image3Url: string;
+  //private image1Title: string;
+  //private image2Title: string;
+  //private image3Titlel: string;
 
   private haveImages: boolean = true;
 
@@ -59,7 +59,8 @@ export class CarouselComponent implements OnInit {
   public getImagesApi():void {
 
       try {     
-        this.imageService.getImagesApi().subscribe((images: Image[]) => { this.getImagesByTradeId(images, this.tradeId) });
+        this.imageService.getImagesApi()
+                 .subscribe((images: Image[]) => { this.getImagesByTradeId(images, this.tradeId) });
       }
       catch (err) {
         this.handleError("getImages method", err);
@@ -73,7 +74,7 @@ export class CarouselComponent implements OnInit {
       this.imageService.getImagesApiByTradeId(id).
             subscribe((images: Image[]) => {
               this.tradeImages = images;            
-              this.getCrouselIds(this.tradeId);
+              this.getCrouselIds(id);
            });
     }
     catch (err) {

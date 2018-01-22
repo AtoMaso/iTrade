@@ -28,8 +28,8 @@ export class ProcessMessagesComponent {
       if (message === null)
           { this.errorMessage = null; }
       else {                   
-           this.getControlStyle(message.type);
-           this.errorMessage = this.getThePrefix(message.type)  + message.text ;           
+           this.getControlStyle(message.messageType);
+           this.errorMessage = this.getThePrefix(message.messageType)  + message.messageText ;           
       }
     }
     catch (error) {

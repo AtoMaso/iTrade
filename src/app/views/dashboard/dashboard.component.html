@@ -4,18 +4,18 @@
           <div class="panel-heading" style="background-color:dimgray;">
               <strong>
                 <label class="smalltextbold textwhite restriction">
-                  {{ trade.title }}
+                  {{ trade.tradeTitle }}
                 </label>
               </strong>
           </div>
 
           <div class="panel-footer">
                 <div>
-                  <strong class="textgray">Category: </strong><span class="textgray">{{ trade.categoryType }}</span>
+                  <strong class="textgray">Category: </strong><span class="textgray">{{ trade.tradeCategoryType }}</span>
                 </div>
                 <div>
                   <strong class="textgray">Trader:</strong>
-                  <a href="" [routerLink]="['/traderinfo']" [queryParams]="{traderId: trade.traderId}" class="text-info smalltextbold restrictionname" style="text-decoration:underline">{{ trade.traderName }}</a>
+                  <a href="" [routerLink]="['/traderinfo']" [queryParams]="{traderId: trade.traderId}" class="text-info smalltextbold restrictionname" style="text-decoration:underline">{{ trade.traderFirstName }} &nbsp; {{ trade.traderLastName }}</a>
                 </div>
                 <div style="margin-top:15px;">
                   <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId"  (onErrorPicked)="ChangeIsRequesting($event)"></carousel>               
@@ -23,8 +23,8 @@
           </div>
 
           <div class="panel-footer">
-                <div> <strong class="textgray">Published: </strong><span class="textgray">{{ trade.datePublished  }}</span></div>
-                <div> <a [routerLink]="['/tradeinfo']" [queryParams]= "{tradeId: trade.tradeId}" class="text-info smalltextbold" style="text-decoration:underline">Go to trade...</a></div>                         
+                <div> <strong class="textgray">Published: </strong><span class="textgray">{{ trade.tradeDatePublished  | date }}</span></div>
+                <div> <a [routerLink]="['/tradeinfo']" [queryParams]= "{tradeId: trade.tradeId}" class="text-info smalltextbold" style="text-decoration:underline">Go to trade...</a></div>                          
         </div>
 </div>
  
