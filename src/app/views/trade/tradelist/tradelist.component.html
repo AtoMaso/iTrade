@@ -56,7 +56,7 @@
                           <tr>
                             <th class="col-md-3" style="vertical-align:middle;">
                               <span style="vertical-align:middle;margin-left:10px;">
-                                    <a (click)="sortTable('tradeTitle')" class="text-info btn btn-info text-uppercase buttonclass textwhite smalltextbold" style="width:auto">Title
+                                    <a (click)="sortTable('tradeTitle')" class="text-info btn btn-info text-uppercase buttonclass textwhite smalltextbold" style="width:auto">Trading
                                       <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
                                       <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
                                     </a>
@@ -96,7 +96,7 @@
 
                           <td class="col-md-3" style="vertical-align:middle" >            
                               <a  [routerLink]="['/tradeinfo']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltextbold text-success">
-                                <span>{{ trade.tradeTitle  }}</span>
+                                <span>{{ trade.tradeObjectName  }}</span>
                               </a>
                           </td>
 
@@ -104,7 +104,7 @@
 
                           <td class="col-md-2" style="vertical-align:middle">
                             <a [routerLink]="['/traderinfo']" [queryParams]="{id: trade.traderId}" class="smalltextbold text-success">
-                              <span>{{ trade.traderFirstName }} &nbsp; {{ trade.traderLastName }}</span>
+                              <span>{{ trade.traderFirstName }} {{ trade.traderLastName }}</span>
                             </a>
                           </td>
 

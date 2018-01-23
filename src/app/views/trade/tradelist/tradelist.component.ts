@@ -262,7 +262,7 @@ export class TradeListComponent implements OnInit {
  
   public columns: Array<any> =
   [
-    { title: 'Title', name: 'tradeTitle', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade title' }},
+    { title: 'Title', name: 'tradeObjectName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade name' }},
     { title: 'Category', name: 'tradeCategoryType', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade category' }},
     { title: 'Trader', name: 'traderLastName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader last name.' }},
     { title: 'Published', name: 'tradeDatePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' }} 
@@ -307,8 +307,8 @@ export class TradeListComponent implements OnInit {
     // reset the array of columns
     this.config.sorting.columns = [];
     switch (column) {
-      case 'tradeTitle':
-        this.config.sorting.columns = [{ name: 'tradeTitle', sort: this.sortTitle }];
+      case 'tradeObjectName':
+        this.config.sorting.columns = [{ name: 'tradeObjectName', sort: this.sortTitle }];
         this.onChangeTable(this.config);
         this.isTitleAsc = !this.isTitleAsc;
         this.sortTitle = this.isTitleAsc ? 'desc' : 'asc';

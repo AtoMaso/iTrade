@@ -113,10 +113,12 @@ interface ISecurityQuestions {
 
 
 interface ITrade {
-  tradeId: number; 
-  tradeTitle: string; 
+  tradeId: number;  
   tradingFor: string[];
   tradeDatePublished: Date;
+  tradeObjectId: number;
+  tradeObjectName: string;
+  tradeCategoryId: number;
   tradeCategoryType: string;
   traderId: number;
   traderFirstName: string;

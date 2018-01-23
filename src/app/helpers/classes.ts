@@ -243,10 +243,12 @@ class SecurityQuestion implements ISecurityQuestions {
 
 class Trade implements ITrade {
 
-  tradeId: number;
-  tradeTitle: string;
+  tradeId: number; 
   tradingFor: string[];
   tradeDatePublished: Date;
+  tradeObjectId: number;
+  tradeObjectName: string;
+  tradeCategoryId: number;
   tradeCategoryType: string;
   traderId: number;
   traderFirstName: string;
@@ -256,10 +258,12 @@ class Trade implements ITrade {
 
   constructor() {    
     this.tradeId = 0;
-    this.tradeTitle = "";
-    this.tradeCategoryType = "";
-    this.tradeDatePublished = new Date(1900, 1, 1);
     this.tradingFor = [];
+    this.tradeDatePublished = new Date(1900, 1, 1); 
+    this.tradeObjectId = 0;
+    this.tradeObjectName = "";
+    this.tradeCategoryId = 0;
+    this.tradeCategoryType = "";
     this.traderFirstName = "";   
     this.traderMiddleName = "";
     this.traderLastName = ""

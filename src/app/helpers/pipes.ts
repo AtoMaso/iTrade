@@ -13,15 +13,15 @@ class SortTradesByTitlePipe implements PipeTransform {
         if (args !== null) {
             if (args[0] === 'A') {
                 return value.sort((a: Trade, b: Trade) => {
-                  if (a.tradeTitle < b.tradeTitle) { return -1; }
-                  if (a.tradeTitle > b.tradeTitle) { return 1; }
+                  if (a.tradeObjectName < b.tradeObjectName) { return -1; }
+                  if (a.tradeObjectName > b.tradeObjectName) { return 1; }
                     return 0;
                 });
             }
             else {
               return value.sort((a: Trade, b: Trade) => {
-                if (a.tradeTitle > b.tradeTitle) { return -1; }
-                if (a.tradeTitle < b.tradeTitle) { return 1; }
+                if (a.tradeObjectName > b.tradeObjectName) { return -1; }
+                if (a.tradeObjectName < b.tradeObjectName) { return 1; }
                     return 0;
                 });
             }
