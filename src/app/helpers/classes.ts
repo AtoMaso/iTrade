@@ -6,7 +6,7 @@
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   ITrade,
-  IImage, ICategory,
+  IImage, IObjectCategory, ITradeObject, ITradeForObject,
   IUserSession, IAuthentication, IUserIdentity,
   IProcessMessage, IPageTitle, IAttachement } from './interfaces';
 
@@ -244,30 +244,37 @@ class SecurityQuestion implements ISecurityQuestions {
 class Trade implements ITrade {
 
   tradeId: number; 
-  tradingFor: string[];
   tradeDatePublished: Date;
-  tradeObjectId: number;
-  tradeObjectName: string;
-  tradeCategoryId: number;
-  tradeCategoryType: string;
+
   traderId: number;
   traderFirstName: string;
   traderMiddleName: string;
   traderLastName: string;
 
+  tradeObjects: TradeObject[];
+  tradeForObjects: TradeForObject[];
+  images: Image[];
+
+  tradeObjectDescription: string;
+  tradeObjectCategoryDescription: string;
+  tradeForObjectsDescription: string[];
 
   constructor() {    
-    this.tradeId = 0;
-    this.tradingFor = [];
+    this.tradeId = 0;  
     this.tradeDatePublished = new Date(1900, 1, 1); 
-    this.tradeObjectId = 0;
-    this.tradeObjectName = "";
-    this.tradeCategoryId = 0;
-    this.tradeCategoryType = "";
+   
     this.traderFirstName = "";   
     this.traderMiddleName = "";
     this.traderLastName = ""
-    this.traderId = 0;
+
+    this.tradeObjects = [];
+    this.tradeForObjects = [];
+    this.images = [];
+
+
+    this.tradeObjectDescription = ""; //this.tradeObjects[0].tradeObjectDescription;
+    this.tradeObjectCategoryDescription = ""; // this.tradeObjects[0].tradeObjectCategoryDescription;
+    this.tradeForObjectsDescription = [];
   }
 }
 
@@ -285,13 +292,49 @@ class Image implements IImage {
   }
 }
 
-class Category implements ICategory {
-  categoryId: number;
-  categoryType: string;
+
+class TradeObject implements ITradeObject {
+
+  tradeObjectId: number;
+  tradeObjectDescription: string;
+  objectCategoryId: number;
+  tradeObjectCategoryDescription: string;
+  tradeId: number;
 
   constructor() {
-    this.categoryId = 0;
-    this.categoryType = "";
+    this.tradeObjectId = 0;
+    this.tradeObjectDescription = "";
+    this.objectCategoryId = 0;
+    this.tradeObjectCategoryDescription = "";
+  } 
+}
+
+
+class TradeForObject implements ITradeForObject {
+
+  tradeForObjectId: number;
+  tradeForObjectDescription: string;
+  objectCategoryId: number;
+  tradeForObjectCategoryDescription: string;
+  tradeId: number;
+
+  constructor() {
+    this.tradeForObjectId = 0;
+    this.tradeForObjectDescription = "";
+    this.objectCategoryId = 0;
+    this.tradeForObjectCategoryDescription = "";
+  }
+
+}
+
+
+class ObjectCategory {
+  objectCategoryId: number;
+  objectCategoryDescription: string;
+
+  constructor() {
+    this.objectCategoryId = 0;
+    this.objectCategoryDescription = "";
   }
 }
 
@@ -403,7 +446,7 @@ export {
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType,
   SecurityAnswer, SecurityQuestion,
-  Trade, Image, Category,
+  Trade, Image, ObjectCategory,
   UserSession, Authentication, UserIdentity,
   ProcessMessage, PageTitle, Attachement
 };

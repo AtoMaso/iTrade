@@ -13,15 +13,15 @@ class SortTradesByTitlePipe implements PipeTransform {
         if (args !== null) {
             if (args[0] === 'A') {
                 return value.sort((a: Trade, b: Trade) => {
-                  if (a.tradeObjectName < b.tradeObjectName) { return -1; }
-                  if (a.tradeObjectName > b.tradeObjectName) { return 1; }
+                  if (a.tradeObjects[0].tradeObjectDescription < b.tradeObjects[0].tradeObjectDescription) { return -1; }
+                  if (a.tradeObjects[0].tradeObjectDescription > b.tradeObjects[0].tradeObjectDescription) { return 1; }
                     return 0;
                 });
             }
             else {
               return value.sort((a: Trade, b: Trade) => {
-                if (a.tradeObjectName > b.tradeObjectName) { return -1; }
-                if (a.tradeObjectName < b.tradeObjectName) { return 1; }
+                if (a.tradeObjects[0].tradeObjectDescription > b.tradeObjects[0].tradeObjectDescription) { return -1; }
+                if (a.tradeObjects[0].tradeObjectDescription < b.tradeObjects[0].tradeObjectDescription) { return 1; }
                     return 0;
                 });
             }
@@ -42,16 +42,16 @@ class SortTradesByCategoryPipe implements PipeTransform {
             if (args === 'A') {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.tradeCategoryType < b.tradeCategoryType) { return -1; }
-                if (a.tradeCategoryType > b.tradeCategoryType) { return 1; }
+                if (a.tradeObjects[0].tradeObjectCategoryDescription < b.tradeObjects[0].tradeObjectCategoryDescription) { return -1; }
+                if (a.tradeObjects[0].tradeObjectCategoryDescription > b.tradeObjects[0].tradeObjectCategoryDescription) { return 1; }
                     return 0;
                 });
             }
             else {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.tradeCategoryType > b.tradeCategoryType) { return -1; }
-                if (a.tradeCategoryType < b.tradeCategoryType) { return 1; }
+                if (a.tradeObjects[0].tradeObjectCategoryDescription > b.tradeObjects[0].tradeObjectCategoryDescription) { return -1; }
+                if (a.tradeObjects[0].tradeObjectCategoryDescription < b.tradeObjects[0].tradeObjectCategoryDescription) { return 1; }
                     return 0;
                 });
             }

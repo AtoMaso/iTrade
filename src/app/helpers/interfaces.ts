@@ -114,16 +114,16 @@ interface ISecurityQuestions {
 
 interface ITrade {
   tradeId: number;  
-  tradingFor: string[];
   tradeDatePublished: Date;
-  tradeObjectId: number;
-  tradeObjectName: string;
-  tradeCategoryId: number;
-  tradeCategoryType: string;
+
   traderId: number;
   traderFirstName: string;
   traderMiddleName: string;
   traderLastName: string;
+
+  tradeObjects: ITradeObject[];
+  tradeForObjects: ITradeForObject[];
+  images: IImage[];
 }
 
 
@@ -135,9 +135,27 @@ interface IImage {
 }
 
 
-interface ICategory {
-  categoryId: number;
-  categoryType: string;
+interface ITradeObject {
+  tradeObjectId: number;
+  tradeObjectDescription: string;
+  objectCategoryId: number;
+  tradeObjectCategoryDescription: string;
+  tradeId: number;
+}
+
+
+interface ITradeForObject {
+  tradeForObjectId: number;
+  tradeForObjectDescription: string;
+  objectCategoryId: number;
+  tradeForObjectCategoryDescription: string;
+  tradeId: number;
+}
+
+
+interface IObjectCategory {
+  objectCategoryId: number;
+  objectCategoryDescription: string;
 }
 
 
@@ -196,6 +214,6 @@ export {
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   ITrade,
-  IImage, ICategory,
+  IImage, IObjectCategory, ITradeObject, ITradeForObject,
   IUserSession, IAuthentication, IUserIdentity, 
   IProcessMessage, IPageTitle, IAttachement };

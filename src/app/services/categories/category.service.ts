@@ -10,7 +10,7 @@ import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry'; 
 
 import { LoggerService } from '../logger/logger.service';
-import { Category, UserSession} from '../../helpers/classes';
+import { ObjectCategory, UserSession} from '../../helpers/classes';
 
 let categoriesUrl = CONFIG.baseUrls.categories;
 let categoryUrl = CONFIG.baseUrls.category;
@@ -37,9 +37,9 @@ export class CategoryService {
     //******************************************************
     // GET CATEGORIES
     //******************************************************  
-    public getCategoriesApi(): Observable<Category[]> {
+    public getCategoriesApi(): Observable<ObjectCategory[]> {
 
-      return this.httpClientService.get<Category[]>(categoriesUrl)
+      return this.httpClientService.get<ObjectCategory[]>(categoriesUrl)
       .retry(3)
       .catch((err: HttpErrorResponse, result) => {
 

@@ -56,7 +56,7 @@
                           <tr>
                             <th class="col-md-3" style="vertical-align:middle;">
                               <span style="vertical-align:middle;margin-left:10px;">
-                                    <a (click)="sortTable('tradeTitle')" class="text-info btn btn-info text-uppercase buttonclass textwhite smalltextbold" style="width:auto">Trading
+                                    <a (click)="sortTable('tradeObjectDescription')" class="text-info btn btn-info text-uppercase buttonclass textwhite smalltextbold" style="width:auto">Trading
                                       <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
                                       <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
                                     </a>
@@ -64,7 +64,7 @@
                             </th>
                             <th class="col-md-2" style="vertical-align:middle">
                               <span style="vertical-align:middle">
-                                        <a (click)="sortTable('tradeCategoryType')" class="text-info btn btn-info text-uppercase buttonclass textwhite smalltextbold" style="width:auto">Category
+                                        <a (click)="sortTable('tradeObjectCategoryDescription')" class="text-info btn btn-info text-uppercase buttonclass textwhite smalltextbold" style="width:auto">Category
                                             <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
                                             <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
                                       </a>
@@ -96,11 +96,11 @@
 
                           <td class="col-md-3" style="vertical-align:middle" >            
                               <a  [routerLink]="['/tradeinfo']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltextbold text-success">
-                                <span>{{ trade.tradeObjectName  }}</span>
+                                <span>{{ trade.tradeObjects[0].tradeObjectDescription  }}</span>
                               </a>
                           </td>
 
-                          <td class="col-md-2 smalltextbold textgray" style="vertical-align:middle">{{ trade.tradeCategoryType  }}</td>
+                          <td class="col-md-2 smalltextbold textgray" style="vertical-align:middle">{{ trade.tradeObjects[0].tradeObjectCategoryDescription  }}</td>
 
                           <td class="col-md-2" style="vertical-align:middle">
                             <a [routerLink]="['/traderinfo']" [queryParams]="{id: trade.traderId}" class="smalltextbold text-success">

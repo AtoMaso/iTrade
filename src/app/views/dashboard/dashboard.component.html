@@ -4,14 +4,14 @@
           <div class="panel-heading" style="background-color:dimgray;">
               <strong>
                 <label class="smalltextbold textwhite restriction">
-                  Trading a<span style="color:coral"> {{ trade.tradeObjectName }}</span>
+                  Trading a<span style="color:coral"> {{ trade.tradeObjects[0].tradeObjectDescription }}</span>
                 </label>
               </strong>
           </div>
 
           <div class="panel-footer">
                 <div>
-                  <strong class="textgray">Category: </strong><span class="textgray">{{ trade.tradeCategoryType }}</span>
+                  <strong class="textgray">Category: </strong><span class="textgray">{{ trade.tradeObjects[0].tradeObjectCategoryDescription }}</span>
                 </div>
                 <div>
                   <strong class="textgray">Trader:</strong>
