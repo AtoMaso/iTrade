@@ -116,7 +116,7 @@ interface ITrade {
   tradeId: number;  
   tradeDatePublished: Date;
 
-  traderId: number;
+  traderId: string;
   traderFirstName: string;
   traderMiddleName: string;
   traderLastName: string;

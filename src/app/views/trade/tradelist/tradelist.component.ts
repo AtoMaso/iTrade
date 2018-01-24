@@ -38,7 +38,6 @@ export class TradeListComponent implements OnInit {
   private isAllowedToAddTrade: boolean = false;
   private isAllowedToRemoveTrade: boolean = false;
   private isOwner: boolean = false;
-  private transformedData: Trade[] = [];
 
   // constructor which injects the services
   constructor(
@@ -103,7 +102,7 @@ export class TradeListComponent implements OnInit {
 
 
   private passToModal(trade: Trade) {
-    if (trade.traderId === +this.session.userIdentity.userId) {
+    if (trade.traderId === this.session.userIdentity.userId) {
       this.isOwner = true;
       this.tradeIdToBeRemoved = trade.tradeId;
     }
@@ -144,7 +143,7 @@ export class TradeListComponent implements OnInit {
     this.tradeApiService.getTradesApi(id)
       .subscribe((returnedTrades: any) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-            this.data = this.DataTransform(returnedTrades),
+            this.data = this.TransformData(returnedTrades),
             this.isRequesting = false,
             this.onChangeTable(this.config)
       }, (res: Response) => this.onError(res, "getTrades"));
@@ -152,22 +151,32 @@ export class TradeListComponent implements OnInit {
 
 
 
-  public DataTransform(returnedTrades: Trade[]): Array<any> {
+  public TransformData(returnedTrades: Trade[]): Array<any> {
+
+    let transformedData = new Array<Trade>();
 
     returnedTrades.forEach(function (value) {
 
-      let trd = new Trade[];
-      trd.tradeId = value.tradeId
+      let trd = new Trade;
+      trd.tradeId = value.tradeId;
+      trd.tradeDatePublished = value.tradeDatePublished;
+
+      trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;
       trd.traderLastName = value.traderLastName;
-      trd.tradeDatePublished = value.tradeDatePublished;
+   
       trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
       trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription; 
 
-      this.transformedData.Add(trd);
+        value.tradeForObjects.forEach(function (value) {
+          trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
+      });
+
+      transformedData.push(trd);
+
     });   
 
-    return this.transformedData;
+    return transformedData;
   }
 
 
@@ -266,13 +275,17 @@ export class TradeListComponent implements OnInit {
   //ngx-pagination methods
   /***********************************************/
   private isTitleAsc = true;
+  private isTitleForAsc = true;
   private isCategoryAsc = true;
   private isNameAsc = true;
   private isPublishedAsc = true;
+
   private sortTitle: string = 'desc';
+  private sortTitleFor: string = 'desc';
   private sortCategory: string = 'desc';
   private sortName: string = 'desc';
   private sortDate: string = 'desc';
+
   private data: Array<any> = [];     // full data from the server
   public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
@@ -283,10 +296,11 @@ export class TradeListComponent implements OnInit {
  
   public columns: Array<any> =
   [
-    { title: 'Trading', name: 'tradeObjectDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade name' }},
-    { title: 'Category', name: 'tradeObjectCategoryDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade category' }},
-    { title: 'Trader', name: 'traderLastName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader last name.' }},
-    { title: 'Published', name: 'tradeDatePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' }} 
+    { title: 'Trading',    name: 'tradeObjectDescription',              sort: true,   filtering: { filterString: '', placeholder: 'Filter by trade object description' } },
+    { title: 'For', name: 'tradeForObjectsDescription',                sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade for object description' } },
+    { title: 'Category',  name: 'tradeObjectCategoryDescription', sort: true,  filtering: { filterString: '', placeholder:  'Filter by trade category' }},
+    { title: 'Trader',      name: 'traderLastName',                       sort: true,   filtering: { filterString: '', placeholder:  'Filter by trader last name.' }},
+    { title: 'Published', name: 'tradeDatePublished',                   sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade date.' }} 
    ];
 
   public config: any = {
@@ -307,19 +321,19 @@ export class TradeListComponent implements OnInit {
  
 
   private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
-    if (config.filtering) {
-      Object.apply(this.config.filtering, config.filtering);
-    }
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
+        if (config.filtering) {
+          Object.apply(this.config.filtering, config.filtering);
+        }
+        if (config.sorting) {
+          (<any>Object).assign(this.config.sorting, config.sorting);
+        }
 
-    let removedData = this.changeRemove(this.data, this.config);
-    let filteredData = this.changeFilter(removedData, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = sortedData; 
-    this.length = sortedData.length; 
-    this.config.totalItems = this.length;
+        let removedData = this.changeRemove(this.data, this.config);
+        let filteredData = this.changeFilter(removedData, this.config);
+        let sortedData = this.changeSort(filteredData, this.config);
+        this.rows = sortedData; 
+        this.length = sortedData.length; 
+        this.config.totalItems = this.length;
   }
 
 
@@ -328,31 +342,41 @@ export class TradeListComponent implements OnInit {
     // reset the array of columns
     this.config.sorting.columns = [];
     switch (column) {
-      case 'tradeObjectDescription':
-        this.config.sorting.columns = [{ name: 'tradeObjectDescription', sort: this.sortTitle }];
-        this.onChangeTable(this.config);
-        this.isTitleAsc = !this.isTitleAsc;
-        this.sortTitle = this.isTitleAsc ? 'desc' : 'asc';
+        case 'tradeObjectDescription':
+          this.config.sorting.columns = [{ name: 'tradeObjectDescription', sort: this.sortTitle }];
+          this.onChangeTable(this.config);
+          this.isTitleAsc = !this.isTitleAsc;
+          this.sortTitle = this.isTitleAsc ? 'desc' : 'asc';
         break;
-      case 'tradeObjectCategoryDescription':
-        this.config.sorting.columns = [{ name: 'tradeObjectCategoryDescription', sort: this.sortCategory }];
-        this.onChangeTable(this.config);
-        this.isCategoryAsc = !this.isCategoryAsc;
-        this.sortCategory = this.isCategoryAsc ? 'desc' : 'asc';
+
+        case 'tradeForObjectsDescription':
+          this.config.sorting.columns = [{ name: 'tradeForObjectsDescription', sort: this.sortTitleFor }];
+          this.onChangeTable(this.config);
+          this.isTitleForAsc = !this.isTitleForAsc;
+          this.sortTitleFor = this.isTitleForAsc ? 'desc' : 'asc';
         break;
-      case 'traderLastName':
-        this.config.sorting.columns = [{ name: 'traderLastName', sort: this.sortName }];
-        this.onChangeTable(this.config);
-        this.isNameAsc = !this.isNameAsc;
-        this.sortName = this.isNameAsc ? 'desc' : 'asc';
+
+        case 'tradeObjectCategoryDescription':
+          this.config.sorting.columns = [{ name: 'tradeObjectCategoryDescription', sort: this.sortCategory }];
+          this.onChangeTable(this.config);
+          this.isCategoryAsc = !this.isCategoryAsc;
+          this.sortCategory = this.isCategoryAsc ? 'desc' : 'asc';
         break;
-      case 'tradeDatePublished':
-        this.config.sorting.columns = [{ name: 'tradeDatePublished', sort: this.sortDate }];
-        this.onChangeTable(this.config);
-        this.isPublishedAsc = !this.isPublishedAsc;
-        this.sortDate = this.isPublishedAsc ? 'desc' : 'asc';
+
+        case 'traderLastName':
+          this.config.sorting.columns = [{ name: 'traderLastName', sort: this.sortName }];
+          this.onChangeTable(this.config);
+          this.isNameAsc = !this.isNameAsc;
+          this.sortName = this.isNameAsc ? 'desc' : 'asc';
         break;
-      default:
+
+        case 'tradeDatePublished':
+          this.config.sorting.columns = [{ name: 'tradeDatePublished', sort: this.sortDate }];
+          this.onChangeTable(this.config);
+          this.isPublishedAsc = !this.isPublishedAsc;
+          this.sortDate = this.isPublishedAsc ? 'desc' : 'asc';
+          break;
+        default:
     }
   }
 

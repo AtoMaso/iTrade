@@ -246,7 +246,7 @@ class Trade implements ITrade {
   tradeId: number; 
   tradeDatePublished: Date;
 
-  traderId: number;
+  traderId: string;
   traderFirstName: string;
   traderMiddleName: string;
   traderLastName: string;
@@ -257,12 +257,13 @@ class Trade implements ITrade {
 
   tradeObjectDescription: string;
   tradeObjectCategoryDescription: string;
-  tradeForObjectsDescription: string[];
+  tradeForObjectsDescription: string;
 
   constructor() {    
     this.tradeId = 0;  
     this.tradeDatePublished = new Date(1900, 1, 1); 
-   
+
+    this.traderId = "";
     this.traderFirstName = "";   
     this.traderMiddleName = "";
     this.traderLastName = ""
@@ -272,9 +273,9 @@ class Trade implements ITrade {
     this.images = [];
 
 
-    this.tradeObjectDescription = ""; //this.tradeObjects[0].tradeObjectDescription;
-    this.tradeObjectCategoryDescription = ""; // this.tradeObjects[0].tradeObjectCategoryDescription;
-    this.tradeForObjectsDescription = [];
+    this.tradeObjectDescription = ""; 
+    this.tradeObjectCategoryDescription = "";
+    this.tradeForObjectsDescription = "";
   }
 }
 
