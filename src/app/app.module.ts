@@ -48,14 +48,30 @@ import { TraderListComponent } from './views/trader/traderlist/traderlist.compon
 import { TraderInfoComponent } from './views/trader/traderinfo/traderinfo.component';
 import { TraderAccountComponent } from './views/trader/traderaccount/traderaccount.component';
 
-//import { PersonaldetailsComponent } from './views/trader/personaldetails/personaldetails.component';
-//import { SecuritydetailsComponent } from './views/trader/securitydetails/securitydetails.component';
+import { PersonaldetailsComponent } from './views/trader/personaldetails/personaldetails.component';
+import { SecuritydetailsComponent } from './views/trader/securitydetails/securitydetails.component';
+import { ContactdetailsComponent } from './views/trader/contactdetails/contactdetails.component';
 //import { TraderaccountComponent } from './views/trader/traderaccount/traderaccount.component';
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
 import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
 import { AddTradeComponent } from './views/trade/addtrade/addtrade.component';
+import { AddtraderComponent } from './views/trader/addtrader/addtrader.component';
+
+import { AddobjectcategoryComponent } from './views/objectcategory/addobjectcategory/addobjectcategory.component';
+import { ObjectcategorylistComponent } from './views/objectcategory/objectcategorylist/objectcategorylist.component';
+import { AddphonetypeComponent } from './views/phone/addphonetype/addphonetype.component';
+import { PhonetypelistComponent } from './views/phone/phonetypelist/phonetypelist.component';
+import { AddresstypelistComponent } from './views/address/addresstypelist/addresstypelist.component';
+import { AddaddresstypeComponent } from './views/address/addaddresstype/addaddresstype.component';
+import { AddsocialnetworktypeComponent } from './views/socialnetwork/addsocialnetworktype/addsocialnetworktype.component';
+import { SocialnetworktypelistComponent } from './views/socialnetwork/socialnetworktypelist/socialnetworktypelist.component';
+import { AddsecurityquestionComponent } from './views/securityquestion/addsecurityquestion/addsecurityquestion.component';
+import { SecurityquestionlistComponent } from './views/securityquestion/securityquestionlist/securityquestionlist.component';
+import { AddprocessmessageComponent } from './views/processmessage/addprocessmessage/addprocessmessage.component';
+import { ProcessmessagelistComponent } from './views/processmessage/processmessagelist/processmessagelist.component';
+
 
 
 //initialises the process message service to get all process messages on start of the application
@@ -87,9 +103,23 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     TraderListComponent,
     TraderInfoComponent,
     TraderAccountComponent,
-    AddTradeComponent
-    //PersonaldetailsComponent,
-    //SecuritydetailsComponent,
+    AddTradeComponent,
+    AddtraderComponent,
+    AddobjectcategoryComponent,
+    AddphonetypeComponent,  
+    PhonetypelistComponent,
+    ObjectcategorylistComponent,
+    AddresstypelistComponent,
+    AddaddresstypeComponent,
+    PersonaldetailsComponent,
+    SecuritydetailsComponent,
+    ContactdetailsComponent,
+    AddsocialnetworktypeComponent,
+    SocialnetworktypelistComponent,
+    AddsecurityquestionComponent,
+    SecurityquestionlistComponent,
+    AddprocessmessageComponent,
+    ProcessmessagelistComponent
     //TraderaccountComponent
     //NG2FileUploadComponent
   ],  

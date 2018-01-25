@@ -250,6 +250,7 @@ class Trade implements ITrade {
   traderFirstName: string;
   traderMiddleName: string;
   traderLastName: string;
+  traderFullName: string;
 
   tradeObjects: TradeObject[];
   tradeForObjects: TradeForObject[];

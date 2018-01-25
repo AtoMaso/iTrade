@@ -160,11 +160,11 @@ export class TradeListComponent implements OnInit {
       let trd = new Trade;
       trd.tradeId = value.tradeId;
       trd.tradeDatePublished = value.tradeDatePublished;
-
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;
-      trd.traderLastName = value.traderLastName;
-   
+      trd.traderMiddleName = value.traderMiddleName;
+      trd.traderLastName = value.traderLastName;     
+      trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;       
       trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
       trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription; 
 
@@ -297,15 +297,15 @@ export class TradeListComponent implements OnInit {
   public columns: Array<any> =
   [
     { title: 'Trading',    name: 'tradeObjectDescription',              sort: true,   filtering: { filterString: '', placeholder: 'Filter by trade object description' } },
-    { title: 'For', name: 'tradeForObjectsDescription',                sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade for object description' } },
+    { title: 'For', name: 'tradeForObjectsDescription',                 sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade for object description' } },
     { title: 'Category',  name: 'tradeObjectCategoryDescription', sort: true,  filtering: { filterString: '', placeholder:  'Filter by trade category' }},
-    { title: 'Trader',      name: 'traderLastName',                       sort: true,   filtering: { filterString: '', placeholder:  'Filter by trader last name.' }},
+    { title: 'Trader', name: 'traderFullName',                             sort: true,   filtering: { filterString: '', placeholder:  'Filter by trader full name.' }},
     { title: 'Published', name: 'tradeDatePublished',                   sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade date.' }} 
    ];
 
   public config: any = {
     id: 'pagination',
-    itemsPerPage: 5,
+    itemsPerPage: 10,
     currentPage: 1,
     totalItems: this.length,
     paging: true,
@@ -363,8 +363,8 @@ export class TradeListComponent implements OnInit {
           this.sortCategory = this.isCategoryAsc ? 'desc' : 'asc';
         break;
 
-        case 'traderLastName':
-          this.config.sorting.columns = [{ name: 'traderLastName', sort: this.sortName }];
+        case 'traderFullName':
+          this.config.sorting.columns = [{ name: 'traderFullName', sort: this.sortName }];
           this.onChangeTable(this.config);
           this.isNameAsc = !this.isNameAsc;
           this.sortName = this.isNameAsc ? 'desc' : 'asc';
