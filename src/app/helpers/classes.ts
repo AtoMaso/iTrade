@@ -5,6 +5,7 @@
   IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
+  IEmail, IEmailType,
   ITrade,
   IImage, IObjectCategory, ITradeObject, ITradeForObject,
   IUserSession, IAuthentication, IUserIdentity,
@@ -234,6 +235,35 @@ class SecurityQuestion implements ISecurityQuestions {
     this.questionText = "";
   }
 
+}
+
+
+class Email implements IEmail {
+  emailId: number;
+  emailTypeid: number;
+  emailType: string;
+  emailAccount: string;
+  contactDetailsId: number;
+
+  constructor() {
+    this.emailId = 0;
+    this.emailType = "";
+    this.emailAccount = "";
+    this.emailTypeid = 0;
+    this.contactDetailsId = 0;
+  }
+}
+
+
+
+class EmailType implements IEmailType {
+  emailTypeId: number;
+  emailTypeDescription: string;
+
+  constructor() {
+    this.emailTypeId = 0;
+    this.emailTypeDescription = "";
+  }
 }
 
 

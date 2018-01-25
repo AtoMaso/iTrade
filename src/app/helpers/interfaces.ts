@@ -109,7 +109,18 @@ interface ISecurityQuestions {
 }
 
 
+interface IEmail {
+  emailId: number;
+  emailTypeid: number;
+  emailType: string;
+  emailAccount: string;
+  contactDetailsId: number;
+}
 
+interface IEmailType {
+  emailTypeId: number;
+  emailTypeDescription: string;
+}
 
 
 interface ITrade {
@@ -213,7 +224,7 @@ export {
   IAddress, IAddressType, IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
-  ITrade,
-  IImage, IObjectCategory, ITradeObject, ITradeForObject,
+  IEmail, IEmailType,
+  ITrade,IImage, IObjectCategory, ITradeObject, ITradeForObject,
   IUserSession, IAuthentication, IUserIdentity, 
   IProcessMessage, IPageTitle, IAttachement };
