@@ -23,7 +23,7 @@ import { PageTitle, Trade } from '../../helpers/classes';
 export class DashboardComponent implements OnInit {
 
   private trades: Trade[]  = [];
-  public isGettingData: boolean;
+  public isRequesting: boolean;
 
   constructor(private tradeapiService: TradeApiService,
                     private titleService: PageTitleService,
@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     this.titleService.emitPageTitle(new PageTitle("Latest trades"));   
     this.messagesService.emitRoute("nill");
 
-    this.isGettingData = true;      
+    this.isRequesting = true;      
     this.getTradesApi()
   }
 
@@ -44,48 +44,30 @@ export class DashboardComponent implements OnInit {
   //  GET THE TOP TRADES
   //*****************************************************
   public getTradesApi(): void {
-
-    try {
-
+      // call the service to get the data  
       this.tradeapiService.getTradesApi().subscribe(
         (response: Trade[]) => {
           this.trades = response;
-          this.isGettingData = false;
-        });
-       
-    }
-    catch (err) {
-      this.handleError("getTradesApi method", err);
-    }
+          this.isRequesting = false;
+        },
+        (res: Response) => this.onError(res, "getTradesApi method"));          
   } 
 
 
 
-  //*****************************************************
-  // PRIVATE METHODS
-  //*****************************************************
-  //@param operation - name of the operation that failed
-  //@param result - optional value to return as the observable result
-  private handleError(operation, err: HttpErrorResponse) {
+  // an error has occured
+  private onError(err: any, operation: string) {
+    // stop the spinner
+    this.isRequesting = false;
 
-    // write a message to the console
-    console.error(`Backend returned code in getImages component method calling the image service!`);
-    
-    // audit log the error on the server side
+    // logg the audit log error
     this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
-   
-    this.isGettingData = false; 
 
-    // images can not be retrieved, so friendly message to be displayed
+    // show the process message
     this.messagesService.emitProcessMessage("PMGTs");
   }
 
-
   // an event from the child carousel component saying that encountered an error
-  private ChangeIsRequesting(bool) {
-    
-    this.isGettingData = false;
-
-  }
+  private ChangeIsRequesting(bool) { this.isRequesting = false;}
 
 }

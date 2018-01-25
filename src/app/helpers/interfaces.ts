@@ -201,9 +201,17 @@ interface IUserIdentity {
 interface IProcessMessage {
   messageId: number;
   messageCode: string;
-  messageType: string;
+  messageTypeDescription: string;
   messageText: string;
+  messageTypeId: number;
 }
+
+interface IProcessMessageType {
+  messageTypeId: number; 
+  messageTypeDescription: string;
+
+}
+
 
  interface IPageTitle {
   title: string;
@@ -227,4 +235,4 @@ export {
   IEmail, IEmailType,
   ITrade,IImage, IObjectCategory, ITradeObject, ITradeForObject,
   IUserSession, IAuthentication, IUserIdentity, 
-  IProcessMessage, IPageTitle, IAttachement };
+  IProcessMessage, IProcessMessageType, IPageTitle, IAttachement };

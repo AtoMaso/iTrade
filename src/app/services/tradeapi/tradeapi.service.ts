@@ -1,4 +1,4 @@
-﻿import { Inject, Injectable } from '@angular/core';
+﻿import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CONFIG } from '../../config';
 import { Observable} from 'rxjs/Observable';
@@ -55,19 +55,17 @@ export class TradeApiService {
                 // A client-side or network error occurred. Handle it accordingly.
                 console.error('Backend returned code in getTadeApiService method:', err.message);
 
-                this.handleError("getTradesApi method in the tradeapi service error", err);
+                this.handleError("getTradesApi method in the tradeapi service error", err);               
 
                } else {
                // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
                 console.error(`Backend returned code in getTadesApi service method. Status code was ${err.status}, body was: ${err.message} , the ${err.url }, was ${ err.statusText }`);
 
                  this.handleError("getTradesApi method in the tradeapi service error", err);
-
+                
               }    
-              // return Observable.of<any>;
-              // or simply an empty observable
-              return Observable.throw(err);
-
+              return Observable.of<any>;
+              // or simply an empty observable              
       });
   }
 
@@ -90,18 +88,15 @@ export class TradeApiService {
             console.error('Backend returned code in getPagesOfYTrades method:', err.message);
 
             this.handleError("getPagesOfTrades method in the tradeapi service error", err);
-
+            
           } else {
             // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
             console.error(`Backend returned code in getPagesOfTrades service method. Status code was ${err.status}, body was: ${err.error.message} , the ${err.url}, was ${err.statusText}`);
 
             this.handleError("getPagesOfTrades method in the tradeapi service error", err);
-
+           
           }
-          // return Observable.of<any>;
-          // or simply an empty observable
-          return Observable.throw(err);
-
+          return Observable.of<any>;       
         });
     }
 
@@ -130,13 +125,27 @@ export class TradeApiService {
   //*****************************************************
   //@param operation - name of the operation that failed
   //@param result - optional value to return as the observable result
-  private handleError(operation, err: HttpErrorResponse) {
+  private handleError(operation: string, err: HttpErrorResponse) {
 
+       let errMsg = `error in ${operation}() retrieving ${this.url}`;
       // audit log the error on the server side
       this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
 
-    // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-    throw (err);
+      // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
+      return Observable.throw(errMsg);
   };
+
+
+  private handleError2(operation: String) {
+    return (err: any) => {
+      let errMsg = `error in ${operation}() retrieving ${this.url}`;
+      console.log(`${errMsg}:`, err)
+      if (err instanceof HttpErrorResponse) {
+        // you could extract more info about the error if you want, e.g.:
+        console.log(`status: ${err.status}, ${err.statusText}`);
+        // errMsg = ...
+      }
+      return Observable.throw(errMsg);
+    }
 }
 

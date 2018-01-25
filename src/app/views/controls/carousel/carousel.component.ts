@@ -24,13 +24,6 @@ export class CarouselComponent implements OnInit {
   public leftRight: string = "#myCarousel";
 
   private isVisible: boolean = true;
-  //private image1Url: string;
-  //private image2Url: string;
-  //private image3Url: string;
-  //private image1Title: string;
-  //private image2Title: string;
-  //private image3Titlel: string;
-
   private haveImages: boolean = true;
 
   @Input() tradeId: number;

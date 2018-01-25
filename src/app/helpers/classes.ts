@@ -6,10 +6,12 @@
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType,
-  ITrade,
-  IImage, IObjectCategory, ITradeObject, ITradeForObject,
+  ITrade, IImage, IObjectCategory,
+  ITradeObject, ITradeForObject,  
   IUserSession, IAuthentication, IUserIdentity,
-  IProcessMessage, IPageTitle, IAttachement } from './interfaces';
+  IProcessMessage, IProcessMessageType,
+  IPageTitle, IAttachement
+} from './interfaces';
 
 
 class Trader implements ITraderList {
@@ -426,14 +428,28 @@ class UserIdentity implements IUserIdentity {
 class ProcessMessage implements IProcessMessage {
   messageId: number;
   messageCode: string;
-  messageType: string;
   messageText: string;
+  messageTypeId: number;
+  messageTypeDescription: string;
+  
 
   constructor() {
     this.messageId = 0;
     this.messageCode = "Undefined";
-    this.messageType = "Undefined";
     this.messageText = "Undefined";
+    this.messageTypeId = 0;
+    this.messageTypeDescription = "Undefined";  
+  }
+}
+
+
+class ProcessMessageType implements IProcessMessageType { 
+  messageTypeId: number;
+  messageTypeDescription: string;
+
+  constructor() { 
+    this.messageTypeId = 0;
+    this.messageTypeDescription = "Undefined";
   }
 }
 
@@ -474,11 +490,11 @@ class Guid {
 
 export {
   Trader, TraderDetails,
-   PersonalDetails, ContactDetails, SecurityDetails,
+  PersonalDetails, ContactDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType,
   SecurityAnswer, SecurityQuestion,
   Trade, Image, ObjectCategory,
   UserSession, Authentication, UserIdentity,
-  ProcessMessage, PageTitle, Attachement
+  ProcessMessage,ProcessMessageType, PageTitle, Attachement
 };

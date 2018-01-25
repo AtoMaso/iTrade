@@ -56,31 +56,32 @@ export class TradeListComponent implements OnInit {
   // implement OnInit to get the initial list of articles
   public ngOnInit() {
 
-    if (sessionStorage["UserSession"] != "null") {
-      try {
-        this.session = JSON.parse(sessionStorage["UserSession"])
-        this.isAuthenticated = this.session.authentication.isAuthenticated;
-        this.identity.roles = this.session.userIdentity.roles;
-        this.IsAllowedToAddTrade();
-        this.IsAllowedToRemoveTrade();
-      }
-      catch (ex) {
-        this.messagesService.emitProcessMessage("PMG");
-      }
+      if (sessionStorage["UserSession"] != "null") {
+              try {
+                this.session = JSON.parse(sessionStorage["UserSession"])
+                this.isAuthenticated = this.session.authentication.isAuthenticated;
+                this.identity.roles = this.session.userIdentity.roles;
+                this.IsAllowedToAddTrade();
+                this.IsAllowedToRemoveTrade();
+              }
+              catch (ex) {
+                this.messagesService.emitProcessMessage("PMG");
+              }
     }
-    this.messagesService.emitRoute("nill");
-    this.isRequesting = true;
-    this.traderId = +this.route.snapshot.paramMap.get('id');  // TODO check this 
 
-    // set proper title depending of what we displaying
-    if (this.traderId) {
-      this.pageTitleService.emitPageTitle(new PageTitle("Trader's Trades"));
-    }
-    else {
-      this.pageTitleService.emitPageTitle(new PageTitle("All Trades"));
-    }
-    // get all or author's articles
-    this.getTrades(this.traderId);
+      this.messagesService.emitRoute("nill");
+      this.isRequesting = true;
+      this.traderId = +this.route.snapshot.paramMap.get('id');  // TODO check this 
+
+      // set proper title depending of what we displaying
+      if (this.traderId) {
+              this.pageTitleService.emitPageTitle(new PageTitle("Trader's Trades"));
+      }
+      else {
+              this.pageTitleService.emitPageTitle(new PageTitle("All Trades"));
+      }
+      // get all or author's articles
+      this.getTrades(this.traderId);
 
      //this.ChangeTable(this.config);
 
@@ -115,7 +116,7 @@ export class TradeListComponent implements OnInit {
 
   private IsAllowedToAddTrade() {
     // in TYPESCRIPT call to class methods containing call to "this" have to be created
-    // and relevant parameters passed (roles in thsi case) and then method called on
+    // and relevant parameters passed (roles in this case) and then method called on
     // that instance of the class, in this instance "identity" object. The reason for this is
     // the "this" keyword is the one of the object calling the method
     if (this.isAuthenticated) {
@@ -151,33 +152,33 @@ export class TradeListComponent implements OnInit {
 
 
 
+
   public TransformData(returnedTrades: Trade[]): Array<any> {
 
-    let transformedData = new Array<Trade>();
+        let transformedData = new Array<Trade>();
+        returnedTrades.forEach(function (value) {
 
-    returnedTrades.forEach(function (value) {
+              let trd = new Trade;
+              trd.tradeId = value.tradeId;
+              trd.tradeDatePublished = value.tradeDatePublished;
+              trd.traderId = value.traderId;
+              trd.traderFirstName = value.traderFirstName;
+              trd.traderMiddleName = value.traderMiddleName;
+              trd.traderLastName = value.traderLastName;     
+              trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;       
+              trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
+              trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription; 
 
-      let trd = new Trade;
-      trd.tradeId = value.tradeId;
-      trd.tradeDatePublished = value.tradeDatePublished;
-      trd.traderId = value.traderId;
-      trd.traderFirstName = value.traderFirstName;
-      trd.traderMiddleName = value.traderMiddleName;
-      trd.traderLastName = value.traderLastName;     
-      trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;       
-      trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
-      trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription; 
+                value.tradeForObjects.forEach(function (value) {
+                  trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
+              });
 
-        value.tradeForObjects.forEach(function (value) {
-          trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
-      });
+              transformedData.push(trd);
 
-      transformedData.push(trd);
-
-    });   
-
-    return transformedData;
+        });   
+      return transformedData;
   }
+
 
 
   //get set of records of articles service method
@@ -185,10 +186,12 @@ export class TradeListComponent implements OnInit {
 
     this.tradeApiService.getPageOfTrades(id, page, total)
       .subscribe((returnedTrades: Trade[]) => {
+
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-          this.data = returnedTrades,
-          this.isRequesting = false,
-          this.onChangeTable(this.config);
+        this.data = returnedTrades,
+        this.isRequesting = false,
+        this.onChangeTable(this.config);
+
       }, (res: Response) => this.onError(res, "getPageOfTradesArticles"));
   }
 
@@ -230,43 +233,15 @@ export class TradeListComponent implements OnInit {
 
 
   // an error has occured
-  private onError(err: any, type: string) {
+  private onError(err: any, operation: string) {
     // stop the spinner
     this.isRequesting = false;
-    let message: string = "";
 
-    // we will log the error in the server side by calling the logger, or that is already 
-    // done on the server side if the error has been caught
-    this.loggerService.addError(err, "article list page");
+    // logg the audit log error
+    this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
 
-    // we will display a fiendly process message using the process message service   
-    if (err.status !== 200 || err.status !== 300) {
-      let data = err.json();
-
-      if (data.ModelState) {
-        for (var key in data.ModelState) {
-          for (var i = 0; i < data.ModelState[key].length; i++) {
-            //errors.push(data.modelState[key][i]);
-            if (message == null) { message = data.ModelState[key][i]; }
-            else { message = message + data.ModelState[key][i]; } // end if else
-          }// end for
-        } // end for
-        this.messagesService.emitProcessMessage("PME", message);   // TODO change the process message code to reflect the trades
-      } // end if
-      else {
-        // we will display a fiendly process message using the process message service    
-        switch (type) {
-          case "removeTrade":
-            this.messagesService.emitProcessMessage("PMRA");  // TODO change the process message code to reflect the trades
-            break;
-          case "getTrades":
-            this.messagesService.emitProcessMessage("PMGAs"); // TODO change the process message code to reflect the trades
-            break;
-          default:
-            this.messagesService.emitProcessMessage("PMG"); // TODO change the process message code to reflect the trades
-        }
-      }
-    } //end if              
+    // show the process message
+    this.messagesService.emitProcessMessage("PMGTs");  // TODO  change the process message
   }
 
 

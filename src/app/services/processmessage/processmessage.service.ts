@@ -91,7 +91,7 @@ export class ProcessMessageService {
     if (localProcessMessage === undefined || localProcessMessage === null ) {
             localProcessMessage = new ProcessMessage();
             localProcessMessage.messageText = "Unexprected error has occured. Please contact the application administration!";
-            localProcessMessage.messageType = "error"
+            localProcessMessage.messageTypeDescription = "error"
     }
     this.behaviorProcessMessageStore.getValue();
     this.behaviorProcessMessageStore.next(localProcessMessage);
