@@ -22,10 +22,11 @@ import { PageTitle, Trade } from '../../helpers/classes';
 
 export class DashboardComponent implements OnInit {
 
-  private trades: Trade[]  = [];
+  //private trades: Trade[] = [];
+  private trades: Array<any> = [];
   public isRequesting: boolean;
 
-  constructor(private tradeapiService: TradeApiService,
+  constructor(private tradeApiService: TradeApiService,
                     private titleService: PageTitleService,
                     private messagesService: ProcessMessageService,
                     private loggerService: LoggerService) { }
@@ -36,7 +37,7 @@ export class DashboardComponent implements OnInit {
     this.messagesService.emitRoute("nill");
 
     this.isRequesting = true;      
-    this.getTradesApi()
+    this.getTradesApi();
   }
 
 
@@ -45,14 +46,46 @@ export class DashboardComponent implements OnInit {
   //*****************************************************
   public getTradesApi(): void {
       // call the service to get the data  
-      this.tradeapiService.getTradesApi().subscribe(
-        (response: Trade[]) => {
-          this.trades = response;
-          this.isRequesting = false;
-        },
-        (res: Response) => this.onError(res, "getTradesApi method"));          
+    this.tradeApiService.getTradesApi()
+      .subscribe((returnedTrades: Trade[]) => {
+        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
+        this.trades = this.TransformData(returnedTrades);
+        this.isRequesting = false;
+     },
+     (res: Response) => this.onError(res, "getTradesApi method"));          
   } 
 
+
+
+  //*****************************************************
+  //  HELPER METHODS
+  //*****************************************************
+  private TransformData(returnedTrades: Trade[]): Array<any> {
+
+    let transformedData = new Array<Trade>();
+
+    returnedTrades.forEach(function (value) {
+      let trd = new Trade;
+
+      trd.tradeId = value.tradeId;
+      trd.tradeDatePublished = value.tradeDatePublished;
+      trd.traderId = value.traderId;
+      trd.traderFirstName = value.traderFirstName;
+      trd.traderMiddleName = value.traderMiddleName;
+      trd.traderLastName = value.traderLastName;
+      trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
+      trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
+      trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
+
+      value.tradeForObjects.forEach(function (value) {
+        trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
+      });
+
+      transformedData.push(trd);
+
+    });
+    return transformedData;
+  }
 
 
   // an error has occured
@@ -66,6 +99,7 @@ export class DashboardComponent implements OnInit {
     // show the process message
     this.messagesService.emitProcessMessage("PMGTs");
   }
+
 
   // an event from the child carousel component saying that encountered an error
   private ChangeIsRequesting(bool) { this.isRequesting = false;}

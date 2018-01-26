@@ -24,7 +24,7 @@ import { ProcessMessageService } from './services/processmessage/processmessage.
 import { PageTitleService } from './services/pagetitle/pagetitle.service';
 import { LoggerService } from './services/logger/logger.service';
 import { TradeApiService } from './services/tradeapi/tradeapi.service';
-import { MessageService } from './services/message/message.service';
+//import { MessageService } from './services/message/message.service';
 import { ValidationService } from './services/validation/validation.service';
 import { InMemoryDataService }  from './services/inmemory/in-memory-data.service'; //
 
@@ -149,7 +149,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
   ],
 
   providers: [
-    TradeApiService, MessageService, ValidationService,
+    TradeApiService, ValidationService,
     AuthenticationService, ProcessMessageService,
     PageTitleService, LoggerService, AuthGuard,
      // to initialise a service when application starts in this case to get all process messages when starts

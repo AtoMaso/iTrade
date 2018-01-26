@@ -33,24 +33,9 @@ let removeAddressUrl = CONFIG.baseUrls.removeaddress;
       .retry(3)
       .catch((err: HttpErrorResponse, result) => {
 
-        if (err.error instanceof Error) {
-
-                // A client-side or network error occurred. Handle it accordingly.
-                console.error('Backend returned code in getAddressesApi method:', err.error.message);
-
-                this.handleError("getAddressesApi method in the addressapi service error", err);
-
-               } else {
-               // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
-                console.error(`Backend returned code in getAddressesApi service method. Status code was ${err.status}, body was: ${err.error.message} , the ${err.url }, was ${ err.statusText }`);
-
-                 this.handleError("getAddressesApi method in the address service error", err);
-
-              }    
-              // return Observable.of<any>;
-              // or simply an empty observable
-              return Observable.throw(err);
-
+        if (err.error instanceof Error) { this.handleError("Client side error occured: getAddressesApi method in the addressapi service error", err); }
+        else { this.handleError("Server side error occured: getAddressesApi method in the address service error", err); }    
+         return Observable.throw(err);
       }); 
     }
 
@@ -74,18 +59,16 @@ let removeAddressUrl = CONFIG.baseUrls.removeaddress;
     // UPDATE ADDRESS
     //******************************************************
 
+  ///*****************************************************
+  // HELPER METHODS
+  //*****************************************************
+  private handleError(operation: string, err: HttpErrorResponse) {
 
-  //*****************************************************
-  // PRIVATE METHODS
-  //*****************************************************
-  //@param operation - name of the operation that failed
-  //@param result - optional value to return as the observable result
-  private handleError(operation, err: HttpErrorResponse) {
-  
-      // audit log the error on the server side
-      this.loggerService.addError(err, `${operation} failed: ${err.error.message},  the URL: ${err.url}, was:  ${err.statusText}`);
+    let errMsg = `error in ${operation}() retrieving ${err.url}`;
+    // audit log the error on the server side
+    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
 
     // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-    throw (err);
+    return Observable.throw(errMsg);
   };
 }

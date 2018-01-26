@@ -4,18 +4,19 @@
           <div class="panel-heading" style="background-color:dimgray;">
               <strong>
                 <label class="smalltextbold textwhite restriction">
-                  Trading a<span style="color:coral"> {{ trade.tradeObjects[0].tradeObjectDescription }}</span>
+                  Trading a<span style="color:coral"> {{ trade.tradeObjectDescription }}</span>
                 </label>
               </strong>
           </div>
 
           <div class="panel-footer">
                 <div>
-                  <strong class="textgray">Category: </strong><span class="textgray">{{ trade.tradeObjects[0].tradeObjectCategoryDescription }}</span>
+                  <span> <strong class="textgray">Category: </strong></span>
+                  <span class="textgray">{{ trade.tradeObjectCategoryDescription }}</span>
                 </div>
                 <div>
-                  <strong class="textgray">Trader:</strong>
-                  <a href="" [routerLink]="['/traderinfo']" [queryParams]="{traderId: trade.traderId}" class="text-info smalltextbold restrictionname" style="text-decoration:underline">{{ trade.traderFirstName }} {{ trade.traderLastName }}</a>
+                  <span><strong class="textgray">Trader:</strong></span>
+                  <span><a href="" [routerLink]="['/traderinfo']" [queryParams]="{traderId: trade.traderId}" class="text-info smalltext restrictionname" style="text-decoration:underline;">{{ trade.traderFullName }} </a></span>
                 </div>
                 <div style="margin-top:15px;">
                   <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId"  (onErrorPicked)="ChangeIsRequesting($event)"></carousel>               
@@ -23,8 +24,17 @@
           </div>
 
           <div class="panel-footer">
-                <div> <strong class="textgray">Published: </strong><span class="textgray">{{ trade.tradeDatePublished  | date }}</span></div>
-                <div> <a [routerLink]="['/tradeinfo']" [queryParams]= "{tradeId: trade.tradeId}" class="text-info smalltextbold" style="text-decoration:underline">Trade details...</a></div>                          
+                <div>
+                  <span> <strong class="textgray">Will trade for: </strong></span>
+                  <span style="color:coral">{{ trade.tradeForObjectsDescription }}</span>
+                </div>
+                <div> 
+                    <span> <strong class="textgray">Published: </strong></span>
+                    <span class="textgray">{{ trade.tradeDatePublished  | date }}</span>
+                </div>                
+                <div> 
+                  <span>  <a [routerLink]="['/tradeinfo']" [queryParams]="{tradeId: trade.tradeId}" class="text-info smalltext" style="text-decoration:underline">Trade details...</a></span>
+                </div>                          
         </div>
 </div>
  

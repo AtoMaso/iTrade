@@ -24,128 +24,86 @@ export class TradeApiService {
   private localUrl: string;
   private session: UserSession;
 
-    constructor(
-      private httpClientService: HttpClient,
-      private loggerService: LoggerService,
-      private authenticationService: AuthenticationService) {
+  constructor(
+    private httpClientService: HttpClient,
+    private loggerService: LoggerService,
+    private authenticationService: AuthenticationService) {
 
-        if (sessionStorage["UserSession"] != "null") {
-            this.session = JSON.parse(sessionStorage["UserSession"]);
-        }  
-    };
+    if (sessionStorage["UserSession"] != "null") {
+      this.session = JSON.parse(sessionStorage["UserSession"]);
+    }
+  };
 
 
 
   //******************************************************
   // GET TRADES
   //******************************************************
-    public getTradesApi(id?: number): Observable<Trade[]> {
+  public getTradesApi(id?: number): Observable<Trade[]> {
+  
+    if (id != 0 || id != undefined) { this.localUrl = `${tradesUrl}?traderId=${id}`; }     // get trader's list of trades
+    if (id == 0 || id == undefined) { this.localUrl = tradesUrl; }  // get all trade list
 
-      // get author's list of articles
-      if (id != 0 || id != undefined) { this.localUrl = `${tradesUrl}?traderId=${id}`; }
-      // get all articles list
-      if (id == 0 || id == undefined) { this.localUrl = tradesUrl; }
-
-      return this.httpClientService.get<Trade[]>(this.localUrl)
+    return this.httpClientService.get<Trade[]>(this.localUrl)     
       .retry(3)
       .catch((err: HttpErrorResponse, result) => {
 
-        if (err.error instanceof Error) {
-
-                // A client-side or network error occurred. Handle it accordingly.
-                console.error('Backend returned code in getTadeApiService method:', err.message);
-
-                this.handleError("getTradesApi method in the tradeapi service error", err);               
-
-               } else {
-               // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
-                console.error(`Backend returned code in getTadesApi service method. Status code was ${err.status}, body was: ${err.message} , the ${err.url }, was ${ err.statusText }`);
-
-                 this.handleError("getTradesApi method in the tradeapi service error", err);
-                
-              }    
-              return Observable.of<any>;
-              // or simply an empty observable              
+        if (err.error instanceof Error) { this.handleError("Client side error occured: getTradesApi method in the tradeapi service error", err);  }
+        else { this.handleError("Server side error occured:getTradesApi method in the tradeapi service error", err); }
+        return Observable.throw(err);
+         
       });
   }
 
 
-    // gets set of articles
-    public getPageOfTrades(id: number, page: number, perpage: number) {
+  // gets set of articles
+  public getPageOfTrades(id: number, page: number, perpage: number) {
+   
+    if (id != 0 || id != undefined) { this.localUrl = `${tradesUrl}?traderId=${id}&page=${page}&perpage=${perpage}`; }  // get trader's list of trade   
+    if (id == 0 || id == undefined) { this.localUrl = `${tradesUrl}?page=${page}&perpage=${perpage}`; }    // get all trade list
 
-      // get author's list of articles
-      if (id != 0 || id != undefined) { this.localUrl = `${tradesUrl}?traderId=${id}&page=${page}&perpage=${perpage}`; }
-      // get all articles list
-      if (id == 0 || id == undefined) { this.localUrl = `${tradesUrl}?page=${page}&perpage=${perpage}`; }
+    return this.httpClientService.get(this.localUrl)
+      .retry(3)
+      .catch((err: HttpErrorResponse, result) => {
 
-      return this.httpClientService.get(this.localUrl)
-        .retry(3)
-        .catch((err: HttpErrorResponse, result) => {
+        if (err.error instanceof Error) { this.handleError("Client side error occured: getPagesOfTrades method in the tradeapi service error", err); }
+        else { this.handleError("Server side error occured: getPagesOfTrades method in the tradeapi service error", err); }
+        return Observable.throw(err);
+      });
+  }
 
-          if (err.error instanceof Error) {
-
-            // A client-side or network error occurred. Handle it accordingly.
-            console.error('Backend returned code in getPagesOfYTrades method:', err.message);
-
-            this.handleError("getPagesOfTrades method in the tradeapi service error", err);
-            
-          } else {
-            // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
-            console.error(`Backend returned code in getPagesOfTrades service method. Status code was ${err.status}, body was: ${err.error.message} , the ${err.url}, was ${err.statusText}`);
-
-            this.handleError("getPagesOfTrades method in the tradeapi service error", err);
-           
-          }
-          return Observable.of<any>;       
-        });
-    }
 
   //******************************************************
-    // GET TRADES
-    //******************************************************
+  // GET TRADE
+  //******************************************************
 
 
-    //******************************************************
-    // ADD TRADE
-    //******************************************************
+  //******************************************************
+  // ADD TRADE
+  //******************************************************
 
 
-    //******************************************************
-    // DELETE TRADE
-    //******************************************************
+  //******************************************************
+  // DELETE TRADE
+  //******************************************************
 
 
-    //******************************************************
-    // UPDATE TRADE
-    //******************************************************
+  //******************************************************
+  // UPDATE TRADE
+  //******************************************************
 
 
-  ///*****************************************************
-  // PRIVATE METHODS
   //*****************************************************
-  //@param operation - name of the operation that failed
-  //@param result - optional value to return as the observable result
+  // HELPER METHODS
+  //*****************************************************
   private handleError(operation: string, err: HttpErrorResponse) {
 
-       let errMsg = `error in ${operation}() retrieving ${this.url}`;
-      // audit log the error on the server side
-      this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
+    let errMsg = `error in ${operation}() retrieving ${err.url}`;
 
-      // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-      return Observable.throw(errMsg);
+    // audit log the error on the server side
+    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
+
+    // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
+    return Observable.throw(errMsg);
   };
-
-
-  private handleError2(operation: String) {
-    return (err: any) => {
-      let errMsg = `error in ${operation}() retrieving ${this.url}`;
-      console.log(`${errMsg}:`, err)
-      if (err instanceof HttpErrorResponse) {
-        // you could extract more info about the error if you want, e.g.:
-        console.log(`status: ${err.status}, ${err.statusText}`);
-        // errMsg = ...
-      }
-      return Observable.throw(errMsg);
-    }
 }
-

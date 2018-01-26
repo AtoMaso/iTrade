@@ -1,5 +1,7 @@
 ﻿import { Inject, Injectable, EventEmitter } from '@angular/core';
-import { Http, Response, Headers, RequestOptions} from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+
 import { CONFIG } from '../../config';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -14,6 +16,7 @@ let updateTraderUrl = CONFIG.baseUrls.updatetrader;
 let addTraderUrl = CONFIG.baseUrls.addtrader;
 let removeTraderUrl = CONFIG.baseUrls.removetrader;
 
+
 @Injectable()
 export class TraderService {
     private localUrl: string;
@@ -26,8 +29,10 @@ export class TraderService {
         }  
     };
 
+
+    // TODO To change the HTTP to HTTClient
     //******************************************************
-    // GET USERS
+    // GET TRADERS
     //******************************************************
     public getTraders(id?: number): any {
         let localUrl: string;
@@ -40,8 +45,8 @@ export class TraderService {
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
       return this.httpService.get(localUrl, { headers: headers })           
-            .map((res: Response) => res.json())  
-            .catch((err: Response) => this.logError(err, "GetTraders"));
+        .map((res: Response) => res.json())  
+        .catch((err: HttpErrorResponse) => this.handleError("GetTraders", err));
     }
 
     // page of members
@@ -54,13 +59,13 @@ export class TraderService {
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
       return this.httpService.get(localUrl, {headers: headers})          
-            .map((res: Response) => res.json())   
-            .catch((err: Response) => this.logError(err, "GetTraders"));
+          .map((res: Response) => res.json())   
+          .catch((err: HttpErrorResponse) => this.handleError("GetTraders", err));
     }
 
 
     //******************************************************
-    // GET USER
+    // GET TRADER
     //******************************************************
     public getTrader(id: string): any {
         let headers = new Headers();
@@ -69,8 +74,8 @@ export class TraderService {
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
       return this.httpService.get(`${traderUrl}?TraderId=${id}`, { headers: headers })            
-            .map((res: Response) => res.json())  
-            .catch((err: Response) => this.logError(err, "GetTrader"));
+          .map((res: Response) => res.json())  
+          .catch((err: HttpErrorResponse) => this.handleError("GetTrader", err));
     }
 
 
@@ -82,7 +87,7 @@ export class TraderService {
 
 
     //******************************************************
-    // ADD USER
+    // ADD TRADER
     //******************************************************
     public addTrader(trader: Trader): any {
 
@@ -94,12 +99,12 @@ export class TraderService {
 
         return this.httpService.post(addTraderUrl, body, { headers: headers })                  
                   .map((res: Response) => res.json())
-                  .catch((err: Response) => this.logError(err, "AddTrader"));
+                 .catch((err: HttpErrorResponse) => this.handleError("AddTrader" , err));
     }
 
 
     //******************************************************
-    // REMOVE USER
+    // REMOVE TRADER
     //******************************************************
     public removeTrader(traderId: string) {
       let localUrl = removeTraderUrl + "?TraderId=" + traderId;
@@ -110,16 +115,22 @@ export class TraderService {
 
       return this.httpService.delete(localUrl, { headers: headers })         
               .map((res: Response) => res.json())
-              .catch(( error:Response) => this.logError(error, "RemoveTrader"));
+              .catch((error: HttpErrorResponse) => this.handleError(error, "RemoveTrader"));
     }
 
 
-    //******************************************************
-    // PRIVATE METHODS
-    //******************************************************
-    private logError(err: any, method:string) {
-      this.loggerService.addError(err, "user.service had an error in the method " + method);   
-      return Observable.throw(err);
-    }
+  //*****************************************************
+  // HELPER METHODS
+  //*****************************************************
+  private handleError(operation: string, err: HttpErrorResponse) {
 
+    let errMsg = `error in ${operation}() retrieving ${err.url}`;
+
+    // audit log the error on the server side
+    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
+
+    // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
+    return Observable.throw(errMsg);
+  };
+    
 }

@@ -107,27 +107,25 @@
                         <tr *ngFor="let trade of rows  | paginate:config ">
 
                           <td class="col-md-2" style="vertical-align:middle" >            
-                              <a  [routerLink]="['/tradeinfo']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltextbold text-success">
+                              <a  [routerLink]="['/tradeinfo']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltext text-success">
                                 <span>{{ trade.tradeObjectDescription  }}</span>
                               </a>
                           </td>
 
-                          <td class="col-md-2 smalltextbold textgray" style="vertical-align:middle">
-                            <!--<a [routerLink]="['/tradeinfo']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltextbold text-success">-->
-                              <span>{{ trade.tradeForObjectsDescription  }}</span>
-                            <!--</a>-->
+                          <td class="col-md-2 smalltextbold textgray" style="vertical-align:middle">                            
+                              <span>{{ trade.tradeForObjectsDescription  }}</span>                       
                           </td>
 
-                          <td class="col-md-2 smalltextbold textgray" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
+                          <td class="col-md-2 smalltex textgray" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
 
 
                           <td class="col-md-3" style="vertical-align:middle">
-                            <a [routerLink]="['/traderinfo']" [queryParams]="{id: trade.traderId}" class="smalltextbold text-success">
+                            <a [routerLink]="['/traderinfo']" [queryParams]="{id: trade.traderId}" class="smalltext text-success">
                               <span> {{ trade.traderFullName }}</span>
                             </a>
                           </td>
 
-                          <td class="col-md-2 smalltextbold textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+                          <td class="col-md-2 smalltext textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
 
 
                           <td class="col-md-2 text-center" style="vertical-align:middle;">

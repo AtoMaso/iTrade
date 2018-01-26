@@ -51,8 +51,6 @@ export class TradeListComponent implements OnInit {
   };
 
 
- 
-
   // implement OnInit to get the initial list of articles
   public ngOnInit() {
 
@@ -102,83 +100,21 @@ export class TradeListComponent implements OnInit {
   }
 
 
-  private passToModal(trade: Trade) {
-    if (trade.traderId === this.session.userIdentity.userId) {
-      this.isOwner = true;
-      this.tradeIdToBeRemoved = trade.tradeId;
-    }
-    else {
-      this.isOwner = false;
-      this.tradeIdToBeRemoved = null;
-    }
-  }
-
-
-  private IsAllowedToAddTrade() {
-    // in TYPESCRIPT call to class methods containing call to "this" have to be created
-    // and relevant parameters passed (roles in this case) and then method called on
-    // that instance of the class, in this instance "identity" object. The reason for this is
-    // the "this" keyword is the one of the object calling the method
-    if (this.isAuthenticated) {
-      this.isAllowedToAddTrade = true;
-    }
-  }
-
-
-  private IsAllowedToRemoveTrade() {
-    // in TYPESCRIPT call to class methods containing call to "this" have to be created
-    // and relevant parameters passed (roles in thsi case) and then method called on
-    // that instance of the class, in this instance "identity" object. The reason for this is
-    // the "this" keyword is the one of the object calling the method
-    if (this.isAuthenticated) {
-      this.isAllowedToRemoveTrade = true;
-    }
-  }
-
-
   //*****************************************************
   // GET TRADES
   //*****************************************************
   private getTrades(id: number) {
 
     this.tradeApiService.getTradesApi(id)
-      .subscribe((returnedTrades: any) => {
+      .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-            this.data = this.TransformData(returnedTrades),
-            this.isRequesting = false,
-            this.onChangeTable(this.config)
-      }, (res: Response) => this.onError(res, "getTrades"));
+        this.data = this.TransformData(returnedTrades),
+        this.isRequesting = false,
+        this.onChangeTable(this.config)
+      },
+      (res: Response) => this.onError(res, "getTrades"));
+
   }
-
-
-
-
-  public TransformData(returnedTrades: Trade[]): Array<any> {
-
-        let transformedData = new Array<Trade>();
-        returnedTrades.forEach(function (value) {
-
-              let trd = new Trade;
-              trd.tradeId = value.tradeId;
-              trd.tradeDatePublished = value.tradeDatePublished;
-              trd.traderId = value.traderId;
-              trd.traderFirstName = value.traderFirstName;
-              trd.traderMiddleName = value.traderMiddleName;
-              trd.traderLastName = value.traderLastName;     
-              trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;       
-              trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
-              trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription; 
-
-                value.tradeForObjects.forEach(function (value) {
-                  trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
-              });
-
-              transformedData.push(trd);
-
-        });   
-      return transformedData;
-  }
-
 
 
   //get set of records of articles service method
@@ -213,8 +149,10 @@ export class TradeListComponent implements OnInit {
   //    , error => this.onError(error, "removeArticle"));
   //}
 
+
+
   //*****************************************************
-  // PRIVATE METHODS ARTICLES
+  // HELPER METHODS ARTICLES
   //*****************************************************
   private onSuccessRemoveTrade(trade: Trade) {
     if (trade) {
@@ -231,6 +169,64 @@ export class TradeListComponent implements OnInit {
     }
   }
 
+  private TransformData(returnedTrades: Trade[]): Array<any> {
+
+    let transformedData = new Array<Trade>();
+    returnedTrades.forEach(function (value) {
+
+      let trd = new Trade;
+      trd.tradeId = value.tradeId;
+      trd.tradeDatePublished = value.tradeDatePublished;
+      trd.traderId = value.traderId;
+      trd.traderFirstName = value.traderFirstName;
+      trd.traderMiddleName = value.traderMiddleName;
+      trd.traderLastName = value.traderLastName;
+      trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
+      trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
+      trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
+
+      value.tradeForObjects.forEach(function (value) {
+        trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
+      });
+
+      transformedData.push(trd);
+
+    });
+    return transformedData;
+  }
+
+  private passToModal(trade: Trade) {
+
+      if (trade.traderId === this.session.userIdentity.userId) {
+        this.isOwner = true;
+        this.tradeIdToBeRemoved = trade.tradeId;
+      }
+      else {
+        this.isOwner = false;
+        this.tradeIdToBeRemoved = null;
+      }
+}
+
+  private IsAllowedToAddTrade() {
+      // in TYPESCRIPT call to class methods containing call to "this" have to be created
+      // and relevant parameters passed (roles in this case) and then method called on
+      // that instance of the class, in this instance "identity" object. The reason for this is
+      // the "this" keyword is the one of the object calling the method
+      if (this.isAuthenticated) {
+        this.isAllowedToAddTrade = true;
+      }
+}
+
+  private IsAllowedToRemoveTrade() {
+      // in TYPESCRIPT call to class methods containing call to "this" have to be created
+      // and relevant parameters passed (roles in thsi case) and then method called on
+      // that instance of the class, in this instance "identity" object. The reason for this is
+      // the "this" keyword is the one of the object calling the method
+      if (this.isAuthenticated) {
+        this.isAllowedToRemoveTrade = true;
+      }
+}
+
 
   // an error has occured
   private onError(err: any, operation: string) {
@@ -245,9 +241,8 @@ export class TradeListComponent implements OnInit {
   }
 
 
-
   /**********************************************/
-  //ngx-pagination methods
+  //ngx-pagination section
   /***********************************************/
   private isTitleAsc = true;
   private isTitleForAsc = true;
@@ -289,12 +284,11 @@ export class TradeListComponent implements OnInit {
     className: ['table-striped', 'table-bordered']
   };
 
-
+  // all sorting and filtering methods
   private onPageChange(passedpage: number) {
     this.config.currentPage = passedpage;
   }
  
-
   private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
         if (config.filtering) {
           Object.apply(this.config.filtering, config.filtering);
@@ -310,8 +304,6 @@ export class TradeListComponent implements OnInit {
         this.length = sortedData.length; 
         this.config.totalItems = this.length;
   }
-
-
 
   private sortTable(column: string) {
     // reset the array of columns
@@ -355,8 +347,6 @@ export class TradeListComponent implements OnInit {
     }
   }
 
-
-
   private changeRemove(data: any, config: any): any {
     if (this.removedTradeId == null) { return data; }
 
@@ -365,8 +355,6 @@ export class TradeListComponent implements OnInit {
     this.data = removedData;
     return this.data;
   }
-
-
 
   public changeFilter(data: any, config: any): any {
 
@@ -405,8 +393,6 @@ export class TradeListComponent implements OnInit {
 
     return filteredData;
   }
-
-
 
   private changeSort(data: any, config: any) {
     if (!config.sorting) {

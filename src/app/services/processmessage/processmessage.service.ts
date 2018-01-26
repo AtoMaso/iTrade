@@ -54,30 +54,16 @@ export class ProcessMessageService {
 
   // get the process messages from the api json repository
   public getProcessMessagesFromRepository(): Observable<ProcessMessage[]> {
-     // using HTTPClient module
+
     return this.httpClientService.get<ProcessMessage[]>(messagessUrl)  
       .retry(3)
       .catch((err: HttpErrorResponse, result) => {
 
-        if (err.error instanceof Error) {
-
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log('Backend returned code in getTadeApiService method:', err.message);
-
-          this.handleError("getTradesApi method in the tradeapi service error", err);
-
-        } else {
-          // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
-          console.log(`Backend returned code in getProcessMessagesFromRepository service method. Status code was ${err.status}, body was: ${err.message} , the ${err.url}, was ${err.statusText}`);
-
-          this.handleError("getTradesApi method in the tradeapi service error", err);
-
-        }
-        // return Observable.of<any>;
-        // or simply an empty observable
-        return Observable.throw(err);
-
+        if (err.error instanceof Error) { this.handleError("getTradesApi method in the tradeapi service error", err); }
+        else { this.handleError("getTradesApi method in the tradeapi service error", err); }       
+        return Observable.of<any>();
       });
+
   }
 
 
@@ -106,20 +92,18 @@ export class ProcessMessageService {
   }
 
 
+  ///*****************************************************
+  // HELPER METHODS
   //*****************************************************
-  // PRIVATE METHODS
-  //*****************************************************
-  //@param operation - name of the operation that failed
-  //@param result - optional value to return as the observable result
-  private handleError(operation, err: HttpErrorResponse) {
+  private handleError(operation: string, err: HttpErrorResponse) {
 
-   
-      // audit log the error on the server side
-      this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
-    
+    let errMsg = `error in ${operation}() retrieving ${err.url}`;
+
+    // audit log the error on the server side
+    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
 
     // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-    throw (err);
+    return Observable.throw(errMsg);
   };
 }
 

@@ -265,7 +265,7 @@ export class AuthenticationService implements OnDestroy {
 
 
   //****************************************************
-  // LOGGING METHODS
+  // HELPER METHODS
   //****************************************************
   private onLoginError(err: Response, method:string) {
         this.authentication.isAuthenticated = false;
@@ -278,7 +278,5 @@ export class AuthenticationService implements OnDestroy {
         this.loggerService.addError(err, "authentication.service had error in the method " + method);
         return Observable.throw(err);
   }
-
-
 
 }

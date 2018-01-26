@@ -38,23 +38,8 @@ export class ImageService {
       .retry(3)
       .catch((err: HttpErrorResponse, result) => {
 
-        if (err.error instanceof Error) {
-
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log('Backend returned code in getImagesApi method:');
-
-          this.handleError("getImagesApi method in the image service error", err);
-
-        } else {
-          console.error('Backend returned code in getImagesApi method:');
-          // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
-          //console.log(`Backend returned code in getImagesApi service method. Status code was ${err.status}, body was: ${err.error} , the ${err.url}, was ${err.statusText}`);
-
-          this.handleError("getImagesApi method in the image service error", err);
-
-        }
-        // return Observable.of<any>;
-        // or simply an empty observable
+        if (err.error instanceof Error) { this.handleError("getImagesApi method in the image service error", err); }
+        else { this.handleError("getImagesApi method in the image service error", err); }        
         return Observable.throw(err);
 
       });
@@ -68,48 +53,26 @@ export class ImageService {
       return this.httpClientService.get<Image[]>(localUrl)
         .retry(3)
         .catch((err: HttpErrorResponse, result) => {
-
-          if (err.error instanceof Error) {
-
-            console.log("Client-side error occured.");
-
-            // A client-side or network error occurred. Handle it accordingly.
-            console.log('Backend returned code in getImagesApiByTradeId method:', err.status);
-
-            this.handleError("getImagesApiByTradeId method in the image service error", err);
-
-          } else {
-
-            console.log("Server-side error occured.");
-
-            // The backend returned an unsuccessful response code. The response body may contain clues as to what went wrong,
-            console.log(`Backend returned code in getImagesApiByTradeId service method. Status code was ${err.status} , the ${err.url}, was ${err.statusText}`);
-
-            this.handleError("getImagesApiByTradeId method in the image service error", err);
-
-          }
-          // return Observable.of<any>;
-          // or simply an empty observable
+          if (err.error instanceof Error) { this.handleError("Client method error ocured: getImagesApiByTradeId method in the image service error.", err); }
+          else { this.handleError("Server side error occured: getImagesApiByTradeId method in the image service error", err); }       
           return Observable.throw(err);
 
         });
   }
 
 
-
+  ///*****************************************************
+  // HELPER METHODS
   //*****************************************************
-  // PRIVATE METHODS
-  //*****************************************************
-  //@param operation - name of the operation that failed
-  //@param result - optional value to return as the observable result
-  private handleError(operation, err: HttpErrorResponse) {
+  private handleError(operation: string, err: HttpErrorResponse) {
 
-  
-      // audit log the error on the server side
-      this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
-  
+    let errMsg = `error in ${operation}() retrieving ${err.url}`;
+
+    // audit log the error on the server side
+    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
+
     // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-    throw (err);
+    return Observable.throw(errMsg);
   };
 
 }
