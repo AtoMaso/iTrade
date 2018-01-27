@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddobjectcategoryComponent } from './addobjectcategory.component';
+import { AddObjectCategoryComponent } from './addobjectcategory.component';
 
-describe('AddobjectcategoryComponent', () => {
-  let component: AddobjectcategoryComponent;
-  let fixture: ComponentFixture<AddobjectcategoryComponent>;
+describe('AddObjectCategoryComponent', () => {
+  let component: AddObjectCategoryComponent;
+  let fixture: ComponentFixture<AddObjectCategoryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddobjectcategoryComponent ]
+      declarations: [AddObjectCategoryComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddobjectcategoryComponent);
+    fixture = TestBed.createComponent(AddObjectCategoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

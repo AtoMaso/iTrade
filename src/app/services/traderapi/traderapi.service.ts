@@ -60,7 +60,7 @@ export class TraderService {
 
       return this.httpService.get(localUrl, {headers: headers})          
           .map((res: Response) => res.json())   
-          .catch((err: HttpErrorResponse) => this.handleError("GetTraders", err));
+          .catch((error: HttpErrorResponse) => this.handleError("GetTraders", error));
     }
 
 
@@ -75,7 +75,7 @@ export class TraderService {
 
       return this.httpService.get(`${traderUrl}?TraderId=${id}`, { headers: headers })            
           .map((res: Response) => res.json())  
-          .catch((err: HttpErrorResponse) => this.handleError("GetTrader", err));
+          .catch((error: HttpErrorResponse) => this.handleError("GetTrader", error));
     }
 
 
@@ -99,7 +99,7 @@ export class TraderService {
 
         return this.httpService.post(addTraderUrl, body, { headers: headers })                  
                   .map((res: Response) => res.json())
-                 .catch((err: HttpErrorResponse) => this.handleError("AddTrader" , err));
+                 .catch((error: HttpErrorResponse) => this.handleError("AddTrader" , error));
     }
 
 
@@ -115,7 +115,7 @@ export class TraderService {
 
       return this.httpService.delete(localUrl, { headers: headers })         
               .map((res: Response) => res.json())
-              .catch((error: HttpErrorResponse) => this.handleError(error, "RemoveTrader"));
+        .catch((error: HttpErrorResponse) => this.handleError("RemoveTrader", error));
     }
 
 

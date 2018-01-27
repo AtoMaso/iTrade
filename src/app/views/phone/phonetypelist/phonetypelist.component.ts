@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './phonetypelist.component.html',
   styleUrls: ['./phonetypelist.component.scss']
 })
-export class PhonetypelistComponent implements OnInit {
+export class PhoneTypeListComponent implements OnInit {
 
   constructor() { }
 

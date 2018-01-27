@@ -1,10 +1,10 @@
                                      
-<div class="panel-group col-md-4 col-lg-3 col-sm-5" *ngFor="let trade of trades | SortTradesByDatePipe: D  | TopTradesPipe: 4">
+<div class="panel-group col-md-4 col-lg-3 col-sm-5" *ngFor="let trade of trades | SortTradesByDatePipe: D  | TopTradesPipe: 8">
 
           <div class="panel-heading" style="background-color:dimgray;">
               <strong>
                 <label class="smalltextbold textwhite restriction">
-                  Trading a<span style="color:coral"> {{ trade.tradeObjectDescription }}</span>
+                  Trading a<span class="textcoral"> {{ trade.tradeObjectDescription }}</span>
                 </label>
               </strong>
           </div>
@@ -26,7 +26,7 @@
           <div class="panel-footer">
                 <div>
                   <span> <strong class="textgray">Will trade for: </strong></span>
-                  <span style="color:coral">{{ trade.tradeForObjectsDescription }}</span>
+                  <span class="textcoral">{{ trade.tradeForObjectsDescription }}</span>
                 </div>
                 <div> 
                     <span> <strong class="textgray">Published: </strong></span>

@@ -10,7 +10,7 @@ import { LoggerService } from '../../services/logger/logger.service';
 import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
-import { TraderDetails, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
+import { TraderDetails, LoginModel, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
 import { ControlMessages } from '../controls/controlmessages/control-messages.component';
 
 @Component({
@@ -20,7 +20,7 @@ import { ControlMessages } from '../controls/controlmessages/control-messages.co
 
 
 export class LoginComponent implements OnInit {
-  private trader: TraderDetails;
+  private trader: LoginModel;
   private loginGroup: any;
   private isRequesting: boolean;
  
@@ -50,11 +50,12 @@ export class LoginComponent implements OnInit {
   // GET ACCOUNT
   //****************************************************
   private login() {
-    this.trader.securityDetails.userName = this.loginGroup.controls.email.value;
-    this.trader.securityDetails.password = this.loginGroup.controls.password.value;
+    this.trader = new LoginModel();
+    this.trader.UserName = this.loginGroup.controls.email.value;
+    this.trader.Password = this.loginGroup.controls.password.value;
 
     if (this.loginGroup.dirty && this.loginGroup.valid) {
-      this.authenticationService.login(this.trader)
+      this.authenticationService.loginClient(this.trader)
                   .subscribe(res => this.onLoginSuccess(res)
                   , error => this.onError(error));
     }  
@@ -66,8 +67,8 @@ export class LoginComponent implements OnInit {
   //****************************************************
   private onLoginSuccess(res:any) {    
       if (sessionStorage["UserSession"] != "null") {               
-          this.router.navigate(['Home']);
-          this.emitUserSession(res);
+        this.router.navigate(['/traderaccount']);      // TODO or somekind of traders home page with the trader;s latest activity 
+        this.emitUserSession(res);
       }    
   }
 
@@ -81,27 +82,22 @@ export class LoginComponent implements OnInit {
   // LOGGING METHODS
   //****************************************************
   // an error has occured
-  private onError(err: any) {    
+  private onError(err: any) {
 
-      let message: string;
-      // stop the spinner
-      this.isRequesting = false;
-      // we will log the error in the server side by calling the logger, or that is already 
-      // done on the server side if the error has been caught
-      this.loggerService.addError(err, "login");
+    // stop the spinner
+    this.isRequesting = false;
+    // we will log the error in the server side by calling the logger, or that is already 
+    // done on the server side if the error has been caught
+    this.loggerService.addError(err, "login");
 
-      // we will display a fiendly process message using the process message service        
-      if (err.status !== 200 || err.status !== 300) {
-        let data = err.json();
-        if (data.error) {
-              // login user
-              message = data.error;
-              this.messageService.emitProcessMessage("PME", message);
-        }
-        else {
-              this.messageService.emitProcessMessage("PMG");
-        }
-      }      
+    // we will display a fiendly process message using the process message service        
+    if (err.status !== 200 || err.status !== 300) {
+      if (err.status === 400) { this.messageService.emitProcessMessage("PMEPI"); }
+      else {
+        if (err.error !== null) { this.messageService.emitProcessMessage("PME", err.error); }
+        else { this.messageService.emitProcessMessage("PMG"); }
+      }
+    }
   }
 }
 

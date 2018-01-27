@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddphonetypeComponent } from './addphonetype.component';
+import { AddPhoneTypeComponent } from './addphonetype.component';
 
-describe('AddphonetypeComponent', () => {
-  let component: AddphonetypeComponent;
-  let fixture: ComponentFixture<AddphonetypeComponent>;
+describe('AddPhoneTypeComponent', () => {
+  let component: AddPhoneTypeComponent;
+  let fixture: ComponentFixture<AddPhoneTypeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddphonetypeComponent ]
+      declarations: [AddPhoneTypeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddphonetypeComponent);
+    fixture = TestBed.createComponent(AddPhoneTypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcessmessagelistComponent } from './processmessagelist.component';
+import { ProcessMessageListComponent } from './processmessagelist.component';
 
-describe('ProcessmessagelistComponent', () => {
-  let component: ProcessmessagelistComponent;
-  let fixture: ComponentFixture<ProcessmessagelistComponent>;
+describe('ProcessMessageListComponent', () => {
+  let component: ProcessMessageListComponent;
+  let fixture: ComponentFixture<ProcessMessageListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProcessmessagelistComponent ]
+      declarations: [ProcessMessageListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProcessmessagelistComponent);
+    fixture = TestBed.createComponent(ProcessMessageListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

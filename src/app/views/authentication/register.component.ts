@@ -11,7 +11,7 @@ import { LoggerService } from '../../services/logger/logger.service';
 import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
-import { TraderDetails, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
+import { TraderDetails, RegisterBindingModel, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
 import { ControlMessages } from '../controls/controlmessages/control-messages.component';
 
 @Component({
@@ -21,9 +21,10 @@ import { ControlMessages } from '../controls/controlmessages/control-messages.co
 
 export class RegisterComponent implements OnInit {
     
-    private trader: TraderDetails = new TraderDetails();    
-    private submitted = false;
-    private registerGroup: any;
+  private trader: TraderDetails = new TraderDetails();    
+  private registerModel = new RegisterBindingModel();
+  private submitted = false;
+  private registerGroup: any;
     
 
     //*****************************************************
@@ -40,13 +41,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
    
     this.titleService.emitPageTitle(new PageTitle("Register"));
-
     this.messageService.emitRoute("nill");
     //this.user.Role = this.route.snapshot.params['role'];
 
-    this.registerGroup = this.formBuilder.group({
-          firstname: new FormControl('', [Validators.required, ValidationService.nameValidator]),
-          secondname: new FormControl('', [Validators.required, ValidationService.nameValidator]),
+    this.registerGroup = this.formBuilder.group({       
           email: new FormControl('', [Validators.required, ValidationService.emailValidator]),
           password: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
           confirmPassword: new FormControl('', [Validators.required, ValidationService.confirmPasswordValidator]),
@@ -57,67 +55,65 @@ export class RegisterComponent implements OnInit {
     //****************************************************
     // GET ACCOUNT
     //****************************************************
-  private register() {        
+  private register() {       
 
-    // TODO do we need first name and last name when user is trying to register??????
-    this.trader.personalDetails.firstName = this.registerGroup.controls.firstname.value;
-    this.trader.personalDetails.lastName = this.registerGroup.controls.secondname.value;
-    this.trader.securityDetails.email = this.registerGroup.controls.email.value;
-    this.trader.securityDetails.password = this.registerGroup.controls.password.value;
-    this.trader.securityDetails.confirmPassword = this.registerGroup.controls.confirmPassword.value;
+    this.registerModel.Email = this.registerGroup.controls.email.value;
+    this.registerModel.Password = this.registerGroup.controls.password.value;
+    this.registerModel.ConfirmPassword = this.registerGroup.controls.confirmPassword.value;
+    this.registerModel.Role = "Trader";
 
-    if (this.ComparePasswords(this.trader)) {
-      this.authenticationService.register(this.trader)
+    if (this.ComparePasswords(this.registerModel)) {
+
+      this.authenticationService.register(this.registerModel)
                 .subscribe(res => this.onSucessRegistering(res)              
                 , (err: Response) => this.onError(err));
         }
     }
-  
-    private ComparePasswords(passedtrader:TraderDetails): boolean {
-      if (passedtrader.securityDetails.password === passedtrader.securityDetails.confirmPassword) { return true; }
+
+
+    private ComparePasswords(passedtrader:RegisterBindingModel): boolean {
+      if (passedtrader.Password === passedtrader.ConfirmPassword) { return true; }
         else {
             this.messageService.emitProcessMessage("PMPNE");
             return false;
         }
     }
 
+
     private onSucessRegistering(res: any) {
         this.submitted = true;
         this.messageService.emitProcessMessage("PMRS");
     }
 
-    // toggles the submitted flag which should disable the form and
-    // show the succes small form
+
+
+    // toggles the submitted flag which should disable the form and show the succes small form
     private onSubmit() { this.submitted = true; }
 
 
     //****************************************************
     // PRIVATE METHODS
     //****************************************************
-    private onError(err: Response) {       
-          let message: string = null;     
+    private onError(err: any) {       
+            let message: string = null;     
 
-          // we will log the error in the server side by calling the logger, or that is already 
-          // done on the server side if the error has been caught
-          this.loggerService.addError(err, "register");      
-
-          // we will display a fiendly process message using the process message service   
-          if (err.status !== 200) {
-                let data = err.json();
-
-                if (data.ModelState) {
-                      for (var key in data.ModelState) {
-                            for (var i = 0; i < data.ModelState[key].length; i++) {                                
-                                  if (message == null) { message = data.ModelState[key][i]; }
-                                  else { message = message + data.ModelState[key][i]; } // end if else
-                            }// end for
-                      } // end for
+            // we will log the error in the server side by calling the logger, or that is already 
+            // done on the server side if the error has been caught
+            this.loggerService.addError(err, "register");      
+            if (err.status !== 200 || err.status !== 300) {    
+              let data = err.json();
+              if (data.ModelState)
+              {
+                  for (var key in data.ModelState) {
+                      for (var i = 0; i < data.ModelState[key].length; i++) {
+                              if (message == null) { message = data.ModelState[key][i]; }
+                              else { message = message + data.ModelState[key][i]; } 
+                        }
+                  } 
                   this.messageService.emitProcessMessage("PME", message);
-                } // end if
-                else {
-                  this.messageService.emitProcessMessage("PMG");
-                }
-          } //end if       
-    }// end method
-} // end class
+              }
+              else {  this.messageService.emitProcessMessage("PMG");}
+        }       
+    }    
+ }
 

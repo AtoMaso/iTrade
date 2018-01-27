@@ -13,6 +13,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { PaginationModule, TabsModule } from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MyDatePickerModule } from 'mydatepicker';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+//import { TokenInterceptor } from './services/authentication/tokeninterceptor/tokeninterceptor.component';
 
 //helpers
 import { AuthGuard } from './helpers/auth.guard';
@@ -24,7 +26,6 @@ import { ProcessMessageService } from './services/processmessage/processmessage.
 import { PageTitleService } from './services/pagetitle/pagetitle.service';
 import { LoggerService } from './services/logger/logger.service';
 import { TradeApiService } from './services/tradeapi/tradeapi.service';
-//import { MessageService } from './services/message/message.service';
 import { ValidationService } from './services/validation/validation.service';
 import { InMemoryDataService }  from './services/inmemory/in-memory-data.service'; //
 
@@ -41,37 +42,37 @@ import { ExpandapanelComponent } from './views/expandapanel/expandapanel.compone
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 
-import { TradeListComponent } from './views/trade/tradelist/tradelist.component';
+import { MyTradeListComponent } from './views/trade/mytradelist/mytradelist.component';
 import { TradeInfoComponent } from './views/trade/tradeinfo/tradeinfo.component';
 
 import { TraderListComponent } from './views/trader/traderlist/traderlist.component';
 import { TraderInfoComponent } from './views/trader/traderinfo/traderinfo.component';
 import { TraderAccountComponent } from './views/trader/traderaccount/traderaccount.component';
 
-import { PersonaldetailsComponent } from './views/trader/personaldetails/personaldetails.component';
-import { SecuritydetailsComponent } from './views/trader/securitydetails/securitydetails.component';
-import { ContactdetailsComponent } from './views/trader/contactdetails/contactdetails.component';
+import { PersonalDetailsComponent } from './views/trader/personaldetails/personaldetails.component';
+import { SecurityDetailsComponent } from './views/trader/securitydetails/securitydetails.component';
+import { ContactDetailsComponent } from './views/trader/contactdetails/contactdetails.component';
 //import { TraderaccountComponent } from './views/trader/traderaccount/traderaccount.component';
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
 import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
 import { AddTradeComponent } from './views/trade/addtrade/addtrade.component';
-import { AddtraderComponent } from './views/trader/addtrader/addtrader.component';
+import { AddTraderComponent } from './views/trader/addtrader/addtrader.component';
 
-import { AddobjectcategoryComponent } from './views/objectcategory/addobjectcategory/addobjectcategory.component';
-import { ObjectcategorylistComponent } from './views/objectcategory/objectcategorylist/objectcategorylist.component';
-import { AddphonetypeComponent } from './views/phone/addphonetype/addphonetype.component';
-import { PhonetypelistComponent } from './views/phone/phonetypelist/phonetypelist.component';
-import { AddresstypelistComponent } from './views/address/addresstypelist/addresstypelist.component';
-import { AddaddresstypeComponent } from './views/address/addaddresstype/addaddresstype.component';
-import { AddsocialnetworktypeComponent } from './views/socialnetwork/addsocialnetworktype/addsocialnetworktype.component';
-import { SocialnetworktypelistComponent } from './views/socialnetwork/socialnetworktypelist/socialnetworktypelist.component';
-import { AddsecurityquestionComponent } from './views/securityquestion/addsecurityquestion/addsecurityquestion.component';
-import { SecurityquestionlistComponent } from './views/securityquestion/securityquestionlist/securityquestionlist.component';
-import { AddprocessmessageComponent } from './views/processmessage/addprocessmessage/addprocessmessage.component';
-import { ProcessmessagelistComponent } from './views/processmessage/processmessagelist/processmessagelist.component';
-
+import { AddObjectCategoryComponent } from './views/objectcategory/addobjectcategory/addobjectcategory.component';
+import { ObjectCategoryListComponent } from './views/objectcategory/objectcategorylist/objectcategorylist.component';
+import { AddPhoneTypeComponent } from './views/phone/addphonetype/addphonetype.component';
+import { PhoneTypeListComponent } from './views/phone/phonetypelist/phonetypelist.component';
+import { AddressTypeListComponent } from './views/address/addresstypelist/addresstypelist.component';
+import { AddAddressTypeComponent } from './views/address/addaddresstype/addaddresstype.component';
+import { AddSocialNetworkTypeComponent } from './views/socialnetwork/addsocialnetworktype/addsocialnetworktype.component';
+import { SocialNetworkTypeListComponent } from './views/socialnetwork/socialnetworktypelist/socialnetworktypelist.component';
+import { AddSecurityQuestionComponent } from './views/securityquestion/addsecurityquestion/addsecurityquestion.component';
+import { SecurityQuestionListComponent } from './views/securityquestion/securityquestionlist/securityquestionlist.component';
+import { AddProcessMessageComponent } from './views/processmessage/addprocessmessage/addprocessmessage.component';
+import { ProcessMessageListComponent } from './views/processmessage/processmessagelist/processmessagelist.component';
+import { AllTradesListComponent } from './views/trade/alltradeslist/alltradeslist.component';
 
 
 //initialises the process message service to get all process messages on start of the application
@@ -98,28 +99,30 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     ExpandapanelComponent,
     AboutComponent,
     ContactComponent,
-    TradeListComponent,
+    MyTradeListComponent,
     TradeInfoComponent,
     TraderListComponent,
     TraderInfoComponent,
     TraderAccountComponent,
     AddTradeComponent,
-    AddtraderComponent,
-    AddobjectcategoryComponent,
-    AddphonetypeComponent,  
-    PhonetypelistComponent,
-    ObjectcategorylistComponent,
-    AddresstypelistComponent,
-    AddaddresstypeComponent,
-    PersonaldetailsComponent,
-    SecuritydetailsComponent,
-    ContactdetailsComponent,
-    AddsocialnetworktypeComponent,
-    SocialnetworktypelistComponent,
-    AddsecurityquestionComponent,
-    SecurityquestionlistComponent,
-    AddprocessmessageComponent,
-    ProcessmessagelistComponent
+    AddTraderComponent,
+    AddObjectCategoryComponent,
+    AddPhoneTypeComponent,  
+    PhoneTypeListComponent,
+    ObjectCategoryListComponent,
+    AddressTypeListComponent,
+    AddAddressTypeComponent,
+    PersonalDetailsComponent,
+    SecurityDetailsComponent,
+    ContactDetailsComponent,
+    AddSocialNetworkTypeComponent,
+    SocialNetworkTypeListComponent,
+    AddSecurityQuestionComponent,
+    SecurityQuestionListComponent,
+    AddProcessMessageComponent,
+    ProcessMessageListComponent,
+    AllTradesListComponent,
+    //TokenInterceptor,
     //TraderaccountComponent
     //NG2FileUploadComponent
   ],  
@@ -140,9 +143,8 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     TabsModule,  
     MyDatePickerModule,
     NgIdleKeepaliveModule.forRoot()
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests and returns simulated server responses.
+    // Remove it when a real web api rest services are ready to receive requests.
     //HttpClientInMemoryWebApiModule.forRoot(
     //     InMemoryDataService, { dataEncapsulation: false }
     //)
@@ -152,7 +154,9 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     TradeApiService, ValidationService,
     AuthenticationService, ProcessMessageService,
     PageTitleService, LoggerService, AuthGuard,
-     // to initialise a service when application starts in this case to get all process messages when starts
+    // to inercept every request for authentication purposes
+    //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    // to initialise a service when application starts in this case to get all process messages when starts
     { provide: APP_INITIALIZER, useFactory: getprocessmessages, deps: [ProcessMessageService], multi: true } 
   ],  
 

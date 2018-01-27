@@ -33,7 +33,7 @@ export class TraderInfoComponent implements OnInit {
 
     this.setupPage();
     this.setupForm();
-
+    this.messagesService.emitRoute("nill");
   }
 
   private setupPage() {

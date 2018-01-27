@@ -1,4 +1,5 @@
 ﻿import {
+  IChangePasswordBindingModel, IRegisterBindingModel, ISetPasswordBindingModel, ILoginModel,
   ITraderList, ITraderDetails,
   IPersonalDetails, ISecurityDetails, IContactDetails,
   IAddress, IAddressType,
@@ -12,6 +13,59 @@
   IProcessMessage, IProcessMessageType,
   IPageTitle, IAttachement
 } from './interfaces';
+
+
+
+
+class LoginModel implements ILoginModel{
+  Email: string;
+  UserName: string;
+  Password: string;
+
+  constructor() {
+    this.Email = "";
+    this.Password = "";
+    this.UserName = "";
+  }
+}
+
+
+class ChangePasswordBindingModel implements  IChangePasswordBindingModel {
+  OldPassword: string;
+  NewPassword: string;
+  ConfirmPassword
+
+  constructor() {
+    this.OldPassword = "";
+    this.NewPassword = "";
+    this.ConfirmPassword = "";
+  }
+}
+
+
+class RegisterBindingModel implements  IRegisterBindingModel {
+  Email: string;
+  Role: string;
+  Password: string;
+  ConfirmPassword: string
+
+  constructor() {
+    this.Email = "";
+    this.Password = "";
+    this.ConfirmPassword = "";
+  }
+}
+
+
+class SetPasswordBindingModel implements ISetPasswordBindingModel {
+  NewPassword: string;
+  ConfirmPassword: string;
+
+  constructor() {
+    this.NewPassword = "";
+    this.ConfirmPassword = "";
+  }
+}
 
 
 class Trader implements ITraderList {
@@ -274,7 +328,7 @@ class EmailType implements IEmailType {
 
 
 class Trade implements ITrade {
-
+  tradeIdStr: string;
   tradeId: number; 
   tradeDatePublished: Date;
 
@@ -293,6 +347,7 @@ class Trade implements ITrade {
   tradeForObjectsDescription: string;
 
   constructor() {    
+    this.tradeIdStr = "";
     this.tradeId = 0;  
     this.tradeDatePublished = new Date(1900, 1, 1); 
 
@@ -489,6 +544,7 @@ class Guid {
 
 
 export {
+  ChangePasswordBindingModel, RegisterBindingModel, SetPasswordBindingModel, LoginModel,
   Trader, TraderDetails,
   PersonalDetails, ContactDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,

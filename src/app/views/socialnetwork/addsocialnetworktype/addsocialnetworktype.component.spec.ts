@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddsocialnetworktypeComponent } from './addsocialnetworktype.component';
+import { AddSocialNetworkTypeComponent } from './addsocialnetworktype.component';
 
-describe('AddsocialnetworktypeComponent', () => {
-  let component: AddsocialnetworktypeComponent;
-  let fixture: ComponentFixture<AddsocialnetworktypeComponent>;
+describe('AddSocialNetworkTypeComponent', () => {
+  let component: AddSocialNetworkTypeComponent;
+  let fixture: ComponentFixture<AddSocialNetworkTypeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddsocialnetworktypeComponent ]
+      declarations: [AddSocialNetworkTypeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddsocialnetworktypeComponent);
+    fixture = TestBed.createComponent(AddSocialNetworkTypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './addresstypelist.component.html',
   styleUrls: ['./addresstypelist.component.scss']
 })
-export class AddresstypelistComponent implements OnInit {
+export class AddressTypeListComponent implements OnInit {
 
   constructor() { }
 

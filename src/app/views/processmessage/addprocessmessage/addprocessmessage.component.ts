@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './addprocessmessage.component.html',
   styleUrls: ['./addprocessmessage.component.scss']
 })
-export class AddprocessmessageComponent implements OnInit {
+export class AddProcessMessageComponent implements OnInit {
 
   constructor() { }
 

@@ -121,7 +121,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
   private logOut() {
     this.authenticationService.logOut();
-    let route = ['Dashboard']
+    let route = ['/dashboard']
     this.router.navigate(route);
   }
 
@@ -170,7 +170,7 @@ export class AppComponent implements OnDestroy, OnInit {
       // the client has decided to continue, so refresh the token
       this.idle.onIdleEnd.subscribe(() => {
         // call the referesh token method to get the refresh token from the webapi        
-        this.authenticationService.refreshToken();
+        this.authenticationService.refreshTokenClient();
         //console.log("refresh from IDLE has happened");
         this.modalComponent.modalIsVisible = false;
       });

@@ -23,8 +23,10 @@
                                     <!-- make the menu hidden when the screen is too small with class "navbar-collapse collapse" -->
                                     <div id="nav" class="navbar-collapse collapse  navbar-right">
                                       <ul class="nav navbar-nav">
-                                        <li class="nav"><a href="" routerLink="/dashboard"><span class="textgray"><i>Dashboard</i></span></a></li>                                               
-                                        <li class="nav"><a href="" routerLink="/tradelist"><span class="textgray"><i>Trades</i></span></a></li>                                                                                                 
+                                        <li class="nav"><a href="" routerLink="/dashboard"><span class="textgray"><i>Dashboard</i></span></a></li>   
+                                        <li class="nav"><a href="" routerLink="/alltradeslist"><span class="textgray"><i>All Trades</i></span></a></li>              
+                                                                               
+                                        <li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/mytradelist"><span class="textgray"><i>My Trades</i></span></a></li>                                                                                                 
                                         <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>
                                         <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/register"><span class="textgray"><i>Register</i></span></a></li>                                      
                                         <li class="nav" *ngIf="isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
@@ -35,14 +37,14 @@
                         </header>
            
 
-                        <!-- LOGGED ON USER -->
+                        <!-- LOGGED ON USER -->                       
                         <div class="container col-md-10 col-md-offset-1">
-                        <div class="row ">
-                          <div *ngIf="_isUserAuthenticated">
-                            <label class="text-info">Logged on as:  {{ _userSession.userIdentity.name }}</label>
+                          <div class="row">
+                            <div *ngIf="isUserAuthenticated" class="panel panel-heading col-md-10 col-md-offset-1" >
+                              <i><label class="small textgray">Welcome back:  <span class="textcoral"> {{ userSession.userIdentity.userName}}</span></label></i>
+                            </div>
                           </div>
-                        </div>
-                      </div>
+                        </div>               
 
 
                          <!-- MASTER PAGE -->
@@ -69,7 +71,7 @@
 
 
                         <!-- PAGE FOOTER-->
-                        <div class="container panel panel-default col-md-10 col-md-offset-1" style="border-width:medium;border-color:darkgray;">
+                        <div class="container panel panel-heading navbar-btn col-md-10 col-md-offset-1" style="border-width:medium;border-color:darkgray;">
 
                                 <div class="row" style="margin-top:10px;">
 

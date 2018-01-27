@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddressTypeListComponent } from './addresstypelist.component';
+import { MyTradeListComponent } from './mytradelist.component';
 
-describe('AddressTypeListComponent', () => {
-  let component: AddressTypeListComponent;
-  let fixture: ComponentFixture<AddressTypeListComponent>;
+describe('MyTradeListComponent', () => {
+  let component: MyTradeListComponent;
+  let fixture: ComponentFixture<MyTradeListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AddressTypeListComponent ]
+      declarations: [MyTradeListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddressTypeListComponent);
+    fixture = TestBed.createComponent(MyTradeListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

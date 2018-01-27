@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './processmessagelist.component.html',
   styleUrls: ['./processmessagelist.component.scss']
 })
-export class ProcessmessagelistComponent implements OnInit {
+export class ProcessMessageListComponent implements OnInit {
 
   constructor() { }
 

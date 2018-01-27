@@ -13,17 +13,12 @@ export class ValidationService {
       'invalidEmailAddress': 'Invalid pattern in your email address.',
       'invalidEmailDomain': 'Invalid domain in your email address',     
       'invalidPassword': 'Invalid password. Password must be between 6 and 10 characters long, and should contain min one number.',
-      'invalidConfirmPassword': 'Invalid confirmpassword. Password must be between 6 and 10 characters long, and contains a number.',
-      'invalidName': 'Invalid name. The name should contain first name and last name separated by a space with maximum lenght of 50 characters. ',
-      'invalidTeamName': 'Invalid team name. The team name must contain alphanumeric character and maximum lenght of 50 characters. ',
+      'invalidConfirmPassword': 'Invalid confirm password. Password must be between 6 and 10 characters long, and contains a number.',
+      'invalidFirstName': 'Invalid name. Your first name should contain only alphabetical characters with maximum lenght of 15 characters. ',
+      'invalidMiddleName': 'Invalid name. Your middle name should contain only alphabetical characters with maximum lenght of 15 characters. ',
+      'invalidLastName': 'Invalid name. Your last name should contain only alphabetical characters with maximum lenght of 50 characters. ',  
       'invalidUsername': 'Invalid username. Username must be 5 alphanumeric characters long. ',
-      'invalidPhone': 'Invalid phone. Phone must contain 10 numeric characters. ',
-      'invalidWorkpoint': 'Invalid workpoint. Workpoint must contain 3-6 numeric characters separated with a dot character. ',
-      'invalidManager': '',
-      'invalidLevel': '',
-      'invalidPosition': '',
-      'invalidTeam': '',
-      'invalidLocation': ''
+      'invalidPhone': 'Invalid phone. Phone must contain 10 numeric characters. '
     };
     return config[validatorName];
   }
@@ -171,16 +166,39 @@ static workpointValidator(control: any) {
 }
 
 // GOOD
-static nameValidator(control: any) {
+static firstNameValidator(control: any) {
     // Name should be any character set separated with minimum one space
     if (control.value) {
-        if (control.value.match(/^(\w{1,20}\s+\w{1,30})$/)) {
+        if (control.value.match(/^(\w{1,15})$/)) {
             return null;
         } else {
-            return { 'invalidName': true };
+            return { 'invalidFirstName': true };
         }
     }
-}
+  }
+
+  static middleNameValidator(control: any) {
+    // Name should be any character set separated with minimum one space
+    if (control.value) {
+      if (control.value.match(/^(\w{1,15})$/)) {
+        return null;
+      } else {
+        return { 'invalidMiddletName': true };
+      }
+    }
+  }
+
+  static lastNameValidator(control: any) {
+    // Name should be any character set separated with minimum one space
+    if (control.value) {
+      if (control.value.match(/^(\w{1,20})$/)) {
+        return null;
+      } else {
+        return { 'invalidLastName': true };
+      }
+    }
+  }
+
 
 // GOOD
 static teamNameValidator(control: any) {

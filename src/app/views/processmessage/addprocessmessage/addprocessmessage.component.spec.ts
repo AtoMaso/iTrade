@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddprocessmessageComponent } from './addprocessmessage.component';
+import { AddProcessMessageComponent } from './addprocessmessage.component';
 
-describe('AddprocessmessageComponent', () => {
-  let component: AddprocessmessageComponent;
-  let fixture: ComponentFixture<AddprocessmessageComponent>;
+describe('AddProcessMessageComponent', () => {
+  let component: AddProcessMessageComponent;
+  let fixture: ComponentFixture<AddProcessMessageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddprocessmessageComponent ]
+      declarations: [AddProcessMessageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddprocessmessageComponent);
+    fixture = TestBed.createComponent(AddProcessMessageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

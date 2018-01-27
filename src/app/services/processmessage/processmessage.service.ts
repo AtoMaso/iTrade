@@ -71,14 +71,20 @@ export class ProcessMessageService {
   // and the message id passed to the child control on the app component
   public emitProcessMessage(code: string, message?: string) {
 
-    let localProcessMessage: ProcessMessage 
-    localProcessMessage = this.allProcessMessages.find(pm => pm.messageCode === code); 
+    let localProcessMessage: ProcessMessage = new ProcessMessage();
 
-    if (localProcessMessage === undefined || localProcessMessage === null ) {
-            localProcessMessage = new ProcessMessage();
-            localProcessMessage.messageText = "Unexprected error has occured. Please contact the application administration!";
-            localProcessMessage.messageTypeDescription = "error"
+    if (code === "PME") {    
+      localProcessMessage.messageText = message;
+      localProcessMessage.messageTypeDescription = "error";
     }
+    else { localProcessMessage = this.allProcessMessages.find(pm => pm.messageCode === code);  }
+
+    if (localProcessMessage === undefined || localProcessMessage === null) {    
+      localProcessMessage.messageText = "Unexprected error has occured. Please contact the application administration!";
+      localProcessMessage.messageTypeDescription = "error";
+    }
+  
+
     this.behaviorProcessMessageStore.getValue();
     this.behaviorProcessMessageStore.next(localProcessMessage);
   }

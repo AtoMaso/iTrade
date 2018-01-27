@@ -39,10 +39,10 @@ export class TradeApiService {
   //******************************************************
   // GET TRADES
   //******************************************************
-  public getTradesApi(id?: number): Observable<Trade[]> {
+  public getTradesApi(id?: string): Observable<Trade[]> {
   
-    if (id != 0 || id != undefined) { this.localUrl = `${tradesUrl}?traderId=${id}`; }     // get trader's list of trades
-    if (id == 0 || id == undefined) { this.localUrl = tradesUrl; }  // get all trade list
+    if (id != "" || id != undefined) { this.localUrl = `${tradesUrl}?traderId=${id}`; }     // get trader's list of trades
+    if (id == "" || id == undefined) { this.localUrl = tradesUrl; }  // get all trade list
 
     return this.httpClientService.get<Trade[]>(this.localUrl)     
       .retry(3)

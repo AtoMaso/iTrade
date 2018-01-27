@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SocialnetworktypelistComponent } from './socialnetworktypelist.component';
+import { SocialNetworkTypeListComponent } from './socialnetworktypelist.component';
 
-describe('SocialnetworktypelistComponent', () => {
-  let component: SocialnetworktypelistComponent;
-  let fixture: ComponentFixture<SocialnetworktypelistComponent>;
+describe('SocialNetworkTypeListComponent', () => {
+  let component: SocialNetworkTypeListComponent;
+  let fixture: ComponentFixture<SocialNetworkTypeListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SocialnetworktypelistComponent ]
+      declarations: [SocialNetworkTypeListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SocialnetworktypelistComponent);
+    fixture = TestBed.createComponent(SocialNetworkTypeListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

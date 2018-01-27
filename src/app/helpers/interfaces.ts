@@ -1,4 +1,31 @@
 ﻿
+interface ILoginModel {
+  Email: string;
+  UserName: string;
+  Password: string;
+}
+
+
+interface IChangePasswordBindingModel {
+  OldPassword: string;
+  NewPassword: string;
+  ConfirmPassword
+}
+
+interface IRegisterBindingModel {
+  Email: string;
+  Role: string;
+  Password: string;
+  ConfirmPassword: string
+}
+
+
+interface ISetPasswordBindingModel {
+    NewPassword: string;
+    ConfirmPassword: string;
+}
+
+
 interface ITraderList {
   traderId: string,
   traderFirstName: string,
@@ -124,6 +151,7 @@ interface IEmailType {
 
 
 interface ITrade {
+  tradeIdStr: string;
   tradeId: number;  
   tradeDatePublished: Date;
 
@@ -227,6 +255,7 @@ interface IProcessMessageType {
 
 
 export {
+  IChangePasswordBindingModel, IRegisterBindingModel, ISetPasswordBindingModel, ILoginModel,
   ITraderList, ITraderDetails,
   IPersonalDetails, ISecurityDetails, IContactDetails,
   IAddress, IAddressType, IPhone, IPhoneType,

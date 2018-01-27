@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddaddresstypeComponent } from './addaddresstype.component';
+import { AddAddressTypeComponent } from './addaddresstype.component';
 
-describe('AddaddresstypeComponent', () => {
-  let component: AddaddresstypeComponent;
-  let fixture: ComponentFixture<AddaddresstypeComponent>;
+describe('AddAddressTypeComponent', () => {
+  let component: AddAddressTypeComponent;
+  let fixture: ComponentFixture<AddAddressTypeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddaddresstypeComponent ]
+      declarations: [AddAddressTypeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddaddresstypeComponent);
+    fixture = TestBed.createComponent(AddAddressTypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
