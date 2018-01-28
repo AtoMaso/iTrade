@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
   //****************************************************
   private onLoginSuccess(res:any) {    
       if (sessionStorage["UserSession"] != "null") {               
-        this.router.navigate(['/traderaccount']);      // TODO or somekind of traders home page with the trader;s latest activity 
+        this.router.navigate(['/traderhome']);     
         this.emitUserSession(res);
       }    
   }

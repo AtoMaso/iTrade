@@ -20,19 +20,17 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 
 @Component({
   selector: 'app-mytradeslist',
-  templateUrl: './mytradelist.component.html',
-  styleUrls: ['./mytradelist.component.scss']
+  templateUrl: './mytradeslist.component.html',
+  styleUrls: ['./mytradeslist.component.scss']
 })
-export class MyTradeListComponent implements OnInit {
+export class MyTradesListComponent implements OnInit {
 
   private traderId: string;
   private removedTradeId: number;
   private tradeIdToBeRemoved: number;
   private tradeToRemove: Trade;
-
   private session: UserSession;
   private identity: UserIdentity = new UserIdentity;
-
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false;
   private isOwner: boolean = false;
@@ -49,30 +47,11 @@ export class MyTradeListComponent implements OnInit {
   };
 
 
-  // implement OnInit to get the initial list of articles
-  public ngOnInit() {
-
-      if (sessionStorage["UserSession"] != "null") {
-              try {
-                this.session = JSON.parse(sessionStorage["UserSession"])
-                this.isAuthenticated = this.session.authentication.isAuthenticated;
-                this.identity.roles = this.session.userIdentity.roles;            
-                this.traderId = this.session.userIdentity.userId;
-              }
-              catch (ex) {
-                this.messagesService.emitProcessMessage("PMG");
-              }
-    }
-
-      this.messagesService.emitRoute("nill");
-      this.isRequesting = true;
-      // set proper title depending of what we displaying
-      this.pageTitleService.emitPageTitle(new PageTitle("My Trades"));
-
-      this.getTrades(this.traderId);
-      // get all or author's articles
-      this.getTrades(this.traderId);
-
+  // implement OnInit to get the initiale list of tades
+  ngOnInit() {
+    this.getUseridentity();
+    this.initialiseComponent();
+    this.getTrades(this.traderId);
   }
 
 
@@ -128,8 +107,30 @@ export class MyTradeListComponent implements OnInit {
 
 
   //*****************************************************
-  // HELPER METHODS ARTICLES
+  // HELPER METHODS 
   //*****************************************************
+  private getUseridentity() {
+    if (sessionStorage["UserSession"] != "null") {
+      try {
+        this.session = JSON.parse(sessionStorage["UserSession"])
+        this.isAuthenticated = this.session.authentication.isAuthenticated;
+        this.identity.roles = this.session.userIdentity.roles;
+        this.traderId = this.session.userIdentity.userId;
+      }
+      catch (ex) {
+        this.messagesService.emitProcessMessage("PMG");
+      }
+    }
+  }
+
+
+  private initialiseComponent() {
+    this.messagesService.emitRoute("nill");
+    this.isRequesting = true;
+    this.pageTitleService.emitPageTitle(new PageTitle("My Trades"));
+  }
+
+
   private onSuccessRemoveTrade(trade: Trade) {
     if (trade) {
       this.removedTradeId = trade.tradeId;
@@ -187,7 +188,6 @@ export class MyTradeListComponent implements OnInit {
   }
 
 
-  // an error has occured
   private onError(err: any, operation: string) {
     // stop the spinner
     this.isRequesting = false;
@@ -393,21 +393,5 @@ export class MyTradeListComponent implements OnInit {
   }
 
 }
-
-
-
-  //public ngAfterViewInit() {
-  //  //// ONE WAY OF PASSING VALUES TO MODAL    TODO find out how to replace this
-  //  ////triggered when modal is about to be shown
-  //  //$('#removeAllowed').on('show.bs.modal', function (event) {
-  //  //  //get data-articleid attribute of the clicked element
-  //  //  var artId = $(event.relatedTarget).data('tradeId');
-  //  //  var modal = $(this)
-  //  //  //populate the textbox
-  //  //  modal.find('input[name="tradeId"]').val(artId);
-  //  //  //modal.find('.modal-body input').val(artId);
-  //  //});
-  //}
-
 
 

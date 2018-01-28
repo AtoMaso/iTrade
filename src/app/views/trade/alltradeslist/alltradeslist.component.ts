@@ -24,15 +24,12 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
   styleUrls: ['./alltradeslist.component.scss']
 })
 export class AllTradesListComponent implements OnInit {
-
-  private traderId: string;
+ 
   private removedTradeId: number;
   private tradeIdToBeRemoved: number;
   private tradeToRemove: Trade;
-
   private session: UserSession;
   private identity: UserIdentity = new UserIdentity;
-
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false;
   private isAllowedToAddTrade: boolean = false;
@@ -52,29 +49,10 @@ export class AllTradesListComponent implements OnInit {
 
 
   // implement OnInit to get the initial list of articles
-  public ngOnInit() {
-
-    if (sessionStorage["UserSession"] != "null") {
-      try {
-        this.session = JSON.parse(sessionStorage["UserSession"])
-        this.isAuthenticated = this.session.authentication.isAuthenticated;
-        this.identity.roles = this.session.userIdentity.roles;
-        this.IsAllowedToAddTrade();
-        this.IsAllowedToRemoveTrade();
-       
-      }
-      catch (ex) {
-        this.messagesService.emitProcessMessage("PMG");
-      }
-    }
-
-    this.messagesService.emitRoute("nill");
-    this.isRequesting = true;
-  
-    // set proper title depending of what we displaying 
-    this.pageTitleService.emitPageTitle(new PageTitle("All Trades"));
-    // get all or author's articles
-    this.getTrades(this.traderId);
+  public ngOnInit() {   
+    this.getUseridentity();
+    this.initialiseComponent();      
+    this.getTrades("");
 
   }
 
@@ -96,9 +74,9 @@ export class AllTradesListComponent implements OnInit {
   //*****************************************************
   // GET TRADES
   //*****************************************************
-  private getTrades(traderId:string) {
+  private getTrades(Id:string) {
 
-    this.tradeApiService.getTradesApi(traderId)
+    this.tradeApiService.getTradesApi(Id)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
         this.data = this.TransformData(returnedTrades),
@@ -133,20 +111,30 @@ export class AllTradesListComponent implements OnInit {
   }
 
 
-  //****************************************************
-  // REMOVE TRADE
-  //****************************************************
-  //private removeTrade(tradeId: string) {
-  //  this.tradeApiService.removeTrade(tradeId)
-  //    .subscribe((removedTrade: Trade) => this.onSuccessRemoveTrade(removedTrade)
-  //    , error => this.onError(error, "removeArticle"));
-  //}
-
-
-
   //*****************************************************
-  // HELPER METHODS ARTICLES
+  // HELPER METHODS
   //*****************************************************
+  private getUseridentity() {
+    if (sessionStorage["UserSession"] != "null") {
+      try {
+        this.session = JSON.parse(sessionStorage["UserSession"])
+        this.isAuthenticated = this.session.authentication.isAuthenticated;
+        this.identity.roles = this.session.userIdentity.roles;       
+      }
+      catch (ex) {
+        this.messagesService.emitProcessMessage("PMG");
+      }
+    }
+  }
+
+
+  private initialiseComponent() {
+    this.messagesService.emitRoute("nill");
+    this.isRequesting = true;
+    this.pageTitleService.emitPageTitle(new PageTitle("All Trades"));
+  }
+
+
   private onSuccessRemoveTrade(trade: Trade) {
     if (trade) {
       this.removedTradeId = trade.tradeId;
@@ -204,29 +192,6 @@ export class AllTradesListComponent implements OnInit {
   }
 
 
-  private IsAllowedToAddTrade() {
-    // in TYPESCRIPT call to class methods containing call to "this" have to be created
-    // and relevant parameters passed (roles in this case) and then method called on
-    // that instance of the class, in this instance "identity" object. The reason for this is
-    // the "this" keyword is the one of the object calling the method
-    if (this.isAuthenticated) {
-      this.isAllowedToAddTrade = true;
-    }
-  }
-
-
-  private IsAllowedToRemoveTrade() {
-    // in TYPESCRIPT call to class methods containing call to "this" have to be created
-    // and relevant parameters passed (roles in thsi case) and then method called on
-    // that instance of the class, in this instance "identity" object. The reason for this is
-    // the "this" keyword is the one of the object calling the method
-    if (this.isAuthenticated) {
-      this.isAllowedToRemoveTrade = true;
-    }
-  }
-
-
-  // an error has occured
   private onError(err: any, operation: string) {
     // stop the spinner
     this.isRequesting = false;
@@ -286,7 +251,6 @@ export class AllTradesListComponent implements OnInit {
   };
 
 
-  // all sorting and filtering methods
   private onPageChange(passedpage: number) {
     this.config.currentPage = passedpage;
   }

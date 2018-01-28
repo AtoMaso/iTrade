@@ -32,8 +32,10 @@ import { InMemoryDataService }  from './services/inmemory/in-memory-data.service
 //components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
+
 import { LoginComponent } from './views/authentication/login.component';
 import { RegisterComponent } from './views/authentication/register.component';
+
 import { PageTitleComponent } from './views/controls/pagetitle/pagetitle.component';
 import { ModalComponent } from './views/controls/modal/modal.component';
 import { SpinnerOneComponent } from './views/controls/spinner/spinnerone.component';
@@ -42,12 +44,15 @@ import { ExpandapanelComponent } from './views/expandapanel/expandapanel.compone
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 
-import { MyTradeListComponent } from './views/trade/mytradelist/mytradelist.component';
-import { TradeInfoComponent } from './views/trade/tradeinfo/tradeinfo.component';
+import { AddTradeComponent } from './views/trade/addtrade/addtrade.component';
+import { AllTradesListComponent } from './views/trade/alltradeslist/alltradeslist.component';
+import { MyTradesListComponent } from './views/trade/mytradeslist/mytradeslist.component';
+import { TradeDetailsComponent } from './views/trade/tradedetails/tradedetails.component';
 
-import { TraderListComponent } from './views/trader/traderlist/traderlist.component';
-import { TraderInfoComponent } from './views/trader/traderinfo/traderinfo.component';
-import { TraderAccountComponent } from './views/trader/traderaccount/traderaccount.component';
+import { AllTradersListComponent } from './views/trader/alltraderslist/alltraderslist.component';
+import { TraderDetailsComponent } from './views/trader/traderdetails/traderdetails.component';
+import { TraderHomeComponent } from './views/trader/traderhome/traderhome.component';
+import { MyTraderAccountComponent } from './views/trader/mytraderaccount/mytraderaccount.component';
 
 import { PersonalDetailsComponent } from './views/trader/personaldetails/personaldetails.component';
 import { SecurityDetailsComponent } from './views/trader/securitydetails/securitydetails.component';
@@ -57,22 +62,24 @@ import { ContactDetailsComponent } from './views/trader/contactdetails/contactde
 
 import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
-import { AddTradeComponent } from './views/trade/addtrade/addtrade.component';
-import { AddTraderComponent } from './views/trader/addtrader/addtrader.component';
 
 import { AddObjectCategoryComponent } from './views/objectcategory/addobjectcategory/addobjectcategory.component';
 import { ObjectCategoryListComponent } from './views/objectcategory/objectcategorylist/objectcategorylist.component';
+
 import { AddPhoneTypeComponent } from './views/phone/addphonetype/addphonetype.component';
 import { PhoneTypeListComponent } from './views/phone/phonetypelist/phonetypelist.component';
+
 import { AddressTypeListComponent } from './views/address/addresstypelist/addresstypelist.component';
 import { AddAddressTypeComponent } from './views/address/addaddresstype/addaddresstype.component';
 import { AddSocialNetworkTypeComponent } from './views/socialnetwork/addsocialnetworktype/addsocialnetworktype.component';
+
 import { SocialNetworkTypeListComponent } from './views/socialnetwork/socialnetworktypelist/socialnetworktypelist.component';
 import { AddSecurityQuestionComponent } from './views/securityquestion/addsecurityquestion/addsecurityquestion.component';
+
 import { SecurityQuestionListComponent } from './views/securityquestion/securityquestionlist/securityquestionlist.component';
+
 import { AddProcessMessageComponent } from './views/processmessage/addprocessmessage/addprocessmessage.component';
 import { ProcessMessageListComponent } from './views/processmessage/processmessagelist/processmessagelist.component';
-import { AllTradesListComponent } from './views/trade/alltradeslist/alltradeslist.component';
 
 
 //initialises the process message service to get all process messages on start of the application
@@ -99,13 +106,16 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     ExpandapanelComponent,
     AboutComponent,
     ContactComponent,
-    MyTradeListComponent,
-    TradeInfoComponent,
-    TraderListComponent,
-    TraderInfoComponent,
-    TraderAccountComponent,
+ 
+    AllTradersListComponent,
+    TraderDetailsComponent,
+    TraderHomeComponent,
+    MyTraderAccountComponent,
+
     AddTradeComponent,
-    AddTraderComponent,
+    AllTradesListComponent,
+    MyTradesListComponent,
+    TradeDetailsComponent,   
     AddObjectCategoryComponent,
     AddPhoneTypeComponent,  
     PhoneTypeListComponent,
@@ -121,7 +131,8 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     SecurityQuestionListComponent,
     AddProcessMessageComponent,
     ProcessMessageListComponent,
-    AllTradesListComponent,
+    
+ 
     //TokenInterceptor,
     //TraderaccountComponent
     //NG2FileUploadComponent

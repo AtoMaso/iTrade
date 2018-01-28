@@ -36,15 +36,16 @@ export class DashboardComponent implements OnInit {
     this.titleService.emitPageTitle(new PageTitle("Latest trades"));   
     this.messagesService.emitRoute("nill");
 
-    this.isRequesting = true;      
-    this.getTradesApi();
+    this.isRequesting = true;          
+    // get the top 8 trades by date published in asc order
+    this.getFilteredTrades(8, "tradeDatePublished", 'asc');
   }
 
 
   //*****************************************************
-  //  GET THE TOP TRADES
+  //  GET ALL TRADES
   //*****************************************************
-  public getTradesApi(): void {
+  public getTrades(): void {
       // call the service to get the data  
     this.tradeApiService.getTradesApi()
       .subscribe((returnedTrades: Trade[]) => {
@@ -55,6 +56,20 @@ export class DashboardComponent implements OnInit {
      (res: Response) => this.onError(res, "getTradesApi method"));          
   } 
 
+
+  //*****************************************************
+  //  GET TOP 8 TRADES
+  //*****************************************************
+  public getFilteredTrades(number: number, filter:string, order:string): void {
+    // call the service to get the data  
+    this.tradeApiService.getFilteredTradesApi(number, filter, order)
+      .subscribe((returnedTrades: Trade[]) => {
+        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
+        this.trades = this.TransformData(returnedTrades);
+        this.isRequesting = false;
+      },
+      (res: Response) => this.onError(res, "getTradesApi method"));
+  } 
 
 
   //*****************************************************
@@ -76,6 +91,7 @@ export class DashboardComponent implements OnInit {
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
       trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
       trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
+      trd.images = value.images; // get the image s and pass them to the  carousel child
 
       value.tradeForObjects.forEach(function (value) {
         trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";

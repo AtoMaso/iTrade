@@ -9,11 +9,11 @@ import { PageTitleService } from '../../../services/pagetitle/pagetitle.service'
 import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../../helpers/classes';
 
 @Component({
-  selector: 'app-tradeinfo',
-  templateUrl: './traderinfo.component.html',
-  styleUrls: ['./traderinfo.component.scss']
+  selector: 'app-traderdetails',
+  templateUrl: './traderdetails.component.html',
+  styleUrls: ['./traderdetails.component.scss']
 })
-export class TraderInfoComponent implements OnInit {
+export class TraderDetailsComponent implements OnInit {
 
   private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
   public myForm: FormGroup;

@@ -8,16 +8,15 @@ import { RegisterComponent } from './views/authentication/register.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 
-import { MyTradeListComponent } from './views/trade/mytradelist/mytradelist.component';
-import { TradeInfoComponent } from './views/trade/tradeinfo/tradeinfo.component';
+import { MyTradesListComponent } from './views/trade/mytradeslist/mytradeslist.component';
+import { TradeDetailsComponent } from './views/trade/tradedetails/tradedetails.component';
 import { AddTradeComponent } from './views/trade/addtrade/addtrade.component';
 import { AllTradesListComponent } from './views/trade/alltradeslist/alltradeslist.component';
 
-import { TraderListComponent } from './views/trader/traderlist/traderlist.component';
-import { TraderInfoComponent } from './views/trader/traderinfo/traderinfo.component';
-import { TraderAccountComponent } from './views/trader/traderaccount/traderaccount.component';
-import { AddTraderComponent } from './views/trader/addtrader/addtrader.component';
-
+import { AllTradersListComponent } from './views/trader/alltraderslist/alltraderslist.component';
+import { TraderDetailsComponent } from './views/trader/traderdetails/traderdetails.component';
+import { TraderHomeComponent } from './views/trader/traderhome/traderhome.component';
+import { MyTraderAccountComponent } from  './views/trader/mytraderaccount/mytraderaccount.component';;
 
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
@@ -32,17 +31,19 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },    
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
+
   //t r a d e s
-  { path: 'alltradeslist', component: AllTradesListComponent },
-  { path: 'mytradelist', component: MyTradeListComponent },
-  { path: 'tradeinfo', component: TradeInfoComponent },
+  { path: 'alltradeslist', component: AllTradesListComponent }, 
+  { path: 'tradedetails', component: TradeDetailsComponent }, // this should be accessible from the dashboard or the list of all trades or my trades view
   { path: 'addtrade', component: AddTradeComponent, canActivate: [AuthGuard] },
 
   // t r a d e r
-  { path: 'traderlist', component:TraderListComponent, canActivate: [AuthGuard]},
-  { path: 'traderinfo', component: TraderInfoComponent },
-  { path: 'traderaccount', component: TraderAccountComponent, canActivate: [AuthGuard] },  
-  { path: 'addtrader', component: AddTraderComponent, canActivate: [AuthGuard]},
+  { path: 'traderdetails', component: TraderDetailsComponent }, // this should be accessible from the dashboard of all trades view  
+  { path: 'traderhome', component: TraderHomeComponent, canActivate: [AuthGuard] },   
+  { path: 'mytradeslist', component: MyTradesListComponent, canActivate: [AuthGuard] },
+  { path: 'mytraderaccount', component: MyTraderAccountComponent, canActivate: [AuthGuard] },
+  { path: 'alltraderslist', component: AllTradersListComponent, canActivate: [AuthGuard] },
+
   //{ path: 'ng2-file-upload', component: NG2FileUploadComponent, canActivate: [AuthGuard] },
 
 ];

@@ -26,7 +26,9 @@
                                         <li class="nav"><a href="" routerLink="/dashboard"><span class="textgray"><i>Dashboard</i></span></a></li>   
                                         <li class="nav"><a href="" routerLink="/alltradeslist"><span class="textgray"><i>All Trades</i></span></a></li>              
                                                                                
-                                        <li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/mytradelist"><span class="textgray"><i>My Trades</i></span></a></li>                                                                                                 
+                                        <li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/traderhome"><span class="textgray"><i>Trader Home</i></span></a></li>      
+                                        <li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/mytradeslist"><span class="textgray"><i>My Trades</i></span></a></li>          
+                                        <li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/mytraderaccount"><span class="textgray"><i>My Account</i></span></a></li>                                                                                               
                                         <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>
                                         <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/register"><span class="textgray"><i>Register</i></span></a></li>                                      
                                         <li class="nav" *ngIf="isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
@@ -41,7 +43,7 @@
                         <div class="container col-md-10 col-md-offset-1">
                           <div class="row">
                             <div *ngIf="isUserAuthenticated" class="panel panel-heading col-md-10 col-md-offset-1" >
-                              <i><label class="small textgray">Welcome back:  <span class="textcoral"> {{ userSession.userIdentity.userName}}</span></label></i>
+                              <i><label class="small textgray">Welcome back:  <span class="textlightcoral text-uppercase"> {{ userSession.userIdentity.userName}}</span></label></i>
                             </div>
                           </div>
                         </div>               

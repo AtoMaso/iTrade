@@ -119,8 +119,11 @@
 
 .textcoral {
     color:coral;
+    
 }
-
+.textlightcoral {
+    color:lightcoral;
+}
 
 .textgreen {
     color:forestgreen;

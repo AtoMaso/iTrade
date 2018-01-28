@@ -73,6 +73,22 @@ export class TradeApiService {
   }
 
 
+  // gets set of articles
+  public getFilteredTradesApi( number: number, filter:string, order: string) {
+    //$select = name, revenue,& $orderby=revenue asc, name desc & $filter=revenue ne null 
+    this.localUrl = `${tradesUrl}?number=${number}&filter=${filter}&order=${order}`; 
+
+    return this.httpClientService.get(this.localUrl)
+      .retry(3)
+      .catch((err: HttpErrorResponse, result) => {
+
+        if (err.error instanceof Error) { this.handleError("Client side error occured: getFilteredTradesApi method in the tradeapi service error", err); }
+        else { this.handleError("Server side error occured: getFilteredTradesApi method in the tradeapi service error", err); }
+        return Observable.throw(err);
+      });
+  }
+
+
   //******************************************************
   // GET TRADE
   //******************************************************

@@ -4,6 +4,7 @@
 <div class="container col-md-12">
 
   <div class="row">
+
     <div class="col-md-2 textgray">
       <!-- this is ng2-table filtering section used but the rest of it is independent table done by me-->
       <span class="smalltextbold">Filter in all columns</span>
@@ -42,6 +43,7 @@
       </div>
 
     </div>
+
   </div>
 
   <br />
@@ -50,7 +52,7 @@
 
     <div class="table-responsive">
 
-      <table class="table table-bordered table-hover table-condensed">
+      <table class="table table-bordered table-hover">
 
         <thead>
           <tr>
@@ -121,31 +123,31 @@
 
         <tr *ngFor="let trade of rows  | paginate:config ">
 
-          <td class="col-md-1 smalltext textgray" style="vertical-align:middle">
+          <td class="col-md-1 smalltext textgray text-uppercase" style="vertical-align:middle">
             <span>{{ trade.tradeId  }}</span>
           </td>
 
 
           <td class="col-md-2" style="vertical-align:middle">
-            <a [routerLink]="['/tradeinfo']" [queryParams]="{id: trade.tradeId}" class="smalltext text-success">
+            <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral">
               <span>{{ trade.tradeObjectDescription  }}</span>
             </a>
           </td>
 
-          <td class="col-md-2 smalltext textgray" style="vertical-align:middle">
+          <td class="col-md-2 smalltext textgray text-uppercase" style="vertical-align:middle">
             <span>{{ trade.tradeForObjectsDescription  }}</span>
           </td>
 
-          <td class="col-md-2 smalltex textgray" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
+          <td class="col-md-2 smalltex textgray text-uppercase" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
 
 
           <td class="col-md-3" style="vertical-align:middle">
-            <a [routerLink]="['/traderinfo']" [queryParams]="{id: trade.traderId}" class="smalltext text-success">
+            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase">
               <span> {{ trade.traderFullName }}</span>
             </a>
           </td>
 
-          <td class="col-md-2 smalltext textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+          <td class="col-md-2 smalltext textgray text-uppercase" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
         </tr>
 
       </table>
@@ -167,11 +169,10 @@
                            [maxSize]="maxSize">
       </pagination-controls>
 
-
-
     </div>
 
   </div>
+
 </div>
 
 

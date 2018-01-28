@@ -11,13 +11,13 @@ import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../.
 
 
 @Component({
-  selector: 'app-tradeinfo',
-  templateUrl: './tradeinfo.component.html',
-  styleUrls: ['./tradeinfo.component.scss']
+  selector: 'app-tradedetails',
+  templateUrl: './tradedetails.component.html',
+  styleUrls: ['./tradedetails.component.scss']
 })
 
 
-export class TradeInfoComponent implements OnInit {
+export class TradeDetailsComponent implements OnInit {
 
   private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
   public myForm: FormGroup;

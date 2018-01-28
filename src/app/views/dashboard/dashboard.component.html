@@ -1,10 +1,9 @@
                                      
-<div class="panel-group col-md-4 col-lg-3 col-sm-5" *ngFor="let trade of trades | SortTradesByDatePipe: D  | TopTradesPipe: 8">
+<div class="panel-group col-md-4 col-lg-3 col-sm-5" *ngFor="let trade of trades | SortTradesByDatePipe: D">
 
           <div class="panel-heading" style="background-color:dimgray;">
               <strong>
-                <label class="smalltextbold textwhite restriction">
-                  Trading a<span class="textcoral"> {{ trade.tradeObjectDescription }}</span>
+                <label class="smalltextbold textwhite restriction"> Trading a<span class="textlightcoral"> {{ trade.tradeObjectDescription }}</span>
                 </label>
               </strong>
           </div>
@@ -16,24 +15,24 @@
                 </div>
                 <div>
                   <span><strong class="textgray">Trader:</strong></span>
-                  <span><a href="" [routerLink]="['/traderinfo']" [queryParams]="{traderId: trade.traderId}" class="text-info smalltext restrictionname" style="text-decoration:underline;">{{ trade.traderFullName }} </a></span>
+                  <span><a href="" [routerLink]="['/traderinfo']" [queryParams]="{traderId: trade.traderId}" class="textlightcoral smalltext restrictionname" style="text-decoration:underline;">{{ trade.traderFullName }} </a></span>
                 </div>
                 <div style="margin-top:15px;">
-                  <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId"  (onErrorPicked)="ChangeIsRequesting($event)"></carousel>               
+                  <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId"  (onErrorPicked)="ChangeIsRequesting($event)" [tradeImages]="trade.images"></carousel>               
                 </div>
           </div>
 
           <div class="panel-footer">
                 <div>
-                  <span> <strong class="textgray">Will trade for: </strong></span>
-                  <span class="textcoral">{{ trade.tradeForObjectsDescription }}</span>
+                  <strong class="textgray">Will trade for:</strong>
+                  <span class="textlightcoral">{{ trade.tradeForObjectsDescription }}</span>
                 </div>
                 <div> 
                     <span> <strong class="textgray">Published: </strong></span>
                     <span class="textgray">{{ trade.tradeDatePublished  | date }}</span>
                 </div>                
                 <div> 
-                  <span>  <a [routerLink]="['/tradeinfo']" [queryParams]="{tradeId: trade.tradeId}" class="text-info smalltext" style="text-decoration:underline">Trade details...</a></span>
+                  <span>  <a [routerLink]="['/tradedetails']" [queryParams]="{tradeId: trade.tradeId}" class="textlightcoral smalltext" style="text-decoration:underline">Trade details...</a></span>
                 </div>                          
         </div>
 </div>

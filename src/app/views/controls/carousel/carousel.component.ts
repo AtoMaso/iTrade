@@ -18,72 +18,48 @@ import { Image } from '../../../helpers/classes';
 
 export class CarouselComponent implements OnInit {
 
-  public allImages: Image[] = [];
-  public tradeImages: Image[] = []; 
+  //public tradeImages: Image[] = []; 
   public cariouselId: string = "myCarousel";
   public leftRight: string = "#myCarousel";
+
+  public imageOne: Image = new Image();
+  public imageTwo: Image = new Image();
+  public imageThree: Image = new Image();
 
   private isVisible: boolean = true;
   private haveImages: boolean = true;
 
   @Input() tradeId: number;
+  @Input() tradeImages: Image[];
   @Output() onErrorPicked: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private  imageService: ImageService,
                      private  loggerService: LoggerService,
-                     private  messagesService: ProcessMessageService) {            
-             
-  }  
+                     private  messagesService: ProcessMessageService) {  }  
 
 
   public ngOnInit() {
-    
-    //this.getImagesLocally();
-    //this.getImagesApi();  
-    this.getImagesApiByTradeId(this.tradeId)
+    // dashbord parent is passing the image of the trade
+    // so the following method is not needed, but we keep it if we needed later
+    // this.getImagesApiByTradeId(this.tradeId)  
+    // but we still need to get crousel ids 
+    this.getCrouselIds(this.tradeId);
   }
-
-
 
   //**************************************************************
   // GET IMAGES METHODS 
   //**************************************************************
-  // gets the images data from the local json file
-  public getImagesApi():void {
-
-      try {     
-        this.imageService.getImagesApi()
-                 .subscribe((images: Image[]) => { this.getImagesByTradeId(images, this.tradeId) });
-      }
-      catch (err) {
-        this.handleError("getImages method", err);
-      }
-  }
-
-
   public getImagesApiByTradeId(id:number): void {
 
     try {
       this.imageService.getImagesApiByTradeId(id).
             subscribe((images: Image[]) => {
-              this.tradeImages = images;            
+              this.tradeImages = images;    
               this.getCrouselIds(id);
            });
     }
     catch (err) {
-      this.handleError("getImagesApiById method", err);
-    }
-  }
-
-
-  public getImagesByTradeId(passedImages, passedId) {
-
-    this.getCrouselIds(passedId);
-
-    for (let x = 0; x < passedImages.length - 1; x++) {
-      if (+passedImages[x].tradeId === passedId) {
-        this.tradeImages.push(passedImages[x]);
-      }
+      this.onError("getImagesApiById method", err);
     }
   }
 
@@ -100,7 +76,7 @@ export class CarouselComponent implements OnInit {
   //**************************************************************
   //@param operation - name of the operation that failed
   //@param result - optional value to return as the observable result
-  private handleError(operation, err: HttpErrorResponse) {
+  private onError(operation, err: HttpErrorResponse) {
 
     this.haveImages = false;
 
