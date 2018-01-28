@@ -10,6 +10,7 @@
   accounts: 'http://localhost:5700/api/account/',
 
   trades: 'http://localhost:5700/api/trades',
+  pagesoftrades: 'http://localhost:5700/api/trades/GetPagesOfTrades',
   trade: 'http://localhost:5700/api/trades/',
   updatetrade: 'http://localhost:5700/api/trades/puttrade',
   addtrade: 'http://localhost:5700/api/trades/tosttrade',

@@ -36,6 +36,9 @@ export class AllTradesListComponent implements OnInit {
   private isAllowedToRemoveTrade: boolean = false;
   private isOwner: boolean = false;
 
+  private setNumber: number = 1;
+  private perPage: number = 4;
+
   // constructor which injects the services
   constructor(
     private route: ActivatedRoute,
@@ -52,8 +55,8 @@ export class AllTradesListComponent implements OnInit {
   public ngOnInit() {   
     this.getUseridentity();
     this.initialiseComponent();      
-    this.getTrades("");
-
+    //this.getTrades("");
+    this.getPageOfTrades("", this.setNumber, this.perPage);
   }
 
 
@@ -79,7 +82,7 @@ export class AllTradesListComponent implements OnInit {
     this.tradeApiService.getTradesApi(Id)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-        this.data = this.TransformData(returnedTrades),
+          this.data = this.TransformData(returnedTrades),
           this.isRequesting = false,
           this.onChangeTable(this.config)
       },
@@ -87,21 +90,32 @@ export class AllTradesListComponent implements OnInit {
 
   }
 
+  private nextSetOfRecords() {
+    this.setNumber = this.setNumber + 1;
+    this.getPageOfTrades("", this.setNumber, this.perPage);
+  }
+
+  private previousSetOfRecords() {
+    this.setNumber = this.setNumber - 1;
+    this.getPageOfTrades("", this.setNumber, this.perPage);
+  }
 
   //get set of records of articles service method
-  private getPageOfTrades(id: number, page: number, total: number) {
+  private getPageOfTrades(traderId: string, page: number=1, perpage: number=4) {
 
-    this.tradeApiService.getPageOfTrades(id, page, total)
+    this.tradeApiService.getPageOfTrades(traderId, page, perpage)
       .subscribe((returnedTrades: Trade[]) => {
 
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-        this.data = returnedTrades,
-          this.isRequesting = false,
+        this.data = this.TransformData(returnedTrades),
+          this.isRequesting = false,        
           this.onChangeTable(this.config);
 
       }, (res: Response) => this.onError(res, "getPageOfTradesArticles"));
   }
 
+
+ 
 
   //****************************************************
   // ADD TRADE

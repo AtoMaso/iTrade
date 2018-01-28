@@ -14,6 +14,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 import { Trade, UserSession, UserIdentity} from '../../helpers/classes';
 
 let tradesUrl = CONFIG.baseUrls.trades;
+let pagesOfTradesUrl = CONFIG.baseUrls.pagesoftrades;
 let tradeUrl = CONFIG.baseUrls.trade;
 let updateTradeUrl = CONFIG.baseUrls.updatetrade;
 let addTradeUrl = CONFIG.baseUrls.addtrade;
@@ -39,6 +40,8 @@ export class TradeApiService {
   //******************************************************
   // GET TRADES
   //******************************************************
+  //GOOD
+  // get all trades for a trader or all trades in the system
   public getTradesApi(id?: string): Observable<Trade[]> {
   
     if (id != "" || id != undefined) { this.localUrl = `${tradesUrl}?traderId=${id}`; }     // get trader's list of trades
@@ -55,12 +58,12 @@ export class TradeApiService {
       });
   }
 
-
-  // gets set of articles
-  public getPageOfTrades(id: number, page: number, perpage: number) {
+  // TODO to test it
+  // gets set of trades, number of pages and number of records per page
+  public getPageOfTrades(id: string, page:number = 1, perpage:number = 50) {
    
-    if (id != 0 || id != undefined) { this.localUrl = `${tradesUrl}?traderId=${id}&page=${page}&perpage=${perpage}`; }  // get trader's list of trade   
-    if (id == 0 || id == undefined) { this.localUrl = `${tradesUrl}?page=${page}&perpage=${perpage}`; }    // get all trade list
+    if (id != "" || id != undefined) { this.localUrl = `${pagesOfTradesUrl}?traderId=${id}&page=${page}&perpage=${perpage}`; }  // get trader's list of trade   
+    if (id == "" || id == undefined) { this.localUrl = `${pagesOfTradesUrl}?page=${page}&perpage=${perpage}`; }    // get all trade list
 
     return this.httpClientService.get(this.localUrl)
       .retry(3)
@@ -72,8 +75,8 @@ export class TradeApiService {
       });
   }
 
-
-  // gets set of articles
+  // GOOD
+  // gets filtered set of trades by date published for the dashboard view
   public getFilteredTradesApi( number: number, filter:string, order: string) {
     //$select = name, revenue,& $orderby=revenue asc, name desc & $filter=revenue ne null 
     this.localUrl = `${tradesUrl}?number=${number}&filter=${filter}&order=${order}`; 

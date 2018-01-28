@@ -73,9 +73,9 @@ export class MyTradesListComponent implements OnInit {
 
 
   //get set of records of articles service method
-  private getPageOfTrades(id: number, page: number, total: number) {
+  private getPageOfTrades(traderId: string, page: number, total: number) {
 
-    this.tradeApiService.getPageOfTrades(id, page, total)
+    this.tradeApiService.getPageOfTrades(traderId, page, total)
       .subscribe((returnedTrades: Trade[]) => {
 
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
