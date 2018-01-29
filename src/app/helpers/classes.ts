@@ -328,6 +328,8 @@ class EmailType implements IEmailType {
 
 
 class Trade implements ITrade {
+
+  totalTradesNumber: number;
   tradeIdStr: string;
   tradeId: number; 
   tradeDatePublished: Date;
@@ -347,6 +349,7 @@ class Trade implements ITrade {
   tradeForObjectsDescription: string;
 
   constructor() {    
+    this.totalTradesNumber = 0;
     this.tradeIdStr = "";
     this.tradeId = 0;  
     this.tradeDatePublished = new Date(1900, 1, 1); 

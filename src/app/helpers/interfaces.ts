@@ -151,6 +151,7 @@ interface IEmailType {
 
 
 interface ITrade {
+  totalTradesNumber: number;
   tradeIdStr: string;
   tradeId: number;  
   tradeDatePublished: Date;

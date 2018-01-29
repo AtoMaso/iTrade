@@ -35,6 +35,10 @@ export class MyTradesListComponent implements OnInit {
   private isAuthenticated: boolean = false;
   private isOwner: boolean = false;
 
+  private totalTradesNumber: number = 0;
+  private setNumber: number = 1;
+  private perPage: number = 4;
+
   // constructor which injects the services
   constructor(
     private route: ActivatedRoute,
@@ -51,7 +55,8 @@ export class MyTradesListComponent implements OnInit {
   ngOnInit() {
     this.getUseridentity();
     this.initialiseComponent();
-    this.getTrades(this.traderId);
+    //this.getTrades(this.traderId); 
+    this.getPageOfTrades(this.traderId, this.setNumber, this.perPage);
   }
 
 
@@ -74,19 +79,19 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
-  //get set of records of articles service method
-  private getPageOfTrades(traderId: string, page: number, total: number) {
+  //gets page of trades 
+  private getPageOfTrades(traderId: string, page: number = 1, perpage: number = 4) {
 
-    this.tradeApiService.getPageOfTrades(traderId, page, total)
+    this.tradeApiService.getPageOfTrades(traderId, page, perpage)
       .subscribe((returnedTrades: Trade[]) => {
 
-        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
+        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }// TODO change the process message code to reflect the trades
         else {
-            this.data = returnedTrades,
-            this.isRequesting = false,
+          this.data = this.TransformData(returnedTrades),
+            this.totalTradesNumber = this.data[0].totalTradesNumber;
+          this.isRequesting = false,
             this.onChangeTable(this.config);
         }
-
       }, (serviceError: Response) => this.onError(serviceError, "getPageOfTrades"));
   }
 
@@ -157,6 +162,8 @@ export class MyTradesListComponent implements OnInit {
     returnedTrades.forEach(function (value) {
 
       let trd = new Trade;
+
+      trd.totalTradesNumber = value.totalTradesNumber;
       trd.tradeIdStr = value.tradeId.toString();
       trd.tradeId = value.tradeId;
       trd.tradeDatePublished = value.tradeDatePublished;
@@ -189,6 +196,29 @@ export class MyTradesListComponent implements OnInit {
         this.isOwner = false;
         this.tradeIdToBeRemoved = null;
       }
+  }
+
+  // next page of records method
+  private nextSetOfRecords() {
+
+    this.messagesService.emitRoute("nill");
+    if (this.totalTradesNumber >= ((this.setNumber + 1) * this.perPage)) {
+      this.setNumber = this.setNumber + 1;
+      this.getPageOfTrades(this.traderId, this.setNumber, this.perPage);
+    }
+    else { this.messagesService.emitProcessMessage("PME", "There no more sets of records."); }
+  }
+
+
+  // previous page of records method
+  private previousSetOfRecords() {
+
+    this.messagesService.emitRoute("nill");
+    if (this.setNumber > 1) {
+      this.setNumber = this.setNumber - 1;
+      this.getPageOfTrades(this.traderId, this.setNumber, this.perPage);
+    }
+    else { this.messagesService.emitProcessMessage("PME", "This is the first set of records."); }
   }
 
 

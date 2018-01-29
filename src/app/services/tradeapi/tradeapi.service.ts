@@ -55,9 +55,8 @@ export class TradeApiService {
   // gets set of trades, number of pages and number of records per page
   public getPageOfTrades(id: string, page: number = 1, perpage: number = 50) {
 
-    if (id != "" || id != undefined) { this.localUrl = `${pagesOfTradesUrl}?traderId=${id}&page=${page}&perpage=${perpage}`; }  // get trader's list of trade   
-    if (id == "" || id == undefined) { this.localUrl = `${pagesOfTradesUrl}?page=${page}&perpage=${perpage}`; }    // get all trade list
-
+    // get trader's list of trade or all tardes based on is the traderId = "" or not     
+    this.localUrl = `${pagesOfTradesUrl}?traderId=${id}&page=${page}&perpage=${perpage}`;  
    
     return this.httpClientService.get(this.localUrl).retry(3);
   }

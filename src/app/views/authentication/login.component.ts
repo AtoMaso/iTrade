@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
     // we will display a fiendly process message using the process message service        
     if (err.status !== 200 || err.status !== 300) {
       try {
-        if (err.status === 400) { this.messageService.emitProcessMessage("PMEPI", err.error; }
+        if (err.status === 400) { this.messageService.emitProcessMessage("PMEPI", err.error); }
         else {
           if (err.error !== null) { this.messageService.emitProcessMessage("PME", err.error); }
           else { this.messageService.emitProcessMessage("PMG"); }

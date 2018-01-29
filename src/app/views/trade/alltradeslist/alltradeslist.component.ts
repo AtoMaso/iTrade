@@ -36,6 +36,7 @@ export class AllTradesListComponent implements OnInit {
   private isAllowedToRemoveTrade: boolean = false;
   private isOwner: boolean = false;
 
+  private totalTradesNumber: number = 0;
   private setNumber: number = 1;
   private perPage: number = 4;
 
@@ -56,13 +57,14 @@ export class AllTradesListComponent implements OnInit {
     this.getUseridentity();
     this.initialiseComponent();      
     //this.getTrades("");
-    this.getPageOfTrades("", this.setNumber, this.perPage);
+     this.getPageOfTrades("", this.setNumber, this.perPage);
   }
 
 
   //*****************************************************
   // GET TRADES
   //*****************************************************
+  // gets all trades
   private getTrades(Id:string) {
 
     this.tradeApiService.getTradesApi(Id)
@@ -79,19 +81,7 @@ export class AllTradesListComponent implements OnInit {
   }
 
 
-  private nextSetOfRecords() {
-    this.setNumber = this.setNumber + 1;
-    this.getPageOfTrades("", this.setNumber, this.perPage);
-  }
-
-
-  private previousSetOfRecords() {
-    this.setNumber = this.setNumber - 1;
-    this.getPageOfTrades("", this.setNumber, this.perPage);
-  }
-
-
-  //get set of records of articles service method
+  //gets page of trades 
   private getPageOfTrades(traderId: string, page: number=1, perpage: number=4) {
 
     this.tradeApiService.getPageOfTrades(traderId, page, perpage)
@@ -100,6 +90,7 @@ export class AllTradesListComponent implements OnInit {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }// TODO change the process message code to reflect the trades
         else {
                 this.data = this.TransformData(returnedTrades),
+                this.totalTradesNumber = this.data[0].totalTradesNumber;
                 this.isRequesting = false,
                 this.onChangeTable(this.config);
        }              
@@ -162,6 +153,8 @@ export class AllTradesListComponent implements OnInit {
     returnedTrades.forEach(function (value) {
 
       let trd = new Trade;
+
+      trd.totalTradesNumber = value.totalTradesNumber;
       trd.tradeIdStr = value.tradeId.toString();
       trd.tradeId = value.tradeId;
       trd.tradeDatePublished = value.tradeDatePublished;
@@ -177,9 +170,8 @@ export class AllTradesListComponent implements OnInit {
         trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
       });
 
-      transformedData.push(trd);
-
-    });
+      transformedData.push(trd);      
+    });  
     return transformedData;
   }
 
@@ -194,6 +186,30 @@ export class AllTradesListComponent implements OnInit {
       this.isOwner = false;
       this.tradeIdToBeRemoved = null;
     }
+  }
+
+
+  // next page of records method
+  private nextSetOfRecords() {
+
+    this.messagesService.emitRoute("nill");
+    if (this.totalTradesNumber >= ((this.setNumber + 1) * this.perPage)) {
+      this.setNumber = this.setNumber + 1;
+      this.getPageOfTrades("", this.setNumber, this.perPage);
+    }
+    else { this.messagesService.emitProcessMessage("PME", "There no more sets of records.");}   
+  }
+
+
+  // previous page of records method
+  private previousSetOfRecords() {
+
+    this.messagesService.emitRoute("nill");
+    if (this.setNumber  > 1) {
+      this.setNumber = this.setNumber - 1;
+      this.getPageOfTrades("", this.setNumber, this.perPage);
+    }
+    else { this.messagesService.emitProcessMessage("PME", "This is the first set of records."); }   
   }
 
 

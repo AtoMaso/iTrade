@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit {
   //*****************************************************
   public getFilteredTrades(number: number, filter:string, order:string): void {
     // call the service to get the data  
-    this.tradeApiService.getFilteredTradesApi(number, filter, order)
+    this.tradeApiService.getFilteredTradesApi(number, filter)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
         this.trades = this.TransformData(returnedTrades);
