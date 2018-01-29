@@ -490,10 +490,10 @@ class ProcessMessage implements IProcessMessage {
 
   constructor() {
     this.messageId = 0;
-    this.messageCode = "Undefined";
-    this.messageText = "Undefined";
+    this.messageCode = "";
+    this.messageText = "";
     this.messageTypeId = 0;
-    this.messageTypeDescription = "Undefined";  
+    this.messageTypeDescription = "";  
   }
 }
 

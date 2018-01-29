@@ -60,20 +60,6 @@ export class AllTradesListComponent implements OnInit {
   }
 
 
-  public ngAfterViewInit() {
-    //// ONE WAY OF PASSING VALUES TO MODAL    TODO find out how to replace this
-    ////triggered when modal is about to be shown
-    //$('#removeAllowed').on('show.bs.modal', function (event) {
-    //  //get data-articleid attribute of the clicked element
-    //  var artId = $(event.relatedTarget).data('tradeId');
-    //  var modal = $(this)
-    //  //populate the textbox
-    //  modal.find('input[name="tradeId"]').val(artId);
-    //  //modal.find('.modal-body input').val(artId);
-    //});
-  }
-
-
   //*****************************************************
   // GET TRADES
   //*****************************************************
@@ -81,42 +67,47 @@ export class AllTradesListComponent implements OnInit {
 
     this.tradeApiService.getTradesApi(Id)
       .subscribe((returnedTrades: Trade[]) => {
-        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
+        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }  // TODO change the process message code to reflect the trades
+        else {
           this.data = this.TransformData(returnedTrades),
-          this.isRequesting = false,
-          this.onChangeTable(this.config)
+            this.isRequesting = false,
+            this.onChangeTable(this.config)
+        }
       },
       (res: Response) => this.onError(res, "getTrades"));
 
   }
+
 
   private nextSetOfRecords() {
     this.setNumber = this.setNumber + 1;
     this.getPageOfTrades("", this.setNumber, this.perPage);
   }
 
+
   private previousSetOfRecords() {
     this.setNumber = this.setNumber - 1;
     this.getPageOfTrades("", this.setNumber, this.perPage);
   }
+
 
   //get set of records of articles service method
   private getPageOfTrades(traderId: string, page: number=1, perpage: number=4) {
 
     this.tradeApiService.getPageOfTrades(traderId, page, perpage)
       .subscribe((returnedTrades: Trade[]) => {
-
-        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-        this.data = this.TransformData(returnedTrades),
-          this.isRequesting = false,        
-          this.onChangeTable(this.config);
-
-      }, (res: Response) => this.onError(res, "getPageOfTradesArticles"));
+      
+        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }// TODO change the process message code to reflect the trades
+        else {
+                this.data = this.TransformData(returnedTrades),
+                this.isRequesting = false,
+                this.onChangeTable(this.config);
+       }              
+      }, (serviceError: Response) => this.onError(serviceError, "getPageOfTrades"));
   }
 
 
  
-
   //****************************************************
   // ADD TRADE
   //****************************************************
@@ -206,15 +197,16 @@ export class AllTradesListComponent implements OnInit {
   }
 
 
-  private onError(err: any, operation: string) {
-    // stop the spinner
+  private onError(serviceError: any, operation: string) {
+    // stop the spinner if running
     this.isRequesting = false;
 
-    // logg the audit log error
-    this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
+    // audit log the error passed
+    this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-    // show the process message
-    this.messagesService.emitProcessMessage("PMGTs");  // TODO  change the process message
+    if (serviceError.error.ModelState !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    else { this.messagesService.emitProcessMessage("PMGTs"); }
+     
   }
 
 
@@ -228,7 +220,7 @@ export class AllTradesListComponent implements OnInit {
   private isNameAsc = true;
   private isPublishedAsc = true;
 
-  private sortId: string = 'des'
+  private sortId: string = 'desc'
   private sortTitle: string = 'desc';
   private sortTitleFor: string = 'desc';
   private sortCategory: string = 'desc';

@@ -304,7 +304,7 @@ export class AuthenticationService implements OnDestroy {
 
 
  //******************************************************
-  // Login/Get token
+  // Login/Get token http way
   //******************************************************
   //public login(trader: LoginModel) {
 

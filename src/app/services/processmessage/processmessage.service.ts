@@ -26,6 +26,7 @@ let removeMessageUrl = CONFIG.baseUrls.removemessage;
 export class ProcessMessageService {
 
   public allProcessMessages: ProcessMessage[] = [];
+  public localProcessMessage: ProcessMessage = new ProcessMessage();
 
   public behaviorProcessMessageStore: BehaviorSubject<ProcessMessage> = new BehaviorSubject(null);
   public behaviorMessageObserver$: Observable<ProcessMessage> = this.behaviorProcessMessageStore.asObservable();
@@ -71,22 +72,42 @@ export class ProcessMessageService {
   // and the message id passed to the child control on the app component
   public emitProcessMessage(code: string, message?: string) {
 
-    let localProcessMessage: ProcessMessage = new ProcessMessage();
+   
 
-    if (code === "PME") {    
-      localProcessMessage.messageText = message;
-      localProcessMessage.messageTypeDescription = "error";
+    if (code === "PME") {
+      this.localProcessMessage = new ProcessMessage();
+      this.localProcessMessage.messageText = message;
+      this.localProcessMessage.messageTypeDescription = "error";
     }
-    else { localProcessMessage = this.allProcessMessages.find(pm => pm.messageCode === code);  }
+    else {
+      try {
 
-    if (localProcessMessage === undefined || localProcessMessage === null) {    
-      localProcessMessage.messageText = "Unexprected error has occured. Please contact the application administration!";
-      localProcessMessage.messageTypeDescription = "error";
+        this.localProcessMessage = this.allProcessMessages.find(pm => pm.messageCode === code);
+
+      } catch (exception) {
+
+          this.localProcessMessage = new ProcessMessage();
+          this.localProcessMessage.messageText = "Unexprected error has occured. Please contact the application administration!";
+          this.localProcessMessage.messageTypeDescription = "error";
+      }     
+  }
+
+    if (this.localProcessMessage === undefined || this.localProcessMessage === null) {    
+      if (message) {
+        this.localProcessMessage = new ProcessMessage();
+        this.localProcessMessage.messageText = message;
+        this.localProcessMessage.messageTypeDescription = "error";
+      }
+      else {
+        this.localProcessMessage = new ProcessMessage();
+        this.localProcessMessage.messageText = "Unexprected error has occured. Please contact the application administration!";
+        this.localProcessMessage.messageTypeDescription = "error";
+      }
     }
   
 
     this.behaviorProcessMessageStore.getValue();
-    this.behaviorProcessMessageStore.next(localProcessMessage);
+    this.behaviorProcessMessageStore.next(this.localProcessMessage);
   }
    
 

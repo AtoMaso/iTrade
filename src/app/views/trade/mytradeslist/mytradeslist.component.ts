@@ -63,9 +63,11 @@ export class MyTradesListComponent implements OnInit {
     this.tradeApiService.getTradesApi(traderId)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-        this.data = this.TransformData(returnedTrades),
-        this.isRequesting = false,
-        this.onChangeTable(this.config)
+        else {
+          this.data = this.TransformData(returnedTrades),
+            this.isRequesting = false,
+            this.onChangeTable(this.config)
+        }
       },
       (res: Response) => this.onError(res, "getTrades"));
 
@@ -79,11 +81,13 @@ export class MyTradesListComponent implements OnInit {
       .subscribe((returnedTrades: Trade[]) => {
 
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-        this.data = returnedTrades,
-        this.isRequesting = false,
-        this.onChangeTable(this.config);
+        else {
+            this.data = returnedTrades,
+            this.isRequesting = false,
+            this.onChangeTable(this.config);
+        }
 
-      }, (res: Response) => this.onError(res, "getPageOfTradesArticles"));
+      }, (serviceError: Response) => this.onError(serviceError, "getPageOfTrades"));
   }
 
 
@@ -188,15 +192,16 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
-  private onError(err: any, operation: string) {
-    // stop the spinner
+  private onError(serviceError: any, operation: string) {
+    // stop the spinner if running
     this.isRequesting = false;
 
-    // logg the audit log error
-    this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
+    // audit log the error passed
+    this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-    // show the process message
-    this.messagesService.emitProcessMessage("PMGTs");  // TODO  change the process message
+    if (serviceError.error.ModelState !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    else { this.messagesService.emitProcessMessage("PMGTs"); }
+
   }
 
 

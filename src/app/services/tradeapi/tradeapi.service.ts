@@ -43,52 +43,33 @@ export class TradeApiService {
   //GOOD
   // get all trades for a trader or all trades in the system
   public getTradesApi(id?: string): Observable<Trade[]> {
-  
+
     if (id != "" || id != undefined) { this.localUrl = `${tradesUrl}?traderId=${id}`; }     // get trader's list of trades
     if (id == "" || id == undefined) { this.localUrl = tradesUrl; }  // get all trade list
 
-    return this.httpClientService.get<Trade[]>(this.localUrl)     
-      .retry(3)
-      .catch((err: HttpErrorResponse, result) => {
-
-        if (err.error instanceof Error) { this.handleError("Client side error occured: getTradesApi method in the tradeapi service error", err);  }
-        else { this.handleError("Server side error occured:getTradesApi method in the tradeapi service error", err); }
-        return Observable.throw(err);
-         
-      });
+    // errors are handled in the component
+    return this.httpClientService.get<Trade[]>(this.localUrl).retry(3);
   }
 
-  // TODO to test it
+  // GOOD 
   // gets set of trades, number of pages and number of records per page
-  public getPageOfTrades(id: string, page:number = 1, perpage:number = 50) {
-   
+  public getPageOfTrades(id: string, page: number = 1, perpage: number = 50) {
+
     if (id != "" || id != undefined) { this.localUrl = `${pagesOfTradesUrl}?traderId=${id}&page=${page}&perpage=${perpage}`; }  // get trader's list of trade   
     if (id == "" || id == undefined) { this.localUrl = `${pagesOfTradesUrl}?page=${page}&perpage=${perpage}`; }    // get all trade list
 
-    return this.httpClientService.get(this.localUrl)
-      .retry(3)
-      .catch((err: HttpErrorResponse, result) => {
-
-        if (err.error instanceof Error) { this.handleError("Client side error occured: getPagesOfTrades method in the tradeapi service error", err); }
-        else { this.handleError("Server side error occured: getPagesOfTrades method in the tradeapi service error", err); }
-        return Observable.throw(err);
-      });
+   
+    return this.httpClientService.get(this.localUrl).retry(3);
   }
 
   // GOOD
   // gets filtered set of trades by date published for the dashboard view
-  public getFilteredTradesApi( number: number, filter:string, order: string) {
+  public getFilteredTradesApi(number: number, filter: string) {
     //$select = name, revenue,& $orderby=revenue asc, name desc & $filter=revenue ne null 
-    this.localUrl = `${tradesUrl}?number=${number}&filter=${filter}&order=${order}`; 
+    this.localUrl = `${tradesUrl}?number=${number}&filter=${filter}`;
 
-    return this.httpClientService.get(this.localUrl)
-      .retry(3)
-      .catch((err: HttpErrorResponse, result) => {
-
-        if (err.error instanceof Error) { this.handleError("Client side error occured: getFilteredTradesApi method in the tradeapi service error", err); }
-        else { this.handleError("Server side error occured: getFilteredTradesApi method in the tradeapi service error", err); }
-        return Observable.throw(err);
-      });
+    // errors are handled in the component
+    return this.httpClientService.get(this.localUrl).retry(3);
   }
 
 
@@ -115,14 +96,5 @@ export class TradeApiService {
   //*****************************************************
   // HELPER METHODS
   //*****************************************************
-  private handleError(operation: string, err: HttpErrorResponse) {
 
-    let errMsg = `error in ${operation}() retrieving ${err.url}`;
-
-    // audit log the error on the server side
-    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
-
-    // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-    return Observable.throw(errMsg);
-  };
 }
