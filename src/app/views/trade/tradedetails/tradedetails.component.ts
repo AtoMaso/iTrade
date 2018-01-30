@@ -1,13 +1,13 @@
-import { Component, OnInit, NgModule, VERSION, AfterViewInit} from '@angular/core';
-import { IMyDpOptions, IMyDateModel, IMyDayLabels, IMyMonthLabels, IMyDate, IMyOptions} from 'mydatepicker';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder, FormsModule } from '@angular/forms';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
+import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 
-import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../../helpers/classes';
+import {Trade, PageTitle } from '../../../helpers/classes';
 
 
 @Component({
@@ -18,81 +18,70 @@ import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../.
 
 
 export class TradeDetailsComponent implements OnInit {
+  private tradeId: number = 0;
+  private trade: Trade;
+  private hasImages: boolean; =false;
 
-  private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
-  public myForm: FormGroup;
-  public datePickerOptions: IMyOptions;
-  public currentLocale: string;
-  public tradeId: number;
-
-  constructor(
-    private formBuilder: FormBuilder,
+  constructor(  
+    private tradeApiService: TradeApiService;
     private route: ActivatedRoute,    
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private loggerService: LoggerService) {
+
+    this.route.queryParams.subscribe(params => { this.tradeId = params['id']; });
   };
 
   ngOnInit() {
 
-    this.setupPage();
-    this.setupForm();
-
+    this.setupPage(); 
+    this.getTheTrade(this.tradeId);
   }
   
   private setupPage() {
-    this.pageTitleService.emitPageTitle(new PageTitle("Trade Info"));
-    this.messagesService.emitRoute("nill");   
-    this.tradeId = +this.route.snapshot.paramMap.get('id');  // TODO check this 
+
+    this.pageTitleService.emitPageTitle(new PageTitle("Trade Details"));
+    this.messagesService.emitRoute("nill");    
   }
 
-  private setDate(): void {
-    // Set today date using the patchValue function
-    let date = new Date();
-    this.myForm.patchValue({
-      myDate: { date: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() } }
+  /*******************************************************?
+  // GET TRADE
+  /*******************************************************/
+  private getTheTrade(tradeId: number) {
+    this.tradeApiService.getSingleTradeApi(tradeId).subscribe((tradeResult: Trade) => {
+
+      this.trade = this.TransformData(tradeResult);
+
+    });        
+  }
+
+
+  private TransformData(returnedTrade: Trade): Trade {     
+
+    let trd = new Trade;
+    
+    trd.tradeIdStr = returnedTrade.tradeId.toString();
+    trd.tradeId = returnedTrade.tradeId;
+    trd.tradeDatePublished = returnedTrade.tradeDatePublished;
+
+    trd.traderId = returnedTrade.traderId;
+    trd.traderFirstName = returnedTrade.traderFirstName;
+    trd.traderMiddleName = returnedTrade.traderMiddleName;
+    trd.traderLastName = returnedTrade.traderLastName;
+    trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
+
+    trd.tradeObjectDescription = returnedTrade.tradeObjects[0].tradeObjectDescription;
+    trd.tradeObjectCategoryDescription = returnedTrade.tradeObjects[0].tradeObjectCategoryDescription;
+
+    returnedTrade.tradeForObjects.forEach(function (returnedTrade) {
+            trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + returnedTrade.tradeForObjectDescription + ",";
     });
 
-    this.selectDate = {
-      year: date.getFullYear(),
-      month: date.getMonth() + 1,
-      day: date.getDate()
+    trd.images = returnedTrade.images;
+
+    if (returnedTrade !== null {
+      this.hasImages = true;
     }
+    return trd;
   }
-
-  private setupForm() {
-
-    this.myForm = this.formBuilder.group({
-      // Empty string or null means no initial value. Can be also specific date
-      myDate: [null, Validators.required]
-      // other controls are here...
-    });
-
-
-    this.currentLocale = 'en';
-    this.datePickerOptions = {
-      dateFormat: 'dd/mm/yyyy',
-      firstDayOfWeek: 'mo',
-      selectorWidth: '300px',
-      width: '300px',
-      minYear: 1900,
-      maxYear: 2100,
-      editableDateField: false,
-
-    };
-
-    this.setDate();
-
-  }
-
-  private onDateChanged(event: IMyDateModel) {
-    // Update value of selDate variable
-    this.selectDate = event.date;
-  }
-
- private clearDate(): void {
-    // Clear the date using the patchValue function
-    this.myForm.patchValue({ myDate: null });
-  }
-
 }

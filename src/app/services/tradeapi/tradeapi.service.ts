@@ -42,28 +42,33 @@ export class TradeApiService {
   //******************************************************
   //GOOD
   // get all trades for a trader or all trades in the system
-  public getTradesApi(id?: string): Observable<Trade[]> {
+  public getTradesApi(traderId?: string): Observable<Trade[]> {
 
-    if (id != "" || id != undefined) { this.localUrl = `${tradesUrl}?traderId=${id}`; }     // get trader's list of trades
-    if (id == "" || id == undefined) { this.localUrl = tradesUrl; }  // get all trade list
+    // get all tardes by traderId
+    if (traderId != "" || traderId != undefined) { this.localUrl = `${tradesUrl}?traderId=${traderId}`; }     
+     // get all trades in the system
+    if (traderId == "" || traderId == undefined) { this.localUrl = tradesUrl; } 
 
     // errors are handled in the component
     return this.httpClientService.get<Trade[]>(this.localUrl).retry(3);
   }
 
+
   // GOOD 
   // gets set of trades, number of pages and number of records per page
-  public getPageOfTrades(id: string, page: number = 1, perpage: number = 50) {
+  public getPageOfTrades(traderId: string, setCounter: number = 1, recordsPerSet: number = 50) {
 
-    // get trader's list of trade or all tardes based on is the traderId = "" or not     
-    this.localUrl = `${pagesOfTradesUrl}?traderId=${id}&page=${page}&perpage=${perpage}`;  
+    // get trades by traderId or not by get a set orecords only
+    this.localUrl = `${pagesOfTradesUrl}?traderId=${traderId}&page=${setCounter}&perpage=${recordsPerSet}`;  
    
     return this.httpClientService.get(this.localUrl).retry(3);
   }
 
+
   // GOOD
   // gets filtered set of trades by date published for the dashboard view
   public getFilteredTradesApi(number: number, filter: string) {
+
     //$select = name, revenue,& $orderby=revenue asc, name desc & $filter=revenue ne null 
     this.localUrl = `${tradesUrl}?number=${number}&filter=${filter}`;
 
@@ -75,7 +80,15 @@ export class TradeApiService {
   //******************************************************
   // GET TRADE
   //******************************************************
+  // get all trades for a trader or all trades in the system
+  public getSingleTradeApi(tradeId: number) {
 
+     // get single trade by tradeId list
+    if (tradeId != 0 || tradeId != undefined) { this.localUrl = `${tradesUrl}/${tradeId}`; }  
+  
+    // errors are handled in the component
+    return this.httpClientService.get(this.localUrl).retry(3);
+  }
 
   //******************************************************
   // ADD TRADE

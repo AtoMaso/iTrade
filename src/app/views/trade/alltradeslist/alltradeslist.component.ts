@@ -57,8 +57,8 @@ export class AllTradesListComponent implements OnInit {
   public ngOnInit() {   
     this.getUseridentity();
     this.initialiseComponent();      
-    //this.getTrades("");
-    this.getPageOfTrades("", this.setsCounter, this.recordsPerSet);
+    this.getTrades("");
+    //this.getPageOfTrades("", this.setsCounter, this.recordsPerSet);
   }
 
 
@@ -66,9 +66,9 @@ export class AllTradesListComponent implements OnInit {
   // GET TRADES
   //*****************************************************
   // gets all trades
-  private getTrades(Id:string) {
+  private getTrades(traderId:string) {
 
-    this.tradeApiService.getTradesApi(Id)
+    this.tradeApiService.getTradesApi(traderId)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }  // TODO change the process message code to reflect the trades
         else {
@@ -134,22 +134,6 @@ export class AllTradesListComponent implements OnInit {
     this.messagesService.emitRoute("nill");
     this.isRequesting = true;
     this.pageTitleService.emitPageTitle(new PageTitle("All Trades"));
-  }
-
-
-  private onSuccessRemoveTrade(trade: Trade) {
-    if (trade) {
-      this.removedTradeId = trade.tradeId;
-      this.onChangeTable(this.config);
-      // reset the removed article after the data has been updated
-      // so it is ready for the next filtering or sorting of the list
-      this.removedTradeId = null;
-
-      this.messagesService.emitProcessMessage("PMRAS"); // TODO change the process message code to reflect the trades
-    }
-    else {
-      this.messagesService.emitProcessMessage("PMRA"); // TODO change the process message code to reflect the trades
-    }
   }
 
 

@@ -113,6 +113,10 @@
   text-align:center;
 }
 
+.underline {
+   text-decoration:underline;
+}
+
 .textbeige {
     color:beige;
 }
@@ -166,8 +170,6 @@
 .dimgreybackground {
     background-color:dimgrey;
 }
-
-
 
 .ng-valid[required] {
   border-left: 7px solid #42A948; /* green */

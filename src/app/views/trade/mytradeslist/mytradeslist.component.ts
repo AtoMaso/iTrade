@@ -150,16 +150,18 @@ export class MyTradesListComponent implements OnInit {
     if (trade) {
       this.removedTradeId = trade.tradeId;
       this.onChangeTable(this.config);
-      // reset the removed article after the data has been updated
-      // so it is ready for the next filtering or sorting of the list
+      // TODO should be calling the onPageChange here ????
+
+      // reset the removed trade after the data has been updated so it is ready for the next filtering or sorting of the list
       this.removedTradeId = null;
 
-      this.messagesService.emitProcessMessage("PMRAS"); // TODO change the process message code to reflect the trades
+      this.messagesService.emitProcessMessage("PMRTS");
     }
     else {
-      this.messagesService.emitProcessMessage("PMRA"); // TODO change the process message code to reflect the trades
+      this.messagesService.emitProcessMessage("PMRTE");
     }
   }
+
 
 
   private TransformData(returnedTrades: Trade[]): Array<any> {
@@ -254,7 +256,8 @@ export class MyTradesListComponent implements OnInit {
     { title: 'Category',  name: 'tradeObjectCategoryDescription', sort: true,  filtering: { filterString: '', placeholder:  'Filter by trade category' }},
     { title: 'Trader', name: 'traderFullName',                             sort: true,   filtering: { filterString: '', placeholder:  'Filter by trader full name.' }},
     { title: 'Published', name: 'tradeDatePublished',                   sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade date.' }} 
-   ];
+    ];
+
 
   public config: any = {
     id: 'pagination',

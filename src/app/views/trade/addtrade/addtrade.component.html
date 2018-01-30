@@ -1,3 +1,29 @@
-<p>
-  addtrade works!
-</p>
+<div class="container col-md-12">
+
+  <!-- example of reactive forms -->
+  <form [formGroup]="myForm" novalidate>
+    <!-- other input fields here ......-->
+
+    <my-date-picker name="mydate" formControlName="mydate"
+                    visibleMonth.monthTxt="Mirko"
+                    #startDatePicker
+                    placeholder="Select a date..."
+                    [options]="datePickerOptions"
+                    (dateChanged)="onDateChanged($event)"
+                    [locale]="en"
+                    [selDate]="selectDate">
+
+    </my-date-picker>
+
+
+
+    <!-- other input fields here ......-->
+    <!-- example of calculating selected date and how is taken from the control properrty  startDatePicker.selectedDate -->
+    <!--<label>startDatePicker.selectedDate:</label>
+    <pre>{{ startDatePicker.selectedDate | json }}</pre>
+    <label>Observed startDateValue$:</label>
+    <pre>{{ (this.startDateValue$ | async) | json }}</pre>-->
+
+  </form>
+
+</div>

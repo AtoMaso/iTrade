@@ -1,29 +1,76 @@
 <div class="container col-md-12">
-  <!-- example of reactive forms -->
-  <form [formGroup]="myForm" novalidate>
-      <!-- other input fields here ......-->
 
-      <my-date-picker name="mydate" formControlName="mydate" 
-                     visibleMonth.monthTxt="Mirko"
-                      #startDatePicker
-                      placeholder="Select a date..."
-                      [options]="datePickerOptions"
-                      (dateChanged)="onDateChanged($event)"
-                      [locale]="en"
-                      [selDate]="selectDate">
-
-      </my-date-picker>
-
-      <!-- other input fields here ......-->
-
-    <!-- example of calculating selected date and how is taken from the control properrty  startDatePicker.selectedDate -->
-    <!--<label>startDatePicker.selectedDate:</label>
-    <pre>{{ startDatePicker.selectedDate | json }}</pre>
-    <label>Observed startDateValue$:</label>
-    <pre>{{ (this.startDateValue$ | async) | json }}</pre>-->
-
-  </form>
+  <div class="row">
 
 
+    <div class="col-md-3">
 
-  
+      <div class="row">
+        <div class="panel panel-heading col-md-12">
+          Trading:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeObjectDescription }}</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="panel panel-heading col-md-12">
+          Trading for:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeForObjectsDescription }}</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="panel panel-heading col-md-12">
+          Category: <span class="smalltext text-uppercase text-info"> {{ trade.tradeObjectCategoryDescription }}</span> 
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="panel panel-heading col-md-12">
+          Date Published: <span class="smalltext text-uppercase text-info"> {{ trade.tradeDatePublished }}</span> 
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="panel panel-heading col-md-12">
+          Trader: <span class="textlightcoral">
+                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase"><span> {{ trade.traderFullName }}</span></a>
+                      </span> 
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="col-md-8 col-md-offset-1" >
+
+      <div class="row panel panel-heading">
+        Images:
+      </div>
+      <div class="container panel panel-heading col-md-12">
+        <!--<div class="row">-->
+          <div class="col-md-4">
+            <div *ngIf="hasImages">
+              <img src="{{ trade.images[0].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div *ngIf="hasImages">
+              <img src="{{ trade.images[1].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div *ngIf="hasImages">
+              <img src="{{ trade.images[2].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+            </div>
+          </div>
+        <!--</div>-->
+      </div>
+      
+    </div>
+        
+  </div>
+
+  <div class="row panel panel-heading">
+    Table of History Records here :
+  </div>
+
+</div>

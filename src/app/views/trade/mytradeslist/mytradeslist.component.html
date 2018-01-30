@@ -113,30 +113,22 @@
 
                         <tr *ngFor="let trade of rows  | paginate:config ">
 
-                          <td class="col-md-1 smalltext textgray text-uppercase" style="vertical-align:middle">
-                            <span>{{ trade.tradeId  }}</span>
+                  
+                          <td class="col-md-1 smalltext text-uppercase text-info" style="vertical-align:middle">{{ trade.tradeId  }}</td>
+
+                          <td class="col-md-2" style="vertical-align:middle">
+                            <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral">{{ trade.tradeObjectDescription  }}</a>
                           </td>
 
-                          <td class="col-md-2" style="vertical-align:middle" >            
-                              <a  [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" style="margin-left:10px" class="smalltext textlightcoral text-uppercase">
-                                <span>{{ trade.tradeObjectDescription  }}</span>
-                              </a>
-                          </td>
+                          <td class="col-md-2 smalltext text-uppercase text-info" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
 
-                          <td class="col-md-2 smalltext textgray text-uppercase" style="vertical-align:middle">                            
-                              <span>{{ trade.tradeForObjectsDescription  }}</span>                       
-                          </td>
-
-                          <td class="col-md-2 smalltex textgray text-uppercase" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
-
+                          <td class="col-md-2 smalltex text-uppercase text-info" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
 
                           <td class="col-md-3" style="vertical-align:middle">
-                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase">
-                              <span> {{ trade.traderFullName }}</span>
-                            </a>
+                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext text-uppercase textlightcoral">{{ trade.traderFullName }}</a>
                           </td>
 
-                          <td class="col-md-2 smalltext textgray text-uppercase" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+                          <td class="col-md-2 smalltext text-uppercase text-info" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
 
 
                           <td class="col-md-2 text-center" style="vertical-align:middle;">
