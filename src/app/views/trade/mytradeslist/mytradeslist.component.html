@@ -12,12 +12,12 @@
 
               <div class="col-md-2 textgray">
                 <span class="smalltextbold">Items Per Page</span>
-                <input type="number" min="0" [(ngModel)]="config.itemsPerPage" class="form-control">
+                <input type="number" min="1" max="{{recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" class="form-control">
               </div>
 
               <div class="col-md-2 textgray">
                 <span class="smalltextbold">Current Page</span>
-                <input type="number" min="0" [(ngModel)]="config.currentPage" class="form-control">
+                <input type="number" min="1" [(ngModel)]="config.currentPage" class="form-control">
               </div>
 
               <div class="col-md-1 textgray">
@@ -25,14 +25,18 @@
                 <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
               </div>
 
-              <div class="col-md-2 col-md-offset-3 text-right">
+              <div class="col-md-2 textgray">
+                <span class="smalltextbold">Records Per Set</span>
+                <input type="number" min="5" max="500" [(ngModel)]="recordsPerSet" class="form-control">
+              </div>
+
+              <div class="col-md-2 col-md-offset-1 text-right">
                 <br />             
                 <div *ngIf="isAuthenticated">                 
-                  <button class="btn btn-sm btn-success" (click)="addTrade()">
-                    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
-                  </button>
+                      <button class="btn btn-sm btn-success" (click)="addTrade()">
+                        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
+                      </button>
                 </div>
-
               </div>
             </div>
 
@@ -156,11 +160,18 @@
                         </tr>
 
                       </table>
-
-
-                       <!--the stylesheet of the pagination is overwritten in the host component sass -->
+              
+              </div>
+   
+        </div>         
+  
+  
+  
+          <div class="row col-md-12">
+                <div class="col-md-5">
+                      <!--the stylesheet of the pagination is overwritten in the host component sass -->
                       <pagination-controls id="pagination" *ngIf="config.paging"
-                                           (pageChange)="onPageChange($event)"                                                
+                                           (pageChange)="onPageChange($event)"
                                            maxSize="9"
                                            directionLinks="false"
                                            autoHide="true"
@@ -173,13 +184,15 @@
                                            (numPages)="numPages = $event"
                                            [maxSize]="maxSize">
                       </pagination-controls>
-
-               
-                    <button (click)="nextSetOfRecords()">Next Set</button>
-                    <button (click)="previousSetOfRecords()">Previous Set</button>
-              </div>
-   
-        </div>          
+                </div>
+                <div class="col-md-2 textgray">
+                        <span class="smalltextbold">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
+                </div>
+                <div class="col-md-3 col-md-offset-2">
+                        <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
+                        <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+                </div>
+          </div> 
 </div>
 
 

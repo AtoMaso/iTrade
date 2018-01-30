@@ -35,9 +35,10 @@ export class MyTradesListComponent implements OnInit {
   private isAuthenticated: boolean = false;
   private isOwner: boolean = false;
 
-  private totalTradesNumber: number = 0;
-  private setNumber: number = 1;
-  private perPage: number = 4;
+  private totalNumberOfRecords: number = 0;
+  private setsCounter: number = 1;
+  private recordsPerSet: number = 4;
+  private totalNumberOfSets: number = 0;
 
   // constructor which injects the services
   constructor(
@@ -47,7 +48,7 @@ export class MyTradesListComponent implements OnInit {
     private pageTitleService: PageTitleService,
     private router: Router,
     private loggerService: LoggerService) {
-    this.length = this.data.length;
+    //this.length = this.data.length;
   };
 
 
@@ -56,7 +57,7 @@ export class MyTradesListComponent implements OnInit {
     this.getUseridentity();
     this.initialiseComponent();
     //this.getTrades(this.traderId); 
-    this.getPageOfTrades(this.traderId, this.setNumber, this.perPage);
+    this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet);
   }
 
 
@@ -69,9 +70,12 @@ export class MyTradesListComponent implements OnInit {
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
         else {
-          this.data = this.TransformData(returnedTrades),
+            this.data = this.TransformData(returnedTrades),
+            this.totalNumberOfRecords = this.data[0].totalTradesNumber;
             this.isRequesting = false,
-            this.onChangeTable(this.config)
+            this.calculateTotalNumberOfSets();
+            this.onChangeTable(this.config),
+            this.onPageChange(1)
         }
       },
       (res: Response) => this.onError(res, "getTrades"));
@@ -87,10 +91,12 @@ export class MyTradesListComponent implements OnInit {
 
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }// TODO change the process message code to reflect the trades
         else {
-          this.data = this.TransformData(returnedTrades),
-            this.totalTradesNumber = this.data[0].totalTradesNumber;
-          this.isRequesting = false,
-            this.onChangeTable(this.config);
+            this.data = this.TransformData(returnedTrades),
+            this.totalNumberOfRecords = this.data[0].totalTradesNumber;
+            this.isRequesting = false,
+            this.calculateTotalNumberOfSets();
+            this.onChangeTable(this.config),
+            this.onPageChange(1)
         }
       }, (serviceError: Response) => this.onError(serviceError, "getPageOfTrades"));
   }
@@ -198,29 +204,6 @@ export class MyTradesListComponent implements OnInit {
       }
   }
 
-  // next page of records method
-  private nextSetOfRecords() {
-
-    this.messagesService.emitRoute("nill");
-    if (this.totalTradesNumber >= ((this.setNumber + 1) * this.perPage)) {
-      this.setNumber = this.setNumber + 1;
-      this.getPageOfTrades(this.traderId, this.setNumber, this.perPage);
-    }
-    else { this.messagesService.emitProcessMessage("PME", "There no more sets of records."); }
-  }
-
-
-  // previous page of records method
-  private previousSetOfRecords() {
-
-    this.messagesService.emitRoute("nill");
-    if (this.setNumber > 1) {
-      this.setNumber = this.setNumber - 1;
-      this.getPageOfTrades(this.traderId, this.setNumber, this.perPage);
-    }
-    else { this.messagesService.emitProcessMessage("PME", "This is the first set of records."); }
-  }
-
 
   private onError(serviceError: any, operation: string) {
     // stop the spinner if running
@@ -256,10 +239,13 @@ export class MyTradesListComponent implements OnInit {
   public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
   public numPages: number = 1;
-  public length: number = 0;
-  public page: number = 1;
+  //public length: number = 0;
+  //public page: number = 1;
+  private isNextButton: boolean = false;
+  private isPrevButton: boolean = false;
+  private lastPageOfTheCurrentSet: number = 0;
 
- 
+
   public columns: Array<any> =
     [
     { title: 'Id', name: 'tradeIdStr', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id' } },
@@ -274,18 +260,106 @@ export class MyTradesListComponent implements OnInit {
     id: 'pagination',
     itemsPerPage: 10,
     currentPage: 1,
-    totalItems: this.length,
+    totalItems: 0,
     paging: true,
     sorting: { columns: this.columns },
     filtering: { filterString: '' },
     className: ['table-striped', 'table-bordered']
   };
 
-  // all sorting and filtering methods
-  private onPageChange(passedpage: number) {
-    this.config.currentPage = passedpage;
+
+
+  private calculateTotalNumberOfSets() {
+
+    let rem = this.totalNumberOfRecords % this.recordsPerSet;
+    let mainpart = ~~(this.totalNumberOfRecords / this.recordsPerSet);
+
+    if (this.totalNumberOfRecords < this.recordsPerSet) { this.totalNumberOfSets = 1; }
+    else {
+      if (this.totalNumberOfRecords > this.recordsPerSet && rem) { this.totalNumberOfSets = mainpart + 1; }
+      else { this.totalNumberOfSets = mainpart; }
+    }
   }
- 
+
+
+
+  private onPageChange(passedpage: number) {
+
+    this.config.currentPage = passedpage;
+
+    let rem = this.config.totalItems % this.config.itemsPerPage;
+    let mainPart = ~~(this.config.totalItems / this.config.itemsPerPage);
+
+
+    if (this.config.totalItems < this.config.itemsPerPage) { this.lastPageOfTheCurrentSet = 1; }
+    else {
+      if (this.config.totalItems > this.config.itemsPerPage && rem) { this.lastPageOfTheCurrentSet = mainPart + 1; }
+      else { this.lastPageOfTheCurrentSet = mainPart; }
+    }
+
+    // togle the next button visibility
+    // is this the last page of the current set and is this the last set of records
+    if (this.lastPageOfTheCurrentSet === this.config.currentPage && this.setsCounter < this.totalNumberOfSets) { this.isNextButton = true; }
+    else { this.isNextButton = false; }
+
+    // toglle the prev visibility
+    if (this.setsCounter > 1) { this.isPrevButton = true; }
+    else { this.isPrevButton = false; }
+
+  }
+
+
+  // next page of records method
+  private nextSetOfRecords() {
+
+    this.messagesService.emitRoute("nill");
+    if (this.totalNumberOfSets > this.setsCounter) {
+
+      // increase the set counter
+      this.setsCounter = this.setsCounter + 1;
+
+      // get the next set of records
+      this.getPageOfTrades("", this.setsCounter, this.recordsPerSet);
+
+      //// set the current page to 1
+      this.config.currentPage = 1;
+
+      //// calll the on change method to recalculate the new set numbers
+      //this.onChangeTable(this.config);
+
+      // call on page change to recalculate the pagination
+      //this.onPageChange(this.config.currentPage);
+    }
+    else { this.messagesService.emitProcessMessage("PME", "There no more sets of records."); }
+  }
+
+
+  // previous page of records method
+  private previousSetOfRecords() {
+
+    this.messagesService.emitRoute("nill");
+
+    if (this.setsCounter > 1) {
+
+      // decreasethe set counter
+      this.setsCounter = this.setsCounter - 1;
+
+      // get the previous set of records
+      this.getPageOfTrades("", this.setsCounter, this.recordsPerSet);
+
+      // set the current page to 1
+      this.config.currentPage = 1;
+
+      //// calll the on change method to recalculate the new set numbers
+      //this.onChangeTable(this.config);
+
+      //// call on page change to recalculate the pagination
+      //this.onPageChange(this.config.currentPage);
+    }
+    else { this.messagesService.emitProcessMessage("PME", "This is the first set of records."); }
+  }
+
+
   private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
         if (config.filtering) {
           Object.apply(this.config.filtering, config.filtering);
@@ -298,9 +372,10 @@ export class MyTradesListComponent implements OnInit {
         let filteredData = this.changeFilter(removedData, this.config);
         let sortedData = this.changeSort(filteredData, this.config);
         this.rows = sortedData; 
-        this.length = sortedData.length; 
-        this.config.totalItems = this.length;
+        this.rows = sortedData;
+        this.config.totalItems = sortedData.length;
   }
+
 
   private sortTable(column: string) {
     // reset the array of columns
@@ -351,6 +426,7 @@ export class MyTradesListComponent implements OnInit {
     }
   }
 
+
   private changeRemove(data: any, config: any): any {
     if (this.removedTradeId == null) { return data; }
 
@@ -359,6 +435,7 @@ export class MyTradesListComponent implements OnInit {
     this.data = removedData;
     return this.data;
   }
+
 
   public changeFilter(data: any, config: any): any {
 
@@ -397,6 +474,7 @@ export class MyTradesListComponent implements OnInit {
 
     return filteredData;
   }
+
 
   private changeSort(data: any, config: any) {
     if (!config.sorting) {

@@ -1,4 +1,4 @@
-
+﻿
 .ngx-pagination {  margin-left: 0;  margin-bottom: 1rem; } 
 .ngx-pagination::before, .ngx-pagination::after { content: ' ';    display: table; }  
 .ngx-pagination::after {    clear: both; } 
@@ -13,4 +13,4 @@
 .ngx-pagination a, .ngx-pagination button {    cursor: pointer; }
 .ngx-pagination .pagination-previous a::before,.ngx-pagination .pagination-previous.disabled::before {   content: '\u00AB';  display: inline-block;  margin-right: 0.5rem; }
 .ngx-pagination .pagination-next a::after,.ngx-pagination .pagination-next.disabled::after {  content: '\u00BB';  display: inline-block;  margin-left: 0.5rem; }
-.ngx-pagination .show-for-sr {  position: absolute !important;  width: 1px;  height: 1px;  overflow: hidden;  clip: rect(0, 0, 0, 0); color:green }
+.ngx-pagination .show-for-sr {  position: absolute !important;  width: 1px;  height: 1px;  overflow: hidden;  clip: rect(0, 0, 0, 0); }

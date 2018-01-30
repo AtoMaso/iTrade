@@ -6,19 +6,19 @@
   <div class="row">
 
     <div class="col-md-2 textgray">
-      <!-- this is ng2-table filtering section used but the rest of it is independent table done by me-->
+      <!-- this is ngx-table filtering section used but the rest of it is independent table done by me-->
       <span class="smalltextbold">Filter in all columns</span>
       <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
     </div>
 
     <div class="col-md-2 textgray">
       <span class="smalltextbold">Items Per Page</span>
-      <input type="number" min="0" [(ngModel)]="config.itemsPerPage" class="form-control">
+      <input type="number" min="1" max="{{recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" class="form-control">
     </div>
 
     <div class="col-md-2 textgray">
       <span class="smalltextbold">Current Page</span>
-      <input type="number" min="0" [(ngModel)]="config.currentPage" class="form-control">
+      <input type="number" min="1" [(ngModel)]="config.currentPage" class="form-control">
     </div>
 
     <div class="col-md-1 textgray">
@@ -26,18 +26,21 @@
       <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
     </div>
 
-    <div class="col-md-2 col-md-offset-3 text-right">
+    <div class="col-md-2 textgray">
+      <span class="smalltextbold">Records Per Set</span>
+      <input type="number" min="5" max="500" [(ngModel)]="recordsPerSet" class="form-control">
+    </div>
+
+    <div class="col-md-2 col-md-offset-1 text-right">
       <br />
-
-      <button *ngIf="!isAuthenticated" type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-sm btn-danger smalltextbold">
-        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
-      </button>
-
-      <div *ngIf="isAuthenticated">
-        <button *ngIf="!IsAllowedToAddTrade" class="btn btn-sm btn-success" data-target="#addDialog" data-toggle="modal">
+      <div *ngIf="!isAuthenticated">
+        <button  type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltextbold">
           <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
         </button>
-        <button *ngIf="IsAllowedToAddTrade" class="btn btn-sm btn-success" (click)="addTrade()">
+      </div>
+
+      <div *ngIf="isAuthenticated">
+        <button class="btn btn-success btn-sm smalltextbold" (click)="addTrade()">
           <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
         </button>
       </div>
@@ -152,7 +155,13 @@
 
       </table>
 
+    </div>
 
+  </div>
+
+
+  <div class="row col-md-12">
+    <div class="col-md-5">
       <!--the stylesheet of the pagination is overwritten in the host component sass -->
       <pagination-controls id="pagination" *ngIf="config.paging"
                            (pageChange)="onPageChange($event)"
@@ -168,12 +177,16 @@
                            (numPages)="numPages = $event"
                            [maxSize]="maxSize">
       </pagination-controls>
-
-      <button (click) ="nextSetOfRecords()">Next Set</button>
-       <button (click)="previousSetOfRecords()">Previous Set</button>
     </div>
-
+    <div class="col-md-2 textgray">
+      <span class="smalltextbold">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
+    </div>
+    <div class="col-md-3 col-md-offset-2">
+      <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
+      <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+    </div>
   </div>
+
 
 </div>
 
@@ -208,3 +221,43 @@
   </div>
 </div>
 
+
+
+
+<!--<pagination-template #p="paginationApi" [id]="id" [maxSize]="maxSize" (pageChange)="pageChange.emit($event)">    
+  <ul class="ngx-pagination"  role="navigation"  [attr.aria-label]="screenReaderPaginationLabel"  *ngIf="!(autoHide && p.pages.length <= 1)">        
+    <li class="pagination-previous" [class.disabled]="p.isFirstPage()" *ngIf="directionLinks">             
+    <a *ngIf="1 < p.getCurrent()" (click)="p.previous()" [attr.aria-label]="previousLabel + ' ' + screenReaderPageLabel">               
+       {{ previousLabel }} 
+      <span class="show-for-sr">{{ screenReaderPageLabel }}</span>            
+    </a>            
+    <span *ngIf="p.isFirstPage()">
+        {{ previousLabel }} 
+        <span class="show-for-sr">{{ screenReaderPageLabel }}
+      </span>            
+      </span>        
+    </li>        
+  <li [class.current]="p.getCurrent() === page.value" *ngFor="let page of p.pages">            
+    <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">                
+        <span class="show-for-sr">{{ screenReaderPageLabel }} </span>                
+        <span>
+        {{ page.label }}</span>            
+      </a>            
+          <div *ngIf="p.getCurrent() === page.value">                
+            <span class="show-for-sr">{{ screenReaderCurrentLabel }} </span>                
+            <span>{{ page.label }}</span>             
+        </div>        
+    </li>        
+    <li class="pagination-next" [class.disabled]="p.isLastPage()" *ngIf="directionLinks">            
+    <a *ngIf="!p.isLastPage()" (click)="p.next()" [attr.aria-label]="nextLabel + ' ' + screenReaderPageLabel">                 
+        {{ nextLabel }} 
+      <span class="show-for-sr">{{ screenReaderPageLabel }}</span>            
+      </a>            
+      <span *ngIf="p.isLastPage()">                 
+      {{ nextLabel }} 
+       <span class="show-for-sr">{{ screenReaderPageLabel }}
+        </span>            
+      </span>        
+    </li>    
+  </ul>    
+  </pagination-template>-->
