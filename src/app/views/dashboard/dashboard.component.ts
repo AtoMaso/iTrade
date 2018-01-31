@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
 
     this.isRequesting = true;          
     // get the top 6 trades by date published in asc order
-    this.getFilteredTrades(6, "tradeDatePublished");
+    this.getFilteredTrades(8, "tradeDatePublished");
   }
 
 

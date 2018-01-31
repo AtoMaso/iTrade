@@ -8,7 +8,8 @@ import { PageTitleService } from '../../../services/pagetitle/pagetitle.service'
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 
 import {Trade, PageTitle } from '../../../helpers/classes';
-import * as $ from 'jquery.js';
+//import * as $ from 'jquery';
+
 
 @Component({
   selector: 'app-tradedetails',
@@ -35,23 +36,46 @@ export class TradeDetailsComponent implements OnInit {
     this.route.queryParams.subscribe(params => { this.tradeId = params['id']; });
   };
 
+
   ngOnInit() {
-
     this.setupPage(); 
-    this.getTheTrade(this.tradeId);
+    this.getTheTrade(this.tradeId); 
+  }
 
-    $(document).ready(function () {
-      $("#demo").on("hide.bs.collapse", function () {
-        $(".btn").html('<span class="glyphicon glyphicon-collapse-down"></span> Open');
+
+  ngAfterViewInit() {
+
+
+    jQuery(document).ready(function () {
+
+      jQuery("#collapseDescription").on("hide.bs.collapse", function () {
+        jQuery(".description").html('<span class="glyphicon glyphicon-plus"></span> Trade Description');
       });
-      $("#demo").on("show.bs.collapse", function () {
-        $(".btn").html('<span class="glyphicon glyphicon-collapse-up"></span> Close');
+      jQuery("#collapseDescription").on("show.bs.collapse", function () {
+        jQuery(".description").html('<span class="glyphicon glyphicon-minus"></span> Trade Description');
       });
+
+      jQuery("#collapseImages").on("hide.bs.collapse", function () {
+        jQuery(".images").html('<span class="glyphicon glyphicon-plus"></span> Trade Images');
+      });
+      jQuery("#collapseImages").on("show.bs.collapse", function () {
+        jQuery(".images").html('<span class="glyphicon glyphicon-minus"></span> Trade Images');
+      });
+
+
+      jQuery("#collapseHistory").on("hide.bs.collapse", function () {
+        jQuery(".history").html('<span class="glyphicon glyphicon-plus"></span> Trade History');
+      });
+      jQuery("#collapseHistory").on("show.bs.collapse", function () {
+        jQuery(".history").html('<span class="glyphicon glyphicon-minus"></span> Trade History');
+      });
+
+
     });
   }
-  
-  private setupPage() {
 
+
+  private setupPage() {
     this.pageTitleService.emitPageTitle(new PageTitle("Trade Details"));
     this.messagesService.emitRoute("nill");    
   }
@@ -97,16 +121,4 @@ export class TradeDetailsComponent implements OnInit {
     return trd;
   }
 
-
-  public plusDescriptionClicked() {
-    this.isPlusDescription = !this.isPlusDescription;
-  }
-
-  public plusImageClicked() {
-    this.isPlusImage = !this.isPlusImage;
-  }
-
-  public plusHistoryClicked() {
-    this.isPlusHistory = !this.isPlusHistory;
-  }
 }

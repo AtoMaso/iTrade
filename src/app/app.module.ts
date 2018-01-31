@@ -10,7 +10,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { Ng2TableModule } from 'ng2-table';
 import { FileUploadModule } from 'ng2-file-upload';
-import { PaginationModule, TabsModule } from 'ngx-bootstrap';
+import { PaginationModule, TabsModule, DateFormatter} from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MyDatePickerModule } from 'mydatepicker';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -148,10 +148,10 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     FormsModule,
     ReactiveFormsModule,
     Ng2TableModule,
-    FileUploadModule,
-    NgxPaginationModule,
-    PaginationModule,       
+    FileUploadModule,  
     TabsModule,  
+    NgxPaginationModule,
+    PaginationModule,          
     MyDatePickerModule,
     NgIdleKeepaliveModule.forRoot()
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests and returns simulated server responses.
@@ -167,6 +167,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     PageTitleService, LoggerService, AuthGuard,
     // to inercept every request for authentication purposes
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+
     // to initialise a service when application starts in this case to get all process messages when starts
     { provide: APP_INITIALIZER, useFactory: getprocessmessages, deps: [ProcessMessageService], multi: true } 
   ],  

@@ -152,11 +152,12 @@
 
 
   <div class="row col-md-12">
+
     <div class="col-md-5">
       <!--the stylesheet of the pagination is overwritten in the host component sass -->
       <pagination-controls id="pagination" *ngIf="config.paging"
                            (pageChange)="onPageChange($event)"
-                           maxSize="9"
+                           maxSize="5"
                            directionLinks="false"
                            autoHide="true"
                            previousLabel="Previous"
@@ -169,9 +170,11 @@
                            [maxSize]="maxSize">
       </pagination-controls>
     </div>
+
     <div class="col-md-2 textgray">
       <span class="smalltextbold">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
     </div>
+
     <div class="col-md-3 col-md-offset-2">
       <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
       <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
