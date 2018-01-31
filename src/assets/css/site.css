@@ -21,7 +21,7 @@
 
 
 .restrictionname {
-    width:160px;
+    width:200px;
     overflow:hidden;
     display:inline-block;
     text-overflow: ellipsis;

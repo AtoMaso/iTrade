@@ -37,8 +37,8 @@ export class DashboardComponent implements OnInit {
     this.messagesService.emitRoute("nill");
 
     this.isRequesting = true;          
-    // get the top 8 trades by date published in asc order
-    this.getFilteredTrades(8, "tradeDatePublished", 'asc');
+    // get the top 6 trades by date published in asc order
+    this.getFilteredTrades(6, "tradeDatePublished");
   }
 
 
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
   //*****************************************************
   //  GET TOP 8 TRADES
   //*****************************************************
-  public getFilteredTrades(number: number, filter:string, order:string): void {
+  public getFilteredTrades(number: number, filter:string): void {
     // call the service to get the data  
     this.tradeApiService.getFilteredTradesApi(number, filter)
       .subscribe((returnedTrades: Trade[]) => {

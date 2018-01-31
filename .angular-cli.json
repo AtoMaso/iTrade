@@ -24,13 +24,15 @@
       "styles": [       
         "styles.scss"
       ],
-      "scripts": [     
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/ngx-bootstrap/bundles/ngx-bootstrap.umd.min.js",
         "../node_modules/ngx-pagination/dist/ngx-pagination.js",
         "../node_modules/ng2-table/bundles/ng2-table.min.js",
         "../node_modules/ng2-file-upload/bundles/ng2-file-upload.umd.min.js",
         "../node_modules/mydatepicker/bundles/mydatepicker.umd.js",
-        "../node_modules/moment/moment.js"
+        "../node_modules/moment/moment.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

@@ -12,6 +12,31 @@
       </div>
 
       <div class="row">
+        <div class="panel panel-heading">
+                  
+          <!--(click)="plusDescriptionClicked()"-->
+            <a class="panel-title collapsed smalltext text-uppercase textlightcoral" role="button"
+                     data-toggle="collapse" data-parent="#accordion" href="#collapseDescription"
+                     aria-expanded="false" aria-controls="collapseDescription">
+
+              <span *ngIf="isPlusDescription" class="glyphicon glyphicon-plus smalltext text-uppercase textlightcoral" onclick="plusDescriptionClicked()">&nbsp; Description </span>
+              <span *ngIf="!isPlusDescription" class="glyphicon glyphicon-minus smalltext text-uppercase textlightcoral"  role="tabpanel">&nbsp; Description </span>              
+            </a>
+                   
+            <div id="collapseDescription" class="panel panel-collapse collapse smalltext textgray" role="tabpanel" aria-labelledby="headingDescription">
+                <div class="panel-heading">             
+            
+                   This is a description of the object above in this  case is a sheet.<br/>
+                   Coton 100% not used in the original packaging.<br/>
+                   Will trade for similar stuff.<br />             
+                          
+                </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
         <div class="panel panel-heading col-md-12">
           Trading for:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeForObjectsDescription }}</span>
         </div>
@@ -25,7 +50,7 @@
 
       <div class="row">
         <div class="panel panel-heading col-md-12">
-          Date Published: <span class="smalltext text-uppercase text-info"> {{ trade.tradeDatePublished }}</span> 
+          Date Published: <span class="smalltext text-uppercase text-info"> {{ trade.tradeDatePublished | date}}</span> 
         </div>
       </div>
 
@@ -40,37 +65,84 @@
     </div>
 
 
-    <div class="col-md-8 col-md-offset-1" >
-
+    <div class="col-md-8 col-md-offset-1 panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      
       <div class="row panel panel-heading">
-        Images:
-      </div>
-      <div class="container panel panel-heading col-md-12">
-        <!--<div class="row">-->
-          <div class="col-md-4">
-            <div *ngIf="hasImages">
-              <img src="{{ trade.images[0].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+
+        <a class="panel-title collapsed smalltext text-uppercase textlightcoral" role="button"  
+               data-toggle="collapse" data-parent="#accordion" href="#collapseImages" aria-expanded="false" aria-controls="collapseImages">
+
+              <span class="glyphicon glyphicon-plus smalltext text-uppercase textlightcoral">&nbsp; Trade Images</span>     
+        </a>
+
+
+        <div id="collapseImages" class="panel panel-collapse collapse smalltext textgray" role="tabpanel" aria-labelledby="headingImages">
+          
+            <div class="container panel panel-heading col-md-12">
+
+              <div class="col-md-4">
+                <div *ngIf="hasImages">
+                  <img src="{{ trade.images[0].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div *ngIf="hasImages">
+                  <img src="{{ trade.images[1].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div *ngIf="hasImages">
+                  <img src="{{ trade.images[2].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+                </div>
+              </div>
+
             </div>
-          </div>
-          <div class="col-md-4">
-            <div *ngIf="hasImages">
-              <img src="{{ trade.images[1].imageUrl }}" alt="" style="height: 250px;width: 250px;">
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div *ngIf="hasImages">
-              <img src="{{ trade.images[2].imageUrl }}" alt="" style="height: 250px;width: 250px;">
-            </div>
-          </div>
-        <!--</div>-->
+
+        </div>
+       
+
       </div>
       
+
+      <div class="row panel panel-heading">     
+
+           <!--(click)="plusHistoryClicked()"-->
+         <a class="panel-title collapsed smalltext text-uppercase textlightcoral" role="button" 
+             data-toggle="collapse" data-parent="#accordion" href="#collapseHistory"
+             aria-expanded="false" aria-controls="collapseHistory">
+
+            <span *ngIf="isPlusHistory" class="glyphicon glyphicon-plus smalltext text-uppercase textlightcoral">&nbsp; Trade History</span>
+            <span *ngIf="!isPlusHistory" class="glyphicon glyphicon-minus smalltext text-uppercase textlightcoral">&nbsp; Trade History </span>
+          </a>
+
+
+         <div id="collapseHistory" class="panel panel-collapse collapse smalltext textgray" role="tabpanel" aria-labelledby="headingHistory">
+            <div class="panel-heading">
+              Table of history records here!!!!
+            </div>
+          </div>
+
     </div>
-        
+
+  </div>
   </div>
 
-  <div class="row panel panel-heading">
-    Table of History Records here :
-  </div>
+  
 
 </div>
+
+
+<div class="container">
+  <h2>Expand and Collapse with different icons</h2>
+  <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#demo">
+    <span class="glyphicon glyphicon-collapse-down"></span> Open
+  </button>
+  <div id="demo" class="collapse">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </div>
+</div>
+

@@ -8,7 +8,7 @@ import { PageTitleService } from '../../../services/pagetitle/pagetitle.service'
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 
 import {Trade, PageTitle } from '../../../helpers/classes';
-
+import * as $ from 'jquery.js';
 
 @Component({
   selector: 'app-tradedetails',
@@ -20,10 +20,13 @@ import {Trade, PageTitle } from '../../../helpers/classes';
 export class TradeDetailsComponent implements OnInit {
   private tradeId: number = 0;
   private trade: Trade;
-  private hasImages: boolean; =false;
+  private hasImages: boolean = false;
+  private isPlusDescription: boolean = true;
+  private isPlusImage: boolean = true;
+  private isPlusHistory: boolean = true;
 
   constructor(  
-    private tradeApiService: TradeApiService;
+    private tradeApiService: TradeApiService,
     private route: ActivatedRoute,    
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
@@ -36,6 +39,15 @@ export class TradeDetailsComponent implements OnInit {
 
     this.setupPage(); 
     this.getTheTrade(this.tradeId);
+
+    $(document).ready(function () {
+      $("#demo").on("hide.bs.collapse", function () {
+        $(".btn").html('<span class="glyphicon glyphicon-collapse-down"></span> Open');
+      });
+      $("#demo").on("show.bs.collapse", function () {
+        $(".btn").html('<span class="glyphicon glyphicon-collapse-up"></span> Close');
+      });
+    });
   }
   
   private setupPage() {
@@ -79,9 +91,22 @@ export class TradeDetailsComponent implements OnInit {
 
     trd.images = returnedTrade.images;
 
-    if (returnedTrade !== null {
+    if (returnedTrade !== null) {
       this.hasImages = true;
     }
     return trd;
+  }
+
+
+  public plusDescriptionClicked() {
+    this.isPlusDescription = !this.isPlusDescription;
+  }
+
+  public plusImageClicked() {
+    this.isPlusImage = !this.isPlusImage;
+  }
+
+  public plusHistoryClicked() {
+    this.isPlusHistory = !this.isPlusHistory;
   }
 }
