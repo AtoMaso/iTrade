@@ -32,47 +32,17 @@ export class ImageService {
     //******************************************************
     // GET IMAGES METHODS
     //******************************************************
-   public getImagesApi(): Observable<Image[]> {
+   public getImages(): Observable<Image[]> {
 
-    return this.httpClientService.get<Image[]>(imagesUrl)
-      .retry(3)
-      .catch((err: HttpErrorResponse, result) => {
-
-        if (err.error instanceof Error) { this.handleError("getImagesApi method in the image service error", err); }
-        else { this.handleError("getImagesApi method in the image service error", err); }        
-        return Observable.throw(err);
-
-      });
+    return this.httpClientService.get<Image[]>(imagesUrl).retry(3);
   }
 
 
-   public getImagesApiByTradeId(tradeId: number): Observable<Image[]> {
+   public getImagesByTradeId(tradeId: number): Observable<Image[]> {
 
       const localUrl = `${imagesUrl}/?tradeId=${tradeId}`;
 
-      return this.httpClientService.get<Image[]>(localUrl)
-        .retry(3)
-        .catch((err: HttpErrorResponse, result) => {
-          if (err.error instanceof Error) { this.handleError("Client method error ocured: getImagesApiByTradeId method in the image service error.", err); }
-          else { this.handleError("Server side error occured: getImagesApiByTradeId method in the image service error", err); }       
-          return Observable.throw(err);
-
-        });
+      return this.httpClientService.get<Image[]>(localUrl).retry(3);
   }
-
-
-  ///*****************************************************
-  // HELPER METHODS
-  //*****************************************************
-  private handleError(operation: string, err: HttpErrorResponse) {
-
-    let errMsg = `error in ${operation}() retrieving ${err.url}`;
-
-    // audit log the error on the server side
-    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
-
-    // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-    return Observable.throw(errMsg);
-  };
 
 }

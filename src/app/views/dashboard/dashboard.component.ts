@@ -91,7 +91,7 @@ export class DashboardComponent implements OnInit {
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
       trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
       trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
-      trd.images = value.images; // get the image s and pass them to the  carousel child
+      trd.images = value.images; // get the images and pass them to the  carousel child
 
       value.tradeForObjects.forEach(function (value) {
         trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
@@ -104,18 +104,17 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  // an error has occured
-  private onError(err: any, operation: string) {
-    // stop the spinner
+  private onError(serviceError: any, operation: string) {
+    // stop the spinner if running
     this.isRequesting = false;
 
-    // logg the audit log error
-    this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
+    // audit log the error passed
+    this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-    // show the process message
-    this.messagesService.emitProcessMessage("PMGTs");
+    if (serviceError.error.ModelState !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    else { this.messagesService.emitProcessMessage("PMGTs"); }
+
   }
-
 
   // an event from the child carousel component saying that encountered an error
   private ChangeIsRequesting(bool) { this.isRequesting = false;}

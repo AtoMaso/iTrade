@@ -167,8 +167,8 @@ export class MyTradesListComponent implements OnInit {
   private TransformData(returnedTrades: Trade[]): Array<any> {
 
     let transformedData = new Array<Trade>();
-    returnedTrades.forEach(function (value) {
 
+    returnedTrades.forEach(function (value) {
       let trd = new Trade;
 
       trd.totalTradesNumber = value.totalTradesNumber;

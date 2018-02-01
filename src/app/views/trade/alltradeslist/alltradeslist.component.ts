@@ -57,8 +57,8 @@ export class AllTradesListComponent implements OnInit {
   public ngOnInit() {   
     this.getUseridentity();
     this.initialiseComponent();      
-    this.getTrades("");
-    //this.getPageOfTrades("", this.setsCounter, this.recordsPerSet);
+    //this.getTrades("");
+    this.getPageOfTrades("", this.setsCounter, this.recordsPerSet);
   }
 
 

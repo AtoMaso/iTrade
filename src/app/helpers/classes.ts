@@ -7,7 +7,7 @@
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType,
-  ITrade, IImage, IObjectCategory,
+  ITrade, IImage, IObjectCategory, ITradeHistory, 
   ITradeObject, ITradeForObject,  
   IUserSession, IAuthentication, IUserIdentity,
   IProcessMessage, IProcessMessageType,
@@ -370,6 +370,22 @@ class Trade implements ITrade {
   }
 }
 
+
+class TradeHistory implements ITradeHistory {
+ 
+  historyId: number;
+  tradeId: number;
+  createdDate: Date;
+  status: string;
+
+  constructor() {
+    this.historyId = 0;
+    this.tradeId = 0;
+    this.createdDate = new Date(9999, 1, 1);
+    this.status = "Initialised";
+  }
+}
+
 class Image implements IImage {
   imageId: number;
   imageTitle: string;
@@ -553,7 +569,7 @@ export {
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType,
   SecurityAnswer, SecurityQuestion,
-  Trade, Image, ObjectCategory,
+  Trade, Image, ObjectCategory, TradeHistory,
   UserSession, Authentication, UserIdentity,
   ProcessMessage,ProcessMessageType, PageTitle, Attachement
 };

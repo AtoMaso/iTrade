@@ -167,6 +167,14 @@ interface ITrade {
 }
 
 
+interface ITradeHistory {
+  historyId: number;
+  tradeId: number;
+  createdDate: Date;
+  status: string;
+}
+
+
 interface IImage {
   imageId: number; 
   imageTitle: string;
@@ -263,6 +271,6 @@ export {
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType,
-  ITrade,IImage, IObjectCategory, ITradeObject, ITradeForObject,
+  ITrade, IImage, IObjectCategory, ITradeObject, ITradeForObject, ITradeHistory,
   IUserSession, IAuthentication, IUserIdentity, 
   IProcessMessage, IProcessMessageType, IPageTitle, IAttachement };

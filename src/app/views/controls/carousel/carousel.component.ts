@@ -28,9 +28,10 @@ export class CarouselComponent implements OnInit {
 
   private isVisible: boolean = true;
   private haveImages: boolean = true;
+  private tradeImages: Image[];
 
   @Input() tradeId: number;
-  @Input() tradeImages: Image[];
+  //@Input() tradeImages: Image[];
   @Output() onErrorPicked: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private  imageService: ImageService,
@@ -41,18 +42,18 @@ export class CarouselComponent implements OnInit {
   public ngOnInit() {
     // dashbord parent is passing the image of the trade
     // so the following method is not needed, but we keep it if we needed later
-    // this.getImagesApiByTradeId(this.tradeId)  
+    this.getImagesByTradeId(this.tradeId)  
     // but we still need to get crousel ids 
     this.getCrouselIds(this.tradeId);
   }
 
   //**************************************************************
-  // GET IMAGES METHODS 
+  // GET IMAGES  
   //**************************************************************
-  public getImagesApiByTradeId(id:number): void {
+  public getImagesByTradeId(id:number): void {
 
     try {
-      this.imageService.getImagesApiByTradeId(id).
+      this.imageService.getImagesByTradeId(id).
             subscribe((images: Image[]) => {
               this.tradeImages = images;    
               this.getCrouselIds(id);
@@ -71,25 +72,14 @@ export class CarouselComponent implements OnInit {
 
 
   
-  //**************************************************************
-  // PRIVATE METHODS ARTICLES
-  //**************************************************************
-  //@param operation - name of the operation that failed
-  //@param result - optional value to return as the observable result
-  private onError(operation, err: HttpErrorResponse) {
+  private onError(serviceError: any, operation: string) {
 
-    this.haveImages = false;
+    // audit log the error passed
+    this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-       // write a message to the console
-      console.log(`Backend returned code in getImagesApiByTradeId method in carousel component method calling the image service!, ${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`); 
-  
-      //// audit log the error on the server side
-      this.loggerService.addError(err, `${operation} failed: ${err.status},  the URL: ${err.url}, was:  ${err.statusText}`);
-  
-    // this is emiting the isRequesting value for the parent dashboard component child spinner component
-    this.onErrorPicked.emit(false);
+    if (serviceError.error.ModelState !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    else { this.messagesService.emitProcessMessage("PMGTs"); }
 
-    // images can not be retrieved, so friendly message to be displayed
-    this.messagesService.emitProcessMessage("PMGI");
   }
+
 }

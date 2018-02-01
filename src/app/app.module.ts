@@ -28,6 +28,9 @@ import { LoggerService } from './services/logger/logger.service';
 import { TradeApiService } from './services/tradeapi/tradeapi.service';
 import { ValidationService } from './services/validation/validation.service';
 import { InMemoryDataService }  from './services/inmemory/in-memory-data.service'; //
+import { ImageService } from './services/image/image.service';
+import { TradeHistoryService } from './services/tradehistory/trade-history.service';
+
 
 //components
 import { AppComponent } from './app.component';
@@ -131,8 +134,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     SecurityQuestionListComponent,
     AddProcessMessageComponent,
     ProcessMessageListComponent,
-    
- 
+  
     //TokenInterceptor,
     //TraderaccountComponent
     //NG2FileUploadComponent
@@ -162,7 +164,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
   ],
 
   providers: [
-    TradeApiService, ValidationService,
+    TradeApiService, ValidationService, ImageService, TradeHistoryService,
     AuthenticationService, ProcessMessageService,
     PageTitleService, LoggerService, AuthGuard,
     // to inercept every request for authentication purposes
