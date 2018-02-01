@@ -18,7 +18,6 @@ import { Image } from '../../../helpers/classes';
 
 export class CarouselComponent implements OnInit {
 
-  //public tradeImages: Image[] = []; 
   public cariouselId: string = "myCarousel";
   public leftRight: string = "#myCarousel";
 
@@ -27,7 +26,7 @@ export class CarouselComponent implements OnInit {
   public imageThree: Image = new Image();
 
   private isVisible: boolean = true;
-  private haveImages: boolean = true;
+  private hasImages: boolean = false;
   private tradeImages: Image[];
 
   @Input() tradeId: number;
@@ -57,6 +56,7 @@ export class CarouselComponent implements OnInit {
             subscribe((images: Image[]) => {
               this.tradeImages = images;    
               this.getCrouselIds(id);
+              if (images !== null) { this.hasImages = true;}
            });
     }
     catch (err) {

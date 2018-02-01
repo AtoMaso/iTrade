@@ -42,7 +42,7 @@ export class TradeApiService {
   //******************************************************
   //GOOD
   // get all trades for a trader or all trades in the system
-  public getTradesApi(traderId?: string): Observable<Trade[]> {
+  public getTrades(traderId?: string): Observable<Trade[]> {
 
     // get all tardes by traderId
     if (traderId != "" || traderId != undefined) { this.localUrl = `${tradesUrl}?traderId=${traderId}`; }     
@@ -67,7 +67,7 @@ export class TradeApiService {
 
   // GOOD
   // gets filtered set of trades by date published for the dashboard view
-  public getFilteredTradesApi(number: number, filter: string) {
+  public getFilteredTrades(number: number, filter: string) {
 
     //$select = name, revenue,& $orderby=revenue asc, name desc & $filter=revenue ne null 
     this.localUrl = `${tradesUrl}?number=${number}&filter=${filter}`;
@@ -81,7 +81,7 @@ export class TradeApiService {
   // GET TRADE
   //******************************************************
   // get all trades for a trader or all trades in the system
-  public getSingleTradeApi(tradeId: number) {
+  public getSingleTrade(tradeId: number): any {
 
      // get single trade by tradeId list
     if (tradeId != 0 || tradeId != undefined) { this.localUrl = `${tradesUrl}/${tradeId}`; }  

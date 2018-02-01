@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit {
   //*****************************************************
   public getTrades(): void {
       // call the service to get the data  
-    this.tradeApiService.getTradesApi()
+    this.tradeApiService.getTrades()
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
         this.trades = this.TransformData(returnedTrades);
@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit {
   //*****************************************************
   public getFilteredTrades(number: number, filter:string): void {
     // call the service to get the data  
-    this.tradeApiService.getFilteredTradesApi(number, filter)
+    this.tradeApiService.getFilteredTrades(number, filter)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
         this.trades = this.TransformData(returnedTrades);
@@ -91,7 +91,7 @@ export class DashboardComponent implements OnInit {
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
       trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
       trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
-      trd.images = value.images; // get the images and pass them to the  carousel child
+      //trd.images = value.images; // get the images and pass them to the  carousel child
 
       value.tradeForObjects.forEach(function (value) {
         trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";

@@ -20,8 +20,9 @@ import {Trade, PageTitle, Image, TradeHistory } from '../../../helpers/classes';
 
 
 export class TradeDetailsComponent implements OnInit {
+
   private tradeId: number = 0;
-  private trade: Trade;
+  private trade: Trade = new Trade();
   private images: Image[];
   private histories: TradeHistory[];
   private hasImages: boolean = false;
@@ -35,16 +36,22 @@ export class TradeDetailsComponent implements OnInit {
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private loggerService: LoggerService) {
-
-    this.route.queryParams.subscribe(params => { this.tradeId = params['id']; });
+   
   };
 
 
   ngOnInit() {
-    this.setupPage(); 
-    this.getTheTrade(this.tradeId); 
+    this.route.queryParams.subscribe(params => { this.tradeId = params['id']; });
+
+    this.setupPage();    
+
+    this.getATrade(this.tradeId); 
+
     this.getTradeImages(this.tradeId);
+
     this.getTradeHistory(this.tradeId);
+
+  
   }
 
 
@@ -88,10 +95,13 @@ export class TradeDetailsComponent implements OnInit {
   /*******************************************************?
   // GET TRADE
   /*******************************************************/
-  private getTheTrade(tradeId: number) {
-    this.tradeApiService.getSingleTradeApi(tradeId).subscribe((tradeResult: Trade) => {
-      this.trade = this.TransformData(tradeResult);
+  private getATrade(tradeId: number) {
+
+    this.tradeApiService.getSingleTrade(tradeId)
+      .subscribe((tradeResult: Trade) => {
+        this.trade = this.TransformData(tradeResult);
     }, (serviceError: Response) => this.onError(serviceError, "getTheTrade"));
+
   }
 
 
@@ -99,9 +109,10 @@ export class TradeDetailsComponent implements OnInit {
  // GET IMAGES
  /*******************************************************/
   private getTradeImages(tradeId: number) {
-    this.imageServise.getImagesByTradeId(tradeId).subscribe((returnedImages: Image[]) => {
-      this.images = returnedImages;
-      if (this.images !== null) { this.hasImages = true; }
+    this.imageServise.getImagesByTradeId(tradeId)
+      .subscribe((returnedImages: Image[]) => {
+          this.images = returnedImages;
+          if (this.images !== null) { this.hasImages = true; }
     }
      , (serviceError: Response) => this.onError(serviceError, "getTradeImages"));
     
@@ -111,25 +122,23 @@ export class TradeDetailsComponent implements OnInit {
  // GET TRADE HISTORY
  /*******************************************************/
   private getTradeHistory(tradeId: number) {
-    this.tradeHistoryService.getTradeHistoryByTradeId(tradeId).subscribe((returnedHistories: TradeHistory[]) => {
-      this.histories = returnedHistories;      
+    this.tradeHistoryService.getTradeHistoryByTradeId(tradeId)
+      .subscribe((returnedHistories: TradeHistory[]) => {
+             this.histories = returnedHistories;      
     }, (serviceError: Response) => this.onError(serviceError, "getTradeHistory"));
   }
+
 
 
   private TransformData(returnedTrade: Trade): Trade {     
 
     let trd = new Trade;
-    
-    trd.tradeIdStr = returnedTrade.tradeId.toString();
+      
     trd.tradeId = returnedTrade.tradeId;
     trd.tradeDatePublished = returnedTrade.tradeDatePublished;
 
-    trd.traderId = returnedTrade.traderId;
-    trd.traderFirstName = returnedTrade.traderFirstName;
-    trd.traderMiddleName = returnedTrade.traderMiddleName;
-    trd.traderLastName = returnedTrade.traderLastName;
-    trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
+    trd.traderId = returnedTrade.traderId; 
+    trd.traderFullName = returnedTrade.traderFirstName + " " + returnedTrade.traderMiddleName + " " + returnedTrade.traderLastName;
 
     trd.tradeObjectDescription = returnedTrade.tradeObjects[0].tradeObjectDescription;
     trd.tradeObjectCategoryDescription = returnedTrade.tradeObjects[0].tradeObjectCategoryDescription;
@@ -137,12 +146,7 @@ export class TradeDetailsComponent implements OnInit {
     returnedTrade.tradeForObjects.forEach(function (returnedTrade) {
             trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + returnedTrade.tradeForObjectDescription + ",";
     });
-
-    //trd.images = returnedTrade.images;
-
-    if (returnedTrade !== null) {
-      this.hasImages = true;
-    }
+   
     return trd;
   }
 
@@ -163,17 +167,13 @@ export class TradeDetailsComponent implements OnInit {
   //ngx-pagination section
   /***********************************************/
   private isIdAsc = true;
-  private isTitleAsc = true;
-  private isTitleForAsc = true;
-  private isCategoryAsc = true;
-  private isNameAsc = true;
-  private isPublishedAsc = true;
+  private isTradeIdAsc = true;
+  private isDateAsc = true;
+  private isStatusAsc = true;
 
   private sortId: string = 'desc'
-  private sortTitle: string = 'desc';
-  private sortTitleFor: string = 'desc';
-  private sortCategory: string = 'desc';
-  private sortName: string = 'desc';
+  private sortTradeId: string = 'desc';
+  private sortStatus: string = 'desc';
   private sortDate: string = 'desc';
 
   private data: Array<any> = [];     // full data from the server
@@ -181,24 +181,18 @@ export class TradeDetailsComponent implements OnInit {
   public maxSize: number = 5;
   public numPages: number = 1;
 
-  private isNextButton: boolean = false;
-  private isPrevButton: boolean = false;
-  private lastPageOfTheCurrentSet: number = 0;
-
   public columns: Array<any> =
   [
-    { title: 'Id', name: 'tradeIdStr', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id' } },
-    { title: 'Trading', name: 'tradeObjectDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade object description' } },
-    { title: 'For', name: 'tradeForObjectsDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade for object description' } },
-    { title: 'Category', name: 'tradeObjectCategoryDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade category' } },
-    { title: 'Trader', name: 'traderFullName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader full name.' } },
-    { title: 'Published', name: 'tradeDatePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' } }
+    { title: 'Id', name: 'historyId', sort: true, filtering: { filterString: '', placeholder: 'Filter by history id' } },
+    { title: 'Trade Id', name: 'tradeId', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id' } },  
+    { title: 'Created Date', name: 'createdDate', sort: true, filtering: { filterString: '', placeholder: 'Filter by history date.' } },
+    { title: 'Action', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by history action.' } }
   ];
 
 
   public config: any = {
     id: 'pagination',
-    itemsPerPage: 10,
+    itemsPerPage: 4,
     currentPage: 1,
     totalItems: 0,
     paging: true,
@@ -207,27 +201,131 @@ export class TradeDetailsComponent implements OnInit {
     className: ['table-striped', 'table-bordered']
   };
 
+
   private onPageChange(passedpage: number) {
 
     this.config.currentPage = passedpage;
-
-    //let rem = this.config.totalItems % this.config.itemsPerPage;
-    //let mainPart = ~~(this.config.totalItems / this.config.itemsPerPage);
-
-
-    //if (this.config.totalItems < this.config.itemsPerPage) { this.lastPageOfTheCurrentSet = 1; }
-    //else {
-    //  if (this.config.totalItems > this.config.itemsPerPage && rem) { this.lastPageOfTheCurrentSet = mainPart + 1; }
-    //  else { this.lastPageOfTheCurrentSet = mainPart; }
-    //}
-
-    //// togle the next button visibility
-    //if (this.lastPageOfTheCurrentSet === this.config.currentPage && this.setsCounter < this.totalNumberOfSets) { this.isNextButton = true; }
-    //else { this.isNextButton = false; }
-
-    //// toglle the prev visibility
-    //if (this.setsCounter > 1) { this.isPrevButton = true; }
-    //else { this.isPrevButton = false; }
-
   }
+
+
+  private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
+    if (config.filtering) {
+      Object.apply(this.config.filtering, config.filtering);
+    }
+    if (config.sorting) {
+      (<any>Object).assign(this.config.sorting, config.sorting);
+    }
+
+    let filteredData = this.changeFilter(this.data, this.config);
+    let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = sortedData;
+    this.config.totalItems = sortedData.length;
+  }
+
+
+  private sortTable(column: string) {
+    // reset the array of columns
+    this.config.sorting.columns = [];
+    switch (column) {
+
+      case 'historyId':
+        this.config.sorting.columns = [{ name: 'historyId', sort: this.sortId }];
+        this.onChangeTable(this.config);
+        this.isIdAsc = !this.isIdAsc;
+        this.sortId = this.isIdAsc ? 'desc' : 'asc';
+        break;
+             
+      case 'tradeId':
+        this.config.sorting.columns = [{ name: 'tradeId', sort: this.sortTradeId }];
+        this.onChangeTable(this.config);
+        this.isTradeIdAsc = !this.isTradeIdAsc;
+        this.sortTradeId = this.isTradeIdAsc ? 'desc' : 'asc';
+        break;
+
+      case 'status':
+        this.config.sorting.columns = [{ name: 'status', sort: this.sortStatus }];
+        this.onChangeTable(this.config);
+        this.isStatusAsc = !this.isStatusAsc;
+        this.sortStatus = this.isStatusAsc ? 'desc' : 'asc';
+        break;
+
+      case 'createdDate':
+        this.config.sorting.columns = [{ name: 'createdDate', sort: this.sortDate }];
+        this.onChangeTable(this.config);
+        this.isDateAsc = !this.isDateAsc;
+        this.sortDate = this.isDateAsc ? 'desc' : 'asc';
+        break;
+      default:
+    }
+  }
+
+
+  public changeFilter(data: any, config: any): any {
+
+    let filteredData: Array<any> = data;
+
+    this.columns.forEach((column: any) => {
+
+      if (column.filtering) {
+        filteredData = filteredData.filter((item: any) => { return item[column.name].match(column.filtering.filterString); });
+      }
+
+    });
+
+    if (!config.filtering) {
+      return filteredData;
+    }
+
+    if (config.filtering.columnName) {
+      return filteredData.filter((item: any) =>
+        item[config.filtering.columnName].match(this.config.filtering.filterString));
+    }
+
+    let tempArray: Array<any> = [];
+    filteredData.forEach((item: any) => {
+
+      // find the string in each coloumn
+      let flag = false;
+      this.columns.forEach((column: any) => {
+        if (item[column.name].toString().match(this.config.filtering.filterString)) { flag = true; }
+      });
+      if (flag) { tempArray.push(item); }
+
+    });
+
+    filteredData = tempArray;
+
+    return filteredData;
+  }
+
+
+  private changeSort(data: any, config: any) {
+    if (!config.sorting) {
+      return data;
+    }
+
+    let columns = this.config.sorting.columns || [];
+    let columnName: string = null;
+    let sort: string = null;
+
+    for (let i = 0; i < columns.length; i++) {
+      if (columns[i].sort != '') {
+        columnName = columns[i].name;
+        sort = columns[i].sort;
+      }
+    }
+    if (!columnName) {
+      return data;
+    }
+
+    return data.sort((previous: any, current: any) => {
+      if (previous[columnName] > current[columnName]) {
+        return sort === 'desc' ? -1 : 1;
+      } else if (previous[columnName] < current[columnName]) {
+        return sort === 'asc' ? -1 : 1;
+      }
+      return 0;
+    });
+  }
+
 }

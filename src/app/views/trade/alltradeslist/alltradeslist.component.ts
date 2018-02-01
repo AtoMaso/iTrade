@@ -68,7 +68,7 @@ export class AllTradesListComponent implements OnInit {
   // gets all trades
   private getTrades(traderId:string) {
 
-    this.tradeApiService.getTradesApi(traderId)
+    this.tradeApiService.getTrades(traderId)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }  // TODO change the process message code to reflect the trades
         else {
