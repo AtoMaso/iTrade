@@ -30,14 +30,14 @@ export class LoginComponent implements OnInit {
   constructor( private router: Router,
                     private formBuilder: FormBuilder,
                     private authenticationService: AuthenticationService,
-                    private messageService: ProcessMessageService,
+                    private messagesService: ProcessMessageService,
                     private titleService: PageTitleService,
                     private loggerService: LoggerService) {}
 
   ngOnInit() {
       
     this.titleService.emitPageTitle(new PageTitle("Login"));
-    this.messageService.emitRoute("nill");
+    this.messagesService.emitRoute("nill");
 
     this.loginGroup = this.formBuilder.group({
       email: new FormControl('', [Validators.required, ValidationService.emailValidator]),
@@ -56,8 +56,8 @@ export class LoginComponent implements OnInit {
 
     if (this.loginGroup.dirty && this.loginGroup.valid) {
       this.authenticationService.loginClient(this.trader)
-                  .subscribe(res => this.onLoginSuccess(res)
-                  , error => this.onError(error));
+          .subscribe(res => this.onLoginSuccess(res)
+           , (error, Response) => this.onError(error, "Login"));
     }  
   }
 
@@ -81,33 +81,15 @@ export class LoginComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  // an error has occured
-  private onError(err: any) {
+  private onError(serviceError: any, operation: string) {
 
-    // stop the spinner
-    this.isRequesting = false;
-    // we will log the error in the server side by calling the logger, or that is already 
-    // done on the server side if the error has been caught
-    this.loggerService.addError(err, "login");
+    // audit log the error passed
+    this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-    // we will display a fiendly process message using the process message service        
-    if (err.status !== 200 || err.status !== 300) {
-      try {
-        if (err.status === 400) { this.messageService.emitProcessMessage("PMEPI", err.error); }
-        else {
-          if (err.error !== null) { this.messageService.emitProcessMessage("PME", err.error); }
-          else { this.messageService.emitProcessMessage("PMG"); }
-        }
-      }
-      catch (exception) {
-        if (err.error !== null) { this.messageService.emitProcessMessage("PME", err.error); }
-        else { this.messageService.emitProcessMessage("PMG"); }
-      }
-    }
-    else {
-      if (err.error !== null) { this.messageService.emitProcessMessage("PME", err.error); }
-      else { this.messageService.emitProcessMessage("PMG"); }
-    }
+    if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    else if (serviceError.status === 400) { this.messagesService.emitProcessMessage("PMEPI", serviceError.error); }
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error);}
+    else { this.messagesService.emitProcessMessage("PMG"); }
 
   }
 }
