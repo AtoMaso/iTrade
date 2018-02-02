@@ -62,13 +62,7 @@ export class AuthenticationService implements OnDestroy {
 
     return this.httpClientService.post(serviceBase + 'Token', data, { headers: httpHeaders, responseType: "text" })
       // this should be .map as the component is subscribing for it
-      .map(res => this.onLoginSuccess(res)
-      , (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) { this.handleError("Client side error occured: loginClient method in the authentication service", err); }
-        else { this.handleError("Server side error occured:loginClient method in the authentication service", err); }
-        return Observable.throw(err);
-      });
-      //this.handleError("Login", error));
+      .map(res => this.onLoginSuccess(res));
 }
 
 
@@ -77,15 +71,9 @@ export class AuthenticationService implements OnDestroy {
     var data = "grant_type=refresh_token&refresh_token=" + this.userIdentity.refreshToken + "&client_id=";
     let httpHeaders = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' })
 
-    return this.httpClientService.post(serviceBase + "Token", data, {headers: httpHeaders})
+    return this.httpClientService.post(serviceBase + "Token", data, { headers: httpHeaders })
       // this should be subscibe as we need to run onLoginSuccess
-      .subscribe(res => this.onLoginSuccess(res) 
-      , (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) { this.handleError("Client side error occured: loginClient method in the authentication service", err); }
-        else { this.handleError("Server side error occured:refreshTokenClient method in the authentication service", err); }
-        return Observable.throw(err);
-      });
-        //this.handleError("RefreshToken", error)
+      .subscribe(res => this.onLoginSuccess(res));
      
   }
 
@@ -100,9 +88,8 @@ export class AuthenticationService implements OnDestroy {
     httpHeaders.append('Accept', 'application/json'); 
     httpHeaders.append('Content-Type', 'application/json');
 
-    return this.httpService.post(serviceAccount + "Register", body, { headers: httpHeaders })
-      .map((res: Response) => this.onSucessRegistering(res)
-      , (error: HttpErrorResponse) => this.handleError("Register", error));
+    return this.httpService.post(serviceAccount + "Register", body, { headers: httpHeaders})
+      .map((res: Response) => this.onSucessRegistering(res));    
   }
 
 
@@ -168,13 +155,7 @@ export class AuthenticationService implements OnDestroy {
   } 
  
   private onSucessRegistering(response: any) {
-     // maybe some logic here but for now code below causes issues as is treated as error passed to the component    
-      //let errors: any = [];
-      //for (var key in response.data.modelState) {
-      //    for (var i = 0; i < response.data.modelState[key].length; i++) {
-      //        errors.push(response.data.modelState[key][i]);
-      //    }
-      //}
+     // !!! maybe some logic here but for now code below causes issues as is treated as error passed to the component        
   }
 
   
@@ -215,8 +196,7 @@ export class AuthenticationService implements OnDestroy {
 
   // NOT USED we will use this method for all authorization method before me make a call
   // this is used in situations when we are constantly working
-  // the IDLE situation is handled by the IDLE methods on the app
-  // component
+  // the IDLE situation is handled by the IDLE methods on the app component
   public refreshTokenWhenNotIdle() {
         if (this.userSession != null) {
               if (moment().isAfter(this.userIdentity.accessTokenExpiresDate)) {
@@ -285,49 +265,4 @@ export class AuthenticationService implements OnDestroy {
       }
   }
 
-
-  //*****************************************************
-  // HELPER METHODS
-  //*****************************************************
-  private handleError(operation: string, err: HttpErrorResponse) {
-
-    let errMsg = `error in ${operation}() retrieving ${err.url}`;
-
-    // audit log the error on the server side
-    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
-
-    // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-    return Observable.throw(errMsg);
-  };
-
 }
-
-
- //******************************************************
-  // Login/Get token http way
-  //******************************************************
-  //public login(trader: LoginModel) {
-
-  //    var data = "grant_type=password&username=" + trader.UserName + "&password=" + trader.Password;
-  //    let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' })    
-
-  //    return this.httpService.post(serviceBase + "Token", data, { headers: headers })       
-  //        .map(res => this.onLoginSuccess(res) // this should be .map as the component is subscribing for it
-  //        , (error:Response) => this.onLoginError(error, "Login"));
-
-  //}
-
-  //// grabs the refresh token when IDLE requires or WORKING session is close to expiry
-  //public refreshToken() {
-  //  var data = "grant_type=refresh_token&refresh_token=" + this.userIdentity.refreshToken + "&client_id=";  
-  //  let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' })
-
-  //  return this.httpService.post(serviceBase + "Token", data, { headers: headers })
-  //      .subscribe(res => this.onLoginSuccess(res) // this should be subscibe as we need to run onLoginSuccess
-  //      ,(error:any) => this.onLoginError(error, "RefreshToken")); 
-  //}
-
-  // used by the token interceptor
-  //public getToken() {
-  //  return this.userIdentity.accessToken;
-  //}
