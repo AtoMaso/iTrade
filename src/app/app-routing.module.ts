@@ -39,7 +39,7 @@ const routes: Routes = [
 
   // t r a d e r
   { path: 'traderdetails', component: TraderDetailsComponent }, // this should be accessible from the dashboard of all trades view  
-  { path: 'traderhome', component: TraderHomeComponent, canActivate: [AuthGuard] },   
+  { path: 'traderhome', component: TraderHomeComponent } // TODO introduce this when page fixed canActivate: [AuthGuard] },   
   { path: 'mytradeslist', component: MyTradesListComponent, canActivate: [AuthGuard] },
   { path: 'mytraderaccount', component: MyTraderAccountComponent, canActivate: [AuthGuard] },
   { path: 'alltraderslist', component: AllTradersListComponent, canActivate: [AuthGuard] },
