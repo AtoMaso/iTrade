@@ -2,6 +2,7 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Response } from '@angular/http';
+import { NG_TABLE_DIRECTIVES, NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table';
 
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
@@ -124,7 +125,8 @@ export class TradeDetailsComponent implements OnInit {
   private getTradeHistory(tradeId: number) {
     this.tradeHistoryService.getTradeHistoryByTradeId(tradeId)
       .subscribe((returnedHistories: TradeHistory[]) => {
-             this.histories = returnedHistories;      
+        this.data = returnedHistories,
+        this.onChangeTable(this.config)
     }, (serviceError: Response) => this.onError(serviceError, "getTradeHistory"));
   }
 
@@ -163,6 +165,7 @@ export class TradeDetailsComponent implements OnInit {
   }
 
 
+
   /**********************************************/
   //ngx-pagination section
   /***********************************************/
@@ -176,15 +179,13 @@ export class TradeDetailsComponent implements OnInit {
   private sortStatus: string = 'desc';
   private sortDate: string = 'desc';
 
-  private data: Array<any> = [];     // full data from the server
-  public rows: Array<any> = [];      // rows passed to the table
+  private data: Array<any> = [];              // full data from the server
+  public historyrows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
   public numPages: number = 1;
 
   public columns: Array<any> =
-  [
-    { title: 'Id', name: 'historyId', sort: true, filtering: { filterString: '', placeholder: 'Filter by history id' } },
-    { title: 'Trade Id', name: 'tradeId', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id' } },  
+  [  
     { title: 'Created Date', name: 'createdDate', sort: true, filtering: { filterString: '', placeholder: 'Filter by history date.' } },
     { title: 'Action', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by history action.' } }
   ];
@@ -192,7 +193,7 @@ export class TradeDetailsComponent implements OnInit {
 
   public config: any = {
     id: 'pagination',
-    itemsPerPage: 4,
+    itemsPerPage: 5,
     currentPage: 1,
     totalItems: 0,
     paging: true,
@@ -218,7 +219,7 @@ export class TradeDetailsComponent implements OnInit {
 
     let filteredData = this.changeFilter(this.data, this.config);
     let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = sortedData;
+    this.historyrows = sortedData;
     this.config.totalItems = sortedData.length;
   }
 
@@ -226,20 +227,14 @@ export class TradeDetailsComponent implements OnInit {
   private sortTable(column: string) {
     // reset the array of columns
     this.config.sorting.columns = [];
+
     switch (column) {
 
-      case 'historyId':
-        this.config.sorting.columns = [{ name: 'historyId', sort: this.sortId }];
+      case 'createdDate':
+        this.config.sorting.columns = [{ name: 'createdDate', sort: this.sortDate }];
         this.onChangeTable(this.config);
-        this.isIdAsc = !this.isIdAsc;
-        this.sortId = this.isIdAsc ? 'desc' : 'asc';
-        break;
-             
-      case 'tradeId':
-        this.config.sorting.columns = [{ name: 'tradeId', sort: this.sortTradeId }];
-        this.onChangeTable(this.config);
-        this.isTradeIdAsc = !this.isTradeIdAsc;
-        this.sortTradeId = this.isTradeIdAsc ? 'desc' : 'asc';
+        this.isDateAsc = !this.isDateAsc;
+        this.sortDate = this.isDateAsc ? 'desc' : 'asc';
         break;
 
       case 'status':
@@ -249,12 +244,6 @@ export class TradeDetailsComponent implements OnInit {
         this.sortStatus = this.isStatusAsc ? 'desc' : 'asc';
         break;
 
-      case 'createdDate':
-        this.config.sorting.columns = [{ name: 'createdDate', sort: this.sortDate }];
-        this.onChangeTable(this.config);
-        this.isDateAsc = !this.isDateAsc;
-        this.sortDate = this.isDateAsc ? 'desc' : 'asc';
-        break;
       default:
     }
   }

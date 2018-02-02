@@ -121,22 +121,46 @@
 
                               <thead>
                                 <tr>
-                                  <th class="col-md-1" style="vertical-align:middle;">
-                                    <span  class="text-uppercase textlightcoral smalltextbold" style="vertical-align:middle;width:auto;">Id</span>
+                                  <th class="col-md-1" style="vertical-align:middle;background-color:#FF223A3A">
+                                    <span  class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Id</span>
+
+                                    <!--<a (click)="sortTable('historyId')" class="text-uppercase buttonclass textlightcoral smalltextbold" style="width:auto">
+                                      Id
+                                      <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
+                                      <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
+                                    </a>-->
                                   </th>
 
 
-                                  <th class="col-md-2" style="vertical-align:middle;">
-                                    <span class="text-uppercase textlightcoral smalltextbold" style="vertical-align:middle;width:auto;">Trade Id</span>                                                                                                                                                                                 
+                                  <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                    <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Trade Id</span>
+                                    
+                                    <!--<a (click)="sortTable('tradeId')" class="text-uppercase buttonclass textblack smalltextbold" style="width:auto">
+                                      Trade Id
+                                      <span *ngIf="isTradeIdAsc" class="glyphicon glyphicon-chevron-down"></span>
+                                      <span *ngIf="!isTradeIdAsc" class="glyphicon glyphicon-chevron-up"></span>
+                                    </a>-->                                                                                                                                                                                 
                                   </th>
 
 
-                                  <th class="col-md-2" style="vertical-align:middle;">
-                                    <span class="text-uppercase textlightcoral smalltextbold"  style="vertical-align:middle;width:auto;">Created Date</span>                                                                                                                                           
+                                  <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                    <!--<span class="text-uppercase textlightcoral smalltextbold"  style="vertical-align:middle;width:auto;">Created Date</span>-->          
+                                    <a (click)="sortTable('createdDate')" class="text-uppercase buttonclass textgray smalltext" style="width:auto">
+                                     Created Date
+                                      <span *ngIf="isDateAsc" class="glyphicon glyphicon-chevron-down"></span>
+                                      <span *ngIf="!isDateAsc" class="glyphicon glyphicon-chevron-up"></span>
+                                    </a>                                                                                                                                                             
                                   </th>
 
-                                  <th class="col-md-2" style="vertical-align:middle;">
-                                    <span  class="text-uppercase textlightcoral smalltextbold" style="vertical-align:middle;width:auto">Action</span>
+
+                                  <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                    <!--<span  class="text-uppercase textlightcoral smalltextbold" style="vertical-align:middle;width:auto">Action</span>-->
+
+                                    <a (click)="sortTable('status')" class="text-uppercase buttonclass textgray smalltext" style="width:auto">
+                                     Action
+                                      <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
+                                      <span *ngIf="!isStatusAsc" class="glyphicon glyphicon-chevron-up"></span>
+                                    </a>                             
                                   </th>
                                                                
                                 </tr>
@@ -144,7 +168,7 @@
 
 
 
-                              <tr *ngFor="let history of histories | paginate:config ">
+                              <tr *ngFor="let history of historyrows | paginate:config ">
 
                                 <td class="col-md-1 smalltext text-uppercase text-info " style="vertical-align:middle">{{ history.historyId  }}</td>
                                

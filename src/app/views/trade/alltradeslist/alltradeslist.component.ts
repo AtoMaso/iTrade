@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Observable';
 // third party
 import { NG_TABLE_DIRECTIVES, NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table';
 
-
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { LoggerService } from '../../../services/logger/logger.service';
@@ -94,9 +93,9 @@ export class AllTradesListComponent implements OnInit {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }// TODO change the process message code to reflect the trades
         else {
                 this.data = this.TransformData(returnedTrades),
-                this.totalNumberOfRecords = this.data[0].totalTradesNumber;
+                this.totalNumberOfRecords = this.data[0].totalTradesNumber,
                 this.isRequesting = false,
-                this.calculateTotalNumberOfSets();
+                this.calculateTotalNumberOfSets(),
                 this.onChangeTable(this.config),
                 this.onPageChange(1)
        }              
