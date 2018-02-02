@@ -15,9 +15,9 @@
               <div class="row">
                 <div class="panel panel-heading">
                                       
-                      <a class="description panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseDescription">
+                      <span class="description panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseDescription">
                         <span class="glyphicon glyphicon-plus"></span> Trade Description
-                      </a>
+                      </span>
                            
                     <div id="collapseDescription" class="collapse smalltext textgray">
 
@@ -34,21 +34,21 @@
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Trading for:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeForObjectsDescription }}</span>
+                  Trading for:<span class="smalltext  text-capitalize text-info"> {{ trade.tradeForObjectsDescription }}</span>
                 </div>
               </div>
 
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Category: <span class="smalltext text-uppercase text-info"> {{ trade.tradeObjectCategoryDescription }}</span> 
+                  Category: <span class="smalltext text-capitalize text-info"> {{ trade.tradeObjectCategoryDescription }}</span> 
                 </div>
               </div>
 
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Date Published: <span class="smalltext text-uppercase text-info"> {{ trade.tradeDatePublished | date }}</span> 
+                  Date Published: <span class="smalltext text-capitalize text-info"> {{ trade.tradeDatePublished | date }}</span> 
                 </div>
               </div>
 
@@ -56,7 +56,7 @@
               <div class="row">
                 <div class="panel panel-heading col-md-12">
                   Trader: <span class="textlightcoral">
-                                    <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase"><span> {{ trade.traderFullName }}</span></a>
+                                    <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase"><span> <i>{{ trade.traderFullName }}</i></span></a>
                               </span> 
                 </div>
               </div>
@@ -69,9 +69,9 @@
 
                 <div class="row panel panel-heading">
 
-                  <a class="images panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseImages">
+                  <span class="images panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseImages">
                     <span class="glyphicon glyphicon-plus"></span> Trade Images
-                 </a>             
+                 </span>             
 
                   <div id="collapseImages" class="collapse">
           
@@ -104,9 +104,9 @@
 
                 <div class="row panel panel-heading">     
 
-                  <a class="history panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
+                  <span class="history panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
                     <span class="glyphicon glyphicon-plus"></span> This Trade History
-                  </a>
+                  </span>
 
                    <div id="collapseHistory" class="collapse">
 
@@ -122,29 +122,16 @@
                               <thead>
                                 <tr>
                                   <th class="col-md-1" style="vertical-align:middle;background-color:#FF223A3A">
-                                    <span  class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Id</span>
-
-                                    <!--<a (click)="sortTable('historyId')" class="text-uppercase buttonclass textlightcoral smalltextbold" style="width:auto">
-                                      Id
-                                      <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
-                                      <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
-                                    </a>-->
+                                    <span  class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Id</span>                                 
                                   </th>
 
 
                                   <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                    <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Trade Id</span>
-                                    
-                                    <!--<a (click)="sortTable('tradeId')" class="text-uppercase buttonclass textblack smalltextbold" style="width:auto">
-                                      Trade Id
-                                      <span *ngIf="isTradeIdAsc" class="glyphicon glyphicon-chevron-down"></span>
-                                      <span *ngIf="!isTradeIdAsc" class="glyphicon glyphicon-chevron-up"></span>
-                                    </a>-->                                                                                                                                                                                 
+                                    <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Trade Id</span>                                                                                                                                                                                 
                                   </th>
 
 
-                                  <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                    <!--<span class="text-uppercase textlightcoral smalltextbold"  style="vertical-align:middle;width:auto;">Created Date</span>-->          
+                                  <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                    
                                     <a (click)="sortTable('createdDate')" class="text-uppercase buttonclass textgray smalltext" style="width:auto">
                                      Created Date
                                       <span *ngIf="isDateAsc" class="glyphicon glyphicon-chevron-down"></span>
@@ -153,9 +140,7 @@
                                   </th>
 
 
-                                  <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                    <!--<span  class="text-uppercase textlightcoral smalltextbold" style="vertical-align:middle;width:auto">Action</span>-->
-
+                                  <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                 
                                     <a (click)="sortTable('status')" class="text-uppercase buttonclass textgray smalltext" style="width:auto">
                                      Action
                                       <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
@@ -170,13 +155,13 @@
 
                               <tr *ngFor="let history of historyrows | paginate:config ">
 
-                                <td class="col-md-1 smalltext text-uppercase text-info " style="vertical-align:middle">{{ history.historyId  }}</td>
+                                <td class="col-md-1 smalltext text-lowercase text-capitalize textgray " style="vertical-align:middle">{{ history.historyId  }}</td>
                                
-                                <td class="col-md-2 smalltext text-uppercase text-info " style="vertical-align:middle"> {{ history.tradeId }}</td>
+                                <td class="col-md-2 smalltext text-lowercase text-capitalize textgray " style="vertical-align:middle"> {{ history.tradeId }}</td>
 
-                                <td class="col-md-2 smalltex text-uppercase text-info " style="vertical-align:middle">{{ history.createdDate | date  }}</td>
+                                <td class="col-md-2 smalltext text-lowercase text-capitalize textgray " style="vertical-align:middle">{{ history.createdDate | date  }}</td>
 
-                                <td class="col-md-2 smalltext text-uppercase text-info " style="vertical-align:middle">{{ history.status}}</td>
+                                <td class="col-md-2 smalltext text-lowercase text-capitalize textgray " style="vertical-align:middle">{{ history.status}}</td>
                               </tr>
 
                             </table>

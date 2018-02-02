@@ -4,7 +4,7 @@
           <div class="panel-heading" style="background-color:dimgray;">              
                    <span class="smalltextbold textwhite restriction">
                               <strong>Trading a 
-                                  <a href="" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral">{{ trade.tradeObjectDescription }}</a>
+                                  <a href="" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription }}</i></a>
                             </strong>
                    </span>                                                                                                               
           </div>
@@ -13,7 +13,7 @@
                 <div>
                   <span>
                     <strong class="textgray">Category: </strong>
-                    <span class="text-uppercase text-info">{{ trade.tradeObjectCategoryDescription }}</span>
+                    <span class="text-capitalize smalltext text-info">{{ trade.tradeObjectCategoryDescription }}</span>
                   </span>
                 </div>     
             
@@ -21,7 +21,7 @@
                 <div>
                   <span>
                     <strong class="textgray">Will trade for:</strong>
-                    <span class="text-uppercase text-info restriction">{{ trade.tradeForObjectsDescription }}</span>
+                    <span class="text-capitalize smalltext text-info ">{{ trade.tradeForObjectsDescription }}</span>
                   </span>
                 </div>
 
@@ -38,13 +38,13 @@
                 <div> 
                   <span>
                     <strong class="textgray">Published: </strong>
-                    <span class="text-uppercase text-info">{{ trade.tradeDatePublished  | date }}</span>
+                    <span class="text-capitalize smalltext text-info">{{ trade.tradeDatePublished  | date }}</span>
                   </span>
                 </div>          
             <div>              
               <span>
                 <strong class="textgray">Trader:</strong>
-                <a href="" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral restriction">{{ trade.traderFullName }}</a>
+                <a href="" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="text-uppercase smalltext textlightcoral restriction"><i>{{ trade.traderFullName }}</i></a>
               </span>             
             </div>       
                    

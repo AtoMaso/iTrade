@@ -126,21 +126,21 @@
 
         <tr *ngFor="let trade of rows  | paginate:config ">
 
-          <td class="col-md-1 smalltext text-uppercase text-info" style="vertical-align:middle">{{ trade.tradeId  }}</td>
+          <td class="col-md-1 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeId  }}</td>
 
           <td class="col-md-2" style="vertical-align:middle">
-              <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral">{{ trade.tradeObjectDescription  }}</a>
+              <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription  }}</i></a>
           </td>
 
-          <td class="col-md-2 smalltext text-uppercase text-info" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
+          <td class="col-md-2 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
 
-          <td class="col-md-2 smalltex text-uppercase text-info" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
+          <td class="col-md-2 smalltex text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
 
           <td class="col-md-3" style="vertical-align:middle">
-            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext text-uppercase textlightcoral">{{ trade.traderFullName }}</a>
+            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.traderFullName }}</i></a>
           </td>
 
-          <td class="col-md-2 smalltext text-uppercase text-info" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+          <td class="col-md-2 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
 
         </tr>
 

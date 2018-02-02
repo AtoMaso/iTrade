@@ -25,12 +25,12 @@
                 <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
               </div>
 
-              <div class="col-md-2 textgray">
+              <!--<div class="col-md-2 textgray">
                 <span class="smalltextbold">Records Per Set</span>
                 <input type="number" min="5" max="500" [(ngModel)]="recordsPerSet" class="form-control">
-              </div>
+              </div>-->
 
-              <div class="col-md-2 col-md-offset-1 text-right">
+              <div class="col-md-2 col-md-offset-3 text-right">
                 <br />             
                 <div *ngIf="isAuthenticated">                 
                       <button class="btn btn-sm btn-success" (click)="addTrade()">
@@ -53,7 +53,7 @@
                             <th class="col-md-1" style="vertical-align:middle;background-color:#FF223A3A">
                               <span style="vertical-align:middle;">
                                 <a (click)="sortTable('tradeIdStr')" class="textgray text-uppercase buttonclass smalltextbold" style="width:auto">
-                                  Id
+                                  Status
                                   <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
                                   <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
                                 </a>
@@ -114,21 +114,21 @@
                         <tr *ngFor="let trade of rows  | paginate:config ">
 
                   
-                          <td class="col-md-1 smalltext text-uppercase text-info" style="vertical-align:middle">{{ trade.tradeId  }}</td>
+                          <td class="col-md-1 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.status  }}</td>
 
                           <td class="col-md-2" style="vertical-align:middle">
-                            <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral">{{ trade.tradeObjectDescription  }}</a>
+                            <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-lowercase text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription  }}</i></a>
                           </td>
 
-                          <td class="col-md-2 smalltext text-uppercase text-info" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
+                          <td class="col-md-2 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
 
-                          <td class="col-md-2 smalltex text-uppercase text-info" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
+                          <td class="col-md-2 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
 
                           <td class="col-md-3" style="vertical-align:middle">
-                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext text-uppercase textlightcoral">{{ trade.traderFullName }}</a>
+                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext text-lowercase text-uppercase textlightcoral"><i>{{ trade.traderFullName }}</i></a>
                           </td>
 
-                          <td class="col-md-2 smalltext text-uppercase text-info" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+                          <td class="col-md-2 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
 
 
                           <td class="col-md-2 text-center" style="vertical-align:middle;">
