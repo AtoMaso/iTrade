@@ -39,6 +39,7 @@ export class MyTradesListComponent implements OnInit {
   private setsCounter: number = 1;
   private recordsPerSet: number = 4;
   private totalNumberOfSets: number = 0;
+  private status: string = "Open";
 
   // constructor which injects the services
   constructor(
@@ -57,16 +58,16 @@ export class MyTradesListComponent implements OnInit {
     this.getUseridentity();
     this.initialiseComponent();
     //this.getTrades(this.traderId); 
-    this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet);
+    this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
   }
 
 
   //*****************************************************
   // GET TRADES
   //*****************************************************
-  private getTrades(traderId:string) {
+  private getTrades(traderId: string, status: string ="All") {
 
-    this.tradeApiService.getTrades(traderId)
+    this.tradeApiService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
         else {
@@ -84,9 +85,9 @@ export class MyTradesListComponent implements OnInit {
 
 
   //gets page of trades 
-  private getPageOfTrades(traderId: string, page: number = 1, perpage: number = 4) {
+  private getPageOfTrades(traderId: string, page: number = 1, perpage: number = 4, status:string="All") {
 
-    this.tradeApiService.getPageOfTrades(traderId, page, perpage)
+    this.tradeApiService.getPageOfTradesWithStatusOrAll(traderId, page, perpage, status)
       .subscribe((returnedTrades: Trade[]) => {
 
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }// TODO change the process message code to reflect the trades
@@ -142,7 +143,7 @@ export class MyTradesListComponent implements OnInit {
   private initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.isRequesting = true;
-    this.pageTitleService.emitPageTitle(new PageTitle("My Trades"));
+    this.pageTitleService.emitPageTitle(new PageTitle("My Open Trades"));
   }
 
 
@@ -322,16 +323,10 @@ export class MyTradesListComponent implements OnInit {
       this.setsCounter = this.setsCounter + 1;
 
       // get the next set of records
-      this.getPageOfTrades("", this.setsCounter, this.recordsPerSet);
+      this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
 
-      //// set the current page to 1
+      // set the current page to 1
       this.config.currentPage = 1;
-
-      //// calll the on change method to recalculate the new set numbers
-      //this.onChangeTable(this.config);
-
-      // call on page change to recalculate the pagination
-      //this.onPageChange(this.config.currentPage);
     }
     else { this.messagesService.emitProcessMessage("PME", "There no more sets of records."); }
   }
@@ -348,16 +343,10 @@ export class MyTradesListComponent implements OnInit {
       this.setsCounter = this.setsCounter - 1;
 
       // get the previous set of records
-      this.getPageOfTrades("", this.setsCounter, this.recordsPerSet);
+      this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
 
       // set the current page to 1
       this.config.currentPage = 1;
-
-      //// calll the on change method to recalculate the new set numbers
-      //this.onChangeTable(this.config);
-
-      //// call on page change to recalculate the pagination
-      //this.onPageChange(this.config.currentPage);
     }
     else { this.messagesService.emitProcessMessage("PME", "This is the first set of records."); }
   }

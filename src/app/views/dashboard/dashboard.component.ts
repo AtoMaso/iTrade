@@ -37,32 +37,32 @@ export class DashboardComponent implements OnInit {
     this.messagesService.emitRoute("nill");
 
     this.isRequesting = true;          
-    // get the top 6 trades by date published in asc order
-    this.getFilteredTrades(8, "tradeDatePublished");
+    // get the top 8 trades by date published in asc order
+    this.getFilteredTrades(8, "Open");
   }
 
 
   //*****************************************************
   //  GET ALL TRADES
   //*****************************************************
-  public getTrades(): void {
-      // call the service to get the data  
-    this.tradeApiService.getTrades()
-      .subscribe((returnedTrades: Trade[]) => {
-        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-        this.trades = this.TransformData(returnedTrades);
-        this.isRequesting = false;
-     },
-     (res: Response) => this.onError(res, "getTradesApi method"));          
-  } 
+  //public getTrades(): void {
+  //    // call the service to get the data  
+  //  this.tradeApiService.getTrades()
+  //    .subscribe((returnedTrades: Trade[]) => {
+  //      if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
+  //      this.trades = this.TransformData(returnedTrades);
+  //      this.isRequesting = false;
+  //   },
+  //   (res: Response) => this.onError(res, "getTradesApi method"));          
+  //} 
 
 
   //*****************************************************
   //  GET TOP 8 TRADES
   //*****************************************************
-  public getFilteredTrades(number: number, filter:string): void {
+  public getFilteredTrades(number: number, status:string): void {
     // call the service to get the data  
-    this.tradeApiService.getFilteredTrades(number, filter)
+    this.tradeApiService.getFilteredTradesWithStatusOrAll(number, status)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
         this.trades = this.TransformData(returnedTrades);
@@ -111,9 +111,13 @@ export class DashboardComponent implements OnInit {
     // audit log the error passed
     this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-    if (serviceError.error.ModelState !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
-    else { this.messagesService.emitProcessMessage("PMGTs"); }
+    //if (serviceError.error.ModelState !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    //else { this.messagesService.emitProcessMessage("PMGTs"); }
 
+    if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    else if (serviceError.status === 400) { this.messagesService.emitProcessMessage("PMEPI", serviceError.error); } // TODO replace this PMEPI with corresponding error
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
+    else { this.messagesService.emitProcessMessage("PMGTs"); }
   }
 
   // an event from the child carousel component saying that encountered an error

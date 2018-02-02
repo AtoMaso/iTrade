@@ -60,6 +60,6 @@ export class MyTraderAccountComponent implements OnInit {
   private initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.isRequesting = true;
-    this.pageTitleService.emitPageTitle(new PageTitle("My Trader Account"));
+    this.pageTitleService.emitPageTitle(new PageTitle("My Account"));
   }
 }

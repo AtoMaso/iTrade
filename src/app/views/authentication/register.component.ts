@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
 
       this.authenticationService.register(this.registerModel)
         .subscribe(res => this.onSucessRegistering(res)
-        , (err: Response) => this.onError(err, "Register"));
+        , (error: Response) => this.onError(error, "Register"));
     }
   }
 

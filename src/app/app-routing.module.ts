@@ -17,6 +17,10 @@ import { AllTradersListComponent } from './views/trader/alltraderslist/alltrader
 import { TraderDetailsComponent } from './views/trader/traderdetails/traderdetails.component';
 import { TraderHomeComponent } from './views/trader/traderhome/traderhome.component';
 import { MyTraderAccountComponent } from  './views/trader/mytraderaccount/mytraderaccount.component';;
+import { PersonalDetailsComponent } from './views/trader/personaldetails/personaldetails.component';;
+import { ContactlDetailsComponent } from './views/trader/contactdetails/contactdetails.component';;
+import { SecurityDetailsComponent } from './views/trader/securitydetails/securitydetails.component';;
+
 
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
@@ -36,12 +40,19 @@ const routes: Routes = [
   { path: 'alltradeslist', component: AllTradesListComponent }, 
   { path: 'tradedetails', component: TradeDetailsComponent }, // this should be accessible from the dashboard or the list of all trades or my trades view
   { path: 'addtrade', component: AddTradeComponent, canActivate: [AuthGuard] },
+  { path: 'mytradeslist', component: MyTradesListComponent, canActivate: [AuthGuard] },
 
   // t r a d e r
-  { path: 'traderdetails', component: TraderDetailsComponent }, // this should be accessible from the dashboard of all trades view  
-  { path: 'traderhome', component: TraderHomeComponent } // TODO introduce this when page fixed canActivate: [AuthGuard] },   
-  { path: 'mytradeslist', component: MyTradesListComponent, canActivate: [AuthGuard] },
+  { path: 'traderhome', component: TraderHomeComponent, canActivate: [AuthGuard] },   
   { path: 'mytraderaccount', component: MyTraderAccountComponent, canActivate: [AuthGuard] },
+  { path: 'personaldetails', component: PersonalDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'contactdetails', component: ContactlDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'securitydetails', component: SecurityDetailsComponent, canActivate: [AuthGuard] },
+
+  { path: 'traderdetails', component: TraderDetailsComponent }, // this should be accessible from the dashboard of all trades view  
+ 
+
+  // t r a d e r s
   { path: 'alltraderslist', component: AllTradersListComponent, canActivate: [AuthGuard] },
 
   //{ path: 'ng2-file-upload', component: NG2FileUploadComponent, canActivate: [AuthGuard] },

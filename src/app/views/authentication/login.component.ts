@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
     if (this.loginGroup.dirty && this.loginGroup.valid) {
       this.authenticationService.loginClient(this.trader)
           .subscribe(res => this.onLoginSuccess(res)
-           , (error, Response) => this.onError(error, "Login"));
+           , (error: Response) => this.onError(error, "Login"));
     }  
   }
 

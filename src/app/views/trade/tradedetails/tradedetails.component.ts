@@ -77,10 +77,10 @@ export class TradeDetailsComponent implements OnInit {
 
 
       jQuery("#collapseHistory").on("hide.bs.collapse", function () {
-        jQuery(".history").html('<span class="glyphicon glyphicon-plus"></span> Trade History');
+        jQuery(".history").html('<span class="glyphicon glyphicon-plus"></span> This Trade History');
       });
       jQuery("#collapseHistory").on("show.bs.collapse", function () {
-        jQuery(".history").html('<span class="glyphicon glyphicon-minus"></span> Trade History');
+       jQuery(".history").html('<span class="glyphicon glyphicon-minus"></span> This Trade History');
       });
 
 
