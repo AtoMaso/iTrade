@@ -1,9 +1,7 @@
-
-
-
 <div class="container col-md-12">
 
-            <div class="row">
+        <!-- Filters -->
+        <div class="row">
               <div class="col-md-2 textgray">
                 <!-- this is ng2-table filtering section used but the rest of it is independent table done by me-->
                 <span class="smalltextbold">Filter in all columns</span>
@@ -35,122 +33,105 @@
               </div>
             </div>
 
-            <br />
+        <br />
 
-            <div class="row">
+        <!-- Table -->
+        <div class="row">
 
+              <!-- Table -->
               <div class="table-responsive">
 
                       <table class="table table-bordered table-hover table-condensed">
 
+                        <!-- Table Header -->
                         <thead>
                           <tr>
-                            <th class="col-md-1" style="vertical-align:middle;background-color:#FF223A3A">
-                              <span style="vertical-align:middle;">
-                                <a (click)="sortTable('tradeIdStr')" class="textgray text-uppercase buttonclass smalltextbold" style="width:auto">
+                            <th class="col-md-1" style="background-color:#FF223A3A">                            
+                                  <a (click)="sortTable('tradeId')" class="textgray text-uppercase smalltextbold" style="width:auto">Id
+                                    <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
+                                    <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
+                                  </a>                            
+                          </th>
+
+                            <th class="col-md-1" style="background-color:#FF223A3A">                              
+                                <a (click)="sortTable('tradeStatus')" class="textgray text-uppercase smalltextbold" style="width:auto">
                                   Status
-                                  <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
-                                  <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
-                                </a>
-                              </span>
+                                  <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
+                                  <span *ngIf="!isStatusAsc" class="glyphicon glyphicon-chevron-up"></span>
+                                </a>                                                          
                             </th>
 
-
-                            <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                              <span style="vertical-align:middle;margin-left:10px;">
-                                    <a (click)="sortTable('tradeObjectDescription')" class="textgray text-uppercase buttonclass smalltextbold" style="width:auto">Trading
+                            <th class="col-md-2" style="background-color:#FF223A3A">                              
+                                    <a (click)="sortTable('tradeObjectDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">Trading
                                       <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
                                       <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
-                                    </a>
-                              </span>
+                                    </a>                             
                             </th>
 
-
-                            <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                              <span style="vertical-align:middle;margin-left:10px;">
-                                <a (click)="sortTable('tradeForObjectsDescription')" class="textgray text-uppercase buttonclass smalltextbold" style="width:auto">
+                            <th class="col-md-2" style="background-color:#FF223A3A">                             
+                                <a (click)="sortTable('tradeForObjectsDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
                                   For
                                   <span *ngIf="isTitleForAsc" class="glyphicon glyphicon-chevron-down"></span>
                                   <span *ngIf="!isTitleForAsc" class="glyphicon glyphicon-chevron-up"></span>
-                                </a>
-                              </span>
+                                </a>                             
                             </th>
 
-                            <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                              <span style="vertical-align:middle">
-                                        <a (click)="sortTable('tradeObjectCategoryDescription')" class="textgray text-uppercase buttonclass smalltextbold" style="width:auto">Category
-                                            <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
-                                            <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
-                                      </a>
-                              </span>
+                            <th class="col-md-2" style="background-color:#FF223A3A">                     
+                                    <a (click)="sortTable('tradeObjectCategoryDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">Category
+                                        <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
+                                        <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
+                                  </a>                              
                             </th>
-                            <th class="col-md-3" style="vertical-align:middle;background-color:#FF223A3A">
-                                <span style="vertical-align:middle">
-                                        <a (click)="sortTable('traderFullName')" class="textgray text-uppercase buttonclass smalltextbold" style="width:auto">Trader
-                                          <span *ngIf="isNameAsc" class="glyphicon glyphicon-chevron-down"></span>
-                                          <span *ngIf="!isNameAsc" class="glyphicon glyphicon-chevron-up"></span>
-                                        </a>
-                                </span>
+                            
+                            <th class="col-md-2" style="background-color:#FF223A3A">                         
+                                <a (click)="sortTable('tradeDatePublished')" class="textgray text-uppercase  smalltextbold" style="width:auto">Published
+                                  <span *ngIf="isPublishedAsc" class="glyphicon glyphicon-chevron-down"></span>
+                                  <span *ngIf="!isPublishedAsc" class="glyphicon glyphicon-chevron-up"></span>
+                                </a>                           
                             </th>
-                            <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                              <span style="vertical-align:middle">
-                                    <a (click)="sortTable('tradeDatePublished')" class="textgray text-uppercase buttonclass  smalltextbold" style="width:auto">Published
-                                      <span *ngIf="isPublishedAsc" class="glyphicon glyphicon-chevron-down"></span>
-                                      <span *ngIf="!isPublishedAsc" class="glyphicon glyphicon-chevron-up"></span>
-                                    </a>
-                              </span>
-                            </th>
+
                             <th class="col-md-2  textgray text-uppercase smalltextbold text-center" style="vertical-align:middle;background-color:#FF223A3A">Actions</th>
                           </tr>
                         </thead>
 
 
-
+                        <!-- Table Rows -->
                         <tr *ngFor="let trade of rows  | paginate:config ">
-
                   
-                          <td class="col-md-1 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.status  }}</td>
+                              <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeId  }}</td>
 
-                          <td class="col-md-2" style="vertical-align:middle">
-                            <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-lowercase text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription  }}</i></a>
-                          </td>
+                              <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeStatus  }}</td>
 
-                          <td class="col-md-2 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
+                              <td class="col-md-2">
+                                  <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription  }}</i></a>
+                              </td>
 
-                          <td class="col-md-2 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
+                              <td class="col-md-2 smalltext text-capitalize textgray"> {{ trade.tradeForObjectsDescription  }}</td>
 
-                          <td class="col-md-3" style="vertical-align:middle">
-                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext text-lowercase text-uppercase textlightcoral"><i>{{ trade.traderFullName }}</i></a>
-                          </td>
+                              <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.tradeObjectCategoryDescription  }}</td>
+                          
+                              <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.tradeDatePublished | date }}</td>
 
-                          <td class="col-md-2 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+                              <td class="col-md-2 text-center">
 
+                               <button *ngIf="!isAuthenticated" type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-sm btn-danger">
+                                    <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
+                               </button>
+                                          
+                                <button *ngIf="isAuthenticated"  type="button" data-target="#removeAllowed" data-articleid=(trade.tradeId) data-toggle="modal" class="btn btn-sm btn-danger smalltextbold" (click)="passToModal(trade)">
+                                          <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
+                                </button>                            
+                              </td>
+                      </tr>
 
-                          <td class="col-md-2 text-center" style="vertical-align:middle;">
-
-                            <button *ngIf="!isAuthenticated" type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-sm btn-danger">
-                              <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
-                            </button>
-
-                            <div *ngIf="isAuthenticated">                         
-                              <button type="button" data-target="#removeAllowed" data-articleid=(trade.tradeId) data-toggle="modal"
-                                      class="btn btn-sm btn-danger smalltextbold" (click)="passToModal(trade)">
-                                <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
-                              </button>
-                            </div>
-
-                          </td>
-                        </tr>
-
-                      </table>
+                    </table>
               
               </div>
    
         </div>         
-  
-  
-  
-          <div class="row col-md-12">
+    
+        <!-- Table pagination -->
+        <div class="row col-md-12">
                 <div class="col-md-5">
                       <!--the stylesheet of the pagination is overwritten in the host component sass -->
                       <pagination-controls id="pagination" *ngIf="config.paging"
@@ -176,13 +157,10 @@
                         <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
                 </div>
           </div> 
+
 </div>
 
-
   <my-spinner [isRunning]="isRequesting"></my-spinner>
-
-
-
 
 <!-- MODAL form to show when ADD/REMOVE trade is clicked and user is NOT LOGGED IN -->
 <div class="modal fade" id="addremoveLogin" tabindex="-1" role="dialog" aria-labelledby="AddRemoveLogin">
@@ -209,7 +187,6 @@
 </div>
 <!--End of modal form -->
 
-
 <!-- MODAL form to show it when ADD trade is clicked and user is NOT ALLOWED -->
 <div class="modal" id="addDialog" [hidden]="hideModal" tabindex="-1" role="dialog" aria-labelledby="AddWarning">
   <div class="modal-dialog" role="document">
@@ -230,8 +207,6 @@
 </div>
 <!-- End of modal form -->
 
-
-
 <!-- MODAL form to show it when REMOVE trade is clicked and user is NOT ALLOWED -->
 <div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="RemoveWarning">
   <div class="modal-dialog" role="document">
@@ -251,8 +226,6 @@
   </div>
 </div>
 <!-- End of modal form -->
-
-
 
 <!-- MODAL form to show it when REMOVE trade is clicked and user is ALLOWED -->
 <div class="modal fade" id="removeAllowed" tabindex="-1" role="dialog" aria-labelledby="Remove">

@@ -151,9 +151,9 @@ interface IEmailType {
 
 
 interface ITrade {
-  totalTradesNumber: number;
-  tradeIdStr: string;
+  totalTradesNumber: number; 
   tradeId: number;  
+  tradeStatus: string;
   tradeDatePublished: Date;
 
   traderId: string;

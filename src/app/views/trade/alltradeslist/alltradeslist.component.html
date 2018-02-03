@@ -1,8 +1,6 @@
-
-
-
 <div class="container col-md-12">
 
+  <!-- Filters -->
   <div class="row">
 
     <div class="col-md-2 textgray">
@@ -51,81 +49,83 @@
 
   <br />
 
+
+  <!-- Table -->
   <div class="row">
 
     <div class="table-responsive">
 
       <table class="table table-bordered table-hover">
 
+        <!-- Table Header -->
         <thead>
           <tr>
-            <th class="col-md-1" style="vertical-align:middle;background-color:#FF223A3A">
-              <span style="vertical-align:middle;">
+            <th class="col-md-1" style="background-color:#FF223A3A">              
                 <a (click)="sortTable('tradeIdStr')" class="text-uppercase textgray smalltextbold" style="width:auto">
                    Id
                   <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
-                </a>
-              </span>
+                </a>            
             </th>
 
+            <th class="col-md-1" style="background-color:#FF223A3A">           
+                <a (click)="sortTable('tradeStatus')" class="textgray text-uppercase smalltextbold" style="width:auto">
+                  Status
+                  <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
+                  <span *ngIf="!isStatusAsc" class="glyphicon glyphicon-chevron-up"></span>
+                </a>            
+            </th>
 
-            <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-              <span style="vertical-align:middle;">
-                <a (click)="sortTable('tradeObjectDescription')" class="textgray text-uppercase   smalltextbold" style="width:auto">
+            <th class="col-md-2" style="background-color:#FF223A3A">            
+                <a (click)="sortTable('tradeObjectDescription')" class="textgray text-uppercase  smalltextbold" style="width:auto">
                   Trading
                   <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
-                </a>
-              </span>
+                </a>            
             </th>
 
-
-            <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-              <span style="vertical-align:middle;margin-left:10px;">
+            <th class="col-md-2" style="background-color:#FF223A3A">          
                 <a (click)="sortTable('tradeForObjectsDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
                   For
                   <span *ngIf="isTitleForAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isTitleForAsc" class="glyphicon glyphicon-chevron-up"></span>
-                </a>
-              </span>
+                </a>          
             </th>
 
-            <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-              <span style="vertical-align:middle">
+            <th class="col-md-2" style="background-color:#FF223A3A">            
                 <a (click)="sortTable('tradeObjectCategoryDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
                   Category
                   <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
-                </a>
-              </span>
+                </a>             
             </th>
-            <th class="col-md-3" style="vertical-align:middle;background-color:#FF223A3A">
-              <span style="vertical-align:middle">
+
+            <th class="col-md-2" style="background-color:#FF223A3A">           
                 <a (click)="sortTable('traderFullName')" class="textgray text-uppercase smalltextbold" style="width:auto">
                   Trader
                   <span *ngIf="isNameAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isNameAsc" class="glyphicon glyphicon-chevron-up"></span>
-                </a>
-              </span>
+                </a>              
             </th>
-            <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-              <span style="vertical-align:middle">
+
+            <th class="col-md-2" style="background-color:#FF223A3A">          
                 <a (click)="sortTable('tradeDatePublished')" class="textgray text-uppercase smalltextbold" style="width:auto">
                   Published
                   <span *ngIf="isPublishedAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isPublishedAsc" class="glyphicon glyphicon-chevron-up"></span>
-                </a>
-              </span>
-            </th>           
+                </a>             
+            </th>         
+              
           </tr>
         </thead>
 
 
-
+        <!-- Table Rows -->
         <tr *ngFor="let trade of rows  | paginate:config ">
 
-          <td class="col-md-1 smalltext text-capitalize textgray" >{{ trade.tradeId  }}</td>
+          <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeId  }}</td>
+
+          <td class="col-md-1 smalltext text-capitalize textgray" >{{ trade.tradeStatus  }}</td>
 
           <td class="col-md-2">
               <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" ><i>{{ trade.tradeObjectDescription  }}</i></a>
@@ -135,7 +135,7 @@
 
           <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.tradeObjectCategoryDescription  }}</td>
 
-          <td class="col-md-3">
+          <td class="col-md-2">
             <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" ><i>{{ trade.traderFullName }}</i></a>
           </td>
 

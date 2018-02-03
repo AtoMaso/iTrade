@@ -330,9 +330,9 @@ class EmailType implements IEmailType {
 class Trade implements ITrade {
 
   totalTradesNumber: number;
-  tradeIdStr: string;
   tradeId: number; 
   tradeDatePublished: Date;
+  tradeStatus: string;
 
   traderId: string;
   traderFirstName: string;
@@ -353,6 +353,7 @@ class Trade implements ITrade {
     this.tradeIdStr = "";
     this.tradeId = 0;  
     this.tradeDatePublished = new Date(1900, 1, 1); 
+    this.tradeStatus = "";
 
     this.traderId = "";
     this.traderFirstName = "";   

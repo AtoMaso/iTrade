@@ -150,8 +150,7 @@ export class MyTradesListComponent implements OnInit {
   private onSuccessRemoveTrade(trade: Trade) {
     if (trade) {
       this.removedTradeId = trade.tradeId;
-      this.onChangeTable(this.config);
-      // TODO should be calling the onPageChange here ????
+      this.onChangeTable(this.config);     
 
       // reset the removed trade after the data has been updated so it is ready for the next filtering or sorting of the list
       this.removedTradeId = null;
@@ -172,15 +171,17 @@ export class MyTradesListComponent implements OnInit {
     returnedTrades.forEach(function (value) {
       let trd = new Trade;
 
-      trd.totalTradesNumber = value.totalTradesNumber;
-      trd.tradeIdStr = value.tradeId.toString();
+      trd.totalTradesNumber = value.totalTradesNumber;    
       trd.tradeId = value.tradeId;
       trd.tradeDatePublished = value.tradeDatePublished;
+      trd.tradeStatus = value.tradeStatus;
+
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;
       trd.traderMiddleName = value.traderMiddleName;
       trd.traderLastName = value.traderLastName;
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
+
       trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
       trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
 
@@ -225,25 +226,24 @@ export class MyTradesListComponent implements OnInit {
   //ngx-pagination section
   /***********************************************/
   private isIdAsc = true;
+  private isStatusAsc = true;
   private isTitleAsc = true;
   private isTitleForAsc = true;
   private isCategoryAsc = true;
-  private isNameAsc = true;
   private isPublishedAsc = true;
 
-  private sortId: string = 'des'
+  private sortId: string = 'desc';
+  private sortStatus: string = 'des'
   private sortTitle: string = 'desc';
   private sortTitleFor: string = 'desc';
   private sortCategory: string = 'desc';
-  private sortName: string = 'desc';
   private sortDate: string = 'desc';
 
   private data: Array<any> = [];     // full data from the server
   public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
   public numPages: number = 1;
-  //public length: number = 0;
-  //public page: number = 1;
+  
   private isNextButton: boolean = false;
   private isPrevButton: boolean = false;
   private lastPageOfTheCurrentSet: number = 0;
@@ -251,11 +251,11 @@ export class MyTradesListComponent implements OnInit {
 
   public columns: Array<any> =
     [
-    { title: 'Id', name: 'tradeIdStr', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id' } },
+    { title: 'Id', name: 'traderId', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id.' } },
+    { title: 'Status', name: 'tradeStatus', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status' } },
     { title: 'Trading',    name: 'tradeObjectDescription',              sort: true,   filtering: { filterString: '', placeholder: 'Filter by trade object description' } },
     { title: 'For', name: 'tradeForObjectsDescription',                 sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade for object description' } },
-    { title: 'Category',  name: 'tradeObjectCategoryDescription', sort: true,  filtering: { filterString: '', placeholder:  'Filter by trade category' }},
-    { title: 'Trader', name: 'traderFullName',                             sort: true,   filtering: { filterString: '', placeholder:  'Filter by trader full name.' }},
+    { title: 'Category',  name: 'tradeObjectCategoryDescription', sort: true,  filtering: { filterString: '', placeholder:  'Filter by trade category' }},   
     { title: 'Published', name: 'tradeDatePublished',                   sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade date.' }} 
     ];
 
@@ -373,11 +373,19 @@ export class MyTradesListComponent implements OnInit {
     // reset the array of columns
     this.config.sorting.columns = [];
     switch (column) {
-      case 'tradeIdStr':
-        this.config.sorting.columns = [{ name: 'tradeIdStr', sort: this.sortId }];
+
+      case 'tradeId':
+        this.config.sorting.columns = [{ name: 'tradeId', sort: this.sortStatus }];
         this.onChangeTable(this.config);
         this.isIdAsc = !this.isIdAsc;
         this.sortId = this.isIdAsc ? 'desc' : 'asc';
+        break;
+
+      case 'tradeStatus':
+        this.config.sorting.columns = [{ name: 'tradeStatus', sort: this.sortStatus }];
+        this.onChangeTable(this.config);
+        this.isStatusAsc = !this.isStatusAsc;
+        this.sortStatus = this.isStatusAsc ? 'desc' : 'asc';
         break;
 
         case 'tradeObjectDescription':
