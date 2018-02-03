@@ -112,24 +112,23 @@
 
                       <div class="panel-heading">
                         
-
+                        <!-- Table -->
                         <div class="row">
 
                           <div class="table-responsive">
 
                             <table class="table table-bordered table-hover">
 
+                              <!-- Table header -->
                               <thead>
                                 <tr>
                                   <th class="col-md-1" style="vertical-align:middle;background-color:#FF223A3A">
                                     <span  class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Id</span>                                 
                                   </th>
 
-
                                   <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
                                     <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Trade Id</span>                                                                                                                                                                                 
                                   </th>
-
 
                                   <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                    
                                     <a (click)="sortTable('createdDate')" class="text-uppercase buttonclass textgray smalltext" style="width:auto">
@@ -138,7 +137,6 @@
                                       <span *ngIf="!isDateAsc" class="glyphicon glyphicon-chevron-up"></span>
                                     </a>                                                                                                                                                             
                                   </th>
-
 
                                   <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                 
                                     <a (click)="sortTable('status')" class="text-uppercase buttonclass textgray smalltext" style="width:auto">
@@ -151,8 +149,7 @@
                                 </tr>
                               </thead>
 
-
-
+                              <!-- Table rows-->
                               <tr *ngFor="let history of historyrows | paginate:config ">
 
                                 <td class="col-md-1 smalltext text-lowercase text-capitalize textgray " style="vertical-align:middle">{{ history.historyId  }}</td>
@@ -170,7 +167,7 @@
 
                         </div>
 
-
+                        <!-- Table navigation -->
                         <div class="row col-md-12">
 
                           <div class="col-md-5">
@@ -189,16 +186,8 @@
                                                  (numPages)="numPages = $event"
                                                  [maxSize]="maxSize">
                             </pagination-controls>
-                          </div>
 
-                          <!--<div class="col-md-2 textgray">
-                            <span class="smalltextbold">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
-                          </div>
-
-                          <div class="col-md-3 col-md-offset-2">
-                            <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
-                            <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
-                          </div>-->
+                          </div>                      
                         </div>
 
 

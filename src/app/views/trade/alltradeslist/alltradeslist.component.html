@@ -26,12 +26,12 @@
       <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
     </div>
 
-    <div class="col-md-2 textgray">
+    <!--<div class="col-md-2 textgray">
       <span class="smalltextbold">Records Per Set</span>
       <input type="number" min="5" max="500" [(ngModel)]="recordsPerSet" class="form-control">
-    </div>
+    </div>-->
 
-    <div class="col-md-2 col-md-offset-1 text-right">
+    <div class="col-md-2 col-md-offset-3 text-right">
       <br />
       <div *ngIf="!isAuthenticated">
         <button  type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltextbold">
@@ -61,7 +61,7 @@
           <tr>
             <th class="col-md-1" style="vertical-align:middle;background-color:#FF223A3A">
               <span style="vertical-align:middle;">
-                <a (click)="sortTable('tradeIdStr')" class="text-uppercase buttonclass textgray smalltextbold" style="width:auto">
+                <a (click)="sortTable('tradeIdStr')" class="text-uppercase textgray smalltextbold" style="width:auto">
                    Id
                   <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -72,7 +72,7 @@
 
             <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
               <span style="vertical-align:middle;">
-                <a (click)="sortTable('tradeObjectDescription')" class="textgray text-uppercase buttonclass  smalltextbold" style="width:auto">
+                <a (click)="sortTable('tradeObjectDescription')" class="textgray text-uppercase   smalltextbold" style="width:auto">
                   Trading
                   <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -83,7 +83,7 @@
 
             <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
               <span style="vertical-align:middle;margin-left:10px;">
-                <a (click)="sortTable('tradeForObjectsDescription')" class="textgray text-uppercase buttonclass smalltextbold" style="width:auto">
+                <a (click)="sortTable('tradeForObjectsDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
                   For
                   <span *ngIf="isTitleForAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isTitleForAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -93,7 +93,7 @@
 
             <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
               <span style="vertical-align:middle">
-                <a (click)="sortTable('tradeObjectCategoryDescription')" class="textgray text-uppercase buttonclass smalltextbold" style="width:auto">
+                <a (click)="sortTable('tradeObjectCategoryDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
                   Category
                   <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -102,7 +102,7 @@
             </th>
             <th class="col-md-3" style="vertical-align:middle;background-color:#FF223A3A">
               <span style="vertical-align:middle">
-                <a (click)="sortTable('traderFullName')" class="textgray text-uppercase buttonclass smalltextbold" style="width:auto">
+                <a (click)="sortTable('traderFullName')" class="textgray text-uppercase smalltextbold" style="width:auto">
                   Trader
                   <span *ngIf="isNameAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isNameAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -111,14 +111,13 @@
             </th>
             <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
               <span style="vertical-align:middle">
-                <a (click)="sortTable('tradeDatePublished')" class="textgray text-uppercase buttonclass smalltextbold" style="width:auto">
+                <a (click)="sortTable('tradeDatePublished')" class="textgray text-uppercase smalltextbold" style="width:auto">
                   Published
                   <span *ngIf="isPublishedAsc" class="glyphicon glyphicon-chevron-down"></span>
                   <span *ngIf="!isPublishedAsc" class="glyphicon glyphicon-chevron-up"></span>
                 </a>
               </span>
-            </th>
-            <!--<th class="col-md-2 smalltextbold textgray text-uppercase text-center" style="vertical-align:middle;">Actions</th>-->
+            </th>           
           </tr>
         </thead>
 
@@ -126,21 +125,21 @@
 
         <tr *ngFor="let trade of rows  | paginate:config ">
 
-          <td class="col-md-1 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeId  }}</td>
+          <td class="col-md-1 smalltext text-capitalize textgray" >{{ trade.tradeId  }}</td>
 
-          <td class="col-md-2" style="vertical-align:middle">
-              <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription  }}</i></a>
+          <td class="col-md-2">
+              <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" ><i>{{ trade.tradeObjectDescription  }}</i></a>
           </td>
 
-          <td class="col-md-2 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
+          <td class="col-md-2 smalltext text-capitalize textgray"> {{ trade.tradeForObjectsDescription  }}</td>
 
-          <td class="col-md-2 smalltex text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeObjectCategoryDescription  }}</td>
+          <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.tradeObjectCategoryDescription  }}</td>
 
-          <td class="col-md-3" style="vertical-align:middle">
-            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.traderFullName }}</i></a>
+          <td class="col-md-3">
+            <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" ><i>{{ trade.traderFullName }}</i></a>
           </td>
 
-          <td class="col-md-2 smalltext text-lowercase text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+          <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.tradeDatePublished | date }}</td>
 
         </tr>
 
@@ -154,7 +153,7 @@
   <div class="row col-md-12">
 
     <div class="col-md-5">
-      <!--the stylesheet of the pagination is overwritten in the host component sass -->
+      <!--the stylesheet of the pagination is overwritten in the host component scss -->
       <pagination-controls id="pagination" *ngIf="config.paging"
                            (pageChange)="onPageChange($event)"
                            maxSize="5"
@@ -184,10 +183,7 @@
 
 </div>
 
-
 <my-spinner [isRunning]="isRequesting"></my-spinner>
-
-
 
 
 <!-- MODAL form to show when add/remove trade is clicked and user is not logged in-->
@@ -198,12 +194,11 @@
       <div class="modal-header">
         <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Login Warning!</h4>
-        <!--<h5 class="modal-title text-warning" id="AddRemoveLogin">Login Dialog</h5>-->
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>     
       </div>
 
       <div class="modal-body text-warning">
-        <p>You need to login to do that action. Do you want to log-in/sign-in?</p>
+        <p>You need to be logged in to do this action. Do you want to log in?</p>
       </div>
 
       <div class="modal-footer">
@@ -216,42 +211,3 @@
 </div>
 
 
-
-
-<!--<pagination-template #p="paginationApi" [id]="id" [maxSize]="maxSize" (pageChange)="pageChange.emit($event)">    
-  <ul class="ngx-pagination"  role="navigation"  [attr.aria-label]="screenReaderPaginationLabel"  *ngIf="!(autoHide && p.pages.length <= 1)">        
-    <li class="pagination-previous" [class.disabled]="p.isFirstPage()" *ngIf="directionLinks">             
-    <a *ngIf="1 < p.getCurrent()" (click)="p.previous()" [attr.aria-label]="previousLabel + ' ' + screenReaderPageLabel">               
-       {{ previousLabel }} 
-      <span class="show-for-sr">{{ screenReaderPageLabel }}</span>            
-    </a>            
-    <span *ngIf="p.isFirstPage()">
-        {{ previousLabel }} 
-        <span class="show-for-sr">{{ screenReaderPageLabel }}
-      </span>            
-      </span>        
-    </li>        
-  <li [class.current]="p.getCurrent() === page.value" *ngFor="let page of p.pages">            
-    <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">                
-        <span class="show-for-sr">{{ screenReaderPageLabel }} </span>                
-        <span>
-        {{ page.label }}</span>            
-      </a>            
-          <div *ngIf="p.getCurrent() === page.value">                
-            <span class="show-for-sr">{{ screenReaderCurrentLabel }} </span>                
-            <span>{{ page.label }}</span>             
-        </div>        
-    </li>        
-    <li class="pagination-next" [class.disabled]="p.isLastPage()" *ngIf="directionLinks">            
-    <a *ngIf="!p.isLastPage()" (click)="p.next()" [attr.aria-label]="nextLabel + ' ' + screenReaderPageLabel">                 
-        {{ nextLabel }} 
-      <span class="show-for-sr">{{ screenReaderPageLabel }}</span>            
-      </a>            
-      <span *ngIf="p.isLastPage()">                 
-      {{ nextLabel }} 
-       <span class="show-for-sr">{{ screenReaderPageLabel }}
-        </span>            
-      </span>        
-    </li>    
-  </ul>    
-  </pagination-template>-->

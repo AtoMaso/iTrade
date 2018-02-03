@@ -21,6 +21,7 @@ import { ControlMessages } from '../controls/controlmessages/control-messages.co
 
 export class LoginComponent implements OnInit {
   private trader: LoginModel;
+  private keeplogin: boolean;
   private loginGroup: any;
   private isRequesting: boolean;
  
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit {
     this.loginGroup = this.formBuilder.group({
       email: new FormControl('', [Validators.required, ValidationService.emailValidator]),
       password: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
+      keeplogin: new FormControl('', []),
     });
   }
 
@@ -53,6 +55,7 @@ export class LoginComponent implements OnInit {
     this.trader = new LoginModel();
     this.trader.UserName = this.loginGroup.controls.email.value;
     this.trader.Password = this.loginGroup.controls.password.value;
+    this.keeplogin = this.loginGroup.controls.keeplogin.value;
 
     if (this.loginGroup.dirty && this.loginGroup.valid) {
       this.authenticationService.loginClient(this.trader)

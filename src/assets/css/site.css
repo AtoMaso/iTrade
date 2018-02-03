@@ -2,8 +2,17 @@
     margin-top: 70px;    
 }
 
+.vl {
+    border-left: 3px solid darkgray;
+    height: 310px;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
+}
+
 .buttonclass {
-    font-family:Verdana;
+    font-family:Arial;
     font-size:medium;
     width:150px;
 }
@@ -31,7 +40,7 @@
 }
 
 .messagespan {
-    font-family:Verdana;
+    font-family:Arial;
     font-size:small
 }
 
@@ -41,75 +50,94 @@
 
 /*extra small text*/
 .extrasmalltext {
-  font-family:Verdana;
+  font-family:Arial;
   font-size:x-small;
 }
 
 
 .extrasmalltextbold {
-  font-family:Verdana;
+  font-family:Arial;
   font-size:x-small;
   font-weight:bold;
 }
 
 .extrasmalltextcentred {
-  font-family:Verdana;
+  font-family:Arial;
   font-size:x-small;
   text-align:center;
 }
 
 /* small text */
 .smalltext {
-  font-family:Verdana;
+  font-family:Arial;
   font-size:small;  
 }
 
 .smalltextbold {
-  font-family:Verdana;
+  font-family:Arial;
   font-size:small;
   font-weight:bold;
 }
 
 .smalltextcentred {
-  font-family:Verdana;
+  font-family:Arial;
   font-size:small;
   text-align:center;
 }
 
 /* nedium text */
 .mediumtext {
-  font-family:Verdana;
+  font-family:Arial;
   font-size:medium;
 }
 
 .mediumtextbold {
-  font-family:Verdana;
+  font-family:Arial;
   font-size:medium;
   font-weight:bold;
 }
 
 .mediumtextcentered {
-  font-family:Verdana;
+  font-family:Arial;
   font-size:medium;
   text-align:center;
 }
 
 /* large text*/
 .largetext {
-  font-family:Verdana;
+  font-family:Arial;
+  font-size:large;
+ 
+}
+
+.largetextbold {
+  font-family:Arial;
   font-size:large;
   font-weight:bold;
 }
 
-.largetextbold {
-  font-family:Verdana;
+
+.largetextcentered {
+  font-family:Arial;
   font-size:large;
+  text-align:center;
+}
+
+.extralargetext {
+  font-family:Arial;
+  font-size:x-large;  
+}
+
+.extralargetextbold {
+  font-family:Arial;
+  font-size:x-large;  
+  font-weight:bold;
 }
 
 
-.largetextcentered {
-  font-family:Verdana;
-  font-size:large;
+.extralargetextcentered {
+  font-family:Arial;
+  font-size:x-large;
   text-align:center;
 }
 

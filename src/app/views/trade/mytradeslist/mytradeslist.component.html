@@ -24,12 +24,7 @@
                 <span class="smalltextbold">Max Size</span>
                 <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
               </div>
-
-              <!--<div class="col-md-2 textgray">
-                <span class="smalltextbold">Records Per Set</span>
-                <input type="number" min="5" max="500" [(ngModel)]="recordsPerSet" class="form-control">
-              </div>-->
-
+          
               <div class="col-md-2 col-md-offset-3 text-right">
                 <br />             
                 <div *ngIf="isAuthenticated">                 
@@ -135,13 +130,9 @@
 
                             <button *ngIf="!isAuthenticated" type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-sm btn-danger">
                               <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
-
                             </button>
 
-                            <div *ngIf="isAuthenticated">
-                              <!--<a *ngIf="!isAllowedToRemoveTrade" href="#removeDialog" class="btn btn-sm btn-danger smalltextbold" data-toggle="modal">
-                                <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
-                              </a>-->
+                            <div *ngIf="isAuthenticated">                         
                               <button type="button" data-target="#removeAllowed" data-articleid=(trade.tradeId) data-toggle="modal"
                                       class="btn btn-sm btn-danger smalltextbold" (click)="passToModal(trade)">
                                 <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
@@ -201,12 +192,11 @@
       <div class="modal-header">
         <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Login Warning!</h4>
-        <!--<h5 class="modal-title text-warning" id="AddRemoveLogin">Login Dialog</h5>-->
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>       
       </div>
 
       <div class="modal-body text-warning">
-        <p>You need to login to do that action. Do you want to log-in/sign-in?</p>
+        <p>You need to be logged in to do this action. Do you want to log in?</p>
       </div>
 
       <div class="modal-footer">
@@ -217,18 +207,17 @@
     </div>
   </div>
 </div>
-<!-- MODAL end of modal form -->
+<!--End of modal form -->
 
 
-<!-- MODAL form to show it when ADD trade is clicked -and user NOT ALLOWED -->
+<!-- MODAL form to show it when ADD trade is clicked and user is NOT ALLOWED -->
 <div class="modal" id="addDialog" [hidden]="hideModal" tabindex="-1" role="dialog" aria-labelledby="AddWarning">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 *ngIf="!isAllowed" class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Add Trade Warning!</h4>
-        <!--<h4 class="modal-title" id="AddWarning">Add Trade Warning</h4>-->
+        <h4 *ngIf="!isAllowed" class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>     
       </div>
       <div *ngIf="!isAllowed" class="modal-body text-warning">
         <p>You have no privileges to add new trade!</p>
@@ -239,19 +228,18 @@
     </div>
   </div>
 </div>
-<!-- MODAL end of modal form -->
+<!-- End of modal form -->
 
 
 
-<!-- MODAL form to show it when REMOVE trade is clicked when user NOT ALLOWED -->
+<!-- MODAL form to show it when REMOVE trade is clicked and user is NOT ALLOWED -->
 <div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="RemoveWarning">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 *ngIf="!isAllowed" class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Trade Warning!</h4>
-        <!--<h4 class="modal-title" id="RemoveWarning"> Remove Trade Warning</h4>-->
+        <h4 *ngIf="!isAllowed" class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>     
       </div>
       <div *ngIf="!isAllowed" class="modal-body text-warning">
         <p>You have no privileges to remove the trade!</p>
@@ -262,11 +250,11 @@
     </div>
   </div>
 </div>
-<!-- MODAL end of modal form -->
+<!-- End of modal form -->
 
 
 
-<!-- MODAL form to show it when REMOVE trade is clicked when user IS ALLOWED -->
+<!-- MODAL form to show it when REMOVE trade is clicked and user is ALLOWED -->
 <div class="modal fade" id="removeAllowed" tabindex="-1" role="dialog" aria-labelledby="Remove">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -274,12 +262,11 @@
       <div class="modal-header">
         <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Trade Warning!</h4>
-        <!--<h5 class="modal-title text-warning" id="Remove">Remove Trade Warning</h5>-->
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>       
       </div>
 
       <div class="modal-body text-warning">
-        <div *ngIf="isOwner"><p>Are you sure you want to delete this trade? All associated images will also be deleted!</p></div>
+        <div *ngIf="isOwner"><p>Are you sure you want to delete this trade?</p></div>
         <div *ngIf="!isOwner"><p>Only the owner of the trade can delete the trade!</p></div>
       </div>
 
@@ -296,4 +283,5 @@
     </div>
   </div>
 </div>
+<!-- End of modal form -->
 
