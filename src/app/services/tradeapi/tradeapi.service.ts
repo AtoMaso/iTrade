@@ -16,8 +16,8 @@ import { Trade, UserSession, UserIdentity} from '../../helpers/classes';
 let allTrades = CONFIG.baseUrls.alltrades;
 let allTradesWithStatus = CONFIG.baseUrls.alltradesWithStatus;
 
-let allTradesByTraderId = CONFIG.baseUrls.alltradesbytraderid;
-let allTradesByTraderIdWithStatus = CONFIG.baseUrls.alltradesbytraderidwithstatus;
+let tradesByTraderId = CONFIG.baseUrls.tradesbytraderid;
+let tradesByTraderIdWithStatus = CONFIG.baseUrls.tradesbytraderidwithstatus;
 
 let pagesOfTradesWithStatus = CONFIG.baseUrls.pagesoftradeswithstatus;
 let pagesOfTradesAll = CONFIG.baseUrls.pagesoftradesall;
@@ -51,16 +51,16 @@ export class TradeApiService {
   // GET TRADES
   //******************************************************
   //GOOD
-  // get all trades for a trader or all trades in the system
-  public getTradesWithStatusOrAll(traderId?: string, status: string = "Open"): Observable<Trade[]> {
+  // get all trades for a trader or all trades in the system  GetTradesByTraderIdWithStatus
+  public getTradesWithStatusOrAll(traderId?: string, status: string = "All"): Observable<Trade[]> {
     if (status === "All") {
-      if (traderId != "" || traderId != undefined) { this.localUrl = `${allTradesByTraderId}?traderId=${traderId}`; }
+      if (traderId != "" || traderId != undefined) { this.localUrl = `${tradesByTraderId}?traderId=${traderId}`; }
       // get all trades in the system
       if (traderId == "" || traderId == undefined) { this.localUrl = allTrades; } 
     }
     else {  
       // get all tardes by traderId
-      if (traderId != "" || traderId != undefined) { this.localUrl = `${allTradesByTraderIdWithStatus}?traderId=${traderId}&statsu=${status}`; }
+      if (traderId != "" || traderId != undefined) { this.localUrl = `${tradesByTraderIdWithStatus}?traderId=${traderId}&status=${status}`; }
       // get all trades in the system
       if (traderId == "" || traderId == undefined) { this.localUrl = allTradesWithStatus; }
     }
@@ -70,20 +70,20 @@ export class TradeApiService {
   }
 
 
-
+  //GOOD
   // gets set of trades, number of pages and number of records per page with status OPEN
-  public getPageOfTradesWithStatusOrAll(traderId: string, setCounter: number = 1, recordsPerSet: number = 50, status: string) {
+  public getPageOfTradesWithStatusOrAll(traderId: string, setCounter: number = 1, recordsPerSet: number = 50, status: string ="All") {
 
     if (status === "All") { this.localUrl = `${pagesOfTradesAll}?traderId=${traderId}&page=${setCounter}&perpage=${recordsPerSet}`; }
     else  { this.localUrl = `${pagesOfTradesWithStatus}?traderId=${traderId}&page=${setCounter}&perpage=${recordsPerSet}&status=${status}`; }
-
+                                               
     return this.httpClientService.get(this.localUrl).retry(3);
   }
 
 
   // GOOD
   // gets filtered set of trades by date published for the dashboard view and they are with status =OPEN
-  public getFilteredTradesWithStatusOrAll(number: number, status:string) {
+  public getFilteredTradesWithStatusOrAll(number: number, status:string = "All") {
 
     if (status === "All") { this.localUrl = `${filteredTradesAll}?number=${number}`; }
     else  { this.localUrl = `${filteredTradesWithStatus}?number=${number}&status=${status}`; }

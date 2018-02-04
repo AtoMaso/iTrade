@@ -25,6 +25,8 @@ export class DashboardComponent implements OnInit {
   //private trades: Trade[] = [];
   private trades: Array<any> = [];
   public isRequesting: boolean;
+  private hasTrades: boolean = true;
+  private hasNoTrades: boolean = false;
 
   constructor(private tradeApiService: TradeApiService,
                     private titleService: PageTitleService,
@@ -38,23 +40,36 @@ export class DashboardComponent implements OnInit {
 
     this.isRequesting = true;          
     // get the top 8 trades by date published in asc order
-    this.getFilteredTrades(8, "Open");
+    this.getFilteredTrades(8, "Open");   
+    //this.getLimitedTrades("Open");
   }
 
 
   //*****************************************************
   //  GET ALL TRADES
   //*****************************************************
-  //public getTrades(): void {
-  //    // call the service to get the data  
-  //  this.tradeApiService.getTrades()
-  //    .subscribe((returnedTrades: Trade[]) => {
-  //      if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-  //      this.trades = this.TransformData(returnedTrades);
-  //      this.isRequesting = false;
-  //   },
-  //   (res: Response) => this.onError(res, "getTradesApi method"));          
-  //} 
+  public getLimitedTrades(status: string): void {
+      // call the service to get the data  
+    this.tradeApiService.getTradesWithStatusOrAll(status)
+      .subscribe((returnedTrades: Trade[]) => {
+        if (returnedTrades.length === 0) {
+          this.hasTrades = false;
+          this.isRequesting = false;
+          if (!this.hasTrades && !this.hasNoTrades) { this.getLimitedTrades("All"); }     // there are no open trades so get the latest closed ones
+          else {
+                this.hasTrades = false;
+                this.hasNoTrades = true;
+          }
+        }
+        else {
+          this.trades = this.TransformData(returnedTrades);
+          this.hasTrades = true;
+          this.hasNoTrades = false;
+          this.isRequesting = false;        
+        }
+     },
+     (res: Response) => this.onError(res, "getTradesApi method"));          
+  } 
 
 
   //*****************************************************
@@ -64,9 +79,21 @@ export class DashboardComponent implements OnInit {
     // call the service to get the data  
     this.tradeApiService.getFilteredTradesWithStatusOrAll(number, status)
       .subscribe((returnedTrades: Trade[]) => {
-        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); } // TODO change the process message code to reflect the trades
-        this.trades = this.TransformData(returnedTrades);
-        this.isRequesting = false;
+        if (returnedTrades.length === 0) {
+              this.hasTrades = false;
+              this.isRequesting = false;
+              if (!this.hasTrades && !this.hasNoTrades) { this.getFilteredTrades(number, "All"); }     // there are no open trades so get the latest closed ones
+              else {
+                    this.hasTrades = false;
+                    this.hasNoTrades = true;
+              }
+        }
+        else {
+          this.trades = this.TransformData(returnedTrades);
+          this.hasTrades = true;
+          this.hasNoTrades = false;
+          this.isRequesting = false;             
+        }
       },
       (res: Response) => this.onError(res, "getTradesApi method"));
   } 
@@ -85,6 +112,7 @@ export class DashboardComponent implements OnInit {
       trd.tradeId = value.tradeId;
       trd.tradeDatePublished = value.tradeDatePublished;
       trd.traderId = value.traderId;
+      trd.tradeStatus = value.tradeStatus;
       trd.traderFirstName = value.traderFirstName;
       trd.traderMiddleName = value.traderMiddleName;
       trd.traderLastName = value.traderLastName;
@@ -110,10 +138,7 @@ export class DashboardComponent implements OnInit {
 
     // audit log the error passed
     this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
-
-    //if (serviceError.error.ModelState !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
-    //else { this.messagesService.emitProcessMessage("PMGTs"); }
-
+  
     if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
     else if (serviceError.status === 400) { this.messagesService.emitProcessMessage("PMEPI", serviceError.error); } // TODO replace this PMEPI with corresponding error
     else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }

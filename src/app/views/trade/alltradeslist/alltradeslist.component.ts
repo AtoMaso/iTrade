@@ -40,6 +40,8 @@ export class AllTradesListComponent implements OnInit {
   private recordsPerSet: number = 50;
   private totalNumberOfSets: number = 0;
   private status: string = "Open";
+  private hasTrades: boolean = true;
+  private hasNoTrades: boolean = false;
 
   // constructor which injects the services
   constructor(
@@ -61,18 +63,28 @@ export class AllTradesListComponent implements OnInit {
   }
 
 
-  //*****************************************************
-  // GET TRADES
-  //*****************************************************
+  //*********************************************************************************************
+  // GET TRADES - this will get open trades, if there are no any open trades will get all or will show message - no trades
+  //*********************************************************************************************
   // gets all trades
   private getTrades(traderId:string, status:string="All") {
 
     this.tradeApiService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
-        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }  // TODO change the process message code to reflect the trades
+        if (returnedTrades.length === 0) {
+              this.hasTrades = false;
+              this.isRequesting = false;           
+              if (!this.hasTrades && !this.hasNoTrades) { this.getTrades(traderId, "All"); }     // there are no open trades so get the latest closed ones
+              else {
+                this.hasTrades = false;
+                this.hasNoTrades = true;   // if there are no records at all than show the message no trades at all
+              }
+        }  
         else {
             this.data = this.TransformData(returnedTrades),
             this.totalNumberOfRecords = this.data[0].totalTradesNumber;
+            this.hasTrades = true;
+            this.hasNoTrades = false;
             this.isRequesting = false,
             this.calculateTotalNumberOfSets();
             this.onChangeTable(this.config),
@@ -85,20 +97,29 @@ export class AllTradesListComponent implements OnInit {
 
 
   //gets page of trades 
-  private getPageOfTrades(traderId: string, page: number=1, perpage: number=4, status: string="All") {
+  private getPageOfTrades(traderId: string, set: number=1, recordsPerSet: number=50, status: string="All") {
 
-    this.tradeApiService.getPageOfTradesWithStatusOrAll(traderId, page, perpage, status)
-      .subscribe((returnedTrades: Trade[]) => {
-      
-        if (returnedTrades.length === 0) { this.messagesService.emitProcessMessage("PMNOAs"); }// TODO change the process message code to reflect the trades
-        else {
-                this.data = this.TransformData(returnedTrades),
-                this.totalNumberOfRecords = this.data[0].totalTradesNumber,
-                this.isRequesting = false,
-                this.calculateTotalNumberOfSets(),
-                this.onChangeTable(this.config),
-                this.onPageChange(1)
-       }              
+    this.tradeApiService.getPageOfTradesWithStatusOrAll(traderId, set, recordsPerSet, status)
+        .subscribe((returnedTrades: Trade[]) => {      
+            if (returnedTrades.length === 0) {
+                  this.hasTrades = false;
+                  this.isRequesting = false;            
+                   if (!this.hasTrades && !this.hasNoTrades ) { this.getPageOfTrades(traderId, set, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
+                  else {
+                    this.hasTrades = false;
+                    this.hasNoTrades = true;  // if there are no records at all than show the message no trades at all
+                  }
+            }
+            else {
+                    this.data = this.TransformData(returnedTrades),
+                    this.totalNumberOfRecords = this.data[0].totalTradesNumber,
+                    this.hasTrades = true;
+                    this.hasNoTrades = false;
+                    this.isRequesting = false,
+                    this.calculateTotalNumberOfSets(),
+                    this.onChangeTable(this.config),
+                    this.onPageChange(1)
+           }              
       }, (serviceError: Response) => this.onError(serviceError, "getPageOfTrades"));
   }
 
@@ -132,7 +153,7 @@ export class AllTradesListComponent implements OnInit {
   private initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.isRequesting = true;
-    this.pageTitleService.emitPageTitle(new PageTitle("All Open Trades"));
+    this.pageTitleService.emitPageTitle(new PageTitle("Trades"));
   }
 
 
@@ -144,14 +165,18 @@ export class AllTradesListComponent implements OnInit {
       let trd = new Trade;
 
       trd.totalTradesNumber = value.totalTradesNumber;
-      trd.tradeIdStr = value.tradeId.toString();
+   
       trd.tradeId = value.tradeId;
+      trd.tradeIdStr = value.tradeId.toString();
       trd.tradeDatePublished = value.tradeDatePublished;
+      trd.tradeStatus = value.tradeStatus;
+
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;
       trd.traderMiddleName = value.traderMiddleName;
       trd.traderLastName = value.traderLastName;
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
+
       trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
       trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
 
@@ -178,16 +203,20 @@ export class AllTradesListComponent implements OnInit {
   }
 
 
+
+  //****************************************************
+  // LOGGING METHODS
+  //****************************************************
   private onError(serviceError: any, operation: string) {
-    // stop the spinner if running
-    this.isRequesting = false;
 
     // audit log the error passed
     this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-    if (serviceError.error.ModelState !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    else if (serviceError.status === 400) { this.messagesService.emitProcessMessage("PMEPI", serviceError.error); } // TODO change this process message
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
     else { this.messagesService.emitProcessMessage("PMGTs"); }
-     
+
   }
 
 
@@ -195,6 +224,7 @@ export class AllTradesListComponent implements OnInit {
   //ngx-pagination section
   /***********************************************/
   private isIdAsc = true;
+  private isStatusAsc = true;
   private isTitleAsc = true;
   private isTitleForAsc = true;
   private isCategoryAsc = true;
@@ -202,6 +232,7 @@ export class AllTradesListComponent implements OnInit {
   private isPublishedAsc = true;
 
   private sortId: string = 'desc'
+  private sortStatus: string = 'des'
   private sortTitle: string = 'desc';
   private sortTitleFor: string = 'desc';
   private sortCategory: string = 'desc';
@@ -222,6 +253,7 @@ export class AllTradesListComponent implements OnInit {
   public columns: Array<any> =
     [
       { title: 'Id', name: 'tradeIdStr', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id' } },
+      { title: 'Status', name: 'tradeStatus', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status' } },
       { title: 'Trading', name: 'tradeObjectDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade object description' } },
       { title: 'For', name: 'tradeForObjectsDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade for object description' } },
       { title: 'Category', name: 'tradeObjectCategoryDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade category' } },
@@ -293,14 +325,9 @@ export class AllTradesListComponent implements OnInit {
       // get the next set of records
       this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
 
-      //// set the current page to 1
+      // set the current page to 1
       this.config.currentPage = 1;
-
-      //// calll the on change method to recalculate the new set numbers
-      //this.onChangeTable(this.config);
-
-      // call on page change to recalculate the pagination
-      //this.onPageChange(this.config.currentPage);
+  
     }
     else { this.messagesService.emitProcessMessage("PME", "There no more sets of records."); }
   }
@@ -321,12 +348,6 @@ export class AllTradesListComponent implements OnInit {
 
       // set the current page to 1
       this.config.currentPage = 1;
-
-      //// calll the on change method to recalculate the new set numbers
-      //this.onChangeTable(this.config);
-
-      //// call on page change to recalculate the pagination
-      //this.onPageChange(this.config.currentPage);
     }
     else { this.messagesService.emitProcessMessage("PME", "This is the first set of records."); }
   }
@@ -357,6 +378,13 @@ export class AllTradesListComponent implements OnInit {
         this.onChangeTable(this.config);
         this.isIdAsc = !this.isIdAsc;
         this.sortId = this.isIdAsc ? 'desc' : 'asc';
+        break;
+
+      case 'tradeStatus':
+        this.config.sorting.columns = [{ name: 'tradeStatus', sort: this.sortStatus }];
+        this.onChangeTable(this.config);
+        this.isStatusAsc = !this.isStatusAsc;
+        this.sortStatus = this.isStatusAsc ? 'desc' : 'asc';
         break;
 
       case 'tradeObjectDescription':

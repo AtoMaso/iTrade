@@ -89,10 +89,11 @@ export class LoginComponent implements OnInit {
     // audit log the error passed
     this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-    if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
-    else if (serviceError.status === 400) { this.messagesService.emitProcessMessage("PMEPI", serviceError.error); }
-    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error);}
-    else { this.messagesService.emitProcessMessage("PMG"); }
+    // PME used to pass the message
+    if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }    
+    else if (serviceError.status === 400 && serviceError.error.substring("password") !== null ) { this.messagesService.emitProcessMessage("PMEPUI"); }
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
+    else { this.messagesService.emitProcessMessage("PMUEO"); } // unexpected error
 
   }
 }

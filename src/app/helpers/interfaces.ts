@@ -150,8 +150,12 @@ interface IEmailType {
 }
 
 
+
+
+
 interface ITrade {
   totalTradesNumber: number; 
+  tradeIdStr: string;
   tradeId: number;  
   tradeStatus: string;
   tradeDatePublished: Date;
@@ -207,6 +211,16 @@ interface IObjectCategory {
 }
 
 
+interface ICorrespondence {
+  id: number;
+  message: string;
+  status: string;
+  dateSent: Date;
+  subject: string;  // this is the object of trade
+  tradeId: number;
+  traderId: string;
+  sender: string;   // this is the trader sending the correspondence
+}
 
 
 
@@ -270,7 +284,7 @@ export {
   IAddress, IAddressType, IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
-  IEmail, IEmailType,
+  IEmail, IEmailType, ICorrespondence,
   ITrade, IImage, IObjectCategory, ITradeObject, ITradeForObject, ITradeHistory,
   IUserSession, IAuthentication, IUserIdentity, 
   IProcessMessage, IProcessMessageType, IPageTitle, IAttachement };

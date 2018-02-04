@@ -1,57 +1,68 @@
                                      
-<div class="panel-group col-md-3" *ngFor="let trade of trades | SortTradesByDatePipe: D">
+<div *ngIf="hasTrades">
 
-          <div class="panel-heading" style="background-color:dimgray;">              
-                   <span class="smalltextbold textwhite restriction">
-                              <strong>Trading a 
-                                  <a href="" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription }}</i></a>
-                            </strong>
-                   </span>                                                                                                               
-          </div>
+    <div class="panel-group col-md-3" *ngFor="let trade of trades | SortTradesByDatePipe: D">
 
-          <div class="panel-footer">               
-                <div>
-                  <span>
-                    <strong class="textgray">Category: </strong>
-                    <span class="text-capitalize smalltext text-info">{{ trade.tradeObjectCategoryDescription }}</span>
-                  </span>
-                </div>     
-            
-              
-                <div>
-                  <span>
-                    <strong class="textgray">Will trade for:</strong>
-                    <span class="text-capitalize smalltext text-info ">{{ trade.tradeForObjectsDescription }}</span>
-                  </span>
-                </div>
+      <div class="panel-heading" style="background-color:dimgray;">
+        <span class="smalltextbold textwhite restriction">
+          <strong>Trading a
+            <a href="" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription }}</i></a>
+          </strong>
+        </span>
+      </div>
 
-
-                <div style="margin-top:15px;">
-                  <span> 
-                      <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)" ></carousel>    <!--[tradeImages]="trade.images"-->
-                  </span>           
-                </div>
-          </div>
-
-          <div class="panel-footer">
-                
-                <div> 
-                  <span>
-                    <strong class="textgray">Published: </strong>
-                    <span class="text-capitalize smalltext text-info">{{ trade.tradeDatePublished  | date }}</span>
-                  </span>
-                </div>          
-            <div>              
-              <span>
-                <strong class="textgray">Trader:</strong>
-                <a href="" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="text-uppercase smalltext textlightcoral restriction"><i>{{ trade.traderFullName }}</i></a>
-              </span>             
-            </div>       
-                   
+      <div class="panel-footer">
+        <div>
+          <span>
+            <strong class="textgray">Category: </strong>
+            <span class="text-capitalize smalltext text-info">{{ trade.tradeObjectCategoryDescription }}</span>
+          </span>
         </div>
+
+
+        <div>
+          <span>
+            <strong class="textgray">Will trade for:</strong>
+            <span class="text-capitalize smalltext text-info ">{{ trade.tradeForObjectsDescription }}</span>
+          </span>
+        </div>       
+
+
+        <div style="margin-top:15px;">
+          <span>
+            <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>    <!--[tradeImages]="trade.images"-->
+          </span>
+        </div>
+      </div>
+
+      <div class="panel-footer">
+        <div>
+          <span>
+            <strong class="textgray">Published: </strong>
+            <span class="text-capitalize smalltext text-info">{{ trade.tradeDatePublished  | date }}</span>
+          </span>
+        </div>
+        <div>
+          <span>
+            <strong class="textgray">Trader:</strong>
+            <a href="" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="text-uppercase smalltext textlightcoral restriction"><i>{{ trade.traderFullName }}</i></a>
+          </span>
+        </div>
+        <div>
+          <span>
+            <strong class="textgray">Status:</strong>
+            <span class="text-capitalize smalltext text-info ">{{ trade.tradeStatus }}</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
 </div>
  
-                      
+
+<span *ngIf="hasNoTrades" class="textoker"> The system can not find any trades!</span>
+
 <my-spinner [isRunning]="isRequesting"></my-spinner>
 
-                
+              

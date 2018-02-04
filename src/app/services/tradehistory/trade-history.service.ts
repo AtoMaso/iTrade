@@ -40,7 +40,7 @@ export class TradeHistoryService {
 
     public getTradeHistoryByTradeId(tradeId: number): Observable<TradeHistory[]> {
 
-          const localUrl = `${tradehistoriesUrl}/?tradeId=${tradeId}`;
+          const localUrl = `${tradehistoriesUrl}?tradeId=${tradeId}`;
 
           return this.httpClientService.get<TradeHistory[]>(localUrl).retry(3);
   }

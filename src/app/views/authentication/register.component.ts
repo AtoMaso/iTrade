@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
   private ComparePasswords(passedtrader: RegisterBindingModel): boolean {
     if (passedtrader.Password === passedtrader.ConfirmPassword) { return true; }
     else {
-      this.messagesService.emitProcessMessage("PMPNE");
+      this.messagesService.emitProcessMessage("PMEPCP");
       return false;
     }
   }
@@ -82,14 +82,13 @@ export class RegisterComponent implements OnInit {
 
   private onSucessRegistering(res: any) {
     this.submitted = true;
-    this.messagesService.emitProcessMessage("PMRS");
+    this.messagesService.emitProcessMessage("PMSCTr");
   }
 
 
 
   // toggles the submitted flag which should disable the form and show the succes small form
   private onSubmit() { this.submitted = true; }
-
 
 
   //****************************************************
@@ -100,11 +99,11 @@ export class RegisterComponent implements OnInit {
     // audit log the error passed
     this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
+    // PME used to pass the message
     if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
-    else if (serviceError.status === 400) { this.messagesService.emitProcessMessage("PMEPI", serviceError.error); }
+    else if (serviceError.status === 400 && serviceError.error.substring("password") !== null) { this.messagesService.emitProcessMessage("PMEPUI"); }
     else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
-    else { this.messagesService.emitProcessMessage("PMG"); }
-
+    else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
 
     // TODO !!!!  to be used if we decide to have multiple messages in the ModelState passed from the web api
     //  let message: string = null;

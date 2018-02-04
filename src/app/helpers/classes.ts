@@ -6,7 +6,7 @@
   IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
-  IEmail, IEmailType,
+  IEmail, IEmailType, ICorrespondence,
   ITrade, IImage, IObjectCategory, ITradeHistory, 
   ITradeObject, ITradeForObject,  
   IUserSession, IAuthentication, IUserIdentity,
@@ -330,6 +330,7 @@ class EmailType implements IEmailType {
 class Trade implements ITrade {
 
   totalTradesNumber: number;
+  tradeIdStr: string;
   tradeId: number; 
   tradeDatePublished: Date;
   tradeStatus: string;
@@ -349,7 +350,7 @@ class Trade implements ITrade {
   tradeForObjectsDescription: string;
 
   constructor() {    
-    this.totalTradesNumber = 0;
+    this.totalTradesNumber = 0;  
     this.tradeIdStr = "";
     this.tradeId = 0;  
     this.tradeDatePublished = new Date(1900, 1, 1); 
@@ -446,6 +447,30 @@ class ObjectCategory {
     this.objectCategoryDescription = "";
   }
 }
+
+class Correspondence implements ICorrespondence {
+  id: number;  
+  message: string;
+  status: string;
+  dateSent: Date;
+  subject: string;  // this is the object of trade
+  tradeId: number;
+  traderId: string;
+  sender: string;   // this is the trader sending the correspondence
+
+  constructor() {
+    this.id = 0;
+    this.subject = "";
+    this.message = "";
+    this.status = "";
+    this.dateSent = new Date(9999, 1, 1);
+    this.tradeId = 0;
+    this.traderId = "";
+    this.sender = "";
+  }
+}
+
+
 
 
 
@@ -569,7 +594,7 @@ export {
   PersonalDetails, ContactDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType,
-  SecurityAnswer, SecurityQuestion,
+  SecurityAnswer, SecurityQuestion, Correspondence,
   Trade, Image, ObjectCategory, TradeHistory,
   UserSession, Authentication, UserIdentity,
   ProcessMessage,ProcessMessageType, PageTitle, Attachement

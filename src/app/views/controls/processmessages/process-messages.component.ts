@@ -14,7 +14,7 @@ import { ProcessMessage } from '../../../helpers/classes';
 
 export class ProcessMessagesComponent {
 
-  public style: string = "container panel panel-default col-md-10 col-md-offset-1";
+  public style: string;
   public stylespan = "messagespan;"
   private errorMessage: string;
 
@@ -26,8 +26,12 @@ export class ProcessMessagesComponent {
   public displayProcessMessage(message: ProcessMessage) {
     try {
       if (message === null)
-          { this.errorMessage = null; }
-      else {                   
+      {
+        this.errorMessage = null;
+      }
+      else {                 
+          this.style = "container panel panel-default col-md-10 col-md-offset-1";
+          this.stylespan = "messagespan;"
           this.getControlStyle(message.messageTypeDescription);
            this.errorMessage = this.getThePrefix(message.messageTypeDescription)  + message.messageText ;           
       }
