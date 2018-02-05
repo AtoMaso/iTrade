@@ -7,6 +7,12 @@
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
+                  Status:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeStatus }}</span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="panel panel-heading col-md-12">
                   Trading:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeObjectDescription }}</span>
                 </div>
               </div>
@@ -19,6 +25,7 @@
                         <span class="glyphicon glyphicon-plus"></span> Trade Description
                       </span>
                            
+                  <!-- colapsable description -->
                     <div id="collapseDescription" class="collapse smalltext textgray">
 
                         <div class="panel-heading">                         
@@ -34,21 +41,21 @@
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Trading for:<span class="smalltext  text-capitalize text-info"> {{ trade.tradeForObjectsDescription }}</span>
+                  Trading for:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeForObjectsDescription }}</span>
                 </div>
               </div>
 
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Category: <span class="smalltext text-capitalize text-info"> {{ trade.tradeObjectCategoryDescription }}</span> 
+                  Category: <span class="smalltext text-uppercase text-info"> {{ trade.tradeObjectCategoryDescription }}</span> 
                 </div>
               </div>
 
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Date Published: <span class="smalltext text-capitalize text-info"> {{ trade.tradeDatePublished | date }}</span> 
+                  Date Published: <span class="smalltext text-uppercase text-info"> {{ trade.tradeDatePublished | date }}</span> 
                 </div>
               </div>
 
@@ -70,10 +77,11 @@
                 <div class="row panel panel-heading">
 
                   <span class="images panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseImages">
-                    <span class="glyphicon glyphicon-plus"></span> Trade Images
+                    <span class="glyphicon glyphicon-minus"></span> Trade Images
                  </span>             
 
-                  <div id="collapseImages" class="collapse">
+                  <!-- collapsable trade images -->
+                  <div id="collapseImages" class="collapse in">
           
                       <div class="container panel panel-heading col-md-12">
 
@@ -105,10 +113,11 @@
                 <div class="row panel panel-heading">     
 
                   <span class="history panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
-                    <span class="glyphicon glyphicon-plus"></span> This Trade History
+                    <span class="glyphicon glyphicon-minus"></span> This Trade History
                   </span>
 
-                   <div id="collapseHistory" class="collapse">
+                   <!-- collapsable trade history , history will minimum one record when trade is created-->
+                   <div id="collapseHistory" class="collapse in">
 
                       <div class="panel-heading">
                         

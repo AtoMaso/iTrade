@@ -53,13 +53,14 @@ export class TraderHomeComponent implements OnInit {
   ngAfterViewInit() {
     jQuery(document).ready(function () {
 
-      jQuery("#collapseCorrespondence").on("hide.bs.collapse", function () {
+    
+      jQuery("#collapseCorrespondence").on("hide.bs.collapse", function () {                         
         jQuery(".correspondence").html('<span class="glyphicon glyphicon-plus"></span> My Correspondence');
       });
-      jQuery("#collapseCorrespondence").on("show.bs.collapse", function () {
+      jQuery("#collapseCorrespondence").on("show.bs.collapse", function () {              
         jQuery(".correspondence").html('<span class="glyphicon glyphicon-minus"></span> My Correspondence');
       });
-
+    
       jQuery("#collapseTrades").on("hide.bs.collapse", function () {
         jQuery(".status").html('<span class="glyphicon glyphicon-plus"></span> My Trades Status');
       });

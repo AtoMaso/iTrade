@@ -6,14 +6,14 @@
 
              <div class="panel panel-heading">
 
-                     <span class="correspondence panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCorrespondence">
-                          <span class="glyphicon glyphicon-plus"></span> My Correspondence <span *ngIf="!hasCorres" class="textoker">- The system can not find any correspondence for you!
+                     <span class="correspondence panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCorrespondence">
+                          <span class="glyphicon glyphicon-minus"></span> My Correspondence <span *ngIf="!hasCorres" class="textoker">- The system can not find any correspondence for you!
                               <a href="" [routerLink]="['/correspondence']"><span class="smalltext text-uppercase textlightcoral"><i>Write Correspondence</i></span></a>
                             </span>  
                      </span>
 
                     <!-- Collapsable Correspondence -->
-                     <div *ngIf ="hasCorres" id="collapseCorrespondence" class="collapse smalltext textgray">
+                     <div *ngIf ="hasCorres" id="collapseCorrespondence" class="collapse in smalltext textgray" >
 
                            <div class="panel-heading">
 
@@ -108,23 +108,21 @@
 
 
               </div>
-
-
             
 
-            <div class="panel panel-heading">
+              <div class="panel panel-heading">
 
                        <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
-                          <span class="glyphicon glyphicon-plus"></span> My Trades Status 
+                          <span class="glyphicon glyphicon-minus"></span> My Trades Status 
                          <span *ngIf="!hasTrades" class="textoker">- The system can not find any trades under you account!
                            <a href="" [routerLink]="['/addtrade']"><span class="smalltext text-uppercase textlightcoral"><i>Add New Trade</i></span></a>
                          </span>                       
                       </span>
 
                       <!-- Collapsable Trade Status -->                   
-                      <div *ngIf="hasTrades" id="collapseTrades" class="collapse smalltext textgray">
+                      <div *ngIf="hasTrades" id="collapseTrades" class="collapse in smalltext textgray">
 
-                      <div class="panel-heading">
+                              <div class="panel-heading">
 
                             <!-- Table-->
                             <div class="table-responsive">
@@ -201,41 +199,75 @@
 
                     </div>
 
-              </div>
+                        </div>
 
                 </div>
 
-                        
+                                
      </div>
 
 
 
        <div class="col-md-2  col-md-offset-1">
 
-      <div class="row">
-        <div class="panel panel-heading"><a href="" [routerLink]="['/mytraderaccount']"><span class="smalltext text-uppercase textlightcoral"><i>My Account</i></span></a> </div>
-      </div>
+            <div class="row">
+              <div class="panel panel-heading"><a href="" [routerLink]="['/mytraderaccount']"><span class="smalltext text-uppercase textlightcoral"><i>My Account</i></span></a> </div>
+            </div>
 
-      <div class="row">
-        <div class="panel panel-heading"><a href="" [routerLink]="['/personaldetails']"><span class="smalltext text-uppercase textlightcoral"><i>My  Personal Details</i></span></a> </div>
-    </div>
+            <div class="row">
+              <div class="panel panel-heading"><a href="" [routerLink]="['/personaldetails']"><span class="smalltext text-uppercase textlightcoral"><i>My  Personal Details</i></span></a> </div>
+          </div>
 
-      <div class="row">
-        <div class="panel panel-heading"><a href="" [routerLink]="['/contactdetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Contact Details</i></span></a> </div>
-        </div>
+            <div class="row">
+              <div class="panel panel-heading"><a href="" [routerLink]="['/contactdetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Contact Details</i></span></a> </div>
+              </div>
 
-      <div class="row">
-        <div class="panel panel-heading"><a href="" [routerLink]="['/securitydetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Security Details</i></span></a> </div>
-        </div>
+            <div class="row">
+              <div class="panel panel-heading"><a href="" [routerLink]="['/securitydetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Security Details</i></span></a> </div>
+            </div>      
 
-         <div *ngIf="hasTrades"> <!-- you can not manage trades if there are no any -->
-           <div class="row">
-             <div class="panel panel-heading">
-               <a href="" [routerLink]="['/mytradeslist']"><span class="smalltext text-uppercase textlightcoral"><i>Manage My Trades</i></span></a>
+         <!-- you can not manage trades if there are no any -->
+         <div *ngIf="hasTrades">
+             <div class="row">
+               <div class="panel panel-heading">
+                 <a href="" [routerLink]="['/mytradeslist']"><span class="smalltext text-uppercase textlightcoral"><i>Manage My Trades</i></span></a>
+               </div>
              </div>
-           </div>
-         </div>
+          </div>
+
     </div>
 
   </div>
+
+
+  <!--<div class="row col-md-12">
+
+    <div class="panel panel-heading">
+
+      <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseManage">
+        <span class="glyphicon glyphicon-plus"></span> Manage My Trades
+        <span *ngIf="!hasTrades" class="textoker">
+          - The system can not find any trades under you account!
+          <a href="" [routerLink]="['/addtrade']"><span class="smalltext text-uppercase textlightcoral"><i>Add New Trade</i></span></a>
+        </span>
+      </span>
+
+      
+      <div id="collapseManage" class="collapse smalltext textgray">
+
+        <div class="panel-heading">
+
+          <div class="row"> <app-mytradeslist></app-mytradeslist></div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>-->
+
 </div>
+
+
+
+    
