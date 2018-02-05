@@ -505,19 +505,23 @@ class UserIdentity implements IUserIdentity {
   accessTokenExpiresDate: Date;
   accessTokenExpiresIn: number;
   userName: string;
+  email: string;
+  emailConfirmed: string;
   name: string;
   userId: string;
   roles: string[];
 
   constructor() {
-          this.accessToken = "";
-          this.refreshToken = "";
-          this.accessTokenType = "";
-          this.accessTokenExpiresDate = new Date();
-          this.accessTokenExpiresIn = 0;
-          this.userName = "";
-          this.userId = "";
-          this.roles = [];
+    this.accessToken = "";
+    this.refreshToken = "";
+    this.accessTokenType = "";
+    this.accessTokenExpiresDate = new Date();
+    this.accessTokenExpiresIn = 0;
+    this.userName = "";
+    this.email = "";
+    this.emailConfirmed = "";
+    this.userId = "";
+    this.roles = [];
   }
 
   public isInRole(rolename: string, roles: string[]): boolean {

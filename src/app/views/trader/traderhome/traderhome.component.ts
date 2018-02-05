@@ -177,13 +177,32 @@ export class TraderHomeComponent implements OnInit {
   //****************************************************
   private onError(serviceError: any, operation: string) {
 
+    let message: string = "";
+
     // audit log the error passed
     this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-    if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
-    else if (serviceError.status === 400) { this.messagesService.emitProcessMessage("XXXXX", serviceError.error); } // TODO change this process message
-    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.Message); }
-    else { this.messagesService.emitProcessMessage("PMEGTs"); }
+    // PME used to pass the message 
+    if (serviceError.error === undefined) {
+
+      var data = serviceError.json();
+
+      if (data.ModelState !== undefined) {
+
+        for (var key in data.ModelState) {
+          for (var i = 0; i < data.ModelState[key].length; i++) {
+
+            if (message == null) { message = data.ModelState[key][i]; }
+            else { message = message + data.ModelState[key][i]; }
+          }
+        }
+      }
+      this.messagesService.emitProcessMessage("PME", message);
+    }
+    else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
+    else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
+
 
   }
 

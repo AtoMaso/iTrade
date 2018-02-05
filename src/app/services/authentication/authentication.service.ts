@@ -109,44 +109,60 @@ export class AuthenticationService implements OnDestroy {
   // PRIVATE METHODS
   //****************************************************** 
   private onLoginSuccess(res: any) {
-      let body = JSON.parse(res);   //.json(); use it with Http
-      this.userIdentity = new UserIdentity();
-      this.authentication = new Authentication();
-      this.userSession = new UserSession();
+
+    let body = JSON.parse(res);   //.json(); use it with Http
+
+    if (body.emailConfirmed == "True") {
+
+    this.userIdentity = new UserIdentity();
+    this.authentication = new Authentication();
+    this.userSession = new UserSession();
      
-      // identity
-      this.userIdentity.accessToken = body.access_token;
-      this.userIdentity.refreshToken = body.refresh_token;
-      this.userIdentity.accessTokenType = body.token_type;      
-      this.userIdentity.accessTokenExpiresIn = body.expires_in;   
-      this.userIdentity.accessTokenExpiresDate = this.tokenExpiresInDate(this.userIdentity.accessTokenExpiresIn)
-      this.userIdentity.userName = body.userName;
-      this.userIdentity.userId = body.Id;
-      this.userIdentity.name = body.firstName + " " + body.middleName + " " + body.lastName;
-      this.userIdentity.roles = body.roles.split(",");
+     // identity
+    this.userIdentity.accessToken = body.access_token;
+    this.userIdentity.refreshToken = body.refresh_token;
+    this.userIdentity.accessTokenType = body.token_type;      
+    this.userIdentity.accessTokenExpiresIn = body.expires_in;   
+    this.userIdentity.accessTokenExpiresDate = this.tokenExpiresInDate(this.userIdentity.accessTokenExpiresIn)
+    this.userIdentity.userName = body.userName;
+    this.userIdentity.email = body.email;
+    this.userIdentity.emailConfirmed = body.emailConfirmed;
+    this.userIdentity.userId = body.Id;
+    this.userIdentity.name = body.firstName + " " + body.middleName + " " + body.lastName;
+    this.userIdentity.roles = body.roles.split(",");
 
-      // authentication
-      this.authentication.isAuthenticated = true;
-      this.authentication.authenticationType = this.userIdentity.accessTokenType;
+    // authentication
+    this.authentication.isAuthenticated = true;
+    this.authentication.authenticationType = this.userIdentity.accessTokenType;
 
-      // session
-      this.userSession.authentication = this.authentication;
-      this.userSession.userIdentity = this.userIdentity;
+    // session
+    this.userSession.authentication = this.authentication;
+    this.userSession.userIdentity = this.userIdentity;
 
+    //  TODO  check has the email beeing confirmed???
+  
+
+      // then create session with the session timer
       this.storeUserIdentity(this.userIdentity);
       this.storeAuthData(this.authentication);
-      this.storeUsersSession(this.userSession);   
+      this.storeUsersSession(this.userSession);
 
       // we do emit from the login component as we do not need to emit new session every time is created
       // if we are planning to pass different sesssion values of expiry values then we need the following line
       // and remove the emiting of the session in the login component
       // this.emitUserSession(this._userSession);
 
-       // clear the webapi session timer if one exist, this is needed when IDLE has done the refresh of the token
+      // clear the webapi session timer if one exist, this is needed when IDLE has done the refresh of the token
       this.clearSessionTimer();
 
       // start the webapi session timer
       this.startSessionTimer(this.userIdentity.accessTokenExpiresIn);
+
+    }
+    else {
+      // show the message that email confirmation has not been recived
+    
+    }  
   }
 
 

@@ -69,10 +69,13 @@ export class LoginComponent implements OnInit {
   // PRIVATE METHODS
   //****************************************************
   private onLoginSuccess(res:any) {    
-      if (sessionStorage["UserSession"] != "null") {               
-        this.router.navigate(['/traderhome']);     
-        this.emitUserSession(res);
-      }    
+    if (sessionStorage["UserSession"] != "null") {
+      this.router.navigate(['/traderhome']);
+      this.emitUserSession(res);
+    }
+    else {
+      this.messagesService.emitProcessMessage("PMEANC"); // account not confirmed
+    }
   }
 
   // get the next session from the session observable
@@ -84,16 +87,34 @@ export class LoginComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  private onError(serviceError: any, operation: string) {   
+
+    let message: string = "";
 
     // audit log the error passed
     this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-    // PME used to pass the message
-    if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }    
-    else if (serviceError.status === 400 && serviceError.error.substring("password") !== null ) { this.messagesService.emitProcessMessage("PMEPUI"); }
+    // PME used to pass the message 
+    if (serviceError.error === undefined) {
+
+      var data = serviceError.json();
+
+      if (data.ModelState !== undefined) {
+
+        for (var key in data.ModelState) {
+          for (var i = 0; i < data.ModelState[key].length; i++) {
+
+            if (message == null) { message = data.ModelState[key][i]; }
+            else { message = message + data.ModelState[key][i]; }
+          }
+        }
+      }
+      this.messagesService.emitProcessMessage("PME", message);
+    }  
+    else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    else if (serviceError.status === 400 && serviceError.error.substring("password") !== null) { this.messagesService.emitProcessMessage("PMEPUI"); }
     else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
-    else { this.messagesService.emitProcessMessage("PMUEO"); } // unexpected error
+    else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
 
   }
 }

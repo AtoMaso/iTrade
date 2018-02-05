@@ -95,33 +95,32 @@ export class RegisterComponent implements OnInit {
   // LOGGING METHODS
   //****************************************************
   private onError(serviceError: any, operation: string) {
+    let message: string = "";
 
     // audit log the error passed
     this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
 
-    // PME used to pass the message
-    if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
-    else if (serviceError.status === 400 && serviceError.error.substring("password") !== null) { this.messagesService.emitProcessMessage("PMEPUI"); }
+    // PME used to pass the message 
+    if (serviceError.error === undefined) {
+
+      var data = serviceError.json();
+
+      if (data.ModelState !== undefined) {
+
+              for (var key in data.ModelState) {
+                      for (var i = 0; i < data.ModelState[key].length; i++) {
+
+                        if (message == null) { message = data.ModelState[key][i]; }
+                        else { message = message + data.ModelState[key][i]; }
+
+                      }
+              }
+         }      
+          this.messagesService.emitProcessMessage("PME", message); 
+    }
+    else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
     else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
     else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
 
-    // TODO !!!!  to be used if we decide to have multiple messages in the ModelState passed from the web api
-    //  let message: string = null;
-    //  // we will log the error in the server side by calling the logger, or that is already 
-    //  // done on the server side if the error has been caught
-    //  this.loggerService.addError(serviceError, "register");
-    //  if (serviceError.status !== 200 || serviceError.status !== 300) {
-    //    let data = serviceError.json();
-    //    if (data.ModelState) {
-    //      for (var key in data.ModelState) {
-    //        for (var i = 0; i < data.ModelState[key].length; i++) {
-    //          if (message == null) { message = data.ModelState[key][i]; }
-    //          else { message = message + data.ModelState[key][i]; }
-    //        }
-    //      }
-    //      this.messagesService.emitProcessMessage("PME", message);
-    //    }
-    //    else { this.messagesService.emitProcessMessage("PMG"); }
-    //}
   }
 }

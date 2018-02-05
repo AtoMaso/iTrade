@@ -77,17 +77,18 @@
           <div class="row">
                     <div class="col-md-8">
                       <div class="panel panel-heading textgray">
-                        An account with the application traders's permissions containing your credentials has been created.
-                        As a trader you will able to add trades, update and remove your trades from the application.
-                        To add an trade select "Add New" button on the All Trades view.
-                        Please use the "Login" button to log into the application with your newly created credentials.
-                        Email confirmation has been sent to your nominated accout. Please check your email and follow the instructions.
+                        An account with the application traders's permissions containing your credentials has been created.                                              
+                        <ul>                                                          
+                          <li> Email confirmation has been sent to your nominated accout  {{ registerModel.Email  }}. </li>
+                          <li> Please check your email and follow the instructions.</li>
+                          <li> After the confirmation, please use the "Login" button to log into the application with your credentials.</li>
+                        </ul>
                       </div>
                     </div>
 
             <div class="col-md-2 col-md-offset-1">
               <div class="smalltext" style="text-align:center">
-                <button class="btn-success  buttonclass" [routerLink]="['/login']">Login</button>
+                <button class="btn-danger  buttonclass" [routerLink]="['/login']" style="width:200px">Login</button>
               </div>
             </div>
             </div>                  

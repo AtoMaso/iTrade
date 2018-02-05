@@ -242,6 +242,8 @@ interface IUserIdentity {
     accessTokenExpiresDate: Date;
     accessTokenExpiresIn: number;
     userName: string;
+    email: string;
+    emailConfirmed: string;
     name: string;
     userId: string;
     roles: string[];
