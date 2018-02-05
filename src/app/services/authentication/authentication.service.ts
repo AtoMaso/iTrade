@@ -112,7 +112,7 @@ export class AuthenticationService implements OnDestroy {
 
     let body = JSON.parse(res);   //.json(); use it with Http
 
-    if (body.emailConfirmed == "True") {
+    if (body.emailConfirmed == "True") {  // this means the account has not been confirmed
 
     this.userIdentity = new UserIdentity();
     this.authentication = new Authentication();
@@ -159,10 +159,7 @@ export class AuthenticationService implements OnDestroy {
       this.startSessionTimer(this.userIdentity.accessTokenExpiresIn);
 
     }
-    else {
-      // show the message that email confirmation has not been recived
-    
-    }  
+    else { this.removeUserSession(); }  
   }
 
 
