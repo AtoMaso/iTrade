@@ -4,11 +4,10 @@
 
        <div  class="row col-md-9">        
 
-             <div class="panel panel-heading">
+              <div class="panel panel-heading">
 
                      <span class="correspondence panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCorrespondence">
-                          <span class="glyphicon glyphicon-minus"></span> My Correspondence <span *ngIf="!hasCorres" class="textoker">- The system can not find any correspondence for you!
-                              <a href="" [routerLink]="['/correspondence']"><span class="smalltext text-uppercase textlightcoral"><i>Write Correspondence</i></span></a>
+                          <span class="glyphicon glyphicon-minus"></span> My Correspondence <span *ngIf="!hasCorres" class="textoker">- The system can not find any correspondence for you!                          
                             </span>  
                      </span>
 
@@ -98,13 +97,14 @@
                                               [(ngModel)]="configCorr.currentPage"
                                               (numPages)="numPagesCorr = $event"
                                               [maxSize]="maxSizeCorr">
-                                  </pagination-controls>
+                                            </pagination-controls>
                                       </div>
                                 </div>
-               
+                            
+                                 <br/>
                          </div>
 
-               </div>
+                    </div>
 
 
               </div>
@@ -114,8 +114,7 @@
 
                        <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
                           <span class="glyphicon glyphicon-minus"></span> My Trades Status 
-                         <span *ngIf="!hasTrades" class="textoker">- The system can not find any trades under you account!
-                           <a href="" [routerLink]="['/addtrade']"><span class="smalltext text-uppercase textlightcoral"><i>Add New Trade</i></span></a>
+                         <span *ngIf="!hasTrades" class="textoker">- The system can not find any trades under you account!                         
                          </span>                       
                       </span>
 
@@ -197,18 +196,24 @@
                               </div>
                             </div>
 
+                             <br />                            
+
                     </div>
-
-                        </div>
-
-                </div>
-
-                                
+                  </div>
+             </div>                                
      </div>
 
 
 
        <div class="col-md-2  col-md-offset-1">
+             <!-- you can not manage trades if there are no any -->
+             <div *ngIf="hasTrades">
+               <div class="row">
+                 <div class="panel panel-heading">
+                   <a href="" [routerLink]="['/mytradeslist']"><span class="smalltext text-uppercase textlightcoral"><i>Manage My Trades</i></span></a>
+                 </div>
+               </div>
+             </div>
 
             <div class="row">
               <div class="panel panel-heading"><a href="" [routerLink]="['/mytraderaccount']"><span class="smalltext text-uppercase textlightcoral"><i>My Account</i></span></a> </div>
@@ -220,21 +225,13 @@
 
             <div class="row">
               <div class="panel panel-heading"><a href="" [routerLink]="['/contactdetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Contact Details</i></span></a> </div>
-              </div>
+              </div>         
 
-            <div class="row">
-              <div class="panel panel-heading"><a href="" [routerLink]="['/securitydetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Security Details</i></span></a> </div>
-            </div>      
-
-         <!-- you can not manage trades if there are no any -->
-         <div *ngIf="hasTrades">
-             <div class="row">
-               <div class="panel panel-heading">
-                 <a href="" [routerLink]="['/mytradeslist']"><span class="smalltext text-uppercase textlightcoral"><i>Manage My Trades</i></span></a>
-               </div>
-             </div>
-          </div>
-
+         <div class="row">
+           <div class="panel panel-heading"> <a href="" [routerLink]="['/addtrade']"><span class="smalltext text-uppercase textlightcoral"><i>Add New Trade</i></span></a> </div>
+         </div>
+                            
+       
     </div>
 
   </div>

@@ -10,7 +10,9 @@ import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { ImageService } from '../../../services/image/image.service';
 import { TradeHistoryService } from '../../../services/tradehistory/trade-history.service';
 
-import {Trade, PageTitle, Image, TradeHistory } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Image, TradeHistory } from '../../../helpers/classes';
+import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
+
 
 @Component({
   selector: 'app-tradedetails',
@@ -25,8 +27,11 @@ export class TradeDetailsComponent implements OnInit {
   private trade: Trade = new Trade();
   private images: Image[];
   private histories: TradeHistory[];
-  private hasImages: boolean = false;
- 
+  private hasImages: boolean = false; 
+  private session: UserSession;
+  private identity: UserIdentity = new UserIdentity;
+  private isRequesting: boolean = false;
+  private isAuthenticated: boolean = false;
 
   constructor(  
     private tradeApiService: TradeApiService,
@@ -43,7 +48,8 @@ export class TradeDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => { this.tradeId = params['id']; });
 
-    this.setupPage();    
+    this.getUseridentity();
+    this.initialiseComponent(); 
 
     this.getATrade(this.tradeId); 
 
@@ -52,6 +58,28 @@ export class TradeDetailsComponent implements OnInit {
     this.getTradeHistory(this.tradeId);
 
   
+  }
+
+  //*****************************************************
+  // HELPER METHODS
+  //*****************************************************
+  private getUseridentity() {
+    if (sessionStorage["UserSession"] != "null") {
+      try {
+        this.session = JSON.parse(sessionStorage["UserSession"])
+        this.isAuthenticated = this.session.authentication.isAuthenticated;
+        this.identity.roles = this.session.userIdentity.roles;
+      }
+      catch (ex) {
+        this.messagesService.emitProcessMessage("PMG");
+      }
+    }
+  }
+
+
+  private initialiseComponent() {
+    this.pageTitleService.emitPageTitle(new PageTitle("Trade Details"));
+    this.messagesService.emitRoute("nill");
   }
 
 
@@ -87,10 +115,7 @@ export class TradeDetailsComponent implements OnInit {
   }
 
 
-  private setupPage() {
-    this.pageTitleService.emitPageTitle(new PageTitle("Trade Details"));
-    this.messagesService.emitRoute("nill");    
-  }
+ 
 
   /*******************************************************?
   // GET TRADE

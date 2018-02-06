@@ -11,6 +11,7 @@
                 </div>
               </div>
 
+
               <div class="row">
                 <div class="panel panel-heading col-md-12">
                   Trading:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeObjectDescription }}</span>
@@ -63,12 +64,27 @@
               <div class="row">
                 <div class="panel panel-heading col-md-12">
                   Trader: <span class="textlightcoral">
-                                    <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase"><span> <i>{{ trade.traderFullName }}</i></span></a>
-                              </span> 
+                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase"><span> <i>{{ trade.traderFullName }}</i></span></a>
+                      </span> 
                 </div>
               </div>
 
+
+              <div class="row">
+                <div class="panel panel-heading col-md-12" style="text-align:center;">
+
+                  <div *ngIf="!isAuthenticated">                   
+                    <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-danger btn-sm smalltextbold" style="width:200px"> Start Trading </button>                                                
+                  </div>
+
+                  <div *ngIf="isAuthenticated">
+                    <button type="button" [routerLink]="['/correspondence']" [queryParams]="{id: trade.tradeId}" class="btn btn-danger btn-sm smalltextbold" style="width:200px"> Start Trading</button>                    
+                  </div>
+
+                </div>
             </div>
+
+         </div>
 
 
           <div class="col-md-8 col-md-offset-1 panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -210,4 +226,32 @@
 
       </div>
 
+</div>
+
+
+<my-spinner [isRunning]="isRequesting"></my-spinner>
+
+
+<!-- MODAL form to show when add/remove trade is clicked and user is not logged in-->
+<div class="modal fade" id="addremoveLogin" tabindex="-1" role="dialog" aria-labelledby="AddRemoveLogin">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>You need to be logged in to do this action. Do you want to log in?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" [routerLink]="['/login']" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
 </div>
