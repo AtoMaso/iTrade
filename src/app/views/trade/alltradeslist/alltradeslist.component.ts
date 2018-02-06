@@ -3,8 +3,6 @@ import { Response } from '@angular/http';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
-// third party
-import { NG_TABLE_DIRECTIVES, NgTableComponent, NgTableFilteringDirective, NgTablePagingDirective, NgTableSortingDirective } from 'ng2-table';
 
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
