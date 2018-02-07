@@ -14,6 +14,7 @@ import { UserSession, UserIdentity, ContactDetails} from '../../helpers/classes'
 
 let contactdetailsbytraderid = CONFIG.baseUrls.contactdetailsbytraderid;
 
+
 @Injectable()
 export class ContactDetailsService {
 
@@ -29,11 +30,11 @@ export class ContactDetailsService {
     }
   };
 
-  public getContactDetailsByTraderId(traderId: string): Observable<ContactDetails[]> {
+  public getContactDetailsByTraderId(traderId: string): Observable<ContactDetails> {
 
     this.localUrl = `${contactdetailsbytraderid}?traderId=${traderId}`; 
 
-    return this.httpClientService.get<ContactDetails[]>(this.localUrl).retry(3);
+    return this.httpClientService.get<ContactDetails>(this.localUrl).retry(3);
   }
 
 

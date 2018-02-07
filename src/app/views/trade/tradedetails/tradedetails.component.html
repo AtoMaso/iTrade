@@ -63,9 +63,7 @@
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Trader: <span class="textlightcoral">
-                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase"><span> <i>{{ trade.traderFullName }}</i></span></a>
-                      </span> 
+                  Trader: <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase"><span> <i>{{ trade.traderFullName }}</i></span></a>                    
                 </div>
               </div>
 
@@ -102,7 +100,7 @@
                       <div class="container panel panel-heading col-md-12">
 
                         <div class="col-md-4">
-                          <div *ngIf="hasImages">
+                          <div *ngIf="hasImages"> <!-- TODO individual check of image 1, 2,3 -->
                             <img src="{{ images[0].imageUrl }}" alt="" style="height: 250px;width: 250px;">
                           </div>
                         </div>
@@ -137,10 +135,8 @@
 
                       <div class="panel-heading">
                         
-                        <!-- Table -->
-                        <div class="row">
-
-                          <div class="table-responsive">
+                        <!-- Table -->                     
+                        <div class="row table-responsive">
 
                             <table class="table table-bordered table-hover">
 
@@ -189,8 +185,7 @@
                             </table>
 
                           </div>
-
-                        </div>
+   
 
                         <!-- Table navigation -->
                         <div class="row col-md-12">

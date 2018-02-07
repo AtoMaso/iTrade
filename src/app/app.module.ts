@@ -26,6 +26,7 @@ import { ProcessMessageService } from './services/processmessage/processmessage.
 import { PageTitleService } from './services/pagetitle/pagetitle.service';
 import { LoggerService } from './services/logger/logger.service';
 import { TradeApiService } from './services/tradeapi/tradeapi.service';
+import { TraderApiService } from './services/traderapi/traderapi.service';
 import { ValidationService } from './services/validation/validation.service';
 import { InMemoryDataService }  from './services/inmemory/in-memory-data.service'; //
 import { ImageService } from './services/image/image.service';
@@ -173,7 +174,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     TradeApiService, ValidationService, ImageService, TradeHistoryService,
     AuthenticationService, ProcessMessageService, CorrespondenceService,
     PersonalDetailsService, ContactDetailsService, SecurityDetailsService,
-    PageTitleService, LoggerService, AuthGuard,
+    PageTitleService, LoggerService, AuthGuard, TraderApiService,
     // to inercept every request for authentication purposes
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 

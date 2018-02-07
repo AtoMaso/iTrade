@@ -33,6 +33,7 @@ interface ITraderList {
   traderLastName: string,
   traderContactEmail: string;
   traderContactPhone: string
+  traderSocialNetwork: string;
 }
 
 interface ITraderDetails {
@@ -56,8 +57,9 @@ interface IPersonalDetails {
 
 interface IContactDetails {
   contactDetailsId: number;
-  traderId: string;
+  traderId: string; 
   phones: IPhone[];
+  emails: IEmail[];
   socialNetworks: ISocialNetwork[];  
 }
 
@@ -95,7 +97,7 @@ interface IAddressType {
 
 interface IPhone {
   phoneId: number; 
-  phoneNumber: number;
+  phoneNumber: string;
   phoneCityCode: string;
   phoneCountryCode: string;
   phoneTypeId: number; 

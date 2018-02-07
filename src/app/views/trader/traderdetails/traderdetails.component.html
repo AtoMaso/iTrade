@@ -9,11 +9,11 @@
                        <span class="personal panel panel-heading col-md-12 collapsed  smalltext text-uppercase textlightcoral"  data-toggle="collapse" data-target="#collapsePersonal">
                             <span class="glyphicon glyphicon-minus"></span> 
                             Personal Details 
-                            <span *ngIf="!hasPersonal" class="textoker">- The system can not find any personal details for this trader</span>
+                            <span *ngIf="!hasPersonal" class="textoker">- The system can not find any personal details for this trader!</span>
                       </span>
          
 
-                       <div id="collapsePersonal" class="collapse in" >   
+                       <div  *ngIf="hasPersonal" id="collapsePersonal" class="collapse in" >   
                          
                           
                                 <div class="col-md-12">
@@ -26,7 +26,7 @@
 
                                        <div class="row">
                                             <div class="panel panel-heading col-md-12">
-                                              Middle Name:<span class="smalltext  text-uppercase text-info"> {{ personal.midleName }}</span>
+                                              Middle Name:<span class="smalltext  text-uppercase text-info"> {{ personal.middleName }}</span>
                                             </div>
                                       </div>
 
@@ -38,7 +38,7 @@
 
                                        <div class="row">
                                             <div class="panel panel-heading col-md-12">
-                                                 Place of Origin:<span class="smalltext  text-uppercase text-info"> {{ personal.addresses[0].addressCity}}</span>
+                                                 Place:<span class="smalltext  text-uppercase text-info"> {{ personal.firstAddressCity }}</span>
                                             </div>
                                      </div>
 
@@ -61,25 +61,25 @@
                   </span>
 
 
-                   <div id="collapseContact" class="collapse in">
+                   <div *ngIf="hasContact" id="collapseContact" class="collapse in">
 
                           <div class="col-md-12">
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12">
-                                <!--Phone:<span class="smalltext  text-uppercase text-info"> {{ contact.Phone }}</span>-->
+                                Phone:<span class="smalltext  text-uppercase text-info">{{ contact.firstCountryCode }} {{ contact.firstCityCode }}  {{ contact.firstPhone }}</span>
                               </div>
                             </div>
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12">
-                                <!--Email Account:<span class="smalltext  text-uppercase text-info"> {{ conatct.Email }}</span>-->
+                                Email Account:<span class="smalltext  text-uppercase text-info"> {{ contact.firstEmail }}</span>
                               </div>
                             </div>
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12">
-                                <!--Social Network:<span class="smalltext  text-uppercase text-info"> {{ contact.SocialNetwork }}</span>-->
+                                Social Network:<span class="smalltext  text-uppercase text-info"> {{ contact.firstSocialNetwork }}</span>
                               </div>
                             </div>
 
@@ -96,7 +96,7 @@
 
     <div class="row">
 
-            <!-- Current Tardes -->
+            <!-- Current Trades -->
            <div class="panel panel-heading">
 
                        <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
@@ -110,7 +110,7 @@
                            <div class="panel-heading">
 
                                  <!-- Table-->
-                                 <div class="table-responsive">
+                                 <div class="row table-responsive">
 
                                    <table class="table table-bordered table-hover table-condensed col-md-9">
 
@@ -118,26 +118,20 @@
                                      <thead>
                                        <tr>
 
-                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                           <span style="vertical-align:middle;margin-left:10px;">
-                                             <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>
-                                           </span>
+                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                       
+                                             <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>                                        
                                          </th>
-                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                           <span style="vertical-align:middle;margin-left:10px;">
-                                             <span class="textgray smalltext text-uppercase" style="width:auto">For</span>
-                                           </span>
-                                         </th>
-                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                           <span style="vertical-align:middle">
-                                             <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>
-                                           </span>
 
+                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                      
+                                             <span class="textgray smalltext text-uppercase" style="width:auto">For</span>                                          
                                          </th>
-                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                           <span style="vertical-align:middle">
-                                             <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>
-                                           </span>
+
+                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                        
+                                             <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>                                         
+                                         </th>
+
+                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                           
+                                             <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>                                        
                                          </th>
                                        </tr>
                                      </thead>
@@ -192,12 +186,13 @@
 
 
 
-           <!-- Traders History -->
+           <!-- Trading History -->
            <div class="panel panel-heading">
 
                   <span class="history panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
                           <span class="glyphicon glyphicon-minus"></span>
-                          Trades History<span *ngIf="!hasHistory" class="textoker">- The system can not find any trade history under this account</span>
+                          Trading History
+                        <span *ngIf="!hasHistory" class="textoker">- The system can not find any trading history under this account</span>
                  </span>
 
 
@@ -206,7 +201,7 @@
                            <div class="panel-heading">
 
                                 <!-- Table-->
-                                <div class="table-responsive">
+                                <div class="row table-responsive">
 
                                 <table class="table table-bordered table-hover table-condensed col-md-9">
 
@@ -214,26 +209,21 @@
                                   <thead>
                                     <tr>
 
-                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                        <span style="vertical-align:middle;margin-left:10px;">
-                                          <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>
-                                        </span>
+                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                        
+                                          <span class="textgray smalltext  text-uppercase" style="width:auto">Traded </span>                                     
                                       </th>
-                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                        <span style="vertical-align:middle;margin-left:10px;">
-                                          <span class="textgray smalltext text-uppercase" style="width:auto">For</span>
-                                        </span>
-                                      </th>
-                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                        <span style="vertical-align:middle">
-                                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>
-                                        </span>
 
+                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                      
+                                          <span class="textgray smalltext text-uppercase" style="width:auto">For</span>                                       
                                       </th>
-                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                        <span style="vertical-align:middle">
+
+                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                       
+                                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>                                       
+                                      </th>
+
+                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                       
                                           <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>
-                                        </span>
+                                        
                                       </th>
                                     </tr>
                                   </thead>

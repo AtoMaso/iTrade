@@ -75,6 +75,7 @@ class Trader implements ITraderList {
   traderLastName: string;
   traderContactEmail: string;
   traderContactPhone: string;
+  traderSocialNetwork: string;
 
   constructor() {    
     this.traderId = ""
@@ -83,6 +84,7 @@ class Trader implements ITraderList {
     this.traderLastName = " ";
     this.traderContactEmail = "";  
     this.traderContactPhone = "";
+    this.traderSocialNetwork = "";
   }
 }
 
@@ -110,6 +112,7 @@ class PersonalDetails implements IPersonalDetails {
   middleName: string;
   lastName: string;
   dateOfBirth: Date;
+  firstAddressCity: string;
   addresses: Address[];
 
   constructor() {
@@ -118,6 +121,7 @@ class PersonalDetails implements IPersonalDetails {
     this.firstName = "";
     this.lastName = "";
     this.dateOfBirth = new Date(1900, 1, 1);
+    this.firstAddressCity = "";
     this.addresses = [];
   }
 }
@@ -127,13 +131,26 @@ class ContactDetails implements IContactDetails {
 
   contactDetailsId: number;
   traderId: string;
+  firstPhone: string;
+  firstCityCode: string;
+  firstCountryCode: string;
+  firstEmail: string;
+  firstSocialNetwork: string;
   phones: IPhone[];
+  emails: IEmail[];
   socialNetworks: ISocialNetwork[];  
 
   constructor() {
     this.contactDetailsId = 0;
     this.traderId = "";
-    this.phones =  [] ;
+    // TODO remove this when check for preferred stuff is introduced
+    this.firstPhone = "";
+    this.firstCityCode = "";
+    this.firstCountryCode = "";
+    this.firstEmail = "";
+    this.firstSocialNetwork = "";
+    this.phones = [];
+    this.emails = [];
     this.socialNetworks = [];
   }
 }
@@ -206,7 +223,7 @@ class AddressType implements IAddressType {
 class Phone implements IPhone {
 
   phoneId: number; 
-  phoneNumber: number;
+  phoneNumber: string;
   phoneCityCode: string;
   phoneCountryCode: string;
   phoneTypeId: number;
@@ -215,7 +232,7 @@ class Phone implements IPhone {
 
   constructor() {
     this.phoneId = 0;
-    this.phoneNumber = 0;
+    this.phoneNumber = "";
     this.phoneCityCode = "";
     this.phoneCountryCode = "";
     this.phoneTypeId = 0;

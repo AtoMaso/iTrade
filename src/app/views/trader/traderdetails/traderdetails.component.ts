@@ -10,6 +10,7 @@ import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
+
 import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails } from '../../../helpers/classes';
 
 @Component({
@@ -24,7 +25,7 @@ export class TraderDetailsComponent implements OnInit {
   private identity: UserIdentity = new UserIdentity;
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false; 
-
+ 
   private personal: PersonalDetails = new PersonalDetails();
   private contact: ContactDetails = new ContactDetails();
   private hasPersonal: boolean = true;
@@ -33,7 +34,7 @@ export class TraderDetailsComponent implements OnInit {
   private hasHistory: boolean = false;
 
 
-  constructor(
+  constructor(    
     private personalService: PersonalDetailsService,
     private contactService: ContactDetailsService,
     private tradeService: TradeApiService,    
@@ -52,7 +53,9 @@ export class TraderDetailsComponent implements OnInit {
 
     this.initialiseComponent();
 
-    this.getPersonalDetails(this.traderId) 
+    this.getPersonalDetails(this.traderId);
+
+    this.getContactDetails(this.traderId) 
 
     this.getTradesCurrent(this.traderId);
 
@@ -67,26 +70,25 @@ export class TraderDetailsComponent implements OnInit {
     jQuery(document).ready(function () {
 
 
-      //jQuery("#collapsePersonal").on("hide.bs.collapse", function () {
-      //     jQuery(".personal").html('<span class="glyphicon glyphicon-plus"></span> Personal Details');
-      //});
-      //jQuery("#collapsePersonal").on("show.bs.collapse", function () {
-      //     jQuery(".personal").html('<span class="glyphicon glyphicon-minus"></span> Personal Details');
-      //});
-
-
-      //jQuery("#collapseContact").on("hide.bs.collapse", function () {
-      //      jQuery(".contact").html('<span class="glyphicon glyphicon-plus"></span> Contact Details');
-      //});
-      //jQuery("#collapseContact").on("show.bs.collapse", function () {
-      //      jQuery(".contact").html('<span class="glyphicon glyphicon-minus"></span> Contact Details');
-      //});
-
-      jQuery("#collapseCorrespondence").on("hide.bs.collapse", function () {
-        jQuery(".correspondence").html('<span class="glyphicon glyphicon-plus"></span> My Correspondence');
+      jQuery("#collapsePersonal").on("hide.bs.collapse", function () {
+           jQuery(".personal").html('<span class="glyphicon glyphicon-plus"></span> Personal Details');
       });
-      jQuery("#collapseCorrespondence").on("show.bs.collapse", function () {
-        jQuery(".correspondence").html('<span class="glyphicon glyphicon-minus"></span> My Correspondence');
+      jQuery("#collapsePersonal").on("show.bs.collapse", function () {
+           jQuery(".personal").html('<span class="glyphicon glyphicon-minus"></span> Personal Details');
+      });
+
+      jQuery("#collapseContact").on("hide.bs.collapse", function () {
+            jQuery(".contact").html('<span class="glyphicon glyphicon-plus"></span> Contact Details');
+      });
+      jQuery("#collapseContact").on("show.bs.collapse", function () {
+            jQuery(".contact").html('<span class="glyphicon glyphicon-minus"></span> Contact Details');
+      });
+
+      jQuery("#collapseHistory").on("hide.bs.collapse", function () {
+        jQuery(".history").html('<span class="glyphicon glyphicon-plus"></span> Trading History');
+      });
+      jQuery("#collapseHistory").on("show.bs.collapse", function () {
+        jQuery(".history").html('<span class="glyphicon glyphicon-minus"></span> Trading History');
       });
 
       jQuery("#collapseTrades").on("hide.bs.collapse", function () {
@@ -106,22 +108,28 @@ export class TraderDetailsComponent implements OnInit {
   //**************************************************************************************
   // GET TRADES -- this will get all trades for the trader closed and open, if there are no any will show message
   //**************************************************************************************
-
   private getPersonalDetails(traderId) {
     this.personalService.getPersonalDetailsByTraderId(traderId)
-      .subscribe((returnedPersonalDetails:PersonalDetails[]) => {
-        if (returnedPersonalDetails.length === 0) { this.hasPersonal = false; }
-        else { this.data = this.TransformDataPersonal(returnedPersonalDetails); }             
+      .subscribe((returnedPersonalDetails:PersonalDetails) => {
+        if (returnedPersonalDetails === null) { this.hasPersonal = false; }
+        else {
+          this.personal = this.TransformDataPersonal(returnedPersonalDetails);
+          this.hasPersonal = true;
+        }             
       },
       (res: Response) => this.onError(res, "getPersonalDetails"));
   }
 
+
   private getContactDetails(traderId) {
 
     this.contactService.getContactDetailsByTraderId(traderId)
-      .subscribe((returnedContactDetails:ContactDetails[]) => {
-        if (returnedContactDetails.length === 0) { this.hasContact = false; }
-        else {  this.data = this.TransformDataContact(returnedContactDetails);}
+      .subscribe((returnedContactDetails:ContactDetails) => {
+        if (returnedContactDetails === null) { this.hasContact = false; }
+        else {
+          this.contact = this.TransformDataContact(returnedContactDetails);
+          this.hasContact = true;
+        }
       },
       (res: Response) => this.onError(res, "getContactDetails"));
   }
@@ -218,34 +226,43 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private TransformDataPersonal(returnedPersonalDetails: PersonalDetails[]): Array<any> {
+  private TransformDataPersonal(returnedPersonalDetails: PersonalDetails): PersonalDetails {
 
-    let transformedData = new Array<PersonalDetails>();
+    let trd = new PersonalDetails;
 
-    returnedPersonalDetails.forEach(function (value) {
-      let trd = new PersonalDetails;
+    trd.firstName = returnedPersonalDetails.firstName;
+    trd.middleName = returnedPersonalDetails.middleName;
+    trd.lastName = returnedPersonalDetails.lastName;
+    trd.traderId = returnedPersonalDetails.traderId;
+    trd.personalDetailsId = returnedPersonalDetails.personalDetailsId;
+    trd.addresses = returnedPersonalDetails.addresses;
+    trd.firstAddressCity = returnedPersonalDetails.addresses[0].addressCity;
   
-      transformedData.push(trd);
-
-    });
-    return transformedData;
+    return trd;;
   }
 
 
+  private TransformDataContact(returnedContactDetails: ContactDetails): ContactDetails {  
 
-  private TransformDataContact(returnedContactDetails: ContactDetails[]): Array<any> {
+    let trd = new ContactDetails;
 
-    let transformedData = new Array<ContactDetails>();
+    trd.traderId = returnedContactDetails.traderId;
+    trd.contactDetailsId = returnedContactDetails.contactDetailsId;
+    trd.phones = returnedContactDetails.phones;
+    //TODO introduce here check for preffered value instead tempp properties
+    trd.firstPhone = returnedContactDetails.phones[0].phoneNumber;
+    trd.firstCityCode = returnedContactDetails.phones[0].phoneCityCode;
+    trd.firstCountryCode = returnedContactDetails.phones[0].phoneCountryCode;
 
-    returnedContactDetails.forEach(function (value) {
-      let trd = new ContactDetails;
+    trd.emails = returnedContactDetails.emails;
+    trd.firstEmail = returnedContactDetails.emails[0].emailAccount;
+    trd.socialNetworks = returnedContactDetails.socialNetworks;    
+    trd.firstSocialNetwork = returnedContactDetails.socialNetworks[0].socialNetworkAccount;    
 
-     
-      transformedData.push(trd);
-
-    });
-    return transformedData;
+    return trd;
   }
+
+
 
   //****************************************************
   // LOGGING METHODS

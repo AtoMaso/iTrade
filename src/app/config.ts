@@ -77,8 +77,8 @@
     removecategory: 'http://localhost:5700/api/objectcategories/deleteobjectcategory',
 
    //traders
-    traders: 'http://localhost:5700/api/account/gettraders',
-    trader: 'http://localhost:5700/api/account/gettraders/',
+    traders: 'http://localhost:5700/api/account/GetTraders',
+    trader: 'http://localhost:5700/api/account/GetTraders/',
     updatetrader: 'http://localhost:5700/api/account/puttrader',
     addtrader: 'http://localhost:5700/api/account/posttrader',
     removetrader: 'http://localhost:5700/api/account/deletetrader',

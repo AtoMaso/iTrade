@@ -18,7 +18,7 @@ let removeTraderUrl = CONFIG.baseUrls.removetrader;
 
 
 @Injectable()
-export class TraderService {
+export class TraderApiService {
     private localUrl: string;
     private session: UserSession;
 
@@ -35,47 +35,45 @@ export class TraderService {
     // GET TRADERS
     //******************************************************
     public getTraders(id?: number): any {
-        let localUrl: string;
-        if (id != undefined) { localUrl = `${traderUrl}?TraderId=${id}`}
-        else { localUrl = traderUrl; }
+      
+      if (id != undefined) { this.localUrl = `${traderUrl}?traderId=${id}`}
+        else { this.localUrl = traderUrl; }
 
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');      
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-      return this.httpService.get(localUrl, { headers: headers })           
-        .map((res: Response) => res.json())  
-        .catch((err: HttpErrorResponse) => this.handleError("GetTraders", err));
+       //return this.httpService.get(this.localUrl, { headers: headers });          
+      return this.httpService.get(this.localUrl);
     }
 
     // page of members
     public getPageOfTraders(page: number, perpage: number) {
 
-        let localUrl = tradersUrl + "?page=" + page + "&perpage=" + perpage;
+       this.localUrl = tradersUrl + "?page=" + page + "&perpage=" + perpage;
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');   
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-      return this.httpService.get(localUrl, {headers: headers})          
-          .map((res: Response) => res.json())   
-          .catch((error: HttpErrorResponse) => this.handleError("GetTraders", error));
+        return this.httpService.get(this.localUrl, { headers: headers });           
+         
     }
 
 
     //******************************************************
     // GET TRADER
     //******************************************************
-    public getTrader(id: string): any {
+    public getTrader(traderid: string): any {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-      return this.httpService.get(`${traderUrl}?TraderId=${id}`, { headers: headers })            
-          .map((res: Response) => res.json())  
-          .catch((error: HttpErrorResponse) => this.handleError("GetTrader", error));
+      //return this.httpService.get(`${traderUrl}?traderId=${id}`, { headers: headers });       
+      return this.httpService.get(`${traderUrl}?traderId=${traderid}`);             
+     
     }
 
 
@@ -91,15 +89,14 @@ export class TraderService {
     //******************************************************
     public addTrader(trader: Trader): any {
 
-      let body = JSON.stringify(trader);
+         let body = JSON.stringify(trader);
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-        return this.httpService.post(addTraderUrl, body, { headers: headers })                  
-                  .map((res: Response) => res.json())
-                 .catch((error: HttpErrorResponse) => this.handleError("AddTrader" , error));
+       return this.httpService.post(addTraderUrl, body, { headers: headers });              
+            
     }
 
 
@@ -107,30 +104,13 @@ export class TraderService {
     // REMOVE TRADER
     //******************************************************
     public removeTrader(traderId: string) {
-      let localUrl = removeTraderUrl + "?TraderId=" + traderId;
+      this.localUrl = removeTraderUrl + "?traderId=" + traderId;
       let headers = new Headers();
       headers.append('Accept', 'application/json');
       headers.append('Content-Type', 'application/json');
       headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-      return this.httpService.delete(localUrl, { headers: headers })         
-              .map((res: Response) => res.json())
-        .catch((error: HttpErrorResponse) => this.handleError("RemoveTrader", error));
+      return this.httpService.delete(this.localUrl, { headers: headers });                         
     }
 
-
-  //*****************************************************
-  // HELPER METHODS
-  //*****************************************************
-  private handleError(operation: string, err: HttpErrorResponse) {
-
-    let errMsg = `error in ${operation}() retrieving ${err.url}`;
-
-    // audit log the error on the server side
-    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
-
-    // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-    return Observable.throw(errMsg);
-  };
-    
 }
