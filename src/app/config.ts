@@ -85,6 +85,7 @@
 
     // contact details
     contactdetails: 'http://localhost:5700/api/contactdetails',
+    contactdetailsbytraderid: 'http://localhost:5700/api/contactdetails/GetContactDetailsByTraderId',
     contactdetail: 'http://localhost:5700/api/contactdetails/',
     updatecontactdetail: 'http://localhost:5700/api/contactdetails/putcontactdetail',
     addcontactdetail: 'http://localhost:5700/api/contactdetails/postcontactdetail',
@@ -92,6 +93,7 @@
 
     // personal details
     personaldetails: 'http://localhost:5700/api/personaldetails',
+    personaldetailsbytraderid: 'http://localhost:5700/api/personaldetails/GetPersonalDetailsByTraderId',    
     personaldetail: 'http://localhost:5700/api/personaldetails/',
     updatepersonaldetail: 'http://localhost:5700/api/personaldetails/putpersonaldetail',
     addpersonaldetail: 'http://localhost:5700/api/personaldetails/postpersonaldetails',

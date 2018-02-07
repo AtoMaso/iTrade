@@ -10,7 +10,6 @@ import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry'; 
 
 import { LoggerService } from '../logger/logger.service';
-import { AuthenticationService } from '../authentication/authentication.service';
 import { Trade, UserSession, UserIdentity} from '../../helpers/classes';
 
 let allTrades = CONFIG.baseUrls.alltrades;
@@ -37,8 +36,7 @@ export class TradeApiService {
 
   constructor(
     private httpClientService: HttpClient,
-    private loggerService: LoggerService,
-    private authenticationService: AuthenticationService) {
+    private loggerService: LoggerService) {
 
     if (sessionStorage["UserSession"] != "null") {
       this.session = JSON.parse(sessionStorage["UserSession"]);

@@ -49,6 +49,7 @@ export class TradeDetailsComponent implements OnInit {
     this.route.queryParams.subscribe(params => { this.tradeId = params['id']; });
 
     this.getUseridentity();
+
     this.initialiseComponent(); 
 
     this.getATrade(this.tradeId); 

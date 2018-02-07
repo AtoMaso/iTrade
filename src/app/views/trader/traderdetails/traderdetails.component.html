@@ -1,49 +1,292 @@
-        <!-- expandable help -->
-<div class="row panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-  <div class="panel panel-body">
+<div class="container col-md-12">
 
-    <h4 class="panel-title">
-      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-        Expand for Help
-      </a>
-    </h4>
+  <div class="row">      
 
-    <div id="collapseOne" class="panel textgray panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-      <div class="panel-body">
+              <!-- Personal Details -->
+             <div class="col-md-4">
+            
+                       <span class="personal panel panel-heading col-md-12 collapsed  smalltext text-uppercase textlightcoral"  data-toggle="collapse" data-target="#collapsePersonal">
+                            <span class="glyphicon glyphicon-minus"></span> 
+                            Personal Details 
+                            <span *ngIf="!hasPersonal" class="textoker">- The system can not find any personal details for this trader</span>
+                      </span>
+         
 
-        Please provide all required information needed (marked in red) to register to the application.
-        <ul>
-          <li>The name should contain your first and second name only and with maximum of 50 characters in length. </li>
-          <li>Your username will be your email account. </li>
-          <li>The application will allow email of 70 characters in length".</li>
-          <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>
-        </ul>
-      </div>
+                       <div id="collapsePersonal" class="collapse in" >   
+                         
+                          
+                                <div class="col-md-12">
+
+                                       <div class="row">
+                                            <div class="panel panel-heading col-md-12">
+                                              First Name:<span class="smalltext  text-uppercase text-info"> {{ personal.firstName }}</span>
+                                            </div>
+                                      </div>
+
+                                       <div class="row">
+                                            <div class="panel panel-heading col-md-12">
+                                              Middle Name:<span class="smalltext  text-uppercase text-info"> {{ personal.midleName }}</span>
+                                            </div>
+                                      </div>
+
+                                       <div class="row">
+                                            <div class="panel panel-heading col-md-12">
+                                                  Last Name:<span class="smalltext  text-uppercase text-info"> {{ personal.lastName }}</span>
+                                            </div>
+                                      </div>
+
+                                       <div class="row">
+                                            <div class="panel panel-heading col-md-12">
+                                                 Place of Origin:<span class="smalltext  text-uppercase text-info"> {{ personal.addresses[0].addressCity}}</span>
+                                            </div>
+                                     </div>
+
+                              </div>                     
+
+                      </div>
+
+              </div>
+     
+
+
+
+            <!-- Contact Details -->
+            <div class="col-md-5 col-md-offset-1">
+
+                  <span class="contact panel panel-heading col-md-12 collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseContact">
+                        <span class="glyphicon glyphicon-minus"></span>
+                            Contact details
+                        <span *ngIf="!hasContact" class="textoker">- The system can not find any contact details for this trader</span>
+                  </span>
+
+
+                   <div id="collapseContact" class="collapse in">
+
+                          <div class="col-md-12">
+
+                            <div class="row">
+                              <div class="panel panel-heading col-md-12">
+                                <!--Phone:<span class="smalltext  text-uppercase text-info"> {{ contact.Phone }}</span>-->
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="panel panel-heading col-md-12">
+                                <!--Email Account:<span class="smalltext  text-uppercase text-info"> {{ conatct.Email }}</span>-->
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="panel panel-heading col-md-12">
+                                <!--Social Network:<span class="smalltext  text-uppercase text-info"> {{ contact.SocialNetwork }}</span>-->
+                              </div>
+                            </div>
+
+
+                      </div>
+             
+                </div>
+
+          </div>
+
     </div>
 
-  </div>
 
-  <div class="panel panel-body">
 
-    <h4 class="panel-title">
-      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        Expand for Help
-      </a>
-    </h4>
+    <div class="row">
 
-    <div id="collapseTwo" class="panel textgray panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-      <div class="panel-body">
+            <!-- Current Tardes -->
+           <div class="panel panel-heading">
 
-        Please provide all required information needed (marked in red) to register to the application.
-        <ul>
-          <li>The name should contain your first and second name only and with maximum of 50 characters in length. </li>
-          <li>Your username will be your email account. </li>
-          <li>The application will allow email of 70 characters in length".</li>
-          <li>The password should be between 6 and 10 character in length and should contain at least one numeric character and one upper case character.</li>
-        </ul>
-      </div>
+                       <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
+                         <span class="glyphicon glyphicon-minus"></span>
+                         Current Trades <span *ngIf="!hasTrades" class="textoker">- The system can not find any open trades under this account!</span>
+                       </span>
+
+                          <!-- Collapsable Current Trade -->     
+                        <div *ngIf="hasTrades" id="collapseTrades" class="collapse in">
+
+                           <div class="panel-heading">
+
+                                 <!-- Table-->
+                                 <div class="table-responsive">
+
+                                   <table class="table table-bordered table-hover table-condensed col-md-9">
+
+                                     <!-- Table Header -->
+                                     <thead>
+                                       <tr>
+
+                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                           <span style="vertical-align:middle;margin-left:10px;">
+                                             <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>
+                                           </span>
+                                         </th>
+                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                           <span style="vertical-align:middle;margin-left:10px;">
+                                             <span class="textgray smalltext text-uppercase" style="width:auto">For</span>
+                                           </span>
+                                         </th>
+                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                           <span style="vertical-align:middle">
+                                             <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>
+                                           </span>
+
+                                         </th>
+                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                           <span style="vertical-align:middle">
+                                             <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>
+                                           </span>
+                                         </th>
+                                       </tr>
+                                     </thead>
+
+                                     <!-- Table Rows-->
+                                     <tr *ngFor="let trade of rows |  paginate:config ">
+
+                                       <td class="col-md-2" style="vertical-align:middle">
+                                         <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription  }}</i></a>
+                                       </td>
+
+                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
+
+                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+
+                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeStatus }}</td>
+
+                                     </tr>
+
+                                   </table>
+
+                                 </div>
+
+                                 <!-- Table pagination -->
+                                 <div class="row col-md-12">
+                                   <div class="col-md-5">
+                                     <pagination-controls id="pagination" *ngIf="config.paging"
+                                                          (pageChange)="onPageChange($event)"
+                                                          maxSize="5"
+                                                          directionLinks="false"
+                                                          autoHide="true"
+                                                          previousLabel="Previous"
+                                                          nextLabel="Next"
+                                                          screenReaderPaginationLabel="Pagination"
+                                                          screenReaderPageLabel="page"
+                                                          screenReaderCurrentLabel="You're on page"
+                                                          [(ngModel)]="config.currentPage"
+                                                          (numPages)="numPages = $event"
+                                                          [maxSize]="maxSize">
+                                     </pagination-controls>
+                                   </div>
+                                 </div>
+
+                                 <br />
+
+                     </div>
+
+                   </div>
+
+                 </div>
+
+
+
+
+           <!-- Traders History -->
+           <div class="panel panel-heading">
+
+                  <span class="history panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
+                          <span class="glyphicon glyphicon-minus"></span>
+                          Trades History<span *ngIf="!hasHistory" class="textoker">- The system can not find any trade history under this account</span>
+                 </span>
+
+
+                  <div *ngIf="hasHistory" id="collapseHistory" class="collapse in">
+
+                           <div class="panel-heading">
+
+                                <!-- Table-->
+                                <div class="table-responsive">
+
+                                <table class="table table-bordered table-hover table-condensed col-md-9">
+
+                                  <!-- Table Header -->
+                                  <thead>
+                                    <tr>
+
+                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                        <span style="vertical-align:middle;margin-left:10px;">
+                                          <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>
+                                        </span>
+                                      </th>
+                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                        <span style="vertical-align:middle;margin-left:10px;">
+                                          <span class="textgray smalltext text-uppercase" style="width:auto">For</span>
+                                        </span>
+                                      </th>
+                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                        <span style="vertical-align:middle">
+                                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>
+                                        </span>
+
+                                      </th>
+                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                        <span style="vertical-align:middle">
+                                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>
+                                        </span>
+                                      </th>
+                                    </tr>
+                                  </thead>
+
+                                  <!-- Table Rows-->
+                                  <tr *ngFor="let tradeHis of rowsHis |  paginate:configHis ">
+
+                                    <td class="col-md-2" style="vertical-align:middle">
+                                      <a [routerLink]="['/tradedetails']" [queryParams]="{id: tradeHis.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ tradeHis.tradeObjectDescription  }}</i></a>
+                                    </td>
+
+                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ tradeHis.tradeForObjectsDescription  }}</td>
+
+
+                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ tradeHis.tradeDatePublished | date }}</td>
+
+                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ tradeHis.tradeStatus }}</td>
+
+                                  </tr>
+
+                                </table>
+
+                              </div>
+
+                               <!-- Table pagination -->
+                                <div class="row col-md-12">
+                              <div class="col-md-5">
+                                <pagination-controls id="paginationHis" *ngIf="configHis.paging"
+                                                     (pageChange)="onPageChangeHis($event)"
+                                                     maxSize="5"
+                                                     directionLinks="false"
+                                                     autoHide="true"
+                                                     previousLabel="Previous"
+                                                     nextLabel="Next"
+                                                     screenReaderPaginationLabel="Pagination"
+                                                     screenReaderPageLabel="page"
+                                                     screenReaderCurrentLabel="You're on page"
+                                                     [(ngModel)]="configHis.currentPage"
+                                                     (numPages)="numPagesHis = $event"
+                                                     [maxSize]="maxSizeHis">
+                                </pagination-controls>
+                              </div>
+                            </div>
+
+                            <br />
+
+                        </div>
+
+                  </div>
+
+
+            </div>
+
     </div>
-  </div>
 
 </div>

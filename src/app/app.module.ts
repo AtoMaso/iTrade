@@ -31,7 +31,9 @@ import { InMemoryDataService }  from './services/inmemory/in-memory-data.service
 import { ImageService } from './services/image/image.service';
 import { TradeHistoryService } from './services/tradehistory/trade-history.service';
 import { CorrespondenceService } from './services/correspondence/correspondence.service';
-
+import { PersonalDetailsService } from './services/personaldetails/personaldetails.service';
+import { ContactDetailsService } from './services/contactdetails/contactdetails.service';
+import { SecurityDetailsService } from './services/securitydetails/securitydetails.service';
 
 //components
 import { AppComponent } from './app.component';
@@ -170,6 +172,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
   providers: [
     TradeApiService, ValidationService, ImageService, TradeHistoryService,
     AuthenticationService, ProcessMessageService, CorrespondenceService,
+    PersonalDetailsService, ContactDetailsService, SecurityDetailsService,
     PageTitleService, LoggerService, AuthGuard,
     // to inercept every request for authentication purposes
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

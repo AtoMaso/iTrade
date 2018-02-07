@@ -7,12 +7,13 @@
               <div class="panel panel-heading">
 
                      <span class="correspondence panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCorrespondence">
-                          <span class="glyphicon glyphicon-minus"></span> My Correspondence <span *ngIf="!hasCorres" class="textoker">- The system can not find any correspondence for you!                          
-                            </span>  
+                          <span class="glyphicon glyphicon-minus"></span> 
+                           My Correspondence 
+                           <span *ngIf="!hasCorres" class="textoker">- The system can not find any correspondence for you!</span>  
                      </span>
 
                     <!-- Collapsable Correspondence -->
-                     <div *ngIf ="hasCorres" id="collapseCorrespondence" class="collapse in smalltext textgray" >
+                     <div *ngIf ="hasCorres" id="collapseCorrespondence" class="collapse in" >
 
                            <div class="panel-heading">
 
@@ -113,90 +114,89 @@
               <div class="panel panel-heading">
 
                        <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
-                          <span class="glyphicon glyphicon-minus"></span> My Trades Status 
-                         <span *ngIf="!hasTrades" class="textoker">- The system can not find any trades under you account!                         
-                         </span>                       
+                          <span class="glyphicon glyphicon-minus"></span>
+                          My Trades Status <span *ngIf="!hasTrades" class="textoker">- The system can not find any trades under you account!</span>                       
                       </span>
 
                       <!-- Collapsable Trade Status -->                   
-                      <div *ngIf="hasTrades" id="collapseTrades" class="collapse in smalltext textgray">
+                      <div *ngIf="hasTrades" id="collapseTrades" class="collapse in">
 
                               <div class="panel-heading">
 
-                            <!-- Table-->
-                            <div class="table-responsive">
+                                  <!-- Table-->
+                                   <div class="table-responsive">
 
-                              <table class="table table-bordered table-hover table-condensed col-md-9">
+                                    <table class="table table-bordered table-hover table-condensed col-md-9">
 
-                                <!-- Table Header -->
-                                <thead>
-                                  <tr>
+                                      <!-- Table Header -->
+                                      <thead>
+                                        <tr>
 
-                                    <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                      <span style="vertical-align:middle;margin-left:10px;">
-                                        <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>
-                                      </span>
-                                    </th>
-                                    <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                      <span style="vertical-align:middle;margin-left:10px;">
-                                        <span class="textgray smalltext text-uppercase" style="width:auto">For</span>
-                                      </span>
-                                    </th>
-                                    <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                      <span style="vertical-align:middle">
-                                        <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>
-                                      </span>
+                                          <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                            <span style="vertical-align:middle;margin-left:10px;">
+                                              <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>
+                                            </span>
+                                          </th>
+                                          <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                            <span style="vertical-align:middle;margin-left:10px;">
+                                              <span class="textgray smalltext text-uppercase" style="width:auto">For</span>
+                                            </span>
+                                          </th>
+                                          <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                            <span style="vertical-align:middle">
+                                              <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>
+                                            </span>
 
-                                    </th>
-                                    <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                      <span style="vertical-align:middle">
-                                        <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>
-                                      </span>
-                                    </th>
-                                  </tr>
-                                </thead>
+                                          </th>
+                                          <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                            <span style="vertical-align:middle">
+                                              <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>
+                                            </span>
+                                          </th>
+                                        </tr>
+                                      </thead>
 
-                                <!-- Table Rows-->
-                                <tr *ngFor="let trade of rows |  paginate:config ">
+                                      <!-- Table Rows-->
+                                      <tr *ngFor="let trade of rows |  paginate:config ">
 
-                                  <td class="col-md-2" style="vertical-align:middle">
-                                    <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription  }}</i></a>
-                                  </td>
+                                        <td class="col-md-2" style="vertical-align:middle">
+                                          <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription  }}</i></a>
+                                        </td>
 
-                                  <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
+                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
 
 
-                                  <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
 
-                                  <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeStatus }}</td>
+                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeStatus }}</td>
 
-                                </tr>
+                                      </tr>
 
-                              </table>
+                                    </table>
 
-                            </div>
+                                  </div>
 
-                            <!-- Table pagination -->
-                            <div class="row col-md-12">
-                              <div class="col-md-5">
-                                <pagination-controls id="pagination" *ngIf="config.paging"
-                                        (pageChange)="onPageChange($event)"
-                                        maxSize="5"
-                                        directionLinks="false"
-                                        autoHide="true"
-                                        previousLabel="Previous"
-                                        nextLabel="Next"
-                                        screenReaderPaginationLabel="Pagination"
-                                        screenReaderPageLabel="page"
-                                        screenReaderCurrentLabel="You're on page"
-                                        [(ngModel)]="config.currentPage"
-                                        (numPages)="numPages = $event"
-                                        [maxSize]="maxSize">
-                                </pagination-controls>
-                              </div>
-                            </div>
+                                   <!-- Table pagination -->
+                                   <div class="row col-md-12">
+                                      <div class="col-md-5">
+                                        <pagination-controls id="pagination" *ngIf="config.paging"
+                                                (pageChange)="onPageChange($event)"
+                                                maxSize="5"
+                                                directionLinks="false"
+                                                autoHide="true"
+                                                previousLabel="Previous"
+                                                nextLabel="Next"
+                                                screenReaderPaginationLabel="Pagination"
+                                                screenReaderPageLabel="page"
+                                                screenReaderCurrentLabel="You're on page"
+                                                [(ngModel)]="config.currentPage"
+                                                (numPages)="numPages = $event"
+                                                [maxSize]="maxSize">
+                                        </pagination-controls>
+                                      </div>
+                                    </div>
 
-                             <br />                            
+                                   <br />                            
 
                     </div>
                   </div>
@@ -222,11 +222,14 @@
             <div class="row">
               <div class="panel panel-heading"><a href="" [routerLink]="['/personaldetails']"><span class="smalltext text-uppercase textlightcoral"><i>My  Personal Details</i></span></a> </div>
           </div>
+          
+         <div class="row">
+           <div class="panel panel-heading"><a href="" [routerLink]="['/contactdetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Contact Details</i></span></a> </div>
+         </div>         
 
-            <div class="row">
-              <div class="panel panel-heading"><a href="" [routerLink]="['/contactdetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Contact Details</i></span></a> </div>
-              </div>         
-
+         <div class="row">
+           <div class="panel panel-heading"><a href="" [routerLink]="['/securitydetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Security Details</i></span></a> </div>
+         </div>       
          <div class="row">
            <div class="panel panel-heading"> <a href="" [routerLink]="['/addtrade']"><span class="smalltext text-uppercase textlightcoral"><i>Add New Trade</i></span></a> </div>
          </div>
@@ -235,33 +238,6 @@
     </div>
 
   </div>
-
-
-  <!--<div class="row col-md-12">
-
-    <div class="panel panel-heading">
-
-      <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseManage">
-        <span class="glyphicon glyphicon-plus"></span> Manage My Trades
-        <span *ngIf="!hasTrades" class="textoker">
-          - The system can not find any trades under you account!
-          <a href="" [routerLink]="['/addtrade']"><span class="smalltext text-uppercase textlightcoral"><i>Add New Trade</i></span></a>
-        </span>
-      </span>
-
-      
-      <div id="collapseManage" class="collapse smalltext textgray">
-
-        <div class="panel-heading">
-
-          <div class="row"> <app-mytradeslist></app-mytradeslist></div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </div>-->
 
 </div>
 

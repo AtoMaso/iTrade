@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Response } from '@angular/http';
+
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { CorrespondenceService } from '../../../services/correspondence/correspondence.service';
@@ -7,8 +10,6 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
-import { MyTradesListComponent } from '../../trade/mytradeslist/mytradeslist.component';
-import { CapsPipe } from '../../../helpers/pipes';
 import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Correspondence } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
@@ -134,9 +135,9 @@ export class TraderHomeComponent implements OnInit {
 
 
   private initialiseComponent() {
-    this.isRequesting = true;
-    this.messagesService.emitRoute("nill");   
+    this.isRequesting = true;  
     this.pageTitleService.emitPageTitle(new PageTitle("Trader Home"));    
+    this.messagesService.emitRoute("nill");   
   }
 
 
@@ -205,6 +206,8 @@ export class TraderHomeComponent implements OnInit {
 
 
   }
+
+
 
 
 
@@ -365,7 +368,6 @@ export class TraderHomeComponent implements OnInit {
   /**********************************************/
   //Correspondence
   /***********************************************/
-
   private isDateSentAsc = true;
   private isSubjectAsc = true;
   private isCorrStatusAsc = true;
