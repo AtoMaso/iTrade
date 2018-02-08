@@ -4,47 +4,46 @@
   <div class="row">      
 
               <!-- Personal Details -->
-             <div class="col-md-4">
-            
-                       <span class="personal panel panel-heading col-md-12 collapsed  smalltext text-uppercase textlightcoral"  data-toggle="collapse" data-target="#collapsePersonal">
-                            <span class="glyphicon glyphicon-minus"></span> 
-                            Personal Details 
-                            <span *ngIf="!hasPersonal" class="textoker">- The system can not find any personal details for this trader!</span>
-                      </span>
-         
+              <div class="col-md-4">
 
-                       <div  *ngIf="hasPersonal" id="collapsePersonal" class="collapse in" >   
-                         
-                          
-                                <div class="col-md-12">
+                <span class="personal panel panel-heading col-md-12 collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapsePersonal">
+                  <span class="glyphicon glyphicon-minus"></span>
+                  Personal Details<span *ngIf="!hasPersonal" class="textoker">- The system can not find any personal details of this trader!</span>
+                </span>
 
-                                       <div class="row">
-                                            <div class="panel panel-heading col-md-12">
-                                              First Name:<span class="smalltext  text-uppercase text-info"> {{ personal.firstName }}</span>
-                                            </div>
-                                      </div>
 
-                                       <div class="row">
-                                            <div class="panel panel-heading col-md-12">
-                                              Middle Name:<span class="smalltext  text-uppercase text-info"> {{ personal.middleName }}</span>
-                                            </div>
-                                      </div>
+                <div *ngIf="hasPersonal" id="collapsePersonal" class="collapse in">
 
-                                       <div class="row">
-                                            <div class="panel panel-heading col-md-12">
-                                                  Last Name:<span class="smalltext  text-uppercase text-info"> {{ personal.lastName }}</span>
-                                            </div>
-                                      </div>
 
-                                       <div class="row">
-                                            <div class="panel panel-heading col-md-12">
-                                                 Place:<span class="smalltext  text-uppercase text-info"> {{ personal.firstAddressCity }}</span>
-                                            </div>
-                                     </div>
+                  <div class="col-md-12">
 
-                              </div>                     
-
+                    <div class="row">
+                      <div class="panel panel-heading col-md-12">
+                        First Name:<span class="smalltext  text-uppercase text-info"> {{ personal.firstName }}</span>
                       </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="panel panel-heading col-md-12">
+                        Middle Name:<span class="smalltext  text-uppercase text-info"> {{ personal.middleName }}</span>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="panel panel-heading col-md-12">
+                        Last Name:<span class="smalltext  text-uppercase text-info"> {{ personal.lastName }}</span>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="panel panel-heading col-md-12">
+                        Place:<span class="smalltext  text-uppercase text-info"> {{ personal.preferredAddress.addressCity }}</span>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
 
               </div>
      
@@ -56,8 +55,7 @@
 
                   <span class="contact panel panel-heading col-md-12 collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseContact">
                         <span class="glyphicon glyphicon-minus"></span>
-                            Contact details
-                        <span *ngIf="!hasContact" class="textoker">- The system can not find any contact details for this trader</span>
+                            Contact details<span *ngIf="!hasContact" class="textoker">- The system can not find any contact details of this trader</span>
                   </span>
 
 
@@ -67,19 +65,19 @@
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12">
-                                Phone:<span class="smalltext  text-uppercase text-info">{{ contact.firstCountryCode }} {{ contact.firstCityCode }}  {{ contact.firstPhone }}</span>
+                                Phone:<span class="smalltext  text-uppercase text-info">{{ contact.preferredPhone.phoneCountryCode }} {{ contact.preferredPhone.phoneCityCode }}  {{ contact.preferredPhone.phoneNumber }}</span>
                               </div>
                             </div>
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12">
-                                Email Account:<span class="smalltext  text-uppercase text-info"> {{ contact.firstEmail }}</span>
+                                Email Account:<span class="smalltext  text-uppercase text-info"> {{ contact.preferredEmail.emailAccount }}</span>
                               </div>
                             </div>
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12">
-                                Social Network:<span class="smalltext  text-uppercase text-info"> {{ contact.firstSocialNetwork }}</span>
+                                Social Network:<span class="smalltext  text-uppercase text-info"> {{ contact.preferredSocialNetwork.socialNetworkAccount }}</span>
                               </div>
                             </div>
 
@@ -93,6 +91,7 @@
     </div>
 
 
+    <br/>
 
     <div class="row">
 
@@ -101,7 +100,7 @@
 
                        <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
                          <span class="glyphicon glyphicon-minus"></span>
-                         Current Trades <span *ngIf="!hasTrades" class="textoker">- The system can not find any open trades under this account!</span>
+                         Current Trades <span *ngIf="!hasTrades" class="textoker">- The system can not find any open trades associated with trader!</span>
                        </span>
 
                           <!-- Collapsable Current Trade -->     
@@ -158,7 +157,7 @@
                                  <!-- Table pagination -->
                                  <div class="row col-md-12">
                                    <div class="col-md-5">
-                                     <pagination-controls id="pagination" *ngIf="config.paging"
+                                     <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
                                                           (pageChange)="onPageChange($event)"
                                                           maxSize="5"
                                                           directionLinks="false"
@@ -181,7 +180,7 @@
 
                    </div>
 
-                 </div>
+            </div>
 
 
 
@@ -192,7 +191,7 @@
                   <span class="history panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
                           <span class="glyphicon glyphicon-minus"></span>
                           Trading History
-                        <span *ngIf="!hasHistory" class="textoker">- The system can not find any trading history under this account</span>
+                        <span *ngIf="!hasHistory" class="textoker">- The system can not find any trading history associated with this trader!</span>
                  </span>
 
 
@@ -250,8 +249,8 @@
 
                                <!-- Table pagination -->
                                 <div class="row col-md-12">
-                              <div class="col-md-5">
-                                <pagination-controls id="paginationHis" *ngIf="configHis.paging"
+                                <div class="col-md-5">
+                                  <pagination-controls id="paginationHis" *ngIf="configHis.paging" ngDefaultControl
                                                      (pageChange)="onPageChangeHis($event)"
                                                      maxSize="5"
                                                      directionLinks="false"

@@ -84,6 +84,7 @@ interface IAddress {
   addressPostcode: number;
   addressState: string;
   addressCountry: string;
+  addressPreferredFlag: string;
   addressTypeId: number;
   addressTypeDescription: string;
   personalDetailsId: number;
@@ -100,6 +101,7 @@ interface IPhone {
   phoneNumber: string;
   phoneCityCode: string;
   phoneCountryCode: string;
+  phonePreferredFlag: string;
   phoneTypeId: number; 
   phoneTypeDescription: string;
   contactDetailsId: number;
@@ -113,6 +115,7 @@ interface IPhoneType {
 interface ISocialNetwork {
   socialNetworkId: number;
   socialNetworkAccount: string;
+  socialNetworkPreferredFlag: string;
   socialNetworkTypId: number;
   socialNetworkTypeText: string;
   contactDetailsId: number;
@@ -143,6 +146,7 @@ interface IEmail {
   emailTypeid: number;
   emailType: string;
   emailAccount: string;
+  emailPreferredFlag: string;
   contactDetailsId: number;
 }
 

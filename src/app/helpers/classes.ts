@@ -112,8 +112,8 @@ class PersonalDetails implements IPersonalDetails {
   middleName: string;
   lastName: string;
   dateOfBirth: Date;
-  firstAddressCity: string;
   addresses: Address[];
+  preferredAddress: Address;
 
   constructor() {
     this.personalDetailsId = 0;
@@ -121,8 +121,8 @@ class PersonalDetails implements IPersonalDetails {
     this.firstName = "";
     this.lastName = "";
     this.dateOfBirth = new Date(1900, 1, 1);
-    this.firstAddressCity = "";
     this.addresses = [];
+    this.preferredAddress = new Address();
   }
 }
 
@@ -130,28 +130,23 @@ class PersonalDetails implements IPersonalDetails {
 class ContactDetails implements IContactDetails {
 
   contactDetailsId: number;
-  traderId: string;
-  firstPhone: string;
-  firstCityCode: string;
-  firstCountryCode: string;
-  firstEmail: string;
-  firstSocialNetwork: string;
-  phones: IPhone[];
-  emails: IEmail[];
-  socialNetworks: ISocialNetwork[];  
+  traderId: string;  
+  phones: Phone[];
+  preferredPhone: Phone;
+  emails: Email[];
+  preferredEmail: Email;
+  socialNetworks: SocialNetwork[];  
+  preferredSocialNetwork: SocialNetwork;
 
   constructor() {
     this.contactDetailsId = 0;
-    this.traderId = "";
-    // TODO remove this when check for preferred stuff is introduced
-    this.firstPhone = "";
-    this.firstCityCode = "";
-    this.firstCountryCode = "";
-    this.firstEmail = "";
-    this.firstSocialNetwork = "";
+    this.traderId = "";  
     this.phones = [];
+    this.preferredPhone = new Phone();
     this.emails = [];
+    this.preferredEmail = new Email();
     this.socialNetworks = [];
+    this.preferredSocialNetwork = new SocialNetwork();
   }
 }
 
@@ -189,6 +184,7 @@ class Address implements IAddress {
   addressCity: string;
   addressState: string;
   addressCountry: string;
+  addressPreferredFlag: string;
   addressTypeId: number;
   addressTypeDescription: string
   personalDetailsId: number;
@@ -202,6 +198,7 @@ class Address implements IAddress {
     this.addressPostcode = 0;
     this.addressState = "";
     this.addressCountry = "";
+    this.addressPreferredFlag = "";
     this.addressTypeId = 0;
     this.addressTypeDescription = "";
     this.personalDetailsId = 0;
@@ -226,6 +223,7 @@ class Phone implements IPhone {
   phoneNumber: string;
   phoneCityCode: string;
   phoneCountryCode: string;
+  phonePreferredFlag: string;
   phoneTypeId: number;
   phoneTypeDescription: string;
   contactDetailsId: number;
@@ -235,6 +233,7 @@ class Phone implements IPhone {
     this.phoneNumber = "";
     this.phoneCityCode = "";
     this.phoneCountryCode = "";
+    this.phonePreferredFlag = "";
     this.phoneTypeId = 0;
     this.phoneTypeDescription = "";
     this.contactDetailsId = 0;
@@ -257,6 +256,7 @@ class PhoneType implements IPhoneType {
 class SocialNetwork implements ISocialNetwork {
   socialNetworkId: number;
   socialNetworkAccount: string; 
+  socialNetworkPreferredFlag: string;
   socialNetworkTypId: number;
   socialNetworkTypeText: string;
   contactDetailsId: number;
@@ -264,6 +264,7 @@ class SocialNetwork implements ISocialNetwork {
   constructor() {
     this.socialNetworkId = 0;
     this.socialNetworkAccount = "";
+    this.socialNetworkPreferredFlag = "";
     this.socialNetworkTypId = 0;
     this.socialNetworkTypeText = "";
   }
@@ -316,12 +317,14 @@ class Email implements IEmail {
   emailTypeid: number;
   emailType: string;
   emailAccount: string;
+  emailPreferredFlag: string;
   contactDetailsId: number;
 
   constructor() {
     this.emailId = 0;
     this.emailType = "";
     this.emailAccount = "";
+    this.emailPreferredFlag = ""
     this.emailTypeid = 0;
     this.contactDetailsId = 0;
   }
@@ -614,7 +617,7 @@ export {
   Trader, TraderDetails,
   PersonalDetails, ContactDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
-  SocialNetwork, SocialNetworkType,
+  SocialNetwork, SocialNetworkType,Email,
   SecurityAnswer, SecurityQuestion, Correspondence,
   Trade, Image, ObjectCategory, TradeHistory,
   UserSession, Authentication, UserIdentity,

@@ -11,7 +11,7 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails, Address, Phone, Email, SocialNetwork } from '../../../helpers/classes';
 
 @Component({
   selector: 'app-traderdetails',
@@ -28,6 +28,7 @@ export class TraderDetailsComponent implements OnInit {
  
   private personal: PersonalDetails = new PersonalDetails();
   private contact: ContactDetails = new ContactDetails();
+
   private hasPersonal: boolean = true;
   private hasContact: boolean = true;
   private hasTrades: boolean = false;
@@ -228,7 +229,7 @@ export class TraderDetailsComponent implements OnInit {
 
   private TransformDataPersonal(returnedPersonalDetails: PersonalDetails): PersonalDetails {
 
-    let trd = new PersonalDetails;
+    let trd = new PersonalDetails;  
 
     trd.firstName = returnedPersonalDetails.firstName;
     trd.middleName = returnedPersonalDetails.middleName;
@@ -236,8 +237,11 @@ export class TraderDetailsComponent implements OnInit {
     trd.traderId = returnedPersonalDetails.traderId;
     trd.personalDetailsId = returnedPersonalDetails.personalDetailsId;
     trd.addresses = returnedPersonalDetails.addresses;
-    trd.firstAddressCity = returnedPersonalDetails.addresses[0].addressCity;
-  
+   
+    returnedPersonalDetails.addresses.forEach(function (value) {
+      if (value.addressPreferredFlag === "true") { trd.preferredAddress = value; }
+    });    
+     
     return trd;;
   }
 
@@ -248,16 +252,22 @@ export class TraderDetailsComponent implements OnInit {
 
     trd.traderId = returnedContactDetails.traderId;
     trd.contactDetailsId = returnedContactDetails.contactDetailsId;
+
     trd.phones = returnedContactDetails.phones;
-    //TODO introduce here check for preffered value instead tempp properties
-    trd.firstPhone = returnedContactDetails.phones[0].phoneNumber;
-    trd.firstCityCode = returnedContactDetails.phones[0].phoneCityCode;
-    trd.firstCountryCode = returnedContactDetails.phones[0].phoneCountryCode;
+    returnedContactDetails.phones.forEach(function (value) {      
+      if (value.phonePreferredFlag === "true") { trd.preferredPhone = value;}
+    });    
+  
 
     trd.emails = returnedContactDetails.emails;
-    trd.firstEmail = returnedContactDetails.emails[0].emailAccount;
+    returnedContactDetails.emails.forEach(function (value) {
+      if (value.emailPreferredFlag === "true") { trd.preferredEmail = value; }
+    });     
+
     trd.socialNetworks = returnedContactDetails.socialNetworks;    
-    trd.firstSocialNetwork = returnedContactDetails.socialNetworks[0].socialNetworkAccount;    
+    returnedContactDetails.socialNetworks.forEach(function (value) {
+      if (value.socialNetworkPreferredFlag === "true") { trd.preferredSocialNetwork = value; }
+    });     
 
     return trd;
   }

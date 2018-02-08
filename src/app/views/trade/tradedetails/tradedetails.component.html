@@ -192,7 +192,7 @@
 
                           <div class="col-md-5">
                             
-                            <pagination-controls id="pagination" *ngIf="config.paging"
+                            <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
                                                  (pageChange)="onPageChange($event)"
                                                  maxSize="5"
                                                  directionLinks="false"
