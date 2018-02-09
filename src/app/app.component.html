@@ -24,14 +24,13 @@
                                     <div id="nav" class="navbar-collapse collapse  navbar-right">
                                       <ul class="nav navbar-nav">
                                         <li class="nav"><a href="" routerLink="/dashboard"><span class="textgray"><i>Dashboard</i></span></a></li>   
-                                        <li class="nav"><a href="" routerLink="/alltradeslist"><span class="textgray"><i>Trades</i></span></a></li>              
-                                                                               
-                                        <li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/traderhome"><span class="textgray"><i>Trader Home</i></span></a></li>      
-                                        <!--<li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/mytradeslist"><span class="textgray"><i>My Open Trades</i></span></a></li>-->          
-                                        <!--<li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/mytraderaccount"><span class="textgray"><i>My Account</i></span></a></li>-->                                                                                             
-                                        <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>
-                                        <!--<li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/register"><span class="textgray"><i>Register</i></span></a></li>-->                                      
+                                        <li class="nav"><a href="" routerLink="/alltradeslist"><span class="textgray"><i>Trades</i></span></a></li>                                                                                             
+                                        <li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/traderhome"><span class="textgray"><i>Trader Home</i></span></a></li>                                            
+                                        <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>                                                                     
                                         <li class="nav" *ngIf="isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
+                                        <!--<li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/mytradeslist"><span class="textgray"><i>My Open Trades</i></span></a></li>-->
+                                        <!--<li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/mytraderaccount"><span class="textgray"><i>My Account</i></span></a></li>-->                                                                                             
+                                        <!--<li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/register"><span class="textgray"><i>Register</i></span></a></li>-->     
                                       </ul>
                                     </div>
 
