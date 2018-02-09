@@ -25,8 +25,8 @@ export class TraderHomeComponent implements OnInit {
   private identity: UserIdentity = new UserIdentity;
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false;
-  private status: string = "All";
-  private statusCorr: string = "All";
+  private status: string = "Open";
+  private statusCorr: string = "New";
   private hasTrades: boolean = true;
   private hasCorres: boolean = true;
 
@@ -56,17 +56,17 @@ export class TraderHomeComponent implements OnInit {
 
     
       jQuery("#collapseCorrespondence").on("hide.bs.collapse", function () {                         
-        jQuery(".correspondence").html('<span class="glyphicon glyphicon-plus"></span> My Correspondence');
+        jQuery(".correspondence").html('<span class="glyphicon glyphicon-plus"></span>   Latest Correspondence ');
       });
       jQuery("#collapseCorrespondence").on("show.bs.collapse", function () {              
-        jQuery(".correspondence").html('<span class="glyphicon glyphicon-minus"></span> My Correspondence');
+        jQuery(".correspondence").html('<span class="glyphicon glyphicon-minus"></span>  Latest Correspondence ');
       });
     
       jQuery("#collapseTrades").on("hide.bs.collapse", function () {
-        jQuery(".status").html('<span class="glyphicon glyphicon-plus"></span> My Trades Status');
+        jQuery(".status").html('<span class="glyphicon glyphicon-plus"></span> Open Trades');
       });
       jQuery("#collapseTrades").on("show.bs.collapse", function () {
-        jQuery(".status").html('<span class="glyphicon glyphicon-minus"></span> My Trades Status');
+        jQuery(".status").html('<span class="glyphicon glyphicon-minus"></span> Open Trades');
       });
 
     });

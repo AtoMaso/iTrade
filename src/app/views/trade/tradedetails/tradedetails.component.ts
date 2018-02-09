@@ -32,6 +32,7 @@ export class TradeDetailsComponent implements OnInit {
   private identity: UserIdentity = new UserIdentity;
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false;
+  private canTrade: boolean = false;
 
   constructor(  
     private tradeApiService: TradeApiService,
@@ -45,6 +46,9 @@ export class TradeDetailsComponent implements OnInit {
   };
 
 
+  /*******************************************************/
+  // Component events
+  /*******************************************************/
   ngOnInit() {
     this.route.queryParams.subscribe(params => { this.tradeId = params['id']; });
 
@@ -56,36 +60,12 @@ export class TradeDetailsComponent implements OnInit {
 
     this.getTradeImages(this.tradeId);
 
-    this.getTradeHistory(this.tradeId);
+    this.getTradeHistory(this.tradeId);  
 
-  
-  }
-
-  //*****************************************************
-  // HELPER METHODS
-  //*****************************************************
-  private getUseridentity() {
-    if (sessionStorage["UserSession"] != "null") {
-      try {
-        this.session = JSON.parse(sessionStorage["UserSession"])
-        this.isAuthenticated = this.session.authentication.isAuthenticated;
-        this.identity.roles = this.session.userIdentity.roles;
-      }
-      catch (ex) {
-        this.messagesService.emitProcessMessage("PMG");
-      }
-    }
-  }
-
-
-  private initialiseComponent() {
-    this.pageTitleService.emitPageTitle(new PageTitle("Trade Details"));
-    this.messagesService.emitRoute("nill");
   }
 
 
   ngAfterViewInit() {
-
 
     jQuery(document).ready(function () {
 
@@ -108,7 +88,7 @@ export class TradeDetailsComponent implements OnInit {
         jQuery(".history").html('<span class="glyphicon glyphicon-plus"></span> This Trade History');
       });
       jQuery("#collapseHistory").on("show.bs.collapse", function () {
-       jQuery(".history").html('<span class="glyphicon glyphicon-minus"></span> This Trade History');
+        jQuery(".history").html('<span class="glyphicon glyphicon-minus"></span> This Trade History');
       });
 
 
@@ -116,17 +96,22 @@ export class TradeDetailsComponent implements OnInit {
   }
 
 
- 
-
-  /*******************************************************?
-  // GET TRADE
+  /*******************************************************/
+  // GET A TRADE
   /*******************************************************/
   private getATrade(tradeId: number) {
 
     this.tradeApiService.getSingleTrade(tradeId)
       .subscribe((tradeResult: Trade) => {
         this.trade = this.TransformData(tradeResult);
-    }, (serviceError: Response) => this.onError(serviceError, "getTheTrade"));
+
+        // check is the trader viewing hist trade but only when logged in
+        if (sessionStorage["UserSession"] != "null") {
+          if (this.trade.traderId === this.session.userIdentity.userId) { this.canTrade = false; }
+          else { this.canTrade = true; }
+        }
+
+    }, (serviceError: Response) => this.onError(serviceError, "getATrade"));
 
   }
 
@@ -144,6 +129,7 @@ export class TradeDetailsComponent implements OnInit {
     
   }
 
+
   /*******************************************************?
  // GET TRADE HISTORY
  /*******************************************************/
@@ -156,7 +142,29 @@ export class TradeDetailsComponent implements OnInit {
   }
 
 
+  //*****************************************************
+  // HELPER METHODS
+  //*****************************************************
+  private getUseridentity() {
+    if (sessionStorage["UserSession"] != "null") {
+      try {
+        this.session = JSON.parse(sessionStorage["UserSession"])
+        this.isAuthenticated = this.session.authentication.isAuthenticated;
+        this.identity.roles = this.session.userIdentity.roles;
+      }
+      catch (ex) {
+        this.messagesService.emitProcessMessage("PMG");
+      }
+    }
+  }
 
+  // initialise component
+  private initialiseComponent() {
+    this.pageTitleService.emitPageTitle(new PageTitle("Trade Details"));
+    this.messagesService.emitRoute("nill");
+  }
+
+  // transform the data in fom we need
   private TransformData(returnedTrade: Trade): Trade {     
 
     let trd = new Trade;
@@ -174,12 +182,12 @@ export class TradeDetailsComponent implements OnInit {
     returnedTrade.tradeForObjects.forEach(function (returnedTrade) {
             trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + returnedTrade.tradeForObjectDescription + ",";
     });
-   
+  
     return trd;
   }
 
 
-
+  // on any error passed from the service or from the component itself
   private onError(serviceError: any, operation: string) {
 
     // audit log the error passed

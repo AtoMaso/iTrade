@@ -476,7 +476,8 @@ class Correspondence implements ICorrespondence {
   dateSent: Date;
   subject: string;  // this is the object of trade
   tradeId: number;
-  traderId: string;
+  traderIdReciever: string;
+  traderIdSender: string;
   sender: string;   // this is the trader sending the correspondence
 
   constructor() {
@@ -486,7 +487,8 @@ class Correspondence implements ICorrespondence {
     this.status = "";
     this.dateSent = new Date(9999, 1, 1);
     this.tradeId = 0;
-    this.traderId = "";
+    this.traderIdReciever = "";
+    this.traderIdSender = "";
     this.sender = "";
   }
 }

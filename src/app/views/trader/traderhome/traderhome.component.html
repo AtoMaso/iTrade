@@ -8,8 +8,8 @@
 
                      <span class="correspondence panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCorrespondence">
                           <span class="glyphicon glyphicon-minus"></span> 
-                           My Correspondence 
-                           <span *ngIf="!hasCorres" class="textoker">- The system can not find any correspondence for you!</span>  
+                           Latest Correspondence 
+                           <span *ngIf="!hasCorres" class="textoker">- The system can not find any new correspondence for you!</span>  
                      </span>
 
                     <!-- Collapsable Correspondence -->
@@ -25,34 +25,24 @@
                                    <!-- Table Header -->
                                    <thead>
                                      <tr>
-                                       <th class="col-md-1" style="vertical-align:middle;background-color:#FF223A3A">
-                                         <span style="vertical-align:middle;margin-left:10px;">
-                                           <span class="textgray smalltext  text-uppercase" style="width:auto">Subject </span>
-                                         </span>
+                                       <th class="col-md-1" style="background-color:#FF223A3A">                                        
+                                           <span class="textgray smalltext  text-uppercase" style="width:auto">Subject </span>                                        
                                        </th>
 
-                                       <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                         <span style="vertical-align:middle;margin-left:10px;">
-                                           <span class="textgray smalltext text-uppercase" style="width:auto">Message</span>
-                                         </span>
+                                       <th class="col-md-2" style="background-color:#FF223A3A">                                         
+                                           <span class="textgray smalltext text-uppercase" style="width:auto">Message</span>                                        
                                        </th>
 
-                                       <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                         <span style="vertical-align:middle">
-                                           <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent</span>
-                                         </span>
+                                       <th class="col-md-2" style="background-color:#FF223A3A">                                     
+                                           <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent</span>                                       
                                        </th>                                 
 
-                                       <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                         <span style="vertical-align:middle">
-                                           <span class="textgray  smalltext  text-uppercase" style="width:auto">Sender</span>
-                                         </span>
+                                       <th class="col-md-2" style="background-color:#FF223A3A">                                         
+                                           <span class="textgray  smalltext  text-uppercase" style="width:auto">Sender</span>                                        
                                        </th>
 
-                                       <th class="col-md-1" style="vertical-align:middle;background-color:#FF223A3A">
-                                         <span style="vertical-align:middle">
-                                           <span class="textgray  smalltext  text-uppercase" style="width:auto">Status</span>
-                                         </span>
+                                       <th class="col-md-1" style="background-color:#FF223A3A">                                         
+                                           <span class="textgray  smalltext  text-uppercase" style="width:auto">Status</span>                                     
                                        </th>
                                      </tr>
                                    </thead>
@@ -60,21 +50,19 @@
                                    <!-- Table Rows -->
                                    <tr *ngFor="let coress of corrRows |  paginate:configCorr ">
 
-                                     <td class="col-md-1">
-                                       <a [routerLink]="['/tradedetails']" [queryParams]="{id: coress.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.subject  }}</i></a>
-                                     </td>
+                                     <td class="col-md-1 smalltext text-capitalize textgray">{{ coress.subject  }}</td>
 
                                       <td class="col-md-2">
-                                       <a [routerLink]="['/correspondence']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
+                                       <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
                                      </td>
 
-                                     <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ coress.dateSent | date }}</td>
+                                     <td class="col-md-2 smalltext text-capitalize textgray">{{ coress.dateSent | date }}</td>
 
                                      <td class="col-md-2">
-                                       <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderId}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.sender  }}</i></a>
+                                       <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.sender  }}</i></a>
                                      </td>        
 
-                                     <td class="col-md-1 smalltext text-capitalize textgray" style="vertical-align:middle">{{ coress.status }}</td>    
+                                     <td class="col-md-1 smalltext text-capitalize textgray">{{ coress.status }}</td>    
                                                                                    
                                    </tr>
 
@@ -115,7 +103,7 @@
 
                        <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
                           <span class="glyphicon glyphicon-minus"></span>
-                          My Trades Status <span *ngIf="!hasTrades" class="textoker">- The system can not find any trades under you account!</span>                       
+                          Open Trades <span *ngIf="!hasTrades" class="textoker">- The system can not find any open trades under you account!</span>                       
                       </span>
 
                       <!-- Collapsable Trade Status -->                   
@@ -132,26 +120,21 @@
                                       <thead>
                                         <tr>
 
-                                          <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                            <span style="vertical-align:middle;margin-left:10px;">
-                                              <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>
-                                            </span>
+                                          <th class="col-md-2" style="background-color:#FF223A3A">                                         
+                                              <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>                                        
                                           </th>
-                                          <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                            <span style="vertical-align:middle;margin-left:10px;">
-                                              <span class="textgray smalltext text-uppercase" style="width:auto">For</span>
-                                            </span>
+
+                                          <th class="col-md-2" style="background-color:#FF223A3A">                                          
+                                              <span class="textgray smalltext text-uppercase" style="width:auto">For</span>                                         
                                           </th>
-                                          <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                            <span style="vertical-align:middle">
+
+                                          <th class="col-md-2" style="background-color:#FF223A3A">                                           
                                               <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>
-                                            </span>
+                                        
 
                                           </th>
-                                          <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
-                                            <span style="vertical-align:middle">
-                                              <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>
-                                            </span>
+                                          <th class="col-md-2" style="background-color:#FF223A3A">                                          
+                                              <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>                                           
                                           </th>
                                         </tr>
                                       </thead>
@@ -210,10 +193,14 @@
              <div *ngIf="hasTrades">
                <div class="row">
                  <div class="panel panel-heading">
-                   <a href="" [routerLink]="['/mytradeslist']"><span class="smalltext text-uppercase textlightcoral"><i>Manage My Trades</i></span></a>
+                   <a href="" [routerLink]="['/mytradeslist']"><span class="smalltext text-uppercase textlightcoral"><i>My Trades</i></span></a>
                  </div>
                </div>
              </div>
+
+           <div class="row">
+             <div class="panel panel-heading"><a href="" [routerLink]="['/correspondenceall']"><span class="smalltext text-uppercase textlightcoral"><i>My Correspondence</i></span></a> </div>
+           </div>
 
             <div class="row">
               <div class="panel panel-heading"><a href="" [routerLink]="['/mytraderaccount']"><span class="smalltext text-uppercase textlightcoral"><i>My Account</i></span></a> </div>

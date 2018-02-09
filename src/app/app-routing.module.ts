@@ -20,7 +20,8 @@ import { MyTraderAccountComponent } from  './views/trader/mytraderaccount/mytrad
 import { PersonalDetailsComponent } from './views/trader/personaldetails/personaldetails.component';;
 import { ContactlDetailsComponent } from './views/trader/contactdetails/contactdetails.component';;
 import { SecurityDetailsComponent } from './views/trader/securitydetails/securitydetails.component';;
-import { CorrespondenceComponent } from './views/correspondence/correspondence.component';
+import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
+import { CorrespondenceAllComponent } from './views/correspondence/correspondenceall/correspondenceall.component';
 
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
@@ -49,8 +50,10 @@ const routes: Routes = [
   { path: 'contactdetails', component: ContactlDetailsComponent, canActivate: [AuthGuard] },
   { path: 'securitydetails', component: SecurityDetailsComponent, canActivate: [AuthGuard] },
   { path: 'traderdetails', component: TraderDetailsComponent }, // this should be accessible from the dashboard of all trades view  
-  { path: 'correspondence', component: CorrespondenceComponent}, // correspondence should available only when authenticated , canActivate: [AuthGuard]
 
+  // correspondence
+  { path: 'correspondenceall', component: CorrespondenceAllComponent}, // correspondence should available only when authenticated , canActivate: [AuthGuard]
+  { path: 'correspondencedetails', component: CorrespondenceDetailsComponent }, // correspondence should available only when authenticated , canActivate: [AuthGuard]
   // t r a d e r s
   { path: 'alltraderslist', component: AllTradersListComponent, canActivate: [AuthGuard] },
 

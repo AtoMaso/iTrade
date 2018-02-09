@@ -224,7 +224,8 @@ interface ICorrespondence {
   dateSent: Date;
   subject: string;  // this is the object of trade
   tradeId: number;
-  traderId: string;
+  traderIdReciever: string;
+  traderIdSender: string;
   sender: string;   // this is the trader sending the correspondence
 }
 

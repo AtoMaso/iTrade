@@ -36,7 +36,7 @@ export class MyTradesListComponent implements OnInit {
   private setsCounter: number = 1;
   private recordsPerSet: number = 4;
   private totalNumberOfSets: number = 0;
-  private status: string = "Open";
+  private status: string = "All";
   private hasTrades: boolean = true;
   private hasNoTrades: boolean = false;
 

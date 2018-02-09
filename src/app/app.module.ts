@@ -88,7 +88,8 @@ import { SecurityQuestionListComponent } from './views/securityquestion/security
 
 import { AddProcessMessageComponent } from './views/processmessage/addprocessmessage/addprocessmessage.component';
 import { ProcessMessageListComponent } from './views/processmessage/processmessagelist/processmessagelist.component';
-import { CorrespondenceComponent } from './views/correspondence/correspondence.component';
+import { CorrespondenceAllComponent } from './views/correspondence/correspondenceall/correspondenceall.component';
+import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
 
 
 //initialises the process message service to get all process messages on start of the application
@@ -140,7 +141,8 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     SecurityQuestionListComponent,
     AddProcessMessageComponent,
     ProcessMessageListComponent,
-    CorrespondenceComponent,
+    CorrespondenceAllComponent,
+    CorrespondenceDetailsComponent,
   
     //TokenInterceptor,
     //TraderaccountComponent
