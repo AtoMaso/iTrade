@@ -7,8 +7,8 @@
               <div class="col-md-4">
 
                 <span class="personal panel panel-heading col-md-12 collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapsePersonal">
-                  <span class="glyphicon glyphicon-minus"></span>
-                  Personal Details<span *ngIf="!hasPersonal" class="textoker">- The system can not find any personal details of this trader!</span>
+                    <span class="glyphicon glyphicon-minus"></span>
+                    Personal Details<span *ngIf="!hasPersonal" class="textoker">- The system can not find any personal details for this trader!</span>
                 </span>
 
 
@@ -58,7 +58,7 @@
 
                   <span class="contact panel panel-heading col-md-12 collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseContact">
                         <span class="glyphicon glyphicon-minus"></span>
-                            Contact details<span *ngIf="!hasContact" class="textoker">- The system can not find any contact details of this trader</span>
+                        Preferred Contact Details<span *ngIf="!hasContact" class="textoker">- The system can not find any contact details for this trader</span>
                   </span>
 
 
@@ -101,7 +101,7 @@
             <!-- Current Trades -->
            <div class="panel panel-heading">
 
-                  <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
+                  <span class="currenttrades panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
                       <span class="glyphicon glyphicon-minus"></span>
                       Current Trades <span *ngIf="!hasTrades" class="textoker">- The system can not find any open trades associated with trader!</span>
                   </span>
@@ -191,10 +191,9 @@
            <!-- Trading History -->
            <div class="panel panel-heading">
 
-                  <span class="history panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
+                  <span class="tradinghistory panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
                           <span class="glyphicon glyphicon-minus"></span>
-                          Trading History
-                        <span *ngIf="!hasHistory" class="textoker">- The system can not find any trading history associated with this trader!</span>
+                          Trading History<span *ngIf="!hasHistory" class="textoker">- The system can not find any trading history associated with this trader!</span>
                  </span>
 
 

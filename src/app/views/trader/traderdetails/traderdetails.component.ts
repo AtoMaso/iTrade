@@ -87,20 +87,21 @@ export class TraderDetailsComponent implements OnInit {
             jQuery(".contact").html('<span class="glyphicon glyphicon-minus"></span> Contact Details');
       });
 
-      jQuery("#collapseHistory").on("hide.bs.collapse", function () {
-        jQuery(".history").html('<span class="glyphicon glyphicon-plus"></span> Trading History');
-      });
-      jQuery("#collapseHistory").on("show.bs.collapse", function () {
-        jQuery(".history").html('<span class="glyphicon glyphicon-minus"></span> Trading History');
-      });
-
       jQuery("#collapseTrades").on("hide.bs.collapse", function () {
-        jQuery(".status").html('<span class="glyphicon glyphicon-plus"></span> My Trades Status');
+        jQuery(".currenttrades").html('<span class="glyphicon glyphicon-plus"></span> My Trades Status');
       });
       jQuery("#collapseTrades").on("show.bs.collapse", function () {
-        jQuery(".status").html('<span class="glyphicon glyphicon-minus"></span> My Trades Status');
+        jQuery(".currenttrades").html('<span class="glyphicon glyphicon-minus"></span> My Trades Status');
       });
 
+      jQuery("#collapseHistory").on("hide.bs.collapse", function () {
+        jQuery(".tradinghistory").html('<span class="glyphicon glyphicon-plus"></span> Trading History');
+      });
+      jQuery("#collapseHistory").on("show.bs.collapse", function () {
+        jQuery(".tradinghistory").html('<span class="glyphicon glyphicon-minus"></span> Trading History');
+      });
+
+   
 
     });
   }
