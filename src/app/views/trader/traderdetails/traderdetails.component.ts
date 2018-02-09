@@ -33,6 +33,8 @@ export class TraderDetailsComponent implements OnInit {
   private hasContact: boolean = true;
   private hasTrades: boolean = false;
   private hasHistory: boolean = false;
+  private hasAddress: boolean = false;
+  private hasMiddleName: boolean = false;
 
 
   constructor(    
@@ -178,8 +180,7 @@ export class TraderDetailsComponent implements OnInit {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
         this.isAuthenticated = this.session.authentication.isAuthenticated;
-        this.identity.roles = this.session.userIdentity.roles;
-        this.traderId = this.session.userIdentity.userId;
+        this.identity.roles = this.session.userIdentity.roles;     
       }
       catch (ex) {
         this.messagesService.emitProcessMessage("PMG");
@@ -239,8 +240,12 @@ export class TraderDetailsComponent implements OnInit {
     trd.addresses = returnedPersonalDetails.addresses;
    
     returnedPersonalDetails.addresses.forEach(function (value) {
-      if (value.addressPreferredFlag === "true") { trd.preferredAddress = value; }
+      if (value.preferred === "true") { trd.preferredAddress = value; }
     });    
+    if (trd.addresses.length === 0) { this.hasAddress = false; }
+    else { this.hasAddress = true; }
+    if (trd.middleName.length === 0) { this.hasMiddleName = false; }
+    else { this.hasMiddleName = true; }
      
     return trd;;
   }
@@ -255,18 +260,18 @@ export class TraderDetailsComponent implements OnInit {
 
     trd.phones = returnedContactDetails.phones;
     returnedContactDetails.phones.forEach(function (value) {      
-      if (value.phonePreferredFlag === "true") { trd.preferredPhone = value;}
+      if (value.preferred === "true") { trd.preferredPhone = value;}
     });    
   
 
     trd.emails = returnedContactDetails.emails;
     returnedContactDetails.emails.forEach(function (value) {
-      if (value.emailPreferredFlag === "true") { trd.preferredEmail = value; }
+      if (value.preferred === "true") { trd.preferredEmail = value; }
     });     
 
     trd.socialNetworks = returnedContactDetails.socialNetworks;    
     returnedContactDetails.socialNetworks.forEach(function (value) {
-      if (value.socialNetworkPreferredFlag === "true") { trd.preferredSocialNetwork = value; }
+      if (value.preferred === "true") { trd.preferredSocialNetwork = value; }
     });     
 
     return trd;

@@ -175,67 +175,67 @@ class SecurityDetails implements ISecurityDetails {
 
 class Address implements IAddress {
 
-  addressId: number;
+  id: number;
   traderId: number;
-  addressNumber: number;
-  addressStreet: string;
-  addressSuburb: string;
-  addressPostcode: number;
-  addressCity: string;
-  addressState: string;
-  addressCountry: string;
-  addressPreferredFlag: string;
-  addressTypeId: number;
-  addressTypeDescription: string
+  number: number;
+  street: string;
+  suburb: string;
+  postcode: number;
+  city: string;
+  state: string;
+  country: string;
+  preferred: string;
+  typeId: number;
+  typeDescription: string
   personalDetailsId: number;
 
   constructor() {
-    this.addressId = 0;
-    this.addressNumber = 0;
-    this.addressStreet = "";
-    this.addressSuburb = "";
-    this.addressCity = "";
-    this.addressPostcode = 0;
-    this.addressState = "";
-    this.addressCountry = "";
-    this.addressPreferredFlag = "";
-    this.addressTypeId = 0;
-    this.addressTypeDescription = "";
+    this.id = 0;
+    this.number = 0;
+    this.street = "";
+    this.suburb = "";
+    this.city = "";
+    this.postcode = 0;
+    this.state = "";
+    this.country = "";
+    this.preferred = "";
+    this.typeId = 0;
+    this.typeDescription = "";
     this.personalDetailsId = 0;
   }
 }
 
 
 class AddressType implements IAddressType {
-  addressTypeId: number;
-  addressTypeDescription: string;
+  typeId: number;
+  typeDescription: string;
 
   constructor() {
-    this.addressTypeId = 0;
-    this.addressTypeDescription = "";
+    this.typeId = 0;
+    this.typeDescription = "";
   }
 }
 
 
 class Phone implements IPhone {
 
-  phoneId: number; 
-  phoneNumber: string;
-  phoneCityCode: string;
-  phoneCountryCode: string;
-  phonePreferredFlag: string;
-  phoneTypeId: number;
-  phoneTypeDescription: string;
+  id: number; 
+  number: string;
+  cityCode: string;
+  countryCode: string;
+  preferred: string;
+  typeId: number;
+  typeDescription: string;
   contactDetailsId: number;
 
   constructor() {
-    this.phoneId = 0;
-    this.phoneNumber = "";
-    this.phoneCityCode = "";
-    this.phoneCountryCode = "";
-    this.phonePreferredFlag = "";
-    this.phoneTypeId = 0;
-    this.phoneTypeDescription = "";
+    this.id = 0;
+    this.number = "";
+    this.cityCode = "";
+    this.countryCode = "";
+    this.preferred = "";
+    this.typeId = 0;
+    this.typeDescription = "";
     this.contactDetailsId = 0;
   }
 
@@ -243,41 +243,42 @@ class Phone implements IPhone {
 
 
 class PhoneType implements IPhoneType {
-  phoneTypeId: number;
-  phoneType: string;
+  typeId: number;
+  typeDescription: string;
 
   constructor() {
-    this.phoneTypeId = 0;
-    this.phoneType = "";
+    this.typeId = 0;
+    this.typeDescription = "";
   }
 }
 
 
 class SocialNetwork implements ISocialNetwork {
-  socialNetworkId: number;
-  socialNetworkAccount: string; 
-  socialNetworkPreferredFlag: string;
-  socialNetworkTypId: number;
-  socialNetworkTypeText: string;
+  id: number;
+  account: string; 
+  preferred: string;
+  typId: number;
+  typeDescription: string;
   contactDetailsId: number;
 
   constructor() {
-    this.socialNetworkId = 0;
-    this.socialNetworkAccount = "";
-    this.socialNetworkPreferredFlag = "";
-    this.socialNetworkTypId = 0;
-    this.socialNetworkTypeText = "";
+    this.id = 0;
+    this.account = "";
+    this.preferred = "";
+    this.typId = 0;
+    this.typeDescription = "";
+    this.contactDetailsId = 0;
   }
 }
 
 
 class SocialNetworkType implements ISocialNetworkType {
-  socialNetworkTypeId: number;
-  socialNetworkTypeText: string;
+  typeId: number;
+  typeDescription: string;
 
   constructor() {
-    this.socialNetworkTypeId = 0;
-    this.socialNetworkTypeText = "";
+    this.typeId = 0;
+    this.typeDescription = "";
   }
 }
 
@@ -313,19 +314,19 @@ class SecurityQuestion implements ISecurityQuestions {
 
 
 class Email implements IEmail {
-  emailId: number;
-  emailTypeid: number;
-  emailType: string;
-  emailAccount: string;
-  emailPreferredFlag: string;
+  id: number;
+  account: string;
+  preferred: string;
+  typeId: number;
+  typeDescription: string; 
   contactDetailsId: number;
 
   constructor() {
-    this.emailId = 0;
-    this.emailType = "";
-    this.emailAccount = "";
-    this.emailPreferredFlag = ""
-    this.emailTypeid = 0;
+    this.id = 0;
+    this.account = "";
+    this.preferred = ""
+    this.typeId = 0;
+    this.typeDescription = "";
     this.contactDetailsId = 0;
   }
 }
@@ -333,12 +334,12 @@ class Email implements IEmail {
 
 
 class EmailType implements IEmailType {
-  emailTypeId: number;
-  emailTypeDescription: string;
+  typeId: number;
+  typeDescription: string;
 
   constructor() {
-    this.emailTypeId = 0;
-    this.emailTypeDescription = "";
+    this.typeId = 0;
+    this.typeDescription = "";
   }
 }
 

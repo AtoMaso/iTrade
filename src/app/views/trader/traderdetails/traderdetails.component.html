@@ -14,8 +14,7 @@
 
                 <div *ngIf="hasPersonal" id="collapsePersonal" class="collapse in">
 
-
-                  <div class="col-md-12">
+                      <div class="col-md-12">
 
                     <div class="row">
                       <div class="panel panel-heading col-md-12">
@@ -25,7 +24,9 @@
 
                     <div class="row">
                       <div class="panel panel-heading col-md-12">
-                        Middle Name:<span class="smalltext  text-uppercase text-info"> {{ personal.middleName }}</span>
+                        Middle Name:
+                        <span *ngIf="hasMiddleName" class="smalltext  text-uppercase text-info"> {{ personal.middleName }}</span>
+                        <span *ngIf="!hasMiddleName" class="smalltext  text-uppercase textoker">No Middle Name</span>
                       </div>
                     </div>
 
@@ -37,7 +38,9 @@
 
                     <div class="row">
                       <div class="panel panel-heading col-md-12">
-                        Place:<span class="smalltext  text-uppercase text-info"> {{ personal.preferredAddress.addressCity }}</span>
+                        Trading From:
+                        <span *ngIf="hasAddress" class="smalltext  text-uppercase text-info"> {{ personal.preferredAddress.city }}</span>
+                        <span *ngIf="!hasAddress" class="smalltext  text-uppercase textoker">No Address Details</span>
                       </div>
                     </div>
 
@@ -65,19 +68,19 @@
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12">
-                                Phone:<span class="smalltext  text-uppercase text-info">{{ contact.preferredPhone.phoneCountryCode }} {{ contact.preferredPhone.phoneCityCode }}  {{ contact.preferredPhone.phoneNumber }}</span>
+                                Phone:<span class="smalltext  text-uppercase text-info">{{ contact.preferredPhone.countryCode }} {{ contact.preferredPhone.cityCode }}  {{ contact.preferredPhone.number }}</span>
                               </div>
                             </div>
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12">
-                                Email Account:<span class="smalltext  text-uppercase text-info"> {{ contact.preferredEmail.emailAccount }}</span>
+                                Email Account:<span class="smalltext  text-uppercase text-info"> {{ contact.preferredEmail.account }}</span>
                               </div>
                             </div>
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12">
-                                Social Network:<span class="smalltext  text-uppercase text-info"> {{ contact.preferredSocialNetwork.socialNetworkAccount }}</span>
+                                Social Network:<span class="smalltext  text-uppercase text-info"> {{ contact.preferredSocialNetwork.account }}</span>
                               </div>
                             </div>
 
@@ -98,13 +101,13 @@
             <!-- Current Trades -->
            <div class="panel panel-heading">
 
-                       <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
-                         <span class="glyphicon glyphicon-minus"></span>
-                         Current Trades <span *ngIf="!hasTrades" class="textoker">- The system can not find any open trades associated with trader!</span>
-                       </span>
+                  <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
+                      <span class="glyphicon glyphicon-minus"></span>
+                      Current Trades <span *ngIf="!hasTrades" class="textoker">- The system can not find any open trades associated with trader!</span>
+                  </span>
 
-                          <!-- Collapsable Current Trade -->     
-                        <div *ngIf="hasTrades" id="collapseTrades" class="collapse in">
+                 <!-- Collapsable Current Trade -->     
+                 <div *ngIf="hasTrades" id="collapseTrades" class="collapse in">
 
                            <div class="panel-heading">
 

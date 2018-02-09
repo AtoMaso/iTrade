@@ -76,54 +76,54 @@ interface ISecurityDetails {
 
 
 interface IAddress {
-  addressId: number; 
-  addressNumber: number;
-  addressStreet: string;
-  addressSuburb: string;
-  addressCity: string;
-  addressPostcode: number;
-  addressState: string;
-  addressCountry: string;
-  addressPreferredFlag: string;
-  addressTypeId: number;
-  addressTypeDescription: string;
+  id: number; 
+  number: number;
+  street: string;
+  suburb: string;
+  city: string;
+  postcode: number;
+  state: string;
+  country: string;
+  preferred: string;
+  typeId: number;
+  typeDescription: string;
   personalDetailsId: number;
 }
 
 interface IAddressType {
-  addressTypeId: number;
-  addressTypeDescription: string;
+  typeId: number;
+  typeDescription: string;
 }
 
 
 interface IPhone {
-  phoneId: number; 
-  phoneNumber: string;
-  phoneCityCode: string;
-  phoneCountryCode: string;
-  phonePreferredFlag: string;
-  phoneTypeId: number; 
-  phoneTypeDescription: string;
+  id: number; 
+  number: string;
+  cityCode: string;
+  countryCode: string;
+  preferred: string;
+  typeId: number; 
+  typeDescription: string;
   contactDetailsId: number;
 }
 
 interface IPhoneType {
-  phoneTypeId: number;
-  phoneType: string;
+  typeId: number;
+  typeDescription: string;
 }
 
 interface ISocialNetwork {
-  socialNetworkId: number;
-  socialNetworkAccount: string;
-  socialNetworkPreferredFlag: string;
-  socialNetworkTypId: number;
-  socialNetworkTypeText: string;
+  id: number;
+  account: string;
+  preferred: string;
+  typId: number;
+  typeDescription: string;
   contactDetailsId: number;
 }
 
 interface ISocialNetworkType {
-  socialNetworkTypeId: number;
-  socialNetworkTypeText: string;
+  typeId: number;
+  typeDescription: string;
 }
 
 
@@ -142,17 +142,17 @@ interface ISecurityQuestions {
 
 
 interface IEmail {
-  emailId: number;
-  emailTypeid: number;
-  emailType: string;
-  emailAccount: string;
-  emailPreferredFlag: string;
+  id: number;
+  account: string;
+  preferred: string;
+  typeId: number;
+  typeDescription: string; 
   contactDetailsId: number;
 }
 
 interface IEmailType {
-  emailTypeId: number;
-  emailTypeDescription: string;
+  typeId: number;
+  typeDescription: string;
 }
 
 
