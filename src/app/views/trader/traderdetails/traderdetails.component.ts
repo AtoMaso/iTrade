@@ -88,10 +88,10 @@ export class TraderDetailsComponent implements OnInit {
       });
 
       jQuery("#collapseTrades").on("hide.bs.collapse", function () {
-        jQuery(".currenttrades").html('<span class="glyphicon glyphicon-plus"></span> My Trades Status');
+        jQuery(".currenttrades").html('<span class="glyphicon glyphicon-plus"></span> Current Trades ');
       });
       jQuery("#collapseTrades").on("show.bs.collapse", function () {
-        jQuery(".currenttrades").html('<span class="glyphicon glyphicon-minus"></span> My Trades Status');
+        jQuery(".currenttrades").html('<span class="glyphicon glyphicon-minus"></span> Current Trades');
       });
 
       jQuery("#collapseHistory").on("hide.bs.collapse", function () {
@@ -100,9 +100,7 @@ export class TraderDetailsComponent implements OnInit {
       jQuery("#collapseHistory").on("show.bs.collapse", function () {
         jQuery(".tradinghistory").html('<span class="glyphicon glyphicon-minus"></span> Trading History');
       });
-
    
-
     });
   }
 
