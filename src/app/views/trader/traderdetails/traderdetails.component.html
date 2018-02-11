@@ -142,14 +142,14 @@
                                      <tr *ngFor="let trade of rows |  paginate:config ">
 
                                        <td class="col-md-2" style="vertical-align:middle">
-                                         <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription  }}</i></a>
+                                         <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.name  }}</i></a>
                                        </td>
 
-                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
+                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeFor  }}</td>
 
-                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.datePublished | date }}</td>
 
-                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeStatus }}</td>
+                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.status }}</td>
 
                                      </tr>
 
@@ -233,15 +233,15 @@
                                   <tr *ngFor="let tradeHis of rowsHis |  paginate:configHis ">
 
                                     <td class="col-md-2" style="vertical-align:middle">
-                                      <a [routerLink]="['/tradedetails']" [queryParams]="{id: tradeHis.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ tradeHis.tradeObjectDescription  }}</i></a>
+                                      <a [routerLink]="['/tradedetails']" [queryParams]="{id: tradeHis.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ tradeHis.name  }}</i></a>
                                     </td>
 
-                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ tradeHis.tradeForObjectsDescription  }}</td>
+                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ tradeHis.tradeFor  }}</td>
 
 
-                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ tradeHis.tradeDatePublished | date }}</td>
+                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ tradeHis.datePublished | date }}</td>
 
-                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ tradeHis.tradeStatus }}</td>
+                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ tradeHis.status }}</td>
 
                                   </tr>
 

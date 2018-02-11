@@ -148,10 +148,15 @@ export class TraderHomeComponent implements OnInit {
     returnedTrades.forEach(function (value) {
       let trd = new Trade;
 
-      trd.totalTradesNumber = value.totalTradesNumber;
+      trd.total = value.total;
+      trd.tradeIdStr = value.tradeId.toString();
       trd.tradeId = value.tradeId;
-      trd.tradeDatePublished = value.tradeDatePublished;
-      trd.tradeStatus = value.tradeStatus;
+      trd.datePublished = value.datePublished;
+      trd.status = value.status;
+      trd.name = value.name;
+      trd.description = value.description;
+      trd.categoryDescription = value.categoryDescription;
+      trd.tradeFor = value.tradeFor;        
 
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;
@@ -159,12 +164,7 @@ export class TraderHomeComponent implements OnInit {
       trd.traderLastName = value.traderLastName;
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
 
-      trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
-      trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
-
-      value.tradeForObjects.forEach(function (value) {
-        trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
-      });
+  
 
       transformedData.push(trd);
 
@@ -231,8 +231,8 @@ export class TraderHomeComponent implements OnInit {
 
   public columns: Array<any> =
     [
-      { title: 'Published', name: 'tradeDatePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' } },
-      { title: 'Action', name: 'tradeStatus', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status.' } }
+      { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' } },
+      { title: 'Action', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status.' } }
     ];
 
 
@@ -275,15 +275,15 @@ export class TraderHomeComponent implements OnInit {
 
     switch (column) {
 
-      case 'tradeDatePublished':
-        this.config.sorting.columns = [{ name: 'tradeDatePublished', sort: this.sortDate }];
+      case 'datePublished':
+        this.config.sorting.columns = [{ name: 'datePublished', sort: this.sortDate }];
         this.onChangeTable(this.config);
         this.isDateAsc = !this.isDateAsc;
         this.sortDate = this.isDateAsc ? 'desc' : 'asc';
         break;
 
-      case 'tradeStatus':
-        this.config.sorting.columns = [{ name: 'tradeStatus', sort: this.sortStatus }];
+      case 'dtatus':
+        this.config.sorting.columns = [{ name: 'dtatus', sort: this.sortStatus }];
         this.onChangeTable(this.config);
         this.isStatusAsc = !this.isStatusAsc;
         this.sortStatus = this.isStatusAsc ? 'desc' : 'asc';

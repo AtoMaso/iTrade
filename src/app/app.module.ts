@@ -35,6 +35,8 @@ import { CorrespondenceService } from './services/correspondence/correspondence.
 import { PersonalDetailsService } from './services/personaldetails/personaldetails.service';
 import { ContactDetailsService } from './services/contactdetails/contactdetails.service';
 import { SecurityDetailsService } from './services/securitydetails/securitydetails.service';
+import { CategoryService } from './services/categories/category.service';
+
 
 //components
 import { AppComponent } from './app.component';
@@ -90,6 +92,8 @@ import { AddProcessMessageComponent } from './views/processmessage/addprocessmes
 import { ProcessMessageListComponent } from './views/processmessage/processmessagelist/processmessagelist.component';
 import { CorrespondenceAllComponent } from './views/correspondence/correspondenceall/correspondenceall.component';
 import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
+import { ForgotPasswordComponent } from './views/password/forgotpassword/forgotpassword.component';
+import { ChangePasswordComponent } from './views/password/changepassword/changepassword.component';
 
 
 //initialises the process message service to get all process messages on start of the application
@@ -143,6 +147,8 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     ProcessMessageListComponent,
     CorrespondenceAllComponent,
     CorrespondenceDetailsComponent,
+    ForgotPasswordComponent,
+    ChangePasswordComponent,
   
     //TokenInterceptor,
     //TraderaccountComponent
@@ -176,7 +182,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     TradeApiService, ValidationService, ImageService, TradeHistoryService,
     AuthenticationService, ProcessMessageService, CorrespondenceService,
     PersonalDetailsService, ContactDetailsService, SecurityDetailsService,
-    PageTitleService, LoggerService, AuthGuard, TraderApiService,
+    PageTitleService, LoggerService, AuthGuard, TraderApiService, CategoryService,
     // to inercept every request for authentication purposes
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 

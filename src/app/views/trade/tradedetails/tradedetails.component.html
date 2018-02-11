@@ -7,14 +7,14 @@
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Status:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeStatus }}</span>
+                  Status:<span class="smalltext  text-uppercase text-info"> {{ trade.status }}</span>
                 </div>
               </div>
 
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Trading:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeObjectDescription }}</span>
+                  Trading:<span class="smalltext  text-uppercase text-info"> {{ trade.name }}</span>
                 </div>
               </div>
 
@@ -28,11 +28,7 @@
                            
                   <!-- colapsable description -->
                     <div id="collapseDescription" class="collapse smalltext textgray">
-
-                        <div class="panel-heading">                         
-                           This is a description of the object above in this  case is a sheet.<br/>
-                           Coton 100% not used in the original packaging.<br/>
-                           Will trade for similar stuff.<br />                                       
+                        <div class="panel-heading"> {{ trade.description}}                                  
                         </div>
                   </div>
 
@@ -42,21 +38,21 @@
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Trading for:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeForObjectsDescription }}</span>
+                  Trading for:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeFor }}</span>
                 </div>
               </div>
 
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Category: <span class="smalltext text-uppercase text-info"> {{ trade.tradeObjectCategoryDescription }}</span> 
+                  Category: <span class="smalltext text-uppercase text-info"> {{ trade.categoryDescription }}</span> 
                 </div>
               </div>
 
 
               <div class="row">
                 <div class="panel panel-heading col-md-12">
-                  Date Published: <span class="smalltext text-uppercase text-info"> {{ trade.tradeDatePublished | date }}</span> 
+                  Date Published: <span class="smalltext text-uppercase text-info"> {{ trade.datePublished | date }}</span> 
                 </div>
               </div>
 
@@ -78,7 +74,7 @@
                   <div *ngIf="isAuthenticated">
 
                     <div *ngIf="canTrade">  
-                        <button type="button" [routerLink]="['/correspondence']" [queryParams]="{id: trade.tradeId}" class="btn btn-danger btn-sm smalltextbold" style="width:200px"> Start Trading</button>            
+                        <button type="button" [routerLink]="['/correspondenceall']" [queryParams]="{id: trade.tradeId}" class="btn btn-danger btn-sm smalltextbold" style="width:200px"> Start Trading</button>            
                     </div>     
                     <div *ngIf="!canTrade">  
                           <button type="button" data-target="#canNotTrade" data-toggle="modal" class="btn btn-danger btn-sm smalltextbold" style="width:200px"> Start Trading</button>                   

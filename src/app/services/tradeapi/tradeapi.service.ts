@@ -108,7 +108,15 @@ export class TradeApiService {
   //******************************************************
   // ADD TRADE
   //******************************************************
+  public AddTrade(trade: Trade) {
 
+    let body = JSON.stringify(trade);
+    let httpHeaders = new HttpHeaders();
+    httpHeaders.append('Accept', 'application/json');
+    httpHeaders.append('Content-Type', 'application/json');
+
+    return this.httpClientService.post(this.localUrl, body, { headers: httpHeaders ).retry(3);
+  }
 
   //******************************************************
   // DELETE TRADE

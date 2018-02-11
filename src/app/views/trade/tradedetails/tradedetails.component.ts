@@ -170,19 +170,16 @@ export class TradeDetailsComponent implements OnInit {
     let trd = new Trade;
       
     trd.tradeId = returnedTrade.tradeId;
-    trd.tradeDatePublished = returnedTrade.tradeDatePublished;
-    trd.tradeStatus = returnedTrade.tradeStatus;
+    trd.datePublished = returnedTrade.datePublished;
+    trd.status = returnedTrade.status;
+    trd.name = returnedTrade.name;
+    trd.description = returnedTrade.description;
+    trd.categoryDescription = returnedTrade.categoryDescription;
+    trd.tradeFor = returnedTrade.tradeFor;        
 
     trd.traderId = returnedTrade.traderId; 
     trd.traderFullName = returnedTrade.traderFirstName + " " + returnedTrade.traderMiddleName + " " + returnedTrade.traderLastName;
 
-    trd.tradeObjectDescription = returnedTrade.tradeObjects[0].tradeObjectDescription;
-    trd.tradeObjectCategoryDescription = returnedTrade.tradeObjects[0].tradeObjectCategoryDescription;
-
-    returnedTrade.tradeForObjects.forEach(function (returnedTrade) {
-            trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + returnedTrade.tradeForObjectDescription + ",";
-    });
-  
     return trd;
   }
 

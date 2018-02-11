@@ -98,6 +98,7 @@ export class AuthenticationService implements OnDestroy {
   // Logout the logged in user
   //******************************************************
   public logOut() {
+    // TODO send the web api logout request
     this.clearSessionTimer();
     this.removeUserIdentity();
     this.removeAuthData();

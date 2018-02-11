@@ -22,6 +22,8 @@ import { ContactlDetailsComponent } from './views/trader/contactdetails/contactd
 import { SecurityDetailsComponent } from './views/trader/securitydetails/securitydetails.component';;
 import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
 import { CorrespondenceAllComponent } from './views/correspondence/correspondenceall/correspondenceall.component';
+import { ForgotPasswordComponent } from './views/password/forgotpassword/forgotpassword.component';
+import { ChangePasswordComponent } from './views/password/changepassword/changepassword.component';
 
 //import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
 
@@ -40,7 +42,7 @@ const routes: Routes = [
   //t r a d e s
   { path: 'alltradeslist', component: AllTradesListComponent }, 
   { path: 'tradedetails', component: TradeDetailsComponent }, // this should be accessible from the dashboard or the list of all trades or my trades view
-  { path: 'addtrade', component: AddTradeComponent, canActivate: [AuthGuard] },
+  { path: 'addtrade', component: AddTradeComponent },
   { path: 'mytradeslist', component: MyTradesListComponent, canActivate: [AuthGuard] },
 
   // t r a d e r
@@ -57,6 +59,9 @@ const routes: Routes = [
   // t r a d e r s
   { path: 'alltraderslist', component: AllTradersListComponent, canActivate: [AuthGuard] },
 
+  // password 
+  { path: 'forgotpassword', component: ForgotPasswordComponent },
+  { path: 'changepassword', component: ChangePasswordComponent },
   //{ path: 'ng2-file-upload', component: NG2FileUploadComponent, canActivate: [AuthGuard] },
 
 ];

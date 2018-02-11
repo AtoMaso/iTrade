@@ -204,23 +204,21 @@ export class TraderDetailsComponent implements OnInit {
     returnedTrades.forEach(function (value) {
       let trd = new Trade;
 
-      trd.totalTradesNumber = value.totalTradesNumber;
+      trd.total = value.total;
+      trd.tradeIdStr = value.tradeId.toString();
       trd.tradeId = value.tradeId;
-      trd.tradeDatePublished = value.tradeDatePublished;
-      trd.tradeStatus = value.tradeStatus;
+      trd.datePublished = value.datePublished;
+      trd.status = value.status;
+      trd.name = value.name;
+      trd.description = value.description;
+      trd.categoryDescription = value.categoryDescription;
+      trd.tradeFor = value.tradeFor;        
 
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;
       trd.traderMiddleName = value.traderMiddleName;
       trd.traderLastName = value.traderLastName;
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
-
-      trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
-      trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
-
-      value.tradeForObjects.forEach(function (value) {
-        trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
-      });
 
       transformedData.push(trd);
 
@@ -335,8 +333,8 @@ export class TraderDetailsComponent implements OnInit {
 
   public columns: Array<any> =
   [
-    { title: 'Published', name: 'tradeDatePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' } },
-    { title: 'Action', name: 'tradeStatus', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status.' } }
+    { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' } },
+    { title: 'Action', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status.' } }
   ];
 
 
@@ -379,15 +377,15 @@ export class TraderDetailsComponent implements OnInit {
 
     switch (column) {
 
-      case 'tradeDatePublished':
-        this.config.sorting.columns = [{ name: 'tradeDatePublished', sort: this.sortDate }];
+      case 'datePublished':
+        this.config.sorting.columns = [{ name: 'datePublished', sort: this.sortDate }];
         this.onChangeTable(this.config);
         this.isDateAsc = !this.isDateAsc;
         this.sortDate = this.isDateAsc ? 'desc' : 'asc';
         break;
 
-      case 'tradeStatus':
-        this.config.sorting.columns = [{ name: 'tradeStatus', sort: this.sortStatus }];
+      case 'status':
+        this.config.sorting.columns = [{ name: 'status', sort: this.sortStatus }];
         this.onChangeTable(this.config);
         this.isStatusAsc = !this.isStatusAsc;
         this.sortStatus = this.isStatusAsc ? 'desc' : 'asc';
@@ -490,8 +488,8 @@ export class TraderDetailsComponent implements OnInit {
 
   public columnsHis: Array<any> =
   [
-    { title: 'Published', name: 'tradeDatePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' } },
-    { title: 'Action', name: 'tradeStatus', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status.' } }
+    { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' } },
+    { title: 'Action', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status.' } }
   ];
 
 
@@ -534,15 +532,15 @@ export class TraderDetailsComponent implements OnInit {
 
     switch (column) {
 
-      case 'tradeDatePublished':
-        this.configHis.sorting.columns = [{ name: 'tradeDatePublished', sort: this.sortDateHis }];
+      case 'datePublished':
+        this.configHis.sorting.columns = [{ name: 'datePublished', sort: this.sortDateHis }];
         this.onChangeTableHis(this.configHis);
         this.isDateHisAsc = !this.isDateHisAsc;
         this.sortDateHis = this.isDateHisAsc ? 'desc' : 'asc';
         break;
 
-      case 'tradeStatus':
-        this.configHis.sorting.columns = [{ name: 'tradeStatus', sort: this.sortStatusHis }];
+      case 'status':
+        this.configHis.sorting.columns = [{ name: 'status', sort: this.sortStatusHis }];
         this.onChangeTableHis(this.configHis);
         this.isStatusHisAsc = !this.isStatusHisAsc;
         this.sortStatusHis = this.isStatusHisAsc ? 'desc' : 'asc';

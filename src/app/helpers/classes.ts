@@ -7,7 +7,7 @@
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType, ICorrespondence,
-  ITrade, IImage, IObjectCategory, ITradeHistory, 
+  ITrade, IImage, ICategory, ITradeHistory, 
   ITradeObject, ITradeForObject,  
   IUserSession, IAuthentication, IUserIdentity,
   IProcessMessage, IProcessMessageType,
@@ -350,11 +350,16 @@ class EmailType implements IEmailType {
 
 class Trade implements ITrade {
 
-  totalTradesNumber: number;
+  total: number;
   tradeIdStr: string;
   tradeId: number; 
-  tradeDatePublished: Date;
-  tradeStatus: string;
+  name: string;
+  description: string;
+  tradeFor: string;
+  datePublished: Date;
+  status: string;
+  categoryId: number;
+  categoryDescription: string;
 
   traderId: string;
   traderFirstName: string;
@@ -362,34 +367,27 @@ class Trade implements ITrade {
   traderLastName: string;
   traderFullName: string;
 
-  tradeObjects: TradeObject[];
-  tradeForObjects: TradeForObject[];
-  images: Image[];
-
-  tradeObjectDescription: string;
-  tradeObjectCategoryDescription: string;
-  tradeForObjectsDescription: string;
-
+  Images: Image[]; 
+  
   constructor() {    
-    this.totalTradesNumber = 0;  
+    this.total = 0;  
     this.tradeIdStr = "";
     this.tradeId = 0;  
-    this.tradeDatePublished = new Date(1900, 1, 1); 
-    this.tradeStatus = "";
+    this.name = "";
+    this.description = "";
+    this.tradeFor = "";    
+    this.datePublished = new Date(1900, 1, 1); 
+    this.status = "";
+    this.categoryId = 0;
+    this.categoryDescription = "";
+
 
     this.traderId = "";
     this.traderFirstName = "";   
     this.traderMiddleName = "";
     this.traderLastName = ""
 
-    this.tradeObjects = [];
-    this.tradeForObjects = [];
-    this.images = [];
-
-
-    this.tradeObjectDescription = ""; 
-    this.tradeObjectCategoryDescription = "";
-    this.tradeForObjectsDescription = "";
+    this.Images = [];
   }
 }
 
@@ -426,46 +424,50 @@ class Image implements IImage {
 
 class TradeObject implements ITradeObject {
 
-  tradeObjectId: number;
-  tradeObjectDescription: string;
-  objectCategoryId: number;
-  tradeObjectCategoryDescription: string;
+  id: number;
+  name: string;
+  description: string;
+  categoryId: number;
+  categoryDescription: string;
   tradeId: number;
 
   constructor() {
-    this.tradeObjectId = 0;
-    this.tradeObjectDescription = "";
-    this.objectCategoryId = 0;
-    this.tradeObjectCategoryDescription = "";
+    this.id = 0;
+    this.name = "";
+    this.description = "";
+    this.categoryId = 0;
+    this.categoryDescription = "";
   } 
 }
 
 
 class TradeForObject implements ITradeForObject {
 
-  tradeForObjectId: number;
-  tradeForObjectDescription: string;
-  objectCategoryId: number;
-  tradeForObjectCategoryDescription: string;
+  id: number;
+  name: string;
+  description: string;
+  categoryId: number;
+  categoryDescription: string;
   tradeId: number;
 
   constructor() {
-    this.tradeForObjectId = 0;
-    this.tradeForObjectDescription = "";
-    this.objectCategoryId = 0;
-    this.tradeForObjectCategoryDescription = "";
+    this.id = 0;
+    this.name = "";
+    this.description = "";
+    this.categoryId = 0;
+    this.categoryDescription = "";
   }
 
 }
 
 
-class ObjectCategory {
-  objectCategoryId: number;
-  objectCategoryDescription: string;
+class Category {
+  categoryId: number;
+  categoryDescription: string;
 
   constructor() {
-    this.objectCategoryId = 0;
-    this.objectCategoryDescription = "";
+    this.categoryId = 0;
+    this.categoryDescription = "";
   }
 }
 
@@ -622,7 +624,7 @@ export {
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType,Email,
   SecurityAnswer, SecurityQuestion, Correspondence,
-  Trade, Image, ObjectCategory, TradeHistory,
+  Trade, Image, Category, TradeHistory,
   UserSession, Authentication, UserIdentity,
   ProcessMessage,ProcessMessageType, PageTitle, Attachement
 };

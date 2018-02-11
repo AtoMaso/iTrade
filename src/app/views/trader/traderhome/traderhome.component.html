@@ -143,15 +143,15 @@
                                       <tr *ngFor="let trade of rows |  paginate:config ">
 
                                         <td class="col-md-2" style="vertical-align:middle">
-                                          <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription  }}</i></a>
+                                          <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.name  }}</i></a>
                                         </td>
 
-                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeForObjectsDescription  }}</td>
+                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeFor  }}</td>
 
 
-                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeDatePublished | date }}</td>
+                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.datePublished | date }}</td>
 
-                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.tradeStatus }}</td>
+                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.status }}</td>
 
                                       </tr>
 
@@ -206,7 +206,7 @@
               <div class="panel panel-heading"><a href="" [routerLink]="['/mytraderaccount']"><span class="smalltext text-uppercase textlightcoral"><i>My Account</i></span></a> </div>
             </div>
 
-            <div class="row">
+            <!--<div class="row">
               <div class="panel panel-heading"><a href="" [routerLink]="['/personaldetails']"><span class="smalltext text-uppercase textlightcoral"><i>My  Personal Details</i></span></a> </div>
           </div>
           
@@ -216,7 +216,7 @@
 
          <div class="row">
            <div class="panel panel-heading"><a href="" [routerLink]="['/securitydetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Security Details</i></span></a> </div>
-         </div>       
+         </div>-->       
          <div class="row">
            <div class="panel panel-heading"> <a href="" [routerLink]="['/addtrade']"><span class="smalltext text-uppercase textlightcoral"><i>Add New Trade</i></span></a> </div>
          </div>

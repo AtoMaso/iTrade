@@ -107,23 +107,24 @@ export class DashboardComponent implements OnInit {
     let transformedData = new Array<Trade>();
 
     returnedTrades.forEach(function (value) {
+
       let trd = new Trade;
 
       trd.tradeId = value.tradeId;
-      trd.tradeDatePublished = value.tradeDatePublished;
+      trd.datePublished = value.datePublished;    
+      trd.status = value.status;
+      trd.name = value.name;
+      trd.description = value.description;
+      trd.categoryDescription = value.categoryDescription;
+      trd.tradeFor = value.tradeFor;        
+
       trd.traderId = value.traderId;
-      trd.tradeStatus = value.tradeStatus;
       trd.traderFirstName = value.traderFirstName;
       trd.traderMiddleName = value.traderMiddleName;
       trd.traderLastName = value.traderLastName;
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
-      trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
-      trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
-      //trd.images = value.images; // get the images and pass them to the  carousel child
-
-      value.tradeForObjects.forEach(function (value) {
-        trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
-      });
+   
+      trd.Images = value.Images;  
 
       transformedData.push(trd);
 

@@ -6,7 +6,7 @@
       <div class="panel-heading" style="background-color:dimgray;">
         <span class="smalltextbold textwhite restriction">
           <strong>Trading a
-            <a href="" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.tradeObjectDescription }}</i></a>
+            <a href="" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{  trade.name }}</i></a>
           </strong>
         </span>
       </div>
@@ -15,7 +15,7 @@
         <div>
           <span>
             <strong class="textgray">Category: </strong>
-            <span class="text-uppercase smalltext text-info">{{ trade.tradeObjectCategoryDescription }}</span>
+            <span class="text-uppercase smalltext text-info">{{ trade.categoryDescription }}</span>
           </span>
         </div>
 
@@ -23,7 +23,7 @@
         <div>
           <span>
             <strong class="textgray">Will trade for:</strong>
-            <span class="text-uppercase smalltext text-info ">{{ trade.tradeForObjectsDescription }}</span>
+            <span class="text-uppercase smalltext text-info ">{{ trade.tradeFor }}</span>
           </span>
         </div>       
 
@@ -39,7 +39,7 @@
         <div>
           <span>
             <strong class="textgray">Published: </strong>
-            <span class="text-uppercase smalltext text-info">{{ trade.tradeDatePublished  | date }}</span>
+            <span class="text-uppercase smalltext text-info">{{ trade.datePublished  | date }}</span>
           </span>
         </div>
         <div>
@@ -51,7 +51,7 @@
         <div>
           <span>
             <strong class="textgray">Status:</strong>
-            <span class="text-uppercase smalltext text-info ">{{ trade.tradeStatus }}</span>
+            <span class="text-uppercase smalltext text-info ">{{ trade.status }}</span>
           </span>
         </div>
       </div>

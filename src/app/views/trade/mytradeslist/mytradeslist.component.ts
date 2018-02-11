@@ -187,23 +187,21 @@ export class MyTradesListComponent implements OnInit {
     returnedTrades.forEach(function (value) {
       let trd = new Trade;
 
-      trd.totalTradesNumber = value.totalTradesNumber;    
+      trd.total = value.total;    
+      trd.tradeIdStr = value.tradeId.toString();
       trd.tradeId = value.tradeId;
-      trd.tradeDatePublished = value.tradeDatePublished;
-      trd.tradeStatus = value.tradeStatus;
+      trd.datePublished = value.datePublished;
+      trd.status = value.status;
+      trd.name = value.name;
+      trd.description = value.description;
+      trd.categoryDescription = value.categoryDescription;
+      trd.tradeFor = value.tradeFor;        
 
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;
       trd.traderMiddleName = value.traderMiddleName;
       trd.traderLastName = value.traderLastName;
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
-
-      trd.tradeObjectDescription = value.tradeObjects[0].tradeObjectDescription;
-      trd.tradeObjectCategoryDescription = value.tradeObjects[0].tradeObjectCategoryDescription;
-
-      value.tradeForObjects.forEach(function (value) {
-        trd.tradeForObjectsDescription = trd.tradeForObjectsDescription + value.tradeForObjectDescription + ",";
-      });
 
       transformedData.push(trd);
 
@@ -278,15 +276,15 @@ export class MyTradesListComponent implements OnInit {
   /***********************************************/
   private isIdAsc = true;
   private isStatusAsc = true;
-  private isTitleAsc = true;
-  private isTitleForAsc = true;
+  private isNameAsc = true;
+  private isForAsc = true;
   private isCategoryAsc = true;
   private isPublishedAsc = true;
 
   private sortId: string = 'desc';
   private sortStatus: string = 'des'
-  private sortTitle: string = 'desc';
-  private sortTitleFor: string = 'desc';
+  private sortName: string = 'desc';
+  private sortFor: string = 'desc';
   private sortCategory: string = 'desc';
   private sortDate: string = 'desc';
 
@@ -302,12 +300,12 @@ export class MyTradesListComponent implements OnInit {
 
   public columns: Array<any> =
     [
-    { title: 'Id', name: 'traderId', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id.' } },
-    { title: 'Status', name: 'tradeStatus', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status' } },
-    { title: 'Trading',    name: 'tradeObjectDescription',              sort: true,   filtering: { filterString: '', placeholder: 'Filter by trade object description' } },
-    { title: 'For', name: 'tradeForObjectsDescription',                 sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade for object description' } },
-    { title: 'Category',  name: 'tradeObjectCategoryDescription', sort: true,  filtering: { filterString: '', placeholder:  'Filter by trade category' }},   
-    { title: 'Published', name: 'tradeDatePublished',                   sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade date.' }} 
+    { title: 'Id', name: 'tradeIdStr', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id.' } },
+    { title: 'Status', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status' } },
+    { title: 'Trading',    name: 'name',              sort: true,   filtering: { filterString: '', placeholder: 'Filter by trade object name' } },
+    { title: 'For', name: 'tradeFor',                 sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade for object name' } },
+    { title: 'Category',  name: 'categoryDescription', sort: true,  filtering: { filterString: '', placeholder:  'Filter by trade category' }},   
+    { title: 'Published', name: 'datePublished',                   sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade date.' }} 
     ];
 
 
@@ -425,43 +423,43 @@ export class MyTradesListComponent implements OnInit {
     this.config.sorting.columns = [];
     switch (column) {
 
-      case 'tradeId':
-        this.config.sorting.columns = [{ name: 'tradeId', sort: this.sortStatus }];
+      case 'tradeIdStr':
+        this.config.sorting.columns = [{ name: 'tradeIdStr', sort: this.sortId }];
         this.onChangeTable(this.config);
         this.isIdAsc = !this.isIdAsc;
         this.sortId = this.isIdAsc ? 'desc' : 'asc';
         break;
 
-      case 'tradeStatus':
-        this.config.sorting.columns = [{ name: 'tradeStatus', sort: this.sortStatus }];
+      case 'status':
+        this.config.sorting.columns = [{ name: 'status', sort: this.sortStatus }];
         this.onChangeTable(this.config);
         this.isStatusAsc = !this.isStatusAsc;
         this.sortStatus = this.isStatusAsc ? 'desc' : 'asc';
         break;
 
-        case 'tradeObjectDescription':
-          this.config.sorting.columns = [{ name: 'tradeObjectDescription', sort: this.sortTitle }];
-          this.onChangeTable(this.config);
-          this.isTitleAsc = !this.isTitleAsc;
-          this.sortTitle = this.isTitleAsc ? 'desc' : 'asc';
+        case 'name':
+        this.config.sorting.columns = [{ name: 'name', sort: this.sortName }];
+        this.onChangeTable(this.config);
+        this.isNameAsc = !this.isNameAsc;
+        this.sortName = this.isNameAsc ? 'desc' : 'asc';
         break;
 
-        case 'tradeForObjectsDescription':
-          this.config.sorting.columns = [{ name: 'tradeForObjectsDescription', sort: this.sortTitleFor }];
-          this.onChangeTable(this.config);
-          this.isTitleForAsc = !this.isTitleForAsc;
-          this.sortTitleFor = this.isTitleForAsc ? 'desc' : 'asc';
+        case 'tradeFor':
+        this.config.sorting.columns = [{ name: 'tradeFor', sort: this.sortFor }];
+        this.onChangeTable(this.config);
+        this.isForAsc = !this.isForAsc;
+        this.sortFor = this.isForAsc ? 'desc' : 'asc';
         break;
 
-        case 'tradeObjectCategoryDescription':
-          this.config.sorting.columns = [{ name: 'tradeObjectCategoryDescription', sort: this.sortCategory }];
+        case 'categoryDescription':
+          this.config.sorting.columns = [{ name: 'categoryDescription', sort: this.sortCategory }];
           this.onChangeTable(this.config);
           this.isCategoryAsc = !this.isCategoryAsc;
           this.sortCategory = this.isCategoryAsc ? 'desc' : 'asc';
         break;   
 
-        case 'tradeDatePublished':
-          this.config.sorting.columns = [{ name: 'tradeDatePublished', sort: this.sortDate }];
+        case 'datePublished':
+          this.config.sorting.columns = [{ name: 'datePublished', sort: this.sortDate }];
           this.onChangeTable(this.config);
           this.isPublishedAsc = !this.isPublishedAsc;
           this.sortDate = this.isPublishedAsc ? 'desc' : 'asc';

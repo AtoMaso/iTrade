@@ -160,20 +160,24 @@ interface IEmailType {
 
 
 interface ITrade {
-  totalTradesNumber: number; 
+  total: number; 
+
   tradeIdStr: string;
   tradeId: number;  
-  tradeStatus: string;
-  tradeDatePublished: Date;
+  name: string;
+  description: string;
+  tradeFor: string;
+  status: string;
+  datePublished: Date;
+  categoryId: number;
+  categoryDescription: string
 
   traderId: string;
   traderFirstName: string;
   traderMiddleName: string;
   traderLastName: string;
 
-  tradeObjects: ITradeObject[];
-  tradeForObjects: ITradeForObject[];
-  images: IImage[];
+  Images: IImage[];
 }
 
 
@@ -194,26 +198,28 @@ interface IImage {
 
 
 interface ITradeObject {
-  tradeObjectId: number;
-  tradeObjectDescription: string;
-  objectCategoryId: number;
-  tradeObjectCategoryDescription: string;
+  id: number;
+  name: string;
+  description: string;
+  categoryId: number;
+  categoryDescription: string;
   tradeId: number;
 }
 
 
 interface ITradeForObject {
-  tradeForObjectId: number;
-  tradeForObjectDescription: string;
-  objectCategoryId: number;
-  tradeForObjectCategoryDescription: string;
+  id: number;
+  name: string;
+  description: string;
+  categoryId: number;
+  categoryDescription: string;
   tradeId: number;
 }
 
 
-interface IObjectCategory {
-  objectCategoryId: number;
-  objectCategoryDescription: string;
+interface ICategory {
+  categoryId: number;
+  categoryDescription: string;
 }
 
 
@@ -294,6 +300,6 @@ export {
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType, ICorrespondence,
-  ITrade, IImage, IObjectCategory, ITradeObject, ITradeForObject, ITradeHistory,
+  ITrade, IImage, ICategory, ITradeObject, ITradeForObject, ITradeHistory,
   IUserSession, IAuthentication, IUserIdentity, 
   IProcessMessage, IProcessMessageType, IPageTitle, IAttachement };

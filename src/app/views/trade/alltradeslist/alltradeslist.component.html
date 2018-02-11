@@ -72,7 +72,7 @@
                     </th>
 
                     <th class="col-md-1" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('tradeStatus')" class="textgray text-uppercase smalltextbold" style="width:auto">
+                      <a (click)="sortTable('status')" class="textgray text-uppercase smalltextbold" style="width:auto">
                         Status
                         <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
                         <span *ngIf="!isStatusAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -80,7 +80,7 @@
                     </th>
 
                     <th class="col-md-2" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('tradeObjectDescription')" class="textgray text-uppercase  smalltextbold" style="width:auto">
+                      <a (click)="sortTable('name')" class="textgray text-uppercase  smalltextbold" style="width:auto">
                         Trading
                         <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
                         <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -88,7 +88,7 @@
                     </th>
 
                     <th class="col-md-2" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('tradeForObjectsDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
+                      <a (click)="sortTable('tradeFor')" class="textgray text-uppercase smalltextbold" style="width:auto">
                         For
                         <span *ngIf="isTitleForAsc" class="glyphicon glyphicon-chevron-down"></span>
                         <span *ngIf="!isTitleForAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -96,7 +96,7 @@
                     </th>
 
                     <th class="col-md-2" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('tradeObjectCategoryDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
+                      <a (click)="sortTable('categoryDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
                         Category
                         <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
                         <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -112,7 +112,7 @@
                     </th>
 
                     <th class="col-md-2" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('tradeDatePublished')" class="textgray text-uppercase smalltextbold" style="width:auto">
+                      <a (click)="sortTable('datePublished')" class="textgray text-uppercase smalltextbold" style="width:auto">
                         Published
                         <span *ngIf="isPublishedAsc" class="glyphicon glyphicon-chevron-down"></span>
                         <span *ngIf="!isPublishedAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -128,21 +128,21 @@
 
                   <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeIdStr  }}</td>
 
-                  <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeStatus  }}</td>
+                  <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.status  }}</td>
 
                   <td class="col-md-2">
-                    <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"><i>{{ trade.tradeObjectDescription  }}</i></a>
+                    <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"><i>{{ trade.name  }}</i></a>
                   </td>
 
-                  <td class="col-md-2 smalltext text-capitalize textgray"> {{ trade.tradeForObjectsDescription  }}</td>
+                  <td class="col-md-2 smalltext text-capitalize textgray"> {{ trade.tradeFor  }}</td>
 
-                  <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.tradeObjectCategoryDescription  }}</td>
+                  <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.categoryDescription  }}</td>
 
                   <td class="col-md-2">
                     <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"><i>{{ trade.traderFullName }}</i></a>
                   </td>
 
-                  <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.tradeDatePublished | date }}</td>
+                  <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.datePublished | date }}</td>
 
                 </tr>
 

@@ -1,29 +1,88 @@
-<div class="container col-md-12">
+
 
   <!-- example of reactive forms -->
-  <form [formGroup]="myForm" novalidate>
+  <form [formGroup]="addForm" novalidate  (submit)="AddTrade()">
+
+    <div class="container col-md-12">
+ 
+      <div class="col-md-12">
+
+        <div class="row">
+          <div class="panel panel-heading col-md-2"><span>Name:</span></div>
+
+          <div class="form-group col-md-8">         
+            <input type="text" formControlName="trading" id="trading" required class="form-control" style="background-color:moccasin; width:300px;">       
+            <control-messages [control]="addForm.controls.trading"></control-messages>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="panel panel-heading col-md-2"><span>Description:</span></div>
+
+          <div class="form-group col-md-8">
+            <textarea autoGrow  formControlName="description" id="description" required class="form-control text-comment" style="background-color:moccasin; width:300px; height:40px;"></textarea> <!--  [(ngModel)]="taskDescription"> -->           
+            <control-messages [control]="addForm.controls.description"></control-messages>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="panel panel-heading col-md-2"><span>Category:</span></div>
+
+          <div class="form-group col-md-8">
+            <select id="category" formControlName="category" class="form-control" (change)="selectName();" style="width:300px;"> <!-- #Id="ngModel" [(ngModel)]="nameId" name="Id"-->
+              <option selected="selected" value="Not on the list"></option>
+              <option [ngValue]="category.objectCategoryId" *ngFor="let category of categories"> {{ category.objectCategoryDescription }}</option>             
+            </select>
+            <control-messages [control]="addForm.controls.category"></control-messages>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="panel panel-heading col-md-2"><span>Trading For:</span></div>
+
+          <div class="form-group col-md-8">
+            <input type="text" formControlName="tradingfor" id="tradingfor" required class="form-control" style="background-color:moccasin; width:300px;">
+            <control-messages [control]="addForm.controls.tradingfor"></control-messages>
+          </div>
+        </div>
+
+  
+       <div class="row">
+          <div class="panel panel-heading col-md-2"><span>Publish Date:</span></div>
+
+          <div class="form-group col-md-8">
+            <my-date-picker name="publishDate" formControlName="publishDate"                      
+                            visibleMonth.monthTxt=""
+                            #publishDate
+                            placeholder="Select a date..."
+                            [options]="datePickerOptions"
+                            (dateChanged)="onDateChanged($event)"
+                            [locale]="en"
+                            [selDate]="selectDate">
+            </my-date-picker>
+            
+          </div>
+        </div>
+
+        <div class="row">         
+          <div class="form-group col-md-8">
+            <button type="submit" (click)="AddTrade()"></button>
+          </div>
+        </div>
+      </div>
+            
+    </div>
+
+</form>
+
+
+
     <!-- other input fields here ......-->
-
-    <my-date-picker name="mydate" formControlName="mydate"
-                    visibleMonth.monthTxt="Mirko"
-                    #startDatePicker
-                    placeholder="Select a date..."
-                    [options]="datePickerOptions"
-                    (dateChanged)="onDateChanged($event)"
-                    [locale]="en"
-                    [selDate]="selectDate">
-
-    </my-date-picker>
-
-
-
-    <!-- other input fields here ......-->
-    <!-- example of calculating selected date and how is taken from the control properrty  startDatePicker.selectedDate -->
-    <!--<label>startDatePicker.selectedDate:</label>
-    <pre>{{ startDatePicker.selectedDate | json }}</pre>
-    <label>Observed startDateValue$:</label>
-    <pre>{{ (this.startDateValue$ | async) | json }}</pre>-->
-
-  </form>
-
-</div>
+<!-- example of calculating selected date and how is taken from the control properrty  startDatePicker.selectedDate -->
+<!--<label>startDatePicker.selectedDate:</label>
+<pre>{{ startDatePicker.selectedDate | json }}</pre>
+<label>Observed startDateValue$:</label>
+<pre>{{ (this.startDateValue$ | async) | json }}</pre>-->
