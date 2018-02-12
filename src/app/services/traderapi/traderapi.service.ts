@@ -89,13 +89,13 @@ export class TraderApiService {
     //******************************************************
     public addTrader(trader: Trader): any {
 
-         let body = JSON.stringify(trader);
-        let httpheaders = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
+      let body = JSON.stringify(trader);
+      let httpheaders = new Headers();
+      httpheaders.append('Accept', 'application/json');
+      httpheaders.append('Content-Type', 'application/json');
+      httpheaders.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-       return this.httpService.post(addTraderUrl, body, { headers: headers });              
+      return this.httpService.post(addTraderUrl, body, { headers: httpheaders });              
             
     }
 

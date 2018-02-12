@@ -12,35 +12,35 @@
               </div>          
 
 
-              <div class="row form-group"  style="height:50px;">
+              <div class="row form-group smalltext"  style="height:50px;">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                  <input type="email" formControlName="email" id="email" maxlength="70" placeholder="Your Email Account" required class="form-control" style="background-color:moccasin">
+                  <input type="email" formControlName="email" id="email" maxlength="70" placeholder="Your Email Account" required class="form-control smalltext" style="background-color:moccasin">
                   <control-messages [control]="registerGroup.controls.email"></control-messages>
                 </div>
               </div>
 
       
-              <div class="row form-group"  style="height:50px;">
+              <div class="row form-group smalltext"  style="height:50px;">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Choose Your Password" required class="form-control" style="background-color:moccasin">
+                    <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Choose Your Password" required class="form-control smalltext" style="background-color:moccasin">
                     <control-messages [control]="registerGroup.controls.password"></control-messages>
                   </div>
                 </div>
 
         
-              <div class="row form-group"  style="height:50px;">
+              <div class="row form-group smalltext"  style="height:50px;">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="20" placeholder="Confirm Your Password" required class="form-control" style="background-color:moccasin">
+                    <input type="password" formControlName="confirmPassword" id="confirmPassword" maxlength="20" placeholder="Confirm Your Password" required class="form-control smalltext" style="background-color:moccasin">
                     <control-messages [control]="registerGroup.controls.confirmPassword"></control-messages>
                   </div>
                 </div>
 
 
               <div class="row" style="margin-top:40px;">
-                <button class="btn-danger buttonclass text-uppercase" type="submit" [disabled]="!registerGroup.valid" style="width:200px; height:30px;">Register</button>
+                <button class="btn-danger buttonclass text-uppercase smalltext" type="submit" [disabled]="!registerGroup.valid" style="width:200px; height:30px;">Register</button>
               </div>
         
             </div>
@@ -52,14 +52,14 @@
               <div class="row panel panel-body textgray">
                   
                   <div class="row col-md-offset-1 textgray" style="height:50px;">
-                    <span class="largetext">  Please provide all required information needed to register your account:</span>
+                    <span class="mediumtext">  Please provide all required information needed to register your account:</span>
                   </div>
 
                   <div class="row col-md-offset-1 textgray">                   
-                    <div class="mediumtext" style="height:40px;"><span class="glyphicon glyphicon-check"></span> Your email account provided will become your username.</div>
-                    <div class="mediumtext" style="height:40px;"><span class="glyphicon glyphicon-check"></span> The application will allow emails with up to 70 characters in length.</div>
-                    <div class="mediumtext" style="height:40px;"><span class="glyphicon glyphicon-check"></span> The password should be between 6 and 10 character in length.</div>
-                    <div class="mediumtext" style="height:40px;"><span class="glyphicon glyphicon-check"></span> The password should contain at least 1 numeric character and 1 upper case character</div>       
+                    <div class="smalltext" style="height:40px;"><span class="glyphicon glyphicon-check"></span> Your email account provided will become your username.</div>
+                    <div class="smalltext" style="height:40px;"><span class="glyphicon glyphicon-check"></span> The application will allow emails with up to 70 characters in length.</div>
+                    <div class="smalltext" style="height:40px;"><span class="glyphicon glyphicon-check"></span> The password should be between 6 and 10 character in length.</div>
+                    <div class="smalltext" style="height:40px;"><span class="glyphicon glyphicon-check"></span> The password should contain at least 1 numeric character and 1 upper case character</div>       
                   </div>
 
             </div>
@@ -76,7 +76,7 @@
 
           <div class="row">
                     <div class="col-md-8">
-                      <div class="panel panel-heading textgray">
+                      <div class="panel panel-heading textgray smalltext">
                         An account with the application traders's permissions containing your credentials has been created.                                              
                         <ul>                                                          
                           <li> Email confirmation has been sent to your nominated accout  <span class="textoker">{{ registerModel.Email  }}</span>. </li>

@@ -13,15 +13,15 @@ class SortTradesByTitlePipe implements PipeTransform {
         if (args !== null) {
             if (args[0] === 'A') {
                 return value.sort((a: Trade, b: Trade) => {
-                  if (a.tradeObjects[0].tradeObjectDescription < b.tradeObjects[0].tradeObjectDescription) { return -1; }
-                  if (a.tradeObjects[0].tradeObjectDescription > b.tradeObjects[0].tradeObjectDescription) { return 1; }
+                  if (a.name < b.name) { return -1; }
+                  if (a.name > b.name) { return 1; }
                     return 0;
                 });
             }
             else {
               return value.sort((a: Trade, b: Trade) => {
-                if (a.tradeObjects[0].tradeObjectDescription > b.tradeObjects[0].tradeObjectDescription) { return -1; }
-                if (a.tradeObjects[0].tradeObjectDescription < b.tradeObjects[0].tradeObjectDescription) { return 1; }
+                if (a.name > b.name) { return -1; }
+                if (a.name < b.name) { return 1; }
                     return 0;
                 });
             }
@@ -42,16 +42,16 @@ class SortTradesByCategoryPipe implements PipeTransform {
             if (args === 'A') {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.tradeObjects[0].tradeObjectCategoryDescription < b.tradeObjects[0].tradeObjectCategoryDescription) { return -1; }
-                if (a.tradeObjects[0].tradeObjectCategoryDescription > b.tradeObjects[0].tradeObjectCategoryDescription) { return 1; }
+                if (a.categoryDescription < b.categoryDescription) { return -1; }
+                if (a.categoryDescription > b.categoryDescription) { return 1; }
                     return 0;
                 });
             }
             else {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.tradeObjects[0].tradeObjectCategoryDescription > b.tradeObjects[0].tradeObjectCategoryDescription) { return -1; }
-                if (a.tradeObjects[0].tradeObjectCategoryDescription < b.tradeObjects[0].tradeObjectCategoryDescription) { return 1; }
+                if (a.categoryDescription > b.categoryDescription) { return -1; }
+                if (a.categoryDescription < b.categoryDescription) { return 1; }
                     return 0;
                 });
             }
@@ -104,16 +104,16 @@ class SortTradesByDatePipe implements PipeTransform {
             if (args === 'A') {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.tradeDatePublished < b.tradeDatePublished) { return -1; }
-                if (a.tradeDatePublished > b.tradeDatePublished) { return 1; }
+                if (a.datePublished < b.datePublished) { return -1; }
+                if (a.datePublished > b.datePublished) { return 1; }
                     return 0;
                 });
             }
             else {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.tradeDatePublished > b.tradeDatePublished) { return -1; }
-                if (a.tradeDatePublished < b.tradeDatePublished) { return 1; }
+                if (a.datePublished > b.datePublished) { return -1; }
+                if (a.datePublished < b.datePublished) { return 1; }
                     return 0;
                 });
             }

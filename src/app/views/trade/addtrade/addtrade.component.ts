@@ -39,19 +39,15 @@ export class AddTradeComponent implements OnInit {
   private isSubmitted: boolean = false; 
   private isVisible: boolean = false;
   private isMessageVisible: boolean = false;
-  private isFileAllowed: boolean = false;
+  private isFileAllowed: boolean = true;
   private fileErrorMessage: string = "";
 
   private categories: Category[] = [];
-
-  private uploader: FileUploader = new FileUploader({    
-    url: uploadsUrl,
-    queueLimit: 3,
-    maxFileSize: 1024 * 1024, //max 10 MB
-    allowedFileType: [ 'jpg', 'jpeg', 'tif', 'psd', 'png', 'bmp']  // MAKE SURE THAT ALL EXTENSIONS ARE INTRODUCED IN THE file-type.class.js of the ng2-file-upload 
-  });
-  private hasBaseDropZoneOver: boolean = true;
-  private hasAnotherDropZoneOver: boolean = false;
+  private uploader: FileUploader;  
+  private hasBaseDropZoneOver: boolean;
+  private hasAnotherDropZoneOver: boolean;
+  private response: string;
+  private allowedMimeType: string[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -61,6 +57,34 @@ export class AddTradeComponent implements OnInit {
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private loggerService: LoggerService) {
+   
+
+    this.uploader = new FileUploader({
+      maxFileSize: 1024 * 1024,    
+      url: uploadsUrl,         
+      allowedMimeType: ['image/png', 'image/gif', 'image/jpeg', 'image/tif', 'image/psd', 'image/png', 'image/bmp'],     
+      disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
+      formatDataFunctionIsAsync: true,    
+      formatDataFunction: async (item) => {
+        return new Promise((resolve, reject) => {
+          resolve({
+                  name: item._file.name,
+                  length: item._file.size,
+                  contentType: item._file.type,
+                  date: new Date()
+            });
+        });
+      }
+    });
+    this.uploader.options.allowedFileType = ['png', 'gif', 'jpeg', 'tif', 'psd', 'png', 'bmp'];
+    this.uploader.options.queueLimit = 3;
+    this.hasBaseDropZoneOver = false;
+    this.hasAnotherDropZoneOver = false;
+
+    this.response = '';
+
+    this.uploader.response.subscribe(res => this.response = res);
+
   };
 
   ngOnInit() {
@@ -78,7 +102,7 @@ export class AddTradeComponent implements OnInit {
     this.categoryService.getCategories()
       .subscribe((res: Category[]) => {
         this.categories = res;
-      })
+      }
       , (error: Response) => this.onError(error, "getCategories"));
   }
 
@@ -101,72 +125,12 @@ export class AddTradeComponent implements OnInit {
     this.hasAnotherDropZoneOver = e;
   }
 
-  private onChange(event: any) {
-
-    this.isFileAllowed = false;
-    this.isMessageVisible = false;
-    let i: number = 0;
-
-    // get the files from the event which controll has passed
-    let files: File[] = event.srcElement.files;   
-    let fileItem: FileItem = new FileItem(this.uploader, files[0], null);
-
-    this.uploader.queue.push(fileItem);
-
-    // MULTIPLE FILES POSSIBLE
-    // check the number of files selected
-    if (this.uploader.queue.length > 3) {
-      this.isMessageVisible = true;
-      this.fileErrorMessage = "Warning: Maximum of 3 files can be attached with maximum size of 10MB each!";
-    }
-
-    for (i = 0; i < files.length; i++) {
-          // check the sizeof the file
-          if (files[i].size > this.uploader.options.maxFileSize) {
-            this.isMessageVisible = true;
-            this.fileErrorMessage = "Warning: The selected file '" + files[i].name + "' is too big!";
-    }
-
-    // check the type of the file
-    this.uploader.options.allowedFileType.forEach(type => {
-          let filename = files[i].name.split(".");
-          if (type === filename[filename.length - 1]) {
-            this.isFileAllowed = true;
-          }
-      });
-
-     if (!this.isFileAllowed) {
-        this.isMessageVisible = true;
-        let filename = files[i].name.split(".");
-        this.fileErrorMessage = "Warning: The  file extension '" + filename[filename.length - 1] + "' is not allowed!";
-      }
-    
-    }
-
-    // SINGLE FILE AT THE TIME
-    //if (this.uploader.queue.length == 3) {
-    //    this.isMessageVisible = true;     
-    //    this.fileErrorMessage = "Warning: Maximum of 3 files can be attached and with maximum size of 10MB each!";
-    //    return;
-    //}
-
-    //// check the size of the file selected
-    //if (files[0].size > this.uploader.options.maxFileSize) {
-    //      this.isMessageVisible = true;
-    //      this.fileErrorMessage = "Warning: The file selected " + files[0].name  + " is too big!";
-    //}
-    //// check the selected file type
-    //this.uploader.options.allowedFileType.forEach(type => {
-    //      let filename = files[0].name.split(".");
-    //      if (type === filename[filename.length-1]) {
-    //            this.isFileAllowed = true;
-    //      }
-    //});
-    //if (!this.isFileAllowed) {        
-    //  this.isMessageVisible = true;       
-    //    this.fileErrorMessage = "Warning: The file extension not allowed!";
-    //}
-
+  private onChange(event: any) {    
+    let m:number = 0; 
+    let fileItems: FileItem[] = this.uploader.queue;
+    for (m = 0; m < fileItems.length; m++) {
+      fileItems[m].isReady = true;
+    }  
   }
 
   // called when remove file button is clicked
@@ -182,7 +146,7 @@ export class AddTradeComponent implements OnInit {
     this.uploader.clearQueue();
   }
 
-  private saveArticle() {
+  private saveTrade() {
 
     if (this.addForm.dirty && this.addForm.valid) {
 
@@ -300,7 +264,7 @@ export class AddTradeComponent implements OnInit {
 
   private onAddSuccess(trade: Trade) {
     let trades: Trade[] = [];
-    trades.push(trade));
+    trades.push(trade);
     //TODO trade has been added to the system
   }
   

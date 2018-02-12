@@ -1,7 +1,7 @@
 
 
   <!-- example of reactive forms -->
-  <form [formGroup]="addForm">
+  <form *ngIf="!isSubmitted" [formGroup]="addForm" (submit)="saveTrade()">
 
     <div class="container col-md-12">
 
@@ -9,7 +9,7 @@
 
         <div class="col-md-6">
 
-          <div class="row">
+          <div class="row smalltext">
             <div class="panel panel-heading col-md-4"><span>Name:</span></div>
 
             <div class="form-group col-md-8">
@@ -19,7 +19,7 @@
           </div>
 
 
-          <div class="row">
+          <div class="row smalltext">
             <div class="panel panel-heading col-md-4"><span>Description:</span></div>
 
             <div class="form-group col-md-8">
@@ -29,7 +29,7 @@
           </div>
 
 
-          <div class="row">
+          <div class="row smalltext">
             <div class="panel panel-heading col-md-4"><span>Category:</span></div>
 
             <div class="form-group col-md-8">
@@ -45,7 +45,7 @@
           </div>
 
 
-          <div class="row">
+          <div class="row smalltext">
             <div class="panel panel-heading col-md-4"><span>Trading For:</span></div>
 
             <div class="form-group col-md-8">
@@ -55,7 +55,7 @@
           </div>
 
 
-          <div class="row">
+          <div class="row smalltext">
             <div class="panel panel-heading col-md-4"><span>Publish Date:</span></div>
 
             <div class="form-group col-md-8">
@@ -78,19 +78,17 @@
         <div class="col-md-6">
 
           <div class="row col-md-12">
+                <div class="row panel panel-heading">
+                  <span class="smalltext">Trade Images (max 3, types: .png, .gif, .jpeg, .png, .bmp, max:10MB ):</span>
+                </div>            
                 <div class="row">
-                  <span>Images:</span>
-                </div>
-                <br />
-                <div class="row">
-                  <input type="file" ng2FileSelect [uploader]="uploader" (change)="onChange($event)" class="btn btn-warning" />
+                  <input type="file" ng2FileSelect [uploader]="uploader"  style="color:transparent;"  multiple  (change)="onChange($event)"/>           
                 </div>          
           </div>
 
-          <div class="row col-md-12">
-
-            <div class="row textoker" *ngIf="isMessageVisible">{{ fileErrorMessage }}</div>
-
+          <div class="row col-md-12 smalltext">
+            <br />
+            <div *ngIf="isMessageVisible" class="row panel panel-heading textoker" >{{ fileErrorMessage }}</div>
             <br />
             <div class="row">
               <span>Upload queue</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -99,42 +97,44 @@
 
 
             <div class="row">
+
               <table class="table">
 
                 <thead>
-                  <tr>
-                    <th width="50%">Name</th>
+                  <tr class="smalltext">
+                    <th width="30%">Name</th>
                     <th>Size</th>
-                    <th>Progress</th>
+                    <!--<th>Progress</th>-->
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th style="text-align:center;">Actions</th>
                   </tr>
                 </thead>
 
                 <tbody>
                   <tr *ngFor="let item of uploader.queue">
-                    <td><label class="text-info">{{ item?.file?.name }}</label></td>
-                    <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                    <td nowrap class="text-info">{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                    <td><label class="text-info smalltext">{{ item?.file?.name }}</label></td>
+                    <!--<td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>-->
+                    <td nowrap class="text-info smalltext">{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
 
-                    <td *ngIf="uploader.isHTML5">
+                    <!--<td *ngIf="uploader.isHTML5">
                         <div class="progress" style="margin-bottom: 0;">
                               <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
                         </div>
-                   </td>
+                   </td>-->
 
-                    <td class="text-center">
+                    <td class="text-center smalltext">
                       <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
                       <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
                       <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                      <span *ngIf="item.isReady"><i class="glyphicon glyphicon-cloud-upload"></i></span>
                     </td>
 
 
                     <td nowrap class="text-center">
-                      <!-- upload button single file-->
-                      <button type="button" class="btn btn-success btn-xs" (click)="uploadSingleFile(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                      <!-- upload button single file in  this case we do not allow that -->
+                      <!--<button type="button" class="btn btn-success btn-xs" (click)="uploadSingleFile(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess">
                             <span class="glyphicon glyphicon-upload"></span> Upload
-                     </button>
+                     </button>-->
                       <!-- cancel button single file -->
                       <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
                         <span class="glyphicon glyphicon-ban-circle"></span> Cancel
@@ -148,25 +148,27 @@
                 </tbody>
 
               </table>
+
             </div>
 
             <!-- Upload multiple -->
             <div class="row">
               <div>
-                <label class="smalltext textgray">Queue progress:</label>
+                <label class="smalltext textgray  smalltext">Queue progress:</label>
                 <div class="progress" style="">
                   <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
                 </div>
               </div>
+              <!-- we do not allow to upload all as we want to do it when we add the trade -->
               <!--<button type="button" class="btn btn-success btn-s"
                 (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
               <span class="glyphicon glyphicon-upload"></span> Upload all
             </button>-->
-              <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+              <button type="button" class="btn btn-warning btn-s smalltext" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
                 <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
               </button>
-              <button type="button" class="btn btn-danger btn-s" (click)="removeAllFiles()" [disabled]="!uploader.queue.length">
-                <span class="glyphicon glyphicon-trash"></span> Remove all
+              <button type="button" class="btn btn-danger btn-s smalltext" (click)="removeAllFiles()" [disabled]="!uploader.queue.length">
+                <span class="glyphicon glyphicon-trash small"></span> Remove all
               </button>
             </div>
 
@@ -176,10 +178,9 @@
       </div>
 
 
-
-        <div class="row">         
+        <div class="row ">         
           <div class="col-md-3">
-            <button type="submit" (click)="AddTrade()" class="btn btn-danger"  style="width:200px;" [disabled]="!addForm.valid">Add Trade</button>
+            <button type="submit" class="btn btn-danger smalltextbold"  style="width:200px;" [disabled]="!addForm.valid">Add Trade</button>
           </div>
         </div>
 
@@ -189,7 +190,7 @@
 </form>
 
 
-<style>
+<!--<style>
   .my-drop-zone {
     border: solid 3px lightgray;
   }
@@ -205,11 +206,6 @@
   html, body {
     height: 100%;
   }
-</style>
+</style>-->
 
-    <!-- other input fields here ......-->
-<!-- example of calculating selected date and how is taken from the control properrty  startDatePicker.selectedDate -->
-<!--<label>startDatePicker.selectedDate:</label>
-<pre>{{ startDatePicker.selectedDate | json }}</pre>
-<label>Observed startDateValue$:</label>
-<pre>{{ (this.startDateValue$ | async) | json }}</pre>-->
+ 

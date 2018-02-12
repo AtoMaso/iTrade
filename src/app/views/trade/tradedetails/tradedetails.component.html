@@ -6,21 +6,21 @@
           <div class="col-md-3">
 
               <div class="row">
-                <div class="panel panel-heading col-md-12">
-                  Status:<span class="smalltext  text-uppercase text-info"> {{ trade.status }}</span>
+                <div class="panel panel-heading col-md-12 smalltext">
+                  Status:<span class="text-uppercase text-info"> {{ trade.status }}</span>
                 </div>
               </div>
 
 
               <div class="row">
-                <div class="panel panel-heading col-md-12">
-                  Trading:<span class="smalltext  text-uppercase text-info"> {{ trade.name }}</span>
+                <div class="panel panel-heading col-md-12 smalltext">
+                  Trading:<span class="text-uppercase text-info"> {{ trade.name }}</span>
                 </div>
               </div>
 
 
               <div class="row">
-                <div class="panel panel-heading">
+                <div class="panel panel-heading smalltext">
                                       
                       <span class="description panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseDescription">
                         <span class="glyphicon glyphicon-plus"></span> Trade Description
@@ -37,35 +37,35 @@
 
 
               <div class="row">
-                <div class="panel panel-heading col-md-12">
-                  Trading for:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeFor }}</span>
+                <div class="panel panel-heading col-md-12 smalltext">
+                  Trading for:<span class="text-uppercase text-info"> {{ trade.tradeFor }}</span>
                 </div>
               </div>
 
 
               <div class="row">
-                <div class="panel panel-heading col-md-12">
-                  Category: <span class="smalltext text-uppercase text-info"> {{ trade.categoryDescription }}</span> 
+                <div class="panel panel-heading col-md-12 smalltext">
+                  Category: <span class="text-uppercase text-info"> {{ trade.categoryDescription }}</span> 
                 </div>
               </div>
 
 
               <div class="row">
-                <div class="panel panel-heading col-md-12">
-                  Date Published: <span class="smalltext text-uppercase text-info"> {{ trade.datePublished | date }}</span> 
+                <div class="panel panel-heading col-md-12 smalltext">
+                  Date Published: <span class="text-uppercase text-info"> {{ trade.datePublished | date }}</span> 
                 </div>
               </div>
 
 
               <div class="row">
-                <div class="panel panel-heading col-md-12">
+                <div class="panel panel-heading col-md-12 smalltext">
                   Trader: <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase"><span> <i>{{ trade.traderFullName }}</i></span></a>                    
                 </div>
               </div>
 
 
               <div class="row">
-                <div class="panel panel-heading col-md-12" style="text-align:center;">
+                <div class="panel panel-heading col-md-12 smalltext" style="text-align:center;">
 
                   <div *ngIf="!isAuthenticated">                   
                     <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-danger btn-sm smalltextbold" style="width:200px"> Start Trading </button>                                                
@@ -91,7 +91,7 @@
           <div class="col-md-8 col-md-offset-1 panel-group" id="accordion" role="tablist" aria-multiselectable="true">
       
 
-                <div class="row panel panel-heading">
+                <div class="row panel panel-heading smalltext">
 
                   <span class="images panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseImages">
                     <span class="glyphicon glyphicon-minus"></span> Trade Images
@@ -100,7 +100,7 @@
                   <!-- collapsable trade images -->
                   <div id="collapseImages" class="collapse in">
           
-                      <div class="container panel panel-heading col-md-12">
+                      <div class="container panel panel-heading col-md-12 smalltext">
 
                         <div class="col-md-4">
                           <div *ngIf="hasImages"> <!-- TODO individual check of image 1, 2,3 -->
@@ -233,7 +233,7 @@
 <!-- MODAL form to show when add/remove trade is clicked and user is not logged in-->
 <div class="modal fade" id="addremoveLogin" tabindex="-1" role="dialog" aria-labelledby="AddRemoveLogin">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content smalltext">
 
       <div class="modal-header">
         <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
@@ -258,7 +258,7 @@
 <!-- MODAL form to show when user viewing hist tarde and is logged in-->
 <div class="modal fade" id="canNotTrade" tabindex="-1" role="dialog" aria-labelledby="canNotTrade">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content smalltext">
 
       <div class="modal-header">
         <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
