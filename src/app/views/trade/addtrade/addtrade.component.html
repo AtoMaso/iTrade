@@ -1,84 +1,211 @@
 
 
   <!-- example of reactive forms -->
-  <form [formGroup]="addForm" novalidate  (submit)="AddTrade()">
+  <form [formGroup]="addForm">
 
     <div class="container col-md-12">
- 
-      <div class="col-md-12">
 
-        <div class="row">
-          <div class="panel panel-heading col-md-2"><span>Name:</span></div>
+      <div class="row">
 
-          <div class="form-group col-md-8">         
-            <input type="text" formControlName="trading" id="trading" required class="form-control" style="background-color:moccasin; width:300px;">       
-            <control-messages [control]="addForm.controls.trading"></control-messages>
+        <div class="col-md-6">
+
+          <div class="row">
+            <div class="panel panel-heading col-md-4"><span>Name:</span></div>
+
+            <div class="form-group col-md-8">
+              <input type="text" formControlName="trading" id="trading" required class="form-control" style="background-color:moccasin; width:300px;">
+              <control-messages [control]="addForm.controls.trading"></control-messages>
+            </div>
           </div>
+
+
+          <div class="row">
+            <div class="panel panel-heading col-md-4"><span>Description:</span></div>
+
+            <div class="form-group col-md-8">
+              <textarea formControlName="description" id="description" class="form-control text-comment" required autoGrow style="background-color:moccasin; width:300px;height:40px"></textarea> <!--  [(ngModel)]="taskDescription"> -->
+              <control-messages [control]="addForm.controls.description"></control-messages>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="panel panel-heading col-md-4"><span>Category:</span></div>
+
+            <div class="form-group col-md-8">
+              <select formControlName="category" id="category" name="category" class="form-control" style="width:300px;">
+                <option value="">Select</option>
+                <option *ngFor="let category of categories" [ngValue]="category.categoryId">
+                  {{ category.categoryDescription }}
+                </option>
+
+              </select>
+              <control-messages [control]="addForm.controls.category"></control-messages>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="panel panel-heading col-md-4"><span>Trading For:</span></div>
+
+            <div class="form-group col-md-8">
+              <input type="text" formControlName="tradingfor" id="tradingfor" required class="form-control" style="background-color:moccasin; width:300px;">
+              <control-messages [control]="addForm.controls.tradingfor"></control-messages>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="panel panel-heading col-md-4"><span>Publish Date:</span></div>
+
+            <div class="form-group col-md-8">
+              <my-date-picker name="publishDate" formControlName="publishDate"
+                              visibleMonth.monthTxt=""
+                              #publishDate
+                              placeholder="Select a date..."
+                              [options]="datePickerOptions"
+                              (dateChanged)="onDateChanged($event)"
+                              [locale]="en"
+                              [selDate]="selectDate">
+              </my-date-picker>
+
+            </div>
+          </div>
+
         </div>
 
+        <!-- file uploads -->
+        <div class="col-md-6">
 
-        <div class="row">
-          <div class="panel panel-heading col-md-2"><span>Description:</span></div>
-
-          <div class="form-group col-md-8">
-            <textarea autoGrow  formControlName="description" id="description" required class="form-control text-comment" style="background-color:moccasin; width:300px; height:40px;"></textarea> <!--  [(ngModel)]="taskDescription"> -->           
-            <control-messages [control]="addForm.controls.description"></control-messages>
+          <div class="row col-md-12">
+                <div class="row">
+                  <span>Images:</span>
+                </div>
+                <br />
+                <div class="row">
+                  <input type="file" ng2FileSelect [uploader]="uploader" (change)="onChange($event)" class="btn btn-warning" />
+                </div>          
           </div>
-        </div>
+
+          <div class="row col-md-12">
+
+            <div class="row textoker" *ngIf="isMessageVisible">{{ fileErrorMessage }}</div>
+
+            <br />
+            <div class="row">
+              <span>Upload queue</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span>Queue length: {{ uploader?.queue?.length }}</span>
+            </div>
 
 
-        <div class="row">
-          <div class="panel panel-heading col-md-2"><span>Category:</span></div>
+            <div class="row">
+              <table class="table">
 
-          <div class="form-group col-md-8">
-            <select id="category" formControlName="category" class="form-control" (change)="selectName();" style="width:300px;"> <!-- #Id="ngModel" [(ngModel)]="nameId" name="Id"-->
-              <option selected="selected" value="Not on the list"></option>
-              <option [ngValue]="category.objectCategoryId" *ngFor="let category of categories"> {{ category.objectCategoryDescription }}</option>             
-            </select>
-            <control-messages [control]="addForm.controls.category"></control-messages>
+                <thead>
+                  <tr>
+                    <th width="50%">Name</th>
+                    <th>Size</th>
+                    <th>Progress</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let item of uploader.queue">
+                    <td><label class="text-info">{{ item?.file?.name }}</label></td>
+                    <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                    <td nowrap class="text-info">{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+
+                    <td *ngIf="uploader.isHTML5">
+                        <div class="progress" style="margin-bottom: 0;">
+                              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                        </div>
+                   </td>
+
+                    <td class="text-center">
+                      <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                      <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                      <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                    </td>
+
+
+                    <td nowrap class="text-center">
+                      <!-- upload button single file-->
+                      <button type="button" class="btn btn-success btn-xs" (click)="uploadSingleFile(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                     </button>
+                      <!-- cancel button single file -->
+                      <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                      </button>
+                      <!-- remove button single file -->
+                      <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(item)">
+                        <span class="glyphicon glyphicon-trash"></span> Remove
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+
+              </table>
+            </div>
+
+            <!-- Upload multiple -->
+            <div class="row">
+              <div>
+                <label class="smalltext textgray">Queue progress:</label>
+                <div class="progress" style="">
+                  <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+              </div>
+              <!--<button type="button" class="btn btn-success btn-s"
+                (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+              <span class="glyphicon glyphicon-upload"></span> Upload all
+            </button>-->
+              <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+              </button>
+              <button type="button" class="btn btn-danger btn-s" (click)="removeAllFiles()" [disabled]="!uploader.queue.length">
+                <span class="glyphicon glyphicon-trash"></span> Remove all
+              </button>
+            </div>
+
           </div>
-        </div>
 
-
-        <div class="row">
-          <div class="panel panel-heading col-md-2"><span>Trading For:</span></div>
-
-          <div class="form-group col-md-8">
-            <input type="text" formControlName="tradingfor" id="tradingfor" required class="form-control" style="background-color:moccasin; width:300px;">
-            <control-messages [control]="addForm.controls.tradingfor"></control-messages>
-          </div>
-        </div>
-
-  
-       <div class="row">
-          <div class="panel panel-heading col-md-2"><span>Publish Date:</span></div>
-
-          <div class="form-group col-md-8">
-            <my-date-picker name="publishDate" formControlName="publishDate"                      
-                            visibleMonth.monthTxt=""
-                            #publishDate
-                            placeholder="Select a date..."
-                            [options]="datePickerOptions"
-                            (dateChanged)="onDateChanged($event)"
-                            [locale]="en"
-                            [selDate]="selectDate">
-            </my-date-picker>
-            
-          </div>
-        </div>
-
-        <div class="row">         
-          <div class="form-group col-md-8">
-            <button type="submit" (click)="AddTrade()"></button>
-          </div>
         </div>
       </div>
-            
-    </div>
+
+
+
+        <div class="row">         
+          <div class="col-md-3">
+            <button type="submit" (click)="AddTrade()" class="btn btn-danger"  style="width:200px;" [disabled]="!addForm.valid">Add Trade</button>
+          </div>
+        </div>
+
+      </div>
+               
 
 </form>
 
 
+<style>
+  .my-drop-zone {
+    border: solid 3px lightgray;
+  }
+
+  .nv-file-over {
+    border: solid 3px red;
+  }
+  /* Default class applied to drop zones on over */
+  .another-file-over-class {
+    border: solid 3px green;
+  }
+
+  html, body {
+    height: 100%;
+  }
+</style>
 
     <!-- other input fields here ......-->
 <!-- example of calculating selected date and how is taken from the control properrty  startDatePicker.selectedDate -->

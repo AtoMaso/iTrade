@@ -9,8 +9,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry'; 
 
-import { LoggerService } from '../logger/logger.service';
-import { Trade, UserSession, UserIdentity} from '../../helpers/classes';
+import { Trade, PostTrade, UserSession, UserIdentity} from '../../helpers/classes';
 
 let allTrades = CONFIG.baseUrls.alltrades;
 let allTradesWithStatus = CONFIG.baseUrls.alltradesWithStatus;
@@ -31,19 +30,15 @@ let removeTrade = CONFIG.baseUrls.removetrade;
 
 @Injectable()
 export class TradeApiService {
-  private localUrl: string;
+
+  private localUrl: string; 
   private session: UserSession;
+  private identity: UserIdentity = new UserIdentity;
+  private token: string;
+  private newTrade = new PostTrade();
 
-  constructor(
-    private httpClientService: HttpClient,
-    private loggerService: LoggerService) {
-
-    if (sessionStorage["UserSession"] != "null") {
-      this.session = JSON.parse(sessionStorage["UserSession"]);
-    }
-  };
-
-
+  constructor( private httpClientService: HttpClient) { };
+ 
 
   //******************************************************
   // GET TRADES
@@ -108,14 +103,20 @@ export class TradeApiService {
   //******************************************************
   // ADD TRADE
   //******************************************************
-  public AddTrade(trade: Trade) {
+  public AddTrade(trade: PostTrade) {
+    // get the session details
+    this.getUseridentity(); 
 
-    let body = JSON.stringify(trade);
-    let httpHeaders = new HttpHeaders();
-    httpHeaders.append('Accept', 'application/json');
-    httpHeaders.append('Content-Type', 'application/json');
-
-    return this.httpClientService.post(this.localUrl, body, { headers: httpHeaders ).retry(3);
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+    // post the trade
+    this.localUrl = addTrade;  
+    return this.httpClientService.post<PostTrade>(this.localUrl, trade, httpOptions).retry(3);
   }
 
   //******************************************************
@@ -131,5 +132,11 @@ export class TradeApiService {
   //*****************************************************
   // HELPER METHODS
   //*****************************************************
-
+  private getUseridentity() {
+    if (sessionStorage["UserSession"] != "null") {    
+        this.session = JSON.parse(sessionStorage["UserSession"])       
+        this.identity = this.session.userIdentity;   
+        this.token = this.identity.accessToken;      
+    }
+  }
 }

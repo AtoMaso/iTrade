@@ -23,9 +23,9 @@
     pagesoftradesall: 'http://localhost:5700/api/trades/GetPagesOfTradesAll',
 
     trade: 'http://localhost:5700/api/trades/',
-    updatetrade: 'http://localhost:5700/api/trades/puttrade',
-    addtrade: 'http://localhost:5700/api/trades/posttrade',
-    removetrade: 'http://localhost:5700/api/trades/deletedrade',
+    updatetrade: 'http://localhost:5700/api/trades/PutTrade',
+    addtrade: 'http://localhost:5700/api/trades/PostTrade',
+    removetrade: 'http://localhost:5700/api/trades/DeleteTrade',
 
     // trade history
     tradehistories: 'http://localhost:5700/api/tradehistories',
@@ -70,11 +70,11 @@
     removetradeforobjects: 'http://localhost:5700/api/tradeforobjects/deletedradeforobject',
  
     // category
-    categories: 'http://localhost:5700/api/objectcategories',
-    category: 'http://localhost:5700/api/objectcategories/',
-    updatecategory: 'http://localhost:5700/api/objectcategories/putobjectcategory',
-    addcategory: 'http://localhost:5700/api/objectcategories/postobjectcategory',
-    removecategory: 'http://localhost:5700/api/objectcategories/deleteobjectcategory',
+    categories: 'http://localhost:5700/api/categories',
+    category: 'http://localhost:5700/api/categories/',
+    updatecategory: 'http://localhost:5700/api/objectcategories/putcategory',
+    addcategory: 'http://localhost:5700/api/objectcategories/postcategory',
+    removecategory: 'http://localhost:5700/api/objectcategories/deletecategory',
 
    //traders
     traders: 'http://localhost:5700/api/account/GetTraders',

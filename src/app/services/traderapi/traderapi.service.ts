@@ -90,7 +90,7 @@ export class TraderApiService {
     public addTrader(trader: Trader): any {
 
          let body = JSON.stringify(trader);
-        let headers = new Headers();
+        let httpheaders = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);

@@ -8,7 +8,7 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { MomentModule } from 'angular2-moment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
-import { Ng2TableModule } from 'ng2-table';
+import { Ng2TableModule} from 'ng2-table';
 import { FileUploadModule } from 'ng2-file-upload';
 import { PaginationModule, TabsModule, DateFormatter} from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -148,8 +148,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     CorrespondenceAllComponent,
     CorrespondenceDetailsComponent,
     ForgotPasswordComponent,
-    ChangePasswordComponent,
-  
+    ChangePasswordComponent  
     //TokenInterceptor,
     //TraderaccountComponent
     //NG2FileUploadComponent
@@ -169,7 +168,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     TabsModule,  
     NgxPaginationModule,
     PaginationModule,          
-    MyDatePickerModule,
+    MyDatePickerModule, 
     NgIdleKeepaliveModule.forRoot()
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests and returns simulated server responses.
     // Remove it when a real web api rest services are ready to receive requests.

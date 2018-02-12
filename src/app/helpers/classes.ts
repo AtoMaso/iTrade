@@ -1,6 +1,6 @@
 ﻿import {
   IChangePasswordBindingModel, IRegisterBindingModel, ISetPasswordBindingModel, ILoginModel,
-  ITraderList, ITraderDetails,
+  ITraderList, ITraderDetails, IPostTrade,
   IPersonalDetails, ISecurityDetails, IContactDetails,
   IAddress, IAddressType,
   IPhone, IPhoneType,
@@ -392,6 +392,35 @@ class Trade implements ITrade {
 }
 
 
+
+class PostTrade implements IPostTrade {
+
+  tradeId: number;
+  name: string;
+  description: string;
+  tradeFor: string;
+  datePublished: Date;
+  status: string;
+  categoryId: number;
+  categoryDescription: string;
+  traderId: string;
+  Images: Image[];
+
+  constructor() {
+    this.tradeId = 0;
+    this.name = "";
+    this.description = "";
+    this.tradeFor = "";
+    this.datePublished = new Date(1900, 1, 1);
+    this.status = "";
+    this.categoryId = 0;
+    this.categoryDescription = "";
+    this.traderId = "";
+    this.Images = [];
+  }
+}
+
+
 class TradeHistory implements ITradeHistory {
  
   historyId: number;
@@ -618,8 +647,9 @@ class Guid {
 
 
 export {
-  ChangePasswordBindingModel, RegisterBindingModel, SetPasswordBindingModel, LoginModel,
-  Trader, TraderDetails,
+  ChangePasswordBindingModel, RegisterBindingModel,
+  SetPasswordBindingModel, LoginModel,
+  Trader, TraderDetails,PostTrade,
   PersonalDetails, ContactDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType,Email,

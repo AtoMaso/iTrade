@@ -181,6 +181,19 @@ interface ITrade {
 }
 
 
+interface IPostTrade {
+ 
+  tradeId: number;
+  name: string;
+  description: string;
+  tradeFor: string;
+  status: string;
+  datePublished: Date;
+  categoryId: number;
+  traderId: string;
+  Images: IImage[];
+}
+
 interface ITradeHistory {
   historyId: number;
   tradeId: number;
@@ -294,7 +307,7 @@ interface IProcessMessageType {
 
 export {
   IChangePasswordBindingModel, IRegisterBindingModel, ISetPasswordBindingModel, ILoginModel,
-  ITraderList, ITraderDetails,
+  ITraderList, ITraderDetails, IPostTrade,
   IPersonalDetails, ISecurityDetails, IContactDetails,
   IAddress, IAddressType, IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,
