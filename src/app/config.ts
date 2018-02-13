@@ -193,6 +193,7 @@
     // uploads
     uploadFileUrl: 'http://localhost:5700/api/uploads/UploadFile',
     imagesPathUrl: 'http://localhost:5700/uploads/images/',
-    
+
+
   }
 }
