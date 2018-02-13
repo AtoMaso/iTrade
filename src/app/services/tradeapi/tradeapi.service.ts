@@ -147,8 +147,4 @@ export class TradeApiService {
         this.token = this.identity.accessToken;      
     }
   }
-
-  private handleError(method: string, object: PostTrade): any {
-
-  }
 }
