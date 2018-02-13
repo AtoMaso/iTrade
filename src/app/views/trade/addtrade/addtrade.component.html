@@ -10,30 +10,30 @@
         <div class="col-md-6">
 
           <div class="row smalltext">
-            <div class="panel panel-heading col-md-4"><span>Name:</span></div>
+            <div class="panel panel-heading col-md-3"><span>Name:</span></div>
 
-            <div class="form-group col-md-8">
-              <input type="text" formControlName="trading" id="trading" required class="form-control" style="background-color:moccasin; width:300px;">
+            <div class="form-group col-md-6">
+              <input type="text" formControlName="trading" id="trading" required class="form-control" style="background-color:moccasin;">
               <control-messages [control]="addForm.controls.trading"></control-messages>
             </div>
           </div>
 
 
           <div class="row smalltext">
-            <div class="panel panel-heading col-md-4"><span>Description:</span></div>
+            <div class="panel panel-heading col-md-3"><span>Description:</span></div>
 
-            <div class="form-group col-md-8">
-              <textarea formControlName="description" id="description" class="form-control text-comment" required autoGrow style="background-color:moccasin; width:300px;height:40px"></textarea> <!--  [(ngModel)]="taskDescription"> -->
+            <div class="form-group col-md-6">
+              <textarea formControlName="description" id="description" class="form-control text-comment" required autoGrow style="background-color:moccasin; height:40px"></textarea> <!--  [(ngModel)]="taskDescription"> -->
               <control-messages [control]="addForm.controls.description"></control-messages>
             </div>
           </div>
 
 
           <div class="row smalltext">
-            <div class="panel panel-heading col-md-4"><span>Category:</span></div>
+            <div class="panel panel-heading col-md-3"><span>Category:</span></div>
 
-            <div class="form-group col-md-8">
-              <select formControlName="category" id="category" name="category" class="form-control" style="width:300px;">
+            <div class="form-group col-md-6">
+              <select formControlName="category" id="category" name="category" class="form-control">
                 <option value="">Select</option>
                 <option *ngFor="let category of categories" [ngValue]="category.categoryId">
                   {{ category.categoryDescription }}
@@ -46,19 +46,19 @@
 
 
           <div class="row smalltext">
-            <div class="panel panel-heading col-md-4"><span>Trading For:</span></div>
+            <div class="panel panel-heading col-md-3"><span>Trading For:</span></div>
 
-            <div class="form-group col-md-8">
-              <input type="text" formControlName="tradingfor" id="tradingfor" required class="form-control" style="background-color:moccasin; width:300px;">
+            <div class="form-group col-md-6">
+              <input type="text" formControlName="tradingfor" id="tradingfor" required class="form-control" style="background-color:moccasin;">
               <control-messages [control]="addForm.controls.tradingfor"></control-messages>
             </div>
           </div>
 
 
           <div class="row smalltext">
-            <div class="panel panel-heading col-md-4"><span>Publish Date:</span></div>
+            <div class="panel panel-heading col-md-3"><span>Publish Date:</span></div>
 
-            <div class="form-group col-md-8">
+            <div class="form-group col-md-6">
               <my-date-picker name="publishDate" formControlName="publishDate"
                               visibleMonth.monthTxt=""
                               #publishDate
@@ -72,6 +72,12 @@
             </div>
           </div>
 
+
+          <div class="row smalltext">
+            <div class="panel panel-heading col-md-3" style="text-align:center;">
+              <button type="submit" class="btn btn-danger smalltextbold" style="width:auto;" [disabled]="!addForm.valid || !hasImages">Add Trade</button>
+            </div>
+          </div>
         </div>
 
         <!-- file uploads -->
@@ -79,7 +85,7 @@
 
           <div class="row col-md-12">
                 <div class="row panel panel-heading">
-                  <span class="smalltext">Trade Images (3-10MB max - types: .png, .gif, .jpeg, .png, .bmp):</span>
+                  <span class="smalltext">Trade Images (3 images - max 10MB each - file types: .png .gif .tif .jpeg .bmp):</span>
                 </div>            
                 <div class="row">
                   <input type="file" ng2FileSelect [uploader]="uploader"  style="color:transparent;"  multiple  (change)="onChange($event)"/>           
@@ -178,11 +184,7 @@
       </div>
 
 
-        <div class="row ">         
-          <div class="col-md-3">
-            <button type="submit" class="btn btn-danger smalltextbold"  style="width:200px;" [disabled]="!addForm.valid || !hasImages">Add Trade</button>
-          </div>
-        </div>
+       
 
       </div>
                

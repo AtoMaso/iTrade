@@ -77,7 +77,7 @@ export class MyTradesListComponent implements OnInit {
         }  
         else {
             this.data = this.TransformData(returnedTrades),
-            this.totalNumberOfRecords = this.data[0].totalTradesNumber;
+            this.totalNumberOfRecords = this.data[0].total;
             this.hasTrades = true;
             this.hasNoTrades = false;
             this.isRequesting = false,           
@@ -107,7 +107,7 @@ export class MyTradesListComponent implements OnInit {
         }  
         else {
             this.data = this.TransformData(returnedTrades),
-            this.totalNumberOfRecords = this.data[0].totalTradesNumber;
+            this.totalNumberOfRecords = this.data[0].total;
             this.hasTrades = true;
             this.hasNoTrades = false;
             this.isRequesting = false,

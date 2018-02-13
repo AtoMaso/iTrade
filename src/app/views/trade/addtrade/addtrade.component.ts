@@ -62,30 +62,17 @@ export class AddTradeComponent implements OnInit {
     this.uploader = new FileUploader({
       maxFileSize: 1024 * 1024,    
       url: uploadFileUrl,         
-      allowedMimeType: ['image/png', 'image/gif', 'image/jpeg', 'image/tif', 'image/psd', 'image/png', 'image/bmp'],      
-      //disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
-      //formatDataFunctionIsAsync: true,    
-      //formatDataFunction: async (item) => {
-      //  return new Promise((resolve, reject) => {
-      //    resolve({
-      //            name: item._file.name,
-      //            length: item._file.size,
-      //            contentType: item._file.type,
-      //            date: new Date(),
-      //      });
-      //  });
-      //}
+      allowedMimeType: ['image/png', 'image/gif', 'image/jpeg', 'image/tif', 'image/bmp'],   
     });
 
-    this.uploader.options.allowedFileType = ['png', 'gif', 'jpeg', 'tif', 'psd', 'png', 'bmp'];
+    this.uploader.options.allowedFileType = ['png', 'gif', 'jpeg', 'tif', 'bmp'];
     this.uploader.options.queueLimit = 3;
+
     this.hasBaseDropZoneOver = false;
     this.hasAnotherDropZoneOver = false;
 
     this.response = '';
-
     this.uploader.response.subscribe(res => this.response = res);
-
   };
 
   ngOnInit() {
@@ -127,8 +114,7 @@ export class AddTradeComponent implements OnInit {
       this.newTrade.status = "Open";
       this.newTrade.traderId = this.identity.userId;
 
-      // set the image array here
-      // the imageid and real url will be created 
+      // set the image array here, the imageid and real url will be created 
       // on the web api side when the tradeId is taken
       if (this.uploader.queue.length > 0) {
         let image = new Image();
@@ -249,8 +235,8 @@ export class AddTradeComponent implements OnInit {
     this.datePickerOptions = {
           dateFormat: 'dd/mm/yyyy',
           firstDayOfWeek: 'mo',
-          selectorWidth: '300px',
-          width: '300px',
+          selectorWidth: 'auto',
+          width: 'auto',
           minYear: 1900,
           maxYear: 2100,
           editableDateField: false
