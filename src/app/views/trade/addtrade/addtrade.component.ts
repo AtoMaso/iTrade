@@ -14,9 +14,8 @@ import { PageTitleService } from '../../../services/pagetitle/pagetitle.service'
 import { UserSession, UserIdentity, Authentication, Trade,PostTrade, PageTitle, Category, Image } from '../../../helpers/classes';
 
 
-let uploadsUrl = CONFIG.baseUrls.uploads;
-let uploadsAttachUrl = CONFIG.baseUrls.uploadsattach;
-let uploadPhysical = CONFIG.baseUrls.uploadsphysical;
+let uploadFileUrl = CONFIG.baseUrls.uploadFileUrl;
+let imagesPathUrl = CONFIG.baseUrls.imagesPathUrl;
 
 @Component({
   selector: 'app-addtrade',
@@ -47,7 +46,8 @@ export class AddTradeComponent implements OnInit {
   private hasBaseDropZoneOver: boolean;
   private hasAnotherDropZoneOver: boolean;
   private response: string;
-  private allowedMimeType: string[];
+  private hasImages: boolean = false;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -61,21 +61,22 @@ export class AddTradeComponent implements OnInit {
 
     this.uploader = new FileUploader({
       maxFileSize: 1024 * 1024,    
-      url: uploadsUrl,         
-      allowedMimeType: ['image/png', 'image/gif', 'image/jpeg', 'image/tif', 'image/psd', 'image/png', 'image/bmp'],     
-      disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
-      formatDataFunctionIsAsync: true,    
-      formatDataFunction: async (item) => {
-        return new Promise((resolve, reject) => {
-          resolve({
-                  name: item._file.name,
-                  length: item._file.size,
-                  contentType: item._file.type,
-                  date: new Date()
-            });
-        });
-      }
+      url: uploadFileUrl,         
+      allowedMimeType: ['image/png', 'image/gif', 'image/jpeg', 'image/tif', 'image/psd', 'image/png', 'image/bmp'],      
+      //disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
+      //formatDataFunctionIsAsync: true,    
+      //formatDataFunction: async (item) => {
+      //  return new Promise((resolve, reject) => {
+      //    resolve({
+      //            name: item._file.name,
+      //            length: item._file.size,
+      //            contentType: item._file.type,
+      //            date: new Date(),
+      //      });
+      //  });
+      //}
     });
+
     this.uploader.options.allowedFileType = ['png', 'gif', 'jpeg', 'tif', 'psd', 'png', 'bmp'];
     this.uploader.options.queueLimit = 3;
     this.hasBaseDropZoneOver = false;
@@ -110,42 +111,6 @@ export class AddTradeComponent implements OnInit {
   //*****************************************************
   // ADD TRADE
   //*****************************************************
-  public AddTrade(passedTrade: PostTrade) {
-
-      this.tradeService.AddTrade(passedTrade)
-        .subscribe((res: Trade) => { this.onAddSuccess(res); }
-        , (error: Response) => this.onError(error, "Login"));
-  }
-
-  private fileOverBase(e: any) {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  private fileOverAnother(e: any) {
-    this.hasAnotherDropZoneOver = e;
-  }
-
-  private onChange(event: any) {    
-    let m:number = 0; 
-    let fileItems: FileItem[] = this.uploader.queue;
-    for (m = 0; m < fileItems.length; m++) {
-      fileItems[m].isReady = true;
-    }  
-  }
-
-  // called when remove file button is clicked
-  private removeFile(item: any) {
-    this.isMessageVisible = false;
-    item.remove();
-
-  }
-
-  // called when remove all files button is clicked
-  private removeAllFiles() {
-    this.isMessageVisible = false;
-    this.uploader.clearQueue();
-  }
-
   private saveTrade() {
 
     if (this.addForm.dirty && this.addForm.valid) {
@@ -162,31 +127,88 @@ export class AddTradeComponent implements OnInit {
       this.newTrade.status = "Open";
       this.newTrade.traderId = this.identity.userId;
 
-      // upload files if any and get result first
+      // set the image array here
+      // the imageid and real url will be created 
+      // on the web api side when the tradeId is taken
       if (this.uploader.queue.length > 0) {
-        this.uploader.queue.forEach(x => this.uploadSingleFile(x))
+        let image = new Image();
+        let m: number = 0;
+
+        for (m = 0; m < this.uploader.queue.length; m++) {
+          image.imageTitle = this.uploader.queue[0].file.name;
+          image.imageUrl = imagesPathUrl;
+          this.newTrade.Images.push(image);
+        }     
       }
-      this.AddTrade(this.newTrade);   
-    }   
+      this.AddTrade(this.newTrade);
+    }
   }
 
-  private uploadSingleFile(item: any) {
+ 
+  public AddTrade(passedTrade: PostTrade) {
+      let trades: PostTrade[] = [];
 
-    let originalFileName: string = item.file.name;
+      this.tradeService.AddTrade(passedTrade)
+            .subscribe(trade =>this.onAddSuccess(trade)
+            , (error: Response) => this.onError(error, "addTrade"));
+  }
+
+
+  private onAddSuccess(trade: PostTrade) {
+  
+    let m: number = 0;
+    if (this.uploader.queue.length > 0) {
+      for (m = 0; m < this.uploader.queue.length; m++) {
+        this.uploader.queue[m].file.name = trade.Images[m].imageTitle;        
+        this.uploadSingleFile(this.uploader.queue[m]);
+      }
+      this.isSubmitted = true;
+    }  
+    
+  }
+
+
+  private uploadSingleFile(item: any) {
     item.withCredentials = false;
     // we are making the name unique evenif the file is the same 
     // and does exist on the server upload side
-    item.file.name = item.file.name;
     item.upload();
-
-    // set the image array here
-    // the imageid and real url will be created 
-    // on the web api side when the tradeId is taken
-    let image = new Image();
-    image.imageTitle = item.file.name;
-    image.imageUrl = uploadPhysical;   
-    this.newTrade.Images.push(image);
   }
+
+
+  private fileOverBase(e: any) {
+    this.hasBaseDropZoneOver = e;
+  }
+
+
+  private fileOverAnother(e: any) {
+    this.hasAnotherDropZoneOver = e;
+  }
+
+
+  private onChange(event: any) {    
+    let m:number = 0; 
+    let fileItems: FileItem[] = this.uploader.queue;
+    for (m = 0; m < fileItems.length; m++) {
+      fileItems[m].isReady = true;
+      this.hasImages = true;
+    }  
+  }
+
+
+  // called when remove file button is clicked
+  private removeFile(item: any) {
+    this.isMessageVisible = false;
+    item.remove();
+  }
+
+
+  // called when remove all files button is clicked
+  private removeAllFiles() {
+    this.isMessageVisible = false;
+    this.uploader.clearQueue();
+  }
+
 
  
   //*****************************************************
@@ -262,11 +284,7 @@ export class AddTradeComponent implements OnInit {
     this.addForm.patchValue({ publishDate: null });
   }
 
-  private onAddSuccess(trade: Trade) {
-    let trades: Trade[] = [];
-    trades.push(trade);
-    //TODO trade has been added to the system
-  }
+ 
   
 
 

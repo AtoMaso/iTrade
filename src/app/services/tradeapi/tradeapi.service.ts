@@ -1,5 +1,6 @@
 ﻿import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { CONFIG } from '../../config';
 import { Observable} from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -31,13 +32,17 @@ let removeTrade = CONFIG.baseUrls.removetrade;
 @Injectable()
 export class TradeApiService {
 
+  private args: RequestOptionsArgs;
   private localUrl: string; 
   private session: UserSession;
   private identity: UserIdentity = new UserIdentity;
   private token: string;
   private newTrade = new PostTrade();
 
-  constructor( private httpClientService: HttpClient) { };
+  constructor(
+    private httpClientService: HttpClient,
+    private http: Http
+  ) { };
  
 
   //******************************************************
@@ -103,21 +108,24 @@ export class TradeApiService {
   //******************************************************
   // ADD TRADE
   //******************************************************
-  public AddTrade(trade: PostTrade) {
+  public AddTrade(trade: PostTrade):Observable<PostTrade> {
     // get the session details
     this.getUseridentity(); 
 
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.token}`
       })
     };
     // post the trade
     this.localUrl = addTrade;  
-    return this.httpClientService.post<PostTrade>(this.localUrl, trade, httpOptions).retry(3);
+    return this.httpClientService.post<PostTrade>(this.localUrl, trade, httpOptions);    
   }
+
+
 
   //******************************************************
   // DELETE TRADE
@@ -138,5 +146,9 @@ export class TradeApiService {
         this.identity = this.session.userIdentity;   
         this.token = this.identity.accessToken;      
     }
+  }
+
+  private handleError(method: string, object: PostTrade): any {
+
   }
 }

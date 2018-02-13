@@ -191,9 +191,8 @@
     removesecurityquestion: 'http://localhost:5700/api/securityquestions/deletesecurityquestion',
 
     // uploads
-    uploads: 'http://localhost:5700/api/uploads',
-    uploadsattach: 'http://localhost:5700/api/attachements',
-    uploadsphysical: 'http://localhost:5700/uploads'
-  
+    uploadFileUrl: 'http://localhost:5700/api/uploads/UploadFile',
+    imagesPathUrl: 'http://localhost:5700/uploads/images/',
+    
   }
 }

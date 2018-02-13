@@ -79,7 +79,7 @@
 
           <div class="row col-md-12">
                 <div class="row panel panel-heading">
-                  <span class="smalltext">Trade Images (max 3, types: .png, .gif, .jpeg, .png, .bmp, max:10MB ):</span>
+                  <span class="smalltext">Trade Images (3-10MB max - types: .png, .gif, .jpeg, .png, .bmp):</span>
                 </div>            
                 <div class="row">
                   <input type="file" ng2FileSelect [uploader]="uploader"  style="color:transparent;"  multiple  (change)="onChange($event)"/>           
@@ -180,32 +180,15 @@
 
         <div class="row ">         
           <div class="col-md-3">
-            <button type="submit" class="btn btn-danger smalltextbold"  style="width:200px;" [disabled]="!addForm.valid">Add Trade</button>
+            <button type="submit" class="btn btn-danger smalltextbold"  style="width:200px;" [disabled]="!addForm.valid || !hasImages">Add Trade</button>
           </div>
         </div>
 
       </div>
                
 
-</form>
+</form> 
 
-
-<!--<style>
-  .my-drop-zone {
-    border: solid 3px lightgray;
-  }
-
-  .nv-file-over {
-    border: solid 3px red;
-  }
-  /* Default class applied to drop zones on over */
-  .another-file-over-class {
-    border: solid 3px green;
-  }
-
-  html, body {
-    height: 100%;
-  }
-</style>-->
-
- 
+<div *ngIf="isSubmitted">
+  Success
+</div>
