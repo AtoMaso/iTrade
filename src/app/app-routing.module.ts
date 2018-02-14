@@ -42,7 +42,7 @@ const routes: Routes = [
   //t r a d e s
   { path: 'alltradeslist', component: AllTradesListComponent }, 
   { path: 'tradedetails', component: TradeDetailsComponent }, // this should be accessible from the dashboard or the list of all trades or my trades view
-  { path: 'addtrade', component: AddTradeComponent },
+  { path: 'addtrade', component: AddTradeComponent, canActivate: [AuthGuard]},
   { path: 'mytradeslist', component: MyTradesListComponent, canActivate: [AuthGuard] },
 
   // t r a d e r

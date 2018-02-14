@@ -122,6 +122,7 @@ export class MyTradesListComponent implements OnInit {
   //****************************************************
   // ADD TRADE
   //****************************************************
+  // navigate to the AddTrade view
   private addTrade() {
     this.router.navigate(['/addtrade']);
   }
@@ -130,17 +131,17 @@ export class MyTradesListComponent implements OnInit {
   //****************************************************
   // REMOVE TRADE
   //****************************************************
-  private removeTrade(tradeId: string) {
-    //this.tradeApiService.removeTrade(tradeId)
-    //  .subscribe((removedTrade: Trade) => this.onSuccessRemoveTrade(removedTrade)
-    //  , error => this.onError(error, "removeArticle"));
+  private deleteTrade(tradeId: number) {
+    this.tradeApiService.DeleteTrade(tradeId)
+      .subscribe((removedTrade: Trade) => this.onSuccessRemoveTrade(removedTrade)
+      , error => this.onError(error, "removeArticle"));
   }
-
 
 
   //*****************************************************
   // HELPER METHODS 
   //*****************************************************
+  // this one should be the authentication service
   private getUseridentity() {
     if (sessionStorage["UserSession"] != "null") {
       try {
@@ -156,6 +157,7 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
+  // initialise componanet method
   private initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.isRequesting = true;
@@ -163,23 +165,7 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
-  private onSuccessRemoveTrade(trade: Trade) {
-    if (trade) {
-      this.removedTradeId = trade.tradeId;
-      this.onChangeTable(this.config);     
-
-      // reset the removed trade after the data has been updated so it is ready for the next filtering or sorting of the list
-      this.removedTradeId = null;
-
-      this.messagesService.emitProcessMessage("PMRTS");
-    }
-    else {
-      this.messagesService.emitProcessMessage("PMRTE");
-    }
-  }
-
-
-
+  // tansformation of the data in fromat we need
   private TransformData(returnedTrades: Trade[]): Array<any> {
 
     let transformedData = new Array<Trade>();
@@ -210,6 +196,7 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
+  // passing data to the modal form
   private passToModal(trade: Trade) {
 
       if (trade.traderId === this.session.userIdentity.userId) {
@@ -223,17 +210,22 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
-  //private onError(serviceError: any, operation: string) {
-  //  // stop the spinner if running
-  //  this.isRequesting = false;
+  // when removing of the trade is successful
+  private onSuccessRemoveTrade(trade: Trade) {
+    if (trade) {
+      this.removedTradeId = trade.tradeId;
+      this.onChangeTable(this.config);
+      this.onPageChange(1);
 
-  //  // audit log the error passed
-  //  this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
+      // reset the removed trade after the data has been updated so it is ready for the next filtering or sorting of the list
+      this.removedTradeId = null;
 
-  //  if (serviceError.error.ModelState !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
-  //  else { this.messagesService.emitProcessMessage("PMGTs"); }
-
-  //}
+      this.messagesService.emitProcessMessage("PMSDT");
+    }
+    else {
+      this.messagesService.emitProcessMessage("PMEDT");
+    }
+  }
 
 
   //****************************************************
@@ -321,7 +313,6 @@ export class MyTradesListComponent implements OnInit {
   };
 
 
-
   private calculateTotalNumberOfSets() {
 
     let rem = this.totalNumberOfRecords % this.recordsPerSet;
@@ -333,7 +324,6 @@ export class MyTradesListComponent implements OnInit {
       else { this.totalNumberOfSets = mainpart; }
     }
   }
-
 
 
   private onPageChange(passedpage: number) {
@@ -388,7 +378,7 @@ export class MyTradesListComponent implements OnInit {
 
     if (this.setsCounter > 1) {
 
-      // decreasethe set counter
+      // decrease the set counter
       this.setsCounter = this.setsCounter - 1;
 
       // get the previous set of records
@@ -412,8 +402,7 @@ export class MyTradesListComponent implements OnInit {
         let removedData = this.changeRemove(this.data, this.config);
         let filteredData = this.changeFilter(removedData, this.config);
         let sortedData = this.changeSort(filteredData, this.config);
-        this.rows = sortedData; 
-        this.rows = sortedData;
+        this.rows = sortedData;     
         this.config.totalItems = sortedData.length;
   }
 

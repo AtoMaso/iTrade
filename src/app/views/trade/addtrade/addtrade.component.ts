@@ -1,7 +1,7 @@
 import { Component, OnInit, NgModule, VERSION, AfterViewInit} from '@angular/core';
 import { IMyDpOptions, IMyDateModel, IMyDayLabels, IMyMonthLabels, IMyDate, IMyOptions} from 'mydatepicker';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder, FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Router, ActivatedRoute, ActivatedRouteSnapshot, NavigationExtras } from '@angular/router';
 import { Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader, FileUploadModule, FileItem} from 'ng2-file-upload';
 import { CONFIG } from '../../../config';
@@ -12,7 +12,7 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 import { UserSession, UserIdentity, Authentication, Trade,PostTrade, PageTitle, Category, Image } from '../../../helpers/classes';
-
+import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 let uploadFileUrl = CONFIG.baseUrls.uploadFileUrl;
 let imagesPathUrl = CONFIG.baseUrls.imagesPathUrl;
@@ -47,11 +47,12 @@ export class AddTradeComponent implements OnInit {
   private hasAnotherDropZoneOver: boolean;
   private response: string;
   private hasImages: boolean = false;
-
+  private addedTrade: PostTrade = new PostTrade();
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private categoryService: CategoryService,
     private tradeService: TradeApiService,
     private messagesService: ProcessMessageService,
@@ -100,6 +101,9 @@ export class AddTradeComponent implements OnInit {
   //*****************************************************
   private saveTrade() {
 
+    // remove previous error messages
+    this.messagesService.emitRoute("nill");
+
     if (this.addForm.dirty && this.addForm.valid) {
 
       this.isMessageVisible = false;
@@ -130,7 +134,7 @@ export class AddTradeComponent implements OnInit {
     }
   }
 
- 
+ // calling the service
   public AddTrade(passedTrade: PostTrade) {
       let trades: PostTrade[] = [];
 
@@ -139,21 +143,26 @@ export class AddTradeComponent implements OnInit {
             , (error: Response) => this.onError(error, "addTrade"));
   }
 
-
+  // on success to the following
   private onAddSuccess(trade: PostTrade) {
-  
+
+    this.addedTrade = trade;
     let m: number = 0;
     if (this.uploader.queue.length > 0) {
       for (m = 0; m < this.uploader.queue.length; m++) {
         this.uploader.queue[m].file.name = trade.Images[m].imageTitle;        
         this.uploadSingleFile(this.uploader.queue[m]);
       }
+    
+      // is no point of changing of isRequested as we go to another page here
       this.isSubmitted = true;
+      //this.isRequesting = false;
+      this.router.navigate(['/tradedetails'],  { queryParams: { id: trade.tradeId, flag:true }});          
     }  
     
   }
 
-
+  // upload each file- maybe we should go with mutliple
   private uploadSingleFile(item: any) {
     item.withCredentials = false;
     // we are making the name unique evenif the file is the same 
@@ -162,6 +171,16 @@ export class AddTradeComponent implements OnInit {
   }
 
 
+  // when files selected change the status
+  private onChange(event: any) {
+    let m: number = 0;
+    let fileItems: FileItem[] = this.uploader.queue;
+    for (m = 0; m < fileItems.length; m++) {
+      fileItems[m].isReady = true;
+      this.hasImages = true;
+    }
+  }
+
   private fileOverBase(e: any) {
     this.hasBaseDropZoneOver = e;
   }
@@ -169,16 +188,6 @@ export class AddTradeComponent implements OnInit {
 
   private fileOverAnother(e: any) {
     this.hasAnotherDropZoneOver = e;
-  }
-
-
-  private onChange(event: any) {    
-    let m:number = 0; 
-    let fileItems: FileItem[] = this.uploader.queue;
-    for (m = 0; m < fileItems.length; m++) {
-      fileItems[m].isReady = true;
-      this.hasImages = true;
-    }  
   }
 
 
@@ -231,7 +240,7 @@ export class AddTradeComponent implements OnInit {
           publishDate: new FormControl('', [Validators.required]),
     });
 
-    this.currentLocale = 'en';
+    this.currentLocale = 'au';
     this.datePickerOptions = {
           dateFormat: 'dd/mm/yyyy',
           firstDayOfWeek: 'mo',

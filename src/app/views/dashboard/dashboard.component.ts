@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   //private trades: Trade[] = [];
   private trades: Array<any> = [];
   public isRequesting: boolean;
-  private hasTrades: boolean = true;
+  private hasTrades: boolean = true;  
   private hasNoTrades: boolean = false;
 
   constructor(private tradeApiService: TradeApiService,

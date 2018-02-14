@@ -95,27 +95,28 @@
 
                   <span class="images panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseImages">
                     <span class="glyphicon glyphicon-minus"></span> Trade Images
+                    <span *ngIf="!hasImages" class="textoker">- The system can not find images for your trade!</span>  
                  </span>             
 
                   <!-- collapsable trade images -->
-                  <div id="collapseImages" class="collapse in">
+                  <div  *ngIf ="hasImages" id="collapseImages" class="collapse in">
           
-                      <div class="container panel panel-heading col-md-12 smalltext">
+                      <div class="container panel panel-heading col-md-12">
 
                         <div class="col-md-4">
-                          <div *ngIf="hasImages"> <!-- TODO individual check of image 1, 2,3 -->
+                          <div *ngIf="hasImage1"> <!-- TODO individual check of image 1, 2,3 -->
                             <img src="{{ images[0].imageUrl }}" alt="" style="height: 250px;width: 250px;">
                           </div>
                         </div>
 
                         <div class="col-md-4">
-                          <div *ngIf="hasImages">
+                          <div *ngIf="hasImage2">
                             <img src="{{ images[1].imageUrl }}" alt="" style="height: 250px;width: 250px;">
                           </div>
                         </div>
 
                         <div class="col-md-4">
-                          <div *ngIf="hasImages">
+                          <div *ngIf="hasImage3">
                             <img src="{{ images[2].imageUrl }}" alt="" style="height: 250px;width: 250px;">
                           </div>
                         </div>

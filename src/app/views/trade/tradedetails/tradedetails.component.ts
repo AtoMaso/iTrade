@@ -24,15 +24,19 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 export class TradeDetailsComponent implements OnInit {
 
   private tradeId: number = 0;
-  private trade: Trade = new Trade();
+  private trade: Trade;
   private images: Image[];
   private histories: TradeHistory[];
-  private hasImages: boolean = false; 
+  private hasImages: boolean = true; 
+  private hasImage1: boolean = true;
+  private hasImage2: boolean = true;
+  private hasImage3: boolean = true;
   private session: UserSession;
   private identity: UserIdentity = new UserIdentity;
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false;
   private canTrade: boolean = false;
+  private flag: boolean = false;
 
   constructor(  
     private tradeApiService: TradeApiService,
@@ -50,7 +54,10 @@ export class TradeDetailsComponent implements OnInit {
   // Component events
   /*******************************************************/
   ngOnInit() {
-    this.route.queryParams.subscribe(params => { this.tradeId = params['id']; });
+    this.route.queryParams.subscribe(params => {
+      this.tradeId = params['id'];
+      this.flag = params['flag'];
+    });
 
     this.getUseridentity();
 
@@ -58,10 +65,11 @@ export class TradeDetailsComponent implements OnInit {
 
     this.getATrade(this.tradeId); 
 
-    this.getTradeImages(this.tradeId);
+    //this.getTradeImages(this.tradeId);
 
     this.getTradeHistory(this.tradeId);  
 
+    if (this.flag) { this.messagesService.emitProcessMessage("PMSAT");}
   }
 
 
@@ -103,7 +111,7 @@ export class TradeDetailsComponent implements OnInit {
 
     this.tradeApiService.getSingleTrade(tradeId)
       .subscribe((tradeResult: Trade) => {
-        this.trade = this.TransformData(tradeResult);
+         this.trade = this.TransformData(tradeResult);
 
         // check is the trader viewing hist trade but only when logged in
         if (sessionStorage["UserSession"] != "null") {
@@ -180,6 +188,18 @@ export class TradeDetailsComponent implements OnInit {
     trd.traderId = returnedTrade.traderId; 
     trd.traderFullName = returnedTrade.traderFirstName + " " + returnedTrade.traderMiddleName + " " + returnedTrade.traderLastName;
 
+    trd.Images = returnedTrade.Images;
+    this.images = returnedTrade.Images;
+    if (this.images.length == 0) {
+      this.hasImages = false;
+    }
+    else if (this.images.length == 1) {
+      this.hasImage2 = false;
+      this.hasImage3 = false;
+    }
+    else if (this.images.length == 2) {
+      this.hasImage3 = false; 
+    }    
     return trd;
   }
 

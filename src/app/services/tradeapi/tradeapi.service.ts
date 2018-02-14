@@ -27,7 +27,7 @@ let filteredTradesAll = CONFIG.baseUrls.filteredtradesall;
 let trade = CONFIG.baseUrls.trade;
 let updateTrade = CONFIG.baseUrls.updatetrade;
 let addTrade = CONFIG.baseUrls.addtrade;
-let removeTrade = CONFIG.baseUrls.removetrade;
+let deleteTrade = CONFIG.baseUrls.deletetrade;
 
 @Injectable()
 export class TradeApiService {
@@ -130,7 +130,23 @@ export class TradeApiService {
   //******************************************************
   // DELETE TRADE
   //******************************************************
+  public DeleteTrade(tradeid:number): Observable<PostTrade> {
+    // get the session details
+    this.getUseridentity();
 
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+    this.localUrl = `${deleteTrade}?tradeId=${tradeid}`; // DELETE api/trades/DeleteTrade?tradeId=1
+
+    return this.httpClientService.delete<PostTrade>(this.localUrl, httpOptions);    
+
+  }
 
   //******************************************************
   // UPDATE TRADE

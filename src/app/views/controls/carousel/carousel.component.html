@@ -10,20 +10,20 @@
   
   <div class="carousel-inner">
     <div class="item active">
-      <div *ngIf="hasImages">
-        <img src="{{tradeImages[0].imageUrl }}" alt="">
+      <div *ngIf="hasImage1">
+        <img src="{{ images[0].imageUrl }}" alt="">
       </div>     
     </div>
 
     <div class="item">
-      <div *ngIf="hasImages">
-        <img src="{{tradeImages[1].imageUrl }}" alt="">
+      <div *ngIf="hasImage2">
+        <img src="{{ images[1].imageUrl }}" alt="">
       </div>   
     </div>
 
     <div class="item">
-      <div *ngIf="hasImages">
-        <img src="{{tradeImages[2].imageUrl }}" alt="">
+      <div *ngIf="hasImage3">
+        <img src="{{ images[2].imageUrl }}" alt="">
       </div>   
     </div>
   </div>

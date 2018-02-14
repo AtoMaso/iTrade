@@ -65,7 +65,7 @@
                               placeholder="Select a date..."
                               [options]="datePickerOptions"
                               (dateChanged)="onDateChanged($event)"
-                              [locale]="en"
+                              [locale]="au"
                               [selDate]="selectDate">
               </my-date-picker>
 
@@ -118,15 +118,15 @@
 
                 <tbody>
                   <tr *ngFor="let item of uploader.queue">
-                    <td><label class="text-info smalltext">{{ item?.file?.name }}</label></td>
+                    <td><label class="textoker smalltext">{{ item?.file?.name }}</label></td>
                     <!--<td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>-->
-                    <td nowrap class="text-info smalltext">{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                    <td nowrap class="textoker smalltext">{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
 
-                    <!--<td *ngIf="uploader.isHTML5">
+                    <td *ngIf="uploader.isHTML5">
                         <div class="progress" style="margin-bottom: 0;">
                               <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
                         </div>
-                   </td>-->
+                   </td>
 
                     <td class="text-center smalltext">
                       <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
@@ -181,16 +181,14 @@
           </div>
 
         </div>
-      </div>
-
-
-       
+      </div>       
 
       </div>
                
-
 </form> 
 
-<div *ngIf="isSubmitted">
-  Success
+<div *ngIf="isSubmitted" class="row col-md-12">
+     <app-tradedetails></app-tradedetails>                     
 </div>
+
+<my-spinner [isRunning]="isRequesting"></my-spinner>

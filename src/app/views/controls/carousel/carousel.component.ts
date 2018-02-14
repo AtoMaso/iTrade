@@ -21,13 +21,12 @@ export class CarouselComponent implements OnInit {
   public cariouselId: string = "myCarousel";
   public leftRight: string = "#myCarousel";
 
-  public imageOne: Image = new Image();
-  public imageTwo: Image = new Image();
-  public imageThree: Image = new Image();
-
+  public hasImage1: boolean = true;
+  public hasImage2: boolean = true;
+  public hasImage3: boolean = true;
   private isVisible: boolean = true;
   private hasImages: boolean = false;
-  private tradeImages: Image[];
+  private images: Image[];
 
   @Input() tradeId: number;
   //@Input() tradeImages: Image[];
@@ -38,9 +37,10 @@ export class CarouselComponent implements OnInit {
                      private  messagesService: ProcessMessageService) {  }  
 
 
-  public ngOnInit() {
-    // dashbord parent is passing the image of the trade
-    // so the following method is not needed, but we keep it if we needed later
+    public ngOnInit() {
+    
+    // dashbord parent can pass the images of the trade
+    // we are going with the call from the control as it is quiker
     this.getImagesByTradeId(this.tradeId)  
     // but we still need to get crousel ids 
     this.getCrouselIds(this.tradeId);
@@ -54,7 +54,8 @@ export class CarouselComponent implements OnInit {
     try {
       this.imageService.getImagesByTradeId(id).
             subscribe((images: Image[]) => {
-              this.tradeImages = images;    
+              this.images = images;    
+              this.handleVisibility();
               this.getCrouselIds(id);
               if (images !== null) { this.hasImages = true;}
            });
@@ -65,13 +66,32 @@ export class CarouselComponent implements OnInit {
   }
 
 
+  // visibility of the images
+  private handleVisibility() {
+    if (this.images.length == 0) {
+      this.hasImages = false;
+    }
+    else if (this.images.length == 1) {
+      this.hasImage2 = false;
+      this.hasImage3 = false;
+    }
+    else if (this.images.length == 2) {
+      this.hasImage3 = false;
+    }    
+  }
+
+
+  // carousel ids to match the control
   public getCrouselIds(passedId) {
     this.cariouselId = this.cariouselId + String(passedId);
     this.leftRight = this.leftRight + String(passedId);
   }
 
 
-  
+
+  //**************************************************************
+  // HANDLE ERRORS  
+  //**************************************************************  
   private onError(serviceError: any, operation: string) {
 
     let message: string = "";
@@ -99,7 +119,6 @@ export class CarouselComponent implements OnInit {
     else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
     else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
     else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
-
 
   }
 

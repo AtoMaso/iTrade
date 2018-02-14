@@ -184,17 +184,17 @@ export class AllTradesListComponent implements OnInit {
   }
 
 
-  //private passToModal(trade: Trade) {
+  private passToModal(trade: Trade) {
 
-  //  if (trade.traderId === this.session.userIdentity.userId) {
-  //    this.isOwner = true;
-  //    this.tradeIdToBeRemoved = trade.tradeId;
-  //  }
-  //  else {
-  //    this.isOwner = false;
-  //    this.tradeIdToBeRemoved = null;
-  //  }
-  //}
+    if (trade.traderId === this.session.userIdentity.userId) {
+      this.isOwner = true;
+      this.tradeIdToBeRemoved = trade.tradeId;
+    }
+    else {
+      this.isOwner = false;
+      this.tradeIdToBeRemoved = null;
+    }
+  }
 
 
 

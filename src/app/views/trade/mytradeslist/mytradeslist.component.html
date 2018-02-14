@@ -124,7 +124,8 @@
                 <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
               </button>
 
-              <button *ngIf="isAuthenticated" type="button" data-target="#removeAllowed" data-articleid=(trade.tradeId) data-toggle="modal" class="btn btn-sm btn-danger smalltextbold" (click)="passToModal(trade)">
+              <button *ngIf="isAuthenticated" type="button" data-target="#removeAllowed" data-articleid=(trade.tradeId) 
+                           data-toggle="modal" class="btn btn-sm btn-danger smalltextbold" (click)="passToModal(trade)">
                 <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
               </button>
             </td>
@@ -259,7 +260,7 @@
         </div>
         <div *ngIf="isOwner">
           <button class="btn btn-danger" data-dismiss="modal">No</button>
-          <button class="btn btn-success" (click)="removeTrade(tradeIdToBeRemoved)" data-dismiss="modal">Yes</button>
+          <button class="btn btn-success" (click)="deleteTrade(tradeIdToBeRemoved)" data-dismiss="modal">Yes</button>
         </div>
       </div>
 

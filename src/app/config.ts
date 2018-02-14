@@ -25,7 +25,7 @@
     trade: 'http://localhost:5700/api/trades/',
     updatetrade: 'http://localhost:5700/api/trades/PutTrade',
     addtrade: 'http://localhost:5700/api/trades/PostTrade',
-    removetrade: 'http://localhost:5700/api/trades/DeleteTrade',
+    deletetrade: 'http://localhost:5700/api/trades/DeleteTrade',
 
     // trade history
     tradehistories: 'http://localhost:5700/api/tradehistories',
