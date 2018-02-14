@@ -1,6 +1,6 @@
 ﻿import { Inject, Injectable, EventEmitter } from '@angular/core';
 import { Http, Response } from '@angular/http';
-
+import * as moment from 'moment';
 
 @Injectable()
 export class ValidationService {
@@ -18,7 +18,12 @@ export class ValidationService {
       'invalidMiddleName': 'Invalid name. Your middle name should contain only alphabetical characters with maximum lenght of 15 characters. ',
       'invalidLastName': 'Invalid name. Your last name should contain only alphabetical characters with maximum lenght of 50 characters. ',  
       'invalidUsername': 'Invalid username. Username must be 5 alphanumeric characters long. ',
-      'invalidPhone': 'Invalid phone. Phone must contain 10 numeric characters. '
+      'invalidPhone': 'Invalid phone. Phone must contain 10 numeric characters. ',
+      'invalidTradeName': 'Name should be 3-15 characters. ',
+      'invalidTradeDescription': 'Description should be 10-200 characters. ',
+      'invalidTradeTradeFor': 'Trade for name should be 3-15 characters. ',
+      'invalidCategoty': 'You must select a category. ',
+      'invalidDatePublished': 'Published date can not be in the past. ',
     };
     return config[validatorName];
   }
@@ -35,6 +40,71 @@ export class ValidationService {
   //  return config[validatorName];
   //}
 
+  static tradeNameValidator(control) {
+    // {10}-Assert trade name can be up to is 10 characters
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z]){3,15}$/)) {
+        return null;
+      } else {
+        return { 'invalidTradeName': true };
+      }
+    }
+  }
+
+  static tradeDescriptionValidator(control) {
+    // {10}-Assert trade description can be up to 200 characters
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z]){10,200}$/)) {
+        return null;
+      } else {
+        return { 'invalidTradeDescription': true };
+      }
+    }
+  }
+
+  static tradeForValidator(control) {
+    // {10}-Assert trade for name can be up to 10 characters
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z]){3,15}$/)) {
+        return null;
+      } else {
+        return { 'invalidTradeTradeFor': true };
+      }
+    }
+  }
+
+
+  static publishDateValidator(control) {
+
+    // {10}-Assert date can no be in the past
+    if (control.value)  {
+        let today = new Date()
+       let now = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate())         
+      let nowstring: string = moment(now).format('YYYY MM DD');
+      let controlstring: string = moment(control.value.date).format('YYYY MM DD');
+      if (controlstring > nowstring) {
+              return null;
+      }
+        else {
+            return { 'invalidDatePublished': true };
+        }
+    }
+}
+
+
+  static categoryValidator(control) {
+
+  // {10}-Assert date can no be in the past
+  if (control.value) {
+ 
+    if (control.value  !== "Select") {
+      return null;
+    }
+    else {
+      return { 'invalidCategoty': true };
+    }
+  }
+}
 
 
   static creditCardValidator(control) {
@@ -129,17 +199,6 @@ export class ValidationService {
       }
   }
 
-  // GOOD
-  static usernameValidator(control: any) {
-    // {5}-Assert username is 5 characters
-    if (control.value) {
-        if (control.value.match(/^(\w{5})$/)) {
-          return null;
-        } else {
-          return { 'invalidUsername': true };
-        }
-    }
-  }
 
 // GOOD
 static phoneValidator(control: any) {
@@ -199,66 +258,5 @@ static firstNameValidator(control: any) {
     }
   }
 
-
-// GOOD
-static teamNameValidator(control: any) {
-    // Name should be any character set separated with minimum one space
-    if (control.value) {
-      // if (control.value.match(/^(\w{1,50})$/)) {
-      if (control.value.match(/^\w+( +\w+)*$/)) {
-            return null;
-        } else {
-            return { 'invalidTeamName': true };
-        }
-    }
-}
-
-
-static memberManagerValidator(control: any) {
-    // Name should be any character set separated with minimum one space
-    if (control.value) {
-        if (control.value.match(/^(\w+)$/)) {
-            return null;
-        } else {
-            return { 'invalidManager': true };
-        }
-    }
-}
-
-
-static levelValidator(control: any) {
-    // Name should be any character set separated with minimum one space
-    if (control.value) {
-        if (control.value.match(/^(\w+)$/)) {
-            return null;
-        } else {
-            return { 'invalidLevel': true };
-        }
-    }
-}
-
-
-static positionValidator(control: any) {
-    // Name should be any character set separated with minimum one space
-    if (control.value) {
-        if (control.value.match(/^(\w+)$/)) {
-            return null;
-        } else {
-            return { 'invalidPosition': true };
-        }
-    }
-}
-
-
-static locationValidator(control: any) {
-    // Name should be any character set separated with minimum one space
-    if (control.value) {
-        if (control.value.match(/^(\w+)$/)) {
-            return null;
-        } else {
-            return { 'invalidLocation': true };
-        }
-    }
-}
 
 }

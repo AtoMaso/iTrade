@@ -8,6 +8,7 @@ import { CONFIG } from '../../../config';
 
 import { CategoryService } from '../../../services/categories/category.service';
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
+import { ValidationService } from '../../../services/validation/validation.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
@@ -27,7 +28,7 @@ export class AddTradeComponent implements OnInit {
   private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
   public addForm: FormGroup;
   public datePickerOptions: IMyOptions;
-  public currentLocale: string;
+  public currentLocale: string = "en";
 
   private session: UserSession;
   private identity: UserIdentity = new UserIdentity;
@@ -233,21 +234,21 @@ export class AddTradeComponent implements OnInit {
   private setupForm() {
    
      this.addForm = this.formBuilder.group({   
-          trading: new FormControl('', [Validators.required]),
-          description: new FormControl('', [Validators.required]),
-          tradingfor: new FormControl('', [Validators.required]),
-          category: new FormControl('', [Validators.required]),
-          publishDate: new FormControl('', [Validators.required]),
+       trading: new FormControl('', [Validators.required, ValidationService.tradeNameValidator]),
+       description: new FormControl('', [Validators.required, ValidationService.tradeDescriptionValidator]),
+       tradingfor: new FormControl('', [Validators.required, ValidationService.tradeForValidator]),
+       category: new FormControl('', [Validators.required, ValidationService.categoryValidator]),
+       publishDate: new FormControl('', [Validators.required, ValidationService.publishDateValidator]),
     });
 
-    this.currentLocale = 'au';
+    this.currentLocale = 'eu';
     this.datePickerOptions = {
           dateFormat: 'dd/mm/yyyy',
           firstDayOfWeek: 'mo',
           selectorWidth: 'auto',
           width: 'auto',
           minYear: 1900,
-          maxYear: 2100,
+          maxYear: 2100,          
           editableDateField: false
     };
 
@@ -259,7 +260,7 @@ export class AddTradeComponent implements OnInit {
     // Set today date using the patchValue function
     let date = new Date();
     this.addForm.patchValue({
-      publishDate: { date: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() } }
+      publishDate: { date: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate()+1 } }
     });
 
     this.selectDate = {

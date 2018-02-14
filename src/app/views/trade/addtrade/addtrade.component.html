@@ -59,23 +59,23 @@
             <div class="panel panel-heading col-md-3"><span>Publish Date:</span></div>
 
             <div class="form-group col-md-6">
-              <my-date-picker name="publishDate" formControlName="publishDate"
-                              visibleMonth.monthTxt=""
-                              #publishDate
-                              placeholder="Select a date..."
-                              [options]="datePickerOptions"
-                              (dateChanged)="onDateChanged($event)"
-                              [locale]="au"
-                              [selDate]="selectDate">
-              </my-date-picker>
-
+                <my-date-picker name="publishDate" formControlName="publishDate"
+                                visibleMonth.monthTxt=""
+                                #publishDate
+                                placeholder="Select a date..."
+                                [options]="datePickerOptions"
+                                (dateChanged)="onDateChanged($event)"
+                                [locale]="currentLocale"
+                                [selDate]="selectDate">
+                </my-date-picker>
+                <control-messages [control]="addForm.controls.publishDate"></control-messages>
             </div>
           </div>
 
 
           <div class="row smalltext">
             <div class="panel panel-heading col-md-3" style="text-align:center;">
-              <button type="submit" class="btn btn-danger smalltextbold" style="width:auto;" [disabled]="!addForm.valid || !hasImages">Add Trade</button>
+              <button type="submit" class="btn btn-danger smalltextbold" style="width:auto;" [disabled]="!addForm.valid || !hasImages">Add New Trade</button>
             </div>
           </div>
         </div>
