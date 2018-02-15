@@ -65,9 +65,9 @@ export class TradeDetailsComponent implements OnInit {
 
     this.getATrade(this.tradeId); 
 
+    if (!this.flag) { this.addHistoryRecord(); }
+ 
     //this.getTradeImages(this.tradeId);
-
-    this.addHistoryRecord();
 
     this.getTradeHistory(this.tradeId);  
 
@@ -226,6 +226,8 @@ export class TradeDetailsComponent implements OnInit {
 
   // on any error passed from the service or from the component itself
   private onError(serviceError: any, operation: string) {
+
+    this.isRequesting = false;
 
     // audit log the error passed
     this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
