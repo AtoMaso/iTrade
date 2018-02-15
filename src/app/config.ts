@@ -23,7 +23,7 @@
     pagesoftradesall: 'http://localhost:5700/api/trades/GetPagesOfTradesAll',
 
     trade: 'http://localhost:5700/api/trades/',
-    updatetrade: 'http://localhost:5700/api/trades/PutTrade',
+    updatetrade: 'http://localhost:5700/api/trades/',
     addtrade: 'http://localhost:5700/api/trades/PostTrade',
     deletetrade: 'http://localhost:5700/api/trades/DeleteTrade',
 

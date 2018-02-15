@@ -146,19 +146,25 @@ export class MyTradesListComponent implements OnInit {
   //****************************************************
   // CLOSE TRADE
   //****************************************************
-  private closeTrade(tradeId: number) {
+  private closeTrade(trade:Trade) {
     // create trade history to be written
     let trhis: TradeHistory = new TradeHistory();
     let dt: Date = new Date();
     trhis.createdDate = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
     trhis.status = "Closed";
-    trhis.tradeId = tradeId;
+    trhis.tradeId = trade.tradeId;
 
+    // add new history record
     this.tradeHistoryService.addTradeHistoryByTradeId(trhis)
-      .subscribe((returnedHistory: TradeHistory) => {
-        this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
-        //  this.data.push(returnedHistory),
-        //  this.onChangeTable(this.config)
+       .subscribe((returnedHistory: TradeHistory) => {
+        // update the trade now
+        trade.status = "Closed";      
+        this.tradeApiService.UpdateTrade(trade)
+              .subscribe((returnedTrade: Trade) => {
+                    // if successfull get the trades now
+                     this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
+
+              }, (serviceError: Response) => this.onError(serviceError, "closeTrade"))                           
       }, (serviceError: Response) => this.onError(serviceError, "closeTrade"));
   }
 
@@ -205,6 +211,7 @@ export class MyTradesListComponent implements OnInit {
       trd.status = value.status;
       trd.name = value.name;
       trd.description = value.description;
+      trd.categoryId = value.categoryId;
       trd.categoryDescription = value.categoryDescription;
       trd.tradeFor = value.tradeFor;        
 
@@ -228,11 +235,15 @@ export class MyTradesListComponent implements OnInit {
         this.isOwner = true;
         this.tradeIdToBeRemoved = trade.tradeId;
         this.tradeIdToBeClosed = trade.tradeId;
+        this.tradeToClose = trade;
+        this.tradeToRemove = trade;
       }
       else {
         this.isOwner = false;
         this.tradeIdToBeRemoved = null;
         this.tradeIdToBeClosed = null;
+        this.tradeToClose = null;
+        this.tradeToRemove = null;
       }
   }
 

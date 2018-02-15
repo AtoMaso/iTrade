@@ -128,6 +128,28 @@ export class TradeApiService {
 
 
   //******************************************************
+  // UPDATE TRADE
+  //******************************************************
+  public UpdateTrade(trade: Trade): Observable<Trade>{
+    // get the session details
+    this.getUseridentity();
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+    // post the trade
+    this.localUrl = updateTrade + trade.tradeId;
+    return this.httpClientService.put<Trade>(this.localUrl, trade, httpOptions);    
+  }
+
+
+
+  //******************************************************
   // DELETE TRADE
   //******************************************************
   public DeleteTrade(tradeid:number): Observable<PostTrade> {
@@ -147,10 +169,6 @@ export class TradeApiService {
     return this.httpClientService.delete<PostTrade>(this.localUrl, httpOptions);    
 
   }
-
-  //******************************************************
-  // UPDATE TRADE
-  //******************************************************
 
 
   //*****************************************************
