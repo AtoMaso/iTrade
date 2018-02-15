@@ -67,6 +67,8 @@ export class TradeDetailsComponent implements OnInit {
 
     //this.getTradeImages(this.tradeId);
 
+    this.addHistoryRecord();
+
     this.getTradeHistory(this.tradeId);  
 
     if (this.flag) { this.messagesService.emitProcessMessage("PMSAT");}
@@ -124,7 +126,7 @@ export class TradeDetailsComponent implements OnInit {
   }
 
 
-  /*******************************************************?
+  /*******************************************************
  // GET IMAGES
  /*******************************************************/
   private getTradeImages(tradeId: number) {
@@ -139,6 +141,24 @@ export class TradeDetailsComponent implements OnInit {
 
 
   /*******************************************************?
+ // ADD HISTORY RECORD
+ /*******************************************************/
+  private addHistoryRecord() {
+    // create new trdae history
+    let trhis: TradeHistory = new TradeHistory();
+    let dt: Date = new Date();
+    trhis.createdDate = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+    trhis.status = "Viewed";
+    trhis.tradeId = this.tradeId;
+
+    this.tradeHistoryService.addTradeHistoryByTradeId(trhis) 
+      .subscribe((returnedHistory: TradeHistory) => {
+          this.data.push(returnedHistory),
+          this.onChangeTable(this.config)
+      }, (serviceError: Response) => this.onError(serviceError, "addTradeHistory"));
+  }
+
+  /*******************************************************
  // GET TRADE HISTORY
  /*******************************************************/
   private getTradeHistory(tradeId: number) {

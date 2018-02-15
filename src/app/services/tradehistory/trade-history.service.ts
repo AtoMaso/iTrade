@@ -14,6 +14,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 import { TradeHistory, UserSession, UserIdentity} from '../../helpers/classes';
 
 let tradehistoriesUrl = CONFIG.baseUrls.tradehistories;
+let tradehistoriesbytradeid = CONFIG.baseUrls.tradehistoriesbytradeid;
 let pagesOfHistoriesUrl = CONFIG.baseUrls.pagesoftradehistories;
 let tradeHistoryUrl = CONFIG.baseUrls.tradehistory;
 let updateTradeHistoryUrl = CONFIG.baseUrls.updatetradehistory;
@@ -32,17 +33,27 @@ export class TradeHistoryService {
   //******************************************************
   // GET IMAGES METHODS
   //******************************************************
-    public getTradeHistoryApi(): Observable<TradeHistory[]> {
+  public getTradeHistoryApi(): Observable<TradeHistory[]> {
 
-      return this.httpClientService.get<TradeHistory[]>(tradehistoriesUrl).retry(3);
+    return this.httpClientService.get<TradeHistory[]>(tradehistoriesUrl).retry(3);
   }
 
 
-    public getTradeHistoryByTradeId(tradeId: number): Observable<TradeHistory[]> {
+  // get history for a tade
+  public getTradeHistoryByTradeId(tradeId: number): Observable<TradeHistory[]> {
 
-          const localUrl = `${tradehistoriesUrl}?tradeId=${tradeId}`;
+    const localUrl = `${tradehistoriesbytradeid}?tradeId=${tradeId}`;
 
-          return this.httpClientService.get<TradeHistory[]>(localUrl).retry(3);
+    return this.httpClientService.get<TradeHistory[]>(localUrl).retry(3);
+  }
+
+
+  // add new history for a trade
+  public addTradeHistoryByTradeId(tradehistory: TradeHistory): Observable<TradeHistory> {
+
+    const localUrl = `${addTradeHistoryUrl}`;
+
+    return this.httpClientService.post<TradeHistory>(localUrl, tradehistory);
   }
 
 }

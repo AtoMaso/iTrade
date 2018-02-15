@@ -259,13 +259,14 @@ export class AddTradeComponent implements OnInit {
   private setDate(): void {
     // Set today date using the patchValue function
     let date = new Date();
+    
     this.addForm.patchValue({
-      publishDate: { date: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate()+1 } }
+      publishDate: { date: { year: date.getFullYear(), month: date.getMonth()+1, day: date.getDate() } }
     });
 
     this.selectDate = {
       year: date.getFullYear(),
-      month: date.getMonth() + 1,
+      month: date.getMonth(),
       day: date.getDate()
     }
   }

@@ -6,12 +6,13 @@ import { Observable } from 'rxjs/Observable';
 
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
+import { TradeHistoryService } from '../../../services/tradehistory/trade-history.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 import { CapsPipe } from '../../../helpers/pipes';
-import {UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../../helpers/classes';
+import {UserSession, UserIdentity, Authentication, Trade, TradeHistory, PageTitle } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -25,12 +26,15 @@ export class MyTradesListComponent implements OnInit {
   private traderId: string;
   private removedTradeId: number;
   private tradeIdToBeRemoved: number;
+  private tradeIdToBeClosed: number;
   private tradeToRemove: Trade;
+  private tradeToClose: Trade;
+  private isOwner: boolean = false;
+
   private session: UserSession;
   private identity: UserIdentity = new UserIdentity;
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false;
-  private isOwner: boolean = false;
 
   private totalNumberOfRecords: number = 0;
   private setsCounter: number = 1;
@@ -44,6 +48,7 @@ export class MyTradesListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private tradeApiService: TradeApiService,
+    private tradeHistoryService: TradeHistoryService,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private router: Router,
@@ -138,6 +143,26 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
+  //****************************************************
+  // CLOSE TRADE
+  //****************************************************
+  private closeTrade(tradeId: number) {
+    // create trade history to be written
+    let trhis: TradeHistory = new TradeHistory();
+    let dt: Date = new Date();
+    trhis.createdDate = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+    trhis.status = "Closed";
+    trhis.tradeId = tradeId;
+
+    this.tradeHistoryService.addTradeHistoryByTradeId(trhis)
+      .subscribe((returnedHistory: TradeHistory) => {
+        this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
+        //  this.data.push(returnedHistory),
+        //  this.onChangeTable(this.config)
+      }, (serviceError: Response) => this.onError(serviceError, "closeTrade"));
+  }
+
+
   //*****************************************************
   // HELPER METHODS 
   //*****************************************************
@@ -202,10 +227,12 @@ export class MyTradesListComponent implements OnInit {
       if (trade.traderId === this.session.userIdentity.userId) {
         this.isOwner = true;
         this.tradeIdToBeRemoved = trade.tradeId;
+        this.tradeIdToBeClosed = trade.tradeId;
       }
       else {
         this.isOwner = false;
         this.tradeIdToBeRemoved = null;
+        this.tradeIdToBeClosed = null;
       }
   }
 

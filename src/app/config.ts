@@ -28,12 +28,13 @@
     deletetrade: 'http://localhost:5700/api/trades/DeleteTrade',
 
     // trade history
-    tradehistories: 'http://localhost:5700/api/tradehistories',
+    tradehistories: 'http://localhost:5700/api/tradehistories/',
+    tradehistoriesbytradeid : 'http://localhost:5700/api/tradehistories/GetTradeHistoriesByTradeId/',   
     pagesoftradehistories: 'http://localhost:5700/api/tradehistories/GetPagesOfTradeHistories',
     tradehistory: 'http://localhost:5700/api/tradehistories/',
-    updatetradehistory: 'http://localhost:5700/api/tradehistories/puttradehistory',
-    addtradehistory: 'http://localhost:5700/api/tradehistories/posttradehistory',
-    removetradehistory: 'http://localhost:5700/api/tradehistories/deletedradehistory',
+    updatetradehistory: 'http://localhost:5700/api/tradehistories/PutTradeHistory',
+    addtradehistory: 'http://localhost:5700/api/tradehistories/PostTradeHistory',
+    removetradehistory: 'http://localhost:5700/api/tradehistories/DeleteTradeHistory',
 
      // images 
     images: 'http://localhost:5700/api/images',
