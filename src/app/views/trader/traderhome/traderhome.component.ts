@@ -45,8 +45,7 @@ export class TraderHomeComponent implements OnInit {
     this.getUseridentity();
     this.initialiseComponent();
 
-    this.getTrades(this.traderId, this.status);
-    this.getCorres(this.traderId, this.statusCorr);
+    this.getTrades(this.traderId, this.status);    
   }
 
 
@@ -81,16 +80,24 @@ export class TraderHomeComponent implements OnInit {
 
     this.tradeService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
-        if (returnedTrades.length === 0) { this.hasTrades = false; } 
-        else {
-            this.data = this.TransformData(returnedTrades),       
-            this.hasTrades = true,         
-            this.onChangeTable(this.config),
-            this.onPageChange(1)
-          }
+        this.onSuccessTrades(returnedTrades);
       },
       (res: Response) => this.onError(res, "getTrades"));
 
+  }
+
+
+  private onSuccessTrades(trades: Trade[]) {
+    if (trades.length === 0) { this.hasTrades = false; }
+    else {
+      this.data = this.TransformData(trades),
+        this.hasTrades = true,
+        this.onChangeTable(this.config),
+        this.onPageChange(1)
+    }
+
+    // now call the correspondence
+    this.getCorres(this.traderId, this.statusCorr);
   }
 
 
@@ -173,10 +180,13 @@ export class TraderHomeComponent implements OnInit {
   }
 
 
+
   //****************************************************
   // LOGGING METHODS
   //****************************************************
   private onError(serviceError: any, operation: string) {
+
+    this.isRequesting = false;
 
     let message: string = "";
 

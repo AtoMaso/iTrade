@@ -56,15 +56,7 @@ export class TraderDetailsComponent implements OnInit {
 
     this.initialiseComponent();
 
-    if (this.getPersonalDetails(this.traderId)) {
-
-      this.getContactDetails(this.traderId)
-
-      this.getTradesCurrent(this.traderId);
-
-      this.getTradesHistory(this.traderId);
-    }
-
+    this.getPersonalDetails(this.traderId));
   }
 
 
@@ -107,56 +99,87 @@ export class TraderDetailsComponent implements OnInit {
 
 
 
-
-  //**************************************************************************************
-  // GET TRADES -- this will get all trades for the trader closed and open, if there are no any will show message
-  //**************************************************************************************
-  private getPersonalDetails(traderId): boolean {
+  //***********************************************************
+  // GET Personal Details
+  //***********************************************************
+  private getPersonalDetails(traderId){
     this.personalService.getPersonalDetailsByTraderId(traderId)
       .subscribe((returnedPersonalDetails: PersonalDetails) => {
-
-        if (returnedPersonalDetails === null) { this.hasPersonal = false; }
-        else {
-          this.personal = this.TransformDataPersonal(returnedPersonalDetails);
-          this.hasPersonal = true;
-          return true;
-        }             
+        this.onSuccessPersonal(returnedPersonalDetails);    
       },
       (res: Response) => this.onError(res, "getPersonalDetails"));
   }
 
 
+  private onSuccessPersonal(personalD: PersonalDetails) {
+    if (personalD === null) { this.hasPersonal = false; }
+    else {
+      this.personal = this.TransformDataPersonal(personalD);
+      this.hasPersonal = true;      
+    }             
+    // call now get contact 
+    this.getContactDetails(this.traderId);
+  }
+
+
+  //***********************************************************
+  // GET Contact Details 
+  //***********************************************************
   private getContactDetails(traderId) {
 
     this.contactService.getContactDetailsByTraderId(traderId)
       .subscribe((returnedContactDetails:ContactDetails) => {
-        if (returnedContactDetails === null) { this.hasContact = false; }
-        else {
-          this.contact = this.TransformDataContact(returnedContactDetails);
-          this.hasContact = true;
-        }
+        this.onSuccessContact(returnedContactDetails);
       },
       (res: Response) => this.onError(res, "getContactDetails"));
   }
 
 
+
+  private onSuccessContact(contacD: ContactDetails) {
+    if (contacD === null) { this.hasContact = false; }
+    else {
+      this.contact = this.TransformDataContact(contacD);
+      this.hasContact = true;
+    }
+    // now call the get trades
+    this.getTradesCurrent(this.traderId);
+  }
+
+
+
+ //***********************************************************
+ // GET Trades 
+ //***********************************************************
   private getTradesCurrent(traderId: string, status: string = "Open") {
 
     this.tradeService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
-        if (returnedTrades.length === 0) { this.hasTrades = false; }
-        else {
-            this.data = this.TransformData(returnedTrades),
-            this.hasTrades = true,
-            this.onChangeTable(this.config),
-            this.onPageChange(1)
-        }
+        this.onSuccessTrades(returnedTrades);
       },
       (res: Response) => this.onError(res, "getTrades"));
 
   }
 
+  private onSuccessTrades(trades: Trade[]) {
 
+    if (trades.length === 0) { this.hasTrades = false; }
+    else {
+      this.data = this.TransformData(trades),
+        this.hasTrades = true,
+        this.onChangeTable(this.config),
+        this.onPageChange(1)
+    }
+
+    // now call the history
+    this.getTradesHistory(this.traderId);   
+  }
+
+
+
+ //***********************************************************
+ // GET Trade History
+ //***********************************************************
   private getTradesHistory(traderId: string, status: string = "Closed") {
 
     this.tradeService.getTradesWithStatusOrAll(traderId, status)
@@ -170,8 +193,9 @@ export class TraderDetailsComponent implements OnInit {
         }
       },
       (res: Response) => this.onError(res, "getTrades"));
-
   }
+
+
 
 
   //*****************************************************
@@ -283,6 +307,8 @@ export class TraderDetailsComponent implements OnInit {
   // LOGGING METHODS
   //****************************************************
   private onError(serviceError: any, operation: string) {
+
+    this.isRequesting = false;
 
     let message: string = "";
 

@@ -2,6 +2,7 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Response } from '@angular/http';
+import { ChangeDetectorRef } from '@angular/core';
 
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
@@ -27,7 +28,8 @@ export class TradeDetailsComponent implements OnInit {
   private trade: Trade;
   private images: Image[];
   private histories: TradeHistory[];
-  private hasImages: boolean = true; 
+  private hasHistory: boolean = false;
+  private hasImages: boolean = false; 
   private hasImage1: boolean = true;
   private hasImage2: boolean = true;
   private hasImage3: boolean = true;
@@ -39,6 +41,7 @@ export class TradeDetailsComponent implements OnInit {
   private flag: boolean = false;
 
   constructor(  
+    private cd: ChangeDetectorRef,
     private tradeApiService: TradeApiService,
     private imageServise: ImageService, 
     private tradeHistoryService: TradeHistoryService,
@@ -46,7 +49,7 @@ export class TradeDetailsComponent implements OnInit {
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private loggerService: LoggerService) {
-   
+  
   };
 
 
@@ -54,6 +57,7 @@ export class TradeDetailsComponent implements OnInit {
   // Component events
   /*******************************************************/
   ngOnInit() {
+
     this.route.queryParams.subscribe(params => {
       this.tradeId = params['id'];
       this.flag = params['flag'];
@@ -65,15 +69,7 @@ export class TradeDetailsComponent implements OnInit {
 
     this.initialiseComponent(); 
 
-    if (this.getATrade(this.tradeId)) {
-
-      if (!this.flag) { this.addHistoryRecord(); }
-
-      //this.getTradeImages(this.tradeId);
-
-      this.getTradeHistory(this.tradeId);
-     
-    }
+    this.getATrade(this.tradeId)) 
   }
 
 
@@ -111,42 +107,34 @@ export class TradeDetailsComponent implements OnInit {
   /*******************************************************/
   // GET A TRADE
   /*******************************************************/
-  private getATrade(tradeId: number): boolean {
+  private getATrade(tradeId: number) {
 
     this.tradeApiService.getSingleTrade(tradeId)
       .subscribe((tradeResult: Trade) => {
-         this.trade = this.TransformData(tradeResult);
-        
-        // check is the trader viewing hist trade but only when logged in
-        if (sessionStorage["UserSession"] != "null") {
-          if (this.trade.traderId === this.session.userIdentity.userId) { this.canTrade = false; }
-          else {
-          this.canTrade = true;         
-          }
-        }
-        return true;
-    }, (serviceError: Response) => this.onError(serviceError, "getATrade"));
+        this.hasImages = true;
+        this.onSuccessTrade(tradeResult);
 
+      }, (serviceError: Response) => this.onError(serviceError, "getATrade"));
   }
 
 
-  /*******************************************************
- // GET IMAGES
- /*******************************************************/
-  private getTradeImages(tradeId: number) {
-    this.imageServise.getImagesByTradeId(tradeId)
-      .subscribe((returnedImages: Image[]) => {
-          this.images = returnedImages;
-          if (this.images !== null) { this.hasImages = true; }
-    }
-     , (serviceError: Response) => this.onError(serviceError, "getTradeImages"));
-    
+
+  private onSuccessTrade(trade: Trade) {
+    this.trade = this.TransformData(trade);
+    // check is the trader viewing this trade when logged
+    if (sessionStorage["UserSession"] != "null") {
+          if (this.trade.traderId === this.session.userIdentity.userId) { this.canTrade = false; }
+          else { this.canTrade = true; }
+    }       
+    // now call the history or add a history first
+    if (!this.flag) { this.addHistoryRecord(); }
+    else { this.getTradeHistory(this.tradeId))}
   }
 
 
   /*******************************************************?
- // ADD HISTORY RECORD
- /*******************************************************/
+// ADD HISTORY RECORD
+/*******************************************************/
   private addHistoryRecord() {
     // create new trdae history
     let trhis: TradeHistory = new TradeHistory();
@@ -155,24 +143,53 @@ export class TradeDetailsComponent implements OnInit {
     trhis.status = "Viewed";
     trhis.tradeId = this.tradeId;
 
-    this.tradeHistoryService.addTradeHistoryByTradeId(trhis) 
+    this.tradeHistoryService.addTradeHistoryByTradeId(trhis)
       .subscribe((returnedHistory: TradeHistory) => {
-          this.data.push(returnedHistory),
-          this.onChangeTable(this.config)
+
+        this.onSuccessAddHistory(returnedHistory);
+
       }, (serviceError: Response) => this.onError(serviceError, "addTradeHistory"));
   }
 
+
+  private onSuccessAddHistory(history: TradeHistory) {
+    this.data.push(history),
+    this.onChangeTable(this.config)
+    this.hasHistory = true;
+    // now call get history
+    this.getTradeHistory(this.tradeId);
+  }
+
+
+
   /*******************************************************
- // GET TRADE HISTORY
- /*******************************************************/
+// GET TRADE HISTORY
+/*******************************************************/
   private getTradeHistory(tradeId: number) {
     this.tradeHistoryService.getTradeHistoryByTradeId(tradeId)
       .subscribe((returnedHistories: TradeHistory[]) => {
-        this.data = returnedHistories,
-        this.onChangeTable(this.config)
-    }, (serviceError: Response) => this.onError(serviceError, "getTradeHistory"));
+
+        this.data = returnedHistories;
+        this.onChangeTable(this.config); 
+
+      }, (serviceError: Response) => this.onError(serviceError, "getTradeHistory"));
+
   }
 
+ 
+
+/*******************************************************
+  // GET IMAGES - not used
+  /*******************************************************/
+  private getTradeImages(tradeId: number) {
+  this.imageServise.getImagesByTradeId(tradeId)
+    .subscribe((returnedImages: Image[]) => {
+      this.images = returnedImages;
+      if (this.images !== null) { this.hasImages = true; }
+    }
+    , (serviceError: Response) => this.onError(serviceError, "getTradeImages"));
+
+}
 
   //*****************************************************
   // HELPER METHODS
@@ -228,10 +245,13 @@ export class TradeDetailsComponent implements OnInit {
   }
 
 
-  // on any error passed from the service or from the component itself
+
+  //****************************************************
+  // LOGGING METHODS
+  //****************************************************
   private onError(serviceError: any, operation: string) {
 
-    this.isRequesting = false;
+    this.isRequesting = false;  
 
     // audit log the error passed
     this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);

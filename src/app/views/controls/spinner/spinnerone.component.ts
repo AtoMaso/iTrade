@@ -29,7 +29,8 @@ export class SpinnerOneComponent implements OnDestroy {
     this.currentTimeout = setTimeout(() => {
         this.isDelayedRunning = value;
         this.cancelTimeout();
-    }, this.delay);
+   }, this.delay);
+
  }
 
   private cancelTimeout(): void {
