@@ -61,17 +61,19 @@ export class TradeDetailsComponent implements OnInit {
 
     this.getUseridentity();
 
+    if (this.flag) { this.messagesService.emitProcessMessage("PMSAT"); }
+
     this.initialiseComponent(); 
 
-    this.getATrade(this.tradeId); 
+    if (this.getATrade(this.tradeId)) {
 
-    if (!this.flag) { this.addHistoryRecord(); }
- 
-    //this.getTradeImages(this.tradeId);
+      if (!this.flag) { this.addHistoryRecord(); }
 
-    this.getTradeHistory(this.tradeId);  
+      //this.getTradeImages(this.tradeId);
 
-    if (this.flag) { this.messagesService.emitProcessMessage("PMSAT");}
+      this.getTradeHistory(this.tradeId);
+     
+    }
   }
 
 
@@ -109,18 +111,20 @@ export class TradeDetailsComponent implements OnInit {
   /*******************************************************/
   // GET A TRADE
   /*******************************************************/
-  private getATrade(tradeId: number) {
+  private getATrade(tradeId: number): boolean {
 
     this.tradeApiService.getSingleTrade(tradeId)
       .subscribe((tradeResult: Trade) => {
          this.trade = this.TransformData(tradeResult);
-
+        
         // check is the trader viewing hist trade but only when logged in
         if (sessionStorage["UserSession"] != "null") {
           if (this.trade.traderId === this.session.userIdentity.userId) { this.canTrade = false; }
-          else { this.canTrade = true; }
+          else {
+          this.canTrade = true;         
+          }
         }
-
+        return true;
     }, (serviceError: Response) => this.onError(serviceError, "getATrade"));
 
   }

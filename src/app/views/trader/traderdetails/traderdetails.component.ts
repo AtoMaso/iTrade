@@ -56,13 +56,14 @@ export class TraderDetailsComponent implements OnInit {
 
     this.initialiseComponent();
 
-    this.getPersonalDetails(this.traderId);
+    if (this.getPersonalDetails(this.traderId)) {
 
-    this.getContactDetails(this.traderId) 
+      this.getContactDetails(this.traderId)
 
-    this.getTradesCurrent(this.traderId);
+      this.getTradesCurrent(this.traderId);
 
-    this.getTradesHistory(this.traderId);
+      this.getTradesHistory(this.traderId);
+    }
 
   }
 
@@ -110,13 +111,15 @@ export class TraderDetailsComponent implements OnInit {
   //**************************************************************************************
   // GET TRADES -- this will get all trades for the trader closed and open, if there are no any will show message
   //**************************************************************************************
-  private getPersonalDetails(traderId) {
+  private getPersonalDetails(traderId): boolean {
     this.personalService.getPersonalDetailsByTraderId(traderId)
-      .subscribe((returnedPersonalDetails:PersonalDetails) => {
+      .subscribe((returnedPersonalDetails: PersonalDetails) => {
+
         if (returnedPersonalDetails === null) { this.hasPersonal = false; }
         else {
           this.personal = this.TransformDataPersonal(returnedPersonalDetails);
           this.hasPersonal = true;
+          return true;
         }             
       },
       (res: Response) => this.onError(res, "getPersonalDetails"));
