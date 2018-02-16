@@ -38,13 +38,13 @@
             <div class="col-md-2 col-md-offset-6 text-right">
               <br />
               <div *ngIf="!isAuthenticated">
-                <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltextbold">
+                <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltext">
                   <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
                 </button>
               </div>
 
               <div *ngIf="isAuthenticated">
-                <button class="btn btn-success btn-sm smalltextbold" (click)="addTrade()">
+                <button class="btn btn-success btn-sm smalltext" (click)="addTrade()">
                   <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
                 </button>
               </div>

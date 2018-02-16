@@ -130,7 +130,7 @@
                       <div class="col-md-6">
                         <!-- remove the trade -->
                         <button type="button" data-target="#removeAllowed" data-articleid=(trade.tradeId)
-                                data-toggle="modal" class="btn btn-sm btn-danger smalltextbold" (click)="passToModal(trade)">
+                                data-toggle="modal" class="btn btn-sm btn-danger smalltext" (click)="passToModal(trade)">
                           <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
                         </button>
                       </div>
@@ -139,7 +139,7 @@
                       <div class="col-md-6">
                         <!-- close the trade -->
                         <button *ngIf="trade.status === 'Open'" type="button" data-target="#closeTrade" data-articleid=(trade.tradeId)
-                                data-toggle="modal" class="btn btn-sm btn-danger smalltextbold" (click)="passToModal(trade)">
+                                data-toggle="modal" class="btn btn-sm btn-warning smalltext" (click)="passToModal(trade)">
                           <span class="glyphicon glyphicon-check"></span>&nbsp; Close Trade
                         </button>
                       </div>

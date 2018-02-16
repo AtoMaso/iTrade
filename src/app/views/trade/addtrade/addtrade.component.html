@@ -74,8 +74,8 @@
 
 
           <div class="row smalltext">
-            <div class="panel panel-heading col-md-3" style="text-align:center;">
-              <button type="submit" class="btn btn-danger smalltextbold" style="width:auto;" [disabled]="!addForm.valid || !hasImages">Add New Trade</button>
+            <div class="col-md-3" style="text-align:center;">
+              <button type="submit" class="btn btn-success smalltext" style="width:auto;" [disabled]="!addForm.valid || !hasImages">Add New Trade</button>
             </div>
           </div>
         </div>
@@ -87,8 +87,15 @@
                 <div class="row panel panel-heading">
                   <span class="smalltext">Trade Images (3 images - max 10MB each - file types: .png .gif .tif .jpeg .bmp):</span>
                 </div>            
-                <div class="row">
-                  <input type="file" ng2FileSelect [uploader]="uploader"  style="color:transparent;"  multiple  (change)="onChange($event)"/>           
+                <div class="row smalltext">
+                  <!--<input type="file" ng2FileSelect [uploader]="uploader"  style="color:transparent;"  multiple  (change)="onChange($event)"/>-->                       
+                  <div id="upload_button">
+                    <label>
+                      <input type="file" ng2FileSelect [uploader]="uploader"  style="color:transparent;"  multiple  (change)="onChange($event)">
+                      <span class="btn btn-primary">Upload files</span>
+                    </label>
+                  </div>
+
                 </div>          
           </div>
 

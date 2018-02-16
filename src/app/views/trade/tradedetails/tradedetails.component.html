@@ -68,16 +68,16 @@
                 <div class="panel panel-heading col-md-12 smalltext" style="text-align:center;">
 
                   <div *ngIf="!isAuthenticated">                   
-                    <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-danger btn-sm smalltextbold" style="width:200px"> Start Trading </button>                                                
+                    <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading </button>                                                
                   </div>
 
                   <div *ngIf="isAuthenticated">
 
                     <div *ngIf="canTrade">  
-                        <button type="button" [routerLink]="['/correspondenceall']" [queryParams]="{id: trade.tradeId}" class="btn btn-danger btn-sm smalltextbold" style="width:200px"> Start Trading</button>            
+                        <button type="button" [routerLink]="['/correspondenceall']" [queryParams]="{id: trade.tradeId}" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading</button>            
                     </div>     
                     <div *ngIf="!canTrade">  
-                          <button type="button" data-target="#canNotTrade" data-toggle="modal" class="btn btn-danger btn-sm smalltextbold" style="width:200px"> Start Trading</button>                   
+                          <button type="button" data-target="#canNotTrade" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading</button>                   
                     </div>     
 
                   </div>
@@ -234,7 +234,7 @@
 <!-- MODAL form to show when add/remove trade is clicked and user is not logged in-->
 <div class="modal fade" id="addremoveLogin" tabindex="-1" role="dialog" aria-labelledby="AddRemoveLogin">
   <div class="modal-dialog" role="document">
-    <div class="modal-content smalltext">
+    <div class="modal-content">
 
       <div class="modal-header">
         <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
@@ -259,20 +259,20 @@
 <!-- MODAL form to show when user viewing hist tarde and is logged in-->
 <div class="modal fade" id="canNotTrade" tabindex="-1" role="dialog" aria-labelledby="canNotTrade">
   <div class="modal-dialog" role="document">
-    <div class="modal-content smalltext">
+    <div class="modal-content ">
 
-      <div class="modal-header smalltext">
+      <div class="modal-header">
         <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
         <a href="#" class="close" data-dismiss="modal">&times;</a>
         <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
       </div>
 
-      <div class="modal-body text-warning smalltext">
+      <div class="modal-body text-warning">
         <p>You can not start a trade on your trade!</p>
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-danger smalltext" data-dismiss="modal">Dismiss</button>        
+        <button class="btn btn-danger" data-dismiss="modal">Dismiss</button>        
       </div>
 
     </div>
