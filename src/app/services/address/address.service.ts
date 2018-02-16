@@ -29,14 +29,8 @@ let removeAddressUrl = CONFIG.baseUrls.removeaddress;
   //******************************************************
   public getAddressesApi(): Observable<Address[]> {
 
-    return this.httpClientService.get<Address[]>(addressesUrl)
-      .retry(3)
-      .catch((err: HttpErrorResponse, result) => {
-
-        if (err.error instanceof Error) { this.handleError("Client side error occured: getAddressesApi method in the addressapi service error", err); }
-        else { this.handleError("Server side error occured: getAddressesApi method in the address service error", err); }    
-         return Observable.throw(err);
-      }); 
+    return this.httpClientService.get<Address[]>(addressesUrl).retry(1)
+   
     }
 
   
@@ -59,16 +53,5 @@ let removeAddressUrl = CONFIG.baseUrls.removeaddress;
     // UPDATE ADDRESS
     //******************************************************
 
-  ///*****************************************************
-  // HELPER METHODS
-  //*****************************************************
-  private handleError(operation: string, err: HttpErrorResponse) {
 
-    let errMsg = `error in ${operation}() retrieving ${err.url}`;
-    // audit log the error on the server side
-    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
-
-    // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-    return Observable.throw(errMsg);
-  };
 }

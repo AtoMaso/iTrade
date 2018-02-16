@@ -33,7 +33,7 @@ export class PersonalDetailsService {
 
     this.localUrl = `${personaldetailsbytraderid}?traderId=${traderId}`; 
 
-    return this.httpClientService.get<PersonalDetails>(this.localUrl).retry(3);
+    return this.httpClientService.get<PersonalDetails>(this.localUrl).retry(1);
   }
 
 

@@ -29,8 +29,8 @@ export class TraderDetailsComponent implements OnInit {
   private personal: PersonalDetails = new PersonalDetails();
   private contact: ContactDetails = new ContactDetails();
 
-  private hasPersonal: boolean = true;
-  private hasContact: boolean = true;
+  private hasPersonal: boolean = false;
+  private hasContact: boolean = false;
   private hasTrades: boolean = false;
   private hasHistory: boolean = false;
   private hasAddress: boolean = false;

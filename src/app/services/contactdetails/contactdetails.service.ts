@@ -34,7 +34,7 @@ export class ContactDetailsService {
 
     this.localUrl = `${contactdetailsbytraderid}?traderId=${traderId}`; 
 
-    return this.httpClientService.get<ContactDetails>(this.localUrl).retry(3);
+    return this.httpClientService.get<ContactDetails>(this.localUrl).retry(1);
   }
 
 

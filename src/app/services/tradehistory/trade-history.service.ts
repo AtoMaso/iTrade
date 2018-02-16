@@ -35,7 +35,7 @@ export class TradeHistoryService {
   //******************************************************
   public getTradeHistoryApi(): Observable<TradeHistory[]> {
 
-    return this.httpClientService.get<TradeHistory[]>(tradehistoriesUrl).retry(3);
+    return this.httpClientService.get<TradeHistory[]>(tradehistoriesUrl).retry(1);
   }
 
 
@@ -44,7 +44,7 @@ export class TradeHistoryService {
 
     const localUrl = `${tradehistoriesbytradeid}?tradeId=${tradeId}`;
 
-    return this.httpClientService.get<TradeHistory[]>(localUrl).retry(3);
+    return this.httpClientService.get<TradeHistory[]>(localUrl).retry(1);
   }
 
 

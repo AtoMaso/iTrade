@@ -64,7 +64,7 @@ export class TradeApiService {
     }
 
     // errors are handled in the component
-    return this.httpClientService.get<Trade[]>(this.localUrl).retry(3);
+    return this.httpClientService.get<Trade[]>(this.localUrl).retry(1);
   }
 
 
@@ -87,7 +87,7 @@ export class TradeApiService {
     else  { this.localUrl = `${filteredTradesWithStatus}?number=${number}&status=${status}`; }
    
     // errors are handled in the component
-    return this.httpClientService.get(this.localUrl).retry(3);
+    return this.httpClientService.get(this.localUrl).retry(1);
   }
 
 
@@ -102,7 +102,7 @@ export class TradeApiService {
     if (tradeId != 0 || tradeId != undefined) { this.localUrl = `${allTrades}/${tradeId}`; }  
   
     // errors are handled in the component
-    return this.httpClientService.get(this.localUrl).retry(3);
+    return this.httpClientService.get(this.localUrl).retry(1);
   }
 
   //******************************************************

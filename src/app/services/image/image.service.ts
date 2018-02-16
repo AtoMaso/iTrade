@@ -34,7 +34,7 @@ export class ImageService {
     //******************************************************
    public getImages(): Observable<Image[]> {
 
-    return this.httpClientService.get<Image[]>(imagesUrl).retry(3);
+    return this.httpClientService.get<Image[]>(imagesUrl).retry(1);
   }
 
 
@@ -42,7 +42,7 @@ export class ImageService {
 
       const localUrl = `${imagesUrl}/?tradeId=${tradeId}`;
 
-      return this.httpClientService.get<Image[]>(localUrl).retry(3);
+      return this.httpClientService.get<Image[]>(localUrl).retry(1);
   }
 
 }

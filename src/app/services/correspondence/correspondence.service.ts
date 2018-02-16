@@ -49,7 +49,7 @@ export class CorrespondenceService {
     if (status === "All") { if (tradeId !== 0 || tradeId !== undefined) { this.localUrl = `${corresbytradeid}?traderId=${tradeId}`; }  }
     else {  if (tradeId !== 0 || tradeId !== undefined) { this.localUrl = `${corresbytradeidwithstatus}?traderId=${tradeId}&status=${status}`; } }  
 
-    return this.httpClientService.get<Correspondence[]>(this.localUrl).retry(3);
+    return this.httpClientService.get<Correspondence[]>(this.localUrl).retry(1);
   }
 
 
@@ -59,6 +59,6 @@ export class CorrespondenceService {
     if (status === "All") { if (traderId !== null || traderId != undefined) { this.localUrl = `${corresbytraderid}?traderId=${traderId}`; } }
     else { if (traderId !== null || traderId !== undefined) { this.localUrl = `${corresbytraderidwithstatus}?traderId=${traderId}&status=${status}`; } }
 
-    return this.httpClientService.get<Correspondence[]>(this.localUrl).retry(3);
+    return this.httpClientService.get<Correspondence[]>(this.localUrl).retry(1);
   }
 }

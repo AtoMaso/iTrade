@@ -40,7 +40,7 @@ export class CategoryService {
   public getCategories() {
 
     this.localUrl = categoriesUrl;
-    return this.httpClientService.get(this.localUrl).retry(3);   
+    return this.httpClientService.get(this.localUrl).retry(1);   
 
   }
 
