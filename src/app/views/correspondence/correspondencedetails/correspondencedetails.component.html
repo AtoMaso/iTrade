@@ -1,3 +1,110 @@
-<p>
-  correspondencedetails works!
-</p>
+<!-- DETAILS SECTION-->
+<div class="container col-md-12">
+
+  <div *ngIf="recievedCorres != null">
+
+    <!-- DETAILS -->
+     <div  class="row">
+
+           <div class="col-md-3">
+
+                <div class="row">
+                  <div class="panel panel-heading col-md-12 smalltext">
+                    Status:<span class="text-uppercase text-info"> {{ recievedCorres.status }}</span>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="panel panel-heading col-md-12 smalltext">
+                    Send from:<span class="text-uppercase text-info"> {{ recievedCorres.sender }}</span>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="panel panel-heading col-md-12 smalltext">
+                    Sent on:<span class="text-uppercase text-info"> {{ recievedCorres.dateSent | date }}</span>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="panel panel-heading col-md-12 smalltext">
+                    Trade:<span class="text-uppercase text-info"> {{ recievedCorres.subject }}</span>
+                  </div>
+                </div>
+
+             <div class="row">
+               <div class="panel panel-heading col-md-12 smalltext">
+                 Trade id:<span class="text-uppercase text-info"> {{ recievedCorres.tradeId }}</span>
+               </div>
+             </div>
+
+             <div class="row">
+               <div class="panel panel-heading col-md-12 smalltext">
+                 Flash:<span class="text-uppercase text-info"> {{ recievedCorres.message }}</span>
+               </div>
+             </div>
+          </div>
+        
+
+           <div class="col-md-7 col-md-offset-1">
+
+                <div class="row">
+                  <div class="panel panel-heading col-md-12 smalltext">
+                      Message content:
+                  </div>
+                </div>
+
+              <div class="row">
+                <div class="panel panel-heading col-md-12 ">
+                  <div  class="smalltext" id="receivedContent"
+                            style="width:inherit;background-color:moccasin;white-space: normal; text-align: justify;-moz-text-align-last: left; text-align-last: left;height:auto;" 
+                            wrap="soft"  rows="6" maxlength="500" readonly> 
+                  </div>
+                  <input type="hidden"  id="hiddencontrol" value="{{ recievedCorres.content }}"/>
+                </div>
+              </div>
+
+              <!-- BUTTONS -->
+              <div class="row">
+                <div class="col-md-3"><button class="btn btn-success buttonclass smalltext" style="width:auto; height:30px;" 
+                                              id="Reply" (click)="WriteCorres"  data-target="#writeMessage" data-toggle="collapse">Reply</button></div>              
+              </div>
+
+             <br/>
+
+           
+              <!-- REPLY -->
+             <div id="writeMessage" class="row collapse">
+
+                     <form [formGroup]="sendCorresGroup" (submit)="sendCorres()">
+
+                         <div class="panel panel-heading col-md-12">
+                           <textarea formControlName="content" id="content" class="smalltext" style="width:inherit;" rows="6" spellcheck="true" maxlength="500" placeholder="Write your message here..."></textarea>
+                           <span id="characterCount" class="smalltext textgray"></span>
+                         </div>
+
+                         <div class="col-md-5">
+                           <button id="Send" class="btn btn-success buttonclass smalltext" type="submit" style="width:auto; height:30px;" value="Send" disabled>Send</button>
+                         </div>
+
+                     </form>
+             </div>
+            </div>     
+      </div>   
+  </div>
+
+
+
+  <!-- NO DETAILS SECTION-->
+  <div *ngIf="recievedCorres == null">
+       
+       <div class="panel panel-heading col-md-12 ">
+         <span class="smalltext textoker text-uppercase">The system can not find the details of that correspondence!</span>
+       </div>
+
+  </div>
+
+ </div>

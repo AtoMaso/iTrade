@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllTradersListComponent } from './alltraderslist.component';
+import { CorrespondenceListComponent } from './correspondencelist.component';
 
-describe('AllTradersListComponent', () => {
-  let component: AllTradersListComponent;
-  let fixture: ComponentFixture<AllTradersListComponent>;
+describe('CorrespondenceListComponent', () => {
+  let component: CorrespondenceListComponent;
+  let fixture: ComponentFixture<CorrespondenceListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AllTradersListComponent ]
+      declarations: [CorrespondenceListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AllTradersListComponent);
+    fixture = TestBed.createComponent(CorrespondenceListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

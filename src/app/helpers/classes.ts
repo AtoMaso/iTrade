@@ -503,18 +503,20 @@ class Category {
 class Correspondence implements ICorrespondence {
   id: number;  
   message: string;
+  content: string;
   status: string;
   dateSent: Date;
   subject: string;  // this is the object of trade
   tradeId: number;
-  traderIdReciever: string;
-  traderIdSender: string;
-  sender: string;   // this is the trader sending the correspondence
+  traderIdReciever: string; // this is the trader viewing it
+  traderIdSender: string;  //this is the trader sending it
+  sender: string;   // this is the trader name sending the correspondence
 
   constructor() {
     this.id = 0;
     this.subject = "";
     this.message = "";
+    this.content = "";
     this.status = "";
     this.dateSent = new Date(9999, 1, 1);
     this.tradeId = 0;

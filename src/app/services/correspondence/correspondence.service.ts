@@ -20,10 +20,10 @@ let corresbytradeid = CONFIG.baseUrls.corresbytradeid;
 let corresbytradeidwithstatus = CONFIG.baseUrls.corresbytradeidwithstatus;
 let corresbytraderid = CONFIG.baseUrls.corresbytraderid;
 let corresbytraderidwithstatus = CONFIG.baseUrls.corresbytraderidwithstatus;
-let singlecorres= CONFIG.baseUrls.corres
+let singlecorres = CONFIG.baseUrls.singlecorres
 let updatecorres = CONFIG.baseUrls.updatecorres;
 let addcorres= CONFIG.baseUrls.addcorres;
-let removecorresl = CONFIG.baseUrls.removecorres;
+let deletecorres = CONFIG.baseUrls.deletecorres;
 
 
 @Injectable()
@@ -33,17 +33,36 @@ export class CorrespondenceService {
   constructor(private httpClientService: HttpClient) { }
 
 
+
+   //**********************************************************
+  // GET CORRES
+  //***********************************************************
   public getCorres(status:string): Observable<Correspondence[]> {
 
     if (status === "All")  { this.localUrl = `${corresbytradeid}`; } 
     else { this.localUrl = `${correswithstatus}?status=${status}`; }   
 
-    return this.httpClientService.get<Correspondence[]>(this.localUrl).retry(3);
+    return this.httpClientService.get<Correspondence[]>(this.localUrl).retry(1);
   }
 
 
 
+   //**********************************************************
+  // GET SINGLE CORRES
+  //***********************************************************
+  // get single correspondence by corres id
+  public getSingleCorres(corresId: number): Observable<Correspondence> {
+   
+    this.localUrl = `${singlecorres}${corresId}`; 
 
+    return this.httpClientService.get<Correspondence>(this.localUrl).retry(1);
+  }
+
+
+   //**********************************************************
+  // GET CORRES BY TRADE ID
+  //***********************************************************
+  // get corres by trade id with or without status
   public getCorresByTradeIdWithStatusOrAll(tradeId: number, status: string): Observable<Correspondence[]> {
   
     if (status === "All") { if (tradeId !== 0 || tradeId !== undefined) { this.localUrl = `${corresbytradeid}?traderId=${tradeId}`; }  }
@@ -53,7 +72,9 @@ export class CorrespondenceService {
   }
 
 
-
+  //**********************************************************
+  // GET CORRES BY TRADER ID
+  //***********************************************************
   public getCorresByTraderIdWithStatusOrAll(traderId: string, status: string): Observable<Correspondence[]> {
 
     if (status === "All") { if (traderId !== null || traderId != undefined) { this.localUrl = `${corresbytraderid}?traderId=${traderId}`; } }
@@ -61,4 +82,16 @@ export class CorrespondenceService {
 
     return this.httpClientService.get<Correspondence[]>(this.localUrl).retry(1);
   }
+
+
+  //**********************************************************
+  // ADD SINGLE CORRES
+  //***********************************************************
+  public addCorres(corres: Correspondence): Observable<Correspondence> {
+
+    const localUrl = `${addcorres}`;
+
+    return this.httpClientService.post<Correspondence>(localUrl, corres);
+  }
+
 }

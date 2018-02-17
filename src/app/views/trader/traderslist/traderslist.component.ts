@@ -12,11 +12,11 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 
 
 @Component({
-  selector: 'app-alltraderlist',
-  templateUrl: './alltraderslist.component.html',
-  styleUrls: ['./alltraderslist.component.scss']
+  selector: 'app-traderlist',
+  templateUrl: './traderslist.component.html',
+  styleUrls: ['./traderslist.component.scss']
 })
-export class AllTradersListComponent implements OnInit {
+export class TradersListComponent implements OnInit {
 
   constructor(private messagesService: ProcessMessageService) { }
 

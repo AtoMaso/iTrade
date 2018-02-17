@@ -1,23 +1,9 @@
-
-/*h1 {
-    color: #369;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 250%;
-  }
-  h2, h3 {
-    color: #444;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-weight: lighter;
-  }*/ 
-
-   /**{
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-  }*/
-
+   @import "~@angular/material/prebuilt-themes/indigo-pink.css";   // TODO  this prebuilt material theme, question will we use it????
 
     body {
     margin: 2em;
   }
+
   body, input[text], button {
     color: #888;
     font-family: Verdana, Cambria, Georgia;

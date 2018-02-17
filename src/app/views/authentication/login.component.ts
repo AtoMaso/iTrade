@@ -32,14 +32,13 @@ export class LoginComponent implements OnInit {
                     private formBuilder: FormBuilder,
                     private authenticationService: AuthenticationService,
                     private messagesService: ProcessMessageService,
-                    private titleService: PageTitleService,
+                    private pageTitleService: PageTitleService,               
                     private loggerService: LoggerService) {}
 
   ngOnInit() {
-      
-    this.titleService.emitPageTitle(new PageTitle("Login"));
-    this.messagesService.emitRoute("nill");
 
+    this.initialiseComponent();      
+    
     this.loginGroup = this.formBuilder.group({
       email: new FormControl('', [Validators.required, ValidationService.emailValidator]),
       password: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
@@ -65,9 +64,6 @@ export class LoginComponent implements OnInit {
   }
 
 
-  //****************************************************
-  // PRIVATE METHODS
-  //****************************************************
   private onLoginSuccess(res:any) {    
     if (sessionStorage["UserSession"] != "null") {
       this.router.navigate(['/traderhome']);
@@ -78,10 +74,22 @@ export class LoginComponent implements OnInit {
     }
   }
 
+
   // get the next session from the session observable
   private emitUserSession(res:any) {
         this.authenticationService.emitUserSession(this.authenticationService.getUserSession());
   }
+
+
+ //****************************************************
+  // HELPER METHODS
+  //****************************************************
+  private initialiseComponent() {
+    this.messagesService.emitRoute("nill");
+    this.isRequesting = true;
+    this.pageTitleService.emitPageTitle(new PageTitle("Trades"));
+  }
+
 
 
   //****************************************************

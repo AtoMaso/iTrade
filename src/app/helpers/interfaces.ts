@@ -239,6 +239,7 @@ interface ICategory {
 interface ICorrespondence {
   id: number;
   message: string;
+  content: string;
   status: string;
   dateSent: Date;
   subject: string;  // this is the object of trade

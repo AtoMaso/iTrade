@@ -69,7 +69,7 @@ export class TradeDetailsComponent implements OnInit {
 
     this.initialiseComponent(); 
 
-    this.getATrade(this.tradeId)) 
+    this.getATrade(this.tradeId);
   }
 
 
@@ -128,7 +128,7 @@ export class TradeDetailsComponent implements OnInit {
     }       
     // now call the history or add a history first
     if (!this.flag) { this.addHistoryRecord(); }
-    else { this.getTradeHistory(this.tradeId))}
+    else { this.getTradeHistory(this.tradeId);}
   }
 
 
@@ -198,8 +198,7 @@ export class TradeDetailsComponent implements OnInit {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
-        this.isAuthenticated = this.session.authentication.isAuthenticated;
-        this.identity.roles = this.session.userIdentity.roles;
+        this.isAuthenticated = this.session.authentication.isAuthenticated;       
       }
       catch (ex) {
         this.messagesService.emitProcessMessage("PMG");

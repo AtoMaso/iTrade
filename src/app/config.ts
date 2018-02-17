@@ -50,76 +50,61 @@
     corresbytradeidwithstatus: 'http://localhost:5700/api/correspondences/GetCorrespondencesByTradeIdWithStatus',
     corresbytraderid: 'http://localhost:5700/api/correspondences/GetCorrespondencesByTraderId',
     corresbytraderidwithstatus: 'http://localhost:5700/api/correspondences/GetCorrespondencesByTraderIdWithStatus',
-
     singlecorres: 'http://localhost:5700/api/correspondences/',
-    updatecorres: 'http://localhost:5700/api/images/putcorrespondence',
-    addcorres: 'http://localhost:5700/api/images/postcorrespondences',
-    removecorres: 'http://localhost:5700/api/images/deletecorrespondence',
+    updatecorres: 'http://localhost:5700/api/correspondences/PutCorrespondence',
+    addcorres: 'http://localhost:5700/api/correspondences/PostCorrespondence',
+    deletecorres: 'http://localhost:5700/api/correspondences/DeleteCorrespondence',
 
-    // trade object
-    tradeobjects: 'http://localhost:5700/api/tradeobjects',
-    tradeobject: 'http://localhost:5700/api/tradeobjects/',
-    updatetradeobject: 'http://localhost:5700/api/tradeobjects/puttradeobject',
-    addtradeobject: 'http://localhost:5700/api/tradeobjects/posttradeobject',
-    removetradeobjects: 'http://localhost:5700/api/tradeobjects/deletedradeobject',
-
-    // trade for objects
-    tradeforobjects: 'http://localhost:5700/api/tradeforobjects',
-    tradeforobject: 'http://localhost:5700/api/tradeforobjects/',
-    updatetradeforobject: 'http://localhost:5700/api/tradeforobjects/puttradeforobject',
-    addtradeforobject: 'http://localhost:5700/api/tradeforobjects/posttradeforobject',
-    removetradeforobjects: 'http://localhost:5700/api/tradeforobjects/deletedradeforobject',
- 
     // category
     categories: 'http://localhost:5700/api/categories',
     category: 'http://localhost:5700/api/categories/',
-    updatecategory: 'http://localhost:5700/api/objectcategories/putcategory',
-    addcategory: 'http://localhost:5700/api/objectcategories/postcategory',
-    removecategory: 'http://localhost:5700/api/objectcategories/deletecategory',
+    updatecategory: 'http://localhost:5700/api/categories/PutCategory',
+    addcategory: 'http://localhost:5700/api/categories/PostCategory',
+    removecategory: 'http://localhost:5700/api/categories/DeleteCategory',
 
    //traders
     traders: 'http://localhost:5700/api/account/GetTraders',
     trader: 'http://localhost:5700/api/account/GetTraders/',
-    updatetrader: 'http://localhost:5700/api/account/puttrader',
-    addtrader: 'http://localhost:5700/api/account/posttrader',
-    removetrader: 'http://localhost:5700/api/account/deletetrader',
+    updatetrader: 'http://localhost:5700/api/account/PutTrader',
+    addtrader: 'http://localhost:5700/api/account/PostTrader',
+    removetrader: 'http://localhost:5700/api/account/DeleteTrader',
 
     // contact details
     contactdetails: 'http://localhost:5700/api/contactdetails',
     contactdetailsbytraderid: 'http://localhost:5700/api/contactdetails/GetContactDetailsByTraderId',
     contactdetail: 'http://localhost:5700/api/contactdetails/',
-    updatecontactdetail: 'http://localhost:5700/api/contactdetails/putcontactdetail',
-    addcontactdetail: 'http://localhost:5700/api/contactdetails/postcontactdetail',
-    removecontactdetail: 'http://localhost:5700/apicontactdetails/deletecontactdetail',
+    updatecontactdetail: 'http://localhost:5700/api/contactdetails/PutContactDetail',
+    addcontactdetail: 'http://localhost:5700/api/contactdetails/PostContactDetail',
+    removecontactdetail: 'http://localhost:5700/api/contactdetails/DeleteContactDetail',
 
     // personal details
     personaldetails: 'http://localhost:5700/api/personaldetails',
     personaldetailsbytraderid: 'http://localhost:5700/api/personaldetails/GetPersonalDetailsByTraderId',    
     personaldetail: 'http://localhost:5700/api/personaldetails/',
-    updatepersonaldetail: 'http://localhost:5700/api/personaldetails/putpersonaldetail',
-    addpersonaldetail: 'http://localhost:5700/api/personaldetails/postpersonaldetails',
-    removepersonaldetail: 'http://localhost:5700/personaldetails/deletepersonaldetail',
+    updatepersonaldetail: 'http://localhost:5700/api/personaldetails/PutPersonaldetail',
+    addpersonaldetail: 'http://localhost:5700/api/personaldetails/PostPersonaldetails',
+    removepersonaldetail: 'http://localhost:5700/personaldetails/DeletePersonaldetail',
   
     // security details
     securitydetails: 'http://localhost:5700/api/securitydetails',
     securitydetail: 'http://localhost:5700/api/personaldetails/',
-    updatesecuritydetail: 'http://localhost:5700/api/securitydetails/putsecuritydetail',
-    addsecuritydetail: 'http://localhost:5700/api/securitydetails/postsecuritydetails',
-    removesecuritydetail: 'http://localhost:5700/securitydetails/deletesecuritydetail',
+    updatesecuritydetail: 'http://localhost:5700/api/securitydetails/PutSecurityDetail',
+    addsecuritydetail: 'http://localhost:5700/api/securitydetails/PostSurityDetails',
+    removesecuritydetail: 'http://localhost:5700/securitydetails/DeleteSecurityDetail',
 
     // address
     addresses: 'http://localhost:5700/api/addresses',
     address: 'http://localhost:5700/api/addresses/',
-    updateaddress: 'http://localhost:5700/api/addresses/putaddress',
-    addaddress: 'http://localhost:5700/api/addresses/postaddress',
-    removeaddress: 'http://localhost:5700/api/addresses/deleteaddress',
+    updateaddress: 'http://localhost:5700/api/addresses/PutAddress',
+    addaddress: 'http://localhost:5700/api/addresses/PostAddress',
+    removeaddress: 'http://localhost:5700/api/addresses/DeleteAddress',
 
     // address type
     addresstypes: 'http://localhost:5700/api/addresstypes',
     addresstype: 'http://localhost:5700/api/addresstypes/',
-    updateaddresstype: 'http://localhost:5700/api/addresstypes/putaddresstype',
-    addaddresstype: 'http://localhost:5700/api/addrestypes/postaddresstype',
-    removeaddresstype: 'http://localhost:5700/api/addresstypes/deleteaddress',
+    updateaddresstype: 'http://localhost:5700/api/addresstypes/PutAddressType',
+    addaddresstype: 'http://localhost:5700/api/addrestypes/PostAddressType',
+    removeaddresstype: 'http://localhost:5700/api/addresstypes/DeleteAddressType',
   
     // process message
     messages: 'http://localhost:5700/api/processmessages',

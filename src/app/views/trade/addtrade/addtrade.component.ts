@@ -5,6 +5,8 @@ import { Router, ActivatedRoute, ActivatedRouteSnapshot, NavigationExtras } from
 import { Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader, FileUploadModule, FileItem} from 'ng2-file-upload';
 import { CONFIG } from '../../../config';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 
 import { CategoryService } from '../../../services/categories/category.service';
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';

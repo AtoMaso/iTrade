@@ -14,6 +14,10 @@ import { PaginationModule, TabsModule, DateFormatter} from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MyDatePickerModule } from 'mydatepicker';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+
 //import { TokenInterceptor } from './services/authentication/tokeninterceptor/tokeninterceptor.component';
 
 //helpers
@@ -40,25 +44,26 @@ import { CategoryService } from './services/categories/category.service';
 
 //components
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './views/dashboard/dashboard.component';
-
-import { LoginComponent } from './views/authentication/login.component';
-import { RegisterComponent } from './views/authentication/register.component';
 
 import { PageTitleComponent } from './views/controls/pagetitle/pagetitle.component';
 import { ModalComponent } from './views/controls/modal/modal.component';
 import { SpinnerOneComponent } from './views/controls/spinner/spinnerone.component';
 import { CarouselComponent } from './views/controls/carousel/carousel.component';
-import { ExpandapanelComponent } from './views/expandapanel/expandapanel.component';
+
+import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { LoginComponent } from './views/authentication/login.component';
+import { RegisterComponent } from './views/authentication/register.component';
+import { ForgotPasswordComponent } from './views/password/forgotpassword/forgotpassword.component';
+import { ChangePasswordComponent } from './views/password/changepassword/changepassword.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 
 import { AddTradeComponent } from './views/trade/addtrade/addtrade.component';
-import { AllTradesListComponent } from './views/trade/alltradeslist/alltradeslist.component';
+import { TradesListComponent } from './views/trade/tradeslist/tradeslist.component';
 import { MyTradesListComponent } from './views/trade/mytradeslist/mytradeslist.component';
 import { TradeDetailsComponent } from './views/trade/tradedetails/tradedetails.component';
 
-import { AllTradersListComponent } from './views/trader/alltraderslist/alltraderslist.component';
+import { TradersListComponent } from './views/trader/traderslist/traderslist.component';
 import { TraderDetailsComponent } from './views/trader/traderdetails/traderdetails.component';
 import { TraderHomeComponent } from './views/trader/traderhome/traderhome.component';
 import { MyTraderAccountComponent } from './views/trader/mytraderaccount/mytraderaccount.component';
@@ -67,14 +72,11 @@ import { PersonalDetailsComponent } from './views/trader/personaldetails/persona
 import { SecurityDetailsComponent } from './views/trader/securitydetails/securitydetails.component';
 import { ContactlDetailsComponent } from './views/trader/contactdetails/contactdetails.component';
 
-//import { TraderaccountComponent } from './views/trader/traderaccount/traderaccount.component';
-//import { NG2FileUploadComponent } from './views/file-upload/ng2-file-upload.component';
-
 import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
 
-import { AddObjectCategoryComponent } from './views/objectcategory/addobjectcategory/addobjectcategory.component';
-import { ObjectCategoryListComponent } from './views/objectcategory/objectcategorylist/objectcategorylist.component';
+import { AddCategoryComponent } from './views/category/addcategory/addcategory.component';
+import { CategoryListComponent } from './views/category/categorylist/categorylist.component';
 
 import { AddPhoneTypeComponent } from './views/phone/addphonetype/addphonetype.component';
 import { PhoneTypeListComponent } from './views/phone/phonetypelist/phonetypelist.component';
@@ -85,15 +87,15 @@ import { AddSocialNetworkTypeComponent } from './views/socialnetwork/addsocialne
 
 import { SocialNetworkTypeListComponent } from './views/socialnetwork/socialnetworktypelist/socialnetworktypelist.component';
 import { AddSecurityQuestionComponent } from './views/securityquestion/addsecurityquestion/addsecurityquestion.component';
-
 import { SecurityQuestionListComponent } from './views/securityquestion/securityquestionlist/securityquestionlist.component';
 
 import { AddProcessMessageComponent } from './views/processmessage/addprocessmessage/addprocessmessage.component';
 import { ProcessMessageListComponent } from './views/processmessage/processmessagelist/processmessagelist.component';
-import { CorrespondenceAllComponent } from './views/correspondence/correspondenceall/correspondenceall.component';
+
+import { CorrespondenceListComponent } from './views/correspondence/correspondencelist/correspondencelist.component';
 import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
-import { ForgotPasswordComponent } from './views/password/forgotpassword/forgotpassword.component';
-import { ChangePasswordComponent } from './views/password/changepassword/changepassword.component';
+import { AddCorrespondenceComponent } from './views/correspondence/addcorrespondence/addcorrespondence.component';
+
 
 
 //initialises the process message service to get all process messages on start of the application
@@ -106,68 +108,35 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
 
   declarations: [
     AppComponent,         
-    DashboardComponent,        
-    LoginComponent,     
-    RegisterComponent,   
-    ControlMessages,   
-    ProcessMessagesComponent,
-    PageTitleComponent,
-    ModalComponent,
-    SpinnerOneComponent,
-    CarouselComponent,
-    TopTradesPipe,
-    SortTradesByDatePipe,
-    ExpandapanelComponent,
-    AboutComponent,
-    ContactComponent,
- 
-    AllTradersListComponent,
-    TraderDetailsComponent,
-    TraderHomeComponent,
-    MyTraderAccountComponent,
 
-    AddTradeComponent,
-    AllTradesListComponent,
-    MyTradesListComponent,
-    TradeDetailsComponent,   
-    AddObjectCategoryComponent,
-    AddPhoneTypeComponent,  
-    PhoneTypeListComponent,
-    ObjectCategoryListComponent,
-    AddressTypeListComponent,
-    AddAddressTypeComponent,
-    PersonalDetailsComponent,
-    SecurityDetailsComponent,
-    ContactlDetailsComponent,
-    AddSocialNetworkTypeComponent,
-    SocialNetworkTypeListComponent,
-    AddSecurityQuestionComponent,
-    SecurityQuestionListComponent,
-    AddProcessMessageComponent,
-    ProcessMessageListComponent,
-    CorrespondenceAllComponent,
-    CorrespondenceDetailsComponent,
-    ForgotPasswordComponent,
-    ChangePasswordComponent  
+    ControlMessages,ProcessMessagesComponent, 
+    PageTitleComponent, ModalComponent, SpinnerOneComponent, CarouselComponent,
+    TopTradesPipe, SortTradesByDatePipe,
+
+    DashboardComponent, AboutComponent, ContactComponent, LoginComponent, RegisterComponent,   
+ 
+    TradersListComponent, TraderDetailsComponent, TraderHomeComponent,MyTraderAccountComponent,
+    AddTradeComponent, TradesListComponent, MyTradesListComponent, TradeDetailsComponent,   
+    AddCategoryComponent, CategoryListComponent,
+    AddPhoneTypeComponent, PhoneTypeListComponent,   
+    AddressTypeListComponent, AddAddressTypeComponent,
+    PersonalDetailsComponent, SecurityDetailsComponent, ContactlDetailsComponent,
+    AddSocialNetworkTypeComponent, SocialNetworkTypeListComponent,
+    AddSecurityQuestionComponent, SecurityQuestionListComponent,
+    AddProcessMessageComponent, ProcessMessageListComponent,
+    CorrespondenceListComponent, CorrespondenceDetailsComponent, AddCorrespondenceComponent,  
+    ForgotPasswordComponent, ChangePasswordComponent,
+  
     //TokenInterceptor,
-    //TraderaccountComponent
-    //NG2FileUploadComponent
   ],  
 
   imports: [    
-    BrowserModule,
-    AppRoutingModule,  
-    HttpClientModule,    
-    HttpModule,
-    JsonpModule,
-    MomentModule,
-    FormsModule,
-    ReactiveFormsModule,
-    Ng2TableModule,
-    FileUploadModule,  
-    TabsModule,  
-    NgxPaginationModule,
-    PaginationModule,          
+    BrowserAnimationsModule, BrowserModule, MatButtonModule, MatCheckboxModule,
+    AppRoutingModule, HttpClientModule, HttpModule,
+    JsonpModule, MomentModule,
+    FormsModule, ReactiveFormsModule,
+    Ng2TableModule, FileUploadModule,  TabsModule,  
+    NgxPaginationModule,PaginationModule,          
     MyDatePickerModule, 
     NgIdleKeepaliveModule.forRoot()
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests and returns simulated server responses.

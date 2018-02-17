@@ -16,11 +16,11 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 
 
 @Component({
-  selector: 'app-alltradeslist',
-  templateUrl: './alltradeslist.component.html',
-  styleUrls: ['./alltradeslist.component.scss']
+  selector: 'app-tradeslist',
+  templateUrl: './tradeslist.component.html',
+  styleUrls: ['./tradeslist.component.scss']
 })
-export class AllTradesListComponent implements OnInit {
+export class TradesListComponent implements OnInit {
  
   private removedTradeId: number;
   private tradeIdToBeRemoved: number;

@@ -56,7 +56,7 @@ export class TraderDetailsComponent implements OnInit {
 
     this.initialiseComponent();
 
-    this.getPersonalDetails(this.traderId));
+    this.getPersonalDetails(this.traderId);
   }
 
 
