@@ -21,25 +21,27 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
   styleUrls: ['./tradeslist.component.scss']
 })
 export class TradesListComponent implements OnInit {
- 
-  private removedTradeId: number;
-  private tradeIdToBeRemoved: number;
-  private tradeToRemove: Trade;
+
   private session: UserSession;
   private identity: UserIdentity = new UserIdentity;
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false;
   private isAllowedToAddTrade: boolean = false;
-  private isAllowedToRemoveTrade: boolean = false;
   private isOwner: boolean = false;
+  private status: string = "Open";
 
   private totalNumberOfRecords: number = 0;
   private setsCounter: number = 1;
   private recordsPerSet: number = 50;
   private totalNumberOfSets: number = 0;
-  private status: string = "Open";
   private hasTrades: boolean = true;
   private hasNoTrades: boolean = false;
+  private hasSets: boolean = false;
+
+  private selectedItem: string = "Name";
+  private displayRecords: number = 0;
+  private totalDisplayRecords: number = 0;
+  private filters: string[] =  null;
 
   // constructor which injects the services
   constructor(
@@ -53,11 +55,14 @@ export class TradesListComponent implements OnInit {
 
 
   // implement OnInit to get the initial list of articles
-  public ngOnInit() {   
+  public ngOnInit() { 
+     
     this.getUseridentity();
-    this.initialiseComponent();      
-    //this.getTrades("");
-    this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
+    this.initialiseComponent();   
+
+    this.getTrades("");
+    //this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
+   ;
   }
 
 
@@ -65,7 +70,7 @@ export class TradesListComponent implements OnInit {
   // GET TRADES - this will get open trades, if there are no any open trades will get all or will show message - no trades
   //*********************************************************************************************
   // gets all trades
-  private getTrades(traderId:string, status:string="All") {
+  private getTrades(traderId:string, status:string="Open") {
 
     this.tradeApiService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
@@ -80,11 +85,11 @@ export class TradesListComponent implements OnInit {
         }  
         else {
             this.data = this.TransformData(returnedTrades),
-            this.totalNumberOfRecords = this.data[0].total;
+            this.totalNumberOfRecords = this.data[0].total;            
             this.hasTrades = true;
             this.hasNoTrades = false;
             this.isRequesting = false,
-            this.calculateTotalNumberOfSets();
+            //this.calculateTotalNumberOfSets();
             this.onChangeTable(this.config),
             this.onPageChange(1)
         }
@@ -95,7 +100,7 @@ export class TradesListComponent implements OnInit {
 
 
   //gets page of trades 
-  private getPageOfTrades(traderId: string, set: number=1, recordsPerSet: number=50, status: string="All") {
+  private getPageOfTrades(traderId: string, set: number=1, recordsPerSet: number=50, status: string="Open") {
 
     this.tradeApiService.getPageOfTradesWithStatusOrAll(traderId, set, recordsPerSet, status)
         .subscribe((returnedTrades: Trade[]) => {      
@@ -178,22 +183,11 @@ export class TradesListComponent implements OnInit {
       trd.traderLastName = value.traderLastName;
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
 
+      trd.Images = value.Images;
+
       transformedData.push(trd);      
     });  
     return transformedData;
-  }
-
-
-  private passToModal(trade: Trade) {
-
-    if (trade.traderId === this.session.userIdentity.userId) {
-      this.isOwner = true;
-      this.tradeIdToBeRemoved = trade.tradeId;
-    }
-    else {
-      this.isOwner = false;
-      this.tradeIdToBeRemoved = null;
-    }
   }
 
 
@@ -236,18 +230,15 @@ export class TradesListComponent implements OnInit {
   /**********************************************/
   //ngx-pagination section
   /***********************************************/
-  private isIdAsc = true;
-  private isStatusAsc = true;
-  private isTitleAsc = true;
-  private isTitleForAsc = true;
-  private isCategoryAsc = true;
-  private isNameAsc = true;
-  private isPublishedAsc = true;
+  private isAsc: boolean = true;
+  private isTraderAsc:boolean = true;
+  private isTradeForAsc:boolean = true;
+  private isCategoryAsc:boolean = true;
+  private isNameAsc: boolean = true;
+  private isDateAsc:boolean = true;
 
-  private sortId: string = 'desc'
-  private sortStatus: string = 'des'
-  private sortTitle: string = 'desc';
-  private sortTitleFor: string = 'desc';
+  private sortTrader: string = 'desc';
+  private sortTradeFor: string = 'desc';
   private sortCategory: string = 'desc';
   private sortName: string = 'desc';
   private sortDate: string = 'desc';
@@ -256,17 +247,14 @@ export class TradesListComponent implements OnInit {
   public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
   public numPages: number = 1;
-  //public length: number = 0;
-  //public page: number = 1;
+  
   private isNextButton: boolean = false;
   private isPrevButton: boolean = false;
-  private lastPageOfTheCurrentSet: number = 0;
+  private lastPageOfTheCurrentSet: number = 0; 
 
 
   public columns: Array<any> =
-    [
-      { title: 'Id', name: 'tradeIdStr', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id' } },
-      { title: 'Status', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status' } },
+    [    
       { title: 'Trading', name: 'name', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade object name' } },
       { title: 'For', name: 'tradeFor', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade for object name' } },
       { title: 'Category', name: 'categoryDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade category' } },
@@ -288,7 +276,7 @@ export class TradesListComponent implements OnInit {
 
 
   private calculateTotalNumberOfSets() {
-
+    this.hasSets = true;
     let rem = this.totalNumberOfRecords % this.recordsPerSet;
     let mainpart = ~~(this.totalNumberOfRecords / this.recordsPerSet);
 
@@ -378,6 +366,11 @@ export class TradesListComponent implements OnInit {
     let sortedData = this.changeSort(filteredData, this.config);
     this.rows = sortedData;  
     this.config.totalItems = sortedData.length;
+
+    if (this.config.totalItems < this.config.itemsPerPage) { this.displayRecords = this.config.totalItems; }
+    else { this.displayRecords = this.config.itemsPerPage; }
+
+
   }
 
 
@@ -385,67 +378,52 @@ export class TradesListComponent implements OnInit {
     // reset the array of columns
     this.config.sorting.columns = [];
     switch (column) {
-
-      case 'tradeIdStr':
-        this.config.sorting.columns = [{ name: 'tradeIdStr', sort: this.sortId }];
-        this.onChangeTable(this.config);
-        this.isIdAsc = !this.isIdAsc;
-        this.sortId = this.isIdAsc ? 'desc' : 'asc';
-        break;
-
-      case 'status':
-        this.config.sorting.columns = [{ name: 'status', sort: this.sortStatus }];
-        this.onChangeTable(this.config);
-        this.isStatusAsc = !this.isStatusAsc;
-        this.sortStatus = this.isStatusAsc ? 'desc' : 'asc';
-        break;
-
       case 'name':
-        this.config.sorting.columns = [{ name: 'name', sort: this.sortTitle }];
+        this.selectedItem = "Name";
+        this.config.sorting.columns = [{ name: 'name', sort: this.sortName }];
         this.onChangeTable(this.config);
-        this.isTitleAsc = !this.isTitleAsc;
-        this.sortTitle = this.isTitleAsc ? 'desc' : 'asc';
+        this.isAsc = !this.isNameAsc;
+        this.isNameAsc = !this.isNameAsc;
+        this.sortName = this.isNameAsc ? 'desc' : 'asc';
         break;
 
       case 'tradeFor':
-        this.config.sorting.columns = [{ name: 'tradeFor', sort: this.sortTitleFor }];
+        this.selectedItem = "Trading For";
+        this.config.sorting.columns = [{ name: 'tradeFor', sort: this.sortTradeFor }];
         this.onChangeTable(this.config);
-        this.isTitleForAsc = !this.isTitleForAsc;
-        this.sortTitleFor = this.isTitleForAsc ? 'desc' : 'asc';
+        this.isAsc = !this.isTradeForAsc;
+        this.isTradeForAsc = !this.isTradeForAsc;
+        this.sortTradeFor = this.isTradeForAsc ? 'desc' : 'asc';
         break;
 
       case 'categoryDescription':
+        this.selectedItem = "Category";
         this.config.sorting.columns = [{ name: 'categoryDescription', sort: this.sortCategory }];
         this.onChangeTable(this.config);
+        this.isAsc = !this.isCategoryAsc;
         this.isCategoryAsc = !this.isCategoryAsc;
         this.sortCategory = this.isCategoryAsc ? 'desc' : 'asc';
         break;
 
       case 'traderFullName':
-        this.config.sorting.columns = [{ name: 'traderFullName', sort: this.sortName }];
+        this.selectedItem = "Trader";
+        this.config.sorting.columns = [{ name: 'traderFullName', sort: this.sortTrader }];
         this.onChangeTable(this.config);
-        this.isNameAsc = !this.isNameAsc;
-        this.sortName = this.isNameAsc ? 'desc' : 'asc';
+        this.isAsc = !this.isTraderAsc;
+        this.isTraderAsc = !this.isTraderAsc;
+        this.sortTrader = this.isTraderAsc ? 'desc' : 'asc';
         break;
 
       case 'datePublished':
+        this.selectedItem = "Published";
         this.config.sorting.columns = [{ name: 'datePublished', sort: this.sortDate }];
         this.onChangeTable(this.config);
-        this.isPublishedAsc = !this.isPublishedAsc;
-        this.sortDate = this.isPublishedAsc ? 'desc' : 'asc';
+        this.isAsc = !this.isDateAsc;
+        this.isDateAsc = !this.isDateAsc;
+        this.sortDate = this.isDateAsc ? 'desc' : 'asc';
         break;
       default:
     }
-  }
-
-
-  private changeRemove(data: any, config: any): any {
-    if (this.removedTradeId == null) { return data; }
-
-    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedTradeId);
-    this.data = null;
-    this.data = removedData;
-    return this.data;
   }
 
 

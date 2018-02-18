@@ -15,8 +15,6 @@
 } from './interfaces';
 
 
-
-
 class LoginModel implements ILoginModel{
   Email: string;
   UserName: string;
@@ -651,7 +649,7 @@ class Guid {
 export {
   ChangePasswordBindingModel, RegisterBindingModel,
   SetPasswordBindingModel, LoginModel,
-  Trader, TraderDetails,PostTrade,
+  Trader, TraderDetails, PostTrade, Sort,
   PersonalDetails, ContactDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType,Email,

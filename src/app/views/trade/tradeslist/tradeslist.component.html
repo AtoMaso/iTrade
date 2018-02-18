@@ -1,168 +1,121 @@
 
 <div *ngIf="hasTrades">
 
-         <div class="container col-md-12">
+         <div class="container col-md-12">    
 
-          <!-- Filters -->
-          <div class="row">
+              <!-- the breadcrumb and sorting section-->
+             <div class="row panel panel-footer" style="height:75px;vertical-align:middle;">
 
-            <div class="col-md-2 textgray">
-              <!-- this is ngx-table filtering section used but the rest of it is independent table done by me-->
-              <span class="smalltextbold">Filter in all columns</span>
-              <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
-            </div>
+                   <!-- breadcrumb -->
+                   <div class="col-md-7 panel panel-heading smalltext" style="height:55px;">
+                     <div style="margin-top:5px;">
+                        <span>Displaying <span class="text-info">{{ displayRecords }}</span> 
+                              of 
+                            <span class="text-info">{{ config.totalItems }}</span> records 
+                       </span>
+                       <span *ngIf="filters != null">with {{ filters }}</span>
+                     </div>
+                   </div>
+                  
+                    <!-- sort -->
+                   <div class="col-md-4 col-md-offset-1 panel panel-heading" style="height:55px;">
 
+                         <div class="col-md-6 smalltext" style="margin-top:5px;">
+                                 <span> Sorted by: <span class="text-info">{{ selectedItem }}</span></span>
+                                 <span *ngIf="isAsc" class="glyphicon glyphicon-chevron-down"></span>
+                                 <span *ngIf="!isAsc" class="glyphicon glyphicon-chevron-up"></span>
+                         </div>       
 
-            <div class="col-md-2 textgray">
-              <span class="smalltextbold">Items Per Page</span>
-              <input type="number" min="1" max="{{recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" class="form-control">
-            </div>
+                         <div class="col-md-6 smalltext" >
+                   
+                             <div class="dropdown">
+                                 <button class="btn btn-primary dropdown-toggle smalltext" id="menu1" type="button" data-toggle="dropdown" style="height:30px;">Select Sorting
+                                   <span class="caret"></span>
+                                 </button>
+                                 <ul class="dropdown-menu smalltext" role="menu" aria-labelledby="menu1">
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('name')">Name</a></li>
+                                   <li role="presentation" class="divider"></li>
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('tradeFor')">Trade For</a></li>
+                                   <li role="presentation" class="divider"></li>
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('datePublished')">Published</a></li>         
+                                   <li role="presentation" class="divider"></li>
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('traderFullName')">Trader</a></li>
+                                   <li role="presentation" class="divider"></li>
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('categoryDescription')">Category</a></li>                                                    
+                                 </ul>
+                               </div>
 
+                           </div>            
 
-            <!--<div class="col-md-2 textgray">
-              <span class="smalltextbold">Current Page</span>
-              <input type="number" min="1" [(ngModel)]="config.currentPage" class="form-control">
-            </div>
-
-            <div class="col-md-1 textgray">
-              <span class="smalltextbold">Max Size</span>
-              <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
-            </div>-->
-
-            <!--<div class="col-md-2 textgray">
-              <span class="smalltextbold">Records Per Set</span>
-              <input type="number" min="5" max="500" [(ngModel)]="recordsPerSet" class="form-control">
-            </div>-->
-
-
-            <div class="col-md-2 col-md-offset-6 text-right">
-              <br />
-              <div *ngIf="!isAuthenticated">
-                <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltext">
-                  <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
-                </button>
-              </div>
-
-              <div *ngIf="isAuthenticated">
-                <button class="btn btn-success btn-sm smalltext" (click)="addTrade()">
-                  <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
-                </button>
-              </div>
-
-            </div>
-
-          </div>
-
-          <br />
+                     </div>
+             
+           </div>
 
 
-          <!-- Table -->
-          <div class="row">
+           <!-- filter and the table -->
+           <div class="row">
 
-            <div class="table-responsive">
+              <!-- filter -->
+             <div class="col-md-2">
+                <div class="row panel panel-heading">                  
+                    <div class="row col-md-12 textgray">
+                        <span class="smalltextbold">Filter in all columns</span>                 
+                    </div>
+                    <div class="row col-md-12 textgray">
+                          <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
+                    </div>
+                </div>               
+             </div>
 
-              <table class="table table-bordered table-hover">
+             <!-- table -->
+             <div class="table-responsive col-md-10">
 
-                <!-- Table Header -->
-                <thead>
-                  <tr style="height:35px;">
-                    <th class="col-md-1" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('tradeIdStr')" class="text-uppercase textgray smalltextbold" style="width:auto">
-                        Id
-                        <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
-                        <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
-                      </a>
-                    </th>
+                     <table class="table  table-hover">                           
+                     
+                         <tr *ngFor="let trade of rows  | paginate:config ">
 
-                    <th class="col-md-1" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('status')" class="textgray text-uppercase smalltextbold" style="width:auto">
-                        Status
-                        <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
-                        <span *ngIf="!isStatusAsc" class="glyphicon glyphicon-chevron-up"></span>
-                      </a>
-                    </th>
-
-                    <th class="col-md-2" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('name')" class="textgray text-uppercase  smalltextbold" style="width:auto">
-                        Trading
-                        <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
-                        <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
-                      </a>
-                    </th>
-
-                    <th class="col-md-2" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('tradeFor')" class="textgray text-uppercase smalltextbold" style="width:auto">
-                        For
-                        <span *ngIf="isTitleForAsc" class="glyphicon glyphicon-chevron-down"></span>
-                        <span *ngIf="!isTitleForAsc" class="glyphicon glyphicon-chevron-up"></span>
-                      </a>
-                    </th>
-
-                    <th class="col-md-2" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('categoryDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
-                        Category
-                        <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
-                        <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
-                      </a>
-                    </th>
-
-                    <th class="col-md-2" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('traderFullName')" class="textgray text-uppercase smalltextbold" style="width:auto">
-                        Trader
-                        <span *ngIf="isNameAsc" class="glyphicon glyphicon-chevron-down"></span>
-                        <span *ngIf="!isNameAsc" class="glyphicon glyphicon-chevron-up"></span>
-                      </a>
-                    </th>
-
-                    <th class="col-md-2" style="background-color:#FF223A3A">
-                      <a (click)="sortTable('datePublished')" class="textgray text-uppercase smalltextbold" style="width:auto">
-                        Published
-                        <span *ngIf="isPublishedAsc" class="glyphicon glyphicon-chevron-down"></span>
-                        <span *ngIf="!isPublishedAsc" class="glyphicon glyphicon-chevron-up"></span>
-                      </a>
-                    </th>
-
-                  </tr>
-                </thead>
+                                 <td class="row col-md-12">   
+                                                                
+                                     <div class="col-md-4 container">                                       
+                                       <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>  
+                                     </div>
 
 
-                <!-- Table Rows -->
-                <tr *ngFor="let trade of rows  | paginate:config ">
+                                     <div class="col-md-4">                                     
+                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Trading:<a class="smalltext text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>
+                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Trading for: <span class="smalltext text-uppercase text-info"> {{ trade.tradeFor  }}</span></div>
+                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Category: <span><span class="smalltext text-uppercase text-info"> {{ trade.categoryDescription  }}</span></span></div>         
+                                       <div class="row smalltext text-capitalize textgray" style="height:30px;">Reference Id:<span class="smalltext text-uppercase text-info"> {{ trade.tradeId  }}</span></div>    
+                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Published on:<span class="smalltext text-uppercase text-info"> {{ trade.datePublished | date }}</span></div>
+                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Trader: <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
+                                     </div>
 
-                  <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeIdStr  }}</td>
 
-                  <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.status  }}</td>
+                                     <div class="col-md-4">
+                                       <div class="row smalltext text-capitalize textgray"  style="height:120px;">Description:<span  class="smalltext text-info"> {{ trade.description  }}</span></div>                                              
+                                       <div class="row smalltext text-capitalize textgray" style="height:30px;">Status: <span class="smalltext text-uppercase text-info"> {{ trade.status  }}</span></div>             
+                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Place:<span  class="smalltext text-uppercase text-info"> {{ trade.place  }}</span></div>                                                                                                                                                
+                                  </div>
+                  
+                                  </td>   
+                          </tr>
+  
+                    </table>
 
-                  <td class="col-md-2">
-                    <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"><i>{{ trade.name  }}</i></a>
-                  </td>
+             </div>
 
-                  <td class="col-md-2 smalltext text-capitalize textgray"> {{ trade.tradeFor  }}</td>
+           </div>
 
-                  <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.categoryDescription  }}</td>
-
-                  <td class="col-md-2">
-                    <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"><i>{{ trade.traderFullName }}</i></a>
-                  </td>
-
-                  <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.datePublished | date }}</td>
-
-                </tr>
-
-              </table>
-
-            </div>
-
-          </div>
 
 
            <!-- Table naviagtion -->
-          <div class="row col-md-12">
-            <div class="col-md-5">
+          <div class="row panel panel-footer" style="height:75px;vertical-align:middle;">
+             
+            <div class="col-md-4 panel panel-heading textsmall"  style="height:55px;vertical-align:middle;">
               <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
                                    (pageChange)="onPageChange($event)"
                                    maxSize="5"
-                                   directionLinks="false"
+                                   directionLinks="true"
                                    autoHide="true"
                                    previousLabel="Previous"
                                    nextLabel="Next"
@@ -175,18 +128,18 @@
               </pagination-controls>
             </div>
 
-            <div class="col-md-2 textgray">
-              <span class="smalltextbold">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
-            </div>
+            <div *ngIf="hasSets">
+              <div class="col-md-2 col-md-offset-1 panel panel-heading" style="height:55px;vertical-align:middle;">
+                <span class="smalltextbold textgray">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
+              </div>
 
-            <div class="col-md-3 col-md-offset-2">
-              <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
-              <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
-            </div>
-          </div>
+              <div class="col-md-3 col-md-offset-2  panel panel-heading" style="height:55px;vertical-align:middle;">
+                <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
+                <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+              </div>
+            </div></div>
 
-
-  </div>
+    </div>
 
 </div>
 
@@ -195,28 +148,139 @@
 <my-spinner [isRunning]="isRequesting"></my-spinner>
 
 
-<!-- MODAL form to show when add/remove trade is clicked and user is not logged in-->
-<div class="modal fade" id="addremoveLogin" tabindex="-1" role="dialog" aria-labelledby="AddRemoveLogin">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
 
-      <div class="modal-header">
-        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
-        <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>     
-      </div>
 
-      <div class="modal-body text-warning">
-        <p>You need to be logged in to do this action. Do you want to log in?</p>
-      </div>
+<!--<div class="row">
 
-      <div class="modal-footer">
-        <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" [routerLink]="['/login']" data-dismiss="modal">Yes</button>
-      </div>
+  <div class="col-md-2 textgray">
 
-    </div>
+    <span class="smalltextbold">Filter in all columns</span>
+    <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
   </div>
+
+
+  <div class="col-md-2 textgray">
+    <span class="smalltextbold">Items Per Page</span>
+    <input type="number" min="1" max="{{recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" class="form-control">
+  </div>
+
+
+  <div class="col-md-2 col-md-offset-6 text-right">
+    <br />
+    <div *ngIf="!isAuthenticated">
+      <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltext">
+        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
+      </button>
+    </div>
+
+    <div *ngIf="isAuthenticated">
+      <button class="btn btn-success btn-sm smalltext" (click)="addTrade()">
+        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Trade
+      </button>
+    </div>
+
+  </div>
+
 </div>
+
+<br />
+
+
+<div class="row">
+
+  <div class="table-responsive">
+
+    <table class="table table-bordered table-hover">
+
+
+      <thead>
+        <tr style="height:35px;">
+          <th class="col-md-1" style="background-color:#FF223A3A">
+            <a (click)="sortTable('tradeIdStr')" class="text-uppercase textgray smalltextbold" style="width:auto">
+              Id
+              <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
+              <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+          </th>
+
+          <th class="col-md-1" style="background-color:#FF223A3A">
+            <a (click)="sortTable('status')" class="textgray text-uppercase smalltextbold" style="width:auto">
+              Status
+              <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
+              <span *ngIf="!isStatusAsc" class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+          </th>
+
+          <th class="col-md-2" style="background-color:#FF223A3A">
+            <a (click)="sortTable('name')" class="textgray text-uppercase  smalltextbold" style="width:auto">
+              Trading
+              <span *ngIf="isTitleAsc" class="glyphicon glyphicon-chevron-down"></span>
+              <span *ngIf="!isTitleAsc" class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+          </th>
+
+          <th class="col-md-2" style="background-color:#FF223A3A">
+            <a (click)="sortTable('tradeFor')" class="textgray text-uppercase smalltextbold" style="width:auto">
+              For
+              <span *ngIf="isTitleForAsc" class="glyphicon glyphicon-chevron-down"></span>
+              <span *ngIf="!isTitleForAsc" class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+          </th>
+
+          <th class="col-md-2" style="background-color:#FF223A3A">
+            <a (click)="sortTable('categoryDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
+              Category
+              <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
+              <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+          </th>
+
+          <th class="col-md-2" style="background-color:#FF223A3A">
+            <a (click)="sortTable('traderFullName')" class="textgray text-uppercase smalltextbold" style="width:auto">
+              Trader
+              <span *ngIf="isNameAsc" class="glyphicon glyphicon-chevron-down"></span>
+              <span *ngIf="!isNameAsc" class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+          </th>
+
+          <th class="col-md-2" style="background-color:#FF223A3A">
+            <a (click)="sortTable('datePublished')" class="textgray text-uppercase smalltextbold" style="width:auto">
+              Published
+              <span *ngIf="isPublishedAsc" class="glyphicon glyphicon-chevron-down"></span>
+              <span *ngIf="!isPublishedAsc" class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+          </th>
+
+        </tr>
+      </thead>
+
+
+      <tr *ngFor="let trade of rows  | paginate:config ">
+
+        <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeIdStr  }}</td>
+
+        <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.status  }}</td>
+
+        <td class="col-md-2">
+          <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"><i>{{ trade.name  }}</i></a>
+        </td>
+
+        <td class="col-md-2 smalltext text-capitalize textgray"> {{ trade.tradeFor  }}</td>
+
+        <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.categoryDescription  }}</td>
+
+        <td class="col-md-2">
+          <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"><i>{{ trade.traderFullName }}</i></a>
+        </td>
+
+        <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.datePublished | date }}</td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+</div>-->
 
 

@@ -126,10 +126,12 @@ export class TradeDetailsComponent implements OnInit {
           if (this.trade.traderId === this.session.userIdentity.userId) { this.canTrade = false; }
           else { this.canTrade = true; }
     }       
+
     // now call the history or add a history first
     if (!this.flag) { this.addHistoryRecord(); }
     else { this.getTradeHistory(this.tradeId);}
   }
+
 
 
   /*******************************************************?
@@ -156,6 +158,7 @@ export class TradeDetailsComponent implements OnInit {
     this.data.push(history),
     this.onChangeTable(this.config)
     this.hasHistory = true;
+
     // now call get history
     this.getTradeHistory(this.tradeId);
   }
@@ -190,6 +193,7 @@ export class TradeDetailsComponent implements OnInit {
     , (serviceError: Response) => this.onError(serviceError, "getTradeImages"));
 
 }
+
 
   //*****************************************************
   // HELPER METHODS

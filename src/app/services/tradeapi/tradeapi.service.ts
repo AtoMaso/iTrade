@@ -60,7 +60,7 @@ export class TradeApiService {
       // get all tardes by traderId
       if (traderId != "" || traderId != undefined) { this.localUrl = `${tradesByTraderIdWithStatus}?traderId=${traderId}&status=${status}`; }
       // get all trades in the system
-      if (traderId == "" || traderId == undefined) { this.localUrl = allTradesWithStatus; }
+      if (traderId == "" || traderId == undefined) { this.localUrl = `${allTradesWithStatus}?status=${status}`; }
     }
 
     // errors are handled in the component
