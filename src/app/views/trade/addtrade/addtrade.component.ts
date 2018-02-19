@@ -163,11 +163,12 @@ export class AddTradeComponent implements OnInit {
   // SELECTION of state should get places for that state
   //*****************************************************
   private onStateChange(item:any) {
-    this.getPlacesByStateId(item[0]);
+    this.getPlacesByStateId(item[1]);
   }
 
+
   private onCategoryChange(item: any) {
-    this.getSubcategoriesByCategoryId(item[0]);
+    this.getSubcategoriesByCategoryId(item[1]);
   }
 
 
@@ -221,6 +222,7 @@ export class AddTradeComponent implements OnInit {
             , (error: Response) => this.onError(error, "addTrade"));
   }
 
+
   // on success to the following
   private onAddSuccess(trade: PostTrade) {
 
@@ -240,6 +242,7 @@ export class AddTradeComponent implements OnInit {
     
   }
 
+
   // upload each file- maybe we should go with mutliple
   private uploadSingleFile(item: any) {
     item.withCredentials = false;
@@ -258,6 +261,7 @@ export class AddTradeComponent implements OnInit {
       this.hasImages = true;
     }
   }
+
 
   private fileOverBase(e: any) {
     this.hasBaseDropZoneOver = e;
@@ -301,12 +305,14 @@ export class AddTradeComponent implements OnInit {
     }
   }
 
+
   private initialiseComponent() {
     this.pageTitleService.emitPageTitle(new PageTitle("Add Trade"));
     this.messagesService.emitRoute("nill");
     //this.isFileAllowed = false;
     this.isRequesting = false;
   }
+
 
   private setupForm() {
    
@@ -336,6 +342,7 @@ export class AddTradeComponent implements OnInit {
 
   }
 
+
   private setDate(): void {
     // Set today date using the patchValue function
     let date = new Date();
@@ -351,18 +358,18 @@ export class AddTradeComponent implements OnInit {
     }
   }
 
+
   private onDateChanged(event: IMyDateModel) {
     // Update value of selDate variable
     this.selectDate = event.date;
   }
+
 
   private clearDate(): void {
     // Clear the date using the patchValue function
     this.addForm.patchValue({ publishDate: null });
   }
 
- 
-  
 
 
   //****************************************************

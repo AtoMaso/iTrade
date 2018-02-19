@@ -44,9 +44,9 @@ export class SubcategoriesService {
   }
 
 
-    public getPlace(id: number): Observable<Subcategory> {
+    public getSubcategory(id: number): Observable<Subcategory> {
     //TODO header here for authentication to be added
-      return this.httpClientService.get<Subcategory>(subcategoriesUrl + `${id}`).retry(1);
+      return this.httpClientService.get<Subcategory>(subcategoryUrl + `${id}`).retry(1);
   }
 
 }
