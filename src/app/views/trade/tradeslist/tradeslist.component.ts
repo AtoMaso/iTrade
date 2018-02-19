@@ -6,12 +6,14 @@ import { Observable } from 'rxjs/Observable';
 
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
+import { CategoryService } from '../../../services/categories/category.service';
+import { SubcategoriesService } from '../../../services/subcategories/subcategories.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 import { CapsPipe } from '../../../helpers/pipes';
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -42,12 +44,16 @@ export class TradesListComponent implements OnInit {
   private selectedItem: string = "Name";
   private displayRecords: number = 0;
   private totalDisplayRecords: number = 0;
-  private filters: string[] =  null;
+  private filters: string[] = null;
+  private categories: Category[] = [];
+  private subcategories: Subcategory[] = [];
 
   // constructor which injects the services
   constructor(
     private route: ActivatedRoute,
     private tradeApiService: TradeApiService,
+    private categoryService: CategoryService,
+    private subcategoriesService: SubcategoriesService,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private router: Router,
@@ -62,6 +68,7 @@ export class TradesListComponent implements OnInit {
     this.initialiseComponent();   
 
     this.getTrades("");
+    this.getCategories();   
     //this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
    ;
   }
@@ -158,6 +165,32 @@ export class TradesListComponent implements OnInit {
   }
 
 
+
+
+  //*****************************************************
+  // GET CATEGORIES
+  //*****************************************************
+  public getCategories() {
+    this.categoryService.getCategories()
+      .subscribe((res: Category[]) => {
+        this.categories = res;
+      }
+      , (error: Response) => this.onError(error, "getCategories"));
+  }
+
+
+  //*****************************************************
+  // GET SUBCATEGORIES
+  //*****************************************************
+  public getSubcategoriesByCategoryId(categoryId: number) {
+    this.subcategoriesService.getSubcategoriesByCategoryId(categoryId)
+      .subscribe((res: Subcategory[]) => {
+        this.subcategories = res;
+      }
+      , (error: Response) => this.onError(error, "getSubcategories"));
+  }
+
+
  
   //****************************************************
   // ADD TRADE
@@ -213,7 +246,9 @@ export class TradesListComponent implements OnInit {
       trd.state = value.state;
       trd.categoryId = value.categoryId;
       trd.categoryDescription = value.categoryDescription;
-      
+      trd.subcategoryId = value.subcategoryId;
+      trd.subcategoryDescription = value.subcategoryDescription;
+
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;
       trd.traderMiddleName = value.traderMiddleName;
@@ -272,13 +307,17 @@ export class TradesListComponent implements OnInit {
   private isTradeForAsc:boolean = true;
   private isCategoryAsc:boolean = true;
   private isNameAsc: boolean = true;
-  private isDateAsc:boolean = true;
+  private isDateAsc: boolean = true;
+  private isPlaceAsc: boolean = true;
+  private isStateAsc: boolean = true;
 
   private sortTrader: string = 'desc';
   private sortTradeFor: string = 'desc';
   private sortCategory: string = 'desc';
   private sortName: string = 'desc';
   private sortDate: string = 'desc';
+  private sortPlace: string = 'desc';
+  private sortState: string = 'desc';
 
   private data: Array<any> = [];     // full data from the server
   public rows: Array<any> = [];      // rows passed to the table
@@ -292,11 +331,13 @@ export class TradesListComponent implements OnInit {
 
   public columns: Array<any> =
     [    
-      { title: 'Trading', name: 'name', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade object name' } },
-      { title: 'For', name: 'tradeFor', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade for object name' } },
-      { title: 'Category', name: 'categoryDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade category' } },
+      { title: 'Trading', name: 'name', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade name' } },
+      { title: 'For', name: 'tradeFor', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade for name' } },
+      { title: 'Category', name: 'categoryDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by  category' } },
       { title: 'Trader', name: 'traderFullName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader full name.' } },
-      { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade date.' } }      
+      { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by date.' } } ,    
+      { title: 'Place', name: 'place', sort: true, filtering: { filterString: '', placeholder: 'Filter by place.' } },
+      { title: 'State', name: 'state', sort: true, filtering: { filterString: '', placeholder: 'Filter by state.' } }     
   ];
 
 
@@ -461,6 +502,24 @@ export class TradesListComponent implements OnInit {
         this.isAsc = !this.isDateAsc;
         this.isDateAsc = !this.isDateAsc;
         this.sortDate = this.isDateAsc ? 'desc' : 'asc';
+        break;
+
+      case 'place':
+        this.selectedItem = "Place";
+        this.config.sorting.columns = [{ name: 'place', sort: this.sortPlace }];
+        this.onChangeTable(this.config);
+        this.isAsc = !this.isPlaceAsc;
+        this.isPlaceAsc = !this.isPlaceAsc;
+        this.sortPlace = this.isPlaceAsc ? 'desc' : 'asc';
+        break;
+
+      case 'state':
+        this.selectedItem = "State";
+        this.config.sorting.columns = [{ name: 'state', sort: this.sortState }];
+        this.onChangeTable(this.config);
+        this.isAsc = !this.isStateAsc;
+        this.isStateAsc = !this.isStateAsc;
+        this.sortState = this.isStateAsc ? 'desc' : 'asc';
         break;
       default:
     }

@@ -163,12 +163,12 @@ export class AddTradeComponent implements OnInit {
   // SELECTION of state should get places for that state
   //*****************************************************
   private onStateChange(item:any) {
-    this.getPlacesByStateId(item[1]);
+    this.getPlacesByStateId(item[3]);
   }
 
 
   private onCategoryChange(item: any) {
-    this.getSubcategoriesByCategoryId(item[1]);
+    this.getSubcategoriesByCategoryId(item[3]);
   }
 
 
@@ -235,9 +235,8 @@ export class AddTradeComponent implements OnInit {
       }
     
       // is no point of changing of isRequested as we go to another page here
-      this.isSubmitted = true;
-      //this.isRequesting = false;
-      this.router.navigate(['/tradedetails'],  { queryParams: { id: trade.tradeId, flag:true }});          
+      this.isSubmitted = true;     
+      this.router.navigate(['/tradedetails'],  { queryParams: { id: trade.tradeId, flag: true }});          
     }  
     
   }
@@ -376,6 +375,9 @@ export class AddTradeComponent implements OnInit {
   // LOGGING METHODS
   //****************************************************
   private onError(serviceError: any, operation: string) {
+
+    this.isRequesting = false;
+
     let message: string = "";
 
     // audit log the error passed

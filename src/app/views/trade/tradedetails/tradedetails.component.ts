@@ -65,9 +65,9 @@ export class TradeDetailsComponent implements OnInit {
 
     this.getUseridentity();
 
-    if (this.flag) { this.messagesService.emitProcessMessage("PMSAT"); }
-
     this.initialiseComponent(); 
+ 
+    if (this.flag) { this.messagesService.emitProcessMessage("PMSAT"); }
 
     this.getATrade(this.tradeId);
   }
@@ -171,7 +171,7 @@ export class TradeDetailsComponent implements OnInit {
   private getTradeHistory(tradeId: number) {
     this.tradeHistoryService.getTradeHistoryByTradeId(tradeId)
       .subscribe((returnedHistories: TradeHistory[]) => {
-
+        this.hasHistory = true;
         this.data = returnedHistories;
         this.onChangeTable(this.config); 
 
@@ -231,6 +231,7 @@ export class TradeDetailsComponent implements OnInit {
     trd.place = returnedTrade.place;
     trd.state = returnedTrade.state;
     trd.categoryDescription = returnedTrade.categoryDescription;
+    trd.subcategoryDescription = returnedTrade.subcategoryDescription;
 
     trd.traderId = returnedTrade.traderId; 
     trd.traderFullName = returnedTrade.traderFirstName + " " + returnedTrade.traderMiddleName + " " + returnedTrade.traderLastName;

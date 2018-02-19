@@ -45,7 +45,7 @@
 
               <div class="row">
                 <div class="panel panel-heading col-md-12 smalltext">
-                  Category: <span class="text-uppercase text-info"> {{ trade.categoryDescription }}</span> 
+                  Category: <span class="text-uppercase text-info"> {{ trade.categoryDescription }} / {{ trade.subcategoryDescription }}</span> 
                 </div>
               </div>
 
@@ -55,6 +55,12 @@
                   Date Published: <span class="text-uppercase text-info"> {{ trade.datePublished | date }}</span> 
                 </div>
               </div>
+
+            <div class="row">
+              <div class="panel panel-heading col-md-12 smalltext">
+                Place: <span class="text-uppercase text-info"> {{ trade.place }} / {{ trade.state }} </span>
+              </div>
+            </div>
 
 
               <div class="row">
@@ -226,6 +232,7 @@
 
 
                 </div>
+
               </div>
 
             </div>

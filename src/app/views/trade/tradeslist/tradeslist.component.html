@@ -50,7 +50,11 @@
                                    <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('traderFullName')">Trader</a></li>
                                    <li role="presentation" class="divider"></li>
-                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('categoryDescription')">Category</a></li>                                                    
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('categoryDescription')">Category</a></li>       
+                                   <li role="presentation" class="divider"></li>
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('place')">Place</a></li>       
+                                   <li role="presentation" class="divider"></li>
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('state')">State</a></li>                                   
                                  </ul>
                                </div>
 
@@ -77,26 +81,68 @@
                       <div id="collapseFilters" class="collapse">
 
                              <div class="col-md-12 panel">
-                                  <span id="category" class="categories panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCategory">
+                                  <!--<span id="category" class="categories panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCategory">
                                     <span class="glyphicon glyphicon-plus"></span> Category
-                                  </span>
+                                  </span>-->
                         
-                                  <div id="collapseCategory" class="collapse smalltext">
-                                    List of categories here
+                                  <!--<div id="collapseCategory" class="collapse smalltext">-->
+                                            
+                                    <!--<div class="col-md-12 smalltext">-->
 
-                                  </div>
+                                      <div class="dropdown">
+                                        <button class="btn btn-primary dropdown-toggle smalltext" id="menu2" type="button" data-toggle="dropdown" style="height:30px;width:150px;">Category<span class="caret"></span></button>
+
+                                        <ul class="dropdown-menu smalltext" role="menu" aria-labelledby="menu2">
+                                            <li role="presentation"  style="width:200px;"><a role="menuitem" tabindex="-1" (click)="filterTable('name')">Name</a></li>                                                
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('tradeFor')">Trade For</a></li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('datePublished')">Published</a></li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('traderFullName')">Trader</a></li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('categoryDescription')">Category</a></li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('place')">Place</a></li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('state')">State</a></li>
+
+                                          </ul>                                    
+                                    </div>
+                               <!--</div>-->
+                               <!--</div>-->
                             </div>
 
 
                             <div class="col-md-12 panel">
-                                <span id="places" class="places panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapsePlace">
+                                <!--<span id="places" class="places panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapsePlace">
                                   <span class="glyphicon glyphicon-plus"></span> Place
-                                </span>
+                                </span>-->
 
-                                  <div id="collapsePlace" class="collapse smalltext">
-                                       List of places here
-                                       
-                                  </div>
+                                  <!--<div id="collapsePlace" class="collapse smalltext">-->
+                                    <div class="dropdown">
+                                      <button class="btn btn-primary dropdown-toggle smalltext" id="menu2" type="button" data-toggle="dropdown" style="height:30px;width:150px;">Places<span class="caret"></span></button>
+
+                                      <ul class="dropdown-menu smalltext" role="menu" aria-labelledby="menu2">
+                                        <li role="presentation" style="width:200px;"><a role="menuitem" tabindex="-1" (click)="changeFilter('name')">QLD</a></li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('tradeFor')">NSW</a></li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('datePublished')">Victoria</a></li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('traderFullName')">Tasmania</a></li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('categoryDescription')">SA</a></li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('place')">WA</a></li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('state')">NT</a></li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('state')">ACT</a></li>
+                                      </ul>
+                                    </div>
+                                                                   
+                                  <!--</div>-->
                             </div>
 
                         </div>
@@ -120,9 +166,10 @@
 
 
                                      <div class="col-md-4">                                     
-                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Trading:<a class="smalltext text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>
+                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Name:<a class="smalltext text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>
                                        <div class="row smalltext text-capitalize textgray"  style="height:30px;">Trading for: <span class="smalltext text-uppercase text-info"> {{ trade.tradeFor  }}</span></div>
-                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Category: <span><span class="smalltext text-uppercase text-info"> {{ trade.categoryDescription  }}</span></span></div>         
+                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Category: <span><span class="smalltext text-uppercase text-info"> {{ trade.categoryDescription  }}</span></span></div>        
+                                       <div class="row smalltext text-capitalize textgray" style="height:30px;">Subcategory: <span><span class="smalltext text-uppercase text-info"> {{ trade.subcategoryDescription  }}</span></span></div>       
                                        <div class="row smalltext text-capitalize textgray" style="height:30px;">Reference Id:<span class="smalltext text-uppercase text-info"> {{ trade.tradeId  }}</span></div>    
                                        <div class="row smalltext text-capitalize textgray"  style="height:30px;">Published on:<span class="smalltext text-uppercase text-info"> {{ trade.datePublished | date }}</span></div>
                                        <div class="row smalltext text-capitalize textgray"  style="height:30px;">Trader: <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
@@ -132,7 +179,8 @@
                                      <div class="col-md-4">
                                        <div class="row smalltext text-capitalize textgray"  style="height:120px;">Description:<span  class="smalltext text-info"> {{ trade.description  }}</span></div>                                              
                                        <div class="row smalltext text-capitalize textgray" style="height:30px;">Status: <span class="smalltext text-uppercase text-info"> {{ trade.status  }}</span></div>             
-                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Place:<span  class="smalltext text-uppercase text-info"> {{ trade.place  }}</span></div>                                                                                                                                                
+                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Place:<span  class="smalltext text-uppercase text-info"> {{ trade.place  }}</span></div>           
+                                       <div class="row smalltext text-capitalize textgray" style="height:30px;">State:<span class="smalltext text-uppercase text-info"> {{ trade.state  }}</span></div>                                                                                                                                                        
                                   </div>
                   
                                   </td>   
