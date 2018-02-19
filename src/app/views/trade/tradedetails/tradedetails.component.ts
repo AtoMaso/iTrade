@@ -225,9 +225,12 @@ export class TradeDetailsComponent implements OnInit {
     trd.datePublished = returnedTrade.datePublished;
     trd.status = returnedTrade.status;
     trd.name = returnedTrade.name;
-    trd.description = returnedTrade.description;
-    trd.categoryDescription = returnedTrade.categoryDescription;
+    trd.description = returnedTrade.description;  
     trd.tradeFor = returnedTrade.tradeFor;        
+
+    trd.place = returnedTrade.place;
+    trd.state = returnedTrade.state;
+    trd.categoryDescription = returnedTrade.categoryDescription;
 
     trd.traderId = returnedTrade.traderId; 
     trd.traderFullName = returnedTrade.traderFirstName + " " + returnedTrade.traderMiddleName + " " + returnedTrade.traderLastName;

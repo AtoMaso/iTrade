@@ -19,7 +19,7 @@ let messagessUrl = CONFIG.baseUrls.messages;
 let messageUrl = CONFIG.baseUrls.message;
 let updateMessageUrl = CONFIG.baseUrls.updatemessage;
 let addMessageUrl = CONFIG.baseUrls.addmessage;
-let removeMessageUrl = CONFIG.baseUrls.removemessage;
+let deleteMessageUrl = CONFIG.baseUrls.deletemessage;
 
 
 @Injectable()

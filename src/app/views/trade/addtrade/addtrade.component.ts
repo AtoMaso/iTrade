@@ -9,12 +9,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 import { CategoryService } from '../../../services/categories/category.service';
+import { SubcategoriesService } from '../../../services/subcategories/subcategories.service';
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
+import { PlacesService } from '../../../services/places/places.service';
+import { StatesService } from '../../../services/states/states.service';
 import { ValidationService } from '../../../services/validation/validation.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
-import { UserSession, UserIdentity, Authentication, Trade,PostTrade, PageTitle, Category, Image } from '../../../helpers/classes';
+
+import { UserSession, UserIdentity, Authentication, Trade,PostTrade, PageTitle, Category, Subcategory, Image, State, Place } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 let uploadFileUrl = CONFIG.baseUrls.uploadFileUrl;
@@ -31,25 +35,29 @@ export class AddTradeComponent implements OnInit {
   public addForm: FormGroup;
   public datePickerOptions: IMyOptions;
   public currentLocale: string = "en";
+  private uploader: FileUploader;
+  private hasBaseDropZoneOver: boolean;
+  private hasAnotherDropZoneOver: boolean;
 
   private session: UserSession;
   private identity: UserIdentity = new UserIdentity;
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false;
-  private newTrade = new PostTrade();
 
   private isSubmitted: boolean = false; 
-  private isVisible: boolean = false;
+  //private isVisible: boolean = false;
   private isMessageVisible: boolean = false;
-  private isFileAllowed: boolean = true;
-  private fileErrorMessage: string = "";
+  //private isFileAllowed: boolean = true;
+  //private fileErrorMessage: string = "";
 
   private categories: Category[] = [];
-  private uploader: FileUploader;  
-  private hasBaseDropZoneOver: boolean;
-  private hasAnotherDropZoneOver: boolean;
+  private subcategories: Subcategory[] = [];
+  private states: State[] = [];
+  private places: Place[] = [];
+  
   private response: string;
   private hasImages: boolean = false;
+  private newTrade = new PostTrade();
   private addedTrade: PostTrade = new PostTrade();
 
   constructor(
@@ -57,7 +65,10 @@ export class AddTradeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private categoryService: CategoryService,
+    private subcategoriesService: SubcategoriesService,
     private tradeService: TradeApiService,
+    private statesService: StatesService,
+    private placesService: PlacesService,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private loggerService: LoggerService) {
@@ -83,7 +94,10 @@ export class AddTradeComponent implements OnInit {
     this.getUseridentity();
     this.initialiseComponent();
     this.setupForm();
+
     this.getCategories();
+    this.getStates();
+    //this.getPlacesByStateId();
   }
 
 
@@ -96,6 +110,64 @@ export class AddTradeComponent implements OnInit {
         this.categories = res;
       }
       , (error: Response) => this.onError(error, "getCategories"));
+  }
+
+
+  //*****************************************************
+  // GET SUBCATEGORIES
+  //*****************************************************
+  public getSubcategoriesByCategoryId(categoryId: number) {
+    this.subcategoriesService.getSubcategoriesByCategoryId(categoryId)
+      .subscribe((res: Subcategory[]) => {
+        this.subcategories = res;
+      }
+      , (error: Response) => this.onError(error, "getSubcategories"));
+  }
+
+
+  //*****************************************************
+  // GET CATEGORIES
+  //*****************************************************
+  public getStates() {
+    this.statesService.getStates()
+      .subscribe((res: State[]) => {
+        this.states = res;
+      }
+      , (error: Response) => this.onError(error, "getStates"));
+  }
+
+
+  //*****************************************************
+  // GET CATEGORIES
+  //*****************************************************
+  public getPlaces() {
+    this.placesService.getPlaces()
+      .subscribe((res: Place[]) => {
+        this.places = res;
+      }
+      , (error: Response) => this.onError(error, "getPlaces"));
+  }
+
+
+  public getPlacesByStateId(stateid:number) {
+    this.placesService.getPlacesByStateId(stateid)
+      .subscribe((res: Place[]) => {
+        this.places = res;
+      }
+      , (error: Response) => this.onError(error, "getPlaces"));
+  }
+
+
+
+  //*****************************************************
+  // SELECTION of state should get places for that state
+  //*****************************************************
+  private onStateChange(item:any) {
+    this.getPlacesByStateId(item[0]);
+  }
+
+  private onCategoryChange(item: any) {
+    this.getSubcategoriesByCategoryId(item[0]);
   }
 
 
@@ -115,10 +187,13 @@ export class AddTradeComponent implements OnInit {
       this.newTrade = new PostTrade();
       this.newTrade.name = this.addForm.controls.trading.value;
       this.newTrade.description = this.addForm.controls.description.value;
-      this.newTrade.categoryId = this.addForm.controls.category.value;
       this.newTrade.tradeFor = this.addForm.controls.tradingfor.value;
       this.newTrade.datePublished = this.addForm.controls.publishDate.value.jsdate;
       this.newTrade.status = "Open";
+      this.newTrade.categoryId = this.addForm.controls.category.value;
+      this.newTrade.subcategoryId = this.addForm.controls.subcategory.value;
+      this.newTrade.placeId = this.addForm.controls.place.value;
+      this.newTrade.stateId = this.addForm.controls.state.value;       
       this.newTrade.traderId = this.identity.userId;
 
       // set the image array here, the imageid and real url will be created 
@@ -229,7 +304,7 @@ export class AddTradeComponent implements OnInit {
   private initialiseComponent() {
     this.pageTitleService.emitPageTitle(new PageTitle("Add Trade"));
     this.messagesService.emitRoute("nill");
-    this.isFileAllowed = false;
+    //this.isFileAllowed = false;
     this.isRequesting = false;
   }
 
@@ -239,7 +314,10 @@ export class AddTradeComponent implements OnInit {
        trading: new FormControl('', [Validators.required, ValidationService.tradeNameValidator]),
        description: new FormControl('', [Validators.required, ValidationService.tradeDescriptionValidator]),
        tradingfor: new FormControl('', [Validators.required, ValidationService.tradeForValidator]),
+       state: new FormControl('', [Validators.required, ValidationService.stateValidator]),
+       place: new FormControl('', [Validators.required, ValidationService.placeValidator]),
        category: new FormControl('', [Validators.required, ValidationService.categoryValidator]),
+       subcategory: new FormControl('', [Validators.required, ValidationService.subcategoryValidator]),
        publishDate: new FormControl('', [Validators.required, ValidationService.publishDateValidator]),
     });
 

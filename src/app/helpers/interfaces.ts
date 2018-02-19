@@ -156,6 +156,17 @@ interface IEmailType {
 }
 
 
+interface IState {
+  id: number;
+  name: string;
+}
+
+interface IPlace {
+  id: number;
+  name: string;
+  stateId: number;
+}
+
 
 
 
@@ -169,8 +180,14 @@ interface ITrade {
   tradeFor: string;
   status: string;
   datePublished: Date;
-  categoryId: number;
+  stateId: number;
+  state: string;
+  placeId: number;
+  place: string;
+  categoryId: number; 
   categoryDescription: string
+  subcategoryId: number;
+  subcategoryDescription: string;
 
   traderId: string;
   traderFirstName: string;
@@ -190,6 +207,9 @@ interface IPostTrade {
   status: string;
   datePublished: Date;
   categoryId: number;
+  stateId: number;
+  placeId: number;
+  subcategoryId: number; 
   traderId: string;
   Images: IImage[];
 }
@@ -233,6 +253,12 @@ interface ITradeForObject {
 interface ICategory {
   categoryId: number;
   categoryDescription: string;
+}
+
+
+interface ISubcategory {
+  subcategoryId: number;
+  subcategoryDescription: string;
 }
 
 
@@ -308,7 +334,7 @@ interface IProcessMessageType {
 
 export {
   IChangePasswordBindingModel, IRegisterBindingModel, ISetPasswordBindingModel, ILoginModel,
-  ITraderList, ITraderDetails, IPostTrade,
+  ITraderList, ITraderDetails, IPostTrade, IPlace, IState, ISubcategory,
   IPersonalDetails, ISecurityDetails, IContactDetails,
   IAddress, IAddressType, IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,

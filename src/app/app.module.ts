@@ -40,6 +40,8 @@ import { PersonalDetailsService } from './services/personaldetails/personaldetai
 import { ContactDetailsService } from './services/contactdetails/contactdetails.service';
 import { SecurityDetailsService } from './services/securitydetails/securitydetails.service';
 import { CategoryService } from './services/categories/category.service';
+import { StatesService } from './services/states/states.service';
+import { PlacesService } from './services/places/places.service';
 
 
 //components
@@ -147,8 +149,8 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
   ],
 
   providers: [
-    TradeApiService, ValidationService, ImageService, TradeHistoryService,
-    AuthenticationService, ProcessMessageService, CorrespondenceService,
+    TradeApiService, ValidationService, ImageService, TradeHistoryService, StatesService,
+    AuthenticationService, ProcessMessageService, CorrespondenceService, PlacesService,
     PersonalDetailsService, ContactDetailsService, SecurityDetailsService,
     PageTitleService, LoggerService, AuthGuard, TraderApiService, CategoryService,
     // to inercept every request for authentication purposes

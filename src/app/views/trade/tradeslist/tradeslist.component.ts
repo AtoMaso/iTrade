@@ -37,6 +37,7 @@ export class TradesListComponent implements OnInit {
   private hasTrades: boolean = true;
   private hasNoTrades: boolean = false;
   private hasSets: boolean = false;
+  private hasNavigation: boolean = false;
 
   private selectedItem: string = "Name";
   private displayRecords: number = 0;
@@ -63,6 +64,36 @@ export class TradesListComponent implements OnInit {
     this.getTrades("");
     //this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
    ;
+  }
+
+
+
+  ngAfterViewInit() {
+
+    jQuery(document).ready(function () {
+
+      jQuery("#collapseFilters").on("hide.bs.collapse", function () {
+        jQuery(".filters").html('<span class="glyphicon glyphicon-plus"></span> Filters');
+      });
+      jQuery("#collapseFilters").on("show.bs.collapse", function () {
+        jQuery(".filters").html('<span class="glyphicon glyphicon-minus"></span> Filters');
+      });
+
+      jQuery("#collapseCategory").on("hide.bs.collapse", function () {
+        jQuery("#category").html('<span class="glyphicon glyphicon-plus"></span> Category');
+      });
+      jQuery("#collapseCategory").on("show.bs.collapse", function () {
+        jQuery("#category").html('<span class="glyphicon glyphicon-minus"></span> Category');
+      });
+
+      jQuery("#collapsePlace").on("hide.bs.collapse", function () {
+        jQuery("#places").html('<span class="glyphicon glyphicon-plus"></span> Place');
+      });
+      jQuery("#collapsePlace").on("show.bs.collapse", function () {
+        jQuery("#places").html('<span class="glyphicon glyphicon-minus"></span> Place');
+      });
+
+    });
   }
 
 
@@ -170,13 +201,19 @@ export class TradesListComponent implements OnInit {
       trd.total = value.total;
       trd.tradeIdStr = value.tradeId.toString();
       trd.tradeId = value.tradeId;
-      trd.datePublished = value.datePublished;
-      trd.status = value.status;
       trd.name = value.name;
       trd.description = value.description;
-      trd.categoryDescription = value.categoryDescription;
+      trd.datePublished = value.datePublished;
       trd.tradeFor = value.tradeFor;        
+      trd.status = value.status;     
 
+      trd.placeId = value.placeId;
+      trd.place = value.place;
+      trd.stateId = value.stateId;
+      trd.state = value.state;
+      trd.categoryId = value.categoryId;
+      trd.categoryDescription = value.categoryDescription;
+      
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;
       trd.traderMiddleName = value.traderMiddleName;
@@ -368,7 +405,10 @@ export class TradesListComponent implements OnInit {
     this.config.totalItems = sortedData.length;
 
     if (this.config.totalItems < this.config.itemsPerPage) { this.displayRecords = this.config.totalItems; }
-    else { this.displayRecords = this.config.itemsPerPage; }
+    else {
+      this.displayRecords = this.config.itemsPerPage;
+      this.hasNavigation = true;
+    }
 
 
   }

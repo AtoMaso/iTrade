@@ -2,8 +2,8 @@
   IChangePasswordBindingModel, IRegisterBindingModel, ISetPasswordBindingModel, ILoginModel,
   ITraderList, ITraderDetails, IPostTrade,
   IPersonalDetails, ISecurityDetails, IContactDetails,
-  IAddress, IAddressType,
-  IPhone, IPhoneType,
+  IAddress, IAddressType, IState, IPlace,
+  IPhone, IPhoneType, ISubcategory,
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType, ICorrespondence,
@@ -341,7 +341,27 @@ class EmailType implements IEmailType {
   }
 }
 
+class State implements IState {
+  id: number;
+  name: string;
 
+  constructor() {
+    this.id = 0;
+    this.name = "";
+  }
+}
+
+class Place implements IPlace {
+  id: number;
+  name: string;
+  stateId: number;
+
+  constructor() {
+    this.id = 0;
+    this.name = "";
+    this.stateId = 0;
+  }
+}
 
 
 
@@ -356,8 +376,14 @@ class Trade implements ITrade {
   tradeFor: string;
   datePublished: Date;
   status: string;
+  placeId: number;
+  place: string;
+  stateId: number;
+  state: string;
   categoryId: number;
   categoryDescription: string;
+  subcategoryId: number;
+  subcategoryDescription: string;
 
   traderId: string;
   traderFirstName: string;
@@ -376,9 +402,14 @@ class Trade implements ITrade {
     this.tradeFor = "";    
     this.datePublished = new Date(1900, 1, 1); 
     this.status = "";
+    this.placeId = 0;
+    this.place = "";
+    this.stateId = 0;
+    this.state = "";
     this.categoryId = 0;
     this.categoryDescription = "";
-
+    this.subcategoryId = 0;
+    this.subcategoryDescription = "";
 
     this.traderId = "";
     this.traderFirstName = "";   
@@ -398,9 +429,15 @@ class PostTrade implements IPostTrade {
   description: string;
   tradeFor: string;
   datePublished: Date;
-  status: string;
+  status: string; 
+  placeId: number;
+  place: string;
+  stateId: number;
+  state: string;
   categoryId: number;
   categoryDescription: string;
+  subcategoryId: number;
+  subcategoryDescription: string;
   traderId: string;
   Images: Image[];
 
@@ -411,8 +448,14 @@ class PostTrade implements IPostTrade {
     this.tradeFor = "";
     this.datePublished = new Date(1900, 1, 1);
     this.status = "";
+    this.placeId = 0;
+    this.place = "";
+    this.stateId = 0;
+    this.state = "";
     this.categoryId = 0;
     this.categoryDescription = "";
+    this.subcategoryId = 0;
+    this.subcategoryDescription = "";
     this.traderId = "";
     this.Images = [];
   }
@@ -488,7 +531,7 @@ class TradeForObject implements ITradeForObject {
 }
 
 
-class Category {
+class Category implements Category {
   categoryId: number;
   categoryDescription: string;
 
@@ -497,6 +540,20 @@ class Category {
     this.categoryDescription = "";
   }
 }
+
+
+class Subcategory implements ISubcategory {
+  subcategoryId: number;
+  subcategoryDescription: string;
+  categoryId: number;
+
+  constructor() {
+    this.subcategoryId = 0;
+    this.subcategoryDescription = "";
+    this.categoryId = 0;
+  }
+}
+
 
 class Correspondence implements ICorrespondence {
   id: number;  
@@ -648,8 +705,8 @@ class Guid {
 
 export {
   ChangePasswordBindingModel, RegisterBindingModel,
-  SetPasswordBindingModel, LoginModel,
-  Trader, TraderDetails, PostTrade, Sort,
+  SetPasswordBindingModel, LoginModel, Subcategory,
+  Trader, TraderDetails, PostTrade, State, Place,
   PersonalDetails, ContactDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType,Email,

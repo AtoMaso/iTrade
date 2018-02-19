@@ -16,7 +16,7 @@ let addressesUrl = CONFIG.baseUrls.addresses;
 let addressUrl = CONFIG.baseUrls.address;
 let updateAddressUrl = CONFIG.baseUrls.updateaddress
 let addAddressUrl = CONFIG.baseUrls.addaddress;
-let removeAddressUrl = CONFIG.baseUrls.removeaddress;
+let deleteAddressUrl = CONFIG.baseUrls.deleteaddress;
 
 
 @Injectable()export class AddressService {

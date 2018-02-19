@@ -7,18 +7,27 @@
              <div class="row panel panel-footer" style="height:75px;vertical-align:middle;">
 
                    <!-- breadcrumb -->
-                   <div class="col-md-7 panel panel-heading smalltext" style="height:55px;">
+                   <div class="col-md-6 panel panel-heading smalltext" style="height:55px;">
                      <div style="margin-top:5px;">
-                        <span>Displaying <span class="text-info">{{ displayRecords }}</span> 
-                              of 
-                            <span class="text-info">{{ config.totalItems }}</span> records 
-                       </span>
+                        <span>Displaying <span class="text-info">{{ displayRecords }}</span> of <span class="text-info">{{ config.totalItems }}</span> records </span>
                        <span *ngIf="filters != null">with {{ filters }}</span>
                      </div>
                    </div>
                   
+
+                 <!-- filter in all coloumns -->
+                   <div class="col-md-2 panel panel-heading" style="height:55px;">                     
+                       <div class="col-md-12">
+                         <!--<span class="smalltextbold">Filter in all columns</span>-->
+                         <input *ngIf="config.filtering" placeholder="Filter in all columns" [ngTableFiltering]="config.filtering" 
+                                (tableChanged)="onChangeTable(config)" class="form-control smalltext" style="height:30px;" />
+                       </div>                    
+                    
+                     </div>
+
+
                     <!-- sort -->
-                   <div class="col-md-4 col-md-offset-1 panel panel-heading" style="height:55px;">
+                   <div class="col-md-4 panel panel-heading" style="height:55px;">
 
                          <div class="col-md-6 smalltext" style="margin-top:5px;">
                                  <span> Sorted by: <span class="text-info">{{ selectedItem }}</span></span>
@@ -29,7 +38,7 @@
                          <div class="col-md-6 smalltext" >
                    
                              <div class="dropdown">
-                                 <button class="btn btn-primary dropdown-toggle smalltext" id="menu1" type="button" data-toggle="dropdown" style="height:30px;">Select Sorting
+                                 <button class="btn btn-primary dropdown-toggle smalltext" id="menu1" type="button" data-toggle="dropdown" style="height:30px;">Sort By
                                    <span class="caret"></span>
                                  </button>
                                  <ul class="dropdown-menu smalltext" role="menu" aria-labelledby="menu1">
@@ -57,14 +66,43 @@
 
               <!-- filter -->
              <div class="col-md-2">
-                <div class="row panel panel-heading">                  
-                    <div class="row col-md-12 textgray">
-                        <span class="smalltextbold">Filter in all columns</span>                 
-                    </div>
-                    <div class="row col-md-12 textgray">
-                          <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
-                    </div>
-                </div>               
+
+                <div class="row panel panel-heading">       
+                             
+                      <span class="filters panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseFilters">
+                        <span class="glyphicon glyphicon-plus"></span> Filters                
+                      </span>
+
+
+                      <div id="collapseFilters" class="collapse">
+
+                             <div class="col-md-12 panel">
+                                  <span id="category" class="categories panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCategory">
+                                    <span class="glyphicon glyphicon-plus"></span> Category
+                                  </span>
+                        
+                                  <div id="collapseCategory" class="collapse smalltext">
+                                    List of categories here
+
+                                  </div>
+                            </div>
+
+
+                            <div class="col-md-12 panel">
+                                <span id="places" class="places panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapsePlace">
+                                  <span class="glyphicon glyphicon-plus"></span> Place
+                                </span>
+
+                                  <div id="collapsePlace" class="collapse smalltext">
+                                       List of places here
+                                       
+                                  </div>
+                            </div>
+
+                        </div>
+
+                </div>   
+                                          
              </div>
 
              <!-- table -->
@@ -109,35 +147,40 @@
 
 
            <!-- Table naviagtion -->
-          <div class="row panel panel-footer" style="height:75px;vertical-align:middle;">
+          <div *ngIf="hasSets || hasNavigation" class="row panel panel-footer" style="height:75px;vertical-align:middle;">
              
-            <div class="col-md-4 panel panel-heading textsmall"  style="height:55px;vertical-align:middle;">
-              <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
-                                   (pageChange)="onPageChange($event)"
-                                   maxSize="5"
-                                   directionLinks="true"
-                                   autoHide="true"
-                                   previousLabel="Previous"
-                                   nextLabel="Next"
-                                   screenReaderPaginationLabel="Pagination"
-                                   screenReaderPageLabel="page"
-                                   screenReaderCurrentLabel="You're on page"
-                                   [(ngModel)]="config.currentPage"
-                                   (numPages)="numPages = $event"
-                                   [maxSize]="maxSize">
-              </pagination-controls>
-            </div>
+                <div class="col-md-4 panel panel-heading textsmall"  style="height:55px;vertical-align:middle;">
+                  <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
+                                       (pageChange)="onPageChange($event)"
+                                       maxSize="5"
+                                       directionLinks="true"
+                                       autoHide="true"
+                                       previousLabel="Previous"
+                                       nextLabel="Next"
+                                       screenReaderPaginationLabel="Pagination"
+                                       screenReaderPageLabel="page"
+                                       screenReaderCurrentLabel="You're on page"
+                                       [(ngModel)]="config.currentPage"
+                                       (numPages)="numPages = $event"
+                                       [maxSize]="maxSize">
+                  </pagination-controls>
+                </div>
 
-            <div *ngIf="hasSets">
-              <div class="col-md-2 col-md-offset-1 panel panel-heading" style="height:55px;vertical-align:middle;">
-                <span class="smalltextbold textgray">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
-              </div>
+                <div *ngIf="hasSets">
 
-              <div class="col-md-3 col-md-offset-2  panel panel-heading" style="height:55px;vertical-align:middle;">
-                <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
-                <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
-              </div>
-            </div></div>
+                  <div class="col-md-2 col-md-offset-1 panel panel-heading" style="height:55px;vertical-align:middle;">
+                    <span class="smalltextbold textgray">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
+                  </div>
+
+                  <div class="col-md-3 col-md-offset-2  panel panel-heading" style="height:55px;vertical-align:middle;">
+                    <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
+                    <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+                  </div>
+
+                </div>
+
+          </div>
+
 
     </div>
 

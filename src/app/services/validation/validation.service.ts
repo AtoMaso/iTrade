@@ -22,7 +22,10 @@ export class ValidationService {
       'invalidTradeName': 'Name should be 3-20 characters. ',
       'invalidTradeDescription': 'Description should be 10-200 characters. ',
       'invalidTradeTradeFor': 'Trade for name should be 3-20 characters. ',
-      'invalidCategoty': 'You must select a category. ',
+      'invalidCategory': 'You must select a category. ',
+      'invalidSubcategory': 'You must select a subcategory. ',
+      'invalidState': 'You must select a state. ',
+      'invalidPlace': 'You must select a place. ',
       'invalidDatePublished': 'Published date can not be in the past. ',
     };
     return config[validatorName];
@@ -102,10 +105,53 @@ export class ValidationService {
       return null;
     }
     else {
-      return { 'invalidCategoty': true };
+      return { 'invalidCategory': true };
     }
   }
-}
+  }
+
+  static subcategoryValidator(control) {
+
+    // {10}-Assert date can no be in the past
+    if (control.value) {
+
+      if (control.value !== "Select") {
+        return null;
+      }
+      else {
+        return { 'invalidSubcategory': true };
+      }
+    }
+  }
+
+
+  static stateValidator(control) {
+
+    // {10}-Assert date can no be in the past
+    if (control.value) {
+
+      if (control.value !== "Select") {
+        return null;
+      }
+      else {
+        return { 'invalidState': true };
+      }
+    }
+  }
+
+  static placeValidator(control) {
+
+    // {10}-Assert date can no be in the past
+    if (control.value) {
+
+      if (control.value !== "Select") {
+        return null;
+      }
+      else {
+        return { 'invalidPlace': true };
+      }
+    }
+  }
 
 
   static creditCardValidator(control) {

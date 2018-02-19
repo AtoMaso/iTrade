@@ -206,14 +206,19 @@ export class MyTradesListComponent implements OnInit {
 
       trd.total = value.total;    
       trd.tradeIdStr = value.tradeId.toString();
-      trd.tradeId = value.tradeId;
-      trd.datePublished = value.datePublished;
-      trd.status = value.status;
+      trd.tradeId = value.tradeId;     
       trd.name = value.name;
       trd.description = value.description;
+      trd.datePublished = value.datePublished;
+      trd.status = value.status;
+      trd.tradeFor = value.tradeFor;   
+
+      trd.placeId = value.placeId;
+      trd.place = value.place;
+      trd.stateId = value.stateId;
+      trd.state = value.state;
       trd.categoryId = value.categoryId;
-      trd.categoryDescription = value.categoryDescription;
-      trd.tradeFor = value.tradeFor;        
+      trd.categoryDescription = value.categoryDescription;       
 
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;

@@ -16,7 +16,7 @@ let categoriesUrl = CONFIG.baseUrls.categories;
 let categoryUrl = CONFIG.baseUrls.category;
 let updateCategoryUrl = CONFIG.baseUrls.updatecategory;
 let addCategoryUrl = CONFIG.baseUrls.addcategory;
-let removeCategoryUrl = CONFIG.baseUrls.removecategory;
+let deleteCategoryUrl = CONFIG.baseUrls.deletecategory;
 
 
 

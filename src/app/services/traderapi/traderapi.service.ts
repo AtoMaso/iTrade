@@ -14,7 +14,7 @@ let tradersUrl = CONFIG.baseUrls.traders;
 let traderUrl = CONFIG.baseUrls.trader;
 let updateTraderUrl = CONFIG.baseUrls.updatetrader;
 let addTraderUrl = CONFIG.baseUrls.addtrader;
-let removeTraderUrl = CONFIG.baseUrls.removetrader;
+let deleteTraderUrl = CONFIG.baseUrls.deletetrader;
 
 
 @Injectable()
@@ -104,7 +104,7 @@ export class TraderApiService {
     // REMOVE TRADER
     //******************************************************
     public removeTrader(traderId: string) {
-      this.localUrl = removeTraderUrl + "?traderId=" + traderId;
+      this.localUrl = deleteTraderUrl + "?traderId=" + traderId;
       let headers = new Headers();
       headers.append('Accept', 'application/json');
       headers.append('Content-Type', 'application/json');
