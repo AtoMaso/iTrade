@@ -47,6 +47,7 @@ export class SubcategoriesService {
     public getSubcategory(id: number): Observable<Subcategory> {
     //TODO header here for authentication to be added
       return this.httpClientService.get<Subcategory>(subcategoryUrl + `${id}`).retry(1);
+
   }
 
 }
