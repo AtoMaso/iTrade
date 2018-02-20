@@ -12,7 +12,8 @@
     //trades
     alltrades: 'http://localhost:5700/api/trades',
     alltradesWithStatus: 'http://localhost:5700/api/trades/GetAllTradesWithStatus',
-
+    alltradesWithSetFilters: 'http://localhost:5700/api/trades/GetTradesWithSetFilters',
+    
     filteredtradeswithstatus: 'http://localhost:5700/api/trades/GetFilteredTradesWithStatus',
     filteredtradesall: 'http://localhost:5700/api/trades/GetFilteredTradesAll',
 

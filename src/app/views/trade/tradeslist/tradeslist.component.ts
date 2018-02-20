@@ -7,13 +7,13 @@ import { Observable } from 'rxjs/Observable';
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { CategoryService } from '../../../services/categories/category.service';
-import { SubcategoriesService } from '../../../services/subcategories/subcategories.service';
+import { StatesService } from '../../../services/states/states.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 import { CapsPipe } from '../../../helpers/pipes';
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, State } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -46,14 +46,28 @@ export class TradesListComponent implements OnInit {
   private totalDisplayRecords: number = 0;
   private filters: string[] = null;
   private categories: Category[] = [];
-  private subcategories: Subcategory[] = [];
+  private states: State[] = [];
+
+
+  private catIdClicked: number = 0;
+  private catDescClicked: string = "";
+
+  private subcatIdClicked: number = 0;
+  private subcatDescClicked: string = "";
+
+  private stateIdClicked: number = 0;
+  private stateNameClicked: string = "";
+
+  private placeIdClicked: number = 0;
+  private placeNameClicked: string = "";
+
 
   // constructor which injects the services
   constructor(
     private route: ActivatedRoute,
     private tradeApiService: TradeApiService,
     private categoryService: CategoryService,
-    private subcategoriesService: SubcategoriesService,
+    private statesService: StatesService,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private router: Router,
@@ -69,6 +83,7 @@ export class TradesListComponent implements OnInit {
 
     this.getTrades("");
     this.getCategories();   
+    this.getStates();
     //this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
    ;
   }
@@ -165,6 +180,70 @@ export class TradesListComponent implements OnInit {
   }
 
 
+  // get trades with set filters (category and places)
+  private getFilteredTrades() {
+    this.tradeApiService.getTradesWithSetFilters(this.catIdClicked, this.subcatIdClicked, this.placeIdClicked, this.stateIdClicked)
+      .subscribe((returnedTrades: Trade[]) => {
+        if (returnedTrades.length === 0) {
+          this.hasTrades = false;
+          this.isRequesting = false;
+          this.messagesService.emitProcessMessage("PMENTrs");
+        }
+        else {
+          this.messagesService.emitRoute("nill");
+          this.data = this.TransformData(returnedTrades),
+          this.totalNumberOfRecords = this.data[0].total;
+          this.hasTrades = true;
+          this.hasNoTrades = false;
+          this.isRequesting = false,
+          //this.calculateTotalNumberOfSets();
+          this.onChangeTable(this.config),
+          this.onPageChange(1)
+        }
+      },
+      (res: Response) => this.onError(res, "Filter"));
+  }
+
+  //*****************************************************
+  //FILTER IMPUTS
+  //*****************************************************
+  private CategoryClicked(categoryid: number, categoryDesc:string) {
+    this.catIdClicked = categoryid;
+    this.catDescClicked = categoryDesc;
+  }
+
+  private SubcategoryClicked(subcategoryid: number, subcategoryDesc: string) {
+    this.subcatIdClicked = subcategoryid;
+    this.subcatDescClicked = subcategoryDesc;
+  }
+
+  private StateClicked(stateid: number, stateName:string) {
+    this.stateIdClicked = stateid;
+    this.stateNameClicked = stateName;
+  }
+
+  private PlaceClicked(placeid: number, placeName:string) {
+    this.placeIdClicked = placeid;
+    this.placeNameClicked = placeName;
+  }
+
+  private ClearAllFilters() {
+    this.catIdClicked = 0;
+    this.catDescClicked = "";
+    this.subcatIdClicked = 0;
+    this.subcatDescClicked = "";
+    this.stateIdClicked = 0;
+    this.stateNameClicked = "";
+    this.placeIdClicked = 0;
+    this.placeNameClicked = "";
+
+    this.getTrades("");
+    this.messagesService.emitRoute("nill");
+  }
+
+
+  
+
 
 
   //*****************************************************
@@ -180,16 +259,15 @@ export class TradesListComponent implements OnInit {
 
 
   //*****************************************************
-  // GET SUBCATEGORIES
+  // GET CATEGORIES
   //*****************************************************
-  public getSubcategoriesByCategoryId(categoryId: number) {
-    this.subcategoriesService.getSubcategoriesByCategoryId(categoryId)
-      .subscribe((res: Subcategory[]) => {
-        this.subcategories = res;
+  public getStates() {
+    this.statesService.getStates()
+      .subscribe((res: State[]) => {
+        this.states = res;
       }
-      , (error: Response) => this.onError(error, "getSubcategories"));
+      , (error: Response) => this.onError(error, "getStates"));
   }
-
 
  
   //****************************************************

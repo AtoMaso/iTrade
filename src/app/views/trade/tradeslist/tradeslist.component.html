@@ -1,5 +1,5 @@
 
-<div *ngIf="hasTrades">
+<!--<div *ngIf="hasTrades">-->
 
          <div class="container col-md-12">    
 
@@ -18,12 +18,11 @@
                  <!-- filter in all coloumns -->
                    <div class="col-md-2 panel panel-heading" style="height:55px;">                     
                        <div class="col-md-12">
-                         <!--<span class="smalltextbold">Filter in all columns</span>-->
+                         <!--<span class="mediumtextbold">Filter in all columns</span>-->
                          <input *ngIf="config.filtering" placeholder="Filter in all columns" [ngTableFiltering]="config.filtering" 
                                 (tableChanged)="onChangeTable(config)" class="form-control smalltext" style="height:30px;" />
-                       </div>                    
-                    
-                     </div>
+                       </div>                                        
+                   </div>
 
 
                     <!-- sort -->
@@ -35,10 +34,10 @@
                                  <span *ngIf="!isAsc" class="glyphicon glyphicon-chevron-up"></span>
                          </div>       
 
-                         <div class="col-md-6 smalltext" >
+                         <div class="col-md-6" >
                    
                              <div class="dropdown">
-                                 <button class="btn btn-primary dropdown-toggle smalltext" id="menu1" type="button" data-toggle="dropdown" style="height:30px;">Sort By
+                                 <button class="btn btn-primary dropdown-toggle smalltext" id="menu1" type="button" data-toggle="dropdown" style="height:30px;width:150px;">Sort By
                                    <span class="caret"></span>
                                  </button>
                                  <ul class="dropdown-menu smalltext" role="menu" aria-labelledby="menu1">
@@ -69,90 +68,75 @@
            <div class="row">
 
               <!-- filter -->
-             <div class="col-md-2">
-
-                <div class="row panel panel-heading">       
-                             
-                      <span class="filters panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseFilters">
-                        <span class="glyphicon glyphicon-plus"></span> Filters                
-                      </span>
-
-
-                      <div id="collapseFilters" class="collapse">
-
-                             <div class="col-md-12 panel">
-                                  <!--<span id="category" class="categories panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCategory">
-                                    <span class="glyphicon glyphicon-plus"></span> Category
-                                  </span>-->
-                        
-                                  <!--<div id="collapseCategory" class="collapse smalltext">-->
-                                            
-                                    <!--<div class="col-md-12 smalltext">-->
-
-                                      <div class="dropdown">
-                                        <button class="btn btn-primary dropdown-toggle smalltext" id="menu2" type="button" data-toggle="dropdown" style="height:30px;width:150px;">Category<span class="caret"></span></button>
-
-                                        <ul class="dropdown-menu smalltext" role="menu" aria-labelledby="menu2">
-                                            <li role="presentation"  style="width:200px;"><a role="menuitem" tabindex="-1" (click)="filterTable('name')">Name</a></li>                                                
-                                            <li role="presentation" class="divider"></li>
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('tradeFor')">Trade For</a></li>
-                                            <li role="presentation" class="divider"></li>
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('datePublished')">Published</a></li>
-                                            <li role="presentation" class="divider"></li>
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('traderFullName')">Trader</a></li>
-                                            <li role="presentation" class="divider"></li>
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('categoryDescription')">Category</a></li>
-                                            <li role="presentation" class="divider"></li>
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('place')">Place</a></li>
-                                            <li role="presentation" class="divider"></li>
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('state')">State</a></li>
-
-                                          </ul>                                    
-                                    </div>
-                               <!--</div>-->
-                               <!--</div>-->
-                            </div>
-
-
-                            <div class="col-md-12 panel">
-                                <!--<span id="places" class="places panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapsePlace">
-                                  <span class="glyphicon glyphicon-plus"></span> Place
-                                </span>-->
-
-                                  <!--<div id="collapsePlace" class="collapse smalltext">-->
-                                    <div class="dropdown">
-                                      <button class="btn btn-primary dropdown-toggle smalltext" id="menu2" type="button" data-toggle="dropdown" style="height:30px;width:150px;">Places<span class="caret"></span></button>
-
-                                      <ul class="dropdown-menu smalltext" role="menu" aria-labelledby="menu2">
-                                        <li role="presentation" style="width:200px;"><a role="menuitem" tabindex="-1" (click)="changeFilter('name')">QLD</a></li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('tradeFor')">NSW</a></li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('datePublished')">Victoria</a></li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('traderFullName')">Tasmania</a></li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('categoryDescription')">SA</a></li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('place')">WA</a></li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('state')">NT</a></li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" (click)="filterTable('state')">ACT</a></li>
-                                      </ul>
-                                    </div>
-                                                                   
-                                  <!--</div>-->
-                            </div>
-
-                        </div>
-
-                </div>   
+             <div class="col-md-2">            
                                           
+               <div class="row panel panel-heading wrapper">
+
+                  <nav id="sidebar">
+                        <!-- Sidebar Header -->
+                      <div class="sidebar-header">
+                        <span class="mediumtext textgray" data-target="#filters" data-toggle="collapse" aria-expanded="false">Filters <span class="caret"></span></span>
+                      </div>
+
+                       <!-- Sidebar Links -->
+                       <ul class="collapse in list-unstyled components mediumtext textgray" id="filters" style="margin-left:20px;" >
+                                                       
+                                <!-- CATEGORIES -->
+                                <li style="margin-top:10px;">
+                                                                 
+                                       <span data-target="#categories" data-toggle="collapse" aria-expanded="false">Category <span class="caret"></span></span>                                                                       
+                                       <ul class="collapse list-unstyled" id="categories" style="margin-left:20px;">                                             
+                                            <!-- foreach category here -->    
+                                            <li *ngFor="let category of categories">                                        
+                                                   <a href="#{{ category.categoryDescription }}" data-toggle="collapse" aria-expanded="false" (click) ="CategoryClicked(category.categoryId, category.categoryDescription)">
+                                                    <span class="textgray">{{ category.categoryDescription }}</span><span class="caret"></span></a>
+                                                    <ul  class="collapse list-unstyled" id="{{ category.categoryDescription }}" style="margin-left:20px;">
+                                                             <!-- for each subcategories here -->
+                                                            <li *ngFor="let subcategory of category.subcategories">
+                                                                    <span href=""  (click) ="SubcategoryClicked(subcategory.subcategoryId, subcategory.subcategoryDescription)">{{ subcategory.subcategoryDescription }}</span>
+                                                            </li>                                                        
+                                                    </ul>
+                                             </li>                                      
+                                      </ul>
+                               </li>
+
+
+                                <!-- PLACES -->
+                               <li style="margin-top:10px;">
+
+                                     <span data-target="#places" data-toggle="collapse" aria-expanded="false">Place <span class="caret"></span></span>
+                                     <ul class="collapse list-unstyled" id="places" style="margin-left:20px;">
+                                           <!-- foreach state here -->
+                                           <li *ngFor="let state of states">
+                                                    <a href="#{{ state.name }}" data-toggle="collapse" aria-expanded="false" (click) ="StateClicked(state.id, state.name)">
+                                                     <span class="textgray">{{ state.name }}</span><span class="caret"></span>
+                                                    </a>
+                                                    <ul class="collapse list-unstyled" id="{{ state.name }}" style="margin-left:20px;">
+                                                            <!-- for each place here -->
+                                                           <li *ngFor="let place of state.places">
+                                                                    <span href="" (click) ="PlaceClicked(place.id, place.name)">{{ place.name }}</span>
+                                                            </li>
+                                                  </ul>
+                                           </li>
+                                     </ul>                                 
+                                </li>          
+                                            
+                          </ul>
+
+                   </nav>
+                    
+
+                   <div>
+                   <button class="btn btn-primary" (click) ="getFilteredTrades()">Search</button>
+                     <button class="btn btn-primary" (click)="ClearAllFilters()">Clear</button>
+                   </div>
+                
+               </div>       
+              
              </div>
 
              <!-- table -->
-             <div class="table-responsive col-md-10">
+             <div *ngIf="hasTrades" class="table-responsive col-md-10">
 
                      <table class="table  table-hover">                           
                      
@@ -165,22 +149,22 @@
                                      </div>
 
 
-                                     <div class="col-md-4">                                     
-                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Name:<a class="smalltext text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>
-                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Trading for: <span class="smalltext text-uppercase text-info"> {{ trade.tradeFor  }}</span></div>
-                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Category: <span><span class="smalltext text-uppercase text-info"> {{ trade.categoryDescription  }}</span></span></div>        
-                                       <div class="row smalltext text-capitalize textgray" style="height:30px;">Subcategory: <span><span class="smalltext text-uppercase text-info"> {{ trade.subcategoryDescription  }}</span></span></div>       
-                                       <div class="row smalltext text-capitalize textgray" style="height:30px;">Reference Id:<span class="smalltext text-uppercase text-info"> {{ trade.tradeId  }}</span></div>    
-                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Published on:<span class="smalltext text-uppercase text-info"> {{ trade.datePublished | date }}</span></div>
-                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Trader: <a class="smalltext text-uppercase textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
+                                     <div class="col-md-4 smalltext text-capitalize textgray">                                     
+                                       <div class="row"  style="height:30px;">Name:<a class="text-uppercase textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>
+                                       <div class="row"  style="height:30px;">Trading for: <span class="text-uppercase text-info"> {{ trade.tradeFor  }}</span></div>
+                                       <div class="row"  style="height:30px;">Category: <span><span class="text-uppercase text-info"> {{ trade.categoryDescription  }}</span></span></div>        
+                                       <div class="row" style="height:30px;">Subcategory: <span><span class="text-uppercase text-info"> {{ trade.subcategoryDescription  }}</span></span></div>       
+                                       <div class="row" style="height:30px;">Reference Id:<span class="text-uppercase text-info"> {{ trade.tradeId  }}</span></div>    
+                                       <div class="row"  style="height:30px;">Published on:<span class="text-uppercase text-info"> {{ trade.datePublished | date }}</span></div>
+                                       <div class="row"  style="height:30px;">Trader: <a class="text-uppercase textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
                                      </div>
 
 
-                                     <div class="col-md-4">
-                                       <div class="row smalltext text-capitalize textgray"  style="height:120px;">Description:<span  class="smalltext text-info"> {{ trade.description  }}</span></div>                                              
-                                       <div class="row smalltext text-capitalize textgray" style="height:30px;">Status: <span class="smalltext text-uppercase text-info"> {{ trade.status  }}</span></div>             
-                                       <div class="row smalltext text-capitalize textgray"  style="height:30px;">Place:<span  class="smalltext text-uppercase text-info"> {{ trade.place  }}</span></div>           
-                                       <div class="row smalltext text-capitalize textgray" style="height:30px;">State:<span class="smalltext text-uppercase text-info"> {{ trade.state  }}</span></div>                                                                                                                                                        
+                                     <div class="col-md-4 smalltext text-capitalize textgray">
+                                       <div class="row"  style="height:120px;">Description:<span  class="text-info"> {{ trade.description  }}</span></div>                                              
+                                       <div class="row" style="height:30px;">Status: <span class="text-uppercase text-info"> {{ trade.status  }}</span></div>             
+                                       <div class="row"  style="height:30px;">Place:<span  class="text-uppercase text-info"> {{ trade.place  }}</span></div>           
+                                       <div class="row" style="height:30px;">State:<span class="text-uppercase text-info"> {{ trade.state  }}</span></div>                                                                                                                                                        
                                   </div>
                   
                                   </td>   
@@ -232,7 +216,7 @@
 
     </div>
 
-</div>
+<!--</div>-->
 
 <span *ngIf="hasNoTrades" class="textoker"> The system can not find any trades!</span>
 

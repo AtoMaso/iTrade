@@ -14,7 +14,8 @@ import { Trade, PostTrade, UserSession, UserIdentity} from '../../helpers/classe
 
 let allTrades = CONFIG.baseUrls.alltrades;
 let allTradesWithStatus = CONFIG.baseUrls.alltradesWithStatus;
-
+let allTradesWithSetFilters = CONFIG.baseUrls.alltradesWithSetFilters;
+ 
 let tradesByTraderId = CONFIG.baseUrls.tradesbytraderid;
 let tradesByTraderIdWithStatus = CONFIG.baseUrls.tradesbytraderidwithstatus;
 
@@ -89,6 +90,14 @@ export class TradeApiService {
     // errors are handled in the component
     return this.httpClientService.get(this.localUrl).retry(1);
   }
+
+
+  public getTradesWithSetFilters(catIdClicked?: number, subcatIdClicked?: number, placeIdClicked?: number, stateIdClicked?: number) {
+
+    this.localUrl = `${allTradesWithSetFilters}?categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}`; 
+    // errors are handled in the component
+    return this.httpClientService.get(this.localUrl).retry(1);
+}
 
 
 

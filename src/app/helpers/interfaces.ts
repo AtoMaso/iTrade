@@ -159,6 +159,7 @@ interface IEmailType {
 interface IState {
   id: number;
   name: string;
+  places: IPlace[];
 }
 
 interface IPlace {
@@ -230,29 +231,10 @@ interface IImage {
 }
 
 
-interface ITradeObject {
-  id: number;
-  name: string;
-  description: string;
-  categoryId: number;
-  categoryDescription: string;
-  tradeId: number;
-}
-
-
-interface ITradeForObject {
-  id: number;
-  name: string;
-  description: string;
-  categoryId: number;
-  categoryDescription: string;
-  tradeId: number;
-}
-
-
 interface ICategory {
   categoryId: number;
   categoryDescription: string;
+  subcategories: ISubcategory[];
 }
 
 
@@ -340,6 +322,6 @@ export {
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType, ICorrespondence,
-  ITrade, IImage, ICategory, ITradeObject, ITradeForObject, ITradeHistory,
+  ITrade, IImage, ICategory, ITradeHistory,
   IUserSession, IAuthentication, IUserIdentity, 
   IProcessMessage, IProcessMessageType, IPageTitle, IAttachement };

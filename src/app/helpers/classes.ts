@@ -7,8 +7,7 @@
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType, ICorrespondence,
-  ITrade, IImage, ICategory, ITradeHistory, 
-  ITradeObject, ITradeForObject,  
+  ITrade, IImage, ICategory, ITradeHistory,  
   IUserSession, IAuthentication, IUserIdentity,
   IProcessMessage, IProcessMessageType,
   IPageTitle, IAttachement
@@ -344,10 +343,12 @@ class EmailType implements IEmailType {
 class State implements IState {
   id: number;
   name: string;
+  places: Place[];
 
   constructor() {
     this.id = 0;
     this.name = "";
+    this.places = [];
   }
 }
 
@@ -492,52 +493,15 @@ class Image implements IImage {
 }
 
 
-class TradeObject implements ITradeObject {
-
-  id: number;
-  name: string;
-  description: string;
+class Category implements ICategory {
   categoryId: number;
   categoryDescription: string;
-  tradeId: number;
-
-  constructor() {
-    this.id = 0;
-    this.name = "";
-    this.description = "";
-    this.categoryId = 0;
-    this.categoryDescription = "";
-  } 
-}
-
-
-class TradeForObject implements ITradeForObject {
-
-  id: number;
-  name: string;
-  description: string;
-  categoryId: number;
-  categoryDescription: string;
-  tradeId: number;
-
-  constructor() {
-    this.id = 0;
-    this.name = "";
-    this.description = "";
-    this.categoryId = 0;
-    this.categoryDescription = "";
-  }
-
-}
-
-
-class Category implements Category {
-  categoryId: number;
-  categoryDescription: string;
+  subcategories: Subcategory[];
 
   constructor() {
     this.categoryId = 0;
     this.categoryDescription = "";
+    this.subcategories = [];
   }
 }
 
