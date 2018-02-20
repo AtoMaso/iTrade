@@ -56,7 +56,8 @@
                 </div>
               </div>
 
-            <div class="row">
+
+              <div class="row">
               <div class="panel panel-heading col-md-12 smalltext">
                 Place: <span class="text-uppercase text-info"> {{ trade.place }} / {{ trade.state }} </span>
               </div>
@@ -172,7 +173,7 @@
                           </th>
 
                           <th class="col-md-2" style="background-color:#FF223A3A">
-                            <a (click)="sortTable('createdDate')" class="text-uppercase buttonclass textgray smalltext" style="width:auto">
+                            <a (click)="sortTable('createdDate')" class="text-uppercase textgray smalltext" style="width:auto">
                               Created Date
                               <span *ngIf="isDateAsc" class="glyphicon glyphicon-chevron-down"></span>
                               <span *ngIf="!isDateAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -180,7 +181,7 @@
                           </th>
 
                           <th class="col-md-2" style="background-color:#FF223A3A">
-                            <a (click)="sortTable('status')" class="text-uppercase buttonclass textgray smalltext" style="width:auto">
+                            <a (click)="sortTable('status')" class="text-uppercase textgray smalltext" style="width:auto">
                               Action
                               <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
                               <span *ngIf="!isStatusAsc" class="glyphicon glyphicon-chevron-up"></span>

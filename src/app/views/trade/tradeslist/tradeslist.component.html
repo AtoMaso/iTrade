@@ -75,28 +75,32 @@
                   <nav id="sidebar">
                         <!-- Sidebar Header -->
                       <div class="sidebar-header">
-                        <span class="mediumtext textgray" data-target="#filters" data-toggle="collapse" aria-expanded="false">Filters <span class="caret"></span></span>
+                        <span class="smalltext textgray" data-target="#filters" data-toggle="collapse" aria-expanded="false">Filters <span class="caret"></span></span>
                       </div>
 
                        <!-- Sidebar Links -->
-                       <ul class="collapse in list-unstyled components mediumtext textgray" id="filters" style="margin-left:20px;" >
+                       <ul class="collapse in list-unstyled components smalltext textgray" id="filters" style="margin-left:10px;" >
                                                        
                                 <!-- CATEGORIES -->
                                 <li style="margin-top:10px;">
                                                                  
-                                       <span data-target="#categories" data-toggle="collapse" aria-expanded="false">Category <span class="caret"></span></span>                                                                       
-                                       <ul class="collapse list-unstyled" id="categories" style="margin-left:20px;">                                             
+                                       <span data-target="#categories" data-toggle="collapse" aria-expanded="false" class="textgray">Category <span class="caret"></span></span>                                                                       
+                                       <ul class="collapse list-unstyled" id="categories" style="margin-left:15px;">   
+                                                                                   
                                             <!-- foreach category here -->    
                                             <li *ngFor="let category of categories">                                        
-                                                   <a href="#{{ category.categoryDescription }}" data-toggle="collapse" aria-expanded="false" (click) ="CategoryClicked(category.categoryId, category.categoryDescription)">
-                                                    <span class="textgray">{{ category.categoryDescription }}</span><span class="caret"></span></a>
-                                                    <ul  class="collapse list-unstyled" id="{{ category.categoryDescription }}" style="margin-left:20px;">
+                                                   <a href="#{{ category.categoryDescription }}" data-toggle="collapse" aria-expanded="false" (click) ="CategoryClicked(category.categoryId, category.categoryDescription)" class="textlightcoral smalltextbold">
+                                                            <span>{{ category.categoryDescription }}</span><span class="caret"></span>
+                                                   </a>
+                                                    
+                                                    <ul  class="collapse list-unstyled" id="{{ category.categoryDescription }}" style="margin-left:15px;">                                                             
                                                              <!-- for each subcategories here -->
                                                             <li *ngFor="let subcategory of category.subcategories">
-                                                                    <span href=""  (click) ="SubcategoryClicked(subcategory.subcategoryId, subcategory.subcategoryDescription)">{{ subcategory.subcategoryDescription }}</span>
+                                                                    <a  (click) ="SubcategoryClicked(subcategory.subcategoryId, subcategory.subcategoryDescription)" class="textoker smalltextbold"><span>{{ subcategory.subcategoryDescription }}</span></a>
                                                             </li>                                                        
                                                     </ul>
-                                             </li>                                      
+                                             </li>     
+                                                                                                                    
                                       </ul>
                                </li>
 
@@ -104,32 +108,40 @@
                                 <!-- PLACES -->
                                <li style="margin-top:10px;">
 
-                                     <span data-target="#places" data-toggle="collapse" aria-expanded="false">Place <span class="caret"></span></span>
-                                     <ul class="collapse list-unstyled" id="places" style="margin-left:20px;">
+                                     <span data-target="#places" data-toggle="collapse" aria-expanded="false" class="textgray">Place <span class="caret"></span></span>
+                                     <ul class="collapse list-unstyled" id="places" style="margin-left:15px;">
+
                                            <!-- foreach state here -->
                                            <li *ngFor="let state of states">
-                                                    <a href="#{{ state.name }}" data-toggle="collapse" aria-expanded="false" (click) ="StateClicked(state.id, state.name)">
-                                                     <span class="textgray">{{ state.name }}</span><span class="caret"></span>
+                                                    <a href="#{{ state.name }}" data-toggle="collapse" aria-expanded="true" (click) ="StateClicked(state.id, state.name)" class="textlightcoral">
+                                                            <span >{{ state.name }}</span><span class="caret"></span>
                                                     </a>
-                                                    <ul class="collapse list-unstyled" id="{{ state.name }}" style="margin-left:20px;">
+
+                                                    <ul class="collapse list-unstyled" id="{{ state.name }}" style="margin-left:15px;">
                                                             <!-- for each place here -->
                                                            <li *ngFor="let place of state.places">
-                                                                    <span href="" (click) ="PlaceClicked(place.id, place.name)">{{ place.name }}</span>
+                                                                   <a (click) ="PlaceClicked(place.id, place.name)" class="textoker"><span >{{ place.name }}</span></a>
                                                             </li>
                                                   </ul>
                                            </li>
+
                                      </ul>                                 
                                 </li>          
-                                            
+                                         
+                         
+                                <li style="margin-top:10px;">
+                                  <div>
+                                    <button class="btn btn-primary smalltext" (click)="getTradesWithSetFilters()" [disabled]="catIdClicked==0 && subcatIdClicked==0  && stateIdClicked==0 && placeIdClicked == 0 ">Search</button>
+                                    <button class="btn btn-primary smalltext" (click)="ClearAllFilters()">Clear</button>
+                                  </div>
+                                </li>   
                           </ul>
 
+                       
                    </nav>
                     
 
-                   <div>
-                   <button class="btn btn-primary" (click) ="getFilteredTrades()">Search</button>
-                     <button class="btn btn-primary" (click)="ClearAllFilters()">Clear</button>
-                   </div>
+                 
                 
                </div>       
               

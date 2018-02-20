@@ -50,16 +50,16 @@ export class TradesListComponent implements OnInit {
 
 
   private catIdClicked: number = 0;
-  private catDescClicked: string = "";
+  private catDescClicked: string = null;
 
   private subcatIdClicked: number = 0;
-  private subcatDescClicked: string = "";
+  private subcatDescClicked: string = null;
 
   private stateIdClicked: number = 0;
-  private stateNameClicked: string = "";
+  private stateNameClicked: string = null;
 
   private placeIdClicked: number = 0;
-  private placeNameClicked: string = "";
+  private placeNameClicked: string = null;
 
 
   // constructor which injects the services
@@ -181,7 +181,7 @@ export class TradesListComponent implements OnInit {
 
 
   // get trades with set filters (category and places)
-  private getFilteredTrades() {
+  private getTradesWithSetFilters() {
     this.tradeApiService.getTradesWithSetFilters(this.catIdClicked, this.subcatIdClicked, this.placeIdClicked, this.stateIdClicked)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
@@ -607,13 +607,10 @@ export class TradesListComponent implements OnInit {
   public changeFilter(data: any, config: any): any {
 
     let filteredData: Array<any> = data;
-
     this.columns.forEach((column: any) => {
-
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => { return item[column.name].match(column.filtering.filterString);  });
       }
-
     });
 
     if (!config.filtering) {
@@ -627,14 +624,12 @@ export class TradesListComponent implements OnInit {
 
     let tempArray: Array<any> = [];
     filteredData.forEach((item: any) => {
-
-      // find the string in each coloumn
-      let flag = false;
-      this.columns.forEach((column: any) => {
-                if (item[column.name].toString().match(this.config.filtering.filterString)) { flag = true; }
-      });
-      if (flag) { tempArray.push(item); }
-
+          // find the string in each coloumn
+          let flag = false;
+          this.columns.forEach((column: any) => {
+                    if (item[column.name].toString().match(this.config.filtering.filterString)) { flag = true; }
+          });
+          if (flag) { tempArray.push(item); }
     });
 
     filteredData = tempArray;
