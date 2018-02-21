@@ -13,7 +13,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 import { CapsPipe } from '../../../helpers/pipes';
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, State } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, State, Place} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -44,23 +44,16 @@ export class TradesListComponent implements OnInit {
   private selectedItem: string = "Name";
   private displayRecords: number = 0;
   private totalDisplayRecords: number = 0;
-  private filters: string[] = null;
+  private filters: string = null;
   private categories: Category[] = [];
   private states: State[] = [];
 
-
-  private catIdClicked: number = 0;
-  private catDescClicked: string = null;
-
-  private subcatIdClicked: number = 0;
-  private subcatDescClicked: string = null;
-
-  private stateIdClicked: number = 0;
-  private stateNameClicked: string = null;
-
-  private placeIdClicked: number = 0;
-  private placeNameClicked: string = null;
-
+  private categoryClicked: Category = null;
+  private subcategoryClicked: Subcategory = null;
+  private stateClicked: State = null;
+  private placeClicked: Place = null;
+  private filters1: string = null;
+  private filters2: string = null;
 
   // constructor which injects the services
   constructor(
@@ -182,7 +175,17 @@ export class TradesListComponent implements OnInit {
 
   // get trades with set filters (category and places)
   private getTradesWithSetFilters() {
-    this.tradeApiService.getTradesWithSetFilters(this.catIdClicked, this.subcatIdClicked, this.placeIdClicked, this.stateIdClicked)
+    let catid: number = 0
+    let subcatid: number = 0
+    let plaid: number = 0
+    let staid: number = 0;
+
+    if (this.categoryClicked != null) { catid = this.categoryClicked.categoryId; }
+    if (this.subcategoryClicked != null) { subcatid = this.subcategoryClicked.subcategoryId; }
+    if (this.stateClicked != null) { staid = this.stateClicked.id; }
+    if (this.placeClicked != null) { plaid = this.placeClicked.id; }
+
+    this.tradeApiService.getTradesWithSetFilters(catid, subcatid, staid ,plaid)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
@@ -204,43 +207,76 @@ export class TradesListComponent implements OnInit {
       (res: Response) => this.onError(res, "Filter"));
   }
 
+
   //*****************************************************
   //FILTER IMPUTS
   //*****************************************************
-  private CategoryClicked(categoryid: number, categoryDesc:string) {
-    this.catIdClicked = categoryid;
-    this.catDescClicked = categoryDesc;
+  private CategoryClicked(category: Category) {
+    this.subcategoryClicked = null;
+    this.categoryClicked = category;
+    this.setupFilterString(); 
   }
 
-  private SubcategoryClicked(subcategoryid: number, subcategoryDesc: string) {
-    this.subcatIdClicked = subcategoryid;
-    this.subcatDescClicked = subcategoryDesc;
+  private SubcategoryClicked(subcategory: Subcategory, category:Category) {
+    this.subcategoryClicked = subcategory; 
+    this.categoryClicked = category;
+    this.setupFilterString();
   }
 
-  private StateClicked(stateid: number, stateName:string) {
-    this.stateIdClicked = stateid;
-    this.stateNameClicked = stateName;
+  private StateClicked(state: State) {
+    this.placeClicked = null;
+    this.stateClicked = state;
+    this.setupFilterString();
   }
 
-  private PlaceClicked(placeid: number, placeName:string) {
-    this.placeIdClicked = placeid;
-    this.placeNameClicked = placeName;
+  private PlaceClicked(place: Place, state: State) {
+    this.placeClicked = place;
+    this.stateClicked = state;
+    this.setupFilterString();
   }
 
   private ClearAllFilters() {
-    this.catIdClicked = 0;
-    this.catDescClicked = "";
-    this.subcatIdClicked = 0;
-    this.subcatDescClicked = "";
-    this.stateIdClicked = 0;
-    this.stateNameClicked = "";
-    this.placeIdClicked = 0;
-    this.placeNameClicked = "";
+    this.categoryClicked = null;
+    this.subcategoryClicked = null;
+    this.stateClicked = null;
+    this.placeClicked = null;
+
+    this.filters = null;
+    this.filters1 = null;
+    this.filters2 = null;
+    this.setupFilterString();
 
     this.getTrades("");
     this.messagesService.emitRoute("nill");
   }
 
+
+  private setupFilterString() {
+
+    if (this.categoryClicked) {
+      this.filters1 = " Category = " + this.categoryClicked.categoryDescription;
+    }
+
+    if (this.subcategoryClicked) {
+      if (this.filters1 == null) { this.filters1 = "Category = " + this.categoryClicked.categoryDescription + " & Subcategory =" + this.subcategoryClicked.subcategoryDescription; }
+      else if (this.filters1.indexOf(this.subcategoryClicked.subcategoryDescription) == -1) { this.filters1 = this.filters1 + " & Subcategory = " + this.subcategoryClicked.subcategoryDescription; }
+    }
+
+    if (this.stateClicked) {
+      this.filters2 = " State = " + this.stateClicked.name;
+    }
+
+    if (this.placeClicked) {
+      if (this.filters2 == null) { this.filters2 = "State = " + this.stateClicked.name + " & Place =" + this.placeClicked.name; }
+      else if (this.filters2.indexOf(this.placeClicked.name) == -1) { this.filters2 = this.filters2 + " & Place = " + this.placeClicked.name; }
+    }
+
+    if (this.filters1 && this.filters2) { this.filters = this.filters1 + " & " + this.filters2; }
+    if (this.filters1 && this.filters2 == null) { this.filters = this.filters1; }
+    if (this.filters2 && this.filters1 == null) { this.filters = this.filters2;
+  }
+   
+  }
 
   
 

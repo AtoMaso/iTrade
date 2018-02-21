@@ -92,7 +92,7 @@ export class TradeApiService {
   }
 
 
-  public getTradesWithSetFilters(catIdClicked?: number, subcatIdClicked?: number, placeIdClicked?: number, stateIdClicked?: number) {
+  public getTradesWithSetFilters(catIdClicked?: number, subcatIdClicked?: number, stateIdClicked?: number, placeIdClicked?: number) {
 
     this.localUrl = `${allTradesWithSetFilters}?categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}`; 
     // errors are handled in the component
