@@ -86,26 +86,26 @@ export class TradesListComponent implements OnInit {
   ngAfterViewInit() {
 
     jQuery(document).ready(function () {
+            
+      jQuery("#filters").on("hide.bs.collapse", function () {
+        jQuery(".gliphfil").html(' Filters  <span class="glyphicon glyphicon-chevron-down"></span> ');
+      });
+      jQuery("#filters").on("show.bs.collapse", function () {
+        jQuery(".gliphfil").html('Filters  <span class="glyphicon glyphicon-chevron-up"></span>');
+      });
+     
+      jQuery("#categories").on("hide.bs.collapse", function () {
+        jQuery(".gliphcat").html(' Categories  <span class="glyphicon glyphicon-chevron-down"></span> ');
+        });
+      jQuery("#categories").on("show.bs.collapse", function () {
+        jQuery(".gliphcat").html('Categories   <span class="glyphicon glyphicon-chevron-up"></span>');
+        });
 
-      jQuery("#collapseFilters").on("hide.bs.collapse", function () {
-        jQuery(".filters").html('<span class="glyphicon glyphicon-plus"></span> Filters');
+      jQuery("#places").on("hide.bs.collapse", function () {
+        jQuery(".gliphpl").html(' Categories  <span class="glyphicon glyphicon-chevron-down"></span> ');
       });
-      jQuery("#collapseFilters").on("show.bs.collapse", function () {
-        jQuery(".filters").html('<span class="glyphicon glyphicon-minus"></span> Filters');
-      });
-
-      jQuery("#collapseCategory").on("hide.bs.collapse", function () {
-        jQuery("#category").html('<span class="glyphicon glyphicon-plus"></span> Category');
-      });
-      jQuery("#collapseCategory").on("show.bs.collapse", function () {
-        jQuery("#category").html('<span class="glyphicon glyphicon-minus"></span> Category');
-      });
-
-      jQuery("#collapsePlace").on("hide.bs.collapse", function () {
-        jQuery("#places").html('<span class="glyphicon glyphicon-plus"></span> Place');
-      });
-      jQuery("#collapsePlace").on("show.bs.collapse", function () {
-        jQuery("#places").html('<span class="glyphicon glyphicon-minus"></span> Place');
+      jQuery("#places").on("show.bs.collapse", function () {
+        jQuery(".gliphpl").html('Categories   <span class="glyphicon glyphicon-chevron-up"></span>');
       });
 
     });
@@ -127,6 +127,7 @@ export class TradesListComponent implements OnInit {
               else {
                 this.hasTrades = false;
                 this.hasNoTrades = true;   // if there are no records at all than show the message no trades at all
+                this.messagesService.emitProcessMessage("PMENTrs");
               }
         }  
         else {
@@ -134,8 +135,7 @@ export class TradesListComponent implements OnInit {
             this.totalNumberOfRecords = this.data[0].total;            
             this.hasTrades = true;
             this.hasNoTrades = false;
-            this.isRequesting = false,
-            //this.calculateTotalNumberOfSets();
+            this.isRequesting = false,           
             this.onChangeTable(this.config),
             this.onPageChange(1)
         }
@@ -156,7 +156,8 @@ export class TradesListComponent implements OnInit {
                    if (!this.hasTrades && !this.hasNoTrades ) { this.getPageOfTrades(traderId, set, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
                   else {
                     this.hasTrades = false;
-                    this.hasNoTrades = true;  // if there are no records at all than show the message no trades at all
+                     this.hasNoTrades = true;  // if there are no records at all than show the message no trades at all
+                     this.messagesService.emitProcessMessage("PMENTrs");
                   }
             }
             else {
@@ -189,7 +190,9 @@ export class TradesListComponent implements OnInit {
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
-          this.isRequesting = false;
+          this.isRequesting = false;  
+          this.data = returnedTrades;          // pass zero records  
+          this.onChangeTable(this.config),   // show 0 from 0 on the top        
           this.messagesService.emitProcessMessage("PMENTrs");
         }
         else {
@@ -198,8 +201,45 @@ export class TradesListComponent implements OnInit {
           this.totalNumberOfRecords = this.data[0].total;
           this.hasTrades = true;
           this.hasNoTrades = false;
+          this.isRequesting = false,      
+          this.onChangeTable(this.config),
+          this.onPageChange(1)
+        }
+      },
+      (res: Response) => this.onError(res, "Filter"));
+  }
+
+
+  // get trades with set filters but sets(category and places)
+  private getTradesWithSetFiltersButSets() {
+    let catid: number = 0
+    let subcatid: number = 0
+    let plaid: number = 0
+    let staid: number = 0;
+
+    if (this.categoryClicked != null) { catid = this.categoryClicked.categoryId; }
+    if (this.subcategoryClicked != null) { subcatid = this.subcategoryClicked.subcategoryId; }
+    if (this.stateClicked != null) { staid = this.stateClicked.id; }
+    if (this.placeClicked != null) { plaid = this.placeClicked.id; }
+
+    // TODO to introduce new service method to get sets of records with set filter
+    this.tradeApiService.getTradesWithSetFilters(catid, subcatid, staid, plaid)
+      .subscribe((returnedTrades: Trade[]) => {
+        if (returnedTrades.length === 0) {
+          this.hasTrades = false;
+          this.isRequesting = false;
+          this.data = returnedTrades;          // pass zero records  
+          this.onChangeTable(this.config),   // show 0 from 0 on the top        
+            this.messagesService.emitProcessMessage("PMENTrs");
+        }
+        else {
+          this.messagesService.emitRoute("nill");
+          this.data = this.TransformData(returnedTrades),
+          this.totalNumberOfRecords = this.data[0].total;
+          this.hasTrades = true;
+          this.hasNoTrades = false;
           this.isRequesting = false,
-          //this.calculateTotalNumberOfSets();
+          this.calculateTotalNumberOfSets();
           this.onChangeTable(this.config),
           this.onPageChange(1)
         }
@@ -235,7 +275,7 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
   }
 
-  private ClearAllFilters() {
+  private GoBack() {
     this.categoryClicked = null;
     this.subcategoryClicked = null;
     this.stateClicked = null;
@@ -248,6 +288,36 @@ export class TradesListComponent implements OnInit {
 
     this.getTrades("");
     this.messagesService.emitRoute("nill");
+  }
+
+  private ClearAllFilters() {
+    this.categoryClicked = null;
+    this.subcategoryClicked = null;
+    this.stateClicked = null;
+    this.placeClicked = null;
+
+    this.filters = null;
+    this.filters1 = null;
+    this.filters2 = null;
+    this.setupFilterString();
+    this.getTrades("");
+    this.messagesService.emitRoute("nill");
+  }
+
+  private ClearPlaces() {
+    this.placeClicked = null;
+    this.stateClicked = null;
+    this.filters2 = null;
+    this.filters = null;
+    this.setupFilterString();
+  }
+
+  private ClearCategories() {
+    this.categoryClicked = null;
+    this.subcategoryClicked = null; 
+    this.filters1 = null;  
+    this.filters = null;
+    this.setupFilterString();
   }
 
 
