@@ -96,8 +96,7 @@ export class AddTradeComponent implements OnInit {
     this.setupForm();
 
     this.getCategories();
-    this.getStates();
-    //this.getPlacesByStateId();
+    this.getStates();    
   }
 
 
@@ -306,7 +305,7 @@ export class AddTradeComponent implements OnInit {
 
 
   private initialiseComponent() {
-    this.pageTitleService.emitPageTitle(new PageTitle("Add Trade"));
+    this.pageTitleService.emitPageTitle(new PageTitle("Post Trade"));
     this.messagesService.emitRoute("nill");
     //this.isFileAllowed = false;
     this.isRequesting = false;
