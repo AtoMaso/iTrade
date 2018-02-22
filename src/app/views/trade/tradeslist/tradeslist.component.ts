@@ -34,7 +34,7 @@ export class TradesListComponent implements OnInit {
 
   private totalNumberOfRecords: number = 0;
   private setsCounter: number = 1;
-  private recordsPerSet: number = 50;
+  private recordsPerSet: number = 10;
   private totalNumberOfSets: number = 0;
   private hasTrades: boolean = true;
   private hasNoTrades: boolean = false;
@@ -74,11 +74,12 @@ export class TradesListComponent implements OnInit {
     this.getUseridentity();
     this.initialiseComponent();   
 
-    this.getTrades("");
+    //this.getTrades("Open");
+    this.getPageOfTrades(this.setsCounter, this.recordsPerSet, this.status);
     this.getCategories();   
     this.getStates();
-    //this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
-   ;
+  
+  
   }
 
 
@@ -116,14 +117,14 @@ export class TradesListComponent implements OnInit {
   // GET TRADES - this will get open trades, if there are no any open trades will get all or will show message - no trades
   //*********************************************************************************************
   // gets all trades
-  private getTrades(traderId:string, status:string="Open") {
+  private getTrades(status: string) {
 
-    this.tradeApiService.getTradesWithStatusOrAll(traderId, status)
+    this.tradeApiService.getTradesWithStatusOrAll("", status)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
               this.hasTrades = false;
               this.isRequesting = false;           
-              if (!this.hasTrades && !this.hasNoTrades) { this.getTrades(traderId, "All"); }     // there are no open trades so get the latest closed ones
+              if (!this.hasTrades && !this.hasNoTrades) { this.getTrades("All"); }     // there are no open trades so get the latest closed ones
               else {
                 this.hasTrades = false;
                 this.hasNoTrades = true;   // if there are no records at all than show the message no trades at all
@@ -146,14 +147,14 @@ export class TradesListComponent implements OnInit {
 
 
   //gets page of trades 
-  private getPageOfTrades(traderId: string, set: number=1, recordsPerSet: number=50, status: string="Open") {
+  private getPageOfTrades(set: number, recordsPerSet: number, status: string) {
 
-    this.tradeApiService.getPageOfTradesWithStatusOrAll(traderId, set, recordsPerSet, status)
+    this.tradeApiService.getPageOfTradesWithStatus(set, recordsPerSet, status)
         .subscribe((returnedTrades: Trade[]) => {      
             if (returnedTrades.length === 0) {
                   this.hasTrades = false;
                   this.isRequesting = false;            
-                   if (!this.hasTrades && !this.hasNoTrades ) { this.getPageOfTrades(traderId, set, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
+                   if (!this.hasTrades && !this.hasNoTrades ) { this.getPageOfTrades(set, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
                   else {
                     this.hasTrades = false;
                      this.hasNoTrades = true;  // if there are no records at all than show the message no trades at all
@@ -257,11 +258,13 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString(); 
   }
 
+
   private SubcategoryClicked(subcategory: Subcategory, category:Category) {
     this.subcategoryClicked = subcategory; 
     this.categoryClicked = category;
     this.setupFilterString();
   }
+
 
   private StateClicked(state: State) {
     this.placeClicked = null;
@@ -269,11 +272,13 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
   }
 
+
   private PlaceClicked(place: Place, state: State) {
     this.placeClicked = place;
     this.stateClicked = state;
     this.setupFilterString();
   }
+
 
   private GoBack() {
     this.categoryClicked = null;
@@ -286,9 +291,11 @@ export class TradesListComponent implements OnInit {
     this.filters2 = null;
     this.setupFilterString();
 
-    this.getTrades("");
+    //this.getTrades("Open");
+    this.getPageOfTrades(this.setsCounter, this.recordsPerSet, this.status);
     this.messagesService.emitRoute("nill");
   }
+
 
   private ClearAllFilters() {
     this.categoryClicked = null;
@@ -300,9 +307,11 @@ export class TradesListComponent implements OnInit {
     this.filters1 = null;
     this.filters2 = null;
     this.setupFilterString();
-    this.getTrades("");
+    //this.getTrades("Open");
+    this.getPageOfTrades(this.setsCounter, this.recordsPerSet, this.status);
     this.messagesService.emitRoute("nill");
   }
+
 
   private ClearCategories() {
     this.categoryClicked = null;
@@ -312,6 +321,7 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
   }
 
+
   private ClearPlaces() {
     this.placeClicked = null;
     this.stateClicked = null;
@@ -319,6 +329,7 @@ export class TradesListComponent implements OnInit {
     this.filters = null;
     this.setupFilterString();
   }
+
 
   // sets up the filter string deiplayed on the screen and filters the datasets based on it
   private setupFilterString() {
@@ -349,8 +360,6 @@ export class TradesListComponent implements OnInit {
   }
 
   
-
-
 
   //*****************************************************
   // GET CATEGORIES
@@ -527,7 +536,7 @@ export class TradesListComponent implements OnInit {
 
   public config: any = {
     id: 'pagination',
-    itemsPerPage: 10,
+    itemsPerPage: 5,
     currentPage: 1,
     totalItems: 0,
     paging: true,
@@ -586,7 +595,7 @@ export class TradesListComponent implements OnInit {
       this.setsCounter = this.setsCounter + 1;
 
       // get the next set of records
-      this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
+      this.getPageOfTrades(this.setsCounter, this.recordsPerSet, this.status);
 
       // set the current page to 1
       this.config.currentPage = 1;
@@ -607,7 +616,7 @@ export class TradesListComponent implements OnInit {
       this.setsCounter = this.setsCounter - 1;
 
       // get the previous set of records
-      this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
+      this.getPageOfTrades(this.setsCounter, this.recordsPerSet, this.status);
 
       // set the current page to 1
       this.config.currentPage = 1;
@@ -629,10 +638,10 @@ export class TradesListComponent implements OnInit {
     this.rows = sortedData;  
     this.config.totalItems = sortedData.length;
 
-    if (this.config.totalItems < this.config.itemsPerPage) { this.displayRecords = this.config.totalItems; }
+    if (this.config.totalItems <= this.config.itemsPerPage) { this.displayRecords = this.config.totalItems; }
     else {
       this.displayRecords = this.config.itemsPerPage;
-      this.hasNavigation = true;
+      this.hasNavigation = true; 
     }
 
 

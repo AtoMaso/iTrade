@@ -21,6 +21,7 @@
     tradesbytraderid: 'http://localhost:5700/api/trades/GetTradesByTraderId',
 
     pagesoftradeswithstatus: 'http://localhost:5700/api/trades/GetPagesOfTradesWithStatus',
+    pagesoftradeswithstatusfortrader : 'http://localhost:5700/api/trades/GetPagesOfTradesWithStatusForTrader',
     pagesoftradesall: 'http://localhost:5700/api/trades/GetPagesOfTradesAll',
 
     trade: 'http://localhost:5700/api/trades/',

@@ -76,7 +76,7 @@ export class TraderHomeComponent implements OnInit {
   //**************************************************************************************
   // GET TRADES -- this will get all trades for the trader closed and open, if there are no any will show message
   //**************************************************************************************
-  private getTrades(traderId: string, status: string = "All") {
+  private getTrades(traderId: string, status: string) {
 
     this.tradeService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {

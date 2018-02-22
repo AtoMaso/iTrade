@@ -162,12 +162,13 @@ export class AddTradeComponent implements OnInit {
   // SELECTION of state should get places for that state
   //*****************************************************
   private onStateChange(item:any) {
-    this.getPlacesByStateId(item[3]);
+    this.getPlacesByStateId(item);
   }
 
 
   private onCategoryChange(item: any) {
-    this.getSubcategoriesByCategoryId(item[3]);
+
+    this.getSubcategoriesByCategoryId(item);
   }
 
 

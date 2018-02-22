@@ -91,11 +91,11 @@
                                                  <!-- buttons -->
                                                  <li style="margin-top:10px;">
                                                    <div>
-                                                     <button class="btn btn-primary smalltext" (click)="getTradesWithSetFilters()"
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="getTradesWithSetFilters()"
                                                              [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">
                                                        Search
                                                      </button>
-                                                     <button class="btn btn-primary smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
                                                    </div>
                                                  </li>
 
@@ -103,105 +103,73 @@
                                                 <!-- CATEGORIES -->
                                                  <li style="margin-top:10px;">
 
-                                                     <div style="margin-bottom:25px;"> 
+                                                     <!--<div style="margin-bottom:25px;">--> 
                                                         <a href="#categories" data-toggle="collapse" class="gliphcat textgray" (click)="ClearCategories()">Category  <span class="glyphicon glyphicon-chevron-up"></span></a>
-                                                     </div>
+                                                     <!--</div>-->
 
                                                      <ul id="categories" class="panel-collapse collapse in list-unstyled" style="margin-left:15px;">
                                                        <!-- foreach category here -->
                                                        <li *ngFor="let category of categories">
-
-                                                             <div class="panel-group" id="catparent">
-                                                              <div class="panel panel-default">
-
-                                                                   <div class="panel-heading" style="margin-top:-18px;">
-                                                                         <a data-toggle="collapse" data-parent="#catparent" href="#{{category.categoryDescription}}"
-                                                                            (click)="CategoryClicked(category)" 
-                                                                            class="panel-title textlightcoral smalltextbold">
-                                                                           <span>{{category.categoryDescription}}  <span class="caret"></span> </span>      
-                                                                         </a>
-                                                                   </div>                                   
-
-                                                                   <div class="panel-collapse collapse" id="{{category.categoryDescription}}"  >
-                                                                       <div class="panel-body">
-                                                                             <ul style="margin-left:-30px;">
-                                                                               <!-- for each subcategories here -->
-                                                                               <li *ngFor="let subcategory of category.subcategories">
-                                                                                    <a (click)="SubcategoryClicked(subcategory, category)" 
-                                                                                      class="textoker smalltextbold">
-                                                                                     <span>{{subcategory.subcategoryDescription}}</span></a>
-                                                                               </li>
-                                                                             </ul>
-                                                                       </div>
-                                                                    </div>   
-                                                               
-                                                                </div>
-                                                           </div>      
-                                                                          
+                                                                                                                           
+                                                              <a data-toggle="collapse" data-parent="#catparent" href="#{{category.categoryDescription}}" (click)="CategoryClicked(category)" class="panel-title textlightcoral smalltextbold">
+                                                                      <span>{{category.categoryDescription}}  <span class="caret"></span> </span>      
+                                                              </a>
+                                                                                                                                        
+                                                              <ul  class="panel-collapse collapse list-unstyled" id="{{category.categoryDescription}}" style="margin-left:15px;">
+                                                                <!-- for each subcategories here -->
+                                                                <li *ngFor="let subcategory of category.subcategories">
+                                                                    <a (click)="SubcategoryClicked(subcategory, category)"  class="textoker smalltextbold" ><span>{{subcategory.subcategoryDescription}}</span></a>
+                                                                </li>
+                                                              </ul>                                                                                                                                       
                                                         </li>
                                                   </ul>
-
                                                 </li>
 
-       
-                                                 <!-- buttons -->
+
+                                                  <!-- buttons -->
                                                  <li style="margin-top:10px;">
                                                    <div>
-                                                     <button class="btn btn-primary smalltext" (click)="getTradesWithSetFilters()"
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="getTradesWithSetFilters()"
                                                              [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">
                                                        Search
                                                      </button>
-                                                     <button class="btn btn-primary smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
                                                    </div>
                                                  </li>
 
 
                                                   <!-- PLACES -->                    
-                                                 <li style="margin-top:10px;">
-
-                                                   <div style="margin-bottom:25px;">
-                                                     <a href="#places" data-toggle="collapse" class="gliphpla textgray" (click)="ClearPlaces()">Place  <span class="glyphicon glyphicon-chevron-up"></span></a>
-                                                   </div>
+                                                 <li style="margin-top:10px;" id="plaparent">                       
+                                                                               
+                                                     <a href="#places" data-toggle="collapse" class="gliphpla textgray" (click)="ClearPlaces()">Place  <span class="glyphicon glyphicon-chevron-up"></span></a>                                                  
 
                                                    <ul id="places" class="panel-collapse collapse in list-unstyled" style="margin-left:15px;">
-                                                     <!-- foreach category here -->
-                                                     <li *ngFor="let state of states">
-
-                                                       <div class="panel-group" id="plaparent">
-                                                         <div class="panel panel-default">
-
-                                                           <div class="panel-heading" style="margin-top:-18px;">
-                                                               <a data-toggle="collapse" data-parent="#plaparent" href="#{{state.name}}" (click)="StateClicked(state)" class="panel-title textlightcoral smalltextbold">
-                                                                 <span>{{state.name}}  <span class="caret"></span> </span>
-                                                               </a>
-                                                           </div>
-
-                                                           <div class="panel-collapse collapse" id="{{state.name}}">
-                                                             <div class="panel-body">
-                                                                 <ul style="margin-left:-30px;">
-                                                                     <!-- for each subcategories here -->
-                                                                     <li *ngFor="let place of state.places">
-                                                                           <a (click)="PlaceClicked(place, state)" class="textoker smalltextbold"><span>{{place.name}}</span></a>
-                                                                     </li>
-                                                                 </ul>
-                                                               </div>
-                                                             </div>
-
-                                                           </div>
-                                                         </div>
-                                                       </li>
+                                                       <!-- foreach category here -->
+                                                       <li *ngFor="let state of states">                                                                                                             
+                                                              <a data-toggle="collapse" data-parent="#plaparent" href="#{{state.name}}" (click)="StateClicked(state)" class="panel-title textlightcoral smalltextbold">
+                                                                <span>{{state.name}}  <span class="caret"></span> </span>
+                                                              </a>
+                                                        
+                                                              <ul class="panel-collapse collapse list-unstyled" id="{{state.name}}" style="margin-left:15px;">
+                                                                    <!-- for each subcategories here -->
+                                                                    <li *ngFor="let place of state.places">
+                                                                          <a (click)="PlaceClicked(place, state)" class="textoker smalltextbold"><span>{{place.name}}</span></a>
+                                                                    </li>
+                                                              </ul>                                                             
+                                                         </li>
                                                      </ul>
+
                                                    </li>
 
 
                                                  <!-- buttons -->
                                                  <li style="margin-top:10px;">
                                                    <div>
-                                                     <button class="btn btn-primary smalltext" (click)="getTradesWithSetFilters()"
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="getTradesWithSetFilters()"
                                                              [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">
                                                        Search
                                                      </button>
-                                                     <button class="btn btn-primary smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
                                                    </div>
                                                  </li>
 
@@ -239,7 +207,7 @@
 
 
                                             <div class="col-md-4 smalltextbold text-capitalize textgray">
-                                              <div class="row"  style="height:120px;">Description:<span  class="text-info"> {{ trade.description  }}</span></div>                                              
+                                              <div class="row"  style="height:120px;">Description:<span  class="text-info"><br/> {{ trade.description  }}</span></div>                                              
                                               <div class="row" style="height:30px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>             
                                               <div class="row"  style="height:30px;">Place:<span  class="text-capitalize text-info"> {{ trade.place  }}</span></div>           
                                               <div class="row" style="height:30px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>                                                                                                                                                        
@@ -304,3 +272,55 @@
 <span *ngIf="hasNoTrades" class="textoker"> The system can not find any trades!</span>
 
 <my-spinner [isRunning]="isRequesting"></my-spinner>
+
+
+
+<!--<div class="panel-group" id="catparent">
+  <div class="panel panel-default">
+    <div class="panel-heading" style="margin-top:-20px;">
+      <a data-toggle="collapse" data-parent="#catparent" href="#{{category.categoryDescription}}"
+         (click)="CategoryClicked(category)"
+         class="panel-title textlightcoral smalltextbold">
+        <span>{{category.categoryDescription}}  <span class="caret"></span> </span>
+      </a>
+    </div>
+
+    <div class="panel-collapse collapse" id="{{category.categoryDescription}}">
+      <div class="panel-body">
+        <ul class="panel-collapse collapse list-unstyled" id="{{category.categoryDescription}}">
+           for each subcategories here 
+          <li *ngFor="let subcategory of category.subcategories">
+            <a (click)="SubcategoryClicked(subcategory, category)"
+               class="textoker smalltextbold">
+              <span>{{subcategory.subcategoryDescription}}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>-->      
+
+
+<!--<div class="panel-group" id="plaparent">
+  <div class="panel panel-default">
+
+    <div class="panel-heading" style="margin-top:-18px;">
+      <a data-toggle="collapse" data-parent="#plaparent" href="#{{state.name}}" (click)="StateClicked(state)" class="panel-title textlightcoral smalltextbold">
+        <span>{{state.name}}  <span class="caret"></span> </span>
+      </a>
+    </div>
+
+    <div class="panel-collapse collapse" id="{{state.name}}">
+      <div class="panel-body">
+        <ul style="margin-left:-30px;">        
+          <li *ngFor="let place of state.places">
+            <a (click)="PlaceClicked(place, state)" class="textoker smalltextbold"><span>{{place.name}}</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>-->

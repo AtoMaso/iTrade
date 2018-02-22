@@ -39,37 +39,9 @@ export class DashboardComponent implements OnInit {
     this.messagesService.emitRoute("nill");
 
     this.isRequesting = true;          
-    // get the top 8 trades by date published in asc order
-    this.getFilteredTrades(6, "Open");   
-    //this.getLimitedTrades("Open");
+    // get the top 6 trades by date published in asc order
+    this.getFilteredTrades(6, "Open");      
   }
-
-
-  //*****************************************************
-  //  GET ALL TRADES
-  //*****************************************************
-  public getLimitedTrades(status: string): void {
-      // call the service to get the data  
-    this.tradeApiService.getTradesWithStatusOrAll(status)
-      .subscribe((returnedTrades: Trade[]) => {
-        if (returnedTrades.length === 0) {
-          this.hasTrades = false;
-          this.isRequesting = false;
-          if (!this.hasTrades && !this.hasNoTrades) { this.getLimitedTrades("All"); }     // there are no open trades so get the latest closed ones
-          else {
-                this.hasTrades = false;
-                this.hasNoTrades = true;
-          }
-        }
-        else {
-          this.trades = this.TransformData(returnedTrades);
-          this.hasTrades = true;
-          this.hasNoTrades = false;
-          this.isRequesting = false;        
-        }
-     },
-     (res: Response) => this.onError(res, "getTradesApi method"));          
-  } 
 
 
   //*****************************************************

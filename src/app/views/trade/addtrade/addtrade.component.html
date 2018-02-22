@@ -32,7 +32,7 @@
                     <div class="panel panel-heading col-md-3"><span>Category:</span></div>
 
                     <div class="form-group col-md-6">
-                      <select formControlName="category" id="category" name="category" class="form-control" style="background-color:moccasin;"  (change)="onCategoryChange($event.target.value)">
+                      <select formControlName="category" id="category" name="category" class="form-control" style="background-color:moccasin;" (ngModelChange)="onCategoryChange($event)">  <!--(change)="onCategoryChange($event.target.value)">-->
                         <!--<option value="">Select</option>-->
                         <option *ngFor="let category of categories" [ngValue]="category.categoryId">
                           {{ category.categoryDescription }}
@@ -64,7 +64,7 @@
                     <div class="panel panel-heading col-md-3"><span>State:</span></div>
 
                     <div class="form-group col-md-6">
-                      <select formControlName="state" id="state" name="state" class="form-control" style="background-color:moccasin;" (change)="onStateChange($event.target.value)">
+                      <select formControlName="state" id="state" name="state" class="form-control" style="background-color:moccasin;" (ngModelChange)="onStateChange($event)">
                         <!--<option value="">Select</option>-->
                         <option *ngFor="let state of states" [ngValue]="state.id"> {{ state.name }}
                         </option>             

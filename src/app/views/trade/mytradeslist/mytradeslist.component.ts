@@ -67,7 +67,7 @@ export class MyTradesListComponent implements OnInit {
   //*********************************************************************************************
   // GET TRADES - this will get open trades, if there are no any open trades will get all or will show message - no trades
   //*********************************************************************************************
-  private getTrades(traderId: string, status: string ="All") {
+  private getTrades(traderId: string, status: string) {
 
     this.tradeApiService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
@@ -97,9 +97,9 @@ export class MyTradesListComponent implements OnInit {
 
 
   //gets page of trades 
-  private getPageOfTrades(traderId: string, set: number = 1, recordsPerSet: number = 50, status:string="All") {
+  private getPageOfTrades(traderId: string, set: number, recordsPerSet: number, status:string) {
 
-    this.tradeApiService.getPageOfTradesWithStatusOrAll(traderId, set, recordsPerSet, status)
+    this.tradeApiService.getPageOfTradesWithStatusForTrader(traderId, set, recordsPerSet, status)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
             this.hasTrades = false;
