@@ -57,180 +57,249 @@
 
                      </div>
              
-           </div>
+            </div>
 
 
-            <!-- filter string-->
-             <div *ngIf="filters" class="row">            
+             <!-- filter string-->
+             <div class="row">            
                <div class="col-md-12 panel panel-title" style="margin-top: -10px;margin-bottom:10px;">                     
-                     <span *ngIf="filters != null" class="smalltextbold">Selected filters : <span class="text-info"> {{ filters }}</span></span>
-               </div>           
+                     <span  class="smalltextbold">Selected filters : <span class="textlightcoral"> {{ filters }}</span></span>                
+               </div>                   
            </div>
 
 
-           <!-- filters and the table -->
-           <div class="row">
+             <!-- filters and the table -->
+             <div class="row">
 
-                  <!-- filters -->
-                 <div class="col-md-2">                                                      
+                    <!-- filters -->
+                    <div class="col-md-2">
+
                           <div class="row panel panel-heading wrapper">
 
-                                <nav id="sidebar">
+                                    <nav id="sidebar">
+                                                                         
+                                           <!-- Sidebar Header -->
+                                           <div class="sidebar-header">
+                                               <span data-target="#filters" data-toggle="collapse" class="gliphfil smalltextbold textgray" aria-expanded="false" (click)="ClearAllFilters()">
+                                                 Filters  <span class="glyphicon glyphicon-chevron-up"></span>
+                                               </span>                                                                                                                                       
+                                           </div>
 
-                                    <!-- Sidebar Header -->
-                                   <div class="sidebar-header">
-                                        <span  data-target="#filters" data-toggle="collapse" class="gliphfil smalltextbold textgray" aria-expanded="false" (click)="ClearAllFilters()">
-                                        Filters <span class="glyphicon glyphicon-chevron-up"></span>
-                                        </span>
-                                  </div>
+                                           <!-- Sidebar Links -->
+                                           <ul id="filters" class="collapse in list-unstyled smalltextbold textgray" style="margin-left:10px;">
 
-                                   <!-- Sidebar Links -->
-                                   <ul  id="filters" class="collapse in list-unstyled smalltextbold textgray"  style="margin-left:10px;" >
-                                                       
-                                           <!-- CATEGORIES -->
-                                           <li style="margin-top:10px;">
-                                                                 
-                                                    <a href="#categories" data-toggle="collapse"  class="gliphcat textgray" (click)="ClearCategories()">
-                                                          Category <span class="glyphicon glyphicon-chevron-up"></span>
-                                                    </a>                                                                                                                                              
+                                                 <!-- buttons -->
+                                                 <li style="margin-top:10px;">
+                                                   <div>
+                                                     <button class="btn btn-primary smalltext" (click)="getTradesWithSetFilters()"
+                                                             [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">
+                                                       Search
+                                                     </button>
+                                                     <button class="btn btn-primary smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
+                                                   </div>
+                                                 </li>
 
-                                                    <ul  id="categories" class="collapse in list-unstyled panel-group" style="margin-left:15px;">
-                                                        <!-- foreach category here -->
-                                                        <li *ngFor="let category of categories" >
-                                                                <a   href="#{{ category.categoryDescription }}"  data-toggle="collapse" data-parent="#categories" (click)="CategoryClicked(category)" class="textlightcoral smalltextbold">
-                                                                  <span>{{ category.categoryDescription }}</span><span class="caret"></span>
-                                                                </a>
 
-                                                                <ul  id="{{ category.categoryDescription }}" class="collapse list-unstyled"  style="margin-left:15px;">
-                                                                        <!-- for each subcategories here -->
-                                                                        <li *ngFor="let subcategory of category.subcategories">
-                                                                                  <a (click)="SubcategoryClicked(subcategory, category)" class="textoker smalltextbold"><span>{{ subcategory.subcategoryDescription }}</span></a>
-                                                                        </li>
-                                                              </ul>
+                                                <!-- CATEGORIES -->
+                                                 <li style="margin-top:10px;">
+
+                                                     <div style="margin-bottom:25px;"> 
+                                                        <a href="#categories" data-toggle="collapse" class="gliphcat textgray" (click)="ClearCategories()">Category  <span class="glyphicon glyphicon-chevron-up"></span></a>
+                                                     </div>
+
+                                                     <ul id="categories" class="panel-collapse collapse in list-unstyled" style="margin-left:15px;">
+                                                       <!-- foreach category here -->
+                                                       <li *ngFor="let category of categories">
+
+                                                             <div class="panel-group" id="catparent">
+                                                              <div class="panel panel-default">
+
+                                                                   <div class="panel-heading" style="margin-top:-18px;">
+                                                                         <a data-toggle="collapse" data-parent="#catparent" href="#{{category.categoryDescription}}"
+                                                                            (click)="CategoryClicked(category)" 
+                                                                            class="panel-title textlightcoral smalltextbold">
+                                                                           <span>{{category.categoryDescription}}  <span class="caret"></span> </span>      
+                                                                         </a>
+                                                                   </div>                                   
+
+                                                                   <div class="panel-collapse collapse" id="{{category.categoryDescription}}"  >
+                                                                       <div class="panel-body">
+                                                                             <ul style="margin-left:-30px;">
+                                                                               <!-- for each subcategories here -->
+                                                                               <li *ngFor="let subcategory of category.subcategories">
+                                                                                    <a (click)="SubcategoryClicked(subcategory, category)" 
+                                                                                      class="textoker smalltextbold">
+                                                                                     <span>{{subcategory.subcategoryDescription}}</span></a>
+                                                                               </li>
+                                                                             </ul>
+                                                                       </div>
+                                                                    </div>   
+                                                               
+                                                                </div>
+                                                           </div>      
+                                                                          
                                                         </li>
-                                                  </ul>                                     
-                                           </li>
+                                                  </ul>
+
+                                                </li>
+
+       
+                                                 <!-- buttons -->
+                                                 <li style="margin-top:10px;">
+                                                   <div>
+                                                     <button class="btn btn-primary smalltext" (click)="getTradesWithSetFilters()"
+                                                             [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">
+                                                       Search
+                                                     </button>
+                                                     <button class="btn btn-primary smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
+                                                   </div>
+                                                 </li>
 
 
-                                            <!-- PLACES -->
-                                           <li style="margin-top:10px;">
+                                                  <!-- PLACES -->                    
+                                                 <li style="margin-top:10px;">
 
-                                                 <a href="#places" data-toggle="collapse" aria-expanded="false" class="gliphpl textgray" (click)="ClearPlaces()">
-                                                        Place <span class="glyphicon glyphicon-chevron-up"></span>
-                                                   </a>
+                                                   <div style="margin-bottom:25px;">
+                                                     <a href="#places" data-toggle="collapse" class="gliphpla textgray" (click)="ClearPlaces()">Place  <span class="glyphicon glyphicon-chevron-up"></span></a>
+                                                   </div>
 
-                                                 <ul class="collapse in list-unstyled" id="places" style="margin-left:15px;">
-                                                       <!-- foreach state here -->
-                                                       <li *ngFor="let state of states">
-                                                                <a href="#{{ state.name }}" data-toggle="collapse" aria-expanded="true" (click) ="StateClicked(state)" class="textlightcoral smalltextbold">
-                                                                        <span >{{ state.name }}</span><span class="caret"></span>
-                                                                </a>
+                                                   <ul id="places" class="panel-collapse collapse in list-unstyled" style="margin-left:15px;">
+                                                     <!-- foreach category here -->
+                                                     <li *ngFor="let state of states">
 
-                                                                <ul class="collapse list-unstyled" id="{{ state.name }}" style="margin-left:15px;">
-                                                                        <!-- for each place here -->
-                                                                       <li *ngFor="let place of state.places">
-                                                                               <a (click) ="PlaceClicked(place, state)" class="textoker smalltextbold"><span >{{ place.name }}</span></a>
-                                                                        </li>
-                                                              </ul>
+                                                       <div class="panel-group" id="plaparent">
+                                                         <div class="panel panel-default">
+
+                                                           <div class="panel-heading" style="margin-top:-18px;">
+                                                               <a data-toggle="collapse" data-parent="#plaparent" href="#{{state.name}}" (click)="StateClicked(state)" class="panel-title textlightcoral smalltextbold">
+                                                                 <span>{{state.name}}  <span class="caret"></span> </span>
+                                                               </a>
+                                                           </div>
+
+                                                           <div class="panel-collapse collapse" id="{{state.name}}">
+                                                             <div class="panel-body">
+                                                                 <ul style="margin-left:-30px;">
+                                                                     <!-- for each subcategories here -->
+                                                                     <li *ngFor="let place of state.places">
+                                                                           <a (click)="PlaceClicked(place, state)" class="textoker smalltextbold"><span>{{place.name}}</span></a>
+                                                                     </li>
+                                                                 </ul>
+                                                               </div>
+                                                             </div>
+
+                                                           </div>
+                                                         </div>
                                                        </li>
-                                                 </ul>                                 
-                                            </li>          
-                                         
-                         
-                                          <!-- buttons -->
-                                          <li style="margin-top:10px;">
-                                            <div>
-                                              <button class="btn btn-primary smalltext" (click)="getTradesWithSetFilters()" [disabled]="catIdClicked==0 && subcatIdClicked==0  && stateIdClicked==0 && placeIdClicked == 0 ">Search</button>
-                                              <button class="btn btn-primary smalltext" (click)="GoBack()">Clear</button>
-                                            </div>
-                                          </li>   
-                                </ul>
-                       
-                                </nav>
-                                                   
-                         </div>       
-                   </div>
+                                                     </ul>
+                                                   </li>
 
-                 <!-- table -->
-                 <div *ngIf="hasTrades" class="col-md-10">
 
-                         <table class="table  table-hover table-responsive">                           
+                                                 <!-- buttons -->
+                                                 <li style="margin-top:10px;">
+                                                   <div>
+                                                     <button class="btn btn-primary smalltext" (click)="getTradesWithSetFilters()"
+                                                             [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">
+                                                       Search
+                                                     </button>
+                                                     <button class="btn btn-primary smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
+                                                   </div>
+                                                 </li>
+
+                                            </ul>
+
+                                   </nav>
+
+                          </div>       
+
+                    </div>
+
+                    <!-- table -->
+                    <div *ngIf="hasTrades" class="col-md-10">
+
+                            <table class="table  table-hover table-responsive">                           
                      
-                             <tr *ngFor="let trade of rows  | paginate:config">
+                                <tr *ngFor="let trade of rows  | paginate:config">
 
-                                     <td class="row col-md-12">   
+                                        <td class="row col-md-12">   
                                                                 
-                                         <div class="col-md-4 container">                                       
-                                           <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>  
-                                         </div>
+                                            <div class="col-md-4 container">                                       
+                                              <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>  
+                                            </div>
 
 
-                                         <div class="col-md-4 smalltextbold text-capitalize textgray">                                     
-                                           <div class="row"  style="height:30px;">Trading:<a class="text-capitalize textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>
-                                           <div class="row"  style="height:30px;">Trading for: <span class="text-capitalize text-info"> {{ trade.tradeFor  }}</span></div>
-                                           <div class="row"  style="height:30px;">Category: <span><span class="text-capitalize text-info"> {{ trade.categoryDescription  }}</span></span></div>        
-                                           <div class="row" style="height:30px;">Subcategory: <span><span class="text-capitalize text-info"> {{ trade.subcategoryDescription  }}</span></span></div>       
-                                           <div class="row" style="height:30px;">Reference Id:<span class="text-capitalize text-info"> {{ trade.tradeId  }}</span></div>    
-                                           <div class="row"  style="height:30px;">Published on:<span class="text-capitalize text-info"> {{ trade.datePublished | date }}</span></div>
-                                           <div class="row"  style="height:30px;">Trader: <a class="text-capitalize textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
-                                         </div>
+                                            <div class="col-md-4 smalltextbold text-capitalize textgray">                                     
+                                              <div class="row"  style="height:30px;">Trading:<a class="text-capitalize textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>
+                                              <div class="row"  style="height:30px;">Trading for: <span class="text-capitalize text-info"> {{ trade.tradeFor  }}</span></div>
+                                              <div class="row"  style="height:30px;">Category: <span><span class="text-capitalize text-info"> {{ trade.categoryDescription  }}</span></span></div>        
+                                              <div class="row" style="height:30px;">Subcategory: <span><span class="text-capitalize text-info"> {{ trade.subcategoryDescription  }}</span></span></div>       
+                                              <div class="row" style="height:30px;">Reference Id:<span class="text-capitalize text-info"> {{ trade.tradeId  }}</span></div>    
+                                              <div class="row"  style="height:30px;">Published on:<span class="text-capitalize text-info"> {{ trade.datePublished | date }}</span></div>
+                                              <div class="row"  style="height:30px;">Trader: <a class="text-capitalize textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
+                                            </div>
 
 
-                                         <div class="col-md-4 smalltextbold text-capitalize textgray">
-                                           <div class="row"  style="height:120px;">Description:<span  class="text-info"> {{ trade.description  }}</span></div>                                              
-                                           <div class="row" style="height:30px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>             
-                                           <div class="row"  style="height:30px;">Place:<span  class="text-capitalize text-info"> {{ trade.place  }}</span></div>           
-                                           <div class="row" style="height:30px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>                                                                                                                                                        
-                                       </div>
+                                            <div class="col-md-4 smalltextbold text-capitalize textgray">
+                                              <div class="row"  style="height:120px;">Description:<span  class="text-info"> {{ trade.description  }}</span></div>                                              
+                                              <div class="row" style="height:30px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>             
+                                              <div class="row"  style="height:30px;">Place:<span  class="text-capitalize text-info"> {{ trade.place  }}</span></div>           
+                                              <div class="row" style="height:30px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>                                                                                                                                                        
+                                          </div>
                   
-                                </td>   
-                         </tr>
+                                  </td>   
+                            </tr>
   
-                  </table>
-
-             </div>
-
-       </div>
-
-
-
-           <!-- Table naviagtion -->
-          <div *ngIf="hasSets || hasNavigation" class="row panel panel-footer" style="height:75px;vertical-align:middle;">
-             
-                <div class="col-md-4 panel panel-heading textsmall"  style="height:55px;vertical-align:middle;">
-                  <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
-                                       (pageChange)="onPageChange($event)"
-                                       maxSize="5"
-                                       directionLinks="true"
-                                       autoHide="true"
-                                       previousLabel="Previous"
-                                       nextLabel="Next"
-                                       screenReaderPaginationLabel="Pagination"
-                                       screenReaderPageLabel="page"
-                                       screenReaderCurrentLabel="You're on page"
-                                       [(ngModel)]="config.currentPage"
-                                       (numPages)="numPages = $event"
-                                       [maxSize]="maxSize">
-                  </pagination-controls>
-                </div>
-
-                <div *ngIf="hasSets">
-
-                  <div class="col-md-2 col-md-offset-1 panel panel-heading" style="height:55px;vertical-align:middle;">
-                    <span class="smalltextbold textgray">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
-                  </div>
-
-                  <div class="col-md-3 col-md-offset-2  panel panel-heading" style="height:55px;vertical-align:middle;">
-                    <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
-                    <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
-                  </div>
+                    </table>
 
                 </div>
 
           </div>
 
 
-   </div>
+            <!-- Table naviagtion -->
+            <div *ngIf="hasNavigation" class="col-md-12 panel panel-heading" style="height:50px;vertical-align:middle;">
+
+                  <div class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
+                      <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
+                                           (pageChange)="onPageChange($event)"
+                                           maxSize="5"
+                                           directionLinks="false"
+                                           autoHide="true"
+                                           previousLabel="Previous"
+                                           nextLabel="Next"
+                                           screenReaderPaginationLabel="Pagination"
+                                           screenReaderPageLabel="page"
+                                           screenReaderCurrentLabel="You're on page"
+                                           [(ngModel)]="config.currentPage"
+                                           (numPages)="numPages = $event"
+                                           [maxSize]="maxSize">
+                      </pagination-controls>
+                    </div>
+
+
+
+                  <div *ngIf="hasSets" class="container col-md-5" style="height:50px;vertical-align:middle;">
+                            
+                      <span class="smalltextbold textgray">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
+                      <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
+                      <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+            
+                  </div>
+
+
+
+                  <div class="container col-md-3" style="height:50px;vertical-align:middle;">
+           
+                      <div class="col-md-12">
+                          <span class="smalltextbold">Items Per Page</span>
+                          <input type="number" min="10" max="30" [(ngModel)]="config.itemsPerPage" style="width:100px;">
+                      </div>
+
+                 </div>
+
+            </div>
+             
+ </div>             
+
 
 <span *ngIf="hasNoTrades" class="textoker"> The system can not find any trades!</span>
 

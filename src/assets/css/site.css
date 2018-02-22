@@ -11,7 +11,10 @@
     top: 0;
 }
 
-
+/*a:active {
+    color:white;   
+    font-style: italic;
+}*/
 
 .restriction {
     width:200px;      

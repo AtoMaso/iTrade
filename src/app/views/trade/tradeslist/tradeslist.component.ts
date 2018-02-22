@@ -95,17 +95,17 @@ export class TradesListComponent implements OnInit {
       });
      
       jQuery("#categories").on("hide.bs.collapse", function () {
-        jQuery(".gliphcat").html(' Categories  <span class="glyphicon glyphicon-chevron-down"></span> ');
+        jQuery(".gliphcat").html(' Category  <span class="glyphicon glyphicon-chevron-down"></span> ');
         });
       jQuery("#categories").on("show.bs.collapse", function () {
-        jQuery(".gliphcat").html('Categories   <span class="glyphicon glyphicon-chevron-up"></span>');
+        jQuery(".gliphcat").html('Category  <span class="glyphicon glyphicon-chevron-up"></span>');
         });
 
       jQuery("#places").on("hide.bs.collapse", function () {
-        jQuery(".gliphpl").html(' Categories  <span class="glyphicon glyphicon-chevron-down"></span> ');
+        jQuery(".gliphpla").html(' Places  <span class="glyphicon glyphicon-chevron-down"></span> ');
       });
       jQuery("#places").on("show.bs.collapse", function () {
-        jQuery(".gliphpl").html('Categories   <span class="glyphicon glyphicon-chevron-up"></span>');
+        jQuery(".gliphpla").html('Place  <span class="glyphicon glyphicon-chevron-up"></span>');
       });
 
     });
@@ -210,7 +210,7 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  // get trades with set filters but sets(category and places)
+  // TODO get trades with set filters but sets(category and places)
   private getTradesWithSetFiltersButSets() {
     let catid: number = 0
     let subcatid: number = 0
@@ -304,14 +304,6 @@ export class TradesListComponent implements OnInit {
     this.messagesService.emitRoute("nill");
   }
 
-  private ClearPlaces() {
-    this.placeClicked = null;
-    this.stateClicked = null;
-    this.filters2 = null;
-    this.filters = null;
-    this.setupFilterString();
-  }
-
   private ClearCategories() {
     this.categoryClicked = null;
     this.subcategoryClicked = null; 
@@ -320,7 +312,15 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
   }
 
+  private ClearPlaces() {
+    this.placeClicked = null;
+    this.stateClicked = null;
+    this.filters2 = null;
+    this.filters = null;
+    this.setupFilterString();
+  }
 
+  // sets up the filter string deiplayed on the screen and filters the datasets based on it
   private setupFilterString() {
 
     if (this.categoryClicked) {
