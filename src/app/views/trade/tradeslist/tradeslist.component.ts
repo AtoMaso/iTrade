@@ -34,7 +34,7 @@ export class TradesListComponent implements OnInit {
 
   private totalNumberOfRecords: number = 0;
   private setsCounter: number = 1;
-  private recordsPerSet: number = 10;
+  private recordsPerSet: number = 5;
   private totalNumberOfSets: number = 0;
   private hasTrades: boolean = true;
   private hasNoTrades: boolean = false;
@@ -147,14 +147,14 @@ export class TradesListComponent implements OnInit {
 
 
   //gets page of trades 
-  private getPageOfTrades(set: number, recordsPerSet: number, status: string) {
+  private getPageOfTrades(setsCounter: number, recordsPerSet: number, status: string) {
 
-    this.tradeApiService.getPageOfTradesWithStatus(set, recordsPerSet, status)
+    this.tradeApiService.getPageOfTradesWithStatus(setsCounter, recordsPerSet, status)
         .subscribe((returnedTrades: Trade[]) => {      
             if (returnedTrades.length === 0) {
                   this.hasTrades = false;
                   this.isRequesting = false;            
-                   if (!this.hasTrades && !this.hasNoTrades ) { this.getPageOfTrades(set, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
+                   if (!this.hasTrades && !this.hasNoTrades ) { this.getPageOfTrades(setsCounter, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
                   else {
                     this.hasTrades = false;
                      this.hasNoTrades = true;  // if there are no records at all than show the message no trades at all
@@ -521,6 +521,8 @@ export class TradesListComponent implements OnInit {
   private isPrevButton: boolean = false;
   private lastPageOfTheCurrentSet: number = 0; 
 
+  private fromNumber: number = 0;
+  private toNumber: number = 0;
 
   public columns: Array<any> =
     [    
@@ -536,7 +538,7 @@ export class TradesListComponent implements OnInit {
 
   public config: any = {
     id: 'pagination',
-    itemsPerPage: 5,
+    itemsPerPage: 3,
     currentPage: 1,
     totalItems: 0,
     paging: true,
@@ -564,10 +566,11 @@ export class TradesListComponent implements OnInit {
 
     this.config.currentPage = passedpage;
 
+    // calculate number of pages
     let rem = this.config.totalItems % this.config.itemsPerPage;
     let mainPart = ~~(this.config.totalItems / this.config.itemsPerPage);
 
-
+    // calculate the the last oage of the current set
     if (this.config.totalItems < this.config.itemsPerPage) { this.lastPageOfTheCurrentSet = 1; }
     else {
       if (this.config.totalItems > this.config.itemsPerPage && rem) { this.lastPageOfTheCurrentSet = mainPart + 1; }
@@ -577,11 +580,27 @@ export class TradesListComponent implements OnInit {
     // togle the next button visibility
     if (this.lastPageOfTheCurrentSet === this.config.currentPage &&   this.setsCounter < this.totalNumberOfSets) { this.isNextButton = true; }
     else {this.isNextButton = false;}
-
-    // toglle the prev visibility
+  
+    // toglle the prev button visibility
     if (this.setsCounter > 1) { this.isPrevButton = true; }
     else { this.isPrevButton = false; }
 
+
+
+    // records shown on the screen
+    // from number
+    this.fromNumber =(((this.config.itemsPerPage * (this.config.currentPage-1)+1) + (this.recordsPerSet * (this.setsCounter - 1))));
+    if (this.fromNumber >= this.totalNumberOfRecords) { this.fromNumber = this.totalNumberOfRecords; }
+
+    // to number
+    this.toNumber = (this.fromNumber + this.config.itemsPerPage - 1);
+    if (this.toNumber >= this.totalNumberOfRecords) {
+      this.toNumber = this.recordsPerSet * this.setsCounter;
+      if (this.recordsPerSet * this.setsCounter > this.totalNumberOfRecords) { this.toNumber = this.totalNumberOfRecords }
+    }
+    else {
+      if (this.toNumber >= this.recordsPerSet * this.setsCounter) { this.toNumber = this.recordsPerSet * this.setsCounter;}
+    }
   }
 
 
@@ -638,13 +657,9 @@ export class TradesListComponent implements OnInit {
     this.rows = sortedData;  
     this.config.totalItems = sortedData.length;
 
-    if (this.config.totalItems <= this.config.itemsPerPage) { this.displayRecords = this.config.totalItems; }
-    else {
-      this.displayRecords = this.config.itemsPerPage;
-      this.hasNavigation = true; 
-    }
-
-
+ 
+    if (this.config.totalItems > this.config.itemsPerPage) { this.hasNavigation = true;  }
+    
   }
 
 

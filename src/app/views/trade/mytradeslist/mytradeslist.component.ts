@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Inject, Injectable, AfterViewInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-import {  NgClass, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
 // services
@@ -97,14 +97,14 @@ export class MyTradesListComponent implements OnInit {
 
 
   //gets page of trades 
-  private getPageOfTrades(traderId: string, set: number, recordsPerSet: number, status:string) {
+  private getPageOfTrades(traderId: string, setCounter: number, recordsPerSet: number, status:string) {
 
-    this.tradeApiService.getPageOfTradesWithStatusForTrader(traderId, set, recordsPerSet, status)
+    this.tradeApiService.getPageOfTradesWithStatusForTrader(traderId, setCounter, recordsPerSet, status)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
             this.hasTrades = false;
             this.isRequesting = false;
-            if (!this.hasTrades && !this.hasNoTrades) { this.getPageOfTrades(traderId, set, recordsPerSet, "All"); }     // there are no open trades so get the latest closed ones
+            if (!this.hasTrades && !this.hasNoTrades) { this.getPageOfTrades(traderId, setCounter, recordsPerSet, "All"); }     // there are no open trades so get the latest closed ones
             else {
               this.hasTrades = false;
               this.hasNoTrades = true;   // if there are no records at all than show the message no trades at all
@@ -405,7 +405,7 @@ export class MyTradesListComponent implements OnInit {
       this.setsCounter = this.setsCounter + 1;
 
       // get the next set of records
-      this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
+      this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
 
       // set the current page to 1
       this.config.currentPage = 1;
@@ -425,7 +425,7 @@ export class MyTradesListComponent implements OnInit {
       this.setsCounter = this.setsCounter - 1;
 
       // get the previous set of records
-      this.getPageOfTrades("", this.setsCounter, this.recordsPerSet, this.status);
+      this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
 
       // set the current page to 1
       this.config.currentPage = 1;

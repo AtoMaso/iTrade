@@ -7,7 +7,7 @@
                    <!-- breadcrumb -->
                    <div class="col-md-4 panel panel-heading smalltextbold" style="height:55px;">
                      <div style="margin-top:5px;">
-                        <span class="smalltextbold">Displaying <span class="text-info smalltextbold">{{ displayRecords }}</span> of <span class="text-info smalltextbold">{{ config.totalItems }}</span> records </span>                    
+                        <span class="smalltextbold">Displaying <span class="text-info smalltextbold">{{ fromNumber }} to {{ toNumber }} </span> of <span class="text-info smalltextbold">{{ totalNumberOfRecords }}</span> records </span>                    
                      </div>
                    </div>
                   
@@ -15,8 +15,8 @@
                  <!-- filter in all coloumns -->
                    <div class="col-md-4 panel panel-heading" style="height:55px;">                     
                        <div class="col-md-12">                         
-                         <input *ngIf="config.filtering" placeholder="Filter in all columns" [ngTableFiltering]="config.filtering" 
-                                (tableChanged)="onChangeTable(config)" class="form-control smalltext" style="height:30px;" />
+                         <input *ngIf="config.filtering" placeholder="Filter in all columns" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" 
+                                class="form-control smalltext" style="height:30px;" />
                        </div>                                        
                    </div>
 
@@ -224,10 +224,10 @@
 
 
             <!-- Table naviagtion -->
-            <div *ngIf="hasNavigation" class="col-md-12 panel panel-heading" style="height:50px;vertical-align:middle;">
+            <div  class="col-md-12 panel panel-heading" style="height:50px;vertical-align:middle;">
 
-                  <div class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
-                      <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
+                  <div *ngIf="hasNavigation" class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
+                      <pagination-controls id="pagination" *ngIf="config.paging" 
                                            (pageChange)="onPageChange($event)"
                                            maxSize="5"
                                            directionLinks="false"
@@ -244,8 +244,7 @@
                     </div>
 
 
-
-                  <div *ngIf="hasSets" class="container col-md-5" style="height:50px;vertical-align:middle;">
+                  <div class="container col-md-5" style="height:50px;vertical-align:middle;">
                             
                       <span class="smalltextbold textgray">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
                       <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
@@ -254,15 +253,23 @@
                   </div>
 
 
+                 <!--<div *ngIf="hasSets && !hasNavigation" class="container col-md-5 col-md-offset-4" style="height:50px;vertical-align:middle;">
 
-                  <div class="container col-md-3" style="height:50px;vertical-align:middle;">
+                      <span class="smalltextbold textgray">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
+                      <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
+                      <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+
+                </div>-->
+
+
+                 <div class="container col-md-3" style="height:50px;vertical-align:middle;">
            
-                      <div class="col-md-12">
-                          <span class="smalltextbold">Items Per Page</span>
-                          <input type="number" min="10" max="30" [(ngModel)]="config.itemsPerPage" style="width:100px;">
-                      </div>
+                    <div class="col-md-12">
+                        <span class="smalltextbold">Items Per Page</span>
+                        <input type="number" min="2" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" style="width:100px;">
+                    </div>
 
-                 </div>
+                </div>
 
             </div>
              
