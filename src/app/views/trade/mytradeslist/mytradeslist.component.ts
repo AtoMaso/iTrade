@@ -99,7 +99,7 @@ export class MyTradesListComponent implements OnInit {
   //gets page of trades 
   private getPageOfTrades(traderId: string, setCounter: number, recordsPerSet: number, status:string) {
 
-    this.tradeApiService.getPageOfTradesWithStatusForTrader(traderId, setCounter, recordsPerSet, status)
+    this.tradeApiService.getSetOfTradesWithStatusForTrader(traderId, setCounter, recordsPerSet, status)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
             this.hasTrades = false;

@@ -75,7 +75,7 @@ export class TradesListComponent implements OnInit {
     this.initialiseComponent();   
 
     //this.getTrades("Open");
-    this.getPageOfTrades(this.setsCounter, this.recordsPerSet, this.status);
+    this.getSetOfTrades(this.setsCounter, this.recordsPerSet, this.status);
     this.getCategories();   
     this.getStates();
   
@@ -147,14 +147,14 @@ export class TradesListComponent implements OnInit {
 
 
   //gets page of trades 
-  private getPageOfTrades(setsCounter: number, recordsPerSet: number, status: string) {
+  private getSetOfTrades(setsCounter: number, recordsPerSet: number, status: string) {
 
-    this.tradeApiService.getPageOfTradesWithStatus(setsCounter, recordsPerSet, status)
+    this.tradeApiService.getSetOfTradesWithStatus(setsCounter, recordsPerSet, status)
         .subscribe((returnedTrades: Trade[]) => {      
             if (returnedTrades.length === 0) {
                   this.hasTrades = false;
                   this.isRequesting = false;            
-                   if (!this.hasTrades && !this.hasNoTrades ) { this.getPageOfTrades(setsCounter, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
+                   if (!this.hasTrades && !this.hasNoTrades ) { this.getSetOfTrades(setsCounter, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
                   else {
                     this.hasTrades = false;
                      this.hasNoTrades = true;  // if there are no records at all than show the message no trades at all
@@ -187,7 +187,7 @@ export class TradesListComponent implements OnInit {
     if (this.stateClicked != null) { staid = this.stateClicked.id; }
     if (this.placeClicked != null) { plaid = this.placeClicked.id; }
 
-    this.tradeApiService.getTradesWithSetFilters(catid, subcatid, staid ,plaid)
+    this.tradeApiService.getAllTradesWithSetFilters(catid, subcatid, staid ,plaid)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
@@ -211,8 +211,8 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  // TODO get trades with set filters but sets(category and places)
-  private getTradesWithSetFiltersButSets() {
+  // get set of trades with set filters (category and places)
+  private getSetOfTradesWithSetFilters() {
     let catid: number = 0
     let subcatid: number = 0
     let plaid: number = 0
@@ -223,8 +223,8 @@ export class TradesListComponent implements OnInit {
     if (this.stateClicked != null) { staid = this.stateClicked.id; }
     if (this.placeClicked != null) { plaid = this.placeClicked.id; }
 
-    // TODO to introduce new service method to get sets of records with set filter
-    this.tradeApiService.getTradesWithSetFilters(catid, subcatid, staid, plaid)
+    // get set of records with set filters
+    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, catid, subcatid, staid, plaid)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
@@ -248,6 +248,46 @@ export class TradesListComponent implements OnInit {
       (res: Response) => this.onError(res, "Filter"));
   }
 
+
+  // initialte filtration
+  private filtersSet() {
+    //this.getTradesWithSetFilters();
+    this.getSetOfTradesWithSetFilters();
+  }
+
+
+  private ClearAllFiltersAndGoBack() {
+    this.categoryClicked = null;
+    this.subcategoryClicked = null;
+    this.stateClicked = null;
+    this.placeClicked = null;
+
+    this.filters = null;
+    this.filters1 = null;
+    this.filters2 = null;
+    this.setupFilterString();
+    //this.getTrades("Open");
+    this.getSetOfTrades(this.setsCounter, this.recordsPerSet, this.status);
+    this.messagesService.emitRoute("nill");
+  }
+
+
+  private ClearCategories() {
+    this.categoryClicked = null;
+    this.subcategoryClicked = null;
+    this.filters1 = null;
+    this.filters = null;
+    this.setupFilterString();
+  }
+
+
+  private ClearPlaces() {
+    this.placeClicked = null;
+    this.stateClicked = null;
+    this.filters2 = null;
+    this.filters = null;
+    this.setupFilterString();
+  }
 
   //*****************************************************
   //FILTER IMPUTS
@@ -276,57 +316,6 @@ export class TradesListComponent implements OnInit {
   private PlaceClicked(place: Place, state: State) {
     this.placeClicked = place;
     this.stateClicked = state;
-    this.setupFilterString();
-  }
-
-
-  private GoBack() {
-    this.categoryClicked = null;
-    this.subcategoryClicked = null;
-    this.stateClicked = null;
-    this.placeClicked = null;
-
-    this.filters = null;
-    this.filters1 = null;
-    this.filters2 = null;
-    this.setupFilterString();
-
-    //this.getTrades("Open");
-    this.getPageOfTrades(this.setsCounter, this.recordsPerSet, this.status);
-    this.messagesService.emitRoute("nill");
-  }
-
-
-  private ClearAllFilters() {
-    this.categoryClicked = null;
-    this.subcategoryClicked = null;
-    this.stateClicked = null;
-    this.placeClicked = null;
-
-    this.filters = null;
-    this.filters1 = null;
-    this.filters2 = null;
-    this.setupFilterString();
-    //this.getTrades("Open");
-    this.getPageOfTrades(this.setsCounter, this.recordsPerSet, this.status);
-    this.messagesService.emitRoute("nill");
-  }
-
-
-  private ClearCategories() {
-    this.categoryClicked = null;
-    this.subcategoryClicked = null; 
-    this.filters1 = null;  
-    this.filters = null;
-    this.setupFilterString();
-  }
-
-
-  private ClearPlaces() {
-    this.placeClicked = null;
-    this.stateClicked = null;
-    this.filters2 = null;
-    this.filters = null;
     this.setupFilterString();
   }
 
@@ -614,7 +603,8 @@ export class TradesListComponent implements OnInit {
       this.setsCounter = this.setsCounter + 1;
 
       // get the next set of records
-      this.getPageOfTrades(this.setsCounter, this.recordsPerSet, this.status);
+      if (this.filters) { this.getSetOfTradesWithSetFilters(); }
+      else { this.getSetOfTrades(this.setsCounter, this.recordsPerSet, this.status); }
 
       // set the current page to 1
       this.config.currentPage = 1;
@@ -635,7 +625,8 @@ export class TradesListComponent implements OnInit {
       this.setsCounter = this.setsCounter - 1;
 
       // get the previous set of records
-      this.getPageOfTrades(this.setsCounter, this.recordsPerSet, this.status);
+      if (this.filters) { this.getSetOfTradesWithSetFilters(); }
+      else { this.getSetOfTrades(this.setsCounter, this.recordsPerSet, this.status); }
 
       // set the current page to 1
       this.config.currentPage = 1;

@@ -11,18 +11,21 @@
 
     //trades
     alltrades: 'http://localhost:5700/api/trades',
-    alltradesWithStatus: 'http://localhost:5700/api/trades/GetAllTradesWithStatus',
-    alltradesWithSetFilters: 'http://localhost:5700/api/trades/GetTradesWithSetFilters',
-    
-    filteredtradeswithstatus: 'http://localhost:5700/api/trades/GetFilteredTradesWithStatus',
-    filteredtradesall: 'http://localhost:5700/api/trades/GetFilteredTradesAll',
+    tradeswithstatus: 'http://localhost:5700/api/trades/GetTradesWithStatus',
 
-    tradesbytraderidwithstatus: 'http://localhost:5700/api/trades/GetTradesByTraderIdWithStatus',
-    tradesbytraderid: 'http://localhost:5700/api/trades/GetTradesByTraderId',
+    tradeswithsetfilters: 'http://localhost:5700/api/trades/GetTradesWithSetFilters',
+    setoftradeswithsetfilters:'http://localhost:5700/api/trades/GetSetOfTradesWithSetFilters',
 
-    pagesoftradeswithstatus: 'http://localhost:5700/api/trades/GetPagesOfTradesWithStatus',
-    pagesoftradeswithstatusfortrader : 'http://localhost:5700/api/trades/GetPagesOfTradesWithStatusForTrader',
-    pagesoftradesall: 'http://localhost:5700/api/trades/GetPagesOfTradesAll',
+    limitedtradeswithstatus: 'http://localhost:5700/api/trades/GetLimitedTradesWithStatus',
+    limitedtradesnostatus: 'http://localhost:5700/api/trades/GetLimitedTradesNoStatus',
+   
+    tradesbytraderidwithstatus: 'http://localhost:5700/api/trades/GetTradesByTraderIdWithStatus',    
+    tradesbytraderidnostatus: 'http://localhost:5700/api/trades/GetTradesByTraderIdNoStatus',
+ 
+    setoftradeswithstatus: 'http://localhost:5700/api/trades/GetSetOfTradesWithStatus',
+    setoftradeswithstatusfortrader: 'http://localhost:5700/api/trades/GetSetOfTradesWithStatusForTrader',
+    setoftradesnostatus: 'http://localhost:5700/api/trades/GetSetOfTradesNoStatusl',
+  
 
     trade: 'http://localhost:5700/api/trades/',
     updatetrade: 'http://localhost:5700/api/trades/',

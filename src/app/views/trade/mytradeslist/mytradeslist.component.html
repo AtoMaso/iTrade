@@ -158,7 +158,7 @@
             <div class="col-md-5">
               <!--the stylesheet of the pagination is overwritten in the host component sass -->
               <pagination-controls id="pagination" *ngIf="config.paging"
-                                   (pageChange)="onPageChange($event)"
+                                   (pageChange)="onPageChange($event)" ngDefaultControl
                                    maxSize="5"
                                    directionLinks="false"
                                    autoHide="true"

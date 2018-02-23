@@ -15,8 +15,7 @@
                  <!-- filter in all coloumns -->
                    <div class="col-md-4 panel panel-heading" style="height:55px;">                     
                        <div class="col-md-12">                         
-                         <input *ngIf="config.filtering" placeholder="Filter in all columns" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" 
-                                class="form-control smalltext" style="height:30px;" />
+                         <input *ngIf="config.filtering" placeholder="Filter in all columns" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control smalltext" style="height:30px;" />
                        </div>                                        
                    </div>
 
@@ -80,7 +79,7 @@
                                                                          
                                            <!-- Sidebar Header -->
                                            <div class="sidebar-header">
-                                               <span data-target="#filters" data-toggle="collapse" class="gliphfil smalltextbold textgray" aria-expanded="false" (click)="ClearAllFilters()">
+                                               <span data-target="#filters" data-toggle="collapse" class="gliphfil smalltextbold textgray" aria-expanded="false" (click)="ClearAllFiltersAndGoBack()">
                                                  Filters  <span class="glyphicon glyphicon-chevron-up"></span>
                                                </span>                                                                                                                                       
                                            </div>
@@ -91,11 +90,11 @@
                                                  <!-- buttons -->
                                                  <li style="margin-top:10px;">
                                                    <div>
-                                                     <button class="btn btn-primary btn-sm smalltext" (click)="getTradesWithSetFilters()"
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="filtersSet()"
                                                              [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">
                                                        Search
                                                      </button>
-                                                     <button class="btn btn-primary btn-sm smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
                                                    </div>
                                                  </li>
 
@@ -129,11 +128,11 @@
                                                   <!-- buttons -->
                                                  <li style="margin-top:10px;">
                                                    <div>
-                                                     <button class="btn btn-primary btn-sm smalltext" (click)="getTradesWithSetFilters()"
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="filtersSet()"
                                                              [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">
                                                        Search
                                                      </button>
-                                                     <button class="btn btn-primary btn-sm smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
                                                    </div>
                                                  </li>
 
@@ -165,11 +164,11 @@
                                                  <!-- buttons -->
                                                  <li style="margin-top:10px;">
                                                    <div>
-                                                     <button class="btn btn-primary btn-sm smalltext" (click)="getTradesWithSetFilters()"
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="filtersSet()"
                                                              [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">
                                                        Search
                                                      </button>
-                                                     <button class="btn btn-primary btn-sm smalltext" (click)="GoBack()" [disabled]="filters == null">Clear</button>
+                                                     <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
                                                    </div>
                                                  </li>
 
@@ -226,14 +225,15 @@
             <!-- Table naviagtion -->
             <div  class="col-md-12 panel panel-heading" style="height:50px;vertical-align:middle;">
 
-                  <div *ngIf="hasNavigation" class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
-                      <pagination-controls id="pagination" *ngIf="config.paging" 
+                  <div  class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
+                    <!-- the ngDefaultControl is needed because the pagination control needs a default acceessor -->
+                      <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl 
                                            (pageChange)="onPageChange($event)"
                                            maxSize="5"
-                                           directionLinks="false"
+                                           directionLinks="true"
                                            autoHide="true"
                                            previousLabel="Previous"
-                                           nextLabel="Next"
+                                           nextLabel="Next" 
                                            screenReaderPaginationLabel="Pagination"
                                            screenReaderPageLabel="page"
                                            screenReaderCurrentLabel="You're on page"
@@ -244,29 +244,19 @@
                     </div>
 
 
-                  <div class="container col-md-5" style="height:50px;vertical-align:middle;">
+                  <div class="container col-md-4" style="text-align:center;">
                             
-                      <span class="smalltextbold textgray">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
+                      <span class="smalltextbold textgray">Set of records: {{ setsCounter }} of  &nbsp;{{  totalNumberOfSets }}</span>
                       <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
                       <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
             
-                  </div>
+                  </div>        
 
-
-                 <!--<div *ngIf="hasSets && !hasNavigation" class="container col-md-5 col-md-offset-4" style="height:50px;vertical-align:middle;">
-
-                      <span class="smalltextbold textgray">Set of records: {{setsCounter }} of {{ totalNumberOfSets}}</span>
-                      <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
-                      <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
-
-                </div>-->
-
-
-                 <div class="container col-md-3" style="height:50px;vertical-align:middle;">
+                 <div class="container col-md-4"  style="text-align:center;">
            
                     <div class="col-md-12">
                         <span class="smalltextbold">Items Per Page</span>
-                        <input type="number" min="2" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" style="width:100px;">
+                        <input type="number" min="2" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" style="width:50px;height:30px;" class="form-inline">
                     </div>
 
                 </div>

@@ -13,18 +13,21 @@ import 'rxjs/add/operator/retry';
 import { Trade, PostTrade, UserSession, UserIdentity} from '../../helpers/classes';
 
 let allTrades = CONFIG.baseUrls.alltrades;
-let allTradesWithStatus = CONFIG.baseUrls.alltradesWithStatus;
-let allTradesWithSetFilters = CONFIG.baseUrls.alltradesWithSetFilters;
+let tradesWithStatus = CONFIG.baseUrls.tradeswithstatus;
+
+let tradesWithSetFilters = CONFIG.baseUrls.tradeswithsetfilters;
+let setOfTradesWithSetFilters = CONFIG.baseUrls.setoftradeswithsetfilters;
+
+let limitedTradesWithStatus = CONFIG.baseUrls.limitedtradeswithstatus;
+let limitedTradesNoStatus = CONFIG.baseUrls.limitedtradesnostatus;
  
-let tradesByTraderId = CONFIG.baseUrls.tradesbytraderid;
+let tradesByTraderIdNoStatus = CONFIG.baseUrls.tradesbytraderidnostatus;
 let tradesByTraderIdWithStatus = CONFIG.baseUrls.tradesbytraderidwithstatus;
 
-let pagesOfTradesWithStatus = CONFIG.baseUrls.pagesoftradeswithstatus;
-let pagesoftradeswithstatusfortrader = CONFIG.baseUrls.pagesoftradeswithstatusfortrader
-let pagesOfTradesAll = CONFIG.baseUrls.pagesoftradesall;
+let setOfTradesWithStatus = CONFIG.baseUrls.setoftradeswithstatus;
+let setOfTradesWithStatusForTrader = CONFIG.baseUrls.setoftradeswithstatusfortrader
+let setOfTradesNoStatus = CONFIG.baseUrls.setoftradesnostatus;
 
-let filteredTradesWithStatus = CONFIG.baseUrls.filteredtradeswithstatus;
-let filteredTradesAll = CONFIG.baseUrls.filteredtradesall;
 
 let trade = CONFIG.baseUrls.trade;
 let updateTrade = CONFIG.baseUrls.updatetrade;
@@ -48,13 +51,13 @@ export class TradeApiService {
  
 
   //******************************************************
-  // GET TRADES
+  // WITH STATUS or ALL
   //******************************************************
   //GOOD
   // get all trades for a trader or all trades in the system  GetTradesByTraderIdWithStatus
   public getTradesWithStatusOrAll(traderId: string, status: string) :  Observable<Trade[]> {
     if (status === "All") {
-      if (traderId != "" || traderId != undefined) { this.localUrl = `${tradesByTraderId}?traderId=${traderId}`; }
+      if (traderId != "" || traderId != undefined) { this.localUrl = `${tradesByTraderIdNoStatus}?traderId=${traderId}`; }
       // get all trades in the system
       if (traderId == "" || traderId == undefined) { this.localUrl = allTrades; } 
     }
@@ -62,7 +65,7 @@ export class TradeApiService {
       // get all tardes by traderId
       if (traderId != "" || traderId != undefined) { this.localUrl = `${tradesByTraderIdWithStatus}?traderId=${traderId}&status=${status}`; }
       // get all trades in the system
-      if (traderId == "" || traderId == undefined) { this.localUrl = `${allTradesWithStatus}?status=${status}`; }
+      if (traderId == "" || traderId == undefined) { this.localUrl = `${tradesWithStatus}?status=${status}`; }
     }
 
     // errors are handled in the component
@@ -70,45 +73,62 @@ export class TradeApiService {
   }
 
 
+  //******************************************************
+  // PAGES WITH STATUS and/or TRADER
+  //******************************************************
   //GOOD
   // gets set of trades, number of pages and number of records per page with status OPEN
-  public getPageOfTradesWithStatusForTrader(traderId: string, setCounter: number, recordsPerSet: number, status: string) {
+  public getSetOfTradesWithStatusForTrader(traderId: string, setCounter: number, recordsPerSet: number, status: string) {
 
-    if (status === "All") { this.localUrl = `${pagesOfTradesAll}?traderId=${traderId}&setCounter=${setCounter}&recordsPerSet=${recordsPerSet}`; }
-    else { this.localUrl = `${pagesoftradeswithstatusfortrader}?traderId=${traderId}&setCounter=${setCounter}&recordsPerSet=${recordsPerSet}&status=${status}`; }
+    if (status === "All") { this.localUrl = `${setOfTradesNoStatus}?traderId=${traderId}&setCounter=${setCounter}&recordsPerSet=${recordsPerSet}`; }
+    else { this.localUrl = `${setOfTradesWithStatusForTrader}?traderId=${traderId}&setCounter=${setCounter}&recordsPerSet=${recordsPerSet}&status=${status}`; }
                                                
     return this.httpClientService.get(this.localUrl).retry(3);
   }
 
 
   // gets set of trades, number of pages and number of records per page with status OPEN
-  public getPageOfTradesWithStatus(setCounter: number, recordsPerSet: number, status: string) {
+  public getSetOfTradesWithStatus(setCounter: number, recordsPerSet: number, status: string) {
 
-    if (status === "All") { this.localUrl = `${pagesOfTradesAll}?setCounter=${setCounter}&recordsPerSet=${recordsPerSet}`; }
-    else { this.localUrl = `${pagesOfTradesWithStatus}?setCounter=${setCounter}&recordsPerSet=${recordsPerSet}&status=${status}`; }
+    if (status === "All") { this.localUrl = `${setOfTradesNoStatus}?setCounter=${setCounter}&recordsPerSet=${recordsPerSet}`; }
+    else { this.localUrl = `${setOfTradesWithStatus}?setCounter=${setCounter}&recordsPerSet=${recordsPerSet}&status=${status}`; }
 
     return this.httpClientService.get(this.localUrl).retry(3);
   }
 
-  // GOOD
-  // gets filtered set of trades by date published for the dashboard view and they are with status =OPEN
-  public getFilteredTradesWithStatusOrAll(number: number, status:string ) {
 
-    if (status === "All") { this.localUrl = `${filteredTradesAll}?number=${number}`; }
-    else  { this.localUrl = `${filteredTradesWithStatus}?number=${number}&status=${status}`; }
+  //******************************************************
+  //LIMITED NUMBER WITH STATUS or NO STATUS
+  //******************************************************
+  // GOOD
+  // gets limited number of trades by date published for the dashboard view and they are with status =OPEN
+  public getLimitedNumberOfTradesTradesWithStatusOrAll(number: number, status:string ) {
+
+    if (status === "All") { this.localUrl = `${limitedTradesNoStatus}?number=${number}`; }
+    else  { this.localUrl = `${limitedTradesWithStatus}?number=${number}&status=${status}`; }
    
     // errors are handled in the component
     return this.httpClientService.get(this.localUrl).retry(1);
   }
 
 
-  public getTradesWithSetFilters(catIdClicked?: number, subcatIdClicked?: number, stateIdClicked?: number, placeIdClicked?: number) {
 
-    this.localUrl = `${allTradesWithSetFilters}?categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}`; 
+  //******************************************************
+  // SET FILTERS - SET or ALL
+  //******************************************************
+  public getAllTradesWithSetFilters(catIdClicked?: number, subcatIdClicked?: number, stateIdClicked?: number, placeIdClicked?: number) {
+
+    this.localUrl = `${tradesWithSetFilters}?categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}`; 
     // errors are handled in the component
     return this.httpClientService.get(this.localUrl).retry(1);
 }
 
+  public getSetOfTradesWithSetFilters(setCounter: number, recordsPerSet: number, status: string, catIdClicked?: number, subcatIdClicked?: number, stateIdClicked?: number, placeIdClicked?: number)  {
+
+    this.localUrl = `${setOfTradesWithSetFilters}?setCounter=${setCounter}&recordsPerSet=${recordsPerSet}&status=${status}&categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}`;
+    // errors are handled in the component
+    return this.httpClientService.get(this.localUrl).retry(1);
+  }
 
 
   //******************************************************
