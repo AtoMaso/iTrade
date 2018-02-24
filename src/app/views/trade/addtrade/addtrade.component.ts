@@ -218,13 +218,13 @@ export class AddTradeComponent implements OnInit {
       let trades: PostTrade[] = [];
 
       this.tradeService.AddTrade(passedTrade)
-            .subscribe(trade =>this.onAddSuccess(trade)
+        .subscribe(trade => this.onAddTradeSuccess(trade)
             , (error: Response) => this.onError(error, "addTrade"));
   }
 
 
   // on success to the following
-  private onAddSuccess(trade: PostTrade) {
+  private onAddTradeSuccess(trade: PostTrade) {
 
     this.addedTrade = trade;
     let m: number = 0;
@@ -236,7 +236,7 @@ export class AddTradeComponent implements OnInit {
     
       // is no point of changing of isRequested as we go to another page here
       this.isSubmitted = true;     
-      this.router.navigate(['/tradedetails'],  { queryParams: { id: trade.tradeId, flag: true }});          
+      this.router.navigate(['/tradedetails'], { queryParams: { id: trade.tradeId, flagnew: true }});          
     }  
     
   }

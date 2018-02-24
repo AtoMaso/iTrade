@@ -18,7 +18,7 @@ var CategoryService = (function () {
     function CategoryService(_http, _loggerService) {
         this._http = _http;
         this._loggerService = _loggerService;
-        if (sessionStorage["UserSession"] !== undefined) {
+        if (sessionStorage["UserSession"] !== null) {
             this.session = JSON.parse(sessionStorage["UserSession"]);
         }
     }

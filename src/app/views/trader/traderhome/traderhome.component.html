@@ -48,7 +48,7 @@
                                    </thead>
 
                                    <!-- Table Rows -->
-                                   <tr *ngFor="let coress of corrRows |  paginate:configCorr ">
+                                   <tr *ngFor="let coress of rowsCorr |  paginate:configCorr ">
 
                                      <td class="col-md-1 smalltext text-capitalize textgray">{{ coress.subject  }}</td>
 
@@ -76,7 +76,7 @@
                                           <pagination-controls id="paginationCorr" *ngIf="configCorr.paging" ngDefaultControl
                                               (pageChange)="onPageChangeCorr($event)"
                                               maxSize="5"
-                                              directionLinks="false"
+                                              directionLinks="true"
                                               autoHide="true"
                                               previousLabel="Previous"
                                               nextLabel="Next"
@@ -148,7 +148,7 @@
 
                                         <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeFor  }}</td>
 
-                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.datePublished | date }}</td>
+                                        <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.datePublished | date:'medium'  }}</td>
 
                                         <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.status }}</td>
 
@@ -164,7 +164,7 @@
                                         <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
                                                 (pageChange)="onPageChange($event)"
                                                 maxSize="5"
-                                                directionLinks="false"
+                                                directionLinks="true"
                                                 autoHide="true"
                                                 previousLabel="Previous"
                                                 nextLabel="Next"

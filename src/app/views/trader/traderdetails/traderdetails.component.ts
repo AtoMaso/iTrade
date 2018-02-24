@@ -35,7 +35,8 @@ export class TraderDetailsComponent implements OnInit {
   private hasHistory: boolean = false;
   private hasAddress: boolean = false;
   private hasMiddleName: boolean = false;
-
+  private isNewLoad: boolean = false;
+  private isNewLoadHis: boolean = false;
 
   constructor(    
     private personalService: PersonalDetailsService,
@@ -162,11 +163,12 @@ export class TraderDetailsComponent implements OnInit {
   }
 
   private onSuccessTrades(trades: Trade[]) {
-
+   
     if (trades.length === 0) { this.hasTrades = false; }
     else {
-      this.data = this.TransformData(trades),
+        this.data = this.TransformData(trades),
         this.hasTrades = true,
+        this.isNewLoad = true;
         this.onChangeTable(this.config),
         this.onPageChange(1)
     }
@@ -186,8 +188,9 @@ export class TraderDetailsComponent implements OnInit {
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.hasHistory = false; }
         else {
-            this.dataHis = this.TransformData(returnedTrades),
-            this.hasHistory = true,
+          this.dataHis = this.TransformData(returnedTrades),
+            this.hasHistory = true;
+            this.isNewLoadHis = true;
             this.onChangeTableHis(this.configHis),
             this.onPageChangeHis(1)
         }
@@ -393,10 +396,16 @@ export class TraderDetailsComponent implements OnInit {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
 
-    let filteredData = this.changeFilter(this.data, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = sortedData;
-    this.config.totalItems = sortedData.length;
+    if (!this.isNewLoad) {
+      let filteredData = this.changeFilter(this.data, this.config);
+      let sortedData = this.changeSort(filteredData, this.config);
+      this.rows = sortedData;
+      this.config.totalItems = sortedData.length;
+    } else {
+      this.rows = this.data;
+      this.config.totalItems = this.data.length;
+      this.isNewLoad = false;
+    }    
   }
 
 
@@ -548,10 +557,17 @@ export class TraderDetailsComponent implements OnInit {
       (<any>Object).assign(this.configHis.sorting, config.sorting);
     }
 
-    let filteredData = this.changeFilterHis(this.dataHis, this.configHis);
-    let sortedData = this.changeSortHis(filteredData, this.configHis);
-    this.rowsHis = sortedData;
-    this.configHis.totalItems = sortedData.length;
+
+    if (!this.isNewLoadHis) {
+      let filteredData = this.changeFilterHis(this.dataHis, this.configHis);
+      let sortedData = this.changeSortHis(filteredData, this.configHis);
+      this.rowsHis = sortedData;
+      this.configHis.totalItems = sortedData.length;
+    } else {
+      this.rowsHis = this.dataHis;
+      this.configHis.totalItems = this.dataHis.length;
+      this.isNewLoadHis = false;
+    }    
   }
 
 

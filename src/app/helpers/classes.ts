@@ -469,12 +469,14 @@ class TradeHistory implements ITradeHistory {
   tradeId: number;
   createdDate: Date;
   status: string;
+  viewer: string;
 
   constructor() {
     this.historyId = 0;
     this.tradeId = 0;
     this.createdDate = new Date(9999, 1, 1);
-    this.status = "Initialised";
+    this.status = "Created";
+    this.viewer = "";
   }
 }
 

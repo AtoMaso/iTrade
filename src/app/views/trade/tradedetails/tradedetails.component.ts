@@ -34,11 +34,13 @@ export class TradeDetailsComponent implements OnInit {
   private hasImage2: boolean = true;
   private hasImage3: boolean = true;
   private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
+  private identity: UserIdentity;
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false;
   private canTrade: boolean = false;
-  private flag: boolean = false;
+  private flagnew: boolean = false;
+  private isFirstLoad: boolean = false;
+
 
   constructor(  
     private cd: ChangeDetectorRef,
@@ -60,15 +62,16 @@ export class TradeDetailsComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.tradeId = params['id'];
-      this.flag = params['flag'];
+      this.flagnew = params['flagnew'];
     });
 
     this.getUseridentity();
 
     this.initialiseComponent(); 
  
-    if (this.flag) { this.messagesService.emitProcessMessage("PMSAT"); }
+    if (this.flagnew) { this.messagesService.emitProcessMessage("PMSAT"); }
 
+    // starts with gettrade end up with get images separatelly
     this.getATrade(this.tradeId);
   }
 
@@ -93,14 +96,15 @@ export class TradeDetailsComponent implements OnInit {
 
 
       jQuery("#collapseHistory").on("hide.bs.collapse", function () {
-        jQuery(".history").html('<span class="glyphicon glyphicon-plus"></span> This Trade History');
+        jQuery(".history").html('<span class="glyphicon glyphicon-plus"></span> Viewing History (max 10)');
       });
       jQuery("#collapseHistory").on("show.bs.collapse", function () {
-        jQuery(".history").html('<span class="glyphicon glyphicon-minus"></span> This Trade History');
+        jQuery(".history").html('<span class="glyphicon glyphicon-minus"></span> Viewing History (max 10)');
       });
 
 
     });
+
   }
 
 
@@ -120,32 +124,47 @@ export class TradeDetailsComponent implements OnInit {
 
 
   private onSuccessTrade(trade: Trade) {
-    this.trade = this.TransformData(trade);
-    // check is the trader viewing this trade when logged
-    if (sessionStorage["UserSession"] != "null") {
-          if (this.trade.traderId === this.session.userIdentity.userId) { this.canTrade = false; }
-          else { this.canTrade = true; }
-    }       
 
-    // now call the history or add a history first
-    if (!this.flag) { this.addHistoryRecord(); }
-    else { this.getTradeHistory(this.tradeId);}
+    this.trade = this.TransformData(trade); 
+
+    // business rule: trader viewing his trade can not add history
+    if (sessionStorage["UserSession"] != "null") {
+      // logged in
+      if (this.trade.traderId !== this.session.userIdentity.userId) { this.canTrade = true; }
+      // if new and logged on trader is trying to view his trade do not add history ??? TODO
+      if (this.flagnew) { this.getTradeHistory(this.tradeId); }
+      else { this.addHistoryRecord(trade); }
+    }
+    else {   
+      // if not logged on, we do not now who is the viewer so add history 
+      this.addHistoryRecord(trade); 
+    }
+  
   }
 
 
 
-  /*******************************************************?
+/*******************************************************/
 // ADD HISTORY RECORD
 /*******************************************************/
-  private addHistoryRecord() {
+  private addHistoryRecord(trade) {
+
     // create new trdae history
     let trhis: TradeHistory = new TradeHistory();
-    let dt: Date = new Date();
-    trhis.createdDate = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
-    trhis.status = "Viewed";
-    trhis.tradeId = this.tradeId;
 
-    this.tradeHistoryService.addTradeHistoryByTradeId(trhis)
+    let dt: Date = new Date();
+    trhis.createdDate = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours(), dt.getMinutes(), dt.getSeconds());
+    trhis.status = "Viewed";
+    trhis.tradeId = trade.tradeId;
+    if (sessionStorage["UserSession"] != "null") {
+      if (this.session.userIdentity.userId == trade.traderId) { trhis.viewer = "Owner"; }
+      else { trhis.viewer = "Trader"; }
+    }
+    else { trhis.viewer = "External";}
+
+
+
+    this.tradeHistoryService.addTradeHistory(trhis)
       .subscribe((returnedHistory: TradeHistory) => {
 
         this.onSuccessAddHistory(returnedHistory);
@@ -154,40 +173,41 @@ export class TradeDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessAddHistory(history: TradeHistory) {
-    this.data.push(history),
-    this.onChangeTable(this.config)
-    this.hasHistory = true;
-
-    // now call get history
-    this.getTradeHistory(this.tradeId);
+  private onSuccessAddHistory(history: TradeHistory) {    
+    // now get the new history as it is limited to 10 per trade
+    this.getTradeHistory(this.tradeId); 
   }
 
 
 
-  /*******************************************************
+/*******************************************************
 // GET TRADE HISTORY
 /*******************************************************/
   private getTradeHistory(tradeId: number) {
-    this.tradeHistoryService.getTradeHistoryByTradeId(tradeId)
+    this.tradeHistoryService.getTradeHistoriesByTradeId(tradeId)
       .subscribe((returnedHistories: TradeHistory[]) => {
         this.hasHistory = true;
+        this.isFirstLoad = true;
         this.data = returnedHistories;
         this.onChangeTable(this.config); 
+
+        // now get the images
+        this.getTradeImages(tradeId);
 
       }, (serviceError: Response) => this.onError(serviceError, "getTradeHistory"));
 
   }
 
- 
+
 
 /*******************************************************
-  // GET IMAGES - not used
+  // GET IMAGES 
   /*******************************************************/
   private getTradeImages(tradeId: number) {
   this.imageServise.getImagesByTradeId(tradeId)
     .subscribe((returnedImages: Image[]) => {
-      this.images = returnedImages;
+      //this.images = returnedImages;
+      this.onSuccessGetImages(returnedImages);
       if (this.images !== null) { this.hasImages = true; }
     }
     , (serviceError: Response) => this.onError(serviceError, "getTradeImages"));
@@ -195,13 +215,30 @@ export class TradeDetailsComponent implements OnInit {
 }
 
 
+  private onSuccessGetImages(images:Image[]) {
+    this.images = images;
+    if (this.images.length == 0) {
+      this.hasImages = false;
+    }
+    else if (this.images.length == 1) {
+      this.hasImage2 = false;
+      this.hasImage3 = false;
+    }
+    else if (this.images.length == 2) {
+      this.hasImage3 = false;
+    }    
+  }
+
+
+
   //*****************************************************
   // HELPER METHODS
   //*****************************************************
   private getUseridentity() {
-    if (sessionStorage["UserSession"] != "null") {
+    if (sessionStorage["UserSession"] != "undefined") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
+        this.identity = this.session.userIdentity;
         this.isAuthenticated = this.session.authentication.isAuthenticated;       
       }
       catch (ex) {
@@ -236,18 +273,20 @@ export class TradeDetailsComponent implements OnInit {
     trd.traderId = returnedTrade.traderId; 
     trd.traderFullName = returnedTrade.traderFirstName + " " + returnedTrade.traderMiddleName + " " + returnedTrade.traderLastName;
 
-    trd.Images = returnedTrade.Images;
-    this.images = returnedTrade.Images;
-    if (this.images.length == 0) {
-      this.hasImages = false;
-    }
-    else if (this.images.length == 1) {
-      this.hasImage2 = false;
-      this.hasImage3 = false;
-    }
-    else if (this.images.length == 2) {
-      this.hasImage3 = false; 
-    }    
+    // this where images are taken from the trade
+    //trd.Images = returnedTrade.Images;
+    //this.images = returnedTrade.Images;
+    //if (this.images.length == 0) {
+    //  this.hasImages = false;
+    //}
+    //else if (this.images.length == 1) {
+    //  this.hasImage2 = false;
+    //  this.hasImage3 = false;
+    //}
+    //else if (this.images.length == 2) {
+    //  this.hasImage3 = false; 
+    //}    
+
     return trd;
   }
 
@@ -297,25 +336,17 @@ export class TradeDetailsComponent implements OnInit {
   /**********************************************/
   //ngx-pagination section
   /***********************************************/
-  private isIdAsc = true;
-  private isTradeIdAsc = true;
   private isDateAsc = true;
-  private isStatusAsc = true;
-
-  private sortId: string = 'desc'
-  private sortTradeId: string = 'desc';
-  private sortStatus: string = 'desc';
   private sortDate: string = 'desc';
 
   private data: Array<any> = [];              // full data from the server
-  public historyrows: Array<any> = [];      // rows passed to the table
+  public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
   public numPages: number = 1;
 
   public columns: Array<any> =
   [  
-    { title: 'Created Date', name: 'createdDate', sort: true, filtering: { filterString: '', placeholder: 'Filter by history date.' } },
-    { title: 'Action', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by history action.' } }
+    { title: 'Created Date', name: 'createdDate', sort: true, filtering: { filterString: '', placeholder: 'Filter by history date.' } }
   ];
 
 
@@ -345,10 +376,16 @@ export class TradeDetailsComponent implements OnInit {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
 
-    let filteredData = this.changeFilter(this.data, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.historyrows = sortedData;
-    this.config.totalItems = sortedData.length;
+    if (!this.isFirstLoad) {
+      let filteredData = this.changeFilter(this.data, this.config);
+      let sortedData = this.changeSort(filteredData, this.config);
+      this.rows = sortedData;
+      this.config.totalItems = sortedData.length;
+    } else {
+      this.rows = this.data;
+      this.config.totalItems = this.data.length;
+      this.isFirstLoad = false;
+    }    
   }
 
 
@@ -364,14 +401,6 @@ export class TradeDetailsComponent implements OnInit {
         this.isDateAsc = !this.isDateAsc;
         this.sortDate = this.isDateAsc ? 'desc' : 'asc';
         break;
-
-      case 'status':
-        this.config.sorting.columns = [{ name: 'status', sort: this.sortStatus }];
-        this.onChangeTable(this.config);
-        this.isStatusAsc = !this.isStatusAsc;
-        this.sortStatus = this.isStatusAsc ? 'desc' : 'asc';
-        break;
-
       default:
     }
   }

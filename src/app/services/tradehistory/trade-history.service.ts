@@ -31,16 +31,16 @@ export class TradeHistoryService {
 
 
   //******************************************************
-  // GET IMAGES METHODS
+  // TRADE HISTORIES METHODS
   //******************************************************
-  public getTradeHistoryApi(): Observable<TradeHistory[]> {
+  public getTradeHistoriesApi(): Observable<TradeHistory[]> {
 
     return this.httpClientService.get<TradeHistory[]>(tradehistoriesUrl).retry(1);
   }
 
 
   // get history for a tade
-  public getTradeHistoryByTradeId(tradeId: number): Observable<TradeHistory[]> {
+  public getTradeHistoriesByTradeId(tradeId: number): Observable<TradeHistory[]> {
 
     const localUrl = `${tradehistoriesbytradeid}?tradeId=${tradeId}`;
 
@@ -49,7 +49,7 @@ export class TradeHistoryService {
 
 
   // add new history for a trade
-  public addTradeHistoryByTradeId(tradehistory: TradeHistory): Observable<TradeHistory> {
+  public addTradeHistory(tradehistory: TradeHistory): Observable<TradeHistory> {
 
     const localUrl = `${addTradeHistoryUrl}`;
 

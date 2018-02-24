@@ -147,7 +147,7 @@
             <div class="row panel panel-heading">
 
               <span class="history panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
-                <span class="glyphicon glyphicon-minus"></span> This Trade History
+                <span class="glyphicon glyphicon-minus"></span> Viewing History (max 10)
                 <span *ngIf="!hasHistory" class="textoker">- The system can not find any history for your trade!</span>
               </span>
 
@@ -164,15 +164,13 @@
                       <!-- Table header -->
                       <thead>
                         <tr>
-                          <th class="col-md-1" style="background-color:#FF223A3A">
-                            <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Id</span>
-                          </th>
+                          
 
-                          <th class="col-md-2" style="background-color:#FF223A3A">
+                          <th class="col-md-1" style="background-color:#FF223A3A">
                             <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Trade Id</span>
                           </th>
 
-                          <th class="col-md-2" style="background-color:#FF223A3A">
+                          <th class="col-md-3" style="background-color:#FF223A3A">
                             <a (click)="sortTable('createdDate')" class="text-uppercase textgray smalltext" style="width:auto">
                               Created Date
                               <span *ngIf="isDateAsc" class="glyphicon glyphicon-chevron-down"></span>
@@ -182,25 +180,29 @@
 
                           <th class="col-md-2" style="background-color:#FF223A3A">
                             <a (click)="sortTable('status')" class="text-uppercase textgray smalltext" style="width:auto">
-                              Action
-                              <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
-                              <span *ngIf="!isStatusAsc" class="glyphicon glyphicon-chevron-up"></span>
+                              Action                        
                             </a>
+                          </th>
+
+                          <th class="col-md-1" style="background-color:#FF223A3A">
+                            <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Viewer</span>
                           </th>
 
                         </tr>
                       </thead>
 
                       <!-- Table rows-->
-                      <tr *ngFor="let history of historyrows | paginate:config ">
+                      <tr *ngFor="let history of rows | paginate:config ">
 
-                        <td class="col-md-1 smalltext text-capitalize textgray">{{ history.historyId  }}</td>
+                   
 
-                        <td class="col-md-2 smalltext text-capitalize textgray "> {{ history.tradeId }}</td>
+                        <td class="col-md-1 smalltext text-capitalize textgray "> {{ history.tradeId }}</td>
 
-                        <td class="col-md-2 smalltext text-capitalize textgray ">{{ history.createdDate | date  }}</td>
+                        <td class="col-md-3 smalltext text-capitalize textgray">{{ history.createdDate | date:'medium'  }}</td>
 
                         <td class="col-md-2 smalltext text-capitalize textgray">{{ history.status}}</td>
+
+                        <td class="col-md-1 smalltext text-capitalize textgray">{{ history.viewer  }}</td>
                       </tr>
 
                     </table>
@@ -214,9 +216,9 @@
                     <div class="col-md-5">
 
                       <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
-                                           (pageChange)="onPageChange($event)"
+                                           (pageChange)="onPageChange($event)" 
                                            maxSize="5"
-                                           directionLinks="false"
+                                           directionLinks="true"
                                            autoHide="true"
                                            previousLabel="Previous"
                                            nextLabel="Next"

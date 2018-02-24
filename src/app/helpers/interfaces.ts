@@ -220,6 +220,7 @@ interface ITradeHistory {
   tradeId: number;
   createdDate: Date;
   status: string;
+  viewer: string;
 }
 
 

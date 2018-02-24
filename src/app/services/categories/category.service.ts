@@ -27,7 +27,7 @@ export class CategoryService {
 
   constructor(private httpClientService: HttpClient, private loggerService: LoggerService) {
 
-      if (sessionStorage["UserSession"] !== undefined) {
+      if (sessionStorage["UserSession"] !== "null") {
         this.session = JSON.parse(sessionStorage["UserSession"]);
       }
     };   

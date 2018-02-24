@@ -14,6 +14,7 @@ import { PaginationModule, TabsModule, DateFormatter} from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MyDatePickerModule } from 'mydatepicker';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { StickyNavModule } from 'ng2-sticky-nav';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
@@ -141,6 +142,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     Ng2TableModule, FileUploadModule,  TabsModule,  
     NgxPaginationModule,PaginationModule,          
     MyDatePickerModule, 
+    StickyNavModule,
     NgIdleKeepaliveModule.forRoot()
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests and returns simulated server responses.
     // Remove it when a real web api rest services are ready to receive requests.

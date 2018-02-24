@@ -29,6 +29,8 @@ export class TraderHomeComponent implements OnInit {
   private statusCorr: string = "New";
   private hasTrades: boolean = true;
   private hasCorres: boolean = true;
+  private isFirstLoad: boolean = false;
+  private isFirstLoadCorr: boolean = false;
 
   constructor(
     private tradeService: TradeApiService,
@@ -92,6 +94,7 @@ export class TraderHomeComponent implements OnInit {
     else {
       this.data = this.TransformData(trades),
         this.hasTrades = true,
+        this.isFirstLoad = true;
         this.onChangeTable(this.config),
         this.onPageChange(1)
     }
@@ -111,11 +114,12 @@ export class TraderHomeComponent implements OnInit {
       .subscribe((returnedCorres: Correspondence []) => {
         if (returnedCorres.length === 0) { this.hasCorres = false; } 
         else {
-            this.corrData = returnedCorres,
-              this.isRequesting = false,
-              this.hasCorres = true,
-              this.onChangeTableCorr(this.configCorr),
-              this.onPageChangeCorr(1)
+          this.dataCorr = returnedCorres,
+            this.isRequesting = false,
+            this.hasCorres = true,
+            this.isFirstLoadCorr = true;
+            this.onChangeTableCorr(this.configCorr),
+            this.onPageChangeCorr(1)
         }
       },
       (res: Response) => this.onError(res, "getCorres"));
@@ -274,10 +278,16 @@ export class TraderHomeComponent implements OnInit {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
 
-    let filteredData = this.changeFilter(this.data, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = sortedData;
-    this.config.totalItems = sortedData.length;
+    if (!this.isFirstLoad) {
+      let filteredData = this.changeFilter(this.data, this.config);
+      let sortedData = this.changeSort(filteredData, this.config);
+      this.rows = sortedData;
+      this.config.totalItems = sortedData.length;
+    } else {
+      this.rows = this.data;
+      this.config.totalItems = this.data.length;
+      this.isFirstLoad = false;
+    }    
   }
 
 
@@ -390,8 +400,8 @@ export class TraderHomeComponent implements OnInit {
   private sortCorrStatus: string = 'desc';
   private sortSender: string = 'desc';
 
-  private corrData: Array<any> = [];     // full data from the server
-  public corrRows: Array<any> = [];      // rows passed to the table
+  private dataCorr: Array<any> = [];     // full data from the server
+  public rowsCorr: Array<any> = [];      // rows passed to the table
   public maxSizeCorr: number = 5;
   public numPagesCorr: number = 1;
 
@@ -430,10 +440,16 @@ export class TraderHomeComponent implements OnInit {
       (<any>Object).assign(this.configCorr.sorting, config.sorting);
     }
 
-    let filteredData = this.changeFilterCorr(this.corrData, this.configCorr);
-    let sortedData = this.changeSortCorr(filteredData, this.configCorr);
-    this.corrRows = sortedData;
-    this.configCorr.totalItems = sortedData.length;
+    if (!this.isFirstLoadCorr) {
+      let filteredData = this.changeFilterCorr(this.dataCorr, this.configCorr);
+      let sortedData = this.changeSortCorr(filteredData, this.configCorr);
+      this.rowsCorr = sortedData;
+      this.configCorr.totalItems = sortedData.length;
+    } else {
+      this.rowsCorr = this.dataCorr;
+      this.configCorr.totalItems = this.dataCorr.length;
+      this.isFirstLoadCorr = false;
+    }    
   }
 
 

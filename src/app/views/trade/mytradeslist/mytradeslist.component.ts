@@ -43,6 +43,7 @@ export class MyTradesListComponent implements OnInit {
   private status: string = "All";
   private hasTrades: boolean = true;
   private hasNoTrades: boolean = false;
+  private isFirstLoad: boolean = false;
 
   // constructor which injects the services
   constructor(
@@ -61,7 +62,7 @@ export class MyTradesListComponent implements OnInit {
     this.getUseridentity();
     this.initialiseComponent();
     //this.getTrades(this.traderId); 
-    this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
+    this.getSetOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
   }
 
   //*********************************************************************************************
@@ -85,7 +86,8 @@ export class MyTradesListComponent implements OnInit {
             this.totalNumberOfRecords = this.data[0].total;
             this.hasTrades = true;
             this.hasNoTrades = false;
-            this.isRequesting = false,           
+            this.isRequesting = false;     
+            this.isFirstLoad;    
             this.calculateTotalNumberOfSets();
             this.onChangeTable(this.config),
             this.onPageChange(1)
@@ -97,14 +99,14 @@ export class MyTradesListComponent implements OnInit {
 
 
   //gets page of trades 
-  private getPageOfTrades(traderId: string, setCounter: number, recordsPerSet: number, status:string) {
+  private getSetOfTrades(traderId: string, setCounter: number, recordsPerSet: number, status:string) {
 
     this.tradeApiService.getSetOfTradesWithStatusForTrader(traderId, setCounter, recordsPerSet, status)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
             this.hasTrades = false;
             this.isRequesting = false;
-            if (!this.hasTrades && !this.hasNoTrades) { this.getPageOfTrades(traderId, setCounter, recordsPerSet, "All"); }     // there are no open trades so get the latest closed ones
+            if (!this.hasTrades && !this.hasNoTrades) { this.getSetOfTrades(traderId, setCounter, recordsPerSet, "All"); }     // there are no open trades so get the latest closed ones
             else {
               this.hasTrades = false;
               this.hasNoTrades = true;   // if there are no records at all than show the message no trades at all
@@ -115,7 +117,8 @@ export class MyTradesListComponent implements OnInit {
             this.totalNumberOfRecords = this.data[0].total;
             this.hasTrades = true;
             this.hasNoTrades = false;
-            this.isRequesting = false,
+            this.isRequesting = false;
+            this.isFirstLoad = true;
             this.calculateTotalNumberOfSets();
             this.onChangeTable(this.config),
             this.onPageChange(1)
@@ -155,14 +158,14 @@ export class MyTradesListComponent implements OnInit {
     trhis.tradeId = trade.tradeId;
 
     // add new history record
-    this.tradeHistoryService.addTradeHistoryByTradeId(trhis)
+    this.tradeHistoryService.addTradeHistory(trhis)
        .subscribe((returnedHistory: TradeHistory) => {
         // update the trade now
         trade.status = "Closed";      
         this.tradeApiService.UpdateTrade(trade)
               .subscribe((returnedTrade: Trade) => {
                     // if successfull get the trades now
-                     this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
+                     this.getSetOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
 
               }, (serviceError: Response) => this.onError(serviceError, "closeTrade"))                           
       }, (serviceError: Response) => this.onError(serviceError, "closeTrade"));
@@ -405,7 +408,7 @@ export class MyTradesListComponent implements OnInit {
       this.setsCounter = this.setsCounter + 1;
 
       // get the next set of records
-      this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
+      this.getSetOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
 
       // set the current page to 1
       this.config.currentPage = 1;
@@ -425,7 +428,7 @@ export class MyTradesListComponent implements OnInit {
       this.setsCounter = this.setsCounter - 1;
 
       // get the previous set of records
-      this.getPageOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
+      this.getSetOfTrades(this.traderId, this.setsCounter, this.recordsPerSet, this.status);
 
       // set the current page to 1
       this.config.currentPage = 1;
@@ -442,11 +445,17 @@ export class MyTradesListComponent implements OnInit {
           (<any>Object).assign(this.config.sorting, config.sorting);
         }
 
-        let removedData = this.changeRemove(this.data, this.config);
-        let filteredData = this.changeFilter(removedData, this.config);
-        let sortedData = this.changeSort(filteredData, this.config);
-        this.rows = sortedData;     
-        this.config.totalItems = sortedData.length;
+    if (!this.isFirstLoad) {
+      let removeData = this.changeRemove(this.data, this.config);
+      let filteredData = this.changeFilter(removeData, this.config);
+      let sortedData = this.changeSort(filteredData, this.config);
+      this.rows = sortedData;
+      this.config.totalItems = sortedData.length;
+    } else {
+      this.rows = this.data;
+      this.config.totalItems = this.data.length;
+      this.isFirstLoad = false;
+    }    
   }
 
 

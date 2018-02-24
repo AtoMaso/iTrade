@@ -34,16 +34,14 @@ export class TradesListComponent implements OnInit {
 
   private totalNumberOfRecords: number = 0;
   private setsCounter: number = 1;
-  private recordsPerSet: number = 5;
+  private recordsPerSet: number = 100;
   private totalNumberOfSets: number = 0;
   private hasTrades: boolean = true;
   private hasNoTrades: boolean = false;
   private hasSets: boolean = false;
   private hasNavigation: boolean = false;
 
-  private selectedItem: string = "Name";
-  private displayRecords: number = 0;
-  private totalDisplayRecords: number = 0;
+  private selectedItem: string = "Published";
   private filters: string = null;
   private categories: Category[] = [];
   private states: State[] = [];
@@ -54,6 +52,7 @@ export class TradesListComponent implements OnInit {
   private placeClicked: Place = null;
   private filters1: string = null;
   private filters2: string = null;
+  private isNewLoad: boolean = false;
 
   // constructor which injects the services
   constructor(
@@ -136,7 +135,8 @@ export class TradesListComponent implements OnInit {
             this.totalNumberOfRecords = this.data[0].total;            
             this.hasTrades = true;
             this.hasNoTrades = false;
-            this.isRequesting = false,           
+            this.isRequesting = false;       
+            this.isNewLoad;   
             this.onChangeTable(this.config),
             this.onPageChange(1)
         }
@@ -167,6 +167,7 @@ export class TradesListComponent implements OnInit {
                     this.hasTrades = true;
                     this.hasNoTrades = false;
                     this.isRequesting = false,
+                    this.isNewLoad = true;
                     this.calculateTotalNumberOfSets(),
                     this.onChangeTable(this.config),
                     this.onPageChange(1)
@@ -202,7 +203,8 @@ export class TradesListComponent implements OnInit {
           this.totalNumberOfRecords = this.data[0].total;
           this.hasTrades = true;
           this.hasNoTrades = false;
-          this.isRequesting = false,      
+          this.isRequesting = false,    
+          this.isNewLoad;     
           this.onChangeTable(this.config),
           this.onPageChange(1)
         }
@@ -240,6 +242,7 @@ export class TradesListComponent implements OnInit {
           this.hasTrades = true;
           this.hasNoTrades = false;
           this.isRequesting = false,
+          this.isNewLoad;   
           this.calculateTotalNumberOfSets();
           this.onChangeTable(this.config),
           this.onPageChange(1)
@@ -527,7 +530,7 @@ export class TradesListComponent implements OnInit {
 
   public config: any = {
     id: 'pagination',
-    itemsPerPage: 3,
+    itemsPerPage: 15,
     currentPage: 1,
     totalItems: 0,
     paging: true,
@@ -642,11 +645,16 @@ export class TradesListComponent implements OnInit {
     if (config.sorting) {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
-  
-    let filteredData = this.changeFilter(this.data, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = sortedData;  
-    this.config.totalItems = sortedData.length;
+    if (!this.isNewLoad) {
+      let filteredData = this.changeFilter(this.data, this.config);
+      let sortedData = this.changeSort(filteredData, this.config);
+      this.rows = sortedData;
+      this.config.totalItems = sortedData.length;
+    } else {
+      this.rows = this.data;
+      this.config.totalItems = this.data.length;
+      this.isNewLoad = false;
+    }
 
  
     if (this.config.totalItems > this.config.itemsPerPage) { this.hasNavigation = true;  }
