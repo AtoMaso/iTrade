@@ -830,7 +830,7 @@ export class TradesListComponent implements OnInit {
           // find the string in each coloumn
           let flag = false;
           this.columns.forEach((column: any) => {
-                    if (item[column.name].toString().match(this.config.filtering.filterString)) { flag = true; }
+            if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) { flag = true; }
           });
           if (flag) { tempArray.push(item); }
     });
