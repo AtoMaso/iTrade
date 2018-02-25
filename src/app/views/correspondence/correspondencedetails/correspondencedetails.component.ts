@@ -73,6 +73,8 @@ export class CorrespondenceDetailsComponent implements OnInit {
           inp.append(html);
         }), 100);
 
+
+
         // set the text of the counter 
         var input = jQuery('#content'), display = jQuery('#characterCount'), count = 0, limit = 500;
         // initalise the counter
@@ -92,6 +94,8 @@ export class CorrespondenceDetailsComponent implements OnInit {
           if (jQuery(this).val() != '') { jQuery('#Send').removeAttr('disabled'); }
           else { jQuery('#Send').attr('disabled', 'disabled'); }
       });
+
+
 
       // update the character counter
       function update(count) {

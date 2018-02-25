@@ -6,7 +6,7 @@
 
                         <!-- MENU -->
                         <header class="row pager">
-                              <div id="menu" class="navbar navbar-default navbar-fixed-top col-md-10 col-md-offset-1" style="border-width:medium;border-color:darkgray;">
+                              <div id="menu" class="navbar navbar-default navbar-fixed-top col-md-10 col-md-offset-1 pagetitlediv">
 
                                     <div class="navbar-header text-center">
                                       <!-- make the navigation to disapear when screen too small with the class nab-vbar-toggle and introducing
@@ -28,10 +28,7 @@
                                         <li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/traderhome"><span class="textgray"><i>Trader Home</i></span></a></li>                                            
                                         <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>             
                                         <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/register"><span class="textgray"><i>Register</i></span></a></li>                                                            
-                                        <li class="nav" *ngIf="isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
-                                        <!--<li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/mytradeslist"><span class="textgray"><i>My Open Trades</i></span></a></li>-->
-                                        <!--<li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/mytraderaccount"><span class="textgray"><i>My Account</i></span></a></li>-->                                                                                             
-                                        
+                                        <li class="nav" *ngIf="isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>                                                                                                                                                      
                                       </ul>
                                     </div>
 
@@ -55,7 +52,7 @@
                             <div class="row">
 
                                   <!-- the page title control -->
-                                  <div class="navbar navbar-default col-md-10 col-md-offset-1" style="border-width:medium; border-color:darkgray;">
+                                  <div class="navbar navbar-default col-md-10 col-md-offset-1 pagetitlediv">
                                     <page-title></page-title>
                                   </div>
 
@@ -64,7 +61,7 @@
                 
                  
                                   <!-- the views slot -->
-                                  <div class=" col-md-10 col-md-offset-1 navbar navbar-default" style="padding-bottom:30px;padding-top:30px; border-width:medium; border-color:darkgray;">
+                                  <div class=" col-md-10 col-md-offset-1 navbar navbar-default routerdiv">
                                     <router-outlet></router-outlet>
                                   </div>
                             </div>
@@ -73,7 +70,7 @@
 
 
                         <!-- PAGE FOOTER-->
-                        <div class="container panel panel-heading navbar-btn col-md-10 col-md-offset-1" style="border-width:medium;border-color:darkgray;">
+                        <div class="container col-md-10 col-md-offset-1 panel panel-heading navbar-btn  footerdiv">
 
                                 <div class="row" style="margin-top:10px;">
 

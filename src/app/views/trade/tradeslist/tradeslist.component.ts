@@ -85,31 +85,105 @@ export class TradesListComponent implements OnInit {
 
   ngAfterViewInit() {
 
-    jQuery(document).ready(function () {
-            
-      jQuery("#filters").on("hide.bs.collapse", function () {
-        jQuery(".gliphfil").html(' Filters  <span class="glyphicon glyphicon-chevron-down"></span> ');
-      });
-      jQuery("#filters").on("show.bs.collapse", function () {
-        jQuery(".gliphfil").html('Filters  <span class="glyphicon glyphicon-chevron-up"></span>');
-      });
+        jQuery(document).ready(function () {
+
+                // toggling the chevrons up and down    
+                jQuery("#filters").on("hide.bs.collapse", function () {
+                  jQuery(".gliphfil").html(' Filters  <span class="glyphicon glyphicon-chevron-down"></span> ');
+                });
+                jQuery("#filters").on("show.bs.collapse", function () {
+                  jQuery(".gliphfil").html('Filters  <span class="glyphicon glyphicon-chevron-up"></span>');
+                });
      
-      jQuery("#categories").on("hide.bs.collapse", function () {
-        jQuery(".gliphcat").html(' Category  <span class="glyphicon glyphicon-chevron-down"></span> ');
-        });
-      jQuery("#categories").on("show.bs.collapse", function () {
-        jQuery(".gliphcat").html('Category  <span class="glyphicon glyphicon-chevron-up"></span>');
-        });
+                jQuery("#categories").on("hide.bs.collapse", function () {
+                  jQuery(".gliphcat").html(' Category  <span class="glyphicon glyphicon-chevron-down"></span> ');
+                  });
+                jQuery("#categories").on("show.bs.collapse", function () {
+                  jQuery(".gliphcat").html('Category  <span class="glyphicon glyphicon-chevron-up"></span>');
+                  });
 
-      jQuery("#places").on("hide.bs.collapse", function () {
-        jQuery(".gliphpla").html(' Places  <span class="glyphicon glyphicon-chevron-down"></span> ');
-      });
-      jQuery("#places").on("show.bs.collapse", function () {
-        jQuery(".gliphpla").html('Place  <span class="glyphicon glyphicon-chevron-up"></span>');
-      });
+                jQuery("#places").on("hide.bs.collapse", function () {
+                  jQuery(".gliphpla").html(' Places  <span class="glyphicon glyphicon-chevron-down"></span> ');
+                });
+                jQuery("#places").on("show.bs.collapse", function () {
+                  jQuery(".gliphpla").html('Place  <span class="glyphicon glyphicon-chevron-up"></span>');
+                });
 
-    });
-  }
+
+ 
+              // scrolling of the filter block
+              var element = jQuery('#follow-scroll'),
+                originalY = element.offset().top;   
+
+              // Space between element and top of screen (when scrolling)
+              var topMargin = 60;     
+
+              // Should probably be set in CSS; but here just for emphasis
+              element.css('position', 'relative');
+
+              jQuery(window).on('scroll', function (event) {
+                var scrollTop = jQuery(window).scrollTop();
+
+                element.stop(false, false).animate({
+                  top: scrollTop < originalY ? 0 : scrollTop - originalY + topMargin,        
+                }, 300);
+              });
+   
+
+
+          setTimeout((function () {
+              // opening and closing the  items
+            jQuery(".inactiveli").on("click", (function () {
+
+              if ($(this).hasClass('inactiveli')) {
+
+                //jQuery(this).slideDown();
+                var subul = jQuery(this).find(".subul");
+                subul.find(".inactivesubli").slideDown();
+                subul.slideDown();
+
+                // find the other siblings
+                //var notActiveLi= jQuery(this).parents('ul').find('.inactive').next('li');             
+                var activeLi = jQuery(this).parents('ul').find('.activeli');
+
+                var ind, len, sibling;
+                for (ind = 0, len = activeLi.length; ind < len; ind++) {
+                  var liactive = jQuery(activeLi[ind]);
+                  liactive.toggleClass("activeli inactiveli");
+                  liactive.removeClass("activeli");
+                  liactive.addClass("inactiveli");
+
+                  var subul = liactive.find(".subul")
+                  subul.find(".inactivesubli").slideUp();
+                  subul.slideUp();
+                }
+
+                // manipulate the clicked one   
+                jQuery(this).toggleClass("inactiveli activeli");
+                jQuery(this).removeClass("inactiveli");
+                jQuery(this).addClass("activeli");
+              }
+              else {
+                
+                var subul = jQuery(this).find(".subul");
+                subul.find(".inactivesubli").slideUp();
+                subul.slideUp();
+
+                jQuery(this).toggleClass("activeli inactiveli");
+                jQuery(this).removeClass("activeli");
+                jQuery(this).addClass("inactiveli");
+
+                //jQuery("#filterstring").text("");          
+              }
+
+            }));
+          }), 50);
+
+  });
+
+
+
+   
 
 
   //*********************************************************************************************

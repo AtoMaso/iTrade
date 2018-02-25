@@ -397,14 +397,14 @@ export class TraderDetailsComponent implements OnInit {
     }
 
     if (!this.isNewLoad) {
-      let filteredData = this.changeFilter(this.data, this.config);
-      let sortedData = this.changeSort(filteredData, this.config);
-      this.rows = sortedData;
-      this.config.totalItems = sortedData.length;
+            let filteredData = this.changeFilter(this.data, this.config);
+            let sortedData = this.changeSort(filteredData, this.config);
+            this.rows = sortedData;
+            this.config.totalItems = sortedData.length;
     } else {
-      this.rows = this.data;
-      this.config.totalItems = this.data.length;
-      this.isNewLoad = false;
+            this.rows = this.data;
+            this.config.totalItems = this.data.length;
+            this.isNewLoad = false;
     }    
   }
 
@@ -436,40 +436,39 @@ export class TraderDetailsComponent implements OnInit {
 
   public changeFilter(data: any, config: any): any {
 
-    let filteredData: Array<any> = data;
+          let filteredData: Array<any> = data;
 
-    this.columns.forEach((column: any) => {
+          this.columns.forEach((column: any) => {
 
-      if (column.filtering) {
-        filteredData = filteredData.filter((item: any) => { return item[column.name].match(column.filtering.filterString); });
-      }
+            if (column.filtering) {
+                filteredData = filteredData.filter((item: any) => {
+                      return item[column.name].match(column.filtering.filterString);
+              });
+            }
 
-    });
+          });
 
-    if (!config.filtering) {
-      return filteredData;
-    }
+          if (!config.filtering) {
+            return filteredData;
+          }
 
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].match(this.config.filtering.filterString));
-    }
+          if (config.filtering.columnName) {
+            return filteredData.filter((item: any) => item[config.filtering.columnName].match(this.config.filtering.filterString));
+          }
 
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
+          let tempArray: Array<any> = [];
+          filteredData.forEach((item: any) => {
 
-      // find the string in each coloumn
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name].toString().match(this.config.filtering.filterString)) { flag = true; }
-      });
-      if (flag) { tempArray.push(item); }
+              // find the string in each coloumn
+              let flag = false;
+            this.columns.forEach((column: any) => { if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.str.toLowerCase())) { flag = true; }  });
+              if (flag) { tempArray.push(item); }
 
-    });
+          });
 
-    filteredData = tempArray;
+          filteredData = tempArray;
 
-    return filteredData;
+          return filteredData;
   }
 
 
