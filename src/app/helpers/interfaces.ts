@@ -185,6 +185,7 @@ interface ITrade {
   state: string;
   placeId: number;
   place: string;
+  postcode: string;
   categoryId: number; 
   categoryDescription: string
   subcategoryId: number;
@@ -210,6 +211,7 @@ interface IPostTrade {
   categoryId: number;
   stateId: number;
   placeId: number;
+  postcode: string;
   subcategoryId: number; 
   traderId: string;
   Images: IImage[];

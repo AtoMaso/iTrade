@@ -120,12 +120,12 @@ export class AddTradeComponent implements OnInit {
       .subscribe((res: Subcategory[]) => {
         this.subcategories = res;
       }
-      , (error: Response) => this.onError(error, "getSubcategories"));
+      , (error: Response) => this.onError(error, "getSubcategoriesByCategoryId"));
   }
 
 
   //*****************************************************
-  // GET CATEGORIES
+  // GET STATES
   //*****************************************************
   public getStates() {
     this.statesService.getStates()
@@ -137,7 +137,7 @@ export class AddTradeComponent implements OnInit {
 
 
   //*****************************************************
-  // GET CATEGORIES
+  // GET PLACES
   //*****************************************************
   public getPlaces() {
     this.placesService.getPlaces()
@@ -153,7 +153,7 @@ export class AddTradeComponent implements OnInit {
       .subscribe((res: Place[]) => {
         this.places = res;
       }
-      , (error: Response) => this.onError(error, "getPlaces"));
+      , (error: Response) => this.onError(error, "getPlacesByStateId"));
   }
 
 
@@ -195,6 +195,7 @@ export class AddTradeComponent implements OnInit {
       this.newTrade.subcategoryId = this.addForm.controls.subcategory.value;
       this.newTrade.placeId = this.addForm.controls.place.value;
       this.newTrade.stateId = this.addForm.controls.state.value;       
+      this.newTrade.postcode = this.addForm.controls.postcode.value;
       this.newTrade.traderId = this.identity.userId;
 
       // set the image array here, the imageid and real url will be created 
@@ -209,9 +210,61 @@ export class AddTradeComponent implements OnInit {
           this.newTrade.Images.push(image);
         }     
       }
-      this.AddTrade(this.newTrade);
+
+        this.AddTrade(this.newTrade);
+        //  if (this.checkThePostcodeAgainstTheState(this.newTrade.state, this.newTrade.postcode)) { this.AddTrade(this.newTrade);  }
+        //  else { this.messagesService.emitProcessMessage("Postcode does not match the state provided!");  }
     }
   }
+
+
+  private checkThePostcodeAgainstTheState(state: string, postcode: string): boolean {
+    switch (state)
+    {
+      case "NSW":
+        if ((parseInt(postcode) >= 1000 && parseInt(postcode) <= 1999) ||
+            (parseInt(postcode) >= 2000 && parseInt(postcode) <= 2599) ||
+            (parseInt(postcode) >=2619  && parseInt(postcode) <= 2899) ||
+            (parseInt(postcode) >= 2921 && parseInt(postcode) <= 2999)) {    
+            return true;        
+        } else {
+          return false;
+        }
+    
+      case "ACT":
+        if ((parseInt(postcode) >= 1000 && parseInt(postcode) <= 1999) ||
+          (parseInt(postcode) >= 2000 && parseInt(postcode) <= 2599) ||
+          (parseInt(postcode) >= 2619 && parseInt(postcode) <= 2899) ||
+          (parseInt(postcode) >= 2921 && parseInt(postcode) <= 2999)) {
+          return true;
+        } else {
+          return false;
+        }
+
+      case "NT":
+
+        break;
+
+      case "WA":
+        break;
+
+      case "QLD":
+        break;
+
+      case "SA":
+        break;
+
+      case "Victoria":
+        break;
+
+      case "Tasmania":
+
+        break;
+      default:
+    }
+    return true;
+  }
+
 
  // calling the service
   public AddTrade(passedTrade: PostTrade) {
@@ -324,6 +377,7 @@ export class AddTradeComponent implements OnInit {
        category: new FormControl('', [Validators.required, ValidationService.categoryValidator]),
        subcategory: new FormControl('', [Validators.required, ValidationService.subcategoryValidator]),
        publishDate: new FormControl('', [Validators.required, ValidationService.publishDateValidator]),
+       postcode: new FormControl('', [Validators.required, ValidationService.postcodeValidator])
     });
 
     this.currentLocale = 'eu';

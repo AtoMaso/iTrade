@@ -267,6 +267,7 @@ export class TradeDetailsComponent implements OnInit {
 
     trd.place = returnedTrade.place;
     trd.state = returnedTrade.state;
+    trd.postcode = returnedTrade.postcode;
     trd.categoryDescription = returnedTrade.categoryDescription;
     trd.subcategoryDescription = returnedTrade.subcategoryDescription;
 

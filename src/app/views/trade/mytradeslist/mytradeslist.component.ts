@@ -220,6 +220,7 @@ export class MyTradesListComponent implements OnInit {
       trd.place = value.place;
       trd.stateId = value.stateId;
       trd.state = value.state;
+      trd.postcode = value.postcode;
       trd.categoryId = value.categoryId;
       trd.categoryDescription = value.categoryDescription;       
 

@@ -379,6 +379,7 @@ class Trade implements ITrade {
   status: string;
   placeId: number;
   place: string;
+  postcode: string;
   stateId: number;
   state: string;
   categoryId: number;
@@ -405,6 +406,7 @@ class Trade implements ITrade {
     this.status = "";
     this.placeId = 0;
     this.place = "";
+    this.postcode = "";
     this.stateId = 0;
     this.state = "";
     this.categoryId = 0;
@@ -433,6 +435,7 @@ class PostTrade implements IPostTrade {
   status: string; 
   placeId: number;
   place: string;
+  postcode: string;
   stateId: number;
   state: string;
   categoryId: number;
@@ -451,6 +454,7 @@ class PostTrade implements IPostTrade {
     this.status = "";
     this.placeId = 0;
     this.place = "";
+    this.postcode = "";
     this.stateId = 0;
     this.state = "";
     this.categoryId = 0;

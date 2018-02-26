@@ -85,6 +85,14 @@
                     </div>
                   </div>
 
+                  <div class="row smalltext">
+                    <div class="panel panel-heading col-md-3"><span>Postcode:</span></div>
+
+                    <div class="form-group col-md-6">
+                      <input type="text" formControlName="postcode" id="postcode" required class="form-control" style="background-color:moccasin;">
+                      <control-messages [control]="addForm.controls.postcode"></control-messages>
+                    </div>
+                  </div>
 
                   <div class="row smalltext">
                     <div class="panel panel-heading col-md-3"><span>Trading For:</span></div>
@@ -126,6 +134,7 @@
                         <div class="row panel panel-heading">
                           <span class="smalltext">Trade Images (3 images - max 10MB each - file types: .png .gif .tif .jpeg .bmp):</span>
                         </div>                                   
+                        <br/>
                         <div class="row smalltext">
                               <!--<input type="file" ng2FileSelect [uploader]="uploader"  style="color:transparent;"  multiple  (change)="onChange($event)"/>-->                       
                               <div id="upload_button">

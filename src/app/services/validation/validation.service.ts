@@ -27,6 +27,7 @@ export class ValidationService {
       'invalidState': 'You must select a state. ',
       'invalidPlace': 'You must select a place. ',
       'invalidDatePublished': 'Published date can not be in the past. ',
+      'invalidPostCode': 'Postcode provide is not valid.'
     };
     return config[validatorName];
   }
@@ -153,6 +154,7 @@ export class ValidationService {
     }
   }
 
+  
 
   static creditCardValidator(control) {
     // Visa, MasterCard, American Express, Diners Club, Discover, JCB
@@ -305,5 +307,16 @@ static firstNameValidator(control: any) {
     }
   }
 
+
+  static postcodeValidator(control: any) {
+    // Name should be any character set separated with minimum one space
+    if (control.value) {
+      if (control.value.match(/^(\d{4})$/)) {           
+        return null;
+      } else {
+        return { 'invalidPostCode': true };
+      }
+    }
+  }
 
 }

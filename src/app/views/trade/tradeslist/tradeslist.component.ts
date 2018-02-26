@@ -3,11 +3,16 @@ import { Response } from '@angular/http';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder, FormsModule } from '@angular/forms';
 
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { CategoryService } from '../../../services/categories/category.service';
+import { SubcategoriesService } from '../../../services/subcategories/subcategories.service';
 import { StatesService } from '../../../services/states/states.service';
+import { PlacesService } from '../../../services/places/places.service';
+import { ValidationService } from '../../../services/validation/validation.service';
+
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
@@ -44,22 +49,42 @@ export class TradesListComponent implements OnInit {
   private selectedItem: string = "Published";
   private filters: string = null;
   private categories: Category[] = [];
+  private subcategories: Subcategory[] = [];
   private states: State[] = [];
+  private places: Place[] = [];
 
   private categoryClicked: Category = null;
-  private subcategoryClicked: Subcategory = null;
+  private subcategoryClicked: Subcategory = null; 
   private stateClicked: State = null;
   private placeClicked: Place = null;
+
+  private categoryClickedD: string = null;
+  private subcategoryClickedD: string = null;
+  private stateClickedD: string = null;
+  private placeClickedD: string = null;
+  private postcodeClickedD: string = null;
+
+  private selectedCategoryId: number = 0;
+  private selectedSubcategoryId: number = 0;
+  private selectedStateId: number = 0;
+  private selectedPlaceId: number = 0;
+
   private filters1: string = null;
   private filters2: string = null;
   private isNewLoad: boolean = false;
 
+  public filterForm: FormGroup;
+
+
   // constructor which injects the services
   constructor(
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private tradeApiService: TradeApiService,
     private categoryService: CategoryService,
+    private subcategoriesService: SubcategoriesService,
     private statesService: StatesService,
+    private placesService: PlacesService,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private router: Router,
@@ -71,120 +96,120 @@ export class TradesListComponent implements OnInit {
   public ngOnInit() { 
      
     this.getUseridentity();
-    this.initialiseComponent();   
+    this.initialiseComponent();     
 
     //this.getTrades("Open");
     this.getSetOfTrades(this.setsCounter, this.recordsPerSet, this.status);
     this.getCategories();   
-    this.getStates();
-  
-  
+    this.getStates();   
   }
-
 
 
   ngAfterViewInit() {
 
-        jQuery(document).ready(function () {
+    jQuery(document).ready(function () {
 
-                // toggling the chevrons up and down    
-                jQuery("#filters").on("hide.bs.collapse", function () {
-                  jQuery(".gliphfil").html(' Filters  <span class="glyphicon glyphicon-chevron-down"></span> ');
-                });
-                jQuery("#filters").on("show.bs.collapse", function () {
-                  jQuery(".gliphfil").html('Filters  <span class="glyphicon glyphicon-chevron-up"></span>');
-                });
-     
-                jQuery("#categories").on("hide.bs.collapse", function () {
-                  jQuery(".gliphcat").html(' Category  <span class="glyphicon glyphicon-chevron-down"></span> ');
-                  });
-                jQuery("#categories").on("show.bs.collapse", function () {
-                  jQuery(".gliphcat").html('Category  <span class="glyphicon glyphicon-chevron-up"></span>');
-                  });
+      // toggling the chevrons up and down    
+      jQuery("#filters").on("hide.bs.collapse", function () {
+        jQuery(".gliphfil").html(' Filters  <span class="glyphicon glyphicon-chevron-down"></span> ');
+      });
+      jQuery("#filters").on("show.bs.collapse", function () {
+        jQuery(".gliphfil").html('Filters  <span class="glyphicon glyphicon-chevron-up"></span>');
+      });
 
-                jQuery("#places").on("hide.bs.collapse", function () {
-                  jQuery(".gliphpla").html(' Places  <span class="glyphicon glyphicon-chevron-down"></span> ');
-                });
-                jQuery("#places").on("show.bs.collapse", function () {
-                  jQuery(".gliphpla").html('Place  <span class="glyphicon glyphicon-chevron-up"></span>');
-                });
+      jQuery("#categories").on("hide.bs.collapse", function () {
+        jQuery(".gliphcat").html(' Category  <span class="glyphicon glyphicon-chevron-down"></span> ');
+      });
+      jQuery("#categories").on("show.bs.collapse", function () {
+        jQuery(".gliphcat").html('Category  <span class="glyphicon glyphicon-chevron-up"></span>');
+      });
+
+      jQuery("#places").on("hide.bs.collapse", function () {
+        jQuery(".gliphpla").html(' Places  <span class="glyphicon glyphicon-chevron-down"></span> ');
+      });
+      jQuery("#places").on("show.bs.collapse", function () {
+        jQuery(".gliphpla").html('Place  <span class="glyphicon glyphicon-chevron-up"></span>');
+      });
 
 
- 
-              // scrolling of the filter block
-              var element = jQuery('#follow-scroll'),
-                originalY = element.offset().top;   
 
-              // Space between element and top of screen (when scrolling)
-              var topMargin = 60;     
+      // scrolling of the filter block
+      var element = jQuery('#follow-scroll'),
+        originalY = element.offset().top;
 
-              // Should probably be set in CSS; but here just for emphasis
-              element.css('position', 'relative');
+      // Space between element and top of screen (when scrolling)
+      var topMargin = 60;
 
-              jQuery(window).on('scroll', function (event) {
-                var scrollTop = jQuery(window).scrollTop();
+      // Should probably be set in CSS; but here just for emphasis
+      element.css('position', 'relative');
 
-                element.stop(false, false).animate({
-                  top: scrollTop < originalY ? 0 : scrollTop - originalY + topMargin,        
-                }, 300);
-              });
+      jQuery(window).on('scroll', function (event) {
+        var scrollTop = jQuery(window).scrollTop();
+
+        element.stop(false, false).animate({
+          top: scrollTop < originalY ? 0 : scrollTop - originalY + topMargin,
+        }, 300);
+      });
+
+
+
+      setTimeout((function () {
+
+        // opening and closing the  items
+        jQuery(".inactiveli").on("click", (function () {
+
+          if (jQuery(this).hasClass('inactiveli')) {
+
+            //jQuery(this).slideDown();
+            var subul = jQuery(this).find(".subul");
+            subul.find(".inactivesubli").slideDown();
+            subul.slideDown();
+
+            // find the other siblings
+            //var notActiveLi= jQuery(this).parents('ul').find('.inactive').next('li');             
+            var activeLi = jQuery(this).parents('ul').find('.activeli');
+
+            var ind, len, sibling;
+            for (ind = 0, len = activeLi.length; ind < len; ind++) {
+              var liactive = jQuery(activeLi[ind]);
+              liactive.toggleClass("activeli inactiveli");
+              liactive.removeClass("activeli");
+              liactive.addClass("inactiveli");
+
+              var subul = liactive.find(".subul")
+              subul.find(".inactivesubli").slideUp();
+              subul.slideUp();
+            }
+
+            // manipulate the clicked one   
+            jQuery(this).toggleClass("inactiveli activeli");
+            jQuery(this).removeClass("inactiveli");
+            jQuery(this).addClass("activeli");
+          }
+          else {
+
+            var subul = jQuery(this).find(".subul");
+            subul.find(".inactivesubli").slideUp();
+            subul.slideUp();
+
+            jQuery(this).toggleClass("activeli inactiveli");
+            jQuery(this).removeClass("activeli");
+            jQuery(this).addClass("inactiveli");
+
+            //jQuery("#filterstring").text("");          
+          }
+
+        }));
+
+      }), 50);
+
+
+
+    }); // document function
+
+
+  }
    
-
-
-          setTimeout((function () {
-              // opening and closing the  items
-            jQuery(".inactiveli").on("click", (function () {
-
-              if ($(this).hasClass('inactiveli')) {
-
-                //jQuery(this).slideDown();
-                var subul = jQuery(this).find(".subul");
-                subul.find(".inactivesubli").slideDown();
-                subul.slideDown();
-
-                // find the other siblings
-                //var notActiveLi= jQuery(this).parents('ul').find('.inactive').next('li');             
-                var activeLi = jQuery(this).parents('ul').find('.activeli');
-
-                var ind, len, sibling;
-                for (ind = 0, len = activeLi.length; ind < len; ind++) {
-                  var liactive = jQuery(activeLi[ind]);
-                  liactive.toggleClass("activeli inactiveli");
-                  liactive.removeClass("activeli");
-                  liactive.addClass("inactiveli");
-
-                  var subul = liactive.find(".subul")
-                  subul.find(".inactivesubli").slideUp();
-                  subul.slideUp();
-                }
-
-                // manipulate the clicked one   
-                jQuery(this).toggleClass("inactiveli activeli");
-                jQuery(this).removeClass("inactiveli");
-                jQuery(this).addClass("activeli");
-              }
-              else {
-                
-                var subul = jQuery(this).find(".subul");
-                subul.find(".inactivesubli").slideUp();
-                subul.slideUp();
-
-                jQuery(this).toggleClass("activeli inactiveli");
-                jQuery(this).removeClass("activeli");
-                jQuery(this).addClass("inactiveli");
-
-                //jQuery("#filterstring").text("");          
-              }
-
-            }));
-          }), 50);
-
-  });
-
-
-
-   
-
 
   //*********************************************************************************************
   // GET TRADES - this will get open trades, if there are no any open trades will get all or will show message - no trades
@@ -294,13 +319,13 @@ export class TradesListComponent implements OnInit {
     let plaid: number = 0
     let staid: number = 0;
 
-    if (this.categoryClicked != null) { catid = this.categoryClicked.categoryId; }
-    if (this.subcategoryClicked != null) { subcatid = this.subcategoryClicked.subcategoryId; }
-    if (this.stateClicked != null) { staid = this.stateClicked.id; }
-    if (this.placeClicked != null) { plaid = this.placeClicked.id; }
+    //if (this.categoryClicked != null) { catid = this.categoryClicked.categoryId; }
+    //if (this.subcategoryClicked != null) { subcatid = this.subcategoryClicked.subcategoryId; }
+    //if (this.stateClicked != null) { staid = this.stateClicked.id; }
+    //if (this.placeClicked != null) { plaid = this.placeClicked.id; }
 
     // get set of records with set filters
-    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, catid, subcatid, staid, plaid)
+    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, this.selectedCategoryId, this.selectedSubcategoryId, this.selectedStateId, this.selectedPlaceId)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
@@ -375,13 +400,11 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString(); 
   }
 
-
   private SubcategoryClicked(subcategory: Subcategory, category:Category) {
     this.subcategoryClicked = subcategory; 
     this.categoryClicked = category;
     this.setupFilterString();
   }
-
 
   private StateClicked(state: State) {
     this.placeClicked = null;
@@ -396,26 +419,121 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
   }
 
+  //*************************************
+  private CategoryClickedD(event:any) {   
+    this.categoryClickedD = event.target.value;
+    this.subcategoryClickedD = null;   
+    let id = this.getCategoryId(this.categoryClickedD);
+    this.getSubcategoriesByCategoryId(id);
+    this.setupFilterStringD();
+  }
+
+  private SubcategoryClickedD(event:any) {    
+    this.subcategoryClickedD = event.target.value;
+    this.getSubcategoryId(this.subcategoryClickedD);
+    this.setupFilterStringD();
+  }
+ 
+  private StateClickedD(event:any) { 
+    this.stateClickedD = event.target.value;
+    this.placeClickedD = null;  
+    let id = this.getStateId(this.stateClickedD);
+    this.getPlacesByStateId(id);
+    this.setupFilterStringD();
+  }
+
+  private PlaceClickedD(event:any) {   
+    this.placeClickedD = event.target.value;    
+    //let id = this.getPlaceId(this.placeClickedD);
+    //this.getPostcodeByPlaceId(event);
+    this.setupFilterStringD();
+  }
+
+  private PostcodeClickedD(event: any) {
+    this.postcodeClickedD = event.target.value;
+    this.setupFilterStringD();
+  }
+
+
+
+  // ids
+  private getCategoryId(categoryname: string): number {
+
+    let m: number = 0;
+    for (m = 0; m < this.categories.length; m++) {
+      if (this.categories[m].categoryDescription == categoryname) {
+        this.selectedCategoryId = this.categories[m].categoryId;
+      }     
+    });
+    return this.selectedCategoryId 
+  }
+
+
+  private getSubcategoryId(subcategoryname: string): number {
+    let m: number = 0;
+    for (m = 0; m < this.subcategories.length; m++) {
+      if (this.subcategories[m].subcategoryDescription == subcategoryname) {
+        this.selectedSubcategoryId = this.subcategories[m].subcategoryId;
+      }
+    });
+    return this.selectedSubcategoryId 
+  }
+
+
+  private getStateId(statename:string):number {   
+    let m: number = 0;
+    for (m = 0; m < this.states.length; m++) {
+      if (this.states[m].name == statename) {
+        this.selectedStateId = this.states[m].id;
+      }
+    });
+    return this.selectedCategoryId 
+  }
+
+
+  private getPlaceId(placename: string): number {
+   
+    let m: number = 0;
+    for (m = 0; m < this.places.length; m++) {
+      if (this.places[m].name == placename) {
+        this.selectedPlaceId = this.places[m].id;
+      }
+    });
+    return this.selectedCategoryId 
+  }
+
+
+  //private getPostcodeId(postcode: string): number {
+
+  //  let m: number = 0;
+  //  for (m = 0; m < this.postcodes.length; m++) {
+  //    if (this.postcodes[m].value == postcode) {
+  //      this.selectedPostcodeId = this.postcodes[m].id;
+  //    }
+  //  });
+  //  return this.selectedPostcodeId
+  //}
 
   // sets up the filter string deiplayed on the screen and filters the datasets based on it
   private setupFilterString() {
 
-    if (this.categoryClicked) {
-      this.filters1 = " Category = " + this.categoryClicked.categoryDescription;
+    if (this.categoryClicked) {  
+      this.filters1 = " Category = " + this.categoryClicked.categoryDescription;      
     }
 
-    if (this.subcategoryClicked) {
-      if (this.filters1 == null) { this.filters1 = "Category = " + this.categoryClicked.categoryDescription + " & Subcategory =" + this.subcategoryClicked.subcategoryDescription; }
-      else if (this.filters1.indexOf(this.subcategoryClicked.subcategoryDescription) == -1) { this.filters1 = this.filters1 + " & Subcategory = " + this.subcategoryClicked.subcategoryDescription; }
+    if (this.subcategoryClicked) {    
+      if (this.filters1 == null) { this.filters1 = "Category = " + this.categoryClicked.categoryDescription + " & Subcategory =" + this.subcategoryClicked.subcategoryDescription; }   
+      else if (this.filters1.indexOf(this.subcategoryClicked.subcategoryDescription) == -1) { this.filters1 = this.filters1 + " & Subcategory = " + this.subcategoryClicked.subcategoryDescription; }   
     }
 
-    if (this.stateClicked) {
-      this.filters2 = " State = " + this.stateClicked.name;
+    if (this.stateClicked) {     
+        this.filters2 = " State = " + this.stateClicked.name;    
     }
 
-    if (this.placeClicked) {
-      if (this.filters2 == null) { this.filters2 = "State = " + this.stateClicked.name + " & Place =" + this.placeClicked.name; }
-      else if (this.filters2.indexOf(this.placeClicked.name) == -1) { this.filters2 = this.filters2 + " & Place = " + this.placeClicked.name; }
+     if (this.placeClicked) {   
+       if (this.filters2 == null) { this.filters2 = "State = " + this.stateClicked.name + " & Place =" + this.placeClicked.name; }     
+        else if (this.filters2.indexOf(this.placeClicked.name) == -1) { this.filters2 = this.filters2 + " & Place = " + this.placeClicked.name; }
+     
     }
 
     if (this.filters1 && this.filters2) { this.filters = this.filters1 + " & " + this.filters2; }
@@ -425,10 +543,38 @@ export class TradesListComponent implements OnInit {
    
   }
 
+  private setupFilterStringD() {
+   
+      if (this.categoryClickedD) {     
+      this.filters1 = " Category = " + this.categoryClickedD;
+    }
+   
+      if (this.subcategoryClickedD) {
+      if (this.filters1 == null) { this.filters1 = "Category = " + this.categoryClickedD + " & Subcategory =" + this.subcategoryClickedD; }
+      else if (this.filters1.indexOf(this.subcategoryClickedD) == -1) { this.filters1 = this.filters1 + " & Subcategory = " + this.subcategoryClickedD; }
+    }
+   
+     if (this.stateClickedD) {    
+      this.filters2 = " State = " + this.stateClickedD;
+    }
+  
+    if (this.placeClickedD) {   
+      if (this.filters2 == null) { this.filters2 = "State = " + this.stateClickedD + " & Place =" + this.placeClickedD; }     
+      else if (this.filters2.indexOf(this.placeClickedD) == -1) { this.filters2 = this.filters2 + " & Place = " + this.placeClickedD; }
+    }
+
+    if (this.filters1 && this.filters2) { this.filters = this.filters1 + " & " + this.filters2; }
+    if (this.filters1 && this.filters2 == null) { this.filters = this.filters1; }
+    if (this.filters2 && this.filters1 == null) {
+    this.filters = this.filters2;
+    }
+
+  }
+
   
 
   //*****************************************************
-  // GET CATEGORIES
+  // GET CATEGORIES AND SUBCATEGORIES
   //*****************************************************
   public getCategories() {
     this.categoryService.getCategories()
@@ -439,8 +585,17 @@ export class TradesListComponent implements OnInit {
   }
 
 
+  public getSubcategoriesByCategoryId(categoryId: number) {
+    this.subcategoriesService.getSubcategoriesByCategoryId(categoryId)
+      .subscribe((res: Subcategory[]) => {
+        this.subcategories = res;
+      }
+      , (error: Response) => this.onError(error, "getSubcategories"));
+  }
+
+
   //*****************************************************
-  // GET CATEGORIES
+  // GET STATES AND PLACES
   //*****************************************************
   public getStates() {
     this.statesService.getStates()
@@ -450,6 +605,27 @@ export class TradesListComponent implements OnInit {
       , (error: Response) => this.onError(error, "getStates"));
   }
 
+
+  public getPlacesByStateId(stateid: number) {
+    this.placesService.getPlacesByStateId(stateid)
+      .subscribe((res: Place[]) => {
+        this.places = res;
+      }
+      , (error: Response) => this.onError(error, "getPlaces"));
+  }
+
+
+  //*****************************************************
+  // SELECTION of state should get places for that state
+  //*****************************************************
+  private onStateChange(item: any) {
+    this.getPlacesByStateId(item);
+  }
+
+
+  private onCategoryChange(item: any) {
+    this.getSubcategoriesByCategoryId(item);
+  }
  
   //****************************************************
   // ADD TRADE
@@ -503,6 +679,7 @@ export class TradesListComponent implements OnInit {
       trd.place = value.place;
       trd.stateId = value.stateId;
       trd.state = value.state;
+      trd.postcode = value.postcode;
       trd.categoryId = value.categoryId;
       trd.categoryDescription = value.categoryDescription;
       trd.subcategoryId = value.subcategoryId;
@@ -568,6 +745,7 @@ export class TradesListComponent implements OnInit {
   private isNameAsc: boolean = true;
   private isDateAsc: boolean = true;
   private isPlaceAsc: boolean = true;
+  private isPlostcodeAsc: boolean = true;
   private isStateAsc: boolean = true;
 
   private sortTrader: string = 'desc';
@@ -576,6 +754,7 @@ export class TradesListComponent implements OnInit {
   private sortName: string = 'desc';
   private sortDate: string = 'desc';
   private sortPlace: string = 'desc';
+  private sortPostcode: string = 'desc';
   private sortState: string = 'desc';
 
   private data: Array<any> = [];     // full data from the server
@@ -598,6 +777,7 @@ export class TradesListComponent implements OnInit {
       { title: 'Trader', name: 'traderFullName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader full name.' } },
       { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by date.' } } ,    
       { title: 'Place', name: 'place', sort: true, filtering: { filterString: '', placeholder: 'Filter by place.' } },
+      { title: 'Postcode', name: 'postcode', sort: true, filtering: { filterString: '', placeholder: 'Filter by postcode.' } },
       { title: 'State', name: 'state', sort: true, filtering: { filterString: '', placeholder: 'Filter by state.' } }     
   ];
 
@@ -719,6 +899,7 @@ export class TradesListComponent implements OnInit {
     if (config.sorting) {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
+
     if (!this.isNewLoad) {
       let filteredData = this.changeFilter(this.data, this.config);
       let sortedData = this.changeSort(filteredData, this.config);
@@ -792,6 +973,15 @@ export class TradesListComponent implements OnInit {
         this.isAsc = !this.isPlaceAsc;
         this.isPlaceAsc = !this.isPlaceAsc;
         this.sortPlace = this.isPlaceAsc ? 'desc' : 'asc';
+        break;
+
+      case 'postcode':
+        this.selectedItem = "Postcode";
+        this.config.sorting.columns = [{ name: 'postcode', sort: this.sortPostcode }];
+        this.onChangeTable(this.config);
+        this.isAsc = !this.isPlostcodeAsc;
+        this.isPlostcodeAsc = !this.isPlostcodeAsc;
+        this.sortPostcode = this.isPlostcodeAsc ? 'desc' : 'asc';
         break;
 
       case 'state':

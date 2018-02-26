@@ -48,6 +48,8 @@
                                    <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('place')">Place</a></li>       
                                    <li role="presentation" class="divider"></li>
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('postcode')">Postcode</a></li>
+                                   <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('state')">State</a></li>                                   
                                  </ul>
                                </div>
@@ -85,90 +87,83 @@
                                </a>
                              </div>
 
-                             <!-- Sidebar Links -->
-                             <ul id="filters" class="collapse in list-unstyled smalltextbold textgray" style="margin-left:10px;">
+                           
+                                    <br />
+                                    <div class="row smalltext">                                     
+                                      <div class="col-md-12">
+                                        <span>Category:</span>
+                                        <select id="category" name="category" class="form-control" style="background-color:moccasin;" (change)="CategoryClickedD($event)">
+                                          <option></option>
+                                          <option *ngFor="let category of categories" [ngValue]="category.categoryId">
+                                            {{ category.categoryDescription }}
+                                          </option>                                        
+                                        </select>
+                                      </div>
+                                    </div>
 
-                               <!-- buttons -->
-                               <li style="margin-top:10px;">
-                                 <div>
-                                   <button class="btn btn-primary btn-sm smalltext" (click)="filtersSet()" [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">Search</button>
-                                   <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
-                                 </div>
-                               </li>
+                                    <br/>
+                                    <div class="row smalltext">                                   
+                                      <div class="col-md-12">
+                                        <span>Subcategory:</span>
+                                        <select id="subcategory" name="subcategory" class="form-control" style="background-color:moccasin;" (change)="SubcategoryClickedD($event)">
+                                          <option></option>
+                                          <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.subcategoryId"  >
+                                            {{ subcategory.subcategoryDescription }}
+                                          </option>                                     
+                                        </select>
+                                      </div>
+                                    </div>
+
+                                    <br />
+                                    <div class="row smalltext">                                   
+                                      <div class="col-md-12">
+                                        <span>State:</span>
+                                        <select  id="state" name="state" class="form-control" style="background-color:moccasin;" (change)="StateClickedD($event)">
+                                          <option></option>
+                                          <option *ngFor="let state of states" [ngValue]="state.id">
+                                            {{ state.name }}
+                                          </option>
+                                        </select>                                      
+                                      </div>
+                                    </div>
+
+                                    <br />
+                                    <div class="row smalltext">                                  
+                                      <div class="col-md-12">
+                                        <span>Place:</span>
+                                        <select id="place" name="place" class="form-control" style="background-color:moccasin;" (change)="PlaceClickedD($event)">
+                                          <option></option>
+                                          <option *ngFor="let place of places" [ngValue]="place.id" >
+                                            {{ place.name }}
+                                          </option>
+                                        </select>                                 
+                                      </div>
+                                    </div>
+
+                                    <br />
+                                   <div class="row smalltext">
+                                     <div class="col-md-12">
+                                       <span>Postcode:</span>
+                                       <select id="postcode" name="postcode" class="form-control" style="background-color:moccasin;">
+                                         <option></option>
+                                         <option *ngFor="let postcode of postcodes" [ngValue]="postcode.id" (change)="PostcodeClickedD($event)">
+                                           {{ place.name }}
+                                         </option>
+                                       </select>
+                                     </div>
+                                   </div>
+                                    <br />
+
+                                    
+                                   <div class="row smalltext">
+                                     <div class="col-md-12">
+                                       <button class="btn btn-primary btn-sm smalltext" (click)="filtersSet()" [disabled]="categoryClickedD == null && subcategoryClickedD ==null  && stateClickedD == null && placeClickedD == null ">Search</button>
+                                       <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
+                                     </div>
+                                   </div>
 
 
-                               <!-- categories -->
-                               <li style="margin-top:10px;">
-
-                             
-                                 <a  class="gliphcat textgray" (click)="ClearCategories()">Category <span class="glyphicon glyphicon-chevron-up"></span></a> <!-- href="#categories" data-toggle="collapse"-->
-                              
-                                 <ul id="categories" class="panel-collapse collapse in list-unstyled" style="margin-left:15px;" >
-
-                                       <!-- foreach category here -->
-                                       <li *ngFor="let category of categories"class="inactiveli"> <!--  id="liitem" -->
-
-                                             <a  (click)="CategoryClicked(category)" class="panel-title textlightcoral smalltextbold">                                                   <!-- data-toggle="collapse" href="#{{category.categoryDescription}}"-->
-                                               <span>{{category.categoryDescription}}  <span class="caret"></span> </span>
-                                             </a>
-
-                                             <ul class="subul panel-collapse collapse list-unstyled" style="margin-left:15px;">                                                             <!-- id="{{category.categoryDescription}}" -->
-
-                                                   <!-- for each subcategories here -->
-                                                   <li *ngFor="let subcategory of category.subcategories"  class="inactivesubli">                                                             <!-- id="subliitem" -->
-                                                        <a (click)="SubcategoryClicked(subcategory, category)" class="textoker smalltextbold"><span>{{subcategory.subcategoryDescription}}</span></a>
-                                                   </li>
-
-                                             </ul>
-
-                                       </li>
-
-                                 </ul>
-                               </li>
-
-
-                               <!-- buttons -->
-                               <li style="margin-top:10px;">
-                                 <div>
-                                   <button class="btn btn-primary btn-sm smalltext" (click)="filtersSet()" [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">Search</button>
-                                   <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
-                                 </div>
-                               </li>
-
-
-                               <!-- places -->
-                               <li style="margin-top:10px;">
-
-                                 <a href="#places" data-toggle="collapse" class="gliphpla textgray" (click)="ClearPlaces()">Place  <span class="glyphicon glyphicon-chevron-up"></span></a>
-
-                                 <ul id="places" class="panel-collapse collapse in list-unstyled" style="margin-left:15px;">
-                                   <!-- foreach category here -->
-                                   <li *ngFor="let state of states">
-                                     <a data-toggle="collapse" href="#{{state.name}}" (click)="StateClicked(state)" class="panel-title textlightcoral smalltextbold">
-                                       <span>{{state.name}}  <span class="caret"></span> </span>
-                                     </a>
-
-                                     <ul class="panel-collapse collapse list-unstyled" id="{{state.name}}" style="margin-left:15px;">
-                                       <!-- for each subcategories here -->
-                                       <li *ngFor="let place of state.places">
-                                         <a (click)="PlaceClicked(place, state)" class="textoker smalltextbold"><span>{{place.name}}</span></a>
-                                       </li>
-                                     </ul>
-                                   </li>
-                                 </ul>
-
-                               </li>
-
-
-                               <!-- buttons -->
-                               <li style="margin-top:10px;">
-                                 <div>
-                                   <button class="btn btn-primary btn-sm smalltext" (click)="filtersSet()" [disabled]="categoryClicked == null && subcategoryClicked ==null  && stateClicked == null && placeClicked == null ">Search</button>
-                                   <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
-                                 </div>
-                               </li>
-
-                             </ul>
+                                  <!-- original stuff here -->
 
                            </nav>
 
@@ -204,7 +199,7 @@
                          <div class="col-md-4 smalltextbold text-capitalize textgray">
                            <div class="row" style="height:120px;">Description:<span class="text-info"><br /> {{ trade.description  }}</span></div>
                            <div class="row" style="height:30px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>
-                           <div class="row" style="height:30px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span></div>
+                           <div class="row" style="height:30px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span>, {{ trade.postcode }}</div>                           
                            <div class="row" style="height:30px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>
                          </div>
 
