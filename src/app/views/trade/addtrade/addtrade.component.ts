@@ -195,7 +195,7 @@ export class AddTradeComponent implements OnInit {
       this.newTrade.subcategoryId = this.addForm.controls.subcategory.value;
       this.newTrade.placeId = this.addForm.controls.place.value;
       this.newTrade.stateId = this.addForm.controls.state.value;       
-      this.newTrade.postcode = this.addForm.controls.postcode.value;
+      this.newTrade.postcodeId = this.addForm.controls.postcode.value;
       this.newTrade.traderId = this.identity.userId;
 
       // set the image array here, the imageid and real url will be created 

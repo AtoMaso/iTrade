@@ -78,90 +78,90 @@
                         <!-- th efollow-scroll is the is used to create the menu to be fixed when scrolling-->
                          <div id="follow-scroll" class="row panel panel-heading wrapper" style="z-index:1000;">  
 
-                           <nav id="sidebar" >
+                                  <nav id="sidebar" >
 
-                             <!-- Sidebar Header -->
-                             <div class="sidebar-header">
-                               <a href="#filters" data-toggle="collapse" class="gliphfil smalltextbold textgray" aria-expanded="false" (click)="ClearAllFiltersAndGoBack()">
-                                 Filters  <span class="glyphicon glyphicon-chevron-up"></span>
-                               </a>
-                             </div>
+                                         <!-- Sidebar Header -->
+                                         <div class="sidebar-header">
+                                           <a href="#filters" data-toggle="collapse" class="gliphfil smalltextbold textgray" aria-expanded="false" (click)="ClearAllFiltersAndGoBack()">
+                                             Filters  <!--<span class="glyphicon glyphicon-chevron-up"></span>-->
+                                           </a>
+                                         </div>
 
                            
-                                    <br />
-                                    <div class="row smalltext">                                     
-                                      <div class="col-md-12">
-                                        <span>Category:</span>
-                                        <select id="category" name="category" class="form-control" style="background-color:moccasin;" (change)="CategoryClickedD($event)">
-                                          <option></option>
-                                          <option *ngFor="let category of categories" [ngValue]="category.categoryId">
-                                            {{ category.categoryDescription }}
-                                          </option>                                        
-                                        </select>
-                                      </div>
-                                    </div>
+                                          <br />
+                                          <div class="row smalltext">                                     
+                                            <div class="col-md-12">
+                                              <span>Category:</span>
+                                              <select id="category" name="category" class="form-control" style="background-color:moccasin;" (change)="CategoryClicked($event)">
+                                                <option></option>
+                                                <option *ngFor="let category of categories" [ngValue]="category.categoryId">
+                                                  {{ category.categoryDescription }}
+                                                </option>                                        
+                                              </select>
+                                            </div>
+                                          </div>
 
-                                    <br/>
-                                    <div class="row smalltext">                                   
-                                      <div class="col-md-12">
-                                        <span>Subcategory:</span>
-                                        <select id="subcategory" name="subcategory" class="form-control" style="background-color:moccasin;" (change)="SubcategoryClickedD($event)">
-                                          <option></option>
-                                          <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.subcategoryId"  >
-                                            {{ subcategory.subcategoryDescription }}
-                                          </option>                                     
-                                        </select>
-                                      </div>
-                                    </div>
+                                          <br/>
+                                          <div class="row smalltext">                                   
+                                            <div class="col-md-12">
+                                              <span>Subcategory:</span>
+                                              <select id="subcategory" name="subcategory" class="form-control" style="background-color:moccasin;" (change)="SubcategoryClicked($event)">
+                                                <option></option>
+                                                <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.subcategoryId"  >
+                                                  {{ subcategory.subcategoryDescription }}
+                                                </option>                                     
+                                              </select>
+                                            </div>
+                                          </div>
 
-                                    <br />
-                                    <div class="row smalltext">                                   
-                                      <div class="col-md-12">
-                                        <span>State:</span>
-                                        <select  id="state" name="state" class="form-control" style="background-color:moccasin;" (change)="StateClickedD($event)">
-                                          <option></option>
-                                          <option *ngFor="let state of states" [ngValue]="state.id">
-                                            {{ state.name }}
-                                          </option>
-                                        </select>                                      
-                                      </div>
-                                    </div>
+                                          <br />
+                                          <div class="row smalltext">                                   
+                                            <div class="col-md-12">
+                                              <span>State:</span>
+                                              <select  id="state" name="state" class="form-control" style="background-color:moccasin;" (change)="StateClicked($event)">
+                                                <option></option>
+                                                <option *ngFor="let state of states" [ngValue]="state.id">
+                                                  {{ state.name }}
+                                                </option>
+                                              </select>                                      
+                                            </div>
+                                          </div>
 
-                                    <br />
-                                    <div class="row smalltext">                                  
-                                      <div class="col-md-12">
-                                        <span>Place:</span>
-                                        <select id="place" name="place" class="form-control" style="background-color:moccasin;" (change)="PlaceClickedD($event)">
-                                          <option></option>
-                                          <option *ngFor="let place of places" [ngValue]="place.id" >
-                                            {{ place.name }}
-                                          </option>
-                                        </select>                                 
-                                      </div>
-                                    </div>
+                                          <br />
+                                          <div class="row smalltext">                                  
+                                            <div class="col-md-12">
+                                              <span>Place:</span>
+                                              <select id="place" name="place" class="form-control" style="background-color:moccasin;" (change)="PlaceClicked($event)">
+                                                <option></option>
+                                                <option *ngFor="let place of places" [ngValue]="place.id" >
+                                                  {{ place.name }}
+                                                </option>
+                                              </select>                                 
+                                            </div>
+                                          </div>
 
-                                    <br />
-                                   <div class="row smalltext">
-                                     <div class="col-md-12">
-                                       <span>Postcode:</span>
-                                       <select id="postcode" name="postcode" class="form-control" style="background-color:moccasin;">
-                                         <option></option>
-                                         <option *ngFor="let postcode of postcodes" [ngValue]="postcode.id" (change)="PostcodeClickedD($event)">
-                                           {{ place.name }}
-                                         </option>
-                                       </select>
-                                     </div>
-                                   </div>
-                                    <br />
-
+                                          <br />
+                                         <div class="row smalltext">
+                                           <div class="col-md-12">
+                                             <span>Postcode:</span>
+                                             <select id="postcode" name="postcode" class="form-control" style="background-color:moccasin;">
+                                               <option></option>
+                                               <option *ngFor="let postcode of postcodes" [ngValue]="postcode.id" (change)="PostcodeClickedD($event)">
+                                                 {{ postcode.number }}
+                                               </option>
+                                             </select>
+                                           </div>
+                                         </div>
+                                          <br />
+                                          <br />
                                     
-                                   <div class="row smalltext">
-                                     <div class="col-md-12">
-                                       <button class="btn btn-primary btn-sm smalltext" (click)="filtersSet()" [disabled]="categoryClickedD == null && subcategoryClickedD ==null  && stateClickedD == null && placeClickedD == null ">Search</button>
-                                       <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
-                                     </div>
-                                   </div>
-
+                                         <div class="row smalltext">
+                                           <div class="col-md-12">
+                                             <button class="btn btn-primary btn-sm smalltext" (click)="runFiltersSet()" [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null ">Search</button>
+                                             <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" >Clear</button>
+                                           </div>
+                                         </div>
+                                   
 
                                   <!-- original stuff here -->
 
@@ -169,7 +169,7 @@
 
                          </div>
                                   
-                   </div>
+                 </div>
 
                  <!-- table -->
                  <div *ngIf="hasTrades" class="col-md-10">
@@ -184,7 +184,6 @@
                            <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>
                          </div>
 
-
                          <div class="col-md-4 smalltextbold text-capitalize textgray">
                            <div class="row" style="height:30px;">Trading:<a class="text-capitalize textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>
                            <div class="row" style="height:30px;">Trading for: <span class="text-capitalize text-info"> {{ trade.tradeFor  }}</span></div>
@@ -195,15 +194,15 @@
                            <div class="row" style="height:30px;">Trader: <a class="text-capitalize textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
                          </div>
 
-
                          <div class="col-md-4 smalltextbold text-capitalize textgray">
                            <div class="row" style="height:120px;">Description:<span class="text-info"><br /> {{ trade.description  }}</span></div>
                            <div class="row" style="height:30px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>
-                           <div class="row" style="height:30px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span>, {{ trade.postcode }}</div>                           
+                           <div class="row" style="height:30px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span>, {{ trade.postcodeNumber }}</div>                           
                            <div class="row" style="height:30px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>
                          </div>
 
                        </td>
+
                      </tr>
 
                    </table>
@@ -213,46 +212,48 @@
                </div>
 
 
-            <!-- Table naviagtion -->
-            <div  class="col-md-12 panel panel-heading" style="height:50px;vertical-align:middle;">
+            <!-- Table navigation -->
+          <div class="row">
+                <div class="col-md-12 panel panel-heading" style="height:50px;vertical-align:middle;">
 
-                  <div  class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
+                  <div class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
                     <!-- the ngDefaultControl is needed because the pagination control needs a default acceessor -->
-                      <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl 
-                                           (pageChange)="onPageChange($event)"
-                                           maxSize="5"
-                                           directionLinks="true"
-                                           autoHide="true"
-                                           previousLabel="Previous"
-                                           nextLabel="Next" 
-                                           screenReaderPaginationLabel="Pagination"
-                                           screenReaderPageLabel="page"
-                                           screenReaderCurrentLabel="You're on page"
-                                           [(ngModel)]="config.currentPage"
-                                           (numPages)="numPages = $event"
-                                           [maxSize]="maxSize">
-                      </pagination-controls>
-                    </div>
+                    <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
+                                         (pageChange)="onPageChange($event)"
+                                         maxSize="5"
+                                         directionLinks="true"
+                                         autoHide="true"
+                                         previousLabel="Previous"
+                                         nextLabel="Next"
+                                         screenReaderPaginationLabel="Pagination"
+                                         screenReaderPageLabel="page"
+                                         screenReaderCurrentLabel="You're on page"
+                                         [(ngModel)]="config.currentPage"
+                                         (numPages)="numPages = $event"
+                                         [maxSize]="maxSize">
+                    </pagination-controls>
+                  </div>
 
 
                   <div class="container col-md-4" style="text-align:center;">
-                            
-                      <span class="smalltextbold textgray">Set of records: {{ setsCounter }} of  &nbsp;{{  totalNumberOfSets }}</span>
-                      <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
-                      <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
-            
-                  </div>        
 
-                 <div class="container col-md-4"  style="text-align:center;">
-           
+                    <span class="smalltextbold textgray">Set of records: {{ setsCounter }} of  &nbsp;{{  totalNumberOfSets }}</span>
+                    <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
+                    <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+
+                  </div>
+
+                  <div class="container col-md-4" style="text-align:center;">
+
                     <div class="col-md-12">
-                        <span class="smalltextbold">Items Per Page</span>
-                        <input type="number" min="15" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" style="width:50px;height:30px;" class="form-inline">
+                      <span class="smalltextbold">Items Per Page</span>
+                      <input type="number" min="15" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" style="width:50px;height:30px;" class="form-inline">
                     </div>
 
-                </div>
+                  </div>
 
-            </div>
+                </div>
+          </div>
              
  </div>             
 

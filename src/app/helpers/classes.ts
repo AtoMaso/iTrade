@@ -2,7 +2,7 @@
   IChangePasswordBindingModel, IRegisterBindingModel, ISetPasswordBindingModel, ILoginModel,
   ITraderList, ITraderDetails, IPostTrade,
   IPersonalDetails, ISecurityDetails, IContactDetails,
-  IAddress, IAddressType, IState, IPlace,
+  IAddress, IAddressType, IState, IPlace, IPostcode,
   IPhone, IPhoneType, ISubcategory,
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
@@ -356,11 +356,25 @@ class Place implements IPlace {
   id: number;
   name: string;
   stateId: number;
+  postcodes: Postcode[];
 
   constructor() {
     this.id = 0;
     this.name = "";
     this.stateId = 0;
+    this.postcodes = [];
+  }
+}
+
+class Postcode implements IPostcode {
+  id: number;
+  number: string;
+  placeId: number;
+
+  constructor() {
+    this.id = 0;
+    this.number = "";
+    this.placeId = 0;
   }
 }
 
@@ -379,7 +393,8 @@ class Trade implements ITrade {
   status: string;
   placeId: number;
   place: string;
-  postcode: string;
+  postcodeId: number;
+  postcodeNumber: string;
   stateId: number;
   state: string;
   categoryId: number;
@@ -406,7 +421,8 @@ class Trade implements ITrade {
     this.status = "";
     this.placeId = 0;
     this.place = "";
-    this.postcode = "";
+    this.postcodeId = 0;
+    this.postcodeNumber = "";
     this.stateId = 0;
     this.state = "";
     this.categoryId = 0;
@@ -434,14 +450,15 @@ class PostTrade implements IPostTrade {
   datePublished: Date;
   status: string; 
   placeId: number;
-  place: string;
-  postcode: string;
+  //place: string;
+  postcodeId: number;
+  //postcodeNumber: string;
   stateId: number;
-  state: string;
+  //state: string;
   categoryId: number;
-  categoryDescription: string;
+  //categoryDescription: string;
   subcategoryId: number;
-  subcategoryDescription: string;
+  //subcategoryDescription: string;
   traderId: string;
   Images: Image[];
 
@@ -453,14 +470,15 @@ class PostTrade implements IPostTrade {
     this.datePublished = new Date(1900, 1, 1);
     this.status = "";
     this.placeId = 0;
-    this.place = "";
-    this.postcode = "";
+    //this.place = "";
+    this.postcodeId = 0;
+    //this.postcodeNumber = "";
     this.stateId = 0;
-    this.state = "";
+    //this.state = "";
     this.categoryId = 0;
-    this.categoryDescription = "";
+    //this.categoryDescription = "";
     this.subcategoryId = 0;
-    this.subcategoryDescription = "";
+    //this.subcategoryDescription = "";
     this.traderId = "";
     this.Images = [];
   }
@@ -676,7 +694,7 @@ class Guid {
 export {
   ChangePasswordBindingModel, RegisterBindingModel,
   SetPasswordBindingModel, LoginModel, Subcategory,
-  Trader, TraderDetails, PostTrade, State, Place,
+  Trader, TraderDetails, PostTrade, State, Place, Postcode,
   PersonalDetails, ContactDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType,Email,

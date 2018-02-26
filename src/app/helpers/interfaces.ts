@@ -166,6 +166,13 @@ interface IPlace {
   id: number;
   name: string;
   stateId: number;
+  postcodes: IPostcode[];
+}
+
+interface IPostcode {
+  id: number;
+  number: string;
+  placeId: number;
 }
 
 
@@ -185,7 +192,8 @@ interface ITrade {
   state: string;
   placeId: number;
   place: string;
-  postcode: string;
+  postcodeId: number;
+  postcodeNumber: string;
   categoryId: number; 
   categoryDescription: string
   subcategoryId: number;
@@ -211,7 +219,7 @@ interface IPostTrade {
   categoryId: number;
   stateId: number;
   placeId: number;
-  postcode: string;
+  postcodeId: number;
   subcategoryId: number; 
   traderId: string;
   Images: IImage[];
@@ -319,7 +327,7 @@ interface IProcessMessageType {
 
 export {
   IChangePasswordBindingModel, IRegisterBindingModel, ISetPasswordBindingModel, ILoginModel,
-  ITraderList, ITraderDetails, IPostTrade, IPlace, IState, ISubcategory,
+  ITraderList, ITraderDetails, IPostTrade, IPlace, IState, ISubcategory, IPostcode,
   IPersonalDetails, ISecurityDetails, IContactDetails,
   IAddress, IAddressType, IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,

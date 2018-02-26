@@ -18,7 +18,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 import { CapsPipe } from '../../../helpers/pipes';
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, State, Place} from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, State, Place, Postcode} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -34,7 +34,6 @@ export class TradesListComponent implements OnInit {
   private isRequesting: boolean = false;
   private isAuthenticated: boolean = false;
   private isAllowedToAddTrade: boolean = false;
-  private isOwner: boolean = false;
   private status: string = "Open";
 
   private totalNumberOfRecords: number = 0;
@@ -45,30 +44,27 @@ export class TradesListComponent implements OnInit {
   private hasNoTrades: boolean = false;
   private hasSets: boolean = false;
   private hasNavigation: boolean = false;
-
   private selectedItem: string = "Published";
-  private filters: string = null;
+ 
   private categories: Category[] = [];
   private subcategories: Subcategory[] = [];
   private states: State[] = [];
   private places: Place[] = [];
+  private postcodes: Postcode[] = [];
 
-  private categoryClicked: Category = null;
-  private subcategoryClicked: Subcategory = null; 
-  private stateClicked: State = null;
-  private placeClicked: Place = null;
-
-  private categoryClickedD: string = null;
-  private subcategoryClickedD: string = null;
-  private stateClickedD: string = null;
-  private placeClickedD: string = null;
-  private postcodeClickedD: string = null;
+  private selectedCategory: string = null;
+  private selectedSubcategory: string = null;
+  private selectedState: string = null;
+  private selectedPlace: string = null;
+  private selectedPostcode: string = null;
 
   private selectedCategoryId: number = 0;
   private selectedSubcategoryId: number = 0;
   private selectedStateId: number = 0;
   private selectedPlaceId: number = 0;
+  private selectedPostcodeId: number = 0;
 
+  private filters: string = null;
   private filters1: string = null;
   private filters2: string = null;
   private isNewLoad: boolean = false;
@@ -151,60 +147,6 @@ export class TradesListComponent implements OnInit {
         }, 300);
       });
 
-
-
-      setTimeout((function () {
-
-        // opening and closing the  items
-        jQuery(".inactiveli").on("click", (function () {
-
-          if (jQuery(this).hasClass('inactiveli')) {
-
-            //jQuery(this).slideDown();
-            var subul = jQuery(this).find(".subul");
-            subul.find(".inactivesubli").slideDown();
-            subul.slideDown();
-
-            // find the other siblings
-            //var notActiveLi= jQuery(this).parents('ul').find('.inactive').next('li');             
-            var activeLi = jQuery(this).parents('ul').find('.activeli');
-
-            var ind, len, sibling;
-            for (ind = 0, len = activeLi.length; ind < len; ind++) {
-              var liactive = jQuery(activeLi[ind]);
-              liactive.toggleClass("activeli inactiveli");
-              liactive.removeClass("activeli");
-              liactive.addClass("inactiveli");
-
-              var subul = liactive.find(".subul")
-              subul.find(".inactivesubli").slideUp();
-              subul.slideUp();
-            }
-
-            // manipulate the clicked one   
-            jQuery(this).toggleClass("inactiveli activeli");
-            jQuery(this).removeClass("inactiveli");
-            jQuery(this).addClass("activeli");
-          }
-          else {
-
-            var subul = jQuery(this).find(".subul");
-            subul.find(".inactivesubli").slideUp();
-            subul.slideUp();
-
-            jQuery(this).toggleClass("activeli inactiveli");
-            jQuery(this).removeClass("activeli");
-            jQuery(this).addClass("inactiveli");
-
-            //jQuery("#filterstring").text("");          
-          }
-
-        }));
-
-      }), 50);
-
-
-
     }); // document function
 
 
@@ -282,10 +224,10 @@ export class TradesListComponent implements OnInit {
     let plaid: number = 0
     let staid: number = 0;
 
-    if (this.categoryClicked != null) { catid = this.categoryClicked.categoryId; }
-    if (this.subcategoryClicked != null) { subcatid = this.subcategoryClicked.subcategoryId; }
-    if (this.stateClicked != null) { staid = this.stateClicked.id; }
-    if (this.placeClicked != null) { plaid = this.placeClicked.id; }
+    if (this.selectedCategory != null) { catid = this.selectedCategoryId; }
+    if (this.selectedSubcategory != null) { subcatid = this.selectedSubcategoryId; }
+    if (this.selectedState != null) { staid = this.selectedStateId; }
+    if (this.selectedPlace != null) { plaid = this.selectedPlaceId; }
 
     this.tradeApiService.getAllTradesWithSetFilters(catid, subcatid, staid ,plaid)
       .subscribe((returnedTrades: Trade[]) => {
@@ -302,8 +244,8 @@ export class TradesListComponent implements OnInit {
           this.totalNumberOfRecords = this.data[0].total;
           this.hasTrades = true;
           this.hasNoTrades = false;
-          this.isRequesting = false,    
-          this.isNewLoad;     
+          this.isRequesting = false,
+            this.isNewLoad = true;;     
           this.onChangeTable(this.config),
           this.onPageChange(1)
         }
@@ -314,18 +256,19 @@ export class TradesListComponent implements OnInit {
 
   // get set of trades with set filters (category and places)
   private getSetOfTradesWithSetFilters() {
+
     let catid: number = 0
     let subcatid: number = 0
     let plaid: number = 0
     let staid: number = 0;
 
-    //if (this.categoryClicked != null) { catid = this.categoryClicked.categoryId; }
-    //if (this.subcategoryClicked != null) { subcatid = this.subcategoryClicked.subcategoryId; }
-    //if (this.stateClicked != null) { staid = this.stateClicked.id; }
-    //if (this.placeClicked != null) { plaid = this.placeClicked.id; }
+    if (this.selectedCategory != null) { catid = this.selectedCategoryId; }
+    if (this.selectedSubcategory != null) { subcatid = this.selectedSubcategoryId; }
+    if (this.selectedState != null) { staid = this.selectedStateId; }
+    if (this.selectedPlace != null) { plaid = this.selectedPlaceId; }
 
     // get set of records with set filters
-    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, this.selectedCategoryId, this.selectedSubcategoryId, this.selectedStateId, this.selectedPlaceId)
+    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, catid, subcatid, staid, plaid)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
@@ -341,7 +284,7 @@ export class TradesListComponent implements OnInit {
           this.hasTrades = true;
           this.hasNoTrades = false;
           this.isRequesting = false,
-          this.isNewLoad;   
+          this.isNewLoad = true;   
           this.calculateTotalNumberOfSets();
           this.onChangeTable(this.config),
           this.onPageChange(1)
@@ -352,17 +295,45 @@ export class TradesListComponent implements OnInit {
 
 
   // initialte filtration
-  private filtersSet() {
+  private runFiltersSet() {
     //this.getTradesWithSetFilters();
     this.getSetOfTradesWithSetFilters();
   }
 
 
+  //*****************************************************
+  // GET CATEGORIES
+  //*****************************************************
+  public getCategories() {
+    this.categoryService.getCategories()
+      .subscribe((res: Category[]) => {
+        this.categories = res;
+      }
+      , (error: Response) => this.onError(error, "getCategories"));
+  }
+
+
+  //*****************************************************
+  // GET STATES
+  //*****************************************************
+  public getStates() {
+    this.statesService.getStates()
+      .subscribe((res: State[]) => {
+        this.states = res;
+      }
+      , (error: Response) => this.onError(error, "getStates"));
+  }
+
+
+  //*****************************************************
+  //CLEANING SCREEN
+  //*****************************************************
   private ClearAllFiltersAndGoBack() {
-    this.categoryClicked = null;
-    this.subcategoryClicked = null;
-    this.stateClicked = null;
-    this.placeClicked = null;
+    this.selectedCategory = null;
+    this.selectedSubcategory = null;
+    this.selectedState = null;
+    this.selectedPlace = null;
+    this.selectedPostcode = null;
 
     this.filters = null;
     this.filters1 = null;
@@ -374,259 +345,157 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  private ClearCategories() {
-    this.categoryClicked = null;
-    this.subcategoryClicked = null;
-    this.filters1 = null;
-    this.filters = null;
-    this.setupFilterString();
-  }
-
-
-  private ClearPlaces() {
-    this.placeClicked = null;
-    this.stateClicked = null;
-    this.filters2 = null;
-    this.filters = null;
-    this.setupFilterString();
-  }
 
   //*****************************************************
   //FILTER IMPUTS
   //*****************************************************
-  private CategoryClicked(category: Category) {
-    this.subcategoryClicked = null;
-    this.categoryClicked = category;
-    this.setupFilterString(); 
-  }
-
-  private SubcategoryClicked(subcategory: Subcategory, category:Category) {
-    this.subcategoryClicked = subcategory; 
-    this.categoryClicked = category;
+  private CategoryClicked(event: any) {     
+    this.selectedCategory = event.target.value;
+    this.selectedSubcategory = null;   
+    this.getCategoryId(event.target.value);  
     this.setupFilterString();
   }
 
-  private StateClicked(state: State) {
-    this.placeClicked = null;
-    this.stateClicked = state;
+  private SubcategoryClicked(event:any) {    
+    this.selectedSubcategory = event.target.value;
+    this.getSubcategoryId(event.target.value);
     this.setupFilterString();
-  }
-
-
-  private PlaceClicked(place: Place, state: State) {
-    this.placeClicked = place;
-    this.stateClicked = state;
-    this.setupFilterString();
-  }
-
-  //*************************************
-  private CategoryClickedD(event:any) {   
-    this.categoryClickedD = event.target.value;
-    this.subcategoryClickedD = null;   
-    let id = this.getCategoryId(this.categoryClickedD);
-    this.getSubcategoriesByCategoryId(id);
-    this.setupFilterStringD();
-  }
-
-  private SubcategoryClickedD(event:any) {    
-    this.subcategoryClickedD = event.target.value;
-    this.getSubcategoryId(this.subcategoryClickedD);
-    this.setupFilterStringD();
   }
  
-  private StateClickedD(event:any) { 
-    this.stateClickedD = event.target.value;
-    this.placeClickedD = null;  
-    let id = this.getStateId(this.stateClickedD);
-    this.getPlacesByStateId(id);
-    this.setupFilterStringD();
+  private StateClicked(event:any) { 
+    this.selectedState = event.target.value;
+    this.selectedPlace = null;  
+    this.selectedPostcode = null;  
+    this.getStateId(event.target.value);  
+    this.setupFilterString();
   }
 
-  private PlaceClickedD(event:any) {   
-    this.placeClickedD = event.target.value;    
-    //let id = this.getPlaceId(this.placeClickedD);
-    //this.getPostcodeByPlaceId(event);
-    this.setupFilterStringD();
+  private PlaceClicked(event:any) {   
+    this.selectedPlace = event.target.value;    
+    this.selectedPostcode = null;  
+    this.getPlaceId(event.target.value;); 
+    this.setupFilterString();
   }
 
-  private PostcodeClickedD(event: any) {
-    this.postcodeClickedD = event.target.value;
-    this.setupFilterStringD();
-  }
-
-
-
-  // ids
-  private getCategoryId(categoryname: string): number {
-
-    let m: number = 0;
-    for (m = 0; m < this.categories.length; m++) {
-      if (this.categories[m].categoryDescription == categoryname) {
-        this.selectedCategoryId = this.categories[m].categoryId;
-      }     
-    });
-    return this.selectedCategoryId 
+  private PostcodeClicked(event: any) {
+    this.selectedPostcode = event.target.value;
+    this.getPostcodeId(event.target.value);
+    this.setupFilterString();
   }
 
 
-  private getSubcategoryId(subcategoryname: string): number {
-    let m: number = 0;
-    for (m = 0; m < this.subcategories.length; m++) {
-      if (this.subcategories[m].subcategoryDescription == subcategoryname) {
-        this.selectedSubcategoryId = this.subcategories[m].subcategoryId;
+  //*****************************************************
+  //GET THE IMPUT IDS
+  //*****************************************************
+  private getCategoryId(categoryname: string) {
+    if (categoryname != "") {
+      let m: number = 0;
+      for (m = 0; m < this.categories.length; m++) {
+        if (this.categories[m].categoryDescription == categoryname) {
+          this.selectedCategoryId = this.categories[m].categoryId;
+          this.subcategories = this.categories[m].subcategories;
+        }
       }
-    });
-    return this.selectedSubcategoryId 
+    }
+    else {
+      this.selectedCategory = null;
+      this.subcategories = null;      
+      this.filters1 = null;
+    }
   }
 
-
-  private getStateId(statename:string):number {   
-    let m: number = 0;
-    for (m = 0; m < this.states.length; m++) {
-      if (this.states[m].name == statename) {
-        this.selectedStateId = this.states[m].id;
+  private getSubcategoryId(subcategoryname: string) {
+    if (subcategoryname != "") {
+      let m: number = 0;
+      for (m = 0; m < this.subcategories.length; m++) {
+        if (this.subcategories[m].subcategoryDescription == subcategoryname) {
+          this.selectedSubcategoryId = this.subcategories[m].subcategoryId;
+        }
       }
-    });
-    return this.selectedCategoryId 
+    }
+    else {
+      this.selectedSubcategory = null;      
+    }
   }
 
-
-  private getPlaceId(placename: string): number {
-   
-    let m: number = 0;
-    for (m = 0; m < this.places.length; m++) {
-      if (this.places[m].name == placename) {
-        this.selectedPlaceId = this.places[m].id;
+  private getStateId(statename: string) {   
+    if (statename != "") {
+      let m: number = 0;
+      for (m = 0; m < this.states.length; m++) {
+        if (this.states[m].name == statename) {
+          this.selectedStateId = this.states[m].id;
+          this.places = this.states[m].places;
+        }
       }
-    });
-    return this.selectedCategoryId 
+    }
+    else {
+      this.selectedState = null;
+      this.places = null;
+      this.filters2 = null;
+    }
+  }
+
+  private getPlaceId(placename: string) {
+    if (placename != "") {
+      let m: number = 0;
+      for (m = 0; m < this.places.length; m++) {
+        if (this.places[m].name == placename) {
+          this.selectedPlaceId = this.places[m].id;
+          this.postcodes = this.places[m].postcodes;
+        }
+      }
+    }
+    else {
+      this.selectedPlace = null;
+      this.postcodes = null;      
+    }
+  }
+
+  private getPostcodeId(postcode: string) {
+    if (postcode != "") {
+      let m: number = 0;
+      for (m = 0; m < this.postcodes.length; m++) {
+        if (this.postcodes[m].number == postcode) {
+          this.selectedPostcodeId = this.postcodes[m].id;
+        }
+      }
+    }
+    else { this.selectedPostcode = null;}  
   }
 
 
-  //private getPostcodeId(postcode: string): number {
-
-  //  let m: number = 0;
-  //  for (m = 0; m < this.postcodes.length; m++) {
-  //    if (this.postcodes[m].value == postcode) {
-  //      this.selectedPostcodeId = this.postcodes[m].id;
-  //    }
-  //  });
-  //  return this.selectedPostcodeId
-  //}
-
-  // sets up the filter string deiplayed on the screen and filters the datasets based on it
+  //*****************************************************
+  //SETUP FILTER STRING
+  //*****************************************************
   private setupFilterString() {
-
-    if (this.categoryClicked) {  
-      this.filters1 = " Category = " + this.categoryClicked.categoryDescription;      
+   
+      if (this.selectedCategory) {     
+        this.filters1 = " Category = " + this.selectedCategory;
     }
-
-    if (this.subcategoryClicked) {    
-      if (this.filters1 == null) { this.filters1 = "Category = " + this.categoryClicked.categoryDescription + " & Subcategory =" + this.subcategoryClicked.subcategoryDescription; }   
-      else if (this.filters1.indexOf(this.subcategoryClicked.subcategoryDescription) == -1) { this.filters1 = this.filters1 + " & Subcategory = " + this.subcategoryClicked.subcategoryDescription; }   
+   
+    if (this.selectedSubcategory) {
+      if (this.filters1 == null) { this.filters1 = "Category = " + this.selectedCategory + " & Subcategory =" + this.selectedSubcategory; }
+      else if (this.filters1.indexOf(this.selectedSubcategory) == -1) { this.filters1 = this.filters1 + " & Subcategory = " + this.selectedSubcategory; }
     }
-
-    if (this.stateClicked) {     
-        this.filters2 = " State = " + this.stateClicked.name;    
+   
+    if (this.selectedState) {    
+      this.filters2 = " State = " + this.selectedState;
     }
-
-     if (this.placeClicked) {   
-       if (this.filters2 == null) { this.filters2 = "State = " + this.stateClicked.name + " & Place =" + this.placeClicked.name; }     
-        else if (this.filters2.indexOf(this.placeClicked.name) == -1) { this.filters2 = this.filters2 + " & Place = " + this.placeClicked.name; }
-     
+  
+    if (this.selectedPlace) {   
+      if (this.filters2 == null) { this.filters2 = "State = " + this.selectedState + " & Place =" + this.selectedPlace; }     
+      else if (this.filters2.indexOf(this.selectedPlace) == -1) { this.filters2 = this.filters2 + " & Place = " + this.selectedPlace; }
     }
 
     if (this.filters1 && this.filters2) { this.filters = this.filters1 + " & " + this.filters2; }
-    if (this.filters1 && this.filters2 == null) { this.filters = this.filters1; }
-    if (this.filters2 && this.filters1 == null) { this.filters = this.filters2;
-  }
-   
-  }
+    else if (this.filters1 && this.filters2 == null) { this.filters = this.filters1; }
+    else if (this.filters2 && this.filters1 == null) { this.filters = this.filters2;}
+    else { this.filters = null;}
 
-  private setupFilterStringD() {
-   
-      if (this.categoryClickedD) {     
-      this.filters1 = " Category = " + this.categoryClickedD;
-    }
-   
-      if (this.subcategoryClickedD) {
-      if (this.filters1 == null) { this.filters1 = "Category = " + this.categoryClickedD + " & Subcategory =" + this.subcategoryClickedD; }
-      else if (this.filters1.indexOf(this.subcategoryClickedD) == -1) { this.filters1 = this.filters1 + " & Subcategory = " + this.subcategoryClickedD; }
-    }
-   
-     if (this.stateClickedD) {    
-      this.filters2 = " State = " + this.stateClickedD;
-    }
-  
-    if (this.placeClickedD) {   
-      if (this.filters2 == null) { this.filters2 = "State = " + this.stateClickedD + " & Place =" + this.placeClickedD; }     
-      else if (this.filters2.indexOf(this.placeClickedD) == -1) { this.filters2 = this.filters2 + " & Place = " + this.placeClickedD; }
-    }
-
-    if (this.filters1 && this.filters2) { this.filters = this.filters1 + " & " + this.filters2; }
-    if (this.filters1 && this.filters2 == null) { this.filters = this.filters1; }
-    if (this.filters2 && this.filters1 == null) {
-    this.filters = this.filters2;
-    }
-
+    // TODO add the postcode here
   }
 
   
-
-  //*****************************************************
-  // GET CATEGORIES AND SUBCATEGORIES
-  //*****************************************************
-  public getCategories() {
-    this.categoryService.getCategories()
-      .subscribe((res: Category[]) => {
-        this.categories = res;
-      }
-      , (error: Response) => this.onError(error, "getCategories"));
-  }
-
-
-  public getSubcategoriesByCategoryId(categoryId: number) {
-    this.subcategoriesService.getSubcategoriesByCategoryId(categoryId)
-      .subscribe((res: Subcategory[]) => {
-        this.subcategories = res;
-      }
-      , (error: Response) => this.onError(error, "getSubcategories"));
-  }
-
-
-  //*****************************************************
-  // GET STATES AND PLACES
-  //*****************************************************
-  public getStates() {
-    this.statesService.getStates()
-      .subscribe((res: State[]) => {
-        this.states = res;
-      }
-      , (error: Response) => this.onError(error, "getStates"));
-  }
-
-
-  public getPlacesByStateId(stateid: number) {
-    this.placesService.getPlacesByStateId(stateid)
-      .subscribe((res: Place[]) => {
-        this.places = res;
-      }
-      , (error: Response) => this.onError(error, "getPlaces"));
-  }
-
-
-  //*****************************************************
-  // SELECTION of state should get places for that state
-  //*****************************************************
-  private onStateChange(item: any) {
-    this.getPlacesByStateId(item);
-  }
-
-
-  private onCategoryChange(item: any) {
-    this.getSubcategoriesByCategoryId(item);
-  }
- 
   //****************************************************
   // ADD TRADE
   //****************************************************
@@ -679,7 +548,8 @@ export class TradesListComponent implements OnInit {
       trd.place = value.place;
       trd.stateId = value.stateId;
       trd.state = value.state;
-      trd.postcode = value.postcode;
+      trd.postcodeId = value.postcodeId;
+      trd.postcodeNumber = value.postcodeNumber;
       trd.categoryId = value.categoryId;
       trd.categoryDescription = value.categoryDescription;
       trd.subcategoryId = value.subcategoryId;
@@ -830,8 +700,6 @@ export class TradesListComponent implements OnInit {
     // toglle the prev button visibility
     if (this.setsCounter > 1) { this.isPrevButton = true; }
     else { this.isPrevButton = false; }
-
-
 
     // records shown on the screen
     // from number
@@ -1063,9 +931,97 @@ export class TradesListComponent implements OnInit {
 }
 
 
+//public getSubcategoriesByCategoryId(categoryId: number) {
+  //  this.subcategoriesService.getSubcategoriesByCategoryId(categoryId)
+  //    .subscribe((res: Subcategory[]) => {
+  //      this.subcategories = res;
+  //    }
+  //    , (error: Response) => this.onError(error, "getSubcategories"));
+  //}
+
+  //public getPlacesByStateId(stateid: number) {
+  //  this.placesService.getPlacesByStateId(stateid)
+  //    .subscribe((res: Place[]) => {
+  //      this.places = res;
+  //    }
+  //    , (error: Response) => this.onError(error, "getPlaces"));
+  //}
+
+  //public getPostcodeByPlaceId(placeid: number) {
+  //  this.postcodesService.getPostcodesByPlaceId(placeid)
+  //    .subscribe((res: Postcode[]) => {
+  //      this.postcodes = res;
+  //    }
+  //    , (error: Response) => this.onError(error, "getPostcodes"));
+  //}
 
 
+//  private ClearCategories() {
+//  this.selectedCategory = null;
+//  this.selectedSubcategory = null;
+//  this.filters1 = null;
+//  this.filters = null;
+//  this.setupFilterString();
+//}
 
+//  private ClearPlaces() {
+//  this.selectedState = null;
+//  this.selectedPlace = null;
+//  this.selectedPostcode = null;
+//  this.filters2 = null;
+//  this.filters = null;
+//  this.setupFilterString();
+//}
+
+  //setTimeout((function () {
+
+      //  // opening and closing the  items
+      //  jQuery(".inactiveli").on("click", (function () {
+
+      //    if (jQuery(this).hasClass('inactiveli')) {
+
+      //      //jQuery(this).slideDown();
+      //      var subul = jQuery(this).find(".subul");
+      //      subul.find(".inactivesubli").slideDown();
+      //      subul.slideDown();
+
+      //      // find the other siblings
+      //      //var notActiveLi= jQuery(this).parents('ul').find('.inactive').next('li');             
+      //      var activeLi = jQuery(this).parents('ul').find('.activeli');
+
+      //      var ind, len, sibling;
+      //      for (ind = 0, len = activeLi.length; ind < len; ind++) {
+      //        var liactive = jQuery(activeLi[ind]);
+      //        liactive.toggleClass("activeli inactiveli");
+      //        liactive.removeClass("activeli");
+      //        liactive.addClass("inactiveli");
+
+      //        var subul = liactive.find(".subul")
+      //        subul.find(".inactivesubli").slideUp();
+      //        subul.slideUp();
+      //      }
+
+      //      // manipulate the clicked one   
+      //      jQuery(this).toggleClass("inactiveli activeli");
+      //      jQuery(this).removeClass("inactiveli");
+      //      jQuery(this).addClass("activeli");
+      //    }
+      //    else {
+
+      //      var subul = jQuery(this).find(".subul");
+      //      subul.find(".inactivesubli").slideUp();
+      //      subul.slideUp();
+
+      //      jQuery(this).toggleClass("activeli inactiveli");
+      //      jQuery(this).removeClass("activeli");
+      //      jQuery(this).addClass("inactiveli");
+
+      //      //jQuery("#filterstring").text("");          
+      //    }
+
+      //  }));
+
+      //}), 50);
 
 
 
