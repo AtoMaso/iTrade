@@ -36,14 +36,11 @@ export class TradesListComponent implements OnInit {
   private isAllowedToAddTrade: boolean = false;
   private status: string = "Open";
 
-  private totalNumberOfRecords: number = 0;
+  private totalNumberOfRecords: number = 0; 
+  private totalNumberOfSets: number = 0;
   private setsCounter: number = 1;
   private recordsPerSet: number = 100;
-  private totalNumberOfSets: number = 0;
   private hasTrades: boolean = true;
-  private hasNoTrades: boolean = false;
-  private hasSets: boolean = false;
-  private hasNavigation: boolean = false;
   private selectedItem: string = "Published";
  
   private categories: Category[] = [];
@@ -69,18 +66,13 @@ export class TradesListComponent implements OnInit {
   private filters2: string = null;
   private isNewLoad: boolean = false;
 
-  public filterForm: FormGroup;
-
 
   // constructor which injects the services
   constructor(
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
     private tradeApiService: TradeApiService,
     private categoryService: CategoryService,
-    private subcategoriesService: SubcategoriesService,
     private statesService: StatesService,
-    private placesService: PlacesService,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private router: Router,
@@ -113,21 +105,6 @@ export class TradesListComponent implements OnInit {
         jQuery(".gliphfil").html('Filters  <span class="glyphicon glyphicon-chevron-up"></span>');
       });
 
-      jQuery("#categories").on("hide.bs.collapse", function () {
-        jQuery(".gliphcat").html(' Category  <span class="glyphicon glyphicon-chevron-down"></span> ');
-      });
-      jQuery("#categories").on("show.bs.collapse", function () {
-        jQuery(".gliphcat").html('Category  <span class="glyphicon glyphicon-chevron-up"></span>');
-      });
-
-      jQuery("#places").on("hide.bs.collapse", function () {
-        jQuery(".gliphpla").html(' Places  <span class="glyphicon glyphicon-chevron-down"></span> ');
-      });
-      jQuery("#places").on("show.bs.collapse", function () {
-        jQuery(".gliphpla").html('Place  <span class="glyphicon glyphicon-chevron-up"></span>');
-      });
-
-
 
       // scrolling of the filter block
       var element = jQuery('#follow-scroll'),
@@ -151,43 +128,16 @@ export class TradesListComponent implements OnInit {
 
 
   }
-   
+
+
+  private PostTrade() {
+    this.router.navigate(['/addtrade']);
+  }
 
   //*********************************************************************************************
   // GET TRADES - this will get open trades, if there are no any open trades will get all or will show message - no trades
   //*********************************************************************************************
-  // gets all trades
-  private getTrades(status: string) {
-
-    this.tradeApiService.getTradesWithStatusOrAll("", status)
-      .subscribe((returnedTrades: Trade[]) => {
-        if (returnedTrades.length === 0) {
-              this.hasTrades = false;
-              this.isRequesting = false;           
-              if (!this.hasTrades && !this.hasNoTrades) { this.getTrades("All"); }     // there are no open trades so get the latest closed ones
-              else {
-                this.hasTrades = false;
-                this.hasNoTrades = true;   // if there are no records at all than show the message no trades at all
-                this.messagesService.emitProcessMessage("PMENTrs");
-              }
-        }  
-        else {
-            this.data = this.TransformData(returnedTrades),
-            this.totalNumberOfRecords = this.data[0].total;            
-            this.hasTrades = true;
-            this.hasNoTrades = false;
-            this.isRequesting = false;       
-            this.isNewLoad;   
-            this.onChangeTable(this.config),
-            this.onPageChange(1)
-        }
-      },
-      (res: Response) => this.onError(res, "getTrades"));
-
-  }
-
-
-  //gets page of trades 
+  //gets set of trades 
   private getSetOfTrades(setsCounter: number, recordsPerSet: number, status: string) {
 
     this.tradeApiService.getSetOfTradesWithStatus(setsCounter, recordsPerSet, status)
@@ -195,66 +145,27 @@ export class TradesListComponent implements OnInit {
             if (returnedTrades.length === 0) {
                   this.hasTrades = false;
                   this.isRequesting = false;            
-                   if (!this.hasTrades && !this.hasNoTrades ) { this.getSetOfTrades(setsCounter, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
+                   if (!this.hasTrades ) { this.getSetOfTrades(setsCounter, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
                   else {
                     this.hasTrades = false;
-                     this.hasNoTrades = true;  // if there are no records at all than show the message no trades at all
+                    // if there are no records at all than show the message no trades at all
                      this.messagesService.emitProcessMessage("PMENTrs");
                   }
             }
             else {
                     this.data = this.TransformData(returnedTrades),
                     this.totalNumberOfRecords = this.data[0].total,
-                    this.hasTrades = true;
-                    this.hasNoTrades = false;
+                    this.hasTrades = true;               
                     this.isRequesting = false,
                     this.isNewLoad = true;
                     this.calculateTotalNumberOfSets(),
                     this.onChangeTable(this.config),
                     this.onPageChange(1)
            }              
-      }, (serviceError: Response) => this.onError(serviceError, "getPageOfTrades"));
+      }, (serviceError: Response) => this.onError(serviceError, "getSetOfTrades"));
   }
 
-
-  // get trades with set filters (category and places)
-  private getTradesWithSetFilters() {
-    let catid: number = 0
-    let subcatid: number = 0
-    let plaid: number = 0
-    let staid: number = 0;
-
-    if (this.selectedCategory != null) { catid = this.selectedCategoryId; }
-    if (this.selectedSubcategory != null) { subcatid = this.selectedSubcategoryId; }
-    if (this.selectedState != null) { staid = this.selectedStateId; }
-    if (this.selectedPlace != null) { plaid = this.selectedPlaceId; }
-
-    this.tradeApiService.getAllTradesWithSetFilters(catid, subcatid, staid ,plaid)
-      .subscribe((returnedTrades: Trade[]) => {
-        if (returnedTrades.length === 0) {
-          this.hasTrades = false;
-          this.isRequesting = false;  
-          this.data = returnedTrades;          // pass zero records  
-          this.onChangeTable(this.config),   // show 0 from 0 on the top        
-          this.messagesService.emitProcessMessage("PMENTrs");
-        }
-        else {
-          this.messagesService.emitRoute("nill");
-          this.data = this.TransformData(returnedTrades),
-          this.totalNumberOfRecords = this.data[0].total;
-          this.hasTrades = true;
-          this.hasNoTrades = false;
-          this.isRequesting = false,
-            this.isNewLoad = true;;     
-          this.onChangeTable(this.config),
-          this.onPageChange(1)
-        }
-      },
-      (res: Response) => this.onError(res, "Filter"));
-  }
-
-
-  // get set of trades with set filters (category and places)
+  // get set of trades with set filters
   private getSetOfTradesWithSetFilters() {
 
     let catid: number = 0
@@ -275,14 +186,13 @@ export class TradesListComponent implements OnInit {
           this.isRequesting = false;
           this.data = returnedTrades;          // pass zero records  
           this.onChangeTable(this.config),   // show 0 from 0 on the top        
-            this.messagesService.emitProcessMessage("PMENTrs");
+          this.messagesService.emitProcessMessage("PMENTrs");
         }
         else {
           this.messagesService.emitRoute("nill");
           this.data = this.TransformData(returnedTrades),
           this.totalNumberOfRecords = this.data[0].total;
-          this.hasTrades = true;
-          this.hasNoTrades = false;
+          this.hasTrades = true;       
           this.isRequesting = false,
           this.isNewLoad = true;   
           this.calculateTotalNumberOfSets();
@@ -290,9 +200,72 @@ export class TradesListComponent implements OnInit {
           this.onPageChange(1)
         }
       },
-      (res: Response) => this.onError(res, "Filter"));
+      (res: Response) => this.onError(res, "getSetOfTradesWithSetFilter"));
   }
 
+  // get all trades - not in use
+  private getTrades(status: string) {
+
+    this.tradeApiService.getTradesWithStatusOrAll("", status)
+      .subscribe((returnedTrades: Trade[]) => {
+        if (returnedTrades.length === 0) {
+          this.hasTrades = false;
+          this.isRequesting = false;
+          if (!this.hasTrades) { this.getTrades("All"); }     // there are no open trades so get the latest closed ones
+          else {
+            this.hasTrades = false;
+            // if there are no records at all than show the message no trades at all
+            this.messagesService.emitProcessMessage("PMENTrs");
+          }
+        }
+        else {
+          this.data = this.TransformData(returnedTrades),
+            this.totalNumberOfRecords = this.data[0].total;
+          this.hasTrades = true;
+          this.isRequesting = false;
+          this.isNewLoad = true;;
+          this.onChangeTable(this.config),
+            this.onPageChange(1)
+        }
+      },
+      (res: Response) => this.onError(res, "getTrades"));
+
+  }
+
+  // get trades with set filters  - not in use
+  private getTradesWithSetFilters() {
+    let catid: number = 0
+    let subcatid: number = 0
+    let plaid: number = 0
+    let staid: number = 0;
+
+    if (this.selectedCategory != null) { catid = this.selectedCategoryId; }
+    if (this.selectedSubcategory != null) { subcatid = this.selectedSubcategoryId; }
+    if (this.selectedState != null) { staid = this.selectedStateId; }
+    if (this.selectedPlace != null) { plaid = this.selectedPlaceId; }
+
+    this.tradeApiService.getAllTradesWithSetFilters(catid, subcatid, staid, plaid)
+      .subscribe((returnedTrades: Trade[]) => {
+        if (returnedTrades.length === 0) {
+          this.hasTrades = false;
+          this.isRequesting = false;
+          this.data = returnedTrades;          // pass zero records  
+          this.onChangeTable(this.config),   // show 0 from 0 on the top        
+            this.messagesService.emitProcessMessage("PMENTrs");
+        }
+        else {
+          this.messagesService.emitRoute("nill");
+          this.data = this.TransformData(returnedTrades),
+            this.totalNumberOfRecords = this.data[0].total;
+          this.hasTrades = true;
+          this.isRequesting = false,
+            this.isNewLoad = true;;
+          this.onChangeTable(this.config),
+            this.onPageChange(1)
+        }
+      },
+      (res: Response) => this.onError(res, "getTradesWithSetFilters"));
+  }
 
   //*****************************************************
   // GET CATEGORIES
@@ -347,9 +320,8 @@ export class TradesListComponent implements OnInit {
   }
 
 
-
   //*****************************************************
-  //FILTER IMPUTS
+  //FILTER INPUTS
   //*****************************************************
   private CategoryClicked(event: any) {     
     this.selectedCategory = event.target.value;
@@ -387,7 +359,7 @@ export class TradesListComponent implements OnInit {
 
 
   //*****************************************************
-  //GET THE IMPUT IDS
+  //GET THE INPUT IDS
   //*****************************************************
   private getCategoryId(categoryname: string) {
     if (categoryname != "") {
@@ -504,14 +476,6 @@ export class TradesListComponent implements OnInit {
     // TODO add the postcode here
   }
 
-  
-  //****************************************************
-  // ADD TRADE
-  //****************************************************
-  private addTrade() {
-    this.router.navigate(['/addtrade']);
-  }
-
 
   //*****************************************************
   // HELPER METHODS
@@ -614,6 +578,9 @@ export class TradesListComponent implements OnInit {
   }
 
 
+  // an event from the child carousel component saying that encountered an error
+  private ChangeIsRequesting(bool) { this.isRequesting = false; }
+
   /**********************************************/
   //ngx-pagination section
   /***********************************************/
@@ -638,8 +605,8 @@ export class TradesListComponent implements OnInit {
 
   private data: Array<any> = [];     // full data from the server
   public rows: Array<any> = [];      // rows passed to the table
-  public maxSize: number = 5;
-  public numPages: number = 1;
+  public maxSize: number = 5;        // number of pages in the navigation
+  public numPages: number = 1;     
   
   private isNextButton: boolean = false;
   private isPrevButton: boolean = false;
@@ -674,7 +641,7 @@ export class TradesListComponent implements OnInit {
 
 
   private calculateTotalNumberOfSets() {
-    this.hasSets = true;
+   
     let rem = this.totalNumberOfRecords % this.recordsPerSet;
     let mainpart = ~~(this.totalNumberOfRecords / this.recordsPerSet);
 
@@ -727,7 +694,6 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  // next page of records method
   private nextSetOfRecords() {
 
     this.messagesService.emitRoute("nill");
@@ -748,7 +714,6 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  // previous page of records method
   private previousSetOfRecords() {
 
     this.messagesService.emitRoute("nill");
@@ -787,9 +752,6 @@ export class TradesListComponent implements OnInit {
       this.config.totalItems = this.data.length;
       this.isNewLoad = false;
     }
-
- 
-    if (this.config.totalItems > this.config.itemsPerPage) { this.hasNavigation = true;  }
     
   }
 
@@ -803,7 +765,7 @@ export class TradesListComponent implements OnInit {
         this.config.sorting.columns = [{ name: 'name', sort: this.sortName }];
         this.onChangeTable(this.config);
         this.isAsc = !this.isNameAsc;
-        this.isNameAsc = !this.isNameAsc;
+        this.isNameAsc = !this.isAsc;
         this.sortName = this.isNameAsc ? 'desc' : 'asc';
         break;
 

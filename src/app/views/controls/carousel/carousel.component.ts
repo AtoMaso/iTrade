@@ -47,7 +47,7 @@ export class CarouselComponent implements OnInit {
   }
 
   //**************************************************************
-  // GET IMAGES  
+  // GET IMAGES  - call the image service not passed from the parent
   //**************************************************************
   public getImagesByTradeId(id:number): void {
 

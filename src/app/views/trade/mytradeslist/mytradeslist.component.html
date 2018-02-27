@@ -186,7 +186,7 @@
 </div>
 
 
-<span *ngIf="hasNoTrades" class="textoker"> The system can not find any trades under your account!</span>
+<span *ngIf="!hasTrades" class="textoker"> The system can not find any trades under your account!</span>
 
 
 <my-spinner [isRunning]="isRequesting"></my-spinner>

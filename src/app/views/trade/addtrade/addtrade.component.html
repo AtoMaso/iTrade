@@ -20,7 +20,6 @@
 
                   <div class="row smalltext">
                     <div class="panel panel-heading col-md-3"><span>Description:</span></div>
-
                     <div class="form-group col-md-6">
                       <textarea formControlName="description" id="description" class="form-control text-comment" required autoGrow style="background-color:moccasin; height:40px"></textarea> <!--  [(ngModel)]="taskDescription"> -->
                       <control-messages [control]="addForm.controls.description"></control-messages>
@@ -33,10 +32,7 @@
 
                     <div class="form-group col-md-6">
                       <select formControlName="category" id="category" name="category" class="form-control" style="background-color:moccasin;" (ngModelChange)="onCategoryChange($event)">  <!--(change)="onCategoryChange($event.target.value)">-->                      
-                        <option *ngFor="let category of categories" [ngValue]="category.categoryId">
-                          {{ category.categoryDescription }}
-                        </option>
-
+                        <option *ngFor="let category of categories" [ngValue]="category.categoryId"> {{ category.categoryDescription }}</option>
                       </select>
                       <control-messages [control]="addForm.controls.category"></control-messages>
                     </div>
@@ -48,10 +44,7 @@
 
                     <div class="form-group col-md-6">
                       <select formControlName="subcategory" id="category" name="subcategory" class="form-control" style="background-color:moccasin;">                        
-                        <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.subcategoryId">
-                          {{ subcategory.subcategoryDescription }}
-                        </option>
-
+                        <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.subcategoryId">{{ subcategory.subcategoryDescription }}</option>
                       </select>
                       <control-messages [control]="addForm.controls.subcategory"></control-messages>
                     </div>
@@ -63,8 +56,7 @@
 
                     <div class="form-group col-md-6">
                       <select formControlName="state" id="state" name="state" class="form-control" style="background-color:moccasin;" (ngModelChange)="onStateChange($event)">                     
-                        <option *ngFor="let state of states" [ngValue]="state.id"> {{ state.name }}
-                        </option>             
+                        <option *ngFor="let state of states" [ngValue]="state.id"> {{ state.name }}</option>             
                       </select>
                       <control-messages [control]="addForm.controls.state"></control-messages>
                     </div>
@@ -75,11 +67,8 @@
                     <div class="panel panel-heading col-md-3"><span>Place:</span></div>
 
                     <div class="form-group col-md-6">
-                      <select formControlName="place" id="place" name="place" class="form-control" style="background-color:moccasin;">                   
-                        <option *ngFor="let place of places" [ngValue]="place.id">
-                          {{ place.name }}
-                        </option>
-
+                      <select formControlName="place" id="place" name="place" class="form-control" style="background-color:moccasin;" (ngModelChange)="onPlaceChange($event)">                   
+                        <option *ngFor="let place of places" [ngValue]="place.id">{{ place.name }}</option>
                       </select>
                       <control-messages [control]="addForm.controls.place"></control-messages>
                     </div>
@@ -89,10 +78,14 @@
                     <div class="panel panel-heading col-md-3"><span>Postcode:</span></div>
 
                     <div class="form-group col-md-6">
-                      <input type="text" formControlName="postcode" id="postcode" required class="form-control" style="background-color:moccasin;">
+                      <select formControlName="postcode" id="postcode" name="postcode" class="form-control" style="background-color:moccasin;">
+                        <option *ngFor="let postcode of postcodes" [ngValue]="postcode.id">{{ postcode.number }}</option>
+                      </select>
                       <control-messages [control]="addForm.controls.postcode"></control-messages>
                     </div>
                   </div>
+
+
 
                   <div class="row smalltext">
                     <div class="panel panel-heading col-md-3"><span>Trading For:</span></div>

@@ -18,7 +18,7 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 
-import { UserSession, UserIdentity, Authentication, Trade,PostTrade, PageTitle, Category, Subcategory, Image, State, Place } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade,PostTrade, PageTitle, Category, Subcategory, Image, State, Place, Postcode } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 let uploadFileUrl = CONFIG.baseUrls.uploadFileUrl;
@@ -29,12 +29,13 @@ let imagesPathUrl = CONFIG.baseUrls.imagesPathUrl;
   templateUrl: './addtrade.component.html',
   styleUrls: ['./addtrade.component.scss']
 })
+
 export class AddTradeComponent implements OnInit {
 
   private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
-  public addForm: FormGroup;
-  public datePickerOptions: IMyOptions;
-  public currentLocale: string = "en";
+  private addForm: FormGroup;
+  private datePickerOptions: IMyOptions;
+  private currentLocale: string = "en";
   private uploader: FileUploader;
   private hasBaseDropZoneOver: boolean;
   private hasAnotherDropZoneOver: boolean;
@@ -45,15 +46,13 @@ export class AddTradeComponent implements OnInit {
   private isAuthenticated: boolean = false;
 
   private isSubmitted: boolean = false; 
-  //private isVisible: boolean = false;
   private isMessageVisible: boolean = false;
-  //private isFileAllowed: boolean = true;
-  //private fileErrorMessage: string = "";
 
   private categories: Category[] = [];
   private subcategories: Subcategory[] = [];
   private states: State[] = [];
   private places: Place[] = [];
+  private postcodes: Postcode[] = [];
   
   private response: string;
   private hasImages: boolean = false;
@@ -90,6 +89,7 @@ export class AddTradeComponent implements OnInit {
     this.uploader.response.subscribe(res => this.response = res);
   };
 
+
   ngOnInit() {
     this.getUseridentity();
     this.initialiseComponent();
@@ -112,21 +112,6 @@ export class AddTradeComponent implements OnInit {
   }
 
 
-  //*****************************************************
-  // GET SUBCATEGORIES
-  //*****************************************************
-  public getSubcategoriesByCategoryId(categoryId: number) {
-    this.subcategoriesService.getSubcategoriesByCategoryId(categoryId)
-      .subscribe((res: Subcategory[]) => {
-        this.subcategories = res;
-      }
-      , (error: Response) => this.onError(error, "getSubcategoriesByCategoryId"));
-  }
-
-
-  //*****************************************************
-  // GET STATES
-  //*****************************************************
   public getStates() {
     this.statesService.getStates()
       .subscribe((res: State[]) => {
@@ -136,39 +121,50 @@ export class AddTradeComponent implements OnInit {
   }
 
 
-  //*****************************************************
-  // GET PLACES
-  //*****************************************************
-  public getPlaces() {
-    this.placesService.getPlaces()
-      .subscribe((res: Place[]) => {
-        this.places = res;
+  public getSubcategoriesByCategoryId(categoryId: number) {    
+    let m: number = 0;
+    for (m = 0; m < this.categories.length; m++) {
+      if (this.categories[m].categoryId == categoryId) {
+        this.subcategories = this.categories[m].subcategories;
       }
-      , (error: Response) => this.onError(error, "getPlaces"));
+    }
   }
 
 
-  public getPlacesByStateId(stateid:number) {
-    this.placesService.getPlacesByStateId(stateid)
-      .subscribe((res: Place[]) => {
-        this.places = res;
+  public getPlacesByStateId(stateid:number) {  
+    let m: number = 0;
+    for (m = 0; m < this.states.length; m++) {
+      if (this.states[m].id == stateid) {
+        this.places = this.states[m].places;
       }
-      , (error: Response) => this.onError(error, "getPlacesByStateId"));
+    }   
+  }
+
+
+  public getPostcodeByPlaceId(placeid: number) {
+    let m: number = 0;
+    for (m = 0; m < this.places.length; m++) {
+      if (this.places[m].id == placeid) {
+        this.postcodes = this.places[m].postcodes;
+      }
+    }
   }
 
 
 
   //*****************************************************
-  // SELECTION of state should get places for that state
+  // SCREEN SELECTION 
   //*****************************************************
-  private onStateChange(item:any) {
+  private onCategoryChange(item: any) {
+    this.getSubcategoriesByCategoryId(item);
+  }
+
+  private onStateChange(item: any) {
     this.getPlacesByStateId(item);
   }
 
-
-  private onCategoryChange(item: any) {
-
-    this.getSubcategoriesByCategoryId(item);
+  private onPlaceChange(item: any) {
+    this.getPostcodeByPlaceId(item);
   }
 
 
@@ -179,7 +175,10 @@ export class AddTradeComponent implements OnInit {
 
     // remove previous error messages
     this.messagesService.emitRoute("nill");
-
+     
+    let dt = new Date();
+    let today = new Date(dt.getFullYear(), dt.getMonth(), dt.getDay());
+        
     if (this.addForm.dirty && this.addForm.valid) {
 
       this.isMessageVisible = false;
@@ -190,7 +189,11 @@ export class AddTradeComponent implements OnInit {
       this.newTrade.description = this.addForm.controls.description.value;
       this.newTrade.tradeFor = this.addForm.controls.tradingfor.value;
       this.newTrade.datePublished = this.addForm.controls.publishDate.value.jsdate;
-      this.newTrade.status = "Open";
+      // TODO check what is the published date, if today then status will be OPEN
+      // is not than should shat"NOT PUBLISHED"
+      if (today < this.newTrade.datePublished) { this.newTrade.status = "Not Published"; }
+      else { this.newTrade.status = "Open";}
+     
       this.newTrade.categoryId = this.addForm.controls.category.value;
       this.newTrade.subcategoryId = this.addForm.controls.subcategory.value;
       this.newTrade.placeId = this.addForm.controls.place.value;
@@ -210,59 +213,8 @@ export class AddTradeComponent implements OnInit {
           this.newTrade.Images.push(image);
         }     
       }
-
-        this.AddTrade(this.newTrade);
-        //  if (this.checkThePostcodeAgainstTheState(this.newTrade.state, this.newTrade.postcode)) { this.AddTrade(this.newTrade);  }
-        //  else { this.messagesService.emitProcessMessage("Postcode does not match the state provided!");  }
+      this.AddTrade(this.newTrade);     
     }
-  }
-
-
-  private checkThePostcodeAgainstTheState(state: string, postcode: string): boolean {
-    switch (state)
-    {
-      case "NSW":
-        if ((parseInt(postcode) >= 1000 && parseInt(postcode) <= 1999) ||
-            (parseInt(postcode) >= 2000 && parseInt(postcode) <= 2599) ||
-            (parseInt(postcode) >=2619  && parseInt(postcode) <= 2899) ||
-            (parseInt(postcode) >= 2921 && parseInt(postcode) <= 2999)) {    
-            return true;        
-        } else {
-          return false;
-        }
-    
-      case "ACT":
-        if ((parseInt(postcode) >= 1000 && parseInt(postcode) <= 1999) ||
-          (parseInt(postcode) >= 2000 && parseInt(postcode) <= 2599) ||
-          (parseInt(postcode) >= 2619 && parseInt(postcode) <= 2899) ||
-          (parseInt(postcode) >= 2921 && parseInt(postcode) <= 2999)) {
-          return true;
-        } else {
-          return false;
-        }
-
-      case "NT":
-
-        break;
-
-      case "WA":
-        break;
-
-      case "QLD":
-        break;
-
-      case "SA":
-        break;
-
-      case "Victoria":
-        break;
-
-      case "Tasmania":
-
-        break;
-      default:
-    }
-    return true;
   }
 
 
@@ -290,16 +242,14 @@ export class AddTradeComponent implements OnInit {
       // is no point of changing of isRequested as we go to another page here
       this.isSubmitted = true;     
       this.router.navigate(['/tradedetails'], { queryParams: { id: trade.tradeId, flagnew: true }});          
-    }  
-    
+    }      
   }
 
 
   // upload each file- maybe we should go with mutliple
   private uploadSingleFile(item: any) {
     item.withCredentials = false;
-    // we are making the name unique evenif the file is the same 
-    // and does exist on the server upload side
+    // we are making the name unique even if the file is the same and does exist on the server upload side
     item.upload();
   }
 
@@ -360,8 +310,7 @@ export class AddTradeComponent implements OnInit {
 
   private initialiseComponent() {
     this.pageTitleService.emitPageTitle(new PageTitle("Post Trade"));
-    this.messagesService.emitRoute("nill");
-    //this.isFileAllowed = false;
+    this.messagesService.emitRoute("nill");   
     this.isRequesting = false;
   }
 
@@ -370,14 +319,14 @@ export class AddTradeComponent implements OnInit {
    
      this.addForm = this.formBuilder.group({   
        trading: new FormControl('', [Validators.required, ValidationService.tradeNameValidator]),
-       description: new FormControl('', [Validators.required, ValidationService.tradeDescriptionValidator]),
-       tradingfor: new FormControl('', [Validators.required, ValidationService.tradeForValidator]),
+       description: new FormControl('', [Validators.required, ValidationService.tradeDescriptionValidator]),          
+       category: new FormControl('', [Validators.required, ValidationService.categoryValidator]),
+       subcategory: new FormControl('', [Validators.required, ValidationService.subcategoryValidator]),    
        state: new FormControl('', [Validators.required, ValidationService.stateValidator]),
        place: new FormControl('', [Validators.required, ValidationService.placeValidator]),
-       category: new FormControl('', [Validators.required, ValidationService.categoryValidator]),
-       subcategory: new FormControl('', [Validators.required, ValidationService.subcategoryValidator]),
+       postcode: new FormControl('', [Validators.required, ValidationService.postcodeValidator]),
+       tradingfor: new FormControl('', [Validators.required, ValidationService.tradeForValidator]),  
        publishDate: new FormControl('', [Validators.required, ValidationService.publishDateValidator]),
-       postcode: new FormControl('', [Validators.required, ValidationService.postcodeValidator])
     });
 
     this.currentLocale = 'eu';
@@ -460,4 +409,5 @@ export class AddTradeComponent implements OnInit {
     else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
 
   }
+
 }

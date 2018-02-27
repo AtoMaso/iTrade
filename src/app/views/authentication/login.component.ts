@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   private trader: LoginModel;
   private keeplogin: boolean;
   private loginGroup: any;
-  private isRequesting: boolean;
+  private isRequesting: boolean = false;
  
   //*****************************************************
   // CONSTRUCTOR IMPLEMENTAION
@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
     this.keeplogin = this.loginGroup.controls.keeplogin.value;
 
     if (this.loginGroup.dirty && this.loginGroup.valid) {
+     
       this.authenticationService.loginClient(this.trader)
           .subscribe(res => this.onLoginSuccess(res)
            , (error: Response) => this.onError(error, "Login"));
@@ -68,6 +69,7 @@ export class LoginComponent implements OnInit {
     if (sessionStorage["UserSession"] != "null") {
       this.router.navigate(['/traderhome']);
       this.emitUserSession(res);
+      this.isRequesting = false;
     }
     else {
       this.messagesService.emitProcessMessage("PMEANC"); // account not confirmed

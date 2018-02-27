@@ -24,7 +24,7 @@
  
     setoftradeswithstatus: 'http://localhost:5700/api/trades/GetSetOfTradesWithStatus',
     setoftradeswithstatusfortrader: 'http://localhost:5700/api/trades/GetSetOfTradesWithStatusForTrader',
-    setoftradesnostatus: 'http://localhost:5700/api/trades/GetSetOfTradesNoStatusl',
+    setoftradesnostatus: 'http://localhost:5700/api/trades/GetSetOfTradesNoStatus',
   
 
     trade: 'http://localhost:5700/api/trades/',

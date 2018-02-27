@@ -1,10 +1,10 @@
 
     <div class="container col-md-12">    
 
-              <!-- the breadcrumb and sorting section-->
+              <!-- the breadcrumb and sorting and filter in allc columns section-->
              <div class="row panel panel-footer" style="height:75px;vertical-align:middle;margin-top:-15px;">
 
-                   <!-- breadcrumb -->
+                   <!-- number breadcrumb -->
                    <div class="col-md-4 panel panel-heading smalltextbold" style="height:55px;">
                      <div style="margin-top:5px;">
                         <span class="smalltextbold">Displaying <span class="text-info smalltextbold">{{ fromNumber }} to {{ toNumber }} </span> of <span class="text-info smalltextbold">{{ totalNumberOfRecords }}</span> records </span>                    
@@ -82,90 +82,105 @@
 
                                          <!-- Sidebar Header -->
                                          <div class="sidebar-header">
-                                           <a href="#filters" data-toggle="collapse" class="gliphfil smalltextbold textgray" aria-expanded="false" (click)="ClearAllFiltersAndGoBack()">
-                                             Filters  <!--<span class="glyphicon glyphicon-chevron-up"></span>-->
+                                           <a href="#filters" data-toggle="collapse" class="gliphfil smalltextbold textgray" aria-expanded="false">
+                                             Filters  <span class="glyphicon glyphicon-chevron-up"></span>
                                            </a>
                                          </div>
 
-                           
+                                        <div id="filters" class="colapse in">
                                           <br />
-                                          <div class="row smalltext">                                     
+                                          <div class="row smalltext">
                                             <div class="col-md-12">
                                               <span>Category:</span>
                                               <select id="category" name="category" class="form-control" style="background-color:moccasin;" (change)="CategoryClicked($event)">
                                                 <option></option>
                                                 <option *ngFor="let category of categories" [ngValue]="category.categoryId">
                                                   {{ category.categoryDescription }}
-                                                </option>                                        
+                                                </option>
                                               </select>
                                             </div>
                                           </div>
 
-                                          <br/>
-                                          <div class="row smalltext">                                   
+                                          <br />
+                                          <div class="row smalltext">
                                             <div class="col-md-12">
                                               <span>Subcategory:</span>
                                               <select id="subcategory" name="subcategory" class="form-control" style="background-color:moccasin;" (change)="SubcategoryClicked($event)">
                                                 <option></option>
-                                                <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.subcategoryId"  >
+                                                <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.subcategoryId">
                                                   {{ subcategory.subcategoryDescription }}
-                                                </option>                                     
+                                                </option>
                                               </select>
                                             </div>
                                           </div>
 
                                           <br />
-                                          <div class="row smalltext">                                   
+                                          <div class="row smalltext">
                                             <div class="col-md-12">
                                               <span>State:</span>
-                                              <select  id="state" name="state" class="form-control" style="background-color:moccasin;" (change)="StateClicked($event)">
+                                              <select id="state" name="state" class="form-control" style="background-color:moccasin;" (change)="StateClicked($event)">
                                                 <option></option>
                                                 <option *ngFor="let state of states" [ngValue]="state.id">
                                                   {{ state.name }}
                                                 </option>
-                                              </select>                                      
+                                              </select>
                                             </div>
                                           </div>
 
                                           <br />
-                                          <div class="row smalltext">                                  
+                                          <div class="row smalltext">
                                             <div class="col-md-12">
                                               <span>Place:</span>
                                               <select id="place" name="place" class="form-control" style="background-color:moccasin;" (change)="PlaceClicked($event)">
                                                 <option></option>
-                                                <option *ngFor="let place of places" [ngValue]="place.id" >
+                                                <option *ngFor="let place of places" [ngValue]="place.id">
                                                   {{ place.name }}
                                                 </option>
-                                              </select>                                 
+                                              </select>
                                             </div>
                                           </div>
 
                                           <br />
-                                         <div class="row smalltext">
-                                           <div class="col-md-12">
-                                             <span>Postcode:</span>
-                                             <select id="postcode" name="postcode" class="form-control" style="background-color:moccasin;" (change)="PostcodeClicked($event)">
-                                               <option></option>
-                                               <option *ngFor="let postcode of postcodes" [ngValue]="postcode.id" >
-                                                 {{ postcode.number }}
-                                               </option>
-                                             </select>
-                                           </div>
-                                         </div>
+                                          <div class="row smalltext">
+                                            <div class="col-md-12">
+                                              <span>Postcode:</span>
+                                              <select id="postcode" name="postcode" class="form-control" style="background-color:moccasin;" (change)="PostcodeClicked($event)">
+                                                <option></option>
+                                                <option *ngFor="let postcode of postcodes" [ngValue]="postcode.id">
+                                                  {{ postcode.number }}
+                                                </option>
+                                              </select>
+                                            </div>
+                                          </div>
                                           <br />
                                           <br />
-                                    
-                                         <div class="row smalltext">
-                                           <div class="col-md-12">
-                                             <button class="btn btn-primary btn-sm smalltext" (click)="getSetOfTradesWithSetFilters()" [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null ">Search</button>
-                                             <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" >Clear</button>
-                                           </div>
-                                         </div>
-                                   
 
-                                  <!-- original stuff here -->
+                                          
+                                          <div class="row container col-md-12" style="height:100px;">
+                                                  
+                                                  <div class="row container" style="height:50px;">
+                                                    <button class="btn btn-primary btn-sm smalltext" (click)="getSetOfTradesWithSetFilters()" [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null ">Search</button>
+                                                    <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
+                                                  </div>
+                                                  
+                                                                                 
+                                                <div *ngIf="!isAuthenticated" class="row container" style="height:50px;">
+                                                  <button type="button" data-target="#addWarning" data-toggle="modal" class="btn btn-sm btn-success smalltext">
+                                                    <span class="glyphicon glyphicon-plus"></span>&nbsp; Post Trade
+                                                  </button>
+                                                </div>
 
-                           </nav>
+                                                <div *ngIf="isAuthenticated" class="row container" style="height:50px;" (click)="PostTrade();">
+                                                  <button type="button" class="btn btn-sm btn-success smalltext">
+                                                    <span class="glyphicon glyphicon-plus"></span>&nbsp; Post Trade
+                                                  </button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                                                 
+                              </nav>
 
                          </div>
                                   
@@ -212,104 +227,78 @@
                </div>
 
 
-            <!-- Table navigation -->
-          <div class="row">
-                <div class="col-md-12 panel panel-heading" style="height:50px;vertical-align:middle;">
+                  <!-- table navigation -->
+                <div class="row">
+                      <div class="col-md-12 panel panel-heading" style="height:50px;vertical-align:middle;">
 
-                  <div class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
-                    <!-- the ngDefaultControl is needed because the pagination control needs a default acceessor -->
-                    <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
-                                         (pageChange)="onPageChange($event)"
-                                         maxSize="5"
-                                         directionLinks="true"
-                                         autoHide="true"
-                                         previousLabel="Previous"
-                                         nextLabel="Next"
-                                         screenReaderPaginationLabel="Pagination"
-                                         screenReaderPageLabel="page"
-                                         screenReaderCurrentLabel="You're on page"
-                                         [(ngModel)]="config.currentPage"
-                                         (numPages)="numPages = $event"
-                                         [maxSize]="maxSize">
-                    </pagination-controls>
-                  </div>
+                        <div class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
+                          <!-- the ngDefaultControl is needed because the pagination control needs a default acceessor -->
+                          <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
+                                               (pageChange)="onPageChange($event)"
+                                               maxSize="5"
+                                               directionLinks="true"
+                                               autoHide="true"
+                                               previousLabel="Previous"
+                                               nextLabel="Next"
+                                               screenReaderPaginationLabel="Pagination"
+                                               screenReaderPageLabel="page"
+                                               screenReaderCurrentLabel="You're on page"
+                                               [(ngModel)]="config.currentPage"
+                                               (numPages)="numPages = $event"
+                                               [maxSize]="maxSize">
+                          </pagination-controls>
+                        </div>
 
 
-                  <div class="container col-md-4" style="text-align:center;">
+                        <div class="container col-md-4" style="text-align:center;">
 
-                    <span class="smalltextbold textgray">Set of records: {{ setsCounter }} of  &nbsp;{{  totalNumberOfSets }}</span>
-                    <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
-                    <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+                          <span class="smalltextbold textgray">Set of records: {{ setsCounter }} of  &nbsp;{{  totalNumberOfSets }}</span>
+                          <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
+                          <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
 
-                  </div>
+                        </div>
 
-                  <div class="container col-md-4" style="text-align:center;">
+                        <div class="container col-md-4" style="text-align:center;">
 
-                    <div class="col-md-12">
-                      <span class="smalltextbold">Items Per Page</span>
-                      <input type="number" min="15" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" style="width:50px;height:30px;" class="form-inline">
-                    </div>
+                          <div class="col-md-12">
+                            <span class="smalltextbold">Items Per Page</span>
+                            <input type="number" min="15" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" style="width:50px;height:30px;" class="form-inline">
+                          </div>
 
-                  </div>
+                        </div>
 
+                      </div>
                 </div>
-          </div>
              
  </div>             
 
 
-<span *ngIf="hasNoTrades" class="textoker"> The system can not find any trades!</span>
+<span *ngIf="!hasTrades" class="textoker"> The system can not find any trades!</span>
 
 <my-spinner [isRunning]="isRequesting"></my-spinner>
 
 
+<!-- MODAL form to show when POST trade is clicked and user is NOT LOGGED IN -->
+<div class="modal fade" id="addWarning" tabindex="-1" role="dialog" aria-labelledby="addWarning">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
 
-<!--<div class="panel-group" id="catparent">
-  <div class="panel panel-default">
-    <div class="panel-heading" style="margin-top:-20px;">
-      <a data-toggle="collapse" data-parent="#catparent" href="#{{category.categoryDescription}}"
-         (click)="CategoryClicked(category)"
-         class="panel-title textlightcoral smalltextbold">
-        <span>{{category.categoryDescription}}  <span class="caret"></span> </span>
-      </a>
-    </div>
-
-    <div class="panel-collapse collapse" id="{{category.categoryDescription}}">
-      <div class="panel-body">
-        <ul class="panel-collapse collapse list-unstyled" id="{{category.categoryDescription}}">
-           for each subcategories here 
-          <li *ngFor="let subcategory of category.subcategories">
-            <a (click)="SubcategoryClicked(subcategory, category)"
-               class="textoker smalltextbold">
-              <span>{{subcategory.subcategoryDescription}}</span>
-            </a>
-          </li>
-        </ul>
+      <div class="modal-header">
+        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
       </div>
-    </div>
 
-  </div>
-</div>-->      
-
-
-<!--<div class="panel-group" id="plaparent">
-  <div class="panel panel-default">
-
-    <div class="panel-heading" style="margin-top:-18px;">
-      <a data-toggle="collapse" data-parent="#plaparent" href="#{{state.name}}" (click)="StateClicked(state)" class="panel-title textlightcoral smalltextbold">
-        <span>{{state.name}}  <span class="caret"></span> </span>
-      </a>
-    </div>
-
-    <div class="panel-collapse collapse" id="{{state.name}}">
-      <div class="panel-body">
-        <ul style="margin-left:-30px;">        
-          <li *ngFor="let place of state.places">
-            <a (click)="PlaceClicked(place, state)" class="textoker smalltextbold"><span>{{place.name}}</span></a>
-          </li>
-        </ul>
+      <div class="modal-body text-warning">
+        <p>You need to be a logged on trader to do this action. Do you want to log in?</p>
       </div>
-    </div>
 
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" [routerLink]="['/login']" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
   </div>
-</div>-->
+</div>
+<!--End of modal form -->

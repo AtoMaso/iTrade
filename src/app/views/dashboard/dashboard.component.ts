@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Response } from '@angular/http';
 
 import { TradeApiService } from '../../services/tradeapi/tradeapi.service';
 import { LoggerService } from '../../services/logger/logger.service';
@@ -22,7 +23,6 @@ import { PageTitle, Trade } from '../../helpers/classes';
 
 export class DashboardComponent implements OnInit {
 
-  //private trades: Trade[] = [];
   private trades: Array<any> = [];
   public isRequesting: boolean;
   private hasTrades: boolean = true;  
@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
 
 
   //*****************************************************
-  //  GET TOP 8 TRADES
+  //  GET TOP 6 TRADES
   //*****************************************************
   public getLimitedNumberOfTrades(number: number, status:string): void {
     // call the service to get the data  
@@ -105,6 +105,9 @@ export class DashboardComponent implements OnInit {
   }
 
 
+ //****************************************************
+ // LOGGING METHODS
+ //****************************************************
   private onError(serviceError: any, operation: string) {
     // stop the spinner if running
     this.isRequesting = false;

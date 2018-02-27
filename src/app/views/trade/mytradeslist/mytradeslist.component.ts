@@ -74,12 +74,7 @@ export class MyTradesListComponent implements OnInit {
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
             this.hasTrades = false;
-            this.isRequesting = false;
-            if (!this.hasTrades && !this.hasNoTrades) { this.getTrades(traderId, "All"); }     // there are no open trades so get the latest closed ones
-            else {
-              this.hasTrades = false;
-              this.hasNoTrades = true;   // if there are no records at all than show the message no trades at all
-            }
+            this.isRequesting = false;          
         }  
         else {
             this.data = this.TransformData(returnedTrades),
@@ -105,12 +100,7 @@ export class MyTradesListComponent implements OnInit {
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
             this.hasTrades = false;
-            this.isRequesting = false;
-            if (!this.hasTrades && !this.hasNoTrades) { this.getSetOfTrades(traderId, setCounter, recordsPerSet, "All"); }     // there are no open trades so get the latest closed ones
-            else {
-              this.hasTrades = false;
-              this.hasNoTrades = true;   // if there are no records at all than show the message no trades at all
-            }
+            this.isRequesting = false;           
         }  
         else {
             this.data = this.TransformData(returnedTrades),

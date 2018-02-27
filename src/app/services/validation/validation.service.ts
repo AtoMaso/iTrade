@@ -32,18 +32,9 @@ export class ValidationService {
     return config[validatorName];
   }
 
-  //static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
-  //  let config = {
-  //    'required': 'Required',
-  //    'invalidCreditCard': 'Is invalid credit card number',
-  //    'invalidEmailAddress': 'Invalid email address',
-  //    'invalidPassword': 'Invalid password. Password must be at least 6 characters long, and contain a number.',
-  //    'minlength': `Minimum length ${validatorValue.requiredLength}`
-  //  };
-
-  //  return config[validatorName];
-  //}
-
+ /**************************************************/
+ //trade list view and add trade view validation 
+/**************************************************/ 
   static tradeNameValidator(control) {
     // {10}-Assert trade name can be up to is 10 characters
     if (control.value) {
@@ -154,23 +145,42 @@ export class ValidationService {
     }
   }
 
-  
+  static postcodeValidator(control: any) {
 
-  static creditCardValidator(control) {
-    // Visa, MasterCard, American Express, Diners Club, Discover, JCB
-    if (control.value.match(/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/)) {
-      return null;
-    } else {
-      return { 'invalidCreditCard': true };
+        // postcode must be selected
+    if (control.value) {
+
+      if (control.value !== "Select") {
+        return null;
+      }
+      else {
+        return { 'invalidPostcode': true };
+      }
     }
   }
+  
 
+
+ /**************************************************/
+ // login and regitser views validations
+/**************************************************/
   static emailValidator(control) {
     // RFC 2822 compliant regex
     if (control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
       return null;
     } else {
       return { 'invalidEmailAddress': true };
+    }
+  }
+
+  static emailDomainValidator(control: any) {
+    if (control.value) {
+      // RFC 2822 compliant regex
+      if (control.value.match(/^(\w+)(\.\w+)(\@ato.gov.au)$/)) {
+        return null;
+      } else {
+        return { 'invalidEmailDomain': true };
+      }
     }
   }
 
@@ -184,57 +194,7 @@ export class ValidationService {
     }
   }
 
-  //// GOOD - TEST IT
-  //static creditCardValidator(control:any) {
-  //  // Visa, MasterCard, American Express, Diners Club, Discover, JCB
-  //  if (control.value) {
-  //      if (control.value.match(/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/)) {
-  //        return null;
-  //      } else {
-  //        return { 'invalidCreditCard': true };
-  //      }
-  //  }
-  //}
-
-  //// GOOD
-  //static emailValidator(control: any) {
-  //  if (control.value) {
-  //      // RFC 2822 compliant regex
-  //      //if (control.value.match(/^([a-zA-Z0-9!#$%&'*+/=?^_`{|}~-])(\.[a-zA-Z0-9!#$ %&'*+/=?^_`{|}~-])(\@\w+(\.\w{3})(\.\w{2}))$/)) {
-  //      if (control.value.match(/^(\w+)(\.\w+)(\@\w+(\.\w{3})(\.\w{2}))$/)) {
-  //        return null;
-  //      } else {
-  //        return { 'invalidEmailAddress': true };
-  //      }
-  //  }
-  //}
-
-  static emailDomainValidator(control: any) {
-    if (control.value) {
-      // RFC 2822 compliant regex
-      if (control.value.match(/^(\w+)(\.\w+)(\@ato.gov.au)$/)) {
-        return null;
-      } else {
-        return { 'invalidEmailDomain': true };
-      }
-    }
-  }
-
-
-  //// GOOD
-  //static passwordValidator(control:any) {
-  //  // {6,100}-Assert password is between 6 and 100 characters
-  //  // (?=.*[0-9])-Assert a string has at least one number
-  //  if (control.value) {
-  //      if (control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,10}$/)) {
-  //        return null;
-  //      } else {
-  //        return { 'invalidPassword': true };
-  //      }
-  //  }
-  //}
-
-
+ 
   // GOOD
   static confirmPasswordValidator(control: any) {   
       // {6,100}-Assert password is between 6 and 100 characters
@@ -261,17 +221,6 @@ static phoneValidator(control: any) {
   }
 }
 
-// GOOD
-static workpointValidator(control: any) {
-  // {3-6}-Assert workpoint is alphanumeric characters and the dot character
-  if (control.value) {
-      if (control.value.match(/^\d{1,3}(\.\d{1,3})$/)) {
-        return null;
-      } else {
-        return { 'invalidWorkpoint': true };
-      }
-  }
-}
 
 // GOOD
 static firstNameValidator(control: any) {
@@ -307,16 +256,12 @@ static firstNameValidator(control: any) {
     }
   }
 
-
-  static postcodeValidator(control: any) {
-    // Name should be any character set separated with minimum one space
-    if (control.value) {
-      if (control.value.match(/^(\d{4})$/)) {           
-        return null;
-      } else {
-        return { 'invalidPostCode': true };
-      }
+  static creditCardValidator(control) {
+    // Visa, MasterCard, American Express, Diners Club, Discover, JCB
+    if (control.value.match(/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/)) {
+      return null;
+    } else {
+      return { 'invalidCreditCard': true };
     }
   }
-
 }
