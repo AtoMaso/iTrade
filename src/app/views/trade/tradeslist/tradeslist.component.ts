@@ -136,7 +136,7 @@ export class TradesListComponent implements OnInit {
       // Space between element and top of screen (when scrolling)
       var topMargin = 60;
 
-      // Should probably be set in CSS; but here just for emphasis
+      // Should probably be set in CSS;
       element.css('position', 'relative');
 
       jQuery(window).on('scroll', function (event) {
@@ -147,7 +147,7 @@ export class TradesListComponent implements OnInit {
         }, 300);
       });
 
-    }); // document function
+    }); // end of document function
 
 
   }
@@ -294,13 +294,6 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  // initialte filtration
-  private runFiltersSet() {
-    //this.getTradesWithSetFilters();
-    this.getSetOfTradesWithSetFilters();
-  }
-
-
   //*****************************************************
   // GET CATEGORIES
   //*****************************************************
@@ -335,12 +328,21 @@ export class TradesListComponent implements OnInit {
     this.selectedPlace = null;
     this.selectedPostcode = null;
 
+    this.categories = null;
+    this.subcategories = null;
+    this.states = null;
+    this.places = null;
+    this.postcodes = null;
+
     this.filters = null;
     this.filters1 = null;
     this.filters2 = null;
     this.setupFilterString();
+
     //this.getTrades("Open");
     this.getSetOfTrades(this.setsCounter, this.recordsPerSet, this.status);
+    this.getCategories();
+    this.getStates();
     this.messagesService.emitRoute("nill");
   }
 
@@ -373,7 +375,7 @@ export class TradesListComponent implements OnInit {
   private PlaceClicked(event:any) {   
     this.selectedPlace = event.target.value;    
     this.selectedPostcode = null;  
-    this.getPlaceId(event.target.value;); 
+    this.getPlaceId(event.target.value); 
     this.setupFilterString();
   }
 
@@ -425,12 +427,14 @@ export class TradesListComponent implements OnInit {
         if (this.states[m].name == statename) {
           this.selectedStateId = this.states[m].id;
           this.places = this.states[m].places;
+          this.postcodes = null;
         }
       }
     }
     else {
       this.selectedState = null;
       this.places = null;
+      this.postcodes = null;
       this.filters2 = null;
     }
   }
@@ -441,7 +445,7 @@ export class TradesListComponent implements OnInit {
       for (m = 0; m < this.places.length; m++) {
         if (this.places[m].name == placename) {
           this.selectedPlaceId = this.places[m].id;
-          this.postcodes = this.places[m].postcodes;
+          this.postcodes = this.places[m].postcodes;         
         }
       }
     }
@@ -474,7 +478,7 @@ export class TradesListComponent implements OnInit {
     }
    
     if (this.selectedSubcategory) {
-      if (this.filters1 == null) { this.filters1 = "Category = " + this.selectedCategory + " & Subcategory =" + this.selectedSubcategory; }
+      if (this.filters1 == null) { this.filters1 = "Category = " + this.selectedCategory + " & Subcategory = " + this.selectedSubcategory; }
       else if (this.filters1.indexOf(this.selectedSubcategory) == -1) { this.filters1 = this.filters1 + " & Subcategory = " + this.selectedSubcategory; }
     }
    
@@ -485,6 +489,11 @@ export class TradesListComponent implements OnInit {
     if (this.selectedPlace) {   
       if (this.filters2 == null) { this.filters2 = "State = " + this.selectedState + " & Place =" + this.selectedPlace; }     
       else if (this.filters2.indexOf(this.selectedPlace) == -1) { this.filters2 = this.filters2 + " & Place = " + this.selectedPlace; }
+    }
+
+    if (this.selectedPostcode) {
+      if (this.filters2 == null) { this.filters2 = "State = " + this.selectedState + " & Place =" + this.selectedPlace + " & Postcode = " + this.selectedPostcode; }
+      else if (this.filters2.indexOf(this.selectedPostcode) == -1 ) { this.filters2 = this.filters2 + " & Postcode = " + this.selectedPostcode; }
     }
 
     if (this.filters1 && this.filters2) { this.filters = this.filters1 + " & " + this.filters2; }
@@ -647,7 +656,7 @@ export class TradesListComponent implements OnInit {
       { title: 'Trader', name: 'traderFullName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader full name.' } },
       { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by date.' } } ,    
       { title: 'Place', name: 'place', sort: true, filtering: { filterString: '', placeholder: 'Filter by place.' } },
-      { title: 'Postcode', name: 'postcode', sort: true, filtering: { filterString: '', placeholder: 'Filter by postcode.' } },
+      { title: 'Postcode', name: 'postcodeNumber', sort: true, filtering: { filterString: '', placeholder: 'Filter by postcode number.' } },
       { title: 'State', name: 'state', sort: true, filtering: { filterString: '', placeholder: 'Filter by state.' } }     
   ];
 
@@ -799,7 +808,7 @@ export class TradesListComponent implements OnInit {
         break;
 
       case 'tradeFor':
-        this.selectedItem = "Trading For";
+        this.selectedItem = "Trade For";
         this.config.sorting.columns = [{ name: 'tradeFor', sort: this.sortTradeFor }];
         this.onChangeTable(this.config);
         this.isAsc = !this.isTradeForAsc;
@@ -843,9 +852,9 @@ export class TradesListComponent implements OnInit {
         this.sortPlace = this.isPlaceAsc ? 'desc' : 'asc';
         break;
 
-      case 'postcode':
+      case 'postcodeNumber':
         this.selectedItem = "Postcode";
-        this.config.sorting.columns = [{ name: 'postcode', sort: this.sortPostcode }];
+        this.config.sorting.columns = [{ name: 'postcodeNumber', sort: this.sortPostcode }];
         this.onChangeTable(this.config);
         this.isAsc = !this.isPlostcodeAsc;
         this.isPlostcodeAsc = !this.isPlostcodeAsc;

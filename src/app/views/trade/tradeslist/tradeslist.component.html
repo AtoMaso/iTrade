@@ -48,7 +48,7 @@
                                    <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('place')">Place</a></li>       
                                    <li role="presentation" class="divider"></li>
-                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('postcode')">Postcode</a></li>
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('postcodeNumber')">Postcode</a></li>
                                    <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('state')">State</a></li>                                   
                                  </ul>
@@ -144,9 +144,9 @@
                                          <div class="row smalltext">
                                            <div class="col-md-12">
                                              <span>Postcode:</span>
-                                             <select id="postcode" name="postcode" class="form-control" style="background-color:moccasin;">
+                                             <select id="postcode" name="postcode" class="form-control" style="background-color:moccasin;" (change)="PostcodeClicked($event)">
                                                <option></option>
-                                               <option *ngFor="let postcode of postcodes" [ngValue]="postcode.id" (change)="PostcodeClickedD($event)">
+                                               <option *ngFor="let postcode of postcodes" [ngValue]="postcode.id" >
                                                  {{ postcode.number }}
                                                </option>
                                              </select>
@@ -157,7 +157,7 @@
                                     
                                          <div class="row smalltext">
                                            <div class="col-md-12">
-                                             <button class="btn btn-primary btn-sm smalltext" (click)="runFiltersSet()" [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null ">Search</button>
+                                             <button class="btn btn-primary btn-sm smalltext" (click)="getSetOfTradesWithSetFilters()" [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null ">Search</button>
                                              <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" >Clear</button>
                                            </div>
                                          </div>
