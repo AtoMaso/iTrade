@@ -29,7 +29,6 @@ export class CarouselComponent implements OnInit {
   private images: Image[];
 
   @Input() tradeId: number;
-  //@Input() tradeImages: Image[];
   @Output() onErrorPicked: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private  imageService: ImageService,

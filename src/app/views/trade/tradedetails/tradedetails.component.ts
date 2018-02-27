@@ -247,11 +247,13 @@ export class TradeDetailsComponent implements OnInit {
     }
   }
 
+
   // initialise component
   private initialiseComponent() {
     this.pageTitleService.emitPageTitle(new PageTitle("Trade Details"));
     this.messagesService.emitRoute("nill");
   }
+
 
   // transform the data in fom we need
   private TransformData(returnedTrade: Trade): Trade {     
@@ -274,20 +276,6 @@ export class TradeDetailsComponent implements OnInit {
 
     trd.traderId = returnedTrade.traderId; 
     trd.traderFullName = returnedTrade.traderFirstName + " " + returnedTrade.traderMiddleName + " " + returnedTrade.traderLastName;
-
-    // this where images are taken from the trade
-    //trd.Images = returnedTrade.Images;
-    //this.images = returnedTrade.Images;
-    //if (this.images.length == 0) {
-    //  this.hasImages = false;
-    //}
-    //else if (this.images.length == 1) {
-    //  this.hasImage2 = false;
-    //  this.hasImage3 = false;
-    //}
-    //else if (this.images.length == 2) {
-    //  this.hasImage3 = false; 
-    //}    
 
     return trd;
   }
@@ -329,8 +317,6 @@ export class TradeDetailsComponent implements OnInit {
     else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }  
     else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
     else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
-
-
   }
 
 

@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
       trd.traderLastName = value.traderLastName;
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
    
-      trd.Images = value.Images;  
+      //trd.Images = value.Images;  
 
       transformedData.push(trd);
 
