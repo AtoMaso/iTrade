@@ -185,7 +185,6 @@
                                     <span *ngIf="item.isReady"><i class="glyphicon glyphicon-cloud-upload"></i></span>
                                   </td>
 
-
                                   <td nowrap class="text-center">
                                     <!-- upload button single file in  this case we do not allow that -->
                                     <!--<button type="button" class="btn btn-success btn-xs" (click)="uploadSingleFile(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess">
@@ -219,7 +218,8 @@
                                   <!--<button type="button" class="btn btn-success btn-s"
                                     (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                                   <span class="glyphicon glyphicon-upload"></span> Upload all
-                                  </button>-->                            
+                                  </button>-->        
+                                  <br/>                    
                                   <button type="button" class="btn btn-warning btn-s smalltext" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
                                         <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
                                   </button>

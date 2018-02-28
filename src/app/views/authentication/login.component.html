@@ -1,86 +1,85 @@
 ﻿
-    <form  [formGroup]="loginGroup" (submit)="login()" class="container col-md-12">
-            <div class="container col-md-12" >
+    <div class="container col-md-11">
 
-          
-                     <div class="col-sm-4">
-                       
-                         <div class="row" style="height:50px;">
-                               <span class="textgray mediumtext">Login with your iTrade account</span>
-                          </div>          
-                           
-
-                         <div class="row form-group smalltext"  style="height:60px;">
-                               <div class="input-group">
-                                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                 <input type="email" formControlName="email" id="email" maxlength="70" placeholder="Your Email Account" required class="form-control smalltext" style="background-color:moccasin">                             
-                               </div>
-                                <control-messages [control]="loginGroup.controls.email"></control-messages>
-                             </div>
-                        
-                                                                                                               
-                         <div class="row form-group smalltext"  style="height:60px;">
-                             <div class="input-group">
-                               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                               <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your Password" required class="form-control smalltext" style="background-color:moccasin">                             
-                             </div>
-                             <control-messages [control]="loginGroup.controls.password"></control-messages>
-                           </div>     
-                            
-                                                             
-                         <div class="row form-group" style="height:60px;text-align:left;">
-                             <div class="input-group panel panel-heading">      
-                               <mat-checkbox class="textlightcoral smalltext"  formControlName="keeplogin" id="keeplogin" checked="true">Keep me logged in</mat-checkbox>                                                                                                                                                                                
-                                <!--<span class="input-group-addon textlightcoral transparent smalltext">Keep me logged in: </span>                                                                         
-                               <span style="display:inline-block; background-color:moccasin;padding:0px;margin:0px;height:20px; width:20px;margin-top:4px;overflow:hidden">
-                                      <input type="checkbox" formControlName="keeplogin" id="keeplogin" class="form-control smalltext" style="opacity:0.50;padding:0px;margin:0px;width:20px;height:20px;margin-top:3px;" />                                            
-                                  </span>-->                         
-                               </div>
-                           </div>                         
-                      
-                                                           
-                         <div class="row form-group" style="height:60px;margin-top:10px;">
-                           <div class="input-group panel panel-heading">
-                             <button class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!loginGroup.valid" style="width:auto; height:30px;">Log In</button>&nbsp;&nbsp;
-                             <a href="" [routerLink]="['/forgotpassword']" class="smalltextbold textlightcoral text-capitalize underline">I Forgot....</a>
-                           </div>
-                         </div>
-
-                      </div>
-
-
+                <form [formGroup]="loginGroup" (submit)="login()" >
               
-                    <div class="col-sm-7 col-md-offset-1" >
+                <div class="col-sm-4">
 
-                      <div class="row panel panel-body">
-
-                        <div class="row col-md-offset-1"  style="height:50px;">
-                          <span class="textgray mediumtext">Unlock the benefits of iTrade account</span>
-                        </div>
-
-
-                        <div class="row col-md-offset-1 textgray">
-
-                          <div class="smalltext" style="height:45px;"> Create an ITrade account to: </div>
-                          <div class="smalltext" style="height:45px;"><span class="glyphicon glyphicon-check"></span> Display a trade to a large community of traders.</div>
-                          <div class="smalltext" style="height:45px;"><span class="glyphicon glyphicon-check"></span> Look for a possible trades.</div>
-                          <div class="smalltext" style="height:45px;"><span class="glyphicon glyphicon-check"></span> Manage all your trades.</div>
-                          <div class="smalltext" style="height:45px;"><span class="glyphicon glyphicon-check"></span> Correspond with wider trader community.</div>
-
-                        </div>
-
-
-                        <div class="row col-md-offset-1" style="height:50px;margin-top:20px">
-                          <button class="btn btn-success text-uppercase smalltext" type="button" [routerLink]="['/register']" style="width:auto; height:30px;">Register Now</button>
-                        </div>
-
-                      </div>
-
+                  <div class="row" style="height:50px;">
+                    <span class="textgray mediumtext">Login with your iTrade account</span>
                   </div>
 
 
-             </div>          
-    </form>
+                  <div class="row form-group smalltext" style="height:60px;">
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                      <input type="email" formControlName="email" id="email" maxlength="70" placeholder="Your Email Account" required class="form-control smalltext" style="background-color:moccasin">
+                    </div>
+                    <control-messages [control]="loginGroup.controls.email"></control-messages>
+                  </div>
+
+
+                  <div class="row form-group smalltext" style="height:60px;">
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                      <input type="password" formControlName="password" id="password" maxlength="20" placeholder="Your Password" required class="form-control smalltext" style="background-color:moccasin">
+                    </div>
+                    <control-messages [control]="loginGroup.controls.password"></control-messages>
+                  </div>
+
+
+                  <div class="row form-group" style="height:60px;text-align:left;">
+                    <div class="input-group panel panel-heading">
+                      <mat-checkbox class="textlightcoral smalltext" formControlName="keeplogin" id="keeplogin" checked="true">Keep me logged in</mat-checkbox>
+                      <!--<span class="input-group-addon textlightcoral transparent smalltext">Keep me logged in: </span>
+                      <span style="display:inline-block; background-color:moccasin;padding:0px;margin:0px;height:20px; width:20px;margin-top:4px;overflow:hidden">
+                              <input type="checkbox" formControlName="keeplogin" id="keeplogin" class="form-control smalltext" style="opacity:0.50;padding:0px;margin:0px;width:20px;height:20px;margin-top:3px;" />
+                          </span>-->
+                    </div>
+                  </div>
+
+
+                  <div class="row form-group" style="height:60px;margin-top:10px;">
+                    <div class="input-group panel panel-heading">
+                      <button class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!loginGroup.valid" style="width:auto; height:30px;">Log In</button>&nbsp;&nbsp;
+                      <a href="" [routerLink]="['/forgotpassword']" class="smalltextbold textlightcoral text-capitalize underline">I Forgot....</a>
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+                <div class="col-sm-7 col-md-offset-1">
+
+                    <div class="row panel panel-body">
+
+                            <div class="row col-md-offset-1" style="height:50px;">
+                              <span class="textgray mediumtext">Unlock the benefits of iTrade account</span>
+                            </div>
+
+
+                           <div class="row col-md-offset-1 textgray">
+
+                            <div class="smalltext" style="height:45px;"> Create an ITrade account to: </div>
+                            <div class="smalltext" style="height:45px;"><span class="glyphicon glyphicon-check"></span> Display a trade to a large community of traders.</div>
+                            <div class="smalltext" style="height:45px;"><span class="glyphicon glyphicon-check"></span> Look for a possible trades.</div>
+                            <div class="smalltext" style="height:45px;"><span class="glyphicon glyphicon-check"></span> Manage all your trades.</div>
+                            <div class="smalltext" style="height:45px;"><span class="glyphicon glyphicon-check"></span> Correspond with wider trader community.</div>
+
+                          </div>
+
+
+                           <div class="row col-md-offset-1" style="height:50px;">
+                            <button class="btn btn-success text-uppercase smalltext" type="button" [routerLink]="['/register']" style="width:auto; height:30px;">Register Now</button>
+                          </div>
+
+                    </div>
+
+                </div>
+              
+         </form>
+</div>
 
 <!--<my-spinner [isRunning]="isRequesting"></my-spinner>-->
 

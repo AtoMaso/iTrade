@@ -1,9 +1,7 @@
 ﻿
- <div *ngIf="!submitted">
+ <div *ngIf="!submitted" class="container col-md-11">
 
-  <form  [formGroup]="registerGroup" (submit)="register()" *ngIf="!submited" class="container col-md-12">
-
-    <div class="container col-md-12">
+      <form  [formGroup]="registerGroup" (submit)="register()" *ngIf="!submited">
 
             <div class="col-md-4">
         
@@ -66,9 +64,8 @@
 
           </div>
       
-    </div>
 
-  </form>
+      </form>
 </div>
 
 
@@ -86,12 +83,12 @@
                       </div>
                     </div>
 
-            <div class="col-md-2 col-md-offset-1">
-              <div class="smalltext" style="text-align:center">
-                <button class="btn btn-success" [routerLink]="['/login']" style="width:150px">Login</button>
-              </div>
-            </div>
-            </div>                  
+                   <div class="col-md-2 col-md-offset-1">
+                    <div class="smalltext" style="text-align:center">
+                      <button class="btn btn-success" [routerLink]="['/login']" style="width:150px">Login</button>
+                    </div>
+                  </div>
+        </div>                  
   </div>
 
 

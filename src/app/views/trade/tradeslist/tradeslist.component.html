@@ -2,19 +2,19 @@
     <div class="container col-md-12">    
 
               <!-- the breadcrumb and sorting and filter in allc columns section-->
-             <div class="row panel panel-footer" style="height:75px;vertical-align:middle;margin-top:-15px;">
+             <div class="row" style="vertical-align:middle;margin-top:-15px;">
 
                    <!-- number breadcrumb -->
                    <div class="col-md-4 panel panel-heading smalltextbold" style="height:55px;">
-                     <div style="margin-top:5px;">
-                        <span class="smalltextbold">Displaying <span class="text-info smalltextbold">{{ fromNumber }} to {{ toNumber }} </span> of <span class="text-info smalltextbold">{{ totalNumberOfRecords }}</span> records </span>                    
+                     <div style="margin-top:8px;">
+                        <span class="smalltextbold" >Displaying <span class="text-info smalltextbold">{{ fromNumber }} to {{ toNumber }} </span> of <span class="text-info smalltextbold">{{ totalNumberOfRecords }}</span> records </span>                    
                      </div>
                    </div>
                   
 
                  <!-- filter in all coloumns -->
                    <div class="col-md-4 panel panel-heading" style="height:55px;">                     
-                       <div class="col-md-12">                         
+                       <div class="col-md-12" style="margin-top:2px;">                         
                          <input *ngIf="config.filtering" placeholder="Filter in all columns" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control smalltext" style="height:30px;" />
                        </div>                                        
                    </div>
@@ -23,16 +23,16 @@
                     <!-- sort -->
                    <div class="col-md-4 panel panel-heading" style="height:55px;">
 
-                         <div class="col-md-6 smalltextbold" style="margin-top:5px;">
+                         <div class="col-md-6 smalltextbold" style="margin-top:8px;">
                                  <span> Sorted by: <span class="text-info">{{ selectedItem }}</span></span>
                                  <span *ngIf="isAsc" class="glyphicon glyphicon-chevron-down"></span>
                                  <span *ngIf="!isAsc" class="glyphicon glyphicon-chevron-up"></span>
                          </div>       
 
-                         <div class="col-md-6" >
+                         <div class="col-md-6" style="margin-top:-2px;" >
                    
                              <div class="dropdown">
-                                 <button class="btn btn-primary dropdown-toggle smalltext" id="menu1" type="button" data-toggle="dropdown" style="height:30px;width:150px;">Sort By
+                                 <button class="btn btn-primary dropdown-toggle smalltext" id="menu1" type="button" data-toggle="dropdown" style="width:150px;text-align:justify;">Sort By
                                    <span class="caret"></span>
                                  </button>
                                  <ul class="dropdown-menu smalltextbold" role="menu" aria-labelledby="menu1">
@@ -62,15 +62,13 @@
 
 
              <!-- filter string-->
-             <div class="row">            
-               <div class="col-md-12 panel panel-title" style="margin-top: -10px;margin-bottom:10px;">                     
-                     <span  class="smalltextbold">Selected filters : <span class="textlightcoral" id="filterstring"> {{ filters }}</span></span>                
-               </div>                   
+             <div class="row panel panel-heading" style="margin-top:-10px;">                                           
+                 <span  class="smalltextbold">Selected filters : <span class="textlightcoral" id="filterstring"> {{ filters }}</span></span>                                 
            </div>
 
 
              <!-- filters and the table -->
-             <div class="row">
+             <div class="row" style="margin-top:-10px;">
 
                  <!-- filters -->
                  <div class="col-md-2">
@@ -194,32 +192,33 @@
                         <td class="row col-md-12">
 
                                <div class="col-md-4 container">
-                                 <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>
+                                 <carousel id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>
                                </div>
 
                                <div class="col-md-4 smalltextbold text-capitalize textgray">
-                                 <div class="row" style="height:30px;">Trading:<a class="text-capitalize textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>                               
-                                 <div class="row" style="height:30px;">Category: <span><span class="text-capitalize text-info"> {{ trade.categoryDescription  }}</span></span></div>
-                                 <div class="row" style="height:30px;">Subcategory: <span><span class="text-capitalize text-info"> {{ trade.subcategoryDescription  }}</span></span></div>
-                                 <div class="row" style="height:30px;">Trading for: <span class="text-capitalize text-info"> {{ trade.tradeFor  }}</span></div>
-                                 <div class="row" style="height:30px;">Reference Id:<span class="text-capitalize text-info"> {{ trade.tradeId  }}</span></div>
-                                 <div class="row" style="height:30px;">Published on:<span class="text-capitalize text-info"> {{ trade.datePublished | date:'medium'  }}</span></div>
-                                 <div class="row" style="height:30px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>
-                                 <div class="row" style="height:30px;">Trader: <a class="text-capitalize textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
+                                 <div class="row" style="height:32px;">Trading:<a class="text-capitalize textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>                               
+                                 <div class="row" style="height:32px;">Category: <span><span class="text-capitalize text-info"> {{ trade.categoryDescription  }}</span></span></div>
+                                 <div class="row" style="height:32px;">Subcategory: <span><span class="text-capitalize text-info"> {{ trade.subcategoryDescription  }}</span></span></div>
+                                 <div class="row" style="height:32px;">Trading for: <span class="text-capitalize text-info"> {{ trade.tradeFor  }}</span></div>
+                                 <div class="row" style="height:32px;">Reference Id:<span class="text-capitalize text-info"> {{ trade.tradeId  }}</span></div>
+                                 <div class="row" style="height:32px;">Published on:<span class="text-capitalize text-info"> {{ trade.datePublished | date:'medium'  }}</span></div>     
+                                 <div class="row" style="height:32px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>                               
+                                 <div class="row" style="height:32px;">Trader: <a class="text-capitalize textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
                                </div>
+                                
 
                                <div class="col-md-4 smalltextbold text-capitalize textgray">
-                                 <div class="row" style="height:180px;">Description:<span class="text-info"><br /> {{ trade.description  }}</span></div>                                
-                                 <div class="row" style="height:30px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span>, {{ trade.postcodeNumber }}</div>
-                                 <div class="row" style="height:30px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>
+                                 <div class="row" style="height:160px;">Description:<span class="text-info"><br /> {{ trade.description  }}</span></div>                                                       
+                                 <div class="row" style="height:32px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span></div>
+                                 <div class="row" style="height:32px;">Postcode:<span class="text-capitalize text-info"> {{ trade.postcodeNumber }}</span></div>
+                                 <div class="row" style="height:32px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>
                                </div>
 
                           </td>
 
                      </tr>
 
-                   
-
+                  
                    </table>
 
                  </div>
@@ -227,9 +226,9 @@
                </div>
 
 
-                  <!-- table navigation -->
-                <div class="row">
-                      <div class="col-md-12 panel panel-heading" style="height:50px;vertical-align:middle;">
+             <!-- table navigation -->
+             <div class="row">
+                      <div class="col-md-10 col-md-offset-2 panel panel-heading" style="height:50px;vertical-align:middle;">
 
                         <div class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
                           <!-- the ngDefaultControl is needed because the pagination control needs a default acceessor -->

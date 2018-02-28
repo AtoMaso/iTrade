@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
   private initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.isRequesting = true;
-    this.pageTitleService.emitPageTitle(new PageTitle("Trades"));
+    this.pageTitleService.emitPageTitle(new PageTitle("Login"));
   }
 
 

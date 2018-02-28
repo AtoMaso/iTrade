@@ -15,7 +15,7 @@ export class PageTitleService {
 
 
     //******************************************************
-    // GET PROCESS MESSAGE
+    // GET PAGE TITLE
     //*****************************************************
     // raises the event which the app component is subcribed to
     public emitPageTitle(page: PageTitle) {  
