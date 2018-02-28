@@ -93,7 +93,7 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
 
     jQuery(document).ready(function () {
 

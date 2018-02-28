@@ -1,3 +1,74 @@
-<p>
-  mytraderaccount works!
-</p>
+<div class="container col-md-12">
+
+          <div class="row panel panel-heading col-md-6"  id="personal" > 
+       
+                  <div class="row personal collapsed" data-toggle="collapse" data-target="#collapsePersonal" >       
+                      <span class="glyphicon glyphicon-minus" style="margin-left:20px;"></span><span class="textlightcoral medium"> Personal Details</span>
+                  </div>
+ 
+                  <div class="row panel panel-body panel-collapse  in col-md-12"  id="collapsePersonal">
+    
+                    <div class="row panel">
+                      <div class="smalltext col-md-8">
+                        <span>First Name:</span>
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="personal.firstName" />
+                      </div>
+                    </div>
+
+                    <div class="row panel">
+                      <div class="smalltext col-md-8">
+                        <span>Middle Name:</span>
+                        <input type="text" class="form-control" id="mname" [(ngModel)]="personal.middleName" />
+                      </div>
+                    </div>
+
+                    <div class="row panel">
+                      <div class="smalltext col-md-8">
+                        <span>Last Name:</span>
+                        <input type="text" class="form-control" id="lname" [(ngModel)]="personal.lastName" />
+                      </div>
+                    </div>
+                         
+                  </div>
+
+          </div>
+
+
+          <div class="row panel panel-heading col-md-6" id="contact">
+
+            <div class="row personal collapsed" data-toggle="collapse" data-target="#collapseContact">
+              <span class="glyphicon glyphicon-minus" style="margin-left:20px;"></span><span class="textlightcoral medium"> Contact Details</span>
+            </div>
+
+            <div class="row panel panel-body panel-collapse  in col-md-12" id="collapseContact">
+
+              <div class="row panel">
+                <div class="smalltext col-md-8">
+                  <span>First Name:</span>
+                  <input type="text" class="form-control" id="fname" [(ngModel)]="personal.firstName" />
+                </div>
+              </div>
+
+              <div class="row panel">
+                <div class="smalltext col-md-8">
+                  <span>Middle Name:</span>
+                  <input type="text" class="form-control" id="mname" [(ngModel)]="personal.middleName" />
+                </div>
+              </div>
+
+              <div class="row panel">
+                <div class="smalltext col-md-8">
+                  <span>Last Name:</span>
+                  <input type="text" class="form-control" id="lname" [(ngModel)]="personal.lastName" />
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="row panel panel-heading col-md-10" id="security">
+            Security
+          </div>
+
+</div>

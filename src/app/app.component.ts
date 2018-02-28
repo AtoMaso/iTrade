@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, Routes, RouterModule, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -105,11 +105,49 @@ export class AppComponent implements OnDestroy, OnInit {
             });
   }
 
+
   public ngOnDestroy() {
     this.subscriptionSession.unsubscribe();
     this.subscriptionMessages.unsubscribe();
     this.subscriptionTitle.unsubscribe();
     this.subscriptionRouter.unsubscribe();
+  }
+
+
+  public ngAfterViewInit() {
+
+    jQuery(document).ready(function () {
+
+      // scrolling of the add block
+      var element1 = jQuery('#add-follow-scroll-1'),
+        originalY1 = element1.offset().top;
+
+      var element2 = jQuery('#add-follow-scroll-2'),
+        originalY2 = element2.offset().top;
+
+      // Space between element and top of screen (when scrolling)
+      var topMargin = 60;
+
+      // Should probably be set in CSS;
+      element1.css('position', 'relative');
+
+      jQuery(window).on('scroll', function (event) {
+
+        var scrollTop = jQuery(window).scrollTop();
+
+        element1.stop(false, false).animate({
+          top: scrollTop < originalY1 ? 0 : scrollTop - originalY1 + topMargin,
+        }, 300);
+
+        element2.stop(false, false).animate({
+          top: scrollTop < originalY2 ? 0 : scrollTop - originalY2 + topMargin,
+        }, 300);
+
+      });
+
+    }); // end of document function
+
+
   }
 
 
@@ -124,6 +162,9 @@ export class AppComponent implements OnDestroy, OnInit {
     let route = ['/dashboard']
     this.router.navigate(route);
   }
+
+
+
 
   //static getParameterByName(name: string, url: string) {
   //  name = name.replace(/[\[\]]/g, "\\$&");

@@ -49,7 +49,7 @@ const routes: Routes = [
 
   // t r a d e r
   { path: 'traderhome', component: TraderHomeComponent, canActivate: [AuthGuard] },   
-  { path: 'mytraderaccount', component: MyTraderAccountComponent, canActivate: [AuthGuard] },
+  { path: 'mytraderaccount', component: MyTraderAccountComponent },  //, canActivate: [AuthGuard]
   { path: 'personaldetails', component: PersonalDetailsComponent, canActivate: [AuthGuard] },
   { path: 'contactdetails', component: ContactlDetailsComponent, canActivate: [AuthGuard] },
   { path: 'securitydetails', component: SecurityDetailsComponent, canActivate: [AuthGuard] },

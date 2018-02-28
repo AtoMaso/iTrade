@@ -25,6 +25,7 @@ export class MyTraderAccountComponent implements OnInit {
   private session: UserSession;
   private identity: UserIdentity = new UserIdentity;
   private isAuthenticated: boolean = false;
+  private firstname: string;
 
   constructor(
     private route: ActivatedRoute,     

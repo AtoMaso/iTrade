@@ -152,25 +152,23 @@
                                               </select>
                                             </div>
                                           </div>
-                                          <br />
-                                          <br />
+                                          <br />                                          
 
                                           
-                                          <div class="row container col-md-12" style="height:100px;">
+                                          <div class="row container col-md-12" style="height:90px;">
                                                   
-                                                  <div class="row container" style="height:50px;">
+                                                  <div class="row container" style="height:45px;">
                                                     <button class="btn btn-primary btn-sm smalltext" (click)="getSetOfTradesWithSetFilters()" [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null ">Search</button>
                                                     <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
                                                   </div>
-                                                  
-                                                                                 
-                                                <div *ngIf="!isAuthenticated" class="row container" style="height:50px;">
+                                                                                                                       
+                                                <div *ngIf="!isAuthenticated" class="row container" style="height:45px;">
                                                   <button type="button" data-target="#addWarning" data-toggle="modal" class="btn btn-sm btn-success smalltext">
                                                     <span class="glyphicon glyphicon-plus"></span>&nbsp; Post Trade
                                                   </button>
                                                 </div>
 
-                                                <div *ngIf="isAuthenticated" class="row container" style="height:50px;" (click)="PostTrade();">
+                                                <div *ngIf="isAuthenticated" class="row container" style="height:45px;" (click)="PostTrade();">
                                                   <button type="button" class="btn btn-sm btn-success smalltext">
                                                     <span class="glyphicon glyphicon-plus"></span>&nbsp; Post Trade
                                                   </button>
