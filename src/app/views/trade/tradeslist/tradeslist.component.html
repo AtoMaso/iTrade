@@ -191,32 +191,34 @@
 
                      <tr *ngFor="let trade of rows  | paginate:config">
 
-                       <td class="row col-md-12">
+                        <td class="row col-md-12">
 
-                         <div class="col-md-4 container">
-                           <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>
-                         </div>
+                               <div class="col-md-4 container">
+                                 <carousel style="align-content:center;" id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>
+                               </div>
 
-                         <div class="col-md-4 smalltextbold text-capitalize textgray">
-                           <div class="row" style="height:30px;">Trading:<a class="text-capitalize textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>
-                           <div class="row" style="height:30px;">Trading for: <span class="text-capitalize text-info"> {{ trade.tradeFor  }}</span></div>
-                           <div class="row" style="height:30px;">Category: <span><span class="text-capitalize text-info"> {{ trade.categoryDescription  }}</span></span></div>
-                           <div class="row" style="height:30px;">Subcategory: <span><span class="text-capitalize text-info"> {{ trade.subcategoryDescription  }}</span></span></div>
-                           <div class="row" style="height:30px;">Reference Id:<span class="text-capitalize text-info"> {{ trade.tradeId  }}</span></div>
-                           <div class="row" style="height:30px;">Published on:<span class="text-capitalize text-info"> {{ trade.datePublished | date:'medium'  }}</span></div>
-                           <div class="row" style="height:30px;">Trader: <a class="text-capitalize textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
-                         </div>
+                               <div class="col-md-4 smalltextbold text-capitalize textgray">
+                                 <div class="row" style="height:30px;">Trading:<a class="text-capitalize textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>                               
+                                 <div class="row" style="height:30px;">Category: <span><span class="text-capitalize text-info"> {{ trade.categoryDescription  }}</span></span></div>
+                                 <div class="row" style="height:30px;">Subcategory: <span><span class="text-capitalize text-info"> {{ trade.subcategoryDescription  }}</span></span></div>
+                                 <div class="row" style="height:30px;">Trading for: <span class="text-capitalize text-info"> {{ trade.tradeFor  }}</span></div>
+                                 <div class="row" style="height:30px;">Reference Id:<span class="text-capitalize text-info"> {{ trade.tradeId  }}</span></div>
+                                 <div class="row" style="height:30px;">Published on:<span class="text-capitalize text-info"> {{ trade.datePublished | date:'medium'  }}</span></div>
+                                 <div class="row" style="height:30px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>
+                                 <div class="row" style="height:30px;">Trader: <a class="text-capitalize textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
+                               </div>
 
-                         <div class="col-md-4 smalltextbold text-capitalize textgray">
-                           <div class="row" style="height:120px;">Description:<span class="text-info"><br /> {{ trade.description  }}</span></div>
-                           <div class="row" style="height:30px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>
-                           <div class="row" style="height:30px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span>, {{ trade.postcodeNumber }}</div>                           
-                           <div class="row" style="height:30px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>
-                         </div>
+                               <div class="col-md-4 smalltextbold text-capitalize textgray">
+                                 <div class="row" style="height:180px;">Description:<span class="text-info"><br /> {{ trade.description  }}</span></div>                                
+                                 <div class="row" style="height:30px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span>, {{ trade.postcodeNumber }}</div>
+                                 <div class="row" style="height:30px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>
+                               </div>
 
-                       </td>
+                          </td>
 
                      </tr>
+
+                   
 
                    </table>
 

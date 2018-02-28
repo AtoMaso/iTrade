@@ -382,7 +382,7 @@ class Postcode implements IPostcode {
 
 
 class Trade implements ITrade {
-
+  addsflag: boolean;
   total: number;
   tradeIdStr: string;
   tradeId: number; 
@@ -411,6 +411,7 @@ class Trade implements ITrade {
   Images: Image[]; 
   
   constructor() {    
+    this.addsflag= false;
     this.total = 0;  
     this.tradeIdStr = "";
     this.tradeId = 0;  

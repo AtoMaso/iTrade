@@ -503,10 +503,15 @@ export class TradesListComponent implements OnInit {
 
   private TransformData(returnedTrades: Trade[]): Array<any> {
 
+    let counter: number = 1;
+
     let transformedData = new Array<Trade>();
     returnedTrades.forEach(function (value) {
+      counter + counter + 1;    
+      let trd = new Trade;    
 
-      let trd = new Trade;
+      if (counter % 5 == 0) { trd.addsflag = true; }
+      else { trd.addsflag = false; }
 
       trd.total = value.total;
       trd.tradeIdStr = value.tradeId.toString();
@@ -534,8 +539,7 @@ export class TradesListComponent implements OnInit {
       trd.traderLastName = value.traderLastName;
       trd.traderFullName = trd.traderFirstName + " " + trd.traderMiddleName + " " + trd.traderLastName;
 
-      //trd.Images = value.Images;
-
+      //trd.Images = value.Images;   
       transformedData.push(trd);      
     });  
     return transformedData;

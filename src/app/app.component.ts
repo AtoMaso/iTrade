@@ -126,7 +126,7 @@ export class AppComponent implements OnDestroy, OnInit {
         originalY2 = element2.offset().top;
 
       // Space between element and top of screen (when scrolling)
-      var topMargin = 60;
+      var topMargin = 55;
 
       // Should probably be set in CSS;
       element1.css('position', 'relative');
