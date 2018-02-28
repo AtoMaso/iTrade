@@ -201,17 +201,17 @@
                                  <div class="row" style="height:32px;">Subcategory: <span><span class="text-capitalize text-info"> {{ trade.subcategoryDescription  }}</span></span></div>
                                  <div class="row" style="height:32px;">Trading for: <span class="text-capitalize text-info"> {{ trade.tradeFor  }}</span></div>
                                  <div class="row" style="height:32px;">Reference Id:<span class="text-capitalize text-info"> {{ trade.tradeId  }}</span></div>
-                                 <div class="row" style="height:32px;">Published on:<span class="text-capitalize text-info"> {{ trade.datePublished | date:'medium'  }}</span></div>     
+                                 <div class="row" style="height:32px;">Published on:<span class="text-capitalize text-info"> {{ trade.datePublished | date }}</span></div>     
                                  <div class="row" style="height:32px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>                               
                                  <div class="row" style="height:32px;">Trader: <a class="text-capitalize textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
                                </div>
                                 
 
-                               <div class="col-md-4 smalltextbold text-capitalize textgray">
-                                 <div class="row" style="height:160px;">Description:<span class="text-info"><br /> {{ trade.description  }}</span></div>                                                       
+                               <div class="col-md-4 smalltextbold text-capitalize textgray">                                                                                 
                                  <div class="row" style="height:32px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span></div>
                                  <div class="row" style="height:32px;">Postcode:<span class="text-capitalize text-info"> {{ trade.postcodeNumber }}</span></div>
                                  <div class="row" style="height:32px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>
+                                 <div class="row" style="height:160px;">Description:<span class="text-info"><br /> {{ trade.description  }}</span></div>     
                                </div>
 
                           </td>

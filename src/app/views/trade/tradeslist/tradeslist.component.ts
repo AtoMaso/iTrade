@@ -106,23 +106,23 @@ export class TradesListComponent implements OnInit {
       });
 
 
-      // scrolling of the filter block
-      var element = jQuery('#follow-scroll'),
-        originalY = element.offset().top;
+      //// scrolling of the filter block
+      //var element = jQuery('#follow-scroll'),
+      //  originalY = element.offset().top;
 
-      // Space between element and top of screen (when scrolling)
-      var topMargin = 60;
+      //// Space between element and top of screen (when scrolling)
+      //var topMargin = 60;
 
-      // Should probably be set in CSS;
-      element.css('position', 'relative');
+      //// Should probably be set in CSS;
+      //element.css('position', 'relative');
 
-      jQuery(window).on('scroll', function (event) {
-        var scrollTop = jQuery(window).scrollTop();
+      //jQuery(window).on('scroll', function (event) {
+      //  var scrollTop = jQuery(window).scrollTop();
 
-        element.stop(false, false).animate({
-          top: scrollTop < originalY ? 0 : scrollTop - originalY + topMargin,
-        }, 300);
-      });
+      //  element.stop(false, false).animate({
+      //    top: scrollTop < originalY ? 0 : scrollTop - originalY + topMargin,
+      //  }, 300);
+      //});
 
     }); // end of document function
 
