@@ -1,116 +1,199 @@
-<div class="col-md-12">
+<div class="container col-md-12">
 
        <!-- personal details row-->
       <div class="row">
 
-            <div class="panel panel-heading col-md-4" id="personal">
+            <div class="panel panel-heading col-md-3" id="personal">
 
-                    <div class="personal collapsed" data-toggle="collapse" data-target="#collapsePersonal">
-                          <span class="glyphicon glyphicon-minus" style="margin-left:20px;"></span><span class="textlightcoral medium text-uppercase"> Personal Details</span>                  
-                    </div>
-           
-            
-                    <div class="colapse in" id="collapsePersonal">
+                   <div class="row">
+                          <div class="personal collapsed col-md-10" data-toggle="collapse" data-target="#collapsePersonal">
+                            <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Personal Details</span>
+                          </div>
 
-                            <!-- personal details display only -->
-                            <div class="col-md-12">
+                        
+                  </div>
+               
+                   <div class="colapse in col-md-12" id="collapsePersonal">                          
+                                      
+                            <div *ngIf ="!personalEdit" class="row col-md-12">
 
-                                       <div class="col-md-11">
-
-                                               <div *ngIf ="!edit" class="row col-md-12">
-
-                                                      <!-- display personal data -->                                                     
-                                                      <div class="smalltextbold col-md-10" style="height:50px; margin-top:20px;">
-                                                        <label for="fname">First Name: </label>
-                                                        <span class="smalltextbold textlightcoral">&nbsp;&nbsp;&nbsp;{{ personalDetails.firstName }}</span>
-                                                      </div>
+                                    <!-- pencil sign -->
+                                    <div class="col-md-12" style="text-align:right;">
+                                      <a (click)="enablePersonalEdit()"><i class="glyphicon glyphicon-pencil" style="text-decoration:double;"></i></a>
+                                    </div>
+                                                                                 
+                                    <div class="smalltextbold col-md-12" style="height:50px; margin-top:20px;">
+                                      <label for="fname">First Name: </label>
+                                      <span class="smalltextbold textlightcoral">&nbsp;&nbsp;&nbsp;{{ personalDetails.firstName }}</span>
+                                    </div>
                                                                                                            
-                                                       <div class="smalltextbold col-md-10" style="height:50px;">
-                                                         <label for="mname">Middle Name: </label>
-                                                         <span class="smalltextbold textlightcoral">&nbsp;{{ personalDetails.middleName }}</span>
-                                                       </div>
+                                    <div class="smalltextbold col-md-12" style="height:50px;">
+                                      <label for="mname">Middle Name: </label>
+                                      <span class="smalltextbold textlightcoral">&nbsp;{{ personalDetails.middleName }}</span>
+                                    </div>
                                                                                                            
-                                                       <div class="smalltextbold col-md-10" style="height:50px;">
-                                                         <label for="lname">Last Name: </label>
-                                                         <span class="smalltextbold textlightcoral">&nbsp;&nbsp;&nbsp;{{ personalDetails.lastName }}</span>
-                                                       </div>
+                                    <div class="smalltextbold col-md-12" style="height:50px;">
+                                      <label for="lname">Last Name: </label>
+                                      <span class="smalltextbold textlightcoral">&nbsp;&nbsp;&nbsp;{{ personalDetails.lastName }}</span>
+                                    </div>
                                                     
+                          </div>
+
+                           <div *ngIf="personalEdit" class="row col-md-12">
+
+                                  <form #personalForm="ngForm" novalidate (submit)="onSubmit(personalForm)" [formGroup]="personalGroup">
+
+                                        <div class="form-group" style="height:60px; margin-top:20px;">
+                                          <div class="smalltext col-md-12">
+                                            <label for="fname">First Name</label>
+                                            <div class="input-group">
+                                              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                              <input type="text" formControlName="fname" id="fname" name="fname" [(ngModel)]="personalDetails.firstName" required class="form-control smalltext" style="background-color:moccasin" />
+                                            </div>
+                                          </div>
+                                          <control-messages [control]="personalGroup.controls.fname"></control-messages>
+                                        </div>
+
+                                        <div class="form-group" style="height:60px;">
+                                          <div class="smalltext col-md-12">
+                                            <label for="mname">Middle Name</label>
+                                            <div class="input-group">
+                                              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                              <input type="text" formControlName="mname" id="mname" name="mname" [(ngModel)]="personalDetails.middleName" class="form-control smalltext" style="background-color:moccasin" />
+                                            </div>
+                                            <control-messages [control]="personalGroup.controls.mname"></control-messages>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group" style="height:60px;">
+                                          <div class="smalltext col-md-12">
+                                            <label for="lname">Last Name</label>
+                                            <div class="input-group">
+                                              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                              <input type="text" formControlName="lname" id="lname" name="lname" [(ngModel)]="personalDetails.lastName" class="form-control smalltext" style="background-color:moccasin" />
+                                            </div>
+                                            <control-messages [control]="personalGroup.controls.lname"></control-messages>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-md-10 panel panel-heading" style="height:60px;margin-top:10px;">
+                                              <div class="col-md-6">
+                                                    <button class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="disablePersonalEdit()">Cancel</button>
                                               </div>
 
-                                              <div *ngIf="edit" class="row col-md-12">
+                                              <div class="col-md-6">
+                                                    <button class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!personalGroup.valid" style="width:auto; height:30px;">Save</button>
+                                              </div>                                                             
+                                        </div>
 
-                                                      <form #personalForm="ngForm" novalidate (submit)="onSubmit(personalForm)" [formGroup]="personalGroup">
-
-                                                            <div class="form-group" style="height:60px; margin-top:20px;">
-                                                              <div class="smalltext col-md-12">
-                                                                <label for="fname">First Name</label>
-                                                                <div class="input-group">
-                                                                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                                  <input type="text" formControlName="fname" id="fname" name="fname" [(ngModel)]="personalDetails.firstName" required class="form-control smalltext" style="background-color:moccasin" />
-                                                                </div>
-                                                              </div>
-                                                              <control-messages [control]="personalGroup.controls.fname"></control-messages>
-                                                            </div>
-
-                                                            <div class="form-group" style="height:60px;">
-                                                              <div class="smalltext col-md-12">
-                                                                <label for="mname">Middle Name</label>
-                                                                <div class="input-group">
-                                                                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                                  <input type="text" formControlName="mname" id="mname" name="mname" [(ngModel)]="personalDetails.middleName" class="form-control smalltext" style="background-color:moccasin" />
-                                                                </div>
-                                                                <control-messages [control]="personalGroup.controls.mname"></control-messages>
-                                                              </div>
-                                                            </div>
-
-                                                            <div class="form-group" style="height:60px;">
-                                                              <div class="smalltext col-md-12">
-                                                                <label for="lname">Last Name</label>
-                                                                <div class="input-group">
-                                                                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                                  <input type="text" formControlName="lname" id="lname" name="lname" [(ngModel)]="personalDetails.lastName" class="form-control smalltext" style="background-color:moccasin" />
-                                                                </div>
-                                                                <control-messages [control]="personalGroup.controls.lname"></control-messages>
-                                                              </div>
-                                                            </div>
-
-                                                            <div class="col-md-8 panel panel-heading" style="height:60px;margin-top:10px;">
-                                                              <div class="col-md-6">
-                                                                <button class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="disableEdit()">Cancel</button>
-                                                              </div>
-
-                                                              <div class="col-md-6">
-                                                                <button class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!loginGroup.valid" style="width:auto; height:30px;">Save</button>
-                                                              </div>
-                                                             
-                                                            </div>
-
-                                                       </form>
+                                    </form>
                                                         
+                          </div>
+                                                                                                                                                                                   
+                </div>
+
+              </div>
+
+
+            <div class="panel panel-heading col-md-8 col-md-offset-1" id="address">
+
+                    <div class="row">
+                          <div class="address collapsed col-md-4" data-toggle="collapse" data-target="#collapseAddress">
+                            <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Address Details</span>
+                          </div>                         
+                    </div>
+                 
+                     <div class="colapse in col-md-12" id="collapseAddress">
+                                                               
+                             <div class="panel-group col-md-4" *ngFor="let address of addresses">
+                                                                    
+                                   <div *ngIf="!addressEdit" class="row col-md-12">
+
+                                        <div class="col-md-12" style="text-align:right;">
+                                         <a (click)="enableAddressEdit(address)"><i class="glyphicon glyphicon-pencil" style="text-decoration:double;"></i></a>
+                                       </div>
+
+                                        <div class="smalltextbold col-md-12" style="height:50px; margin-top:20px;">
+                                          <label for="fname">First Name: </label>
+                                          <span class="smalltextbold textlightcoral">&nbsp;&nbsp;&nbsp;{{ address.number }}</span>
+                                        </div>
+
+                                        <div class="smalltextbold col-md-12" style="height:50px;">
+                                          <label for="mname">Middle Name: </label>
+                                          <span class="smalltextbold textlightcoral">&nbsp;{{ address.street }}</span>
+                                        </div>
+
+                                        <div class="smalltextbold col-md-12" style="height:50px;">
+                                          <label for="lname">Last Name: </label>
+                                          <span class="smalltextbold textlightcoral">&nbsp;&nbsp;&nbsp;{{ address.suburb }}</span>
+                                        </div>
+
+                                </div>
+
+                                <div *ngIf="addressEdit" class="row col-md-12">
+
+                                    <form #addressForm="ngForm" novalidate (submit)="onSubmit()" [formGroup]="addressGroup">
+
+                                            <div class="form-group" style="height:60px; margin-top:20px;">
+                                              <div class="smalltext col-md-12">
+                                                <label for="fname">First Name</label>
+                                                <div class="input-group">
+                                                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                  <input type="text" formControlName="fname" id="fname" name="fname" [(ngModel)]="address.number" required class="form-control smalltext" style="background-color:moccasin" />
+                                                </div>
+                                              </div>
+                                              <control-messages [control]="personalGroup.controls.fname"></control-messages>
+                                            </div>
+
+                                            <div class="form-group" style="height:60px;">
+                                              <div class="smalltext col-md-12">
+                                                <label for="mname">Middle Name</label>
+                                                <div class="input-group">
+                                                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                  <input type="text" formControlName="mname" id="mname" name="mname" [(ngModel)]="address.street" class="form-control smalltext" style="background-color:moccasin" />
+                                                </div>
+                                                <control-messages [control]="personalGroup.controls.mname"></control-messages>
+                                              </div>
+                                            </div>
+
+                                            <div class="form-group" style="height:60px;">
+                                              <div class="smalltext col-md-12">
+                                                <label for="lname">Last Name</label>
+                                                <div class="input-group">
+                                                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                  <input type="text" formControlName="lname" id="lname" name="lname" [(ngModel)]="address.suburb" class="form-control smalltext" style="background-color:moccasin" />
+                                                </div>
+                                                <control-messages [control]="personalGroup.controls.lname"></control-messages>
+                                              </div>
+                                            </div>
+
+                                            <div class="col-md-10 panel panel-heading" style="height:60px;margin-top:10px;">
+                                              <div class="col-md-6">
+                                                <button class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="disableAddressEdit(address)">Cancel</button>
                                               </div>
 
-                                      </div>
+                                              <div class="col-md-6">
+                                                <button class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!laddressGroup.valid" style="width:auto; height:30px;">Save</button>
+                                              </div>
+                                            </div>
 
-                                      <!-- pencil sign -->
-                                      <div class="col-md-1">
-                                          <a (click)="enableEdit()"><i class="glyphicon glyphicon-pencil" style="text-decoration:double;"></i></a>
-                                      </div>
+                                    </form>
 
-                              </div>
+                                </div>
 
-                      </div>     
-                                                            
-            </div>
-
+                             </div>
+                    </div>
+              </div>
       </div>
 
-  <!-- contact details here-->
-  <div class="row">
-    <div class="panel panel-heading" id="contact">contact details row</div>
-  </div>
+      <!-- contact details here-->
+    <div class="row">
+      <div class="panel panel-heading" id="contact">contact details row</div>
+    </div>
 
     <!-- security details here-->
-  <div class="row">
-    <div class="panel panel-heading" id="security">security details row</div>
-  </div>
+    <div class="row">
+      <div class="panel panel-heading" id="security">security details row</div>
+    </div>
+
   </div>

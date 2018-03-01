@@ -15,7 +15,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 
 // components
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails, SecurityDetails } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails, SecurityDetails, Address} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -34,8 +34,16 @@ export class MyTraderAccountComponent implements OnInit {
   private personalDetails: PersonalDetails = new PersonalDetails();
   private contactDetails: ContactDetails = new ContactDetails();
   private securityDetails: SecurityDetails = new SecurityDetails();  
+  private addresses: Address[] = [];
   private personalGroup: any;
-  private edit: boolean = false;
+
+  private personalEdit: boolean = false;
+  private addressEdit: boolean = false;
+  private emailEdit: boolean = false;
+  private phoneEdit: boolean = false;
+  private socialEdit: boolean = false;
+  private securityEdit: boolean = false;
+  private passwordEdit: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -66,6 +74,31 @@ export class MyTraderAccountComponent implements OnInit {
 
   }
 
+
+  public ngAfterViewInit() {
+
+    jQuery(document).ready(function () {
+
+      // toggling the chevrons up and down    
+      jQuery("#collapsePersonal").on("hide.bs.collapse", function () {
+        jQuery(".personal").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Personal Details</span>  ');
+      });
+      jQuery("#collapsePersonal").on("show.bs.collapse", function () {
+        jQuery(".personal").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Personal Details</span>');
+      });
+
+      jQuery("#collapseAddress").on("hide.bs.collapse", function () {
+        jQuery(".address").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Address Details</span>  ');
+      });
+      jQuery("#collapseAddress").on("show.bs.collapse", function () {
+        jQuery(".address").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Address Details</span>');
+      });
+
+    }); // end of document function
+
+
+  }
+
   //************************************************************
   // DETAILS
   //************************************************************
@@ -80,6 +113,7 @@ export class MyTraderAccountComponent implements OnInit {
 
   private onSuccessPersonal(pd: PersonalDetails) {
     this.personalDetails = pd;    
+    this.addresses = pd.addresses;
     this.getContactDetails(this.traderId);
   }
 
@@ -107,9 +141,20 @@ export class MyTraderAccountComponent implements OnInit {
   //************************************************************
   // UPDATES
   //************************************************************
-  private enableEdit() { this.edit = true;}
-  private disableEdit() { this.edit = false; }
-
+  private enablePersonalEdit() { this.personalEdit = true;}
+  private disablePersonalEdit() { this.personalEdit = false; }
+  private enableAddressEdit(address:Address) { this.addressEdit = true; }
+  private disableAddressEdit(address:Address) { this.addressEdit = false; }
+  private enableEmailEdit() { this.emailEdit = true; }
+  private disableEmailEdit() { this.emailEdit = false; }
+  private enablePhoneEdit() { this.phoneEdit = true; }
+  private disablePhoneEdit() { this.phoneEdit = false; }
+  private enableSocialEdit() { this.socialEdit = true; }
+  private disableSocialEdit() { this.socialEdit = false; }
+  private enableSecurityEdit() { this.securityEdit = true; }
+  private disableSecurityEdit() { this.securityEdit = false; }
+  private enablePasswordEdit() { this.passwordEdit = true; }
+  private disablePasswordEdit() { this.passwordEdit = false; }
 
   //************************************************************
   // HELPER METHODS
