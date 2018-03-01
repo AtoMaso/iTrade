@@ -5,49 +5,43 @@
 
             <div class="panel panel-heading col-md-4" id="personal">
 
-                    <div class="row personal collapsed" data-toggle="collapse" data-target="#collapsePersonal">
+                    <div class="personal collapsed" data-toggle="collapse" data-target="#collapsePersonal">
                           <span class="glyphicon glyphicon-minus" style="margin-left:20px;"></span><span class="textlightcoral medium text-uppercase"> Personal Details</span>                  
                     </div>
            
             
-                    <div class="row panel panel-heading panel-collapse  in col-md-12" id="collapsePersonal">
+                    <div class="colapse in" id="collapsePersonal">
 
                             <!-- personal details display only -->
                             <div class="col-md-12">
 
                                        <div class="col-md-11">
 
-                                               <div *ngIf ="!edit" class="col-md-12 form-group">
+                                               <div *ngIf ="!edit" class="row col-md-12">
 
-                                                      <!-- display personal data -->
-                                                      <div class="panel panel-heading col-md-12">
-                                                        <div class="smalltextbold col-md-12">
-                                                          <label for="fname">First Name: </label>
-                                                          <span class="smalltextbold textlightcoral">&nbsp;&nbsp;&nbsp;{{ personalDetails.firstName }}</span>
-                                                        </div>
+                                                      <!-- display personal data -->                                                     
+                                                      <div class="smalltextbold col-md-10" style="height:50px; margin-top:20px;">
+                                                        <label for="fname">First Name: </label>
+                                                        <span class="smalltextbold textlightcoral">&nbsp;&nbsp;&nbsp;{{ personalDetails.firstName }}</span>
                                                       </div>
+                                                                                                           
+                                                       <div class="smalltextbold col-md-10" style="height:50px;">
+                                                         <label for="mname">Middle Name: </label>
+                                                         <span class="smalltextbold textlightcoral">&nbsp;{{ personalDetails.middleName }}</span>
+                                                       </div>
+                                                                                                           
+                                                       <div class="smalltextbold col-md-10" style="height:50px;">
+                                                         <label for="lname">Last Name: </label>
+                                                         <span class="smalltextbold textlightcoral">&nbsp;&nbsp;&nbsp;{{ personalDetails.lastName }}</span>
+                                                       </div>
+                                                    
+                                              </div>
 
-                                                      <div class="panel panel-heading col-md-12">
-                                                        <div class="smalltextbold col-md-12">
-                                                          <label for="mname">Middle Name: </label>
-                                                          <span class="smalltextbold textlightcoral">&nbsp;{{ personalDetails.middleName }}</span>
-                                                        </div>
-                                                      </div>
-
-                                                      <div class="panel panel-heading col-md-12">
-                                                        <div class="smalltextbold col-md-12">
-                                                          <label for="lname">Last Name: </label>
-                                                          <span class="smalltextbold textlightcoral">&nbsp;&nbsp;&nbsp;{{ personalDetails.lastName }}</span>
-                                                        </div>
-                                                      </div>
-
-                                            </div>
-
-                                              <div *ngIf="edit" class="row panel panel-heading col-md-12">
+                                              <div *ngIf="edit" class="row col-md-12">
 
                                                       <form #personalForm="ngForm" novalidate (submit)="onSubmit(personalForm)" [formGroup]="personalGroup">
 
-                                                            <div class="form-group" style="height:60px;">
+                                                            <div class="form-group" style="height:60px; margin-top:20px;">
                                                               <div class="smalltext col-md-12">
                                                                 <label for="fname">First Name</label>
                                                                 <div class="input-group">
@@ -80,12 +74,18 @@
                                                               </div>
                                                             </div>
 
-                                                            <div>
+                                                            <div class="col-md-8 panel panel-heading" style="height:60px;margin-top:10px;">
+                                                              <div class="col-md-6">
+                                                                <button class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="disableEdit()">Cancel</button>
+                                                              </div>
 
+                                                              <div class="col-md-6">
+                                                                <button class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!loginGroup.valid" style="width:auto; height:30px;">Save</button>
+                                                              </div>
+                                                             
                                                             </div>
 
                                                        </form>
-
                                                         
                                               </div>
 
@@ -93,7 +93,7 @@
 
                                       <!-- pencil sign -->
                                       <div class="col-md-1">
-                                          <a (click)="toggleEdit()"><i class="glyphicon glyphicon-pencil" style="text-decoration:double;"></i></a>
+                                          <a (click)="enableEdit()"><i class="glyphicon glyphicon-pencil" style="text-decoration:double;"></i></a>
                                       </div>
 
                               </div>

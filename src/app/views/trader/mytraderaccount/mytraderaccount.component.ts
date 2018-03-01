@@ -107,9 +107,8 @@ export class MyTraderAccountComponent implements OnInit {
   //************************************************************
   // UPDATES
   //************************************************************
-  private toggleEdit() {
-    this.edit = true;
-  }
+  private enableEdit() { this.edit = true;}
+  private disableEdit() { this.edit = false; }
 
 
   //************************************************************
