@@ -14,7 +14,7 @@ export class PageTitleComponent implements OnInit {
   private pageValue: string = "";
   private isAuthenticated: boolean = false;
   private userSession: UserSession = new UserSession();
-  private userIdentity: UserIdentity = new UserIdentity():
+  private userIdentity: UserIdentity = new UserIdentity();
 
   constructor( private messagesService:ProcessMessageService) {}
 

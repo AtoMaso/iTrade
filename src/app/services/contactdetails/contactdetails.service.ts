@@ -1,5 +1,6 @@
 import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { CONFIG } from '../../config';
 import { Observable} from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -19,23 +20,42 @@ let contactdetailsbytraderid = CONFIG.baseUrls.contactdetailsbytraderid;
 export class ContactDetailsService {
 
   private localUrl: string;
+  private args: RequestOptionsArgs;
   private session: UserSession;
+  private identity: UserIdentity = new UserIdentity;
+  private token: string;
 
-  constructor(
-    private httpClientService: HttpClient,
-    private loggerService: LoggerService) {
 
-    if (sessionStorage["UserSession"] != "null") {
-      this.session = JSON.parse(sessionStorage["UserSession"]);
-    }
+  constructor(private httpClientService: HttpClient) {
+    this.getUseridentity();
   };
+
 
   public getContactDetailsByTraderId(traderId: string): Observable<ContactDetails> {
 
-    this.localUrl = `${contactdetailsbytraderid}?traderId=${traderId}`; 
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
 
-    return this.httpClientService.get<ContactDetails>(this.localUrl).retry(1);
+    this.localUrl = `${contactdetailsbytraderid}?traderId=${traderId}`; 
+    return this.httpClientService.get<ContactDetails>(this.localUrl, httpOptions).retry(1);
   }
 
+
+  //*****************************************************
+  // HELPER METHODS
+  //*****************************************************
+  private getUseridentity() {
+    if (sessionStorage["UserSession"] != "null") {
+      this.session = JSON.parse(sessionStorage["UserSession"])
+      this.identity = this.session.userIdentity;
+      this.token = this.identity.accessToken;
+    }
+  }
 
 }

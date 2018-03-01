@@ -4,39 +4,41 @@
 
           <div class="row" >
 
-                    <!-- Filters -->           
+            <div class=" col-md-10 col-md-offset-1">
+                  <!-- Filters -->
                   <div class="col-md-2 textgray">
-                        <!-- this is ng2-table filtering section used but the rest of it is independent table done by me-->
-                        <span class="smalltextbold">Filter in all columns</span>
-                        <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
+                    <!-- this is ng2-table filtering section used but the rest of it is independent table done by me-->
+                    <span class="smalltextbold">Filter in all columns</span>
+                    <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
                   </div>
 
 
                   <div class="col-md-2 textgray">
-                        <span class="smalltextbold">Items Per Page</span>
-                        <input type="number" min="10" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" class="form-control">
+                    <span class="smalltextbold">Items Per Page</span>
+                    <input type="number" min="10" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" class="form-control">
                   </div>
 
 
                   <!--<div class="col-md-2 textgray">
-                      <span class="smalltextbold">Current Page</span>
-                      <input type="number" min="1" [(ngModel)]="config.currentPage" class="form-control">
-                    </div>
+                    <span class="smalltextbold">Current Page</span>
+                    <input type="number" min="1" [(ngModel)]="config.currentPage" class="form-control">
+                  </div>
 
-                    <div class="col-md-1 textgray">
-                      <span class="smalltextbold">Max Size</span>
-                      <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
-                    </div>-->
+                  <div class="col-md-1 textgray">
+                    <span class="smalltextbold">Max Size</span>
+                    <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
+                  </div>-->
 
 
-                  <div  class="col-md-2 col-md-offset-6" style="text-align:right;">
-                     <br/>                    
+                  <div class="col-md-2 col-md-offset-6" style="text-align:right;">
+                    <br />
                     <div *ngIf="isAuthenticated">
                       <button class="btn btn-sm btn-success" (click)="addTrade()">
                         <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Post Trade
                       </button>
-                    </div>             
+                    </div>
                   </div>
+                </div>
 
 
             </div>
@@ -47,20 +49,21 @@
           <!-- Table -->
           <div class="row">
             
-            <div class="table-responsive">
+            <div class="table-responsive col-md-10 col-md-offset-1">
 
               <table class="table table-bordered table-hover table-condensed">
 
                 <!-- Table Header -->
                 <thead>
                   <tr style="height:35px;">
-                        <th class="col-md-1" style="background-color:#FF223A3A;">
+
+                        <!--<th class="col-md-1" style="background-color:#FF223A3A;">
                           <a (click)="sortTable('tradeIdStr')" class="textgray text-uppercase smalltextbold" style="width:auto">
                             Id
                             <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
                             <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
                           </a>
-                        </th>
+                        </th>-->
 
                     <th class="col-md-1" style="background-color:#FF223A3A;">
                       <a (click)="sortTable('status')" class="textgray text-uppercase smalltextbold" style="width:auto">
@@ -110,7 +113,7 @@
                 <!-- Table Rows -->
                 <tr *ngFor="let trade of rows  | paginate:config ">
 
-                  <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeIdStr  }}</td>
+                  <!--<td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeIdStr  }}</td>-->
 
                   <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.status  }}</td>
 
@@ -124,26 +127,27 @@
 
                   <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.datePublished | date }}</td>
 
-                  <td class="col-md-3 text-center">
+                  <td class="col-md-4">
 
-                    <div class="col-md-12">
-                      <div class="col-md-6">
-                        <!-- remove the trade -->
-                        <button type="button" data-target="#removeAllowed" data-articleid=(trade.tradeId)
-                                data-toggle="modal" class="btn btn-sm btn-danger smalltext" (click)="passToModal(trade)">
-                          <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
-                        </button>
-                      </div>
+                          <div class="col-md-12">
+
+                            <div class="col-md-6">
+                              <!-- remove the trade -->
+                              <button type="button" data-target="#removeAllowed" data-articleid=(trade.tradeId)
+                                      data-toggle="modal" class="btn btn-sm btn-danger smalltext" (click)="passToModal(trade)">
+                                <span class="glyphicon glyphicon-trash"></span>&nbsp; Remove Trade
+                              </button>
+                            </div>
 
 
-                      <div class="col-md-6">
-                        <!-- close the trade -->
-                        <button *ngIf="trade.status === 'Open'" type="button" data-target="#closeTrade" data-articleid=(trade.tradeId)
-                                data-toggle="modal" class="btn btn-sm btn-warning smalltext" (click)="passToModal(trade)">
-                          <span class="glyphicon glyphicon-check"></span>&nbsp; Close Trade
-                        </button>
-                      </div>
-                    </div>
+                            <div class="col-md-6">
+                              <!-- close the trade -->
+                              <button *ngIf="trade.status === 'Open'" type="button" data-target="#closeTrade" data-articleid=(trade.tradeId)
+                                      data-toggle="modal" class="btn btn-sm btn-warning smalltext" (click)="passToModal(trade)">
+                                <span class="glyphicon glyphicon-check"></span>&nbsp; Close Trade
+                              </button>
+                            </div>
+                          </div>
                   </td>
                 </tr>
 
@@ -154,7 +158,7 @@
           </div>
 
           <!-- Table pagination -->
-          <div class="row col-md-12">
+          <div class="row col-md-10 col-md-offset-1">
             <div class="col-md-5">
               <!--the stylesheet of the pagination is overwritten in the host component sass -->
               <pagination-controls id="pagination" *ngIf="config.paging"

@@ -95,7 +95,7 @@
 
    //traders
     traders: 'http://localhost:5700/api/account/GetTraders',
-    trader: 'http://localhost:5700/api/account/GetTraders/',
+    traderbytraderid: 'http://localhost:5700/api/account/GetTraderByTraderId/',
     updatetrader: 'http://localhost:5700/api/account/PutTrader',
     addtrader: 'http://localhost:5700/api/account/PostTrader',
     deletetrader: 'http://localhost:5700/api/account/DeleteTrader',
@@ -118,6 +118,7 @@
   
     // security details
     securitydetails: 'http://localhost:5700/api/securitydetails',
+    securitydetailsbytraderid: 'http://localhost:5700/api/securitydetails/GetSecurityDetailsByTraderId',   
     securitydetail: 'http://localhost:5700/api/personaldetails/',
     updatesecuritydetail: 'http://localhost:5700/api/securitydetails/PutSecurityDetail',
     addsecuritydetail: 'http://localhost:5700/api/securitydetails/PostSurityDetails',

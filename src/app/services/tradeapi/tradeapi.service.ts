@@ -45,9 +45,7 @@ export class TradeApiService {
   private newTrade = new PostTrade();
 
   constructor(
-    private httpClientService: HttpClient,
-    private http: Http
-  ) { };
+    private httpClientService: HttpClient ) { };
  
 
   //******************************************************

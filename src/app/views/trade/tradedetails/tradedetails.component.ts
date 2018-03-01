@@ -288,10 +288,6 @@ export class TradeDetailsComponent implements OnInit {
   private onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;  
-
-    // audit log the error passed
-    this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
-
     let message: string = "";
 
     // audit log the error passed

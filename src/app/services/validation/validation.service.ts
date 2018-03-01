@@ -13,10 +13,7 @@ export class ValidationService {
       'invalidEmailAddress': 'Invalid pattern in your email address.',
       'invalidEmailDomain': 'Invalid domain in your email address',     
       'invalidPassword': 'Invalid password. Password must be between 6 and 10 characters long, and should contain min one number.',
-      'invalidConfirmPassword': 'Invalid confirm password. Password must be between 6 and 10 characters long, and contains a number.',
-      'invalidFirstName': 'Invalid name. Your first name should contain only alphabetical characters with maximum lenght of 15 characters. ',
-      'invalidMiddleName': 'Invalid name. Your middle name should contain only alphabetical characters with maximum lenght of 15 characters. ',
-      'invalidLastName': 'Invalid name. Your last name should contain only alphabetical characters with maximum lenght of 50 characters. ',  
+      'invalidConfirmPassword': 'Invalid confirm password. Password must be between 6 and 10 characters long, and contains a number.',     
       'invalidUsername': 'Invalid username. Username must be 5 alphanumeric characters long. ',
       'invalidPhone': 'Invalid phone. Phone must contain 10 numeric characters. ',
       'invalidTradeName': 'Name should be 3-20 characters. ',
@@ -27,7 +24,10 @@ export class ValidationService {
       'invalidState': 'You must select a state. ',
       'invalidPlace': 'You must select a place. ',
       'invalidDatePublished': 'Published date can not be in the past. ',
-      'invalidPostCode': 'Postcode provide is not valid.'
+      'invalidPostCode': 'Postcode provide is not valid.',
+      'invalidFirstName': 'Invalid name. Your first name should contain only alphabetical characters with maximum lenght of 15 characters. ',
+      'invalidMiddleName': 'Invalid name. Your middle name should contain only alphabetical characters with maximum lenght of 15 characters. ',
+      'invalidLastName': 'Invalid name. Your last name should contain only alphabetical characters with maximum lenght of 20 characters. '
     };
     return config[validatorName];
   }

@@ -1,17 +1,21 @@
-﻿import { Inject, Injectable, EventEmitter } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+﻿import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
+import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { CONFIG } from '../../config';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable} from 'rxjs/Observable';
+import { catchError, map, tap } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/operator/retry';
 
 import { LoggerService } from '../logger/logger.service';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { Trader, UserSession} from '../../helpers/classes';
+import { Trader, UserSession, UserIdentity} from '../../helpers/classes';
 
 let tradersUrl = CONFIG.baseUrls.traders;
-let traderUrl = CONFIG.baseUrls.trader;
+let traderByTraderIdUrl = CONFIG.baseUrls.traderbytraderid;
 let updateTraderUrl = CONFIG.baseUrls.updatetrader;
 let addTraderUrl = CONFIG.baseUrls.addtrader;
 let deleteTraderUrl = CONFIG.baseUrls.deletetrader;
@@ -19,45 +23,52 @@ let deleteTraderUrl = CONFIG.baseUrls.deletetrader;
 
 @Injectable()
 export class TraderApiService {
-    private localUrl: string;
-    private session: UserSession;
+  private localUrl: string;
+  private args: RequestOptionsArgs;
+  private session: UserSession;
+  private identity: UserIdentity = new UserIdentity;
+  private token: string;
 
-    constructor(private httpService: Http, private loggerService: LoggerService, private authenticationService:AuthenticationService) {
 
-        if (sessionStorage["UserSession"] != "null") {
-            this.session = JSON.parse(sessionStorage["UserSession"]);
-        }  
-    };
+  constructor(private httpClientService: HttpClient) {
+    this.getUseridentity();
+  };
 
 
     // TODO To change the HTTP to HTTClient
     //******************************************************
     // GET TRADERS
     //******************************************************
-    public getTraders(id?: number): any {
+    public getTraders(): any {
       
-      if (id != undefined) { this.localUrl = `${traderUrl}?traderId=${id}`}
-        else { this.localUrl = traderUrl; }
+       // prepare the headesrs
+       const httpOptions = {
+         headers: new HttpHeaders({
+           'Accept': 'application/json',
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${this.token}`
+         })
+      };
 
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');      
-        headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
-
+       this.localUrl = tradersUrl; 
        //return this.httpService.get(this.localUrl, { headers: headers });          
-      return this.httpService.get(this.localUrl);
+        return this.httpClientService.get(this.localUrl, httpOptions).retry(1);
     }
 
     // page of members
-    public getPageOfTraders(page: number, perpage: number) {
+    public getSetOfTraders(page: number, perpage: number) {
+     
+       // prepare the headesrs
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token}`
+          })
+      };
 
-       this.localUrl = tradersUrl + "?page=" + page + "&perpage=" + perpage;
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');   
-        headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
-
-        return this.httpService.get(this.localUrl, { headers: headers });           
+        this.localUrl = tradersUrl + "?page=" + page + "&perpage=" + perpage;
+        return this.httpClientService.get(this.localUrl, httpOptions).retry(1);           
          
     }
 
@@ -65,14 +76,19 @@ export class TraderApiService {
     //******************************************************
     // GET TRADER
     //******************************************************
-    public getTrader(traderid: string): any {
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
+    public getTraderByTraderId(traderid: string): any {
 
-      //return this.httpService.get(`${traderUrl}?traderId=${id}`, { headers: headers });       
-      return this.httpService.get(`${traderUrl}?traderId=${traderid}`);             
+      // prepare the headesrs
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
+        })
+      };
+      
+      this.localUrl = `${traderByTraderIdUrl}?traderId=${traderid}`;
+      return this.httpClientService.get(this.localUrl);             
      
     }
 
@@ -89,13 +105,16 @@ export class TraderApiService {
     //******************************************************
     public addTrader(trader: Trader): any {
 
-      let body = JSON.stringify(trader);
-      let httpheaders = new Headers();
-      httpheaders.append('Accept', 'application/json');
-      httpheaders.append('Content-Type', 'application/json');
-      httpheaders.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
+      // prepare the headesrs
+      const httpOptions = {
+          headers: new HttpHeaders({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token}`
+          })
+      };
 
-      return this.httpService.post(addTraderUrl, body, { headers: httpheaders });              
+      return this.httpClientService.post(addTraderUrl, trader, httpOptions);              
             
     }
 
@@ -104,13 +123,29 @@ export class TraderApiService {
     // REMOVE TRADER
     //******************************************************
     public removeTrader(traderId: string) {
-      this.localUrl = deleteTraderUrl + "?traderId=" + traderId;
-      let headers = new Headers();
-      headers.append('Accept', 'application/json');
-      headers.append('Content-Type', 'application/json');
-      headers.append('Authorization', `Bearer ${this.session.userIdentity.accessToken}`);
 
-      return this.httpService.delete(this.localUrl, { headers: headers });                         
+       // prepare the headesrs
+      const httpOptions = {
+            headers: new HttpHeaders({
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${this.token}`
+            })
+      };
+
+      this.localUrl = deleteTraderUrl + "?traderId=" + traderId;
+      return this.httpClientService.delete(this.localUrl, httpOptions);                         
     }
 
+
+    //*****************************************************
+    // HELPER METHODS
+    //*****************************************************
+    private getUseridentity() {
+      if (sessionStorage["UserSession"] != "null") {
+        this.session = JSON.parse(sessionStorage["UserSession"])
+        this.identity = this.session.userIdentity;
+        this.token = this.identity.accessToken;
+      }
+    }
 }

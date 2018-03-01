@@ -111,7 +111,6 @@ export class TraderDetailsComponent implements OnInit {
       (res: Response) => this.onError(res, "getPersonalDetails"));
   }
 
-
   private onSuccessPersonal(personalD: PersonalDetails) {
     if (personalD === null) { this.hasPersonal = false; }
     else {
@@ -134,8 +133,6 @@ export class TraderDetailsComponent implements OnInit {
       },
       (res: Response) => this.onError(res, "getContactDetails"));
   }
-
-
 
   private onSuccessContact(contacD: ContactDetails) {
     if (contacD === null) { this.hasContact = false; }
