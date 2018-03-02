@@ -33,6 +33,7 @@ export class MyTraderAccountComponent implements OnInit {
   private session: UserSession;
   private identity: UserIdentity = new UserIdentity;
   private isAuthenticated: boolean = false;
+
   private personalDetails: PersonalDetails = new PersonalDetails();
   private contactDetails: ContactDetails = new ContactDetails();
   private securityDetails: SecurityDetails = new SecurityDetails();  
@@ -45,6 +46,14 @@ export class MyTraderAccountComponent implements OnInit {
   private personalGroup: any;
   private addressGroup: any;
 
+  private selectedState: State = null;
+  private selectedCity: Place = null;
+  private selectedPostcode: Postcode = null;
+
+  private defaultState: State = null;
+  private defaultCity: Place = null;
+  private defaultPostcode: Postcode = null;
+
   private personalEdit: boolean = false;
   private addressEdit: boolean = false;
   private emailEdit: boolean = false;
@@ -52,17 +61,6 @@ export class MyTraderAccountComponent implements OnInit {
   private socialEdit: boolean = false;
   private securityEdit: boolean = false;
   private passwordEdit: boolean = false;
-
-  private selectedState: string = null;
-  private selectedPlace: string = null;
-  private selectedPostcode: string = null;
-  private selectedStateId: number = 0;
-  private selectedPlaceId: number = 0;
-  private selectedPostcodeId: number = 0;
-
-  private defaultState: State = new State();
-  private defaultCity: Place = new Place();
-  private defaultPostcode: Postcode = new Postcode();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -80,9 +78,12 @@ export class MyTraderAccountComponent implements OnInit {
   ngOnInit() {
     this.getUseridentity();
     this.initialiseComponent();
+
     this.getPersonalDetails(this.traderId);
-    this.getStates();  
-    this.setupForms();
+    this.getStates();        
+
+    this.setPersonalForm();   
+    this.setAddressForm();             
   }
 
 
@@ -107,33 +108,32 @@ export class MyTraderAccountComponent implements OnInit {
 
     }); // end of document function
 
-
   }
 
 
-  private setupForms() {
-
+  private setPersonalForm() {
     this.personalGroup = this.formBuilder.group({
       fname: new FormControl('', [Validators.required, ValidationService.firstNameValidator]),
       mname: new FormControl('', [ValidationService.middleNameValidator]),
       lname: new FormControl('', [Validators.required, ValidationService.lastNameValidator])
 
     });
+  }
 
+
+  private setAddressForm() {
 
     this.addressGroup = this.formBuilder.group({
-
       number: new FormControl('', [ValidationService.numberValidator]),
       unit: new FormControl('', [ValidationService.unitValidator]),
       street: new FormControl('', [ValidationService.streetValidator]),
       suburb: new FormControl('', [ValidationService.suburbValidator]),
       postcode: new FormControl('', [ValidationService.postcodeValidator]),
-      city: new FormControl('', [ValidationService.placeValidator]),
+      city: new FormControl(this.cities[0], [ValidationService.placeValidator]),
       state: new FormControl('', [ValidationService.stateValidator])
-
     });
-  }
 
+  }
 
 
   //************************************************************
@@ -151,8 +151,7 @@ export class MyTraderAccountComponent implements OnInit {
   private onSuccessPersonal(pd: PersonalDetails) {
     this.personalDetails = pd;    
     this.addresses = pd.addresses;
-    this.address = pd.addresses[0];
-    this.setPersonalDefaults();   
+    this.address = pd.addresses[0];    
     this.getContactDetails(this.traderId);
   }
 
@@ -163,6 +162,7 @@ export class MyTraderAccountComponent implements OnInit {
         this.onSuccessContact(contactResult);
       }, (serviceError: Response) => this.onError(serviceError, "getContactDetails"));
   }
+
 
   private onSuccessContact(cd: ContactDetails) {
     this.contactDetails = cd;
@@ -185,14 +185,12 @@ export class MyTraderAccountComponent implements OnInit {
   public getStates() {
     this.statesService.getStates()
       .subscribe((res: State[]) => {
-        this.states = res;                        
-        this.setAddressDefaults();
+        this.states = res;                       
       }
       , (error: Response) => this.onError(error, "getStates"));
   }
 
  
-
   //*****************************************************
   //SET DEFAULTS
   //*****************************************************
@@ -204,20 +202,26 @@ export class MyTraderAccountComponent implements OnInit {
     });
   }
 
+
   private setAddressDefaults() {
 
     let m: number = 0;
+    let localStates: State[] = [];
+    let localCities: Place[] = [];
+    let localPostcodes: Postcode[] = [];   
 
     for (m = 0; m < this.states.length; m++) {
       if (this.states[m].name == this.address.state) { this.defaultState = this.states[m]; }
     }
+    localCities = this.defaultState.places;
 
-    for (m = 0; m<this.cities.length; m++) {
-      if (this.cities[m].name == this.address.city) { this.defaultCity = this.cities[m]; }
+    for (m = 0; m < localCities.length; m++) {
+      if (localCities[m].name == this.address.city) { this.defaultCity = localCities[m]; }
     }
+    localPostcodes = this.defaultCity.postcodes;
 
-    for (m = 0; m< this.postcodes.length; m++) {
-      if (this.postcodes[m].number == this.address.postcode) { this.defaultPostcode = this.postcodes[m]; }
+    for (m = 0; m < localPostcodes.length; m++) {
+      if (localPostcodes[m].number == this.address.postcode) { this.defaultPostcode = localPostcodes[m]; }
     }
 
     this.addressGroup.setValue({
@@ -232,60 +236,60 @@ export class MyTraderAccountComponent implements OnInit {
     });
   }
 
- 
-
 
   //*****************************************************
   //GET THE INPUT IDS
   //*****************************************************
-  private StateClicked(item: any) {
-    this.getPlacesByStateId(item);
-
+  private onStateChange(state: State) {    
+    this.postcodes = null;   
+    this.cities = state.places;
   }
 
-  private CityClicked(item: any) {
-    this.getPostcodeByPlaceId(item);
+  private onCityChange(city: Place) {
+    this.postcodes = city.postcodes;
   }
-
-
-  public getPlacesByStateId(stateid: number) {
-    let m: number = 0;
-    for (m = 0; m < this.states.length; m++) {
-      if (this.states[m].id == stateid) {
-        this.cities = this.states[m].places;
-      }
-    }
-  }
-
-
-  public getPostcodeByPlaceId(placeid: number) {
-    let m: number = 0;
-    for (m = 0; m < this.cities.length; m++) {
-      if (this.cities[m].id == placeid) {
-        this.postcodes = this.cities[m].postcodes;
-      }
-    }
-  }
-
 
 
   //************************************************************
   // UPDATES
   //************************************************************
-  private enablePersonalEdit() { this.personalEdit = true;}
-  private disablePersonalEdit() { this.personalEdit = false; }
-  private enableAddressEdit(address:Address) { this.addressEdit = true; }
-  private disableAddressEdit(address:Address) { this.addressEdit = false; }
+  private enablePersonalEdit() {
+    this.personalEdit = true;    
+    this.setPersonalDefaults();
+  }
+  private disablePersonalEdit() {
+    this.personalEdit = false;
+  }
+  private enableAddressEdit(address: Address) {
+    this.addressEdit = true;
+    this.cities = null;
+    this.postcodes = null;
+    this.setAddressDefaults();
+  }
+  private disableAddressEdit(address: Address) {
+    this.addressEdit = false;
+  }
+
   private enableEmailEdit() { this.emailEdit = true; }
+
   private disableEmailEdit() { this.emailEdit = false; }
+
   private enablePhoneEdit() { this.phoneEdit = true; }
+
   private disablePhoneEdit() { this.phoneEdit = false; }
+
   private enableSocialEdit() { this.socialEdit = true; }
+
   private disableSocialEdit() { this.socialEdit = false; }
+
   private enableSecurityEdit() { this.securityEdit = true; }
+
   private disableSecurityEdit() { this.securityEdit = false; }
+
   private enablePasswordEdit() { this.passwordEdit = true; }
+
   private disablePasswordEdit() { this.passwordEdit = false; }
+
 
   //************************************************************
   // HELPER METHODS

@@ -99,7 +99,7 @@ export class ValidationService {
   // {10}-Assert date can no be in the past
   if (control.value) {
  
-    if (control.value  !== "Select") {
+    if (control.value.categoryDescription  !== "") {
       return null;
     }
     else {
@@ -113,7 +113,7 @@ export class ValidationService {
     // {10}-Assert date can no be in the past
     if (control.value) {
 
-      if (control.value !== "Select") {
+      if (control.value.subcategoryDescription !== "") {
         return null;
       }
       else {
@@ -127,7 +127,7 @@ export class ValidationService {
     // {10}-Assert date can no be in the past
     if (control.value) {
 
-      if (control.value !== "Select") {
+      if (control.value.name !== "") {
         return null;
       }
       else {
@@ -141,7 +141,7 @@ export class ValidationService {
     // {10}-Assert date can no be in the past
     if (control.value) {
 
-      if (control.value !== "Select") {
+      if (control.value.name !== "") {
         return null;
       }
       else {
@@ -155,7 +155,7 @@ export class ValidationService {
         // postcode must be selected
     if (control.value) {
 
-      if (control.value !== "Select") {
+      if (control.value.number !== "") {
         return null;
       }
       else {

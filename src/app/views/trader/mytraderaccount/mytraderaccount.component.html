@@ -75,7 +75,7 @@
                                           </div>
                                         </div>
 
-                                        <div class="col-md-10 panel panel-heading" style="height:60px;margin-top:10px;">
+                                        <div class="col-md-12 panel panel-heading" style="height:60px;margin-top:10px;">
                                               <div class="col-md-6">
                                                 <button class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="disablePersonalEdit()">
                                                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
@@ -96,18 +96,16 @@
                                                                                                                                                                                    
                 </div>
 
-              </div>
+            </div>
 
 
             <!-- address details section -->
             <div class="col-md-6 col-md-offset-1" id="address">
-
                     
                       <div class="address panel panel-heading collapsed col-md-12" data-toggle="collapse" data-target="#collapseAddress">
                         <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Address Details</span>
                       </div>                         
-                    
-                 
+                                     
                      <div class="panel panel-heading colapse in col-md-12 footerdiv" id="collapseAddress" style="margin-top:-20px;">
                                                                
                              <!--<div class="panel-group col-md-4" *ngFor="let address of addresses">-->
@@ -115,7 +113,7 @@
                                    <div *ngIf="!addressEdit" class="row col-md-12">
 
                                         <div class="col-md-12" style="text-align:right;">
-                                         <a (click)="enableAddressEdit(address)" class="textoker">Edit <i class="glyphicon glyphicon-edit" aria-hidden="true" style="text-decoration:double;"></i></a>
+                                         <a (click)="enableAddressEdit()" class="textoker">Edit <i class="glyphicon glyphicon-edit" aria-hidden="true" style="text-decoration:double;"></i></a>
                                        </div>
 
                                         <div class="col-md-12">
@@ -168,7 +166,7 @@
 
                                 </div>
 
-                                <div *ngIf="addressEdit" class="row col-md-12">
+                                  <div *ngIf="addressEdit" class="row col-md-12">
 
                                     <form #addressForm="ngForm" novalidate (submit)="onSubmitAddress()" [formGroup]="addressGroup">
 
@@ -216,7 +214,7 @@
                                                           <div class="smalltext col-md-12">
                                                             <label for="suburb">Suburb</label>
                                                             <div class="input-group">
-                                                              <span class="input-group-addon"><i class="	glyphicon glyphicon-tower" aria-hidden="true"></i></span>
+                                                              <span class="input-group-addon"><i class="glyphicon glyphicon-tower" aria-hidden="true"></i></span>
                                                               <input type="text" formControlName="suburb" id="suburb" name="suburb" class="form-control smalltext" style="background-color:moccasin" />
                                                             </div>
                                                             <control-messages [control]="addressGroup.controls.suburb"></control-messages>
@@ -232,8 +230,8 @@
                                                             <div class="input-group">
                                                               <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></i></span>
                                                               <!--<input type="text" formControlName="state" id="state" name="state" [(ngModel)]="address.state" class="form-control smalltext" style="background-color:moccasin" />-->
-                                                              <select formControlName="state" id="state" name="state" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="StateClicked($event)" >
-                                                                <option></option>
+                                                              <select formControlName="state" id="state" name="state" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onStateChange($event)" >                                                             
+                                                                <option></option>         
                                                                 <option *ngFor="let state of states" [ngValue]="state" >
                                                                   {{ state.name }}
                                                                 </option>
@@ -249,9 +247,9 @@
                                                             <div class="input-group">
                                                               <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-left" aria-hidden="true"></i></span>
                                                               <!--<input type="text" formControlName="city" id="city" name="city" [(ngModel)]="address.city" class="form-control smalltext" style="background-color:moccasin" />-->
-                                                                <select  formControlName="city" id="city" name="city" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="CityClicked($event)">
-                                                                  <option></option>
-                                                                  <option *ngFor="let city of cities" [value]="city.id">
+                                                                <select  formControlName="city" id="city" name="city" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onCityChange($event)">                                                                
+                                                                  <option></option>         
+                                                                  <option *ngFor="let city of cities" [ngValue]="city">
                                                                     {{ city.name }}
                                                                   </option>
                                                                 </select>
@@ -260,16 +258,15 @@
                                                           </div>
                                                         </div>
                                                     
-
                                                         <div class="form-group" style="height:60px;">
                                                           <div class="smalltext col-md-12">
                                                             <label for="postcode">Postcode</label>
                                                             <div class="input-group">
                                                               <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
                                                               <!--<input type="text" formControlName="postcode" id="postcode" name="postcode" [(ngModel)]="address.postcode" class="form-control smalltext" style="background-color:moccasin" />-->
-                                                              <select formControlName="postcode" id="postcode" name="postcode" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="PostcodeClicked($event)">
-                                                                <option></option>
-                                                                <option *ngFor="let postcode of postcodes" [value]="postcode.id">
+                                                              <select formControlName="postcode" id="postcode" name="postcode" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onPostcodeChange($event)">                                                              
+                                                                <option></option>         
+                                                                <option *ngFor="let postcode of postcodes" [ngValue]="postcode">
                                                                   {{ postcode.number }}
                                                                 </option>
                                                               </select>
@@ -277,12 +274,10 @@
                                                             <control-messages [control]="addressGroup.controls.postcode"></control-messages>
                                                           </div>
                                                         </div>
-                                                        
-                                                
-
-                                                        <div class="col-md-10 panel panel-heading" style="height:60px;margin-top:10px;">
+                                                                                                       
+                                                        <div class="col-md-12 panel panel-heading" style="height:60px;margin-top:10px;">
                                                           <div class="col-md-6">
-                                                            <button class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="disableAddressEdit(address)">
+                                                            <button class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="disableAddressEdit()">
                                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                                             </button>
                                                           </div>
@@ -297,17 +292,12 @@
                                                 </div>
 
                                           </div>
-
                                     </form>
-
                                 </div>
-
                              <!--</div>-->
                     </div>
               </div>
-
     </div>
-
 
 
       <!-- contact details here-->

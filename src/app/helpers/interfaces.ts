@@ -77,11 +77,12 @@ interface ISecurityDetails {
 
 interface IAddress {
   id: number; 
-  number: number;
+  number: string;
+  unit: string;
   street: string;
   suburb: string;
   city: string;
-  postcode: number;
+  postcode: string;
   state: string;
   country: string;
   preferred: string;

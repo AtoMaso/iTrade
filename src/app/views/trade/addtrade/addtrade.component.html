@@ -31,8 +31,8 @@
                     <div class="panel panel-heading col-md-3"><span>Category:</span></div>
 
                     <div class="form-group col-md-6">
-                      <select formControlName="category" id="category" name="category" class="form-control" style="background-color:moccasin;" (ngModelChange)="onCategoryChange($event)">  <!--(change)="onCategoryChange($event.target.value)">-->                      
-                        <option *ngFor="let category of categories" [ngValue]="category.categoryId"> {{ category.categoryDescription }}</option>
+                      <select formControlName="category" id="category" name="category" class="form-control" style="background-color:moccasin;" (ngModelChange)="onCategoryChange($event)">  <!--(change)="onCategoryChange($event.target.value)">-->                                                   
+                        <option *ngFor="let category of categories" [ngValue]="category"> {{ category.categoryDescription }}</option>
                       </select>
                       <control-messages [control]="addForm.controls.category"></control-messages>
                     </div>
@@ -43,8 +43,8 @@
                     <div class="panel panel-heading col-md-3"><span>Subcategory:</span></div>
 
                     <div class="form-group col-md-6">
-                      <select formControlName="subcategory" id="category" name="subcategory" class="form-control" style="background-color:moccasin;">                        
-                        <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.subcategoryId">{{ subcategory.subcategoryDescription }}</option>
+                      <select formControlName="subcategory" id="category" name="subcategory" class="form-control" style="background-color:moccasin;">                                         
+                        <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory">{{ subcategory.subcategoryDescription }}</option>
                       </select>
                       <control-messages [control]="addForm.controls.subcategory"></control-messages>
                     </div>
@@ -55,8 +55,8 @@
                     <div class="panel panel-heading col-md-3"><span>State:</span></div>
 
                     <div class="form-group col-md-6">
-                      <select formControlName="state" id="state" name="state" class="form-control" style="background-color:moccasin;" (ngModelChange)="onStateChange($event)">                     
-                        <option *ngFor="let state of states" [ngValue]="state.id"> {{ state.name }}</option>             
+                      <select formControlName="state" id="state" name="state" class="form-control" style="background-color:moccasin;" (ngModelChange)="onStateChange($event)">                                  
+                        <option *ngFor="let state of states" [ngValue]="state"> {{ state.name }}</option>             
                       </select>
                       <control-messages [control]="addForm.controls.state"></control-messages>
                     </div>
@@ -67,8 +67,8 @@
                     <div class="panel panel-heading col-md-3"><span>Place:</span></div>
 
                     <div class="form-group col-md-6">
-                      <select formControlName="place" id="place" name="place" class="form-control" style="background-color:moccasin;" (ngModelChange)="onPlaceChange($event)">                   
-                        <option *ngFor="let place of places" [ngValue]="place.id">{{ place.name }}</option>
+                      <select formControlName="place" id="place" name="place" class="form-control" style="background-color:moccasin;" (ngModelChange)="onPlaceChange($event)">         
+                       <option *ngFor="let place of places" [ngValue]="place">{{ place.name }}</option>
                       </select>
                       <control-messages [control]="addForm.controls.place"></control-messages>
                     </div>
@@ -78,8 +78,8 @@
                     <div class="panel panel-heading col-md-3"><span>Postcode:</span></div>
 
                     <div class="form-group col-md-6">
-                      <select formControlName="postcode" id="postcode" name="postcode" class="form-control" style="background-color:moccasin;">
-                        <option *ngFor="let postcode of postcodes" [ngValue]="postcode.id">{{ postcode.number }}</option>
+                      <select formControlName="postcode" id="postcode" name="postcode" class="form-control" style="background-color:moccasin;">                     
+                        <option *ngFor="let postcode of postcodes" [ngValue]="postcode">{{ postcode.number }}</option>
                       </select>
                       <control-messages [control]="addForm.controls.postcode"></control-messages>
                     </div>

@@ -174,10 +174,11 @@ class Address implements IAddress {
 
   id: number;
   traderId: number;
-  number: number;
+  number: string;
+  unit: string;
   street: string;
   suburb: string;
-  postcode: number;
+  postcode: string;
   city: string;
   state: string;
   country: string;
@@ -188,11 +189,12 @@ class Address implements IAddress {
 
   constructor() {
     this.id = 0;
-    this.number = 0;
+    this.number = "";
+    this.unit = "";
     this.street = "";
     this.suburb = "";
     this.city = "";
-    this.postcode = 0;
+    this.postcode = "";
     this.state = "";
     this.country = "";
     this.preferred = "";

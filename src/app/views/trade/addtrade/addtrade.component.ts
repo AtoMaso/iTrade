@@ -121,51 +121,22 @@ export class AddTradeComponent implements OnInit {
   }
 
 
-  public getSubcategoriesByCategoryId(categoryId: number) {    
-    let m: number = 0;
-    for (m = 0; m < this.categories.length; m++) {
-      if (this.categories[m].categoryId == categoryId) {
-        this.subcategories = this.categories[m].subcategories;
-      }
-    }
-  }
-
-
-  public getPlacesByStateId(stateid:number) {  
-    let m: number = 0;
-    for (m = 0; m < this.states.length; m++) {
-      if (this.states[m].id == stateid) {
-        this.places = this.states[m].places;
-      }
-    }   
-  }
-
-
-  public getPostcodeByPlaceId(placeid: number) {
-    let m: number = 0;
-    for (m = 0; m < this.places.length; m++) {
-      if (this.places[m].id == placeid) {
-        this.postcodes = this.places[m].postcodes;
-      }
-    }
-  }
-
-
-
   //*****************************************************
-  // SCREEN SELECTION 
+  // SCREEN CHANGE SELECTION 
   //*****************************************************
-  private onCategoryChange(item: any) {
-    this.getSubcategoriesByCategoryId(item);
+  private onCategoryChange(category: Category) {        
+    this.subcategories = category.subcategories;
   }
 
-  private onStateChange(item: any) {
-    this.getPlacesByStateId(item);
+  private onStateChange(state: State) {  
+    this.postcodes = null;
+    this.places = state.places;
   }
 
-  private onPlaceChange(item: any) {
-    this.getPostcodeByPlaceId(item);
+  private onPlaceChange(place: Place) { 
+    this.postcodes = place.postcodes;
   }
+
 
 
   //*****************************************************
@@ -188,17 +159,16 @@ export class AddTradeComponent implements OnInit {
       this.newTrade.name = this.addForm.controls.trading.value;
       this.newTrade.description = this.addForm.controls.description.value;
       this.newTrade.tradeFor = this.addForm.controls.tradingfor.value;
-      this.newTrade.datePublished = this.addForm.controls.publishDate.value.jsdate;
-      // TODO check what is the published date, if today then status will be OPEN
-      // is not than should shat"NOT PUBLISHED"
+      this.newTrade.datePublished = this.addForm.controls.publishDate.value.jsdate;     
+       
       if (today < this.newTrade.datePublished) { this.newTrade.status = "Not Published"; }
       else { this.newTrade.status = "Open";}
      
-      this.newTrade.categoryId = this.addForm.controls.category.value;
-      this.newTrade.subcategoryId = this.addForm.controls.subcategory.value;
-      this.newTrade.placeId = this.addForm.controls.place.value;
-      this.newTrade.stateId = this.addForm.controls.state.value;       
-      this.newTrade.postcodeId = this.addForm.controls.postcode.value;
+      this.newTrade.categoryId = this.addForm.controls.category.value.categoryId;
+      this.newTrade.subcategoryId = this.addForm.controls.subcategory.value.subcategoryId;
+      this.newTrade.placeId = this.addForm.controls.place.value.id;
+      this.newTrade.stateId = this.addForm.controls.state.value.id;       
+      this.newTrade.postcodeId = this.addForm.controls.postcode.value.id;
       this.newTrade.traderId = this.identity.userId;
 
       // set the image array here, the imageid and real url will be created 
