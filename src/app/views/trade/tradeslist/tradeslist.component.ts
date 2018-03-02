@@ -8,16 +8,16 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder, F
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { CategoryService } from '../../../services/categories/category.service';
-import { SubcategoriesService } from '../../../services/subcategories/subcategories.service';
+//import { SubcategoriesService } from '../../../services/subcategories/subcategories.service';
 import { StatesService } from '../../../services/states/states.service';
-import { PlacesService } from '../../../services/places/places.service';
+//import { PlacesService } from '../../../services/places/places.service';
 import { ValidationService } from '../../../services/validation/validation.service';
 
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
-import { CapsPipe } from '../../../helpers/pipes';
+//import { CapsPipe } from '../../../helpers/pipes';
 import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, State, Place, Postcode} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 

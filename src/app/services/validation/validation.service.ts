@@ -15,19 +15,27 @@ export class ValidationService {
       'invalidPassword': 'Invalid password. Password must be between 6 and 10 characters long, and should contain min one number.',
       'invalidConfirmPassword': 'Invalid confirm password. Password must be between 6 and 10 characters long, and contains a number.',     
       'invalidUsername': 'Invalid username. Username must be 5 alphanumeric characters long. ',
-      'invalidPhone': 'Invalid phone. Phone must contain 10 numeric characters. ',
+
       'invalidTradeName': 'Name should be 3-20 characters. ',
       'invalidTradeDescription': 'Description should be 10-200 characters. ',
       'invalidTradeTradeFor': 'Trade for name should be 3-20 characters. ',
       'invalidCategory': 'You must select a category. ',
       'invalidSubcategory': 'You must select a subcategory. ',
       'invalidState': 'You must select a state. ',
-      'invalidPlace': 'You must select a place. ',
+      'invalidPlace': 'You must select a place. ',   
       'invalidDatePublished': 'Published date can not be in the past. ',
-      'invalidPostCode': 'Postcode provide is not valid.',
-      'invalidFirstName': 'Invalid name. Your first name should contain only alphabetical characters with maximum lenght of 15 characters. ',
-      'invalidMiddleName': 'Invalid name. Your middle name should contain only alphabetical characters with maximum lenght of 15 characters. ',
-      'invalidLastName': 'Invalid name. Your last name should contain only alphabetical characters with maximum lenght of 20 characters. '
+      'invalidPostCode': 'You must select postcode.',
+  
+      'invalidPhone': 'Phone must contain 10 numeric characters. ',
+
+      'invalidNumber': 'The number must be a numerical value.',
+      'invalidUnit': 'The unit number must be a numerical value.',
+      'invalidSteeet': 'The street name can not be longer than 30 characters.',
+      'invalidSuburb': 'The suburb name can not be longer than 30 characters.',
+
+      'invalidFirstName': 'Your first name should contain only alphabetical characters with maximum lenght of 15 characters. ',
+      'invalidMiddleName': 'Your middle name should contain only alphabetical characters with maximum lenght of 15 characters. ',
+      'invalidLastName': 'Your last name should contain only alphabetical characters with maximum lenght of 20 characters. '
     };
     return config[validatorName];
   }
@@ -68,7 +76,6 @@ export class ValidationService {
     }
   }
 
-
   static publishDateValidator(control) {
 
     // {10}-Assert date can no be in the past
@@ -86,7 +93,6 @@ export class ValidationService {
         }
     }
 }
-
 
   static categoryValidator(control) {
 
@@ -115,7 +121,6 @@ export class ValidationService {
       }
     }
   }
-
 
   static stateValidator(control) {
 
@@ -162,7 +167,7 @@ export class ValidationService {
 
 
  /**************************************************/
- // login and regitser views validations
+ // login and register views validations plust personal details
 /**************************************************/
   static emailValidator(control) {
     // RFC 2822 compliant regex
@@ -194,7 +199,6 @@ export class ValidationService {
     }
   }
 
- 
   // GOOD
   static confirmPasswordValidator(control: any) {   
       // {6,100}-Assert password is between 6 and 100 characters
@@ -207,20 +211,6 @@ export class ValidationService {
           }
       }
   }
-
-
-// GOOD
-static phoneValidator(control: any) {
-  // {1-10}-Assert phone is numeric only
-  if (control.value) {
-      if (control.value.match(/^(\d{10})$/)) {
-        return null;
-      } else {
-        return { 'invalidPhone': true };
-      }
-  }
-}
-
 
 // GOOD
 static firstNameValidator(control: any) {
@@ -256,6 +246,75 @@ static firstNameValidator(control: any) {
     }
   }
 
+
+
+  //********************************************************
+  // contact details validations
+  //********************************************************
+  // GOOD
+  static phoneValidator(control: any) {
+    // {1-10}-Assert phone is numeric only
+    if (control.value) {
+      if (control.value.match(/^(\d{10})$/)) {
+        return null;
+      } else {
+        return { 'invalidPhone': true };
+      }
+    }
+  }
+
+  //********************************************************
+  // address details validations
+  //********************************************************
+  static streetValidator(control) {
+    
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z\s]){3,30}$/)) {
+        return null;
+      } else {
+        return { 'invalidStreet': true };
+      }
+    }
+  }
+
+  static suburbValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z\s]){3,30}$/)) {
+        return null;
+      } else {
+        return { 'invalidSuburb': true };
+      }
+    }
+  }
+
+  static numberValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([0-9]){1,5}$/)) {
+        return null;
+      } else {
+        return { 'invalidNumber': true };
+      }
+    }
+  }
+
+  static unitValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([0-9]){1,5}$/)) {
+        return null;
+      } else {
+        return { 'invalidUnit': true };
+      }
+    }
+  }
+
+
+
+  //********************************************************
+  // extra ones
+  //********************************************************
   static creditCardValidator(control) {
     // Visa, MasterCard, American Express, Diners Club, Discover, JCB
     if (control.value.match(/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/)) {
@@ -264,4 +323,5 @@ static firstNameValidator(control: any) {
       return { 'invalidCreditCard': true };
     }
   }
+
 }

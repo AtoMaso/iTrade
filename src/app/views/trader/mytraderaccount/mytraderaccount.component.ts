@@ -6,6 +6,8 @@ import { NgClass, NgIf } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 // services
 import { PersonalDetailsService } from '../../../services/personaldetails/personaldetails.service';
+import { StatesService } from '../../../services/states/states.service';
+
 import { ContactDetailsService } from '../../../services/contactdetails/contactdetails.service';
 import { SecurityDetailsService } from '../../../services/securitydetails/securitydetails.service';
 import { ValidationService } from '../../../services/validation/validation.service';
@@ -15,7 +17,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 
 // components
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails, SecurityDetails, Address} from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails, SecurityDetails, Address, State, Place, Postcode} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -35,7 +37,13 @@ export class MyTraderAccountComponent implements OnInit {
   private contactDetails: ContactDetails = new ContactDetails();
   private securityDetails: SecurityDetails = new SecurityDetails();  
   private addresses: Address[] = [];
+  private address: Address = new Address();
+  private states: State[] = [];
+  private cities: Place[] = [];
+  private postcodes: Postcode[] = [];
+
   private personalGroup: any;
+  private addressGroup: any;
 
   private personalEdit: boolean = false;
   private addressEdit: boolean = false;
@@ -45,6 +53,17 @@ export class MyTraderAccountComponent implements OnInit {
   private securityEdit: boolean = false;
   private passwordEdit: boolean = false;
 
+  private selectedState: string = null;
+  private selectedPlace: string = null;
+  private selectedPostcode: string = null;
+  private selectedStateId: number = 0;
+  private selectedPlaceId: number = 0;
+  private selectedPostcodeId: number = 0;
+
+  private defaultState: State = new State();
+  private defaultCity: Place = new Place();
+  private defaultPostcode: Postcode = new Postcode();
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -52,26 +71,18 @@ export class MyTraderAccountComponent implements OnInit {
     private personalService: PersonalDetailsService,
     private contactService: ContactDetailsService,
     private securityService: SecurityDetailsService,
+    private statesService: StatesService,
     private pageTitleService: PageTitleService,
     private messagesService: ProcessMessageService,
-    private loggerService: LoggerService) {
-  };
+    private loggerService: LoggerService) { };
 
 
   ngOnInit() {
     this.getUseridentity();
     this.initialiseComponent();
-
-    this.personalGroup = this.formBuilder.group({
-
-      fname: new FormControl('', [Validators.required, ValidationService.firstNameValidator]),
-      mname: new FormControl('', [ValidationService.middleNameValidator]),
-      lname: new FormControl('', [Validators.required, ValidationService.lastNameValidator])
-
-    });
-
     this.getPersonalDetails(this.traderId);
-
+    this.getStates();  
+    this.setupForms();
   }
 
 
@@ -99,6 +110,32 @@ export class MyTraderAccountComponent implements OnInit {
 
   }
 
+
+  private setupForms() {
+
+    this.personalGroup = this.formBuilder.group({
+      fname: new FormControl('', [Validators.required, ValidationService.firstNameValidator]),
+      mname: new FormControl('', [ValidationService.middleNameValidator]),
+      lname: new FormControl('', [Validators.required, ValidationService.lastNameValidator])
+
+    });
+
+
+    this.addressGroup = this.formBuilder.group({
+
+      number: new FormControl('', [ValidationService.numberValidator]),
+      unit: new FormControl('', [ValidationService.unitValidator]),
+      street: new FormControl('', [ValidationService.streetValidator]),
+      suburb: new FormControl('', [ValidationService.suburbValidator]),
+      postcode: new FormControl('', [ValidationService.postcodeValidator]),
+      city: new FormControl('', [ValidationService.placeValidator]),
+      state: new FormControl('', [ValidationService.stateValidator])
+
+    });
+  }
+
+
+
   //************************************************************
   // DETAILS
   //************************************************************
@@ -114,6 +151,8 @@ export class MyTraderAccountComponent implements OnInit {
   private onSuccessPersonal(pd: PersonalDetails) {
     this.personalDetails = pd;    
     this.addresses = pd.addresses;
+    this.address = pd.addresses[0];
+    this.setPersonalDefaults();   
     this.getContactDetails(this.traderId);
   }
 
@@ -137,6 +176,98 @@ export class MyTraderAccountComponent implements OnInit {
         this.securityDetails = securityResult;       
       }, (serviceError: Response) => this.onError(serviceError, "getSecurityDetails"));
   }
+
+  
+
+  //*****************************************************
+  // GET STATES
+  //*****************************************************
+  public getStates() {
+    this.statesService.getStates()
+      .subscribe((res: State[]) => {
+        this.states = res;                        
+        this.setAddressDefaults();
+      }
+      , (error: Response) => this.onError(error, "getStates"));
+  }
+
+ 
+
+  //*****************************************************
+  //SET DEFAULTS
+  //*****************************************************
+  private setPersonalDefaults() {
+    this.personalGroup.setValue({
+      fname: this.personalDetails.firstName,
+      mname: this.personalDetails.middleName,
+      lname: this.personalDetails.lastName,
+    });
+  }
+
+  private setAddressDefaults() {
+
+    let m: number = 0;
+
+    for (m = 0; m < this.states.length; m++) {
+      if (this.states[m].name == this.address.state) { this.defaultState = this.states[m]; }
+    }
+
+    for (m = 0; m<this.cities.length; m++) {
+      if (this.cities[m].name == this.address.city) { this.defaultCity = this.cities[m]; }
+    }
+
+    for (m = 0; m< this.postcodes.length; m++) {
+      if (this.postcodes[m].number == this.address.postcode) { this.defaultPostcode = this.postcodes[m]; }
+    }
+
+    this.addressGroup.setValue({
+      number: this.address.number,
+      unit: this.address.unit,
+      street: this.address.street,
+      suburb: this.address.suburb,
+      state: this.defaultState,
+      postcode: this.defaultPostcode,
+      city: this.defaultCity,
+
+    });
+  }
+
+ 
+
+
+  //*****************************************************
+  //GET THE INPUT IDS
+  //*****************************************************
+  private StateClicked(item: any) {
+    this.getPlacesByStateId(item);
+
+  }
+
+  private CityClicked(item: any) {
+    this.getPostcodeByPlaceId(item);
+  }
+
+
+  public getPlacesByStateId(stateid: number) {
+    let m: number = 0;
+    for (m = 0; m < this.states.length; m++) {
+      if (this.states[m].id == stateid) {
+        this.cities = this.states[m].places;
+      }
+    }
+  }
+
+
+  public getPostcodeByPlaceId(placeid: number) {
+    let m: number = 0;
+    for (m = 0; m < this.cities.length; m++) {
+      if (this.cities[m].id == placeid) {
+        this.postcodes = this.cities[m].postcodes;
+      }
+    }
+  }
+
+
 
   //************************************************************
   // UPDATES
