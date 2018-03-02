@@ -246,13 +246,13 @@
                                                             <label for="city">City</label>
                                                             <div class="input-group">
                                                               <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-left" aria-hidden="true"></i></span>
-                                                              <!--<input type="text" formControlName="city" id="city" name="city" [(ngModel)]="address.city" class="form-control smalltext" style="background-color:moccasin" />-->
-                                                                <select  formControlName="city" id="city" name="city" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onCityChange($event)">                                                                
+                                                              <input type="text" formControlName="city" id="city" name="city" [(ngModel)]="address.city" class="form-control smalltext" style="background-color:moccasin" />
+                                                                <!--<select  formControlName="city" id="city" name="city" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onCityChange($event)">                                                                
                                                                   <option></option>         
                                                                   <option *ngFor="let city of cities" [ngValue]="city">
                                                                     {{ city.name }}
                                                                   </option>
-                                                                </select>
+                                                                </select>-->
                                                             </div>
                                                             <control-messages [control]="addressGroup.controls.city"></control-messages>
                                                           </div>
@@ -263,13 +263,13 @@
                                                             <label for="postcode">Postcode</label>
                                                             <div class="input-group">
                                                               <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
-                                                              <!--<input type="text" formControlName="postcode" id="postcode" name="postcode" [(ngModel)]="address.postcode" class="form-control smalltext" style="background-color:moccasin" />-->
-                                                              <select formControlName="postcode" id="postcode" name="postcode" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onPostcodeChange($event)">                                                              
+                                                              <input type="text" formControlName="postcode" id="postcode" name="postcode" [(ngModel)]="address.postcode" class="form-control smalltext" style="background-color:moccasin" />
+                                                              <!--<select formControlName="postcode" id="postcode" name="postcode" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onPostcodeChange($event)">                                                              
                                                                 <option></option>         
                                                                 <option *ngFor="let postcode of postcodes" [ngValue]="postcode">
                                                                   {{ postcode.number }}
                                                                 </option>
-                                                              </select>
+                                                              </select>-->
                                                             </div>
                                                             <control-messages [control]="addressGroup.controls.postcode"></control-messages>
                                                           </div>
