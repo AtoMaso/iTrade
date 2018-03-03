@@ -28,6 +28,8 @@ export class ValidationService {
   
       'invalidPhone': 'Phone must contain 10 numeric characters. ',
 
+      'invalidPreferredFlag': 'The preferred flag must be selected',
+      'invalidAddressType': 'The address type must be selected',
       'invalidNumber': 'The number must be a numerical value.',
       'invalidUnit': 'The unit number must be a numerical value.',
       'invalidSteeet': 'The street name can not be longer than 30 characters.',
@@ -266,6 +268,31 @@ static firstNameValidator(control: any) {
   //********************************************************
   // address details validations
   //********************************************************
+  static preferredValidator(control) {
+
+    if (control.value) {
+      if (control.value.number !== "") {
+        return null;
+      }
+      else {
+        return { 'invalidPreferredFlag': true };
+      }
+    }
+  }
+
+
+  static addresstypeValidator(control) {
+    if (control.value) {
+      if (control.value.number !== "") {
+        return null;
+      }
+      else {
+        return { 'invalidAddressType': true };
+      }
+    }
+  }
+
+
   static streetValidator(control) {
     
     if (control.value) {

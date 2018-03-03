@@ -66,3 +66,23 @@ export class SecurityDetailsComponent implements OnInit {
 
 }
 
+//private getContactDetails(traderId: string) {
+  //  this.contactService.getContactDetailsByTraderId(traderId)
+  //    .subscribe((contactResult: ContactDetails) => {       
+  //      this.onSuccessContact(contactResult);
+  //    }, (serviceError: Response) => this.onError(serviceError, "getContactDetails"));
+  //}
+
+
+  //private onSuccessContact(cd: ContactDetails) {
+  //  this.contactDetails = cd;
+  //  this.getSecurityDetails(this.traderId);
+  //}
+
+
+  //private getSecurityDetails(traderId: string) {
+  //  this.securityService.getSecurityDetailsByTraderId(traderId)
+  //    .subscribe((securityResult: SecurityDetails) => {
+  //      this.securityDetails = securityResult;       
+  //    }, (serviceError: Response) => this.onError(serviceError, "getSecurityDetails"));
+  //}

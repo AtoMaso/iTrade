@@ -14,6 +14,7 @@ import { LoggerService } from '../logger/logger.service';
 import { UserSession, UserIdentity, PersonalDetails} from '../../helpers/classes';
 
 let personaldetailsbytraderid = CONFIG.baseUrls.personaldetailsbytraderid;
+let updatepersonaldetail = CONFIG.baseUrls.updatepersonaldetail;
 
 @Injectable()
 export class PersonalDetailsService {
@@ -45,6 +46,21 @@ export class PersonalDetailsService {
     return this.httpClientService.get<PersonalDetails>(this.localUrl, httpOptions).retry(1);
   }
 
+  //update personal details
+  public updatePersonalDetails(pd: PersonalDetails) {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    this.localUrl = `${updatepersonaldetail}`;
+    return this.httpClientService.put<PersonalDetails>(this.localUrl, pd, httpOptions).retry(1);
+  }
+
 
   //*****************************************************
   // HELPER METHODS
@@ -56,5 +72,4 @@ export class PersonalDetailsService {
       this.token = this.identity.accessToken;
     }
   }
-
 }

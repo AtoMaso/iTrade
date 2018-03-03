@@ -44,6 +44,7 @@ import { CategoryService } from './services/categories/category.service';
 import { SubcategoriesService } from './services/subcategories/subcategories.service';
 import { StatesService } from './services/states/states.service';
 import { PlacesService } from './services/places/places.service';
+import { AddressService } from './services/address/address.service';
 
 
 //components
@@ -154,7 +155,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     TradeApiService, ValidationService, ImageService, TradeHistoryService, StatesService,
     AuthenticationService, ProcessMessageService, CorrespondenceService, PlacesService,
     PersonalDetailsService, ContactDetailsService, SecurityDetailsService, SubcategoriesService,
-    PageTitleService, LoggerService, AuthGuard, TraderApiService, CategoryService,
+    PageTitleService, LoggerService, AuthGuard, TraderApiService, CategoryService, AddressService,
     // to inercept every request for authentication purposes
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 

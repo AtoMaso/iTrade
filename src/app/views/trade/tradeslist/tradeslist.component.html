@@ -196,14 +196,14 @@
                                </div>
 
                                <div class="col-md-4 smalltextbold text-capitalize textgray">
-                                 <div class="row" style="height:32px;">Trading:<a class="text-capitalize textlightcoral" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}"> {{ trade.name  }}</a></div>                               
+                                 <div class="row" style="height:32px;">Trading:<a class="text-capitalize textlightcoral" style="text-decoration:underline;" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}">{{ trade.name  }}</a></div>                               
                                  <div class="row" style="height:32px;">Category: <span><span class="text-capitalize text-info"> {{ trade.categoryDescription  }}</span></span></div>
                                  <div class="row" style="height:32px;">Subcategory: <span><span class="text-capitalize text-info"> {{ trade.subcategoryDescription  }}</span></span></div>
                                  <div class="row" style="height:32px;">Trading for: <span class="text-capitalize text-info"> {{ trade.tradeFor  }}</span></div>
                                  <div class="row" style="height:32px;">Reference Id:<span class="text-capitalize text-info"> {{ trade.tradeId  }}</span></div>
                                  <div class="row" style="height:32px;">Published on:<span class="text-capitalize text-info"> {{ trade.datePublished | date }}</span></div>     
                                  <div class="row" style="height:32px;">Status: <span class="text-capitalize text-info"> {{ trade.status  }}</span></div>                               
-                                 <div class="row" style="height:32px;">Trader: <a class="text-capitalize textlightcoral" [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}"> {{ trade.traderFullName }}</a></div>
+                                 <div class="row" style="height:32px;">Trader: <a class="text-capitalize textlightcoral"  style="text-decoration:underline;"  [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}">{{ trade.traderFullName }}</a></div>
                                </div>
                                 
 

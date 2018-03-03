@@ -256,24 +256,24 @@ export class TraderDetailsComponent implements OnInit {
 
   private TransformDataPersonal(returnedPersonalDetails: PersonalDetails): PersonalDetails {
 
-    let trd = new PersonalDetails;  
+    let pd = new PersonalDetails;  
 
-    trd.firstName = returnedPersonalDetails.firstName;
-    trd.middleName = returnedPersonalDetails.middleName;
-    trd.lastName = returnedPersonalDetails.lastName;
-    trd.traderId = returnedPersonalDetails.traderId;
-    trd.personalDetailsId = returnedPersonalDetails.personalDetailsId;
-    trd.addresses = returnedPersonalDetails.addresses;
+    pd.firstName = returnedPersonalDetails.firstName;
+    pd.middleName = returnedPersonalDetails.middleName;
+    pd.lastName = returnedPersonalDetails.lastName;
+    pd.traderId = returnedPersonalDetails.traderId;
+    pd.personalDetailsId = returnedPersonalDetails.personalDetailsId;
+    pd.addresses = returnedPersonalDetails.addresses;
    
-    returnedPersonalDetails.addresses.forEach(function (value) {
-      if (value.preferred === "true") { trd.preferredAddress = value; }
-    });    
-    if (trd.addresses.length === 0) { this.hasAddress = false; }
+    //returnedPersonalDetails.addresses.forEach(function (value) {
+    //  if (value.preferred === "true") { pd.preferred = value; }
+    //});    
+    if (pd.addresses.length === 0) { this.hasAddress = false; }
     else { this.hasAddress = true; }
-    if (trd.middleName.length === 0) { this.hasMiddleName = false; }
+    if (pd.middleName.length === 0) { this.hasMiddleName = false; }
     else { this.hasMiddleName = true; }
      
-    return trd;;
+    return pd;;
   }
 
 

@@ -112,9 +112,9 @@
     personaldetails: 'http://localhost:5700/api/personaldetails',
     personaldetailsbytraderid: 'http://localhost:5700/api/personaldetails/GetPersonalDetailsByTraderId',    
     personaldetail: 'http://localhost:5700/api/personaldetails/',
-    updatepersonaldetail: 'http://localhost:5700/api/personaldetails/PutPersonaldetail',
-    addpersonaldetail: 'http://localhost:5700/api/personaldetails/PostPersonaldetails',
-    deletepersonaldetail: 'http://localhost:5700/personaldetails/DeletePersonaldetail',
+    updatepersonaldetail: 'http://localhost:5700/api/personaldetails/PutPersonalDetail',
+    addpersonaldetail: 'http://localhost:5700/api/personaldetails/PostPersonalDetails',
+    deletepersonaldetail: 'http://localhost:5700/personaldetails/DeletePersonalDetail',
   
     // security details
     securitydetails: 'http://localhost:5700/api/securitydetails',

@@ -85,15 +85,15 @@ interface IAddress {
   postcode: string;
   state: string;
   country: string;
-  preferred: string;
-  typeId: number;
-  typeDescription: string;
+  preferredFlag: string;
+  addressTypeId: number;
+  addressType: string;
   personalDetailsId: number;
 }
 
 interface IAddressType {
-  typeId: number;
-  typeDescription: string;
+  addressTypeId: number;
+  addressType: string;
 }
 
 

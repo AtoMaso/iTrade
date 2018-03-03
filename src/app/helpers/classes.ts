@@ -110,7 +110,6 @@ class PersonalDetails implements IPersonalDetails {
   lastName: string;
   dateOfBirth: Date;
   addresses: Address[];
-  preferredAddress: Address;
 
   constructor() {
     this.personalDetailsId = 0;
@@ -119,7 +118,6 @@ class PersonalDetails implements IPersonalDetails {
     this.lastName = "";
     this.dateOfBirth = new Date(1900, 1, 1);
     this.addresses = [];
-    this.preferredAddress = new Address();
   }
 }
 
@@ -182,9 +180,9 @@ class Address implements IAddress {
   city: string;
   state: string;
   country: string;
-  preferred: string;
-  typeId: number;
-  typeDescription: string
+  preferredFlag: string;
+  addressTypeId: number;
+  addressType: string
   personalDetailsId: number;
 
   constructor() {
@@ -197,21 +195,21 @@ class Address implements IAddress {
     this.postcode = "";
     this.state = "";
     this.country = "";
-    this.preferred = "";
-    this.typeId = 0;
-    this.typeDescription = "";
+    this.preferredFlag = "";
+    this.addressTypeId = 0;
+    this.addressType = "";
     this.personalDetailsId = 0;
   }
 }
 
 
 class AddressType implements IAddressType {
-  typeId: number;
-  typeDescription: string;
+  addressTypeId: number;
+  addressType: string;
 
   constructor() {
-    this.typeId = 0;
-    this.typeDescription = "";
+    this.addressTypeId = 0;
+    this.addressType = "";
   }
 }
 
@@ -693,6 +691,15 @@ class Guid {
 }
 
 
+class PreferredType {
+  id: number;
+  value: string;
+
+  constructor() {
+    this.id = 0;
+    this.value = "";
+  }
+}
 
 export {
   ChangePasswordBindingModel, RegisterBindingModel,
@@ -704,5 +711,5 @@ export {
   SecurityAnswer, SecurityQuestion, Correspondence,
   Trade, Image, Category, TradeHistory,
   UserSession, Authentication, UserIdentity,
-  ProcessMessage,ProcessMessageType, PageTitle, Attachement
+  ProcessMessage,ProcessMessageType, PageTitle, Attachement, PreferredType
 };
