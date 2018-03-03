@@ -40,7 +40,7 @@
 
                             <div *ngIf="personalEdit" class="row col-md-12">
 
-                                  <form #personalForm="ngForm" novalidate (submit)="onSubmitPersonal()" [formGroup]="personalGroup">
+                                  <form  novalidate [formGroup]="personalForm">
 
                                         <div class="form-group" style="height:60px; margin-top:20px;">
                                           <div class="smalltext col-md-12">
@@ -50,7 +50,7 @@
                                               <input type="text" formControlName="fname" id="fname" name="fname" required class="form-control smalltext" style="background-color:moccasin" />
                                             </div>
                                           </div>
-                                          <control-messages [control]="personalGroup.controls.fname"></control-messages>
+                                          <control-messages [control]="personalForm.controls.fname"></control-messages>
                                         </div>
 
                                         <div class="form-group" style="height:60px;">
@@ -60,7 +60,7 @@
                                               <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
                                               <input type="text" formControlName="mname" id="mname" name="mname" class="form-control smalltext" style="background-color:moccasin" />
                                             </div>
-                                            <control-messages [control]="personalGroup.controls.mname"></control-messages>
+                                            <control-messages [control]="personalForm.controls.mname"></control-messages>
                                           </div>
                                         </div>
 
@@ -71,7 +71,7 @@
                                               <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
                                               <input type="text" formControlName="lname" id="lname" name="lname" class="form-control smalltext" style="background-color:moccasin" />
                                             </div>
-                                            <control-messages [control]="personalGroup.controls.lname"></control-messages>
+                                            <control-messages [control]="personalForm.controls.lname"></control-messages>
                                           </div>
                                         </div>
 
@@ -168,7 +168,7 @@
 
                                   <div *ngIf="addressEdit" class="row col-md-12">
 
-                                    <form #addressForm="ngForm" novalidate (submit)="onSubmitAddress()" [formGroup]="addressGroup">
+                                    <form novalidate  [formGroup]="addressForm">
 
                                       <div class="col-md-12">
 
@@ -182,7 +182,7 @@
                                                               <input type="text" formControlName="number" id="number" name="number" class="form-control smalltext" style="background-color:moccasin" />
                                                             </div>
                                                           </div>
-                                                          <control-messages [control]="addressGroup.controls.number"></control-messages>
+                                                          <control-messages [control]="addressForm.controls.number"></control-messages>
                                                         </div>
 
 
@@ -193,7 +193,7 @@
                                                               <span class="input-group-addon"><i class="glyphicon glyphicon-home" aria-hidden="true"></i></span>
                                                               <input type="text" formControlName="unit" id="unit" name="unit" class="form-control smalltext" style="background-color:moccasin" />
                                                             </div>
-                                                            <control-messages [control]="addressGroup.controls.unit"></control-messages>
+                                                            <control-messages [control]="addressForm.controls.unit"></control-messages>
                                                           </div>
                                                         </div>
 
@@ -205,7 +205,7 @@
                                                               <span class="input-group-addon"><i class="glyphicon glyphicon-road" aria-hidden="true"></i></span>
                                                               <input type="text" formControlName="street" id="street" name="street" class="form-control smalltext" style="background-color:moccasin" />
                                                             </div>
-                                                            <control-messages [control]="addressGroup.controls.street"></control-messages>
+                                                            <control-messages [control]="addressForm.controls.street"></control-messages>
                                                           </div>
                                                         </div>
 
@@ -217,7 +217,7 @@
                                                               <span class="input-group-addon"><i class="glyphicon glyphicon-tower" aria-hidden="true"></i></span>
                                                               <input type="text" formControlName="suburb" id="suburb" name="suburb" class="form-control smalltext" style="background-color:moccasin" />
                                                             </div>
-                                                            <control-messages [control]="addressGroup.controls.suburb"></control-messages>
+                                                            <control-messages [control]="addressForm.controls.suburb"></control-messages>
                                                           </div>
                                                         </div>
                                               </div>
@@ -228,8 +228,7 @@
                                                           <div class="smalltext col-md-12">
                                                             <label for="state">State</label>
                                                             <div class="input-group">
-                                                              <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></i></span>
-                                                              <!--<input type="text" formControlName="state" id="state" name="state" [(ngModel)]="address.state" class="form-control smalltext" style="background-color:moccasin" />-->
+                                                              <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></i></span>                                                        
                                                               <select formControlName="state" id="state" name="state" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onStateChange($event)" >                                                             
                                                                 <option></option>         
                                                                 <option *ngFor="let state of states" [ngValue]="state" >
@@ -237,7 +236,7 @@
                                                                 </option>
                                                               </select>
                                                             </div>
-                                                            <control-messages [control]="addressGroup.controls.state"></control-messages>
+                                                            <control-messages [control]="addressForm.controls.state"></control-messages>
                                                           </div>
                                                         </div>                                                                                                             
 
@@ -246,15 +245,15 @@
                                                             <label for="city">City</label>
                                                             <div class="input-group">
                                                               <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-left" aria-hidden="true"></i></span>
-                                                              <input type="text" formControlName="city" id="city" name="city" [(ngModel)]="address.city" class="form-control smalltext" style="background-color:moccasin" />
-                                                                <!--<select  formControlName="city" id="city" name="city" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onCityChange($event)">                                                                
+                                                              <!--<input type="text" formControlName="city" id="city" name="city" [(ngModel)]="address.city" class="form-control smalltext" style="background-color:moccasin" />-->
+                                                                <select  formControlName="city" id="city" name="city" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onCityChange($event)">                                                                
                                                                   <option></option>         
                                                                   <option *ngFor="let city of cities" [ngValue]="city">
                                                                     {{ city.name }}
                                                                   </option>
-                                                                </select>-->
+                                                                </select>
                                                             </div>
-                                                            <control-messages [control]="addressGroup.controls.city"></control-messages>
+                                                            <control-messages [control]="addressForm.controls.city"></control-messages>
                                                           </div>
                                                         </div>
                                                     
@@ -262,16 +261,15 @@
                                                           <div class="smalltext col-md-12">
                                                             <label for="postcode">Postcode</label>
                                                             <div class="input-group">
-                                                              <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
-                                                              <input type="text" formControlName="postcode" id="postcode" name="postcode" [(ngModel)]="address.postcode" class="form-control smalltext" style="background-color:moccasin" />
-                                                              <!--<select formControlName="postcode" id="postcode" name="postcode" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onPostcodeChange($event)">                                                              
+                                                              <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>                                                           
+                                                              <select formControlName="postcode" id="postcode" name="postcode" class="form-control smalltext" style="background-color:moccasin;"  (ngModelChange)="onPostcodeChange($event)">                                                              
                                                                 <option></option>         
                                                                 <option *ngFor="let postcode of postcodes" [ngValue]="postcode">
                                                                   {{ postcode.number }}
                                                                 </option>
-                                                              </select>-->
+                                                              </select>
                                                             </div>
-                                                            <control-messages [control]="addressGroup.controls.postcode"></control-messages>
+                                                            <control-messages [control]="addressForm.controls.postcode"></control-messages>
                                                           </div>
                                                         </div>
                                                                                                        
@@ -283,7 +281,7 @@
                                                           </div>
 
                                                           <div class="col-md-6">
-                                                            <button class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!addressGroup.valid" style="width:auto; height:30px;">
+                                                            <button class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!addressForm.valid" style="width:auto; height:30px;">
                                                               <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                                                                 Save
                                                             </button>
@@ -302,12 +300,78 @@
 
       <!-- contact details here-->
     <div class="row">
-      <div class="panel panel-heading" id="contact">contact details row</div>
+      <div class="panel panel-heading" id="contact">
+
+      </div>
     </div>
 
     <!-- security details here-->
     <div class="row">
-      <div class="panel panel-heading" id="security">security details row</div>
+      <div class="panel panel-heading" id="security">security details row
+      
+      <!-- change pasword -->
+        <div class="row custom-row">
+          <div class="col-sm-5 custom-container jumbotron">
+
+            <form class="form-horizontal">
+              <fieldset>
+                <legend>SignUp</legend>
+
+                <!--- Email Block --->
+                <div class="form-group">
+                  <label for="inputEmail">Email</label>
+                  <input type="text"
+                         id="inputEmail"
+                         placeholder="Email">
+                </div>
+                <!--- Password Block --->
+                <div class="form-group">
+                  <label for="inputPassword">Password</label>
+                  <input type="password"
+                         id="inputPassword"
+                         placeholder="Password">
+                </div>
+
+                <div class="form-group">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <input type="password"
+                         id="confirmPassword"
+                         placeholder="Password">
+                </div>
+
+                <!--- Select gender Block --->
+                <div class="form-group">
+                  <label for="select">Gender</label>
+                  <select id="select">
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <!--- Terms and conditions Block --->
+                <div class="form-group checkbox">
+                  <label>
+                    <input type="checkbox"> Confirm that you've read the Terms and
+                    Conditions
+                  </label>
+                </div>
+
+                <!--- Buttons Block --->
+                <div class="form-group">
+                  <button type="reset" class="btn btn-default">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      
+      </div>
+
+
+
+
     </div>
 
   </div>

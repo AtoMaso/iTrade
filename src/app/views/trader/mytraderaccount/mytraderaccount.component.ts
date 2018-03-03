@@ -17,7 +17,8 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 
 // components
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails, SecurityDetails, Address, State, Place, Postcode} from '../../../helpers/classes';
+import {UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails, SecurityDetails } from '../../../helpers/classes';
+import { Address, State, Place, Postcode, Phone, Email, SecurityQuestion, SecurityAnswer} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -42,9 +43,14 @@ export class MyTraderAccountComponent implements OnInit {
   private states: State[] = [];
   private cities: Place[] = [];
   private postcodes: Postcode[] = [];
+  private phones: Phone[] = [];
+  private emails: Email[] = [];
+  private questions: SecurityQuestion[] = [];
+  private answers: SecurityAnswer[] = [];
 
-  private personalGroup: any;
-  private addressGroup: any;
+  private personalForm: any;
+  private addressForm: any;
+  private contactForm: any;
 
   private selectedState: State = null;
   private selectedCity: Place = null;
@@ -112,7 +118,7 @@ export class MyTraderAccountComponent implements OnInit {
 
 
   private setPersonalForm() {
-    this.personalGroup = this.formBuilder.group({
+    this.personalForm = this.formBuilder.group({
       fname: new FormControl('', [Validators.required, ValidationService.firstNameValidator]),
       mname: new FormControl('', [ValidationService.middleNameValidator]),
       lname: new FormControl('', [Validators.required, ValidationService.lastNameValidator])
@@ -123,7 +129,7 @@ export class MyTraderAccountComponent implements OnInit {
 
   private setAddressForm() {
 
-    this.addressGroup = this.formBuilder.group({
+    this.addressForm = this.formBuilder.group({
       number: new FormControl('', [ValidationService.numberValidator]),
       unit: new FormControl('', [ValidationService.unitValidator]),
       street: new FormControl('', [ValidationService.streetValidator]),
@@ -136,8 +142,60 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
+
+  //*****************************************************
+  //SET DEFAULTS
+  //*****************************************************
+  private setPersonalDefaults() {
+
+    setTimeout(() => {
+      this.personalForm.setValue({
+        fname: this.personalDetails.firstName,
+        mname: this.personalDetails.middleName,
+        lname: this.personalDetails.lastName,
+      });
+    }, 0);
+  }
+
+  private setAddressDefaults() {
+
+    let m: number = 0;
+    let localStates: State[] = [];
+    let localCities: Place[] = [];
+    let localPostcodes: Postcode[] = [];
+
+    for (m = 0; m < this.states.length; m++) {
+      if (this.states[m].name == this.address.state) { this.defaultState = this.states[m]; }
+    }
+    localCities = this.defaultState.places;
+
+    for (m = 0; m < localCities.length; m++) {
+      if (localCities[m].name == this.address.city) { this.defaultCity = localCities[m]; }
+    }
+    localPostcodes = this.defaultCity.postcodes;
+
+    for (m = 0; m < localPostcodes.length; m++) {
+      if (localPostcodes[m].number == this.address.postcode) { this.defaultPostcode = localPostcodes[m]; }
+    }
+
+    setTimeout(() => {
+
+      this.addressForm.setValue({
+        number: this.address.number,
+        unit: this.address.unit,
+        street: this.address.street,
+        suburb: this.address.suburb,
+        state: this.defaultState,
+        postcode: this.defaultPostcode,
+        city: this.defaultCity,
+      });
+
+    }, 0);
+  }
+
+
   //************************************************************
-  // DETAILS
+  // GET DATA FOR THE FORMS
   //************************************************************
   private getPersonalDetails(traderId: string) {
     this.personalService.getPersonalDetailsByTraderId(traderId)
@@ -177,11 +235,7 @@ export class MyTraderAccountComponent implements OnInit {
       }, (serviceError: Response) => this.onError(serviceError, "getSecurityDetails"));
   }
 
-  
-
-  //*****************************************************
-  // GET STATES
-  //*****************************************************
+ 
   public getStates() {
     this.statesService.getStates()
       .subscribe((res: State[]) => {
@@ -192,53 +246,7 @@ export class MyTraderAccountComponent implements OnInit {
 
  
   //*****************************************************
-  //SET DEFAULTS
-  //*****************************************************
-  private setPersonalDefaults() {
-    this.personalGroup.setValue({
-      fname: this.personalDetails.firstName,
-      mname: this.personalDetails.middleName,
-      lname: this.personalDetails.lastName,
-    });
-  }
-
-
-  private setAddressDefaults() {
-
-    let m: number = 0;
-    let localStates: State[] = [];
-    let localCities: Place[] = [];
-    let localPostcodes: Postcode[] = [];   
-
-    for (m = 0; m < this.states.length; m++) {
-      if (this.states[m].name == this.address.state) { this.defaultState = this.states[m]; }
-    }
-    localCities = this.defaultState.places;
-
-    for (m = 0; m < localCities.length; m++) {
-      if (localCities[m].name == this.address.city) { this.defaultCity = localCities[m]; }
-    }
-    localPostcodes = this.defaultCity.postcodes;
-
-    for (m = 0; m < localPostcodes.length; m++) {
-      if (localPostcodes[m].number == this.address.postcode) { this.defaultPostcode = localPostcodes[m]; }
-    }
-
-    this.addressGroup.setValue({
-      number: this.address.number,
-      unit: this.address.unit,
-      street: this.address.street,
-      suburb: this.address.suburb,
-      state: this.defaultState,
-      postcode: this.defaultPostcode,
-      city: this.defaultCity,
-
-    });
-  }
-
-
-  //*****************************************************
-  //GET THE INPUT IDS
+  //GET THE SCREEN INPUT
   //*****************************************************
   private onStateChange(state: State) {    
     this.postcodes = null;   
@@ -289,6 +297,86 @@ export class MyTraderAccountComponent implements OnInit {
   private enablePasswordEdit() { this.passwordEdit = true; }
 
   private disablePasswordEdit() { this.passwordEdit = false; }
+
+
+  //*****************************************************
+  // SAVe ADDRESS
+  //*****************************************************
+  //private saveAddress() {
+
+  //  // remove previous error messages
+  //  this.messagesService.emitRoute("nill");
+
+  //  let dt = new Date();
+  //  let today = new Date(dt.getFullYear(), dt.getMonth(), dt.getDay());
+
+  //  if (this.addForm.dirty && this.addForm.valid) {
+
+  //    this.isMessageVisible = false;
+  //    this.isRequesting = true;
+
+  //    this.newTrade = new PostTrade();
+  //    this.newTrade.name = this.addForm.controls.trading.value;
+  //    this.newTrade.description = this.addForm.controls.description.value;
+  //    this.newTrade.tradeFor = this.addForm.controls.tradingfor.value;
+  //    this.newTrade.datePublished = this.addForm.controls.publishDate.value.jsdate;
+
+  //    if (today < this.newTrade.datePublished) { this.newTrade.status = "Not Published"; }
+  //    else { this.newTrade.status = "Open"; }
+
+  //    this.newTrade.categoryId = this.addForm.controls.category.value.categoryId;
+  //    this.newTrade.subcategoryId = this.addForm.controls.subcategory.value.subcategoryId;
+  //    this.newTrade.placeId = this.addForm.controls.place.value.id;
+  //    this.newTrade.stateId = this.addForm.controls.state.value.id;
+  //    this.newTrade.postcodeId = this.addForm.controls.postcode.value.id;
+  //    this.newTrade.traderId = this.identity.userId;
+
+  //    // set the image array here, the imageid and real url will be created 
+  //    // on the web api side when the tradeId is taken
+  //    if (this.uploader.queue.length > 0) {
+  //      let image = new Image();
+  //      let m: number = 0;
+
+  //      for (m = 0; m < this.uploader.queue.length; m++) {
+  //        image.imageTitle = this.uploader.queue[0].file.name;
+  //        image.imageUrl = imagesPathUrl;
+  //        this.newTrade.Images.push(image);
+  //      }
+  //    }
+  //    this.AddTrade(this.newTrade);
+  //  }
+  //}
+
+
+  //// calling the service
+  //public AddTrade(passedTrade: PostTrade) {
+  //  let trades: PostTrade[] = [];
+
+  //  this.tradeService.AddTrade(passedTrade)
+  //    .subscribe(trade => this.onAddTradeSuccess(trade)
+  //    , (error: Response) => this.onError(error, "addTrade"));
+  //}
+
+
+  //// on success to the following
+  //private onAddTradeSuccess(trade: PostTrade) {
+
+  //  this.addedTrade = trade;
+  //  let m: number = 0;
+  //  if (this.uploader.queue.length > 0) {
+  //    for (m = 0; m < this.uploader.queue.length; m++) {
+  //      this.uploader.queue[m].file.name = trade.Images[m].imageTitle;
+  //      this.uploadSingleFile(this.uploader.queue[m]);
+  //    }
+
+  //    // is no point of changing of isRequested as we go to another page here
+  //    this.isSubmitted = true;
+  //    this.router.navigate(['/tradedetails'], { queryParams: { id: trade.tradeId, flagnew: true } });
+  //  }
+  //}
+
+
+
 
 
   //************************************************************
