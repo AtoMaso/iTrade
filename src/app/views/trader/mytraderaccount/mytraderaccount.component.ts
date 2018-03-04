@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges, Inject, Injectable, AfterViewInit } from '@angular/core';
+import { IMyDpOptions, IMyDateModel, IMyDayLabels, IMyMonthLabels, IMyDate, IMyOptions } from 'mydatepicker';
 import { Response } from '@angular/http';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, FormArray, ReactiveFormsModule, Validators  } from '@angular/forms';
@@ -23,6 +24,10 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
   styleUrls: ['./mytraderaccount.component.scss']
 })
 export class MyTraderAccountComponent implements OnInit {
+
+  private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
+  private currentLocale: string = "en";
+  private datePickerOptions: IMyOptions;
 
   private traderId: string;
   private isRequesting: boolean;
@@ -184,8 +189,7 @@ export class MyTraderAccountComponent implements OnInit {
       fname: new FormControl('', [Validators.required, ValidationService.firstNameValidator]),
       mname: new FormControl('', [ValidationService.middleNameValidator]),
       lname: new FormControl('', [Validators.required, ValidationService.lastNameValidator]),
-      dbirth: new FormControl('', [ValidationService.lastNameValidator])
-
+      dbirth: new FormControl('', [ValidationService.dateValidator])
     });
   }
 
@@ -224,14 +228,29 @@ export class MyTraderAccountComponent implements OnInit {
   //*****************************************************
   private setPersonalFormDefaults() {
 
-    setTimeout(() => {
+    //setTimeout(() => {
       this.personalForm.setValue({
         fname: this.personalDetails.firstName,
         mname: this.personalDetails.middleName,
         lname: this.personalDetails.lastName,
         dbirth: this.personalDetails.dateOfBirth,
       });
-    }, 0);
+
+
+      this.currentLocale = 'eu';
+      this.datePickerOptions = {
+        dateFormat: 'dd/mm/yyyy',
+        firstDayOfWeek: 'mo',
+        selectorWidth: '310px',
+        width: '310px',
+        minYear: 1900,
+        maxYear: 2100,
+        editableDateField: false
+      };
+
+      this.setDate(this.personalDetails.dateOfBirth);
+
+    //}, 0);
   }
 
   private setAddressFormDefaults() {
@@ -281,6 +300,36 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
+ private setDate(datetoset: Date): void {
+    // Set today date using the patchValue function
+   let date = new Date();
+   date.setFullYear(datetoset.getFullYear());
+   date.setMonth(datetoset.getMonth());
+   date.setDate(datetoset.getDay());
+
+    this.personalForm.patchValue({
+      dbirth: { date: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() } }
+    });
+
+    this.selectDate = {
+      year: date.getFullYear(),
+      month: date.getMonth(),
+      day: date.getDate()
+    }
+  }
+
+
+  private onDateChanged(event: IMyDateModel) {
+    // Update value of selDate variable
+    this.selectDate = event.date;
+  }
+
+
+  private clearDate(): void {
+    // Clear the date using the patchValue function
+    this.personalForm.patchValue({ dbirth: null });
+  }
+
   //*****************************************************
   //GET THE SCREEN INPUT
   //*****************************************************
@@ -304,6 +353,7 @@ export class MyTraderAccountComponent implements OnInit {
       }
     }
   }
+
 
   //************************************************************
   // UPDATES

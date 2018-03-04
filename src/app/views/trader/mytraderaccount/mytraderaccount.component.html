@@ -45,43 +45,51 @@
 
                                         <form novalidate [formGroup]="personalForm">
 
-                                          <div class="form-group smalltext col-md-12" style="height:60px; margin-top:20px;">                                          
+                                          <div class="form-group smalltext col-md-12" style="height:70px; margin-top:20px;">                                          
                                               <label for="fname">First Name:</label>
                                               <div class="input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                                 <input type="text" formControlName="fname" id="fname" name="fname" required class="form-control smalltext" style="background-color:moccasin" />
                                               </div>                                          
                                                <control-messages [control]="personalForm.controls.fname"></control-messages>
                                           </div>
 
-                                          <div class="form-group smalltext col-md-12" style="height:60px;">                                           
+                                          <div class="form-group smalltext col-md-12" style="height:70px;">                                           
                                               <label for="mname">Middle Name:</label>
                                               <div class="input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                                 <input type="text" formControlName="mname" id="mname" name="mname" class="form-control smalltext" style="background-color:moccasin" />
                                               </div>
                                               <control-messages [control]="personalForm.controls.mname"></control-messages>                                          
                                           </div>
 
-                                          <div class="form-group smalltext col-md-12" style="height:60px;">                                            
+                                          <div class="form-group smalltext col-md-12" style="height:70px;">                                            
                                               <label for="lname">Last Name:</label>
                                               <div class="input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                                 <input type="text" formControlName="lname" id="lname" name="lname" class="form-control smalltext" style="background-color:moccasin" />
                                               </div>
                                               <control-messages [control]="personalForm.controls.lname"></control-messages>                                            
                                           </div>
 
-                                          <div class="form-group smalltext col-md-12" style="height:60px;">                                           
+                                          <div class="form-group smalltext col-md-12" style="height:70px;">                                           
                                               <label for="dbirth">Date Of Birth:</label>
                                               <div class="input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
-                                                <input type="text" formControlName="dbirth" id="dbirth" name="dbirth" class="form-control smalltext" style="background-color:moccasin" />
-                                              </div>
+                                                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>                                               
+                                                  <my-date-picker name="dbirth" formControlName="dbirth"
+                                                                  visibleMonth.monthTxt=""
+                                                                  #dbirth
+                                                                  placeholder="Select a date..."
+                                                                  [options]="datePickerOptions"
+                                                                  (dateChanged)="onDateChanged($event)"
+                                                                  [locale]="currentLocale"
+                                                                  [selDate]="selectDate">
+                                                  </my-date-picker>
+                                                </div>
                                               <control-messages [control]="personalForm.controls.dbirth"></control-messages>                                           
                                           </div>
 
-                                          <div class="col-md-12 panel panel-heading" style="height:60px;margin-top:10px;">
+                                          <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
                                             <div class="col-md-6">
                                               <button  id="personalcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="TogglePersonal()">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
@@ -201,7 +209,7 @@
 
                                     <div class="col-md-6">
 
-                                      <div class="form-group smalltext col-md-12" style="height:60px; margin-top:20px;">                                      
+                                      <div class="form-group smalltext col-md-12" style="height:70px; margin-top:20px;">                                      
                                           <label for="preferredtype">Preferred Address:</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
@@ -215,7 +223,7 @@
                                         <control-messages [control]="addressForm.controls.preferredtype"></control-messages>
                                       </div>
 
-                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                     
+                                      <div class="form-group smalltext col-md-12" style="height:70px;">                                     
                                           <label for="addresstype">Address Type:</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
@@ -229,7 +237,7 @@
                                           <control-messages [control]="addressForm.controls.addresstype"></control-messages>                                        
                                       </div>         
                                                                                                     
-                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                         
+                                      <div class="form-group smalltext col-md-12" style="height:70px;">                                         
                                           <label for="number">Street Number</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-home" aria-hidden="true"></i></span>
@@ -238,7 +246,7 @@
                                         <control-messages [control]="addressForm.controls.number"></control-messages>
                                       </div>
 
-                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                         
+                                      <div class="form-group smalltext col-md-12" style="height:70px;">                                         
                                           <label for="unit">Unit Number</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-home" aria-hidden="true"></i></span>
@@ -247,7 +255,7 @@
                                           <control-messages [control]="addressForm.controls.unit"></control-messages>                                          
                                       </div>
                                     
-                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                       
+                                      <div class="form-group smalltext col-md-12" style="height:70px;">                                       
                                           <label for="street">Street</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-road" aria-hidden="true"></i></span>
@@ -260,7 +268,7 @@
 
                                     <div class="col-md-6">
 
-                                      <div class="form-group smalltext col-md-12" style="height:60px;margin-top:20px;">                                      
+                                      <div class="form-group smalltext col-md-12" style="height:70px;margin-top:20px;">                                      
                                           <label for="suburb">Suburb</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-tower" aria-hidden="true"></i></span>
@@ -269,7 +277,7 @@
                                           <control-messages [control]="addressForm.controls.suburb"></control-messages>                                        
                                       </div>
 
-                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                       
+                                      <div class="form-group smalltext col-md-12" style="height:70px;">                                       
                                           <label for="state">State</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></i></span>
@@ -283,7 +291,7 @@
                                           <control-messages [control]="addressForm.controls.state"></control-messages>                                      
                                       </div>
 
-                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                       
+                                      <div class="form-group smalltext col-md-12" style="height:70px;">                                       
                                           <label for="city">City</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-left" aria-hidden="true"></i></span>
@@ -297,7 +305,7 @@
                                           <control-messages [control]="addressForm.controls.city"></control-messages>                                     
                                       </div>
 
-                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                     
+                                      <div class="form-group smalltext col-md-12" style="height:70px;">                                     
                                           <label for="postcode">Postcode</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
@@ -311,7 +319,7 @@
                                           <control-messages [control]="addressForm.controls.postcode"></control-messages>                                     
                                       </div>
 
-                                      <div class="col-md-12 panel panel-heading" style="height:60px;margin-top:10px;">
+                                      <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
                                         <div class="col-md-6">
                                           <button id="addresscancel" class="btn btn-warning text-capitalize smalltext" style="width:auto; height:30px;" (click)="ToggleAddress()">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel

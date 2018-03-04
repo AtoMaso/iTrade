@@ -33,9 +33,9 @@ let imagesPathUrl = CONFIG.baseUrls.imagesPathUrl;
 export class AddTradeComponent implements OnInit {
 
   private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
-  private addForm: FormGroup;
+  private currentLocale: string = "en";  
   private datePickerOptions: IMyOptions;
-  private currentLocale: string = "en";
+  private addForm: FormGroup;
   private uploader: FileUploader;
   private hasBaseDropZoneOver: boolean;
   private hasAnotherDropZoneOver: boolean;

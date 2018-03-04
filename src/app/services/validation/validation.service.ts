@@ -37,7 +37,8 @@ export class ValidationService {
 
       'invalidFirstName': 'Your first name should contain only alphabetical characters with maximum lenght of 15 characters. ',
       'invalidMiddleName': 'Your middle name should contain only alphabetical characters with maximum lenght of 15 characters. ',
-      'invalidLastName': 'Your last name should contain only alphabetical characters with maximum lenght of 20 characters. '
+      'invalidLastName': 'Your last name should contain only alphabetical characters with maximum lenght of 20 characters. ',
+      'invalidDate': 'Date must be selected.'
     };
     return config[validatorName];
   }
@@ -248,7 +249,23 @@ static firstNameValidator(control: any) {
     }
   }
 
+  static dateValidator(control) {
 
+    // {10}-Assert date can no be in the past
+    if (control.value) {
+      //let today = new Date()
+      //let now = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+      //now = moment().toDate();
+      //now.setDate(now.getDate() - 1);
+      //if (moment(now).isBefore(moment(control.value.jsdate))) {\
+      if (control.value != null) {
+        return null;
+      }
+      else {
+        return { 'invalidDate': true };
+      }
+    }
+  }
 
   //********************************************************
   // contact details validations
