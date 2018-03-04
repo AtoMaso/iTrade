@@ -30,15 +30,19 @@ export class MyTraderAccountComponent implements OnInit {
   private identity: UserIdentity = new UserIdentity;
   private isAuthenticated: boolean = false;
 
-  private personalDetails: PersonalDetails = new PersonalDetails();
-  private contactDetails: ContactDetails = new ContactDetails();
-  private securityDetails: SecurityDetails = new SecurityDetails();  
-  private addresses: Address[] = [];
-  private address: Address = new Address();
+  private personalDetails: PersonalDetails = null;
+  private contactDetails: ContactDetails = null;
+  private securityDetails: SecurityDetails = null;   
+
+  private availableAddresses: Address[] = [];
+  private availableAddressesCount: number = 0;
+  private addressInView: Address; 
+
   private states: State[] = [];
   private cities: Place[] = [];
   private postcodes: Postcode[] = [];
   private addresstypes: AddressType[] = [];
+  private availableaddtypes: AddressType[] = [];
   private preferredtypes: PreferredType[] = [];
 
   private personalForm: FormGroup;
@@ -47,12 +51,15 @@ export class MyTraderAccountComponent implements OnInit {
   private selectedState: State = null;
   private selectedCity: Place = null;
   private selectedPostcode: Postcode = null;
+  private selectedAddressType: AddressType = null;
+  private selectedPreferredType: PreferredType = null;
 
   private defaultState: State = null;
   private defaultCity: Place = null;
   private defaultPostcode: Postcode = null;
   private defaultPreferredType: PreferredType = null;
   private defaultAddressType: AddressType = null;
+  private defaultDateOfBirth: Date;
 
   private personalEdit: boolean = false;
   private addressEdit: boolean = false;
@@ -69,7 +76,7 @@ export class MyTraderAccountComponent implements OnInit {
     private loggerService: LoggerService) { };
 
 
-  ngOnInit() {
+ public ngOnInit() {
     this.getUseridentity();
     this.initialiseComponent();
 
@@ -102,106 +109,6 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
-  private setPersonalForm() {
-    this.personalForm = this.formBuilder.group({
-      fname: new FormControl('', [Validators.required, ValidationService.firstNameValidator]),
-      mname: new FormControl('', [ValidationService.middleNameValidator]),
-      lname: new FormControl('', [Validators.required, ValidationService.lastNameValidator]),
-      dbirth: new FormControl('', [ ValidationService.lastNameValidator])
-
-    });
-  }
-
-
-  private setAddressForm() {
-    this.addressForm = this.formBuilder.group({
-
-      preferredtype: new FormControl('', [ValidationService.preferredValidator]),
-      addresstype: new FormControl('', [ValidationService.addresstypeValidator]),
-      number: new FormControl('', [ValidationService.numberValidator]),
-      unit: new FormControl('', [ValidationService.unitValidator]),
-      street: new FormControl('', [ValidationService.streetValidator]),
-      suburb: new FormControl('', [ValidationService.suburbValidator]),
-      postcode: new FormControl('', [ValidationService.postcodeValidator]),
-      city: new FormControl(this.cities[0], [ValidationService.placeValidator]),
-      state: new FormControl('', [ValidationService.stateValidator]),
-   
-    });
-  }
-
-
-  private preparePreferredList() {
-    let pre1: PreferredType = new PreferredType();
-    pre1.id = 1;
-    pre1.value = "Yes";
-    let pre2: PreferredType = new PreferredType();
-    pre2.id = 2;
-    pre2.value = "No";
-    this.preferredtypes.push(pre1);
-    this.preferredtypes.push(pre2);
-  }
-
-  //*****************************************************
-  //SET DEFAULTS
-  //*****************************************************
-  private setPersonalFormDefaults() {
-
-    setTimeout(() => {
-      this.personalForm.setValue({
-        fname: this.personalDetails.firstName,
-        mname: this.personalDetails.middleName,
-        lname: this.personalDetails.lastName,
-        dbirth: this.personalDetails.dateOfBirth,
-      });
-    }, 0);
-  }
-
-  private setAddressFormDefaults() {
-
-    let m: number = 0;
-    let localStates: State[] = [];
-    let localCities: Place[] = [];
-    let localPostcodes: Postcode[] = [];
-
-    for (m = 0; m < this.states.length; m++) {
-      if (this.states[m].name == this.address.state) { this.defaultState = this.states[m]; }
-    }
-    localCities = this.defaultState.places;
-
-    for (m = 0; m < localCities.length; m++) {
-      if (localCities[m].name == this.address.city) { this.defaultCity = localCities[m]; }
-    }
-    localPostcodes = this.defaultCity.postcodes;
-
-    for (m = 0; m < localPostcodes.length; m++) {
-      if (localPostcodes[m].number == this.address.postcode) { this.defaultPostcode = localPostcodes[m]; }
-    }
-
-    for (m = 0; m < this.addresstypes.length; m++) {
-      if (this.addresstypes[m].addressType == this.address.addressType) { this.defaultAddressType = this.addresstypes[m]; }
-    }
-
-    for (m = 0; m < this.preferredtypes.length; m++) {
-      if (this.preferredtypes[m].value == this.address.preferredFlag) { this.defaultPreferredType = this.preferredtypes[m]; }
-    }
-
-    setTimeout(() => {
-
-      this.addressForm.setValue({       
-        number: this.address.number,
-        unit: this.address.unit,
-        street: this.address.street,
-        suburb: this.address.suburb,
-        state: this.defaultState || new State(),
-        city: this.defaultCity || new Place(),
-        postcode: this.defaultPostcode || new Postcode(),
-        addresstype: this.defaultAddressType || new AddressType(),
-        preferredtype: this.defaultPreferredType || new PreferredType()    
-      });
-
-    }, 0);
-  }
-
 
   //************************************************************
   // GET DATA FOR THE FORMS
@@ -215,9 +122,7 @@ export class MyTraderAccountComponent implements OnInit {
 
 
   private onSuccessPersonal(pd: PersonalDetails) {
-    this.personalDetails = pd;    
-    this.addresses = pd.addresses;
-    this.address = pd.addresses[0];    
+    this.personalDetails = pd;        
     this.getStates();    
   }
 
@@ -246,13 +151,134 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
-  private onSuccessAddressTypes(res: AddressType[]) {
-    this.addresstypes = res;
+  private onSuccessAddressTypes(types: AddressType[]) {
+    this.addresstypes = types;   
+    this.defineAddressesAndTypes();
     this.preparePreferredList();
     this.setPersonalForm();
     this.setAddressForm();
   }
 
+
+  private defineAddressesAndTypes() {
+
+    this.availableAddresses = this.personalDetails.addresses;
+    this.addressInView = this.availableAddresses[0];    
+    this.availableAddressesCount = this.availableAddresses.length;
+
+    let m: number = 0;
+    let n: number = 0;
+    for (m = 0; m < this.addresstypes.length; m++) {
+      for (n = 0; n < this.availableAddresses.length; n++) {
+        if (this.addresstypes[m].addressType == this.availableAddresses[n].addressType) {
+          this.availableaddtypes.push(this.addresstypes[m]);
+        }
+      }     
+    }
+
+  }
+
+
+  private setPersonalForm() {
+    this.personalForm = this.formBuilder.group({
+      fname: new FormControl('', [Validators.required, ValidationService.firstNameValidator]),
+      mname: new FormControl('', [ValidationService.middleNameValidator]),
+      lname: new FormControl('', [Validators.required, ValidationService.lastNameValidator]),
+      dbirth: new FormControl('', [ValidationService.lastNameValidator])
+
+    });
+  }
+
+
+  private setAddressForm() {
+    this.addressForm = this.formBuilder.group({
+
+      preferredtype: new FormControl('', [ValidationService.preferredValidator]),
+      addresstype: new FormControl('', [ValidationService.addresstypeValidator]),
+      number: new FormControl('', [ValidationService.numberValidator]),
+      unit: new FormControl('', [ValidationService.unitValidator]),
+      street: new FormControl('', [ValidationService.streetValidator]),
+      suburb: new FormControl('', [ValidationService.suburbValidator]),
+      postcode: new FormControl('', [ValidationService.postcodeValidator]),
+      city: new FormControl(this.cities[0], [ValidationService.placeValidator]),
+      state: new FormControl('', [ValidationService.stateValidator]),
+
+    });
+  }
+
+
+  private preparePreferredList() {
+    let pre1: PreferredType = new PreferredType();
+    pre1.id = 1;
+    pre1.value = "Yes";
+    let pre2: PreferredType = new PreferredType();
+    pre2.id = 2;
+    pre2.value = "No";
+    this.preferredtypes.push(pre1);
+    this.preferredtypes.push(pre2);
+  }
+
+
+  //*****************************************************
+  //SET DEFAULTS
+  //*****************************************************
+  private setPersonalFormDefaults() {
+
+    setTimeout(() => {
+      this.personalForm.setValue({
+        fname: this.personalDetails.firstName,
+        mname: this.personalDetails.middleName,
+        lname: this.personalDetails.lastName,
+        dbirth: this.personalDetails.dateOfBirth,
+      });
+    }, 0);
+  }
+
+  private setAddressFormDefaults() {
+
+    let m: number = 0;
+    let localStates: State[] = [];
+    let localCities: Place[] = [];
+    let localPostcodes: Postcode[] = [];
+
+    for (m = 0; m < this.states.length; m++) {
+      if (this.states[m].name == this.addressInView.state) { this.defaultState = this.states[m]; }
+    }
+    localCities = this.defaultState.places;
+
+    for (m = 0; m < localCities.length; m++) {
+      if (localCities[m].name == this.addressInView.city) { this.defaultCity = localCities[m]; }
+    }
+    localPostcodes = this.defaultCity.postcodes;
+
+    for (m = 0; m < localPostcodes.length; m++) {
+      if (localPostcodes[m].number == this.addressInView.postcode) { this.defaultPostcode = localPostcodes[m]; }
+    }
+
+    for (m = 0; m < this.addresstypes.length; m++) {
+      if (this.addresstypes[m].addressType == this.addressInView.addressType) { this.defaultAddressType = this.addresstypes[m]; }
+    }
+
+    for (m = 0; m < this.preferredtypes.length; m++) {
+      if (this.preferredtypes[m].value == this.addressInView.preferredFlag) { this.defaultPreferredType = this.preferredtypes[m]; }
+    }
+
+    setTimeout(() => {
+
+      this.addressForm.setValue({
+        number: this.addressInView.number,
+        unit: this.addressInView.unit,
+        street: this.addressInView.street,
+        suburb: this.addressInView.suburb,
+        state: this.defaultState,
+        city: this.defaultCity,
+        postcode: this.defaultPostcode,
+        addresstype: this.defaultAddressType,
+        preferredtype: this.defaultPreferredType
+      });
+
+    }, 30);
+  }
 
 
   //*****************************************************
@@ -263,29 +289,37 @@ export class MyTraderAccountComponent implements OnInit {
     this.cities = state.places;
   }
 
+
   private onCityChange(city: Place) {
     this.postcodes = city.postcodes;
   }
 
 
+  private onViewAddressTypeChange(type:any) {
+    let m: number = 0;
+    for (m = 0; m < this.availableAddresses.length; m++) {
+      if (this.availableAddresses[m].addressType == type.target.value) {
+        this.addressInView = this.availableAddresses[m];
+        this.setAddressFormDefaults();
+      }
+    }
+  }
+
   //************************************************************
   // UPDATES
   //************************************************************
-  private enablePersonalEdit() {
-    this.personalEdit = true;    
-    this.setPersonalFormDefaults();
+  private TogglePersonal() {
+    this.personalEdit = !this.personalEdit;    
+    if (this.personalEdit) { this.setPersonalFormDefaults();}
   }
-  private disablePersonalEdit() {   
-    this.personalEdit = false;
-  }
-  private enableAddressEdit(address: Address) {
-    this.addressEdit = true;
-    this.cities = null;
-    this.postcodes = null;
-    this.setAddressFormDefaults();
-  }
-  private disableAddressEdit(address: Address) { 
-    this.addressEdit = false;
+
+  private ToggleAddress() {
+    this.addressEdit = !this.addressEdit;
+    if (this.addressEdit) {   
+      this.setAddressFormDefaults();
+      this.cities = null;
+      this.postcodes = null;
+    }
   }
 
 
@@ -316,8 +350,6 @@ export class MyTraderAccountComponent implements OnInit {
     return savePersonal;
   }
 
-
-
   private onSubmitAddress() {
     let address: Address = this.prepareSaveAddress();
     this.addressService.updateAddress(address).subscribe(
@@ -326,7 +358,6 @@ export class MyTraderAccountComponent implements OnInit {
     );
     //this.ngOnChanges();
   }
-
 
   private prepareSaveAddress(): Address {
     const formModel = this.addressForm.value;

@@ -3,7 +3,7 @@
       <!-- personal deatils + address details row -->
           <div class="row">
     
-                      <div class="col-md-3 col-md-offset-1" id="personal">
+                      <div class="col-md-4" id="personal">
 
                             <div class="personal  panel panel-heading collapsed col-md-12" data-toggle="collapse" data-target="#collapsePersonal">
                               <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Personal Details</span>
@@ -13,89 +13,83 @@
 
                                   <div *ngIf="!personalEdit" class="row col-md-12">
 
-                                    <div class="col-md-12" style="text-align:right;">
-                                      <a (click)="enablePersonalEdit()" class="textoker">Edit <i class="glyphicon glyphicon-edit" style="text-decoration:double;"></i></a>
-                                    </div>
+                                        <div class="col-md-12" style="text-align:right;">
+                                          <div *ngIf="!personalDetails" class="col-md-3"><a (click)="AddPersonal()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
+                                          <div *ngIf="personalDetails" class="col-md-4"><a (click)="TogglePersonal()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>
+                                          <div *ngIf="personalDetails" class="col-md-5"><a (click)="DeletePersonal()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
+                                        </div>
 
-                                    <div class="smalltextbold col-md-12" style="height:50px; margin-top:20px;">
-                                      <label for="fname">First Name: </label>
-                                      <span class="smalltextbold text-info text-uppercase">&nbsp;&nbsp;&nbsp;{{ personalDetails.firstName }}</span>
-                                    </div>
+                                        <div class="smalltextbold col-md-12" style="height:50px; margin-top:20px;">
+                                          <div class="col-md-6"> <label for="fname">First Name: </label></div>
+                                          <div class="col-md-6"><span class="smalltextbold text-info text-uppercase">{{ personalDetails.firstName }}</span></div>
+                                        </div>
 
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="mname">Middle Name: </label>
-                                      <span class="smalltextbold text-info text-uppercase">&nbsp;{{ personalDetails.middleName }}</span>
-                                    </div>
+                                        <div class="smalltextbold col-md-12" style="height:50px;">
+                                          <div class="col-md-6">  <label for="mname">Middle Name: </label></div>
+                                          <div class="col-md-6">  <span class="smalltextbold text-info text-uppercase">{{ personalDetails.middleName }}</span></div>
+                                        </div>
 
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="lname">Last Name: </label>
-                                      <span class="smalltextbold text-info text-uppercase">&nbsp;&nbsp;&nbsp;{{ personalDetails.lastName }}</span>
-                                    </div>
+                                        <div class="smalltextbold col-md-12" style="height:50px;">
+                                          <div class="col-md-6">  <label for="lname">Last Name: </label></div>
+                                          <div class="col-md-6">  <span class="smalltextbold text-info text-uppercase">{{ personalDetails.lastName }}</span></div>
+                                        </div>
 
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="lname">Date Of Birth: </label>
-                                      <span class="smalltextbold text-info text-uppercase">&nbsp;&nbsp;&nbsp;{{ personalDetails.dateOfBirth | date }}</span>
-                                    </div>
+                                        <div class="smalltextbold col-md-12" style="height:50px;">
+                                          <div class="col-md-6"> <label for="lname">Date Of Birth: </label></div>
+                                          <div class="col-md-6"> <span class="smalltextbold text-info text-uppercase">{{ personalDetails.dateOfBirth | date }}</span></div>
+                                        </div>
 
                                 </div>
 
-                                <div *ngIf="personalEdit" class="row col-md-12">
+                                  <div *ngIf="personalEdit" class="row col-md-12">
 
                                         <form novalidate [formGroup]="personalForm">
 
-                                          <div class="form-group" style="height:60px; margin-top:20px;">
-                                            <div class="smalltext col-md-12">
-                                              <label for="fname">First Name</label>
+                                          <div class="form-group smalltext col-md-12" style="height:60px; margin-top:20px;">                                          
+                                              <label for="fname">First Name:</label>
                                               <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
                                                 <input type="text" formControlName="fname" id="fname" name="fname" required class="form-control smalltext" style="background-color:moccasin" />
-                                              </div>
-                                            </div>
-                                            <control-messages [control]="personalForm.controls.fname"></control-messages>
+                                              </div>                                          
+                                               <control-messages [control]="personalForm.controls.fname"></control-messages>
                                           </div>
 
-                                          <div class="form-group" style="height:60px;">
-                                            <div class="smalltext col-md-12">
-                                              <label for="mname">Middle Name</label>
+                                          <div class="form-group smalltext col-md-12" style="height:60px;">                                           
+                                              <label for="mname">Middle Name:</label>
                                               <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
                                                 <input type="text" formControlName="mname" id="mname" name="mname" class="form-control smalltext" style="background-color:moccasin" />
                                               </div>
-                                              <control-messages [control]="personalForm.controls.mname"></control-messages>
-                                            </div>
+                                              <control-messages [control]="personalForm.controls.mname"></control-messages>                                          
                                           </div>
 
-                                          <div class="form-group" style="height:60px;">
-                                            <div class="smalltext col-md-12">
-                                              <label for="lname">Last Name</label>
+                                          <div class="form-group smalltext col-md-12" style="height:60px;">                                            
+                                              <label for="lname">Last Name:</label>
                                               <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
                                                 <input type="text" formControlName="lname" id="lname" name="lname" class="form-control smalltext" style="background-color:moccasin" />
                                               </div>
-                                              <control-messages [control]="personalForm.controls.lname"></control-messages>
-                                            </div>
+                                              <control-messages [control]="personalForm.controls.lname"></control-messages>                                            
                                           </div>
 
-                                          <div class="form-group" style="height:60px;">
-                                            <div class="smalltext col-md-12">
-                                              <label for="dbirth">Last Name</label>
+                                          <div class="form-group smalltext col-md-12" style="height:60px;">                                           
+                                              <label for="dbirth">Date Of Birth:</label>
                                               <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
                                                 <input type="text" formControlName="dbirth" id="dbirth" name="dbirth" class="form-control smalltext" style="background-color:moccasin" />
                                               </div>
-                                              <control-messages [control]="personalForm.controls.dbirth"></control-messages>
-                                            </div>
+                                              <control-messages [control]="personalForm.controls.dbirth"></control-messages>                                           
                                           </div>
 
                                           <div class="col-md-12 panel panel-heading" style="height:60px;margin-top:10px;">
                                             <div class="col-md-6">
-                                              <button class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="disablePersonalEdit()">
+                                              <button  id="personalcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="TogglePersonal()">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                               </button>
                                             </div>
 
                                             <div class="col-md-6">
-                                              <button class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!personalGroup.valid" style="width:auto; height:30px;">
+                                              <button  id="personalsave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!personalForm.valid" style="width:auto; height:30px;">
                                                 <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                                                 Save
                                               </button>
@@ -111,18 +105,31 @@
                     </div>
 
 
-                      <div class="col-md-6 col-md-offset-1" id="address">
+                      <div class="col-md-7 col-md-offset-1" id="address">
 
-                            <div class="address panel panel-heading collapsed col-md-12" data-toggle="collapse" data-target="#collapseAddress">
-                              <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Address Details</span>
+                            <div>
+                              <div class="address panel panel-heading collapsed col-md-6" data-toggle="collapse" data-target="#collapseAddress">
+                                <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Address Details</span>
+                              </div>                              
+                              <div class="panel panel-heading smalltext col-md-6" style="text-align:right;z-index:1000;">     
+                                Select address:                                                                                                                 
+                                  <select id="atype" name="atype" class="smalltext" style="background-color:moccasin;" (change)="onViewAddressTypeChange($event)">
+                                    <option></option>
+                                    <option *ngFor="let atype of availableaddtypes" [ngValue]="atype">
+                                      {{ atype.addressType }}
+                                    </option>
+                                  </select>                               
+                              </div>
                             </div>
-
+                                                                                
                             <div class="panel panel-heading colapse in col-md-12 footerdiv" id="collapseAddress" style="margin-top:-20px;">
 
                               <div *ngIf="!addressEdit" class="row col-md-12">
 
                                 <div class="col-md-12" style="text-align:right;">
-                                  <a (click)="enableAddressEdit()" class="textoker">Edit <i class="glyphicon glyphicon-edit" aria-hidden="true" style="text-decoration:double;"></i></a>
+                                  <div *ngIf="availableAddressesCount < 3" class="col-md-4"><a (click)="addressAdd()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
+                                  <div *ngIf="availableAddressesCount >1"  class="col-md-4"><a (click)="ToggleAddress()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>                                  
+                                  <div *ngIf="availableAddressesCount >1"  class="col-md-4"><a (click)="addressDelete()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
                                 </div>
 
                                 <div class="col-md-12">
@@ -130,28 +137,28 @@
                                   <div class="col-md-6">
 
                                     <div class="smalltextbold col-md-12" style="height:50px;margin-top:20px;">
-                                      <label for="preferredtype">Preferred Address: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ address.preferredFlag }}</span>
+                                       <label for="preferredtype">Preferred: </label>
+                                       <span class="smalltextbold text-info text-uppercase"> {{ addressInView.preferredFlag }}</span>
                                     </div>
 
                                     <div class="smalltextbold col-md-12" style="height:50px;">
                                       <label for="addresstype">Address Type: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ address.addressType }}</span>
+                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.addressType }}</span>
                                     </div>
 
                                     <div class="smalltextbold col-md-12" style="height:50px;">
                                       <label for="number">Street Number: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ address.number }}</span>
-                                    </div>
+                                       <span class="smalltextbold text-info text-uppercase"> {{ addressInView.number }}</span>
+                                    </div>            
+                                    
+                                    <div class="smalltextbold col-md-12" style="height:50px;">
+                                      <label for="number">Unit Number: </label>
+                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.unit }}</span>
+                                    </div>                               
 
                                     <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="unit">Unit Number: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ address.unit }}</span>
-                                    </div>
-
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="street">Street: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ address.street }}</span>
+                                      <label for="street">Street Name: </label>
+                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.street }}</span>
                                     </div>
 
                                
@@ -159,24 +166,25 @@
                                   </div>
 
                                   <div class="col-md-6">
+
                                     <div class="smalltextbold col-md-12" style="height:50px;margin-top:20px;">
-                                      <label for="suburb">Suburb: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ address.suburb }}</span>
+                                        <label for="suburb">Suburb: </label>
+                                        <span class="smalltextbold text-info text-uppercase"> {{ addressInView.suburb }}</span>
                                     </div>
 
                                     <div class="smalltextbold col-md-12" style="height:50px;">
                                       <label for="state">State: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ address.state }}</span>
+                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.state }}</span>
                                     </div>
 
                                     <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="city">City: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ address.city }}</span>
+                                     <label for="city">City: </label>
+                                     <span class="smalltextbold text-info text-uppercase"> {{ addressInView.city }}</span>
                                     </div>
 
                                     <div class="smalltextbold col-md-12" style="height:50px;">
                                       <label for="postcode">Postcode: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ address.postcode }}</span>
+                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.postcode }}</span>
                                     </div>
 
                                   </div>
@@ -193,8 +201,7 @@
 
                                     <div class="col-md-6">
 
-                                      <div class="form-group" style="height:60px; margin-top:20px;">
-                                        <div class="smalltext col-md-12">
+                                      <div class="form-group smalltext col-md-12" style="height:60px; margin-top:20px;">                                      
                                           <label for="preferredtype">Preferred Address:</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
@@ -204,13 +211,11 @@
                                                 {{ preferredtype.value }}
                                               </option>
                                             </select>
-                                          </div>
-                                        </div>
+                                          </div>                                        
                                         <control-messages [control]="addressForm.controls.preferredtype"></control-messages>
                                       </div>
 
-                                      <div class="form-group" style="height:60px;">
-                                        <div class="smalltext col-md-12">
+                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                     
                                           <label for="addresstype">Address Type:</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
@@ -221,62 +226,50 @@
                                               </option>
                                             </select>
                                           </div>
-                                          <control-messages [control]="addressForm.controls.addresstype"></control-messages>
-                                        </div>
+                                          <control-messages [control]="addressForm.controls.addresstype"></control-messages>                                        
                                       </div>         
-                                                                
-                                      <div class="form-group" style="height:60px;">
-                                        <div class="smalltext col-md-12">
+                                                                                                    
+                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                         
                                           <label for="number">Street Number</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-home" aria-hidden="true"></i></span>
                                             <input type="text" formControlName="number" id="number" name="number" class="form-control smalltext" style="background-color:moccasin" />
-                                          </div>
-                                        </div>
+                                          </div>                                          
                                         <control-messages [control]="addressForm.controls.number"></control-messages>
                                       </div>
 
-                                      <div class="form-group" style="height:60px;">
-                                        <div class="smalltext col-md-12">
+                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                         
                                           <label for="unit">Unit Number</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-home" aria-hidden="true"></i></span>
                                             <input type="text" formControlName="unit" id="unit" name="unit" class="form-control smalltext" style="background-color:moccasin" />
                                           </div>
-                                          <control-messages [control]="addressForm.controls.unit"></control-messages>
-                                        </div>
+                                          <control-messages [control]="addressForm.controls.unit"></control-messages>                                          
                                       </div>
-
-                                      <div class="form-group" style="height:60px;">
-                                        <div class="smalltext col-md-12">
+                                    
+                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                       
                                           <label for="street">Street</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-road" aria-hidden="true"></i></span>
                                             <input type="text" formControlName="street" id="street" name="street" class="form-control smalltext" style="background-color:moccasin" />
                                           </div>
-                                          <control-messages [control]="addressForm.controls.street"></control-messages>
-                                        </div>
+                                          <control-messages [control]="addressForm.controls.street"></control-messages>                                       
                                       </div>         
                                                                 
                                     </div>
 
-
-
                                     <div class="col-md-6">
 
-                                      <div class="form-group" style="height:60px;margin-top:20px;">
-                                        <div class="smalltext col-md-12">
+                                      <div class="form-group smalltext col-md-12" style="height:60px;margin-top:20px;">                                      
                                           <label for="suburb">Suburb</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-tower" aria-hidden="true"></i></span>
                                             <input type="text" formControlName="suburb" id="suburb" name="suburb" class="form-control smalltext" style="background-color:moccasin" />
                                           </div>
-                                          <control-messages [control]="addressForm.controls.suburb"></control-messages>
-                                        </div>
+                                          <control-messages [control]="addressForm.controls.suburb"></control-messages>                                        
                                       </div>
 
-                                      <div class="form-group" style="height:60px;">
-                                        <div class="smalltext col-md-12">
+                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                       
                                           <label for="state">State</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></i></span>
@@ -287,12 +280,10 @@
                                               </option>
                                             </select>
                                           </div>
-                                          <control-messages [control]="addressForm.controls.state"></control-messages>
-                                        </div>
+                                          <control-messages [control]="addressForm.controls.state"></control-messages>                                      
                                       </div>
 
-                                      <div class="form-group" style="height:60px;">
-                                        <div class="smalltext col-md-12">
+                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                       
                                           <label for="city">City</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-left" aria-hidden="true"></i></span>
@@ -303,12 +294,10 @@
                                               </option>
                                             </select>
                                           </div>
-                                          <control-messages [control]="addressForm.controls.city"></control-messages>
-                                        </div>
+                                          <control-messages [control]="addressForm.controls.city"></control-messages>                                     
                                       </div>
 
-                                      <div class="form-group" style="height:60px;">
-                                        <div class="smalltext col-md-12">
+                                      <div class="form-group smalltext col-md-12" style="height:60px;">                                     
                                           <label for="postcode">Postcode</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
@@ -319,19 +308,18 @@
                                               </option>
                                             </select>
                                           </div>
-                                          <control-messages [control]="addressForm.controls.postcode"></control-messages>
-                                        </div>
+                                          <control-messages [control]="addressForm.controls.postcode"></control-messages>                                     
                                       </div>
 
                                       <div class="col-md-12 panel panel-heading" style="height:60px;margin-top:10px;">
                                         <div class="col-md-6">
-                                          <button class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="disableAddressEdit()">
+                                          <button id="addresscancel" class="btn btn-warning text-capitalize smalltext" style="width:auto; height:30px;" (click)="ToggleAddress()">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                           </button>
                                         </div>
 
                                         <div class="col-md-6">
-                                          <button class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!addressForm.valid" style="width:auto; height:30px;">
+                                          <button  id="addresssave" class="btn btn-success text-capitalize smalltext" type="submit" [disabled]="!addressForm.valid" style="width:auto; height:30px;">
                                             <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                                             Save
                                           </button>
@@ -346,7 +334,7 @@
                               </div>
 
                             </div>
-                          </div>
+                    </div>
 
             </div>
 
