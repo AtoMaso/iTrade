@@ -103,21 +103,20 @@ class TraderDetails implements ITraderDetails {
 
 class PersonalDetails implements IPersonalDetails {
 
-  personalDetailsId: number;
+  id: number;
   traderId: string;
   firstName: string;
   middleName: string;
   lastName: string;
-  dateOfBirth: Date;
-  addresses: Address[];
+  dateOfBirth: string;
 
   constructor() {
-    this.personalDetailsId = 0;
+    this.id = 0;
     this.traderId = "";
     this.firstName = "";
+    this.middleName = "";
     this.lastName = "";
-    this.dateOfBirth = new Date(1900, 1, 1);
-    this.addresses = [];
+    this.dateOfBirth = "";
   }
 }
 
@@ -170,8 +169,7 @@ class SecurityDetails implements ISecurityDetails {
 
 class Address implements IAddress {
 
-  id: number;
-  traderId: number;
+  id: number; 
   number: string;
   unit: string;
   street: string;
@@ -182,8 +180,9 @@ class Address implements IAddress {
   country: string;
   preferredFlag: string;
   addressTypeId: number;
-  addressType: string
-  personalDetailsId: number;
+  addressType: string;
+  traderId: string;
+
 
   constructor() {
     this.id = 0;
@@ -198,7 +197,7 @@ class Address implements IAddress {
     this.preferredFlag = "";
     this.addressTypeId = 0;
     this.addressType = "";
-    this.personalDetailsId = 0;
+    this.traderId = "";
   }
 }
 

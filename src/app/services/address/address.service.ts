@@ -22,6 +22,7 @@ let deleteAddressUrl = CONFIG.baseUrls.deleteaddress;
 
 
 let addressTypesUrl = CONFIG.baseUrls.addresstypes;
+let addressesbytraderid = CONFIG.baseUrls.addressesbytraderid;
 let addressTypeUrl = CONFIG.baseUrls.addresstypes;
 let updateAddressTypeUrl = CONFIG.baseUrls.updateaddresstype;
 let addAddressTypeUrl = CONFIG.baseUrls.addaddresstype;
@@ -65,22 +66,61 @@ let deleteAddressTypeUrl = CONFIG.baseUrls.deleteaddresstype;
     //******************************************************
     // GET ADDRESS
     //******************************************************
+  public getAddressesByTraderId(traderId: string) {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    this.localUrl = `${addressesbytraderid}?traderId=${traderId}`;
+    return this.httpClientService.get<Address[]>(this.localUrl, httpOptions).retry(1);
+  }
 
 
     //******************************************************
     // ADD ADDRESS
     //******************************************************
+  public addAddress(address: Address): Observable<Address> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
 
+    this.localUrl = `${addAddressUrl}`;
+    return this.httpClientService.post<Address>(this.localUrl, address, httpOptions).retry(1);
+  }
 
     //******************************************************
     // DELETE ADDRESS
     //******************************************************
+  public deleteAddress(address: Address): Observable<Address> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    this.localUrl = `${deleteAddressUrl}/${address.id}`;
+    return this.httpClientService.delete<Address>(this.localUrl, httpOptions).retry(1);
+  }
 
 
     //******************************************************
     // UPDATE ADDRESS
     //******************************************************
-    public updateAddress(add: Address) {
+  public updateAddress(address: Address): Observable<Address> {
       // prepare the headesrs
       const httpOptions = {
         headers: new HttpHeaders({
@@ -90,8 +130,8 @@ let deleteAddressTypeUrl = CONFIG.baseUrls.deleteaddresstype;
         })
       };
 
-      this.localUrl = `${updateAddressUrl}`;
-      return this.httpClientService.put<PersonalDetails>(this.localUrl, add,  httpOptions).retry(1);
+      this.localUrl = `${updateAddressUrl}?id=${address.id}`;
+      return this.httpClientService.put<Address>(this.localUrl, address,  httpOptions).retry(1);
     }
 
 

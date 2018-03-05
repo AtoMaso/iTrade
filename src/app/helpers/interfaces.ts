@@ -46,13 +46,12 @@ interface ITraderDetails {
 
 
 interface IPersonalDetails {
-  personalDetailsId: number;
+  id: number;
   traderId: string;
   firstName: string;
   middleName: string;
   lastName: string;
-  dateOfBirth: Date;
-  addresses: IAddress[]
+  dateOfBirth: string;
 }
 
 interface IContactDetails {
@@ -88,7 +87,7 @@ interface IAddress {
   preferredFlag: string;
   addressTypeId: number;
   addressType: string;
-  personalDetailsId: number;
+  traderId: string;
 }
 
 interface IAddressType {

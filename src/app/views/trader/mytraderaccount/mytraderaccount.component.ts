@@ -26,7 +26,7 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 export class MyTraderAccountComponent implements OnInit {
 
   private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
-  private currentLocale: string = "en";
+  private currentLocale: string = "au";
   private datePickerOptions: IMyOptions;
 
   private traderId: string;
@@ -66,8 +66,9 @@ export class MyTraderAccountComponent implements OnInit {
   private defaultAddressType: AddressType = null;
   private defaultDateOfBirth: Date;
 
-  private personalEdit: boolean = false;
+  private personalAddEdit: boolean = false;
   private addressEdit: boolean = false;
+  private addressAdd: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -85,7 +86,7 @@ export class MyTraderAccountComponent implements OnInit {
     this.getUseridentity();
     this.initialiseComponent();
 
-    this.getPersonalDetails(this.traderId); 
+    this.getPersonalDetailsByTraderId(this.traderId); 
    
   }
 
@@ -109,7 +110,7 @@ export class MyTraderAccountComponent implements OnInit {
         jQuery(".address").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Address Details</span>');
       });
 
-    }); // end of document function
+    }); // end of document method
 
   }
 
@@ -118,7 +119,7 @@ export class MyTraderAccountComponent implements OnInit {
   //************************************************************
   // GET DATA FOR THE FORMS
   //************************************************************
-  private getPersonalDetails(traderId: string) {
+  private getPersonalDetailsByTraderId(traderId: string) {
     this.personalService.getPersonalDetailsByTraderId(traderId)
       .subscribe((personalResult: PersonalDetails) => {
         this.onSuccessPersonal(personalResult);
@@ -127,7 +128,7 @@ export class MyTraderAccountComponent implements OnInit {
 
 
   private onSuccessPersonal(pd: PersonalDetails) {
-    this.personalDetails = pd;        
+    this.personalDetails = pd;           
     this.getStates();    
   }
 
@@ -143,6 +144,21 @@ export class MyTraderAccountComponent implements OnInit {
 
   private onSuccessStates(res: State[]) {
     this.states = res;     
+    this.getAddressesByTraderId(this.traderId);   
+  }
+
+
+  private getAddressesByTraderId(traderId: string) {
+
+    this.addressService.getAddressesByTraderId(traderId)
+      .subscribe((addressResult: Address[]) => {
+        this.onSuccessAddresses(addressResult);
+      }, (serviceError: Response) => this.onError(serviceError, "getAddresses"));
+  }
+
+
+  private onSuccessAddresses(addresses: Address[]) { 
+    this.availableAddresses = addresses;
     this.getAddressTypes();
   }
 
@@ -158,16 +174,14 @@ export class MyTraderAccountComponent implements OnInit {
 
   private onSuccessAddressTypes(types: AddressType[]) {
     this.addresstypes = types;   
-    this.defineAddressesAndTypes();
+    this.defineAddressesAndTypes(this.availableAddresses);
     this.preparePreferredList();
-    this.setPersonalForm();
-    this.setAddressForm();
+  
   }
 
 
-  private defineAddressesAndTypes() {
-
-    this.availableAddresses = this.personalDetails.addresses;
+  private defineAddressesAndTypes(addresses:Address[]) {
+    
     this.addressInView = this.availableAddresses[0];    
     this.availableAddressesCount = this.availableAddresses.length;
 
@@ -228,16 +242,16 @@ export class MyTraderAccountComponent implements OnInit {
   //*****************************************************
   private setPersonalFormDefaults() {
 
-    //setTimeout(() => {
+    setTimeout(() => {
       this.personalForm.setValue({
         fname: this.personalDetails.firstName,
         mname: this.personalDetails.middleName,
-        lname: this.personalDetails.lastName,
-        dbirth: this.personalDetails.dateOfBirth,
+        lname: this.personalDetails.lastName,     
+        dbirth: new Date(this.personalDetails.dateOfBirth)
       });
 
 
-      this.currentLocale = 'eu';
+      this.currentLocale = 'au';
       this.datePickerOptions = {
         dateFormat: 'dd/mm/yyyy',
         firstDayOfWeek: 'mo',
@@ -250,7 +264,7 @@ export class MyTraderAccountComponent implements OnInit {
 
       this.setDate(this.personalDetails.dateOfBirth);
 
-    //}, 0);
+    }, 0);
   }
 
   private setAddressFormDefaults() {
@@ -300,23 +314,20 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
- private setDate(datetoset: Date): void {
-    // Set today date using the patchValue function
-   let date = new Date();
-   date.setFullYear(datetoset.getFullYear());
-   date.setMonth(datetoset.getMonth());
-   date.setDate(datetoset.getDay());
-
+ private setDate(datetoset: string) {
+ 
+    var value = new Date(datetoset);   
     this.personalForm.patchValue({
-      dbirth: { date: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() } }
+      dbirth: { value: { year: value.getFullYear(), month: value.getMonth()+1, day: value.getDate() } }
     });
 
     this.selectDate = {
-      year: date.getFullYear(),
-      month: date.getMonth(),
-      day: date.getDate()
+      year: value.getFullYear(),
+      month: value.getMonth()+1,
+      day: value.getDate()
     }
   }
+
 
 
   private onDateChanged(event: IMyDateModel) {
@@ -355,17 +366,26 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
-  //************************************************************
-  // UPDATES
-  //************************************************************
-  private TogglePersonal() {
-    this.personalEdit = !this.personalEdit;    
-    if (this.personalEdit) { this.setPersonalFormDefaults();}
+  private onAddPersonal() {
+    this.personalAddEdit= true;
+    this.setPersonalForm();
+    this.personalDetails = null;
   }
 
-  private ToggleAddress() {
+
+  private onTogglePersonal() {
+    this.personalAddEdit = !this.personalAddEdit;    
+    if (this.personalAddEdit) {
+      this.setPersonalForm();
+      this.setPersonalFormDefaults();
+    }
+  }
+
+
+  private onToggleAddress() {
     this.addressEdit = !this.addressEdit;
-    if (this.addressEdit) {   
+    if (this.addressEdit) {        
+      this.setAddressForm();
       this.setAddressFormDefaults();
       this.cities = null;
       this.postcodes = null;
@@ -376,58 +396,94 @@ export class MyTraderAccountComponent implements OnInit {
   //*****************************************************
   // SAVe ADDRESS
   //*****************************************************
-  private onSubmitPersonal() {
-    let pd= this.prepareSavePersonal();
-    this.personalService.updatePersonalDetails(pd).subscribe(
+  private onAddUpdatePersonal() {
 
-      /* error handling */
-    );
-    //this.ngOnChanges();
+    let pd = this.prepareAddUpdatePersonal();
+    if (this.personalDetails== null) {
+          // add new address   
+          this.personalService.addPersonalDetails(pd).subscribe((res: PersonalDetails) => {
+            this.personalDetails = res;
+          }, (serviceError: Response) => this.onError(serviceError, "onAddPersonal"));
+    }
+    else {
+      // update address     
+      this.personalService.updatePersonalDetails(pd).subscribe((res: PersonalDetails) => {
+        this.personalDetails = res;
+      }, (serviceError: Response) => this.onError(serviceError, "onUpdatePersonal"));
+    }
+ }
+
+  private prepareAddUpdatePersonal(): PersonalDetails {
+    const formModel = this.personalForm.value;
+
+    let addUpdatePersonal: PersonalDetails = new PersonalDetails();
+
+    if (this.personalDetails != null) { addUpdatePersonal.id = this.personalDetails.id;     }
+    addUpdatePersonal.traderId = this.traderId;
+    addUpdatePersonal.firstName= formModel.fname as string;
+    addUpdatePersonal.middleName = formModel.mname as string;
+    addUpdatePersonal.lastName = formModel.lname as string;
+    addUpdatePersonal.dateOfBirth = formModel.dbirth.jsdate;
+
+    return addUpdatePersonal;
   }
 
-  private prepareSavePersonal(): PersonalDetails {
-    const formModel = this.personalForm.value;  
 
-    const savePersonal: PersonalDetails = {
-      personalDetailsId: this.personalDetails.personalDetailsId,
-      dateOfBirth: this.personalDetails.dateOfBirth,
-      addresses: this.personalDetails.addresses,   
-      traderId: this.personalDetails.traderId,
-      firstName: formModel.fname as string,
-      middleName: formModel.mname as string,
-      lastName: formModel.lname as string,          
-    };
-    return savePersonal;
-  }
 
-  private onSubmitAddress() {
+  //private prepareUpdatePersonal(): PersonalDetails {
+  //  const formModel = this.personalForm.value;  
+
+  //  const savePersonal: PersonalDetails = {
+  //    id: this.personalDetails.id,         
+  //    traderId: this.personalDetails.traderId,
+  //    firstName: formModel.fname as string,
+  //    middleName: formModel.mname as string,
+  //    lastName: formModel.lname as string,          
+  //    dateOfBirth: formModel.dbirth.jsdate
+  //  };
+  //  return savePersonal;
+  //}
+
+
+
+  private onUpdateAddress() {
+
     let address: Address = this.prepareSaveAddress();
-    this.addressService.updateAddress(address).subscribe(
 
-      /* error handling */
-    );
-    //this.ngOnChanges();
+    this.addressService.updateAddress(address).subscribe((res: Address) => {
+      this.addressInView = res;
+    }, (serviceError: Response) => this.onError(serviceError, "onUpdateAddress"));
+
   }
 
   private prepareSaveAddress(): Address {
     const formModel = this.addressForm.value;
 
-    //const saveAddress: Address = {
+    let state: State = formModel.state;
+    let city: Place = formModel.city;
+    let postcode: Postcode = formModel.postcode;
+    let preferredflag: PreferredType = formModel.preferredtype;
+    let addresstype: AddressType = formModel.addresstype;
 
-      //personalDetailsId: this.address.personalDetailsId, 
-      //traderId: this.personalDetails.traderId,
-      //number: formModel.number,             
-      //unit: formModel.unit,       
-      //street: formModel.street,       
-      //suburb: formModel.suburb,       
-      //city: formModel.city,       
-      //postcode: formModel.postcode,       
-      //state: formModel.state,       
-      //preferred: formModel.preferred,
-      //addressType: formModel.addresstype,
+
+    const updateAddress: Address = {
+
+      id:this.addressInView.id as number,
+      traderId: this.addressInView.traderId  as string,         
+      country: this.addressInView.country as string,      
+      number: formModel.number as string, 
+      unit: formModel.unit as string,    
+      street: formModel.street as string,   
+      suburb: formModel.suburb as string,  
+      city: city.name,
+      postcode: postcode.number,
+      state: state.name, 
+      preferredFlag: preferredflag.value,
+      addressTypeId: addresstype.addressTypeId,
+      addressType: addresstype.addressType
       
-    //};
-    return new Address();// saveAddress;
+    };
+    return updateAddress;
   }
 
 

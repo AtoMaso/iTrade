@@ -7,6 +7,7 @@ import { Response } from '@angular/http';
 import { PersonalDetailsService } from '../../../services/personaldetails/personaldetails.service';
 import { ContactDetailsService } from '../../../services/contactdetails/contactdetails.service';
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
+import { AddressService } from '../../../services/address/address.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
@@ -28,6 +29,7 @@ export class TraderDetailsComponent implements OnInit {
  
   private personal: PersonalDetails = new PersonalDetails();
   private contact: ContactDetails = new ContactDetails();
+  private addresses: Address[] = [];
 
   private hasPersonal: boolean = false;
   private hasContact: boolean = false;
@@ -42,6 +44,7 @@ export class TraderDetailsComponent implements OnInit {
     private personalService: PersonalDetailsService,
     private contactService: ContactDetailsService,
     private tradeService: TradeApiService,    
+    private addressService: AddressService,
     private route: ActivatedRoute,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
@@ -117,7 +120,24 @@ export class TraderDetailsComponent implements OnInit {
       this.personal = this.TransformDataPersonal(personalD);
       this.hasPersonal = true;      
     }             
-    // call now get contact 
+    // call now get addresses 
+    this.getAddressesByTraderId(this.traderId);
+  }
+
+
+  private getAddressesByTraderId(traderId: string) {
+
+    this.addressService.getAddressesByTraderId(traderId)
+      .subscribe((addressResult: Address[]) => {
+        this.onSuccessAddresses(addressResult);
+       
+      }, (serviceError: Response) => this.onError(serviceError, "getAddresses"));
+  }
+
+
+  private onSuccessAddresses(addresses: Address[]) {
+    this.addresses = addresses;
+    // get contact details
     this.getContactDetails(this.traderId);
   }
 
@@ -143,7 +163,6 @@ export class TraderDetailsComponent implements OnInit {
     // now call the get trades
     this.getTradesCurrent(this.traderId);
   }
-
 
 
  //***********************************************************
@@ -196,7 +215,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-
+ 
 
   //*****************************************************
   // HELPER METHODS 
@@ -262,14 +281,15 @@ export class TraderDetailsComponent implements OnInit {
     pd.middleName = returnedPersonalDetails.middleName;
     pd.lastName = returnedPersonalDetails.lastName;
     pd.traderId = returnedPersonalDetails.traderId;
-    pd.personalDetailsId = returnedPersonalDetails.personalDetailsId;
-    pd.addresses = returnedPersonalDetails.addresses;
+    pd.id = returnedPersonalDetails.id;
+   
    
     //returnedPersonalDetails.addresses.forEach(function (value) {
     //  if (value.preferred === "true") { pd.preferred = value; }
     //});    
-    if (pd.addresses.length === 0) { this.hasAddress = false; }
+    if (this.addresses.length === 0) { this.hasAddress = false; }
     else { this.hasAddress = true; }
+
     if (pd.middleName.length === 0) { this.hasMiddleName = false; }
     else { this.hasMiddleName = true; }
      

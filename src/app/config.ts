@@ -127,12 +127,13 @@
     // address
     addresses: 'http://localhost:5700/api/addresses',
     address: 'http://localhost:5700/api/addresses/',
+    addressesbytraderid: 'http://localhost:5700/api/addresses/GetAddressesByTraderId',
     updateaddress: 'http://localhost:5700/api/addresses/PutAddress',
     addaddress: 'http://localhost:5700/api/addresses/PostAddress',
     deleteaddress: 'http://localhost:5700/api/addresses/DeleteAddress',
 
     // address type
-    addresstypes: 'http://localhost:5700/api/addresstypes',
+    addresstypes: 'http://localhost:5700/api/addresstypes',    
     addresstype: 'http://localhost:5700/api/addresstypes/',
     updateaddresstype: 'http://localhost:5700/api/addresstypes/PutAddressType',
     addaddresstype: 'http://localhost:5700/api/addrestypes/PostAddressType',

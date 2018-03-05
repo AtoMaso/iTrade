@@ -11,39 +11,41 @@
 
                             <div class="panel panel-heading colapse in col-md-12 footerdiv" id="collapsePersonal" style="margin-top:-20px;">
 
-                                  <div *ngIf="!personalEdit" class="row col-md-12">
+                                  <div *ngIf="!personalAddEdit" class="row col-md-12">
 
                                         <div class="col-md-12" style="text-align:right;">
-                                          <div *ngIf="!personalDetails" class="col-md-3"><a (click)="AddPersonal()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
-                                          <div *ngIf="personalDetails" class="col-md-4"><a (click)="TogglePersonal()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>
-                                          <div *ngIf="personalDetails" class="col-md-5"><a (click)="DeletePersonal()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
+                                          <div *ngIf="!personalDetails" class="col-md-3"><a (click)="onAddPersonal()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
+                                          <div *ngIf="personalDetails" class="col-md-4"><a (click)="onTogglePersonal()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>
+                                          <div *ngIf="personalDetails" class="col-md-5"><a (click)="onDeletePersonal()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
                                         </div>
 
-                                        <div class="smalltextbold col-md-12" style="height:50px; margin-top:20px;">
-                                          <div class="col-md-6"> <label for="fname">First Name: </label></div>
-                                          <div class="col-md-6"><span class="smalltextbold text-info text-uppercase">{{ personalDetails.firstName }}</span></div>
-                                        </div>
+                                        <div *ngIf="personalDetails != null">
+                                              <div class="smalltextbold col-md-12" style="height:50px; margin-top:20px;">
+                                                <div class="col-md-6"> <label for="fname">First Name: </label></div>
+                                                <div class="col-md-6"><span class="smalltextbold text-info text-uppercase">{{ personalDetails.firstName }}</span></div>
+                                              </div>
 
-                                        <div class="smalltextbold col-md-12" style="height:50px;">
-                                          <div class="col-md-6">  <label for="mname">Middle Name: </label></div>
-                                          <div class="col-md-6">  <span class="smalltextbold text-info text-uppercase">{{ personalDetails.middleName }}</span></div>
-                                        </div>
+                                              <div class="smalltextbold col-md-12" style="height:50px;">
+                                                <div class="col-md-6">  <label for="mname">Middle Name: </label></div>
+                                                <div class="col-md-6">  <span class="smalltextbold text-info text-uppercase">{{ personalDetails.middleName }}</span></div>
+                                              </div>
 
-                                        <div class="smalltextbold col-md-12" style="height:50px;">
-                                          <div class="col-md-6">  <label for="lname">Last Name: </label></div>
-                                          <div class="col-md-6">  <span class="smalltextbold text-info text-uppercase">{{ personalDetails.lastName }}</span></div>
-                                        </div>
+                                              <div class="smalltextbold col-md-12" style="height:50px;">
+                                                <div class="col-md-6">  <label for="lname">Last Name: </label></div>
+                                                <div class="col-md-6">  <span class="smalltextbold text-info text-uppercase">{{ personalDetails.lastName }}</span></div>
+                                              </div>
 
-                                        <div class="smalltextbold col-md-12" style="height:50px;">
-                                          <div class="col-md-6"> <label for="lname">Date Of Birth: </label></div>
-                                          <div class="col-md-6"> <span class="smalltextbold text-info text-uppercase">{{ personalDetails.dateOfBirth | date }}</span></div>
+                                              <div class="smalltextbold col-md-12" style="height:50px;">
+                                                <div class="col-md-6"> <label for="lname">Date Of Birth: </label></div>
+                                                <div class="col-md-6"> <span class="smalltextbold text-info text-uppercase">{{ personalDetails.dateOfBirth | date }}</span></div>
+                                              </div>
                                         </div>
 
                                 </div>
 
-                                  <div *ngIf="personalEdit" class="row col-md-12">
+                                  <div *ngIf="personalAddEdit" class="row col-md-12">
 
-                                        <form novalidate [formGroup]="personalForm">
+                                        <form novalidate [formGroup]="personalForm" (submit)="onAddUpdatePersonal()">
 
                                           <div class="form-group smalltext col-md-12" style="height:70px; margin-top:20px;">                                          
                                               <label for="fname">First Name:</label>
@@ -91,7 +93,7 @@
 
                                           <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
                                             <div class="col-md-6">
-                                              <button  id="personalcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="TogglePersonal()">
+                                              <button  id="personalcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onTogglePersonal()">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                               </button>
                                             </div>
@@ -135,14 +137,14 @@
                               <div *ngIf="!addressEdit" class="row col-md-12">
 
                                 <div class="col-md-12" style="text-align:right;">
-                                  <div *ngIf="availableAddressesCount < 3" class="col-md-4"><a (click)="addressAdd()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
-                                  <div *ngIf="availableAddressesCount >1"  class="col-md-4"><a (click)="ToggleAddress()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>                                  
-                                  <div *ngIf="availableAddressesCount >1"  class="col-md-4"><a (click)="addressDelete()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
+                                  <div *ngIf="availableAddressesCount < 3" class="col-md-4"><a (click)="onAddressAdd()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
+                                  <div *ngIf="availableAddressesCount >1"  class="col-md-4"><a (click)="onToggleAddress()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>                                  
+                                  <div *ngIf="availableAddressesCount >1"  class="col-md-4"><a (click)="onAddressDelete()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
                                 </div>
 
                                 <div class="col-md-12">
 
-                                  <div class="col-md-6">
+                                  <div class="col-md-6 col-md-offset-1">
 
                                     <div class="smalltextbold col-md-12" style="height:50px;margin-top:20px;">
                                        <label for="preferredtype">Preferred: </label>
@@ -159,7 +161,7 @@
                                        <span class="smalltextbold text-info text-uppercase"> {{ addressInView.number }}</span>
                                     </div>            
                                     
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
+                                    <div *ngIf="addressInView.unit !=''" class="smalltextbold col-md-12" style="height:50px;">
                                       <label for="number">Unit Number: </label>
                                       <span class="smalltextbold text-info text-uppercase"> {{ addressInView.unit }}</span>
                                     </div>                               
@@ -173,7 +175,7 @@
 
                                   </div>
 
-                                  <div class="col-md-6">
+                                  <div class="col-md-5">
 
                                     <div class="smalltextbold col-md-12" style="height:50px;margin-top:20px;">
                                         <label for="suburb">Suburb: </label>
@@ -203,7 +205,7 @@
 
                               <div *ngIf="addressEdit" class="row col-md-12">
 
-                                <form novalidate [formGroup]="addressForm">
+                                <form novalidate [formGroup]="addressForm" (submit) ="onUpdateAddress()">
 
                                   <div class="col-md-12">
 
@@ -321,7 +323,7 @@
 
                                       <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
                                         <div class="col-md-6">
-                                          <button id="addresscancel" class="btn btn-warning text-capitalize smalltext" style="width:auto; height:30px;" (click)="ToggleAddress()">
+                                          <button id="addresscancel" class="btn btn-warning text-capitalize smalltext" style="width:auto; height:30px;" (click)="onToggleAddress()">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                           </button>
                                         </div>

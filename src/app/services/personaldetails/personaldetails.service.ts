@@ -15,6 +15,7 @@ import { UserSession, UserIdentity, PersonalDetails} from '../../helpers/classes
 
 let personaldetailsbytraderid = CONFIG.baseUrls.personaldetailsbytraderid;
 let updatepersonaldetail = CONFIG.baseUrls.updatepersonaldetail;
+let addpersonaldetail = CONFIG.baseUrls.addpersonaldetail;
 
 @Injectable()
 export class PersonalDetailsService {
@@ -31,6 +32,9 @@ export class PersonalDetailsService {
   };
 
 
+  //*****************************************************
+  // GET PERSONAL BY TRADER ID
+  //*****************************************************
   public getPersonalDetailsByTraderId(traderId: string): Observable<PersonalDetails>{
 
     // prepare the headesrs
@@ -46,8 +50,11 @@ export class PersonalDetailsService {
     return this.httpClientService.get<PersonalDetails>(this.localUrl, httpOptions).retry(1);
   }
 
-  //update personal details
-  public updatePersonalDetails(pd: PersonalDetails) {
+
+  //*****************************************************
+  // ADD PERSONAL
+  //*****************************************************
+  public addPersonalDetails(pd: PersonalDetails): Observable<PersonalDetails> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -57,7 +64,25 @@ export class PersonalDetailsService {
       })
     };
 
-    this.localUrl = `${updatepersonaldetail}`;
+    this.localUrl = `${addpersonaldetail}`;
+    return this.httpClientService.post<PersonalDetails>(this.localUrl, pd, httpOptions).retry(1);
+  }
+
+  //*****************************************************
+  // UPDATE PERSONAL
+  //*****************************************************
+  //update personal details
+  public updatePersonalDetails(pd: PersonalDetails): Observable<PersonalDetails> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    this.localUrl = `${updatepersonaldetail}?id=${pd.id}`;
     return this.httpClientService.put<PersonalDetails>(this.localUrl, pd, httpOptions).retry(1);
   }
 
