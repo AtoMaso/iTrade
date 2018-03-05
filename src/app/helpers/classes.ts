@@ -1,7 +1,8 @@
 ﻿import {
-  IChangePasswordBindingModel, IRegisterBindingModel, ISetPasswordBindingModel, ILoginModel,
-  ITraderList, ITraderDetails, IPostTrade,
-  IPersonalDetails, ISecurityDetails, IContactDetails,
+  IChangePasswordBindingModel, IRegisterBindingModel,
+  ISetPasswordBindingModel, ILoginModel,
+  ITraderList, IPostTrade,
+  IPersonalDetails, ISecurityDetails,
   IAddress, IAddressType, IState, IPlace, IPostcode,
   IPhone, IPhoneType, ISubcategory,
   ISecurityAnswer, ISecurityQuestions,
@@ -86,20 +87,6 @@ class Trader implements ITraderList {
 }
 
 
-class TraderDetails implements ITraderDetails {
-  traderId: string;
-  personalDetails: PersonalDetails;
-  contactDetails: ContactDetails;
-  securityDetails: SecurityDetails;
-
-  constructor() {
-    this.traderId = "";
-    this.personalDetails = new PersonalDetails();
-    this.contactDetails = new ContactDetails();
-    this.securityDetails = new SecurityDetails();
-  }
-}
-
 
 class PersonalDetails implements IPersonalDetails {
 
@@ -117,30 +104,6 @@ class PersonalDetails implements IPersonalDetails {
     this.middleName = "";
     this.lastName = "";
     this.dateOfBirth = "";
-  }
-}
-
-
-class ContactDetails implements IContactDetails {
-
-  contactDetailsId: number;
-  traderId: string;  
-  phones: Phone[];
-  preferredPhone: Phone;
-  emails: Email[];
-  preferredEmail: Email;
-  socialNetworks: SocialNetwork[];  
-  preferredSocialNetwork: SocialNetwork;
-
-  constructor() {
-    this.contactDetailsId = 0;
-    this.traderId = "";  
-    this.phones = [];
-    this.preferredPhone = new Phone();
-    this.emails = [];
-    this.preferredEmail = new Email();
-    this.socialNetworks = [];
-    this.preferredSocialNetwork = new SocialNetwork();
   }
 }
 
@@ -219,32 +182,32 @@ class Phone implements IPhone {
   number: string;
   cityCode: string;
   countryCode: string;
-  preferred: string;
-  typeId: number;
-  typeDescription: string;
-  contactDetailsId: number;
+  preferredFlag: string;
+  phoneTypeId: number;
+  phoneType: string;
+  traderId: string;
 
   constructor() {
     this.id = 0;
     this.number = "";
     this.cityCode = "";
     this.countryCode = "";
-    this.preferred = "";
-    this.typeId = 0;
-    this.typeDescription = "";
-    this.contactDetailsId = 0;
+    this.preferredFlag = "";
+    this.phoneTypeId = 0;
+    this.phoneType = "";
+    this.traderId = "";
   }
 
 }
 
 
 class PhoneType implements IPhoneType {
-  typeId: number;
-  typeDescription: string;
+  phoneTypeId: number;
+  phoneType: string;
 
   constructor() {
-    this.typeId = 0;
-    this.typeDescription = "";
+    this.phoneTypeId = 0;
+    this.phoneType = "";
   }
 }
 
@@ -252,29 +215,29 @@ class PhoneType implements IPhoneType {
 class SocialNetwork implements ISocialNetwork {
   id: number;
   account: string; 
-  preferred: string;
-  typId: number;
-  typeDescription: string;
-  contactDetailsId: number;
+  preferredFlag: string;
+  socialTypeId: number;
+  socialType: string;
+  traderId: string;
 
   constructor() {
     this.id = 0;
     this.account = "";
-    this.preferred = "";
-    this.typId = 0;
-    this.typeDescription = "";
-    this.contactDetailsId = 0;
+    this.preferredFlag = "";
+    this.socialTypeId = 0;
+    this.socialType = "";
+    this.traderId = "";
   }
 }
 
 
 class SocialNetworkType implements ISocialNetworkType {
-  typeId: number;
-  typeDescription: string;
+  socialTypeId: number;
+  socialType: string;
 
   constructor() {
-    this.typeId = 0;
-    this.typeDescription = "";
+    this.socialTypeId = 0;
+    this.socialType = "";
   }
 }
 
@@ -312,30 +275,30 @@ class SecurityQuestion implements ISecurityQuestions {
 class Email implements IEmail {
   id: number;
   account: string;
-  preferred: string;
-  typeId: number;
-  typeDescription: string; 
-  contactDetailsId: number;
+  preferredFlag: string;
+  emailTypeId: number;
+  emailType: string; 
+  traderId: string;
 
   constructor() {
     this.id = 0;
     this.account = "";
-    this.preferred = ""
-    this.typeId = 0;
-    this.typeDescription = "";
-    this.contactDetailsId = 0;
+    this.preferredFlag = ""
+    this.emailTypeId = 0;
+    this.emailType = "";
+    this.traderId = "";
   }
 }
 
 
 
 class EmailType implements IEmailType {
-  typeId: number;
-  typeDescription: string;
+  emailTypeId: number;
+  emailType: string;
 
   constructor() {
-    this.typeId = 0;
-    this.typeDescription = "";
+    this.emailTypeId = 0;
+    this.emailType = "";
   }
 }
 
@@ -703,10 +666,10 @@ class PreferredType {
 export {
   ChangePasswordBindingModel, RegisterBindingModel,
   SetPasswordBindingModel, LoginModel, Subcategory,
-  Trader, TraderDetails, PostTrade, State, Place, Postcode,
-  PersonalDetails, ContactDetails, SecurityDetails,
+  Trader, PostTrade, State, Place, Postcode,
+  PersonalDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
-  SocialNetwork, SocialNetworkType,Email,
+  SocialNetwork, SocialNetworkType, Email, EmailType,
   SecurityAnswer, SecurityQuestion, Correspondence,
   Trade, Image, Category, TradeHistory,
   UserSession, Authentication, UserIdentity,

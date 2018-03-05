@@ -156,44 +156,47 @@
     // phone
     phones: 'http://localhost:5700/api/phones',
     phone: 'http://localhost:5700/api/phones/',
-    updatephone: 'http://localhost:5700/api/phones/putphone',
-    addphone: 'http://localhost:5700/api/phones/postphone',
-    deletephone: 'http://localhost:5700/api/phones/deletephone',
+    phonesbytraderid: 'http://localhost:5700/api/phones/GetPhonesByTraderId',
+    updatephone: 'http://localhost:5700/api/phones/PutPhone',
+    addphone: 'http://localhost:5700/api/phones/PostPhone',
+    deletephone: 'http://localhost:5700/api/phones/DeletePhone',
 
     // phone type
     phonetypes: 'http://localhost:5700/api/phonetypes',
     phonetype: 'http://localhost:5700/api/phonetypes/',
-    updatephonetype: 'http://localhost:5700/api/phonetypes/putphonetype',
-    addphonetype: 'http://localhost:5700/api/phonetypes/postphonetype',
-    deletephonetype: 'http://localhost:5700/api/phonetypes/deletephonetype',
+    updatephonetype: 'http://localhost:5700/api/phonetypes/PutPhoneType',
+    addphonetype: 'http://localhost:5700/api/phonetypes/PostPhoneType',
+    deletephonetype: 'http://localhost:5700/api/phonetypes/DeletePhoneType',
 
    // email
     emails: 'http://localhost:5700/api/emails',
     email: 'http://localhost:5700/api/emails/',
-    updateemail: 'http://localhost:5700/api/emails/putemail',
-    addemail: 'http://localhost:5700/api/emails/postemail',
-    deleteemail: 'http://localhost:5700/api/emails/deleteemail',
+    emailsbytraderid: 'http://localhost:5700/api/emails/GetEmailsByTraderId',
+    updateemail: 'http://localhost:5700/api/emails/PutEmail',
+    addemail: 'http://localhost:5700/api/emails/PostEmail',
+    deleteemail: 'http://localhost:5700/api/emails/DeleteEmail',
 
     // email type
     emailtypes: 'http://localhost:5700/api/emailtypes',
     emailtype: 'http://localhost:5700/api/emailtypes/',
-    updateemailtype: 'http://localhost:5700/api/emailtypes/putemailtype',
-    addemailtype: 'http://localhost:5700/api/emailtypes/postemailtype',
-    deleteemailtype: 'http://localhost:5700/api/emailtypes/deleteemailtype',
+    updateemailtype: 'http://localhost:5700/api/emailtypes/PutEmailType',
+    addemailtype: 'http://localhost:5700/api/emailtypes/PostEmailType',
+    deleteemailtype: 'http://localhost:5700/api/emailtypes/DeleteEmailType',
   
     // social network
     socialnetworks: 'http://localhost:5700/api/socialnetworks',
     socialnetwork: 'http://localhost:5700/api/socialnetworks/',
-    updatesocialnetwork: 'http://localhost:5700/api/socialnetworks/putsocialnetwork',
-    addsocialnetwork: 'http://localhost:5700/api/socialnetworks/postsocialnetwork',
-    deletesocialnetwork: 'http://localhost:5700/api/socialnetworks/deletesocialnetwork',
+    socialnetworksbytraderid: 'http://localhost:5700/api/socialnetworks/GetSocialNetworksByTraderId',
+    updatesocialnetwork: 'http://localhost:5700/api/socialnetworks/PutSocialNetwork',
+    addsocialnetwork: 'http://localhost:5700/api/socialnetworks/PostSocialNetwork',
+    deletesocialnetwork: 'http://localhost:5700/api/socialnetworks/DeleteSocialNetwork',
 
     // socila network type
     socialnetworktypes: 'http://localhost:5700/api/socialnetworktypes',
     socialnetworktype: 'http://localhost:5700/api/socialnetworktypes/',
-    updatesocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/putsocialnetworktype',
-    addsocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/postsocialnetworktype',
-    deletesocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/deletesocialnetworktype',
+    updatesocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/PutSocialNetworktype',
+    addsocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/PostSocialNetworktype',
+    deletesocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/DeleteSocialNetworktype',
 
     // security answers
     securityanswers: 'http://localhost:5700/api/securityanswers',

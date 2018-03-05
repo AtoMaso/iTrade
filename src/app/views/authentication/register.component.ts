@@ -11,7 +11,7 @@ import { LoggerService } from '../../services/logger/logger.service';
 import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
-import { TraderDetails, RegisterBindingModel, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
+import { RegisterBindingModel, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
 import { ControlMessages } from '../controls/controlmessages/control-messages.component';
 
 @Component({
@@ -21,7 +21,6 @@ import { ControlMessages } from '../controls/controlmessages/control-messages.co
 
 export class RegisterComponent implements OnInit {
 
-  private trader: TraderDetails = new TraderDetails();
   private registerModel = new RegisterBindingModel();
   private submitted = false;
   private registerGroup: any;

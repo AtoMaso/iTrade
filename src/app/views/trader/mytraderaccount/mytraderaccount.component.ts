@@ -13,8 +13,8 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
-import {UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails, SecurityDetails } from '../../../helpers/classes';
-import { Address, State, Place, Postcode, Phone, AddressType, PreferredType } from '../../../helpers/classes';
+import {UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, SecurityDetails } from '../../../helpers/classes';
+import { Address, State, Place, Postcode, Email, Phone, SocialNetwork, AddressType, PreferredType, PhoneType, SocialNetworkType, EmailType } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -35,9 +35,11 @@ export class MyTraderAccountComponent implements OnInit {
   private identity: UserIdentity = new UserIdentity;
   private isAuthenticated: boolean = false;
 
-  private personalDetails: PersonalDetails = null;
-  private contactDetails: ContactDetails = null;
+  private personalDetails: PersonalDetails = null; 
   private securityDetails: SecurityDetails = null;   
+  private emails: Email[] = [];
+  private phones: Phone[] = [];
+  private socials: SocialNetwork[] = [];
 
   private availableAddresses: Address[] = [];
   private availableAddressesCount: number = 0;

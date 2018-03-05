@@ -29,7 +29,8 @@ let addAddressTypeUrl = CONFIG.baseUrls.addaddresstype;
 let deleteAddressTypeUrl = CONFIG.baseUrls.deleteaddresstype;
 
 
-@Injectable() export class AddressService {
+@Injectable()
+export class AddressService {
 
   private localUrl: string;
   private args: RequestOptionsArgs;

@@ -1,6 +1,6 @@
 ﻿// used only when the data pased is object
 import { Pipe, PipeTransform } from '@angular/core';
-import { Trade, TraderDetails, } from './classes';
+import { Trade, } from './classes';
 
 
 // articles pipes
@@ -138,22 +138,6 @@ class TopTradesPipe implements PipeTransform {
     }
 }
 
-// authors pipes
-@Pipe({ name: 'SortTradersByNamePipe' })
-class SortTradersByNamePipe implements PipeTransform {
-    transform(value: TraderDetails[], args: any) {
-
-        if (!value || !value.sort) { return value; }
-
-        return value.sort((a: TraderDetails, b: TraderDetails) => {
-          if (a.personalDetails.firstName < b.personalDetails.firstName) { return -1; }
-          if (a.personalDetails.firstName > b.personalDetails.firstName) { return 1; }
-            return 0;
-        });
-    }
-}
-
-
 // teams pipes
 
 
@@ -194,6 +178,5 @@ export {
   SortTradesByTraderNamePipe,
   SortTradesByDatePipe,
   TopTradesPipe,
-  SortTradersByNamePipe,
   InitCapsPipe,
    CapsPipe}

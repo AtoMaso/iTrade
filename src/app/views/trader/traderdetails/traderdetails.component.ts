@@ -5,14 +5,16 @@ import { Observable } from 'rxjs/Observable';
 import { Response } from '@angular/http';
 
 import { PersonalDetailsService } from '../../../services/personaldetails/personaldetails.service';
-import { ContactDetailsService } from '../../../services/contactdetails/contactdetails.service';
+import { EmailsService } from '../../../services/emails/emails.service';
+import { PhonesService } from '../../../services/phones/phones.service';
+import { SocialNetworksService } from '../../../services/socialnetworks/social-networks.service';
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { AddressService } from '../../../services/address/address.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, ContactDetails, Address, Phone, Email, SocialNetwork } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, Address, Phone, Email, SocialNetwork } from '../../../helpers/classes';
 
 @Component({
   selector: 'app-traderdetails',
@@ -28,11 +30,15 @@ export class TraderDetailsComponent implements OnInit {
   private isAuthenticated: boolean = false; 
  
   private personal: PersonalDetails = new PersonalDetails();
-  private contact: ContactDetails = new ContactDetails();
+  private emails: Email[] = [];
+  private phones: Phone[] = [];
+  private socialnetworks: SocialNetwork[] = [];
   private addresses: Address[] = [];
 
   private hasPersonal: boolean = false;
-  private hasContact: boolean = false;
+  private hasEmails: boolean = false;
+  private hasPhones: boolean = false;
+  private hasSocial: boolean = false;
   private hasTrades: boolean = false;
   private hasHistory: boolean = false;
   private hasAddress: boolean = false;
@@ -40,9 +46,16 @@ export class TraderDetailsComponent implements OnInit {
   private isNewLoad: boolean = false;
   private isNewLoadHis: boolean = false;
 
+  private prefEmail: Email= new Email();
+  private prefPhone: Phone = new Phone();
+  private prefSocial: SocialNetwork = new SocialNetwork();
+  private prefAddress: Address = new Address();
+
   constructor(    
     private personalService: PersonalDetailsService,
-    private contactService: ContactDetailsService,
+    private emailsService: EmailsService,
+    private phonesService: PhonesService,
+    private socialslNetworksService: SocialNetworksService,
     private tradeService: TradeApiService,    
     private addressService: AddressService,
     private route: ActivatedRoute,
@@ -137,29 +150,104 @@ export class TraderDetailsComponent implements OnInit {
 
   private onSuccessAddresses(addresses: Address[]) {
     this.addresses = addresses;
+
+    if (this.addresses.length === 0) { this.hasAddress = false; }
+    else {
+      this.hasAddress = true;
+      let m: number = 0;
+          for (m = 0; m < this.addresses.length; m++) {
+            if (this.addresses[m].preferredFlag == "Yes") { this.prefAddress = this.addresses[m]; }
+          }
+    }
+  
     // get contact details
-    this.getContactDetails(this.traderId);
+    this.getEmails(this.traderId);
   }
 
 
   //***********************************************************
   // GET Contact Details 
   //***********************************************************
-  private getContactDetails(traderId) {
+  private getEmails(traderId) {
 
-    this.contactService.getContactDetailsByTraderId(traderId)
-      .subscribe((returnedContactDetails:ContactDetails) => {
-        this.onSuccessContact(returnedContactDetails);
+    this.emailsService.getEmailsByTraderId(traderId)
+      .subscribe((returnedEmails:Email[]) => {
+        this.onSuccessEmails(returnedEmails);
       },
-      (res: Response) => this.onError(res, "getContactDetails"));
+      (res: Response) => this.onError(res, "getEmails"));
   }
 
-  private onSuccessContact(contacD: ContactDetails) {
-    if (contacD === null) { this.hasContact = false; }
+
+  private onSuccessEmails(emails: Email[]) {
+    if (emails === null) { this.hasEmails = false; }
     else {
-      this.contact = this.TransformDataContact(contacD);
-      this.hasContact = true;
+      this.emails = emails;
+      let m: number = 0
+      for (m = 0; m < this.emails.length; m++) {
+        if (this.emails[m].preferredFlag == "Yes") {
+          this.prefEmail = this.emails[m];
+          break;
+        }
+      }
+      this.hasEmails = true;
     }
+
+    // now call the get phones
+    this.getPhones(this.traderId);
+  }
+
+
+  private getPhones(traderId) {
+    this.phonesService.getPhonesByTraderId(traderId)
+      .subscribe((returnedPhones: Phone[]) => {
+        this.onSuccessPhones(returnedPhones);
+      },
+      (res: Response) => this.onError(res, "getPhones"));
+  }
+
+
+  private onSuccessPhones(phones: Phone[]) {
+    if (phones === null) { this.hasPhones = false; }
+    else {
+      this.phones = phones;
+      let m: number = 0
+      for (m = 0; m < this.phones.length; m++) {
+        if (this.phones[m].preferredFlag == "Yes") {
+          this.prefPhone = this.phones[m];
+          break;
+        }
+      }
+      this.hasPhones = true;
+    }
+
+    this.getSocial(this.traderId);  
+  }
+
+
+  private getSocial(traderId) {
+    this.socialslNetworksService.getSocialNetworksByTraderId(traderId)
+      .subscribe((returnedSocial: SocialNetwork[]) => {
+        this.onSuccessSocial(returnedSocial);
+      },
+      (res: Response) => this.onError(res, "getSocial"));
+  }
+
+
+
+  private onSuccessSocial(socials: SocialNetwork []) {
+    if (socials === null) { this.hasSocial = false; }
+    else {
+      this.socialnetworks = socials;
+      let m: number = 0
+      for (m = 0; m < this.socialnetworks.length; m++) {
+        if (this.socialnetworks[m].preferredFlag == "Yes") {
+          this.prefSocial = this.socialnetworks[m];
+          break;
+        }
+      }
+      this.hasSocial = true;
+    }
+
     // now call the get trades
     this.getTradesCurrent(this.traderId);
   }
@@ -282,46 +370,13 @@ export class TraderDetailsComponent implements OnInit {
     pd.lastName = returnedPersonalDetails.lastName;
     pd.traderId = returnedPersonalDetails.traderId;
     pd.id = returnedPersonalDetails.id;
-   
-   
-    //returnedPersonalDetails.addresses.forEach(function (value) {
-    //  if (value.preferred === "true") { pd.preferred = value; }
-    //});    
-    if (this.addresses.length === 0) { this.hasAddress = false; }
-    else { this.hasAddress = true; }
-
+     
     if (pd.middleName.length === 0) { this.hasMiddleName = false; }
     else { this.hasMiddleName = true; }
      
     return pd;;
   }
 
-
-  private TransformDataContact(returnedContactDetails: ContactDetails): ContactDetails {  
-
-    let trd = new ContactDetails;
-
-    trd.traderId = returnedContactDetails.traderId;
-    trd.contactDetailsId = returnedContactDetails.contactDetailsId;
-
-    trd.phones = returnedContactDetails.phones;
-    returnedContactDetails.phones.forEach(function (value) {      
-      if (value.preferred === "true") { trd.preferredPhone = value;}
-    });    
-  
-
-    trd.emails = returnedContactDetails.emails;
-    returnedContactDetails.emails.forEach(function (value) {
-      if (value.preferred === "true") { trd.preferredEmail = value; }
-    });     
-
-    trd.socialNetworks = returnedContactDetails.socialNetworks;    
-    returnedContactDetails.socialNetworks.forEach(function (value) {
-      if (value.preferred === "true") { trd.preferredSocialNetwork = value; }
-    });     
-
-    return trd;
-  }
 
 
 

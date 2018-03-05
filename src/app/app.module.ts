@@ -38,13 +38,15 @@ import { ImageService } from './services/image/image.service';
 import { TradeHistoryService } from './services/tradehistory/trade-history.service';
 import { CorrespondenceService } from './services/correspondence/correspondence.service';
 import { PersonalDetailsService } from './services/personaldetails/personaldetails.service';
-import { ContactDetailsService } from './services/contactdetails/contactdetails.service';
 import { SecurityDetailsService } from './services/securitydetails/securitydetails.service';
 import { CategoryService } from './services/categories/category.service';
 import { SubcategoriesService } from './services/subcategories/subcategories.service';
 import { StatesService } from './services/states/states.service';
 import { PlacesService } from './services/places/places.service';
 import { AddressService } from './services/address/address.service';
+import { EmailsService } from './services/emails/emails.service';
+import { PhonesService } from './services/phones/phones.service';
+import { SocialNetworksService } from './services/socialnetworks/social-networks.service';
 
 
 //components
@@ -154,7 +156,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
   providers: [
     TradeApiService, ValidationService, ImageService, TradeHistoryService, StatesService,
     AuthenticationService, ProcessMessageService, CorrespondenceService, PlacesService,
-    PersonalDetailsService, ContactDetailsService, SecurityDetailsService, SubcategoriesService,
+    PersonalDetailsService, SecurityDetailsService, SubcategoriesService, SocialNetworksService, EmailsService, PhonesService,
     PageTitleService, LoggerService, AuthGuard, TraderApiService, CategoryService, AddressService,
     // to inercept every request for authentication purposes
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

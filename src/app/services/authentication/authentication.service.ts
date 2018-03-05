@@ -15,7 +15,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
 import { LoggerService } from '../logger/logger.service';
-import { TraderDetails, RegisterBindingModel, LoginModel, UserSession, Authentication, UserIdentity } from '../../helpers/classes';
+import { RegisterBindingModel, LoginModel, UserSession, Authentication, UserIdentity } from '../../helpers/classes';
 
 let serviceBase = CONFIG.baseUrls.servicebase;
 let serviceAccount = CONFIG.baseUrls.accounts;

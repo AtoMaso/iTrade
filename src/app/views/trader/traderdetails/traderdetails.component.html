@@ -39,7 +39,7 @@
                               <div class="row">
                                 <div class="panel panel-heading col-md-12 smalltext">
                                   Trading From:
-                                  <span *ngIf="hasAddress" class="smalltext  text-uppercase text-info"> {{ personal.preferredAddress.city }}</span>
+                                  <span *ngIf="hasAddress" class="smalltext  text-uppercase text-info"> {{ prefAddress.city }}</span>
                                   <span *ngIf="!hasAddress" class="smalltext  text-uppercase textoker">No Address Details</span>
                                 </div>
                               </div>
@@ -58,29 +58,29 @@
 
                   <span class="contact panel panel-heading col-md-12 collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseContact">
                         <span class="glyphicon glyphicon-minus"></span>
-                        Preferred Contact Details<span *ngIf="!hasContact" class="textoker"> - The system can not find any contact details for this trader</span>
+                        Preferred Contact Details<span *ngIf="!hasEmails && !hasPhones && !hasSocials" class="textoker"> - The system can not find any contact details for this trader</span>
                   </span>
 
 
-                   <div *ngIf="hasContact" id="collapseContact" class="collapse in">
+                   <div *ngIf="hasEmails || hasPhones || hasSocials" id="collapseContact" class="collapse in">
 
                           <div class="col-md-12">
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12 smalltext">
-                                Phone:<span class="smalltext  text-uppercase text-info">{{ contact.preferredPhone.countryCode }} {{ contact.preferredPhone.cityCode }}  {{ contact.preferredPhone.number }}</span>
+                                Phone:<span class="smalltext  text-uppercase text-info"> {{ prefPhone.countryCode }} {{ prefPhone.cityCode }}  {{ prefPhone.number }}</span>
                               </div>
                             </div>
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12 smalltext">
-                                Email Account:<span class="smalltext  text-uppercase text-info"> {{ contact.preferredEmail.account }}</span>
+                                Email Account:<span class="smalltext  text-uppercase text-info"> {{ prefEmail.account }}</span>
                               </div>
                             </div>
 
                             <div class="row">
                               <div class="panel panel-heading col-md-12 smalltext">
-                                Social Network:<span class="smalltext  text-uppercase text-info"> {{ contact.preferredSocialNetwork.account }}</span>
+                                Social Network:<span class="smalltext  text-uppercase text-info"> {{ prefSocial.account }}</span>
                               </div>
                             </div>
 

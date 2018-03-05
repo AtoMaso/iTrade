@@ -10,7 +10,7 @@ import { LoggerService } from '../../services/logger/logger.service';
 import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
-import { TraderDetails, LoginModel, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
+import { LoginModel, UserSession, UserIdentity, PageTitle } from '../../helpers/classes';
 import { ControlMessages } from '../controls/controlmessages/control-messages.component';
 
 @Component({

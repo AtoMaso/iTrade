@@ -36,13 +36,6 @@ interface ITraderList {
   traderSocialNetwork: string;
 }
 
-interface ITraderDetails {
-  traderId: string;
-  personalDetails: IPersonalDetails;
-  contactDetails: IContactDetails
-  securityDetails: ISecurityDetails;
-}
-
 
 
 interface IPersonalDetails {
@@ -52,14 +45,6 @@ interface IPersonalDetails {
   middleName: string;
   lastName: string;
   dateOfBirth: string;
-}
-
-interface IContactDetails {
-  contactDetailsId: number;
-  traderId: string; 
-  phones: IPhone[];
-  emails: IEmail[];
-  socialNetworks: ISocialNetwork[];  
 }
 
 
@@ -101,29 +86,29 @@ interface IPhone {
   number: string;
   cityCode: string;
   countryCode: string;
-  preferred: string;
-  typeId: number; 
-  typeDescription: string;
-  contactDetailsId: number;
+  preferredFlag: string;
+  phoneTypeId: number; 
+  phoneType: string;
+  traderId: string;
 }
 
 interface IPhoneType {
-  typeId: number;
-  typeDescription: string;
+  phoneTypeId: number;
+  phoneType: string;
 }
 
 interface ISocialNetwork {
   id: number;
   account: string;
-  preferred: string;
-  typId: number;
-  typeDescription: string;
-  contactDetailsId: number;
+  preferredFlag: string;
+  socialTypeId: number;
+  socialType: string;
+  traderId: string;
 }
 
 interface ISocialNetworkType {
-  typeId: number;
-  typeDescription: string;
+  socialTypeId: number;
+  socialType: string;
 }
 
 
@@ -144,15 +129,15 @@ interface ISecurityQuestions {
 interface IEmail {
   id: number;
   account: string;
-  preferred: string;
-  typeId: number;
-  typeDescription: string; 
-  contactDetailsId: number;
+  preferredFlag: string;
+  emailTypeId: number;
+  emailType: string; 
+  traderId: string;
 }
 
 interface IEmailType {
-  typeId: number;
-  typeDescription: string;
+  emailTypeId: number;
+  emailType: string;
 }
 
 
@@ -326,9 +311,10 @@ interface IProcessMessageType {
 
 
 export {
-  IChangePasswordBindingModel, IRegisterBindingModel, ISetPasswordBindingModel, ILoginModel,
-  ITraderList, ITraderDetails, IPostTrade, IPlace, IState, ISubcategory, IPostcode,
-  IPersonalDetails, ISecurityDetails, IContactDetails,
+  IChangePasswordBindingModel, IRegisterBindingModel,
+  ISetPasswordBindingModel, ILoginModel,
+  ITraderList, IPostTrade, IPlace, IState, ISubcategory, IPostcode,
+  IPersonalDetails, ISecurityDetails,
   IAddress, IAddressType, IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
