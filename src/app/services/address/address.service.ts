@@ -16,13 +16,14 @@ import { UserSession, UserIdentity, PersonalDetails } from '../../helpers/classe
 
 let addressesUrl = CONFIG.baseUrls.addresses;
 let addressUrl = CONFIG.baseUrls.address;
+let addressesbytraderid = CONFIG.baseUrls.addressesbytraderid;
+let preferredaddress = CONFIG.baseUrls.preferredaddress;
 let updateAddressUrl = CONFIG.baseUrls.updateaddress
 let addAddressUrl = CONFIG.baseUrls.addaddress;
 let deleteAddressUrl = CONFIG.baseUrls.deleteaddress;
 
 
 let addressTypesUrl = CONFIG.baseUrls.addresstypes;
-let addressesbytraderid = CONFIG.baseUrls.addressesbytraderid;
 let addressTypeUrl = CONFIG.baseUrls.addresstypes;
 let updateAddressTypeUrl = CONFIG.baseUrls.updateaddresstype;
 let addAddressTypeUrl = CONFIG.baseUrls.addaddresstype;
@@ -65,7 +66,7 @@ export class AddressService {
 
   
     //******************************************************
-    // GET ADDRESS
+    // GET ADDRESSES BY TRADER ID
     //******************************************************
   public getAddressesByTraderId(traderId: string) {
 
@@ -82,6 +83,24 @@ export class AddressService {
     return this.httpClientService.get<Address[]>(this.localUrl, httpOptions).retry(1);
   }
 
+
+  //******************************************************
+  // GET PREFERRED ADDRESS
+  //******************************************************
+  public getPreferredAddress(traderId: string, flag: string) {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    this.localUrl = `${preferredaddress}?traderId=${traderId}&preferredFlag=${flag}`;
+    return this.httpClientService.get<Address>(this.localUrl, httpOptions).retry(1);
+  }
 
     //******************************************************
     // ADD ADDRESS

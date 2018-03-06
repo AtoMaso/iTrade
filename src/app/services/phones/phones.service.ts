@@ -16,6 +16,7 @@ import { UserSession, UserIdentity, Phone, PhoneType } from '../../helpers/class
 
 let phonesUrl = CONFIG.baseUrls.phones;
 let phonesbytraderid = CONFIG.baseUrls.phonesbytraderid;
+let preferedphone = CONFIG.baseUrls.preferredphone;
 let phoneUrl = CONFIG.baseUrls.phones;
 let updatePhoneUrl = CONFIG.baseUrls.updatephone
 let addPhoneUrl = CONFIG.baseUrls.addphone;
@@ -82,6 +83,23 @@ export class PhonesService {
     return this.httpClientService.get<Phone[]>(this.localUrl, httpOptions).retry(1);
   }
 
+  //******************************************************
+  // GET PREFERRED PHONE
+  //******************************************************
+  public getPreferredPhone(traderId: string, flag: string): Observable<Phone> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    this.localUrl = `${preferedphone}?traderId=${traderId}&preferredFlag=${flag}`;
+    return this.httpClientService.get<Phone>(this.localUrl, httpOptions).retry(1);
+  }
 
   //******************************************************
   // ADD PHONE

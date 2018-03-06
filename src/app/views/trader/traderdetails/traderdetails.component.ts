@@ -140,24 +140,20 @@ export class TraderDetailsComponent implements OnInit {
 
   private getAddressesByTraderId(traderId: string) {
 
-    this.addressService.getAddressesByTraderId(traderId)
-      .subscribe((addressResult: Address[]) => {
+    this.addressService.getPreferredAddress(traderId, "Yes")
+      .subscribe((addressResult: Address) => {
         this.onSuccessAddresses(addressResult);
        
       }, (serviceError: Response) => this.onError(serviceError, "getAddresses"));
   }
 
 
-  private onSuccessAddresses(addresses: Address[]) {
-    this.addresses = addresses;
-
-    if (this.addresses.length === 0) { this.hasAddress = false; }
+  private onSuccessAddresses(address: Address) {
+   
+    if (address.id == 0 ) { this.hasAddress = false; }
     else {
-      this.hasAddress = true;
-      let m: number = 0;
-          for (m = 0; m < this.addresses.length; m++) {
-            if (this.addresses[m].preferredFlag == "Yes") { this.prefAddress = this.addresses[m]; }
-          }
+      this.prefAddress = address;
+      this.hasAddress = true;    
     }
   
     // get contact details
@@ -170,25 +166,19 @@ export class TraderDetailsComponent implements OnInit {
   //***********************************************************
   private getEmails(traderId) {
 
-    this.emailsService.getEmailsByTraderId(traderId)
-      .subscribe((returnedEmails:Email[]) => {
-        this.onSuccessEmails(returnedEmails);
+    this.emailsService.getPreferredEmail(traderId, "Yes")
+      .subscribe((returnedEmail:Email) => {
+        this.onSuccessEmails(returnedEmail);
       },
-      (res: Response) => this.onError(res, "getEmails"));
+      (res: Response) => this.onError(res, "getPreferredEmail"));
   }
 
 
-  private onSuccessEmails(emails: Email[]) {
-    if (emails === null) { this.hasEmails = false; }
+  private onSuccessEmails(email: Email) {
+    // new phone is returned when there is no record in a webapi
+    if (email.id == 0) { this.hasEmails = false; }
     else {
-      this.emails = emails;
-      let m: number = 0
-      for (m = 0; m < this.emails.length; m++) {
-        if (this.emails[m].preferredFlag == "Yes") {
-          this.prefEmail = this.emails[m];
-          break;
-        }
-      }
+      this.prefEmail = email;
       this.hasEmails = true;
     }
 
@@ -198,55 +188,42 @@ export class TraderDetailsComponent implements OnInit {
 
 
   private getPhones(traderId) {
-    this.phonesService.getPhonesByTraderId(traderId)
-      .subscribe((returnedPhones: Phone[]) => {
-        this.onSuccessPhones(returnedPhones);
+    this.phonesService.getPreferredPhone(traderId, "Yes")
+      .subscribe((returnedPhone: Phone) => {
+        this.onSuccessPhones(returnedPhone);
       },
-      (res: Response) => this.onError(res, "getPhones"));
+      (res: Response) => this.onError(res, "getPreferredPhone"));
   }
 
 
-  private onSuccessPhones(phones: Phone[]) {
-    if (phones === null) { this.hasPhones = false; }
+  private onSuccessPhones(phone: Phone) {
+    if (phone.id == 0) { this.hasPhones = false; }
     else {
-      this.phones = phones;
-      let m: number = 0
-      for (m = 0; m < this.phones.length; m++) {
-        if (this.phones[m].preferredFlag == "Yes") {
-          this.prefPhone = this.phones[m];
-          break;
-        }
-      }
+      this.prefPhone = phone;   
       this.hasPhones = true;
     }
 
+    // now get the social networks
     this.getSocial(this.traderId);  
   }
 
 
   private getSocial(traderId) {
-    this.socialslNetworksService.getSocialNetworksByTraderId(traderId)
-      .subscribe((returnedSocial: SocialNetwork[]) => {
+    this.socialslNetworksService.getPreferredSocialNetwork(traderId, "Yes")
+      .subscribe((returnedSocial: SocialNetwork) => {
         this.onSuccessSocial(returnedSocial);
       },
-      (res: Response) => this.onError(res, "getSocial"));
+      (res: Response) => this.onError(res, "getPreferredSocialNetwork"));
   }
 
 
 
-  private onSuccessSocial(socials: SocialNetwork []) {
-    if (socials === null) { this.hasSocial = false; }
+  private onSuccessSocial(social: SocialNetwork) {
+    if (social.id == 0) { this.hasSocial = false; }
     else {
-      this.socialnetworks = socials;
-      let m: number = 0
-      for (m = 0; m < this.socialnetworks.length; m++) {
-        if (this.socialnetworks[m].preferredFlag == "Yes") {
-          this.prefSocial = this.socialnetworks[m];
-          break;
-        }
-      }
+      this.prefSocial = social;     
       this.hasSocial = true;
-    }
+      }  
 
     // now call the get trades
     this.getTradesCurrent(this.traderId);

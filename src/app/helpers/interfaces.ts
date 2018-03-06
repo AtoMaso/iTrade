@@ -55,7 +55,6 @@ interface ISecurityDetails {
   email: string;
   password: string;
   confirmPassword: string;
-  securityAnswers: ISecurityAnswer[];
 }
 
 
@@ -114,10 +113,10 @@ interface ISocialNetworkType {
 
 interface ISecurityAnswer {
   answerId: number;
-  questionId: number;
-  questionText: string;
   questionAnswer: string;
-  securityDetailsId: number;
+  questionId: number;
+  questionText: string; 
+  traderId: string;
 }
 
 interface ISecurityQuestions {

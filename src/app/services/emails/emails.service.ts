@@ -16,6 +16,7 @@ import { UserSession, UserIdentity, Email, EmailType } from '../../helpers/class
 
 let emailsUrl = CONFIG.baseUrls.emails;
 let emailsbytraderid = CONFIG.baseUrls.emailsbytraderid;
+let preferredemail = CONFIG.baseUrls.preferredemail;
 let emailUrl = CONFIG.baseUrls.emails;
 let updateEmailUrl = CONFIG.baseUrls.updateemail
 let addEmailUrl = CONFIG.baseUrls.addemail;
@@ -65,7 +66,7 @@ export class EmailsService {
 
 
   //******************************************************
-  // GET EMAIL
+  // GET EMAIL BY TRADER ID
   //******************************************************
   public getEmailsByTraderId(traderId: string) :Observable<Email[]>{
 
@@ -82,6 +83,24 @@ export class EmailsService {
     return this.httpClientService.get<Email[]>(this.localUrl, httpOptions).retry(1);
   }
 
+
+  //******************************************************
+  // GET PREFERRED EMAIL
+  //******************************************************
+  public getPreferredEmail(traderId: string, flag: string): Observable<Email> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    this.localUrl = `${preferredemail}?traderId=${traderId}&preferredFlag=${flag}`;
+    return this.httpClientService.get<Email>(this.localUrl, httpOptions).retry(1);
+  }
 
   //******************************************************
   // ADD EMAIL

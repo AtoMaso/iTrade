@@ -44,12 +44,14 @@ export class MyTraderAccountComponent implements OnInit {
   private availableAddresses: Address[] = [];
   private availableAddressesCount: number = 0;
   private addressInView: Address; 
+  private tempAddress: Address;
 
   private states: State[] = [];
   private cities: Place[] = [];
   private postcodes: Postcode[] = [];
-  private addresstypes: AddressType[] = [];
-  private availableaddtypes: AddressType[] = [];
+  private alladdresstypes: AddressType[] = [];
+  private existingaddresstypes: AddressType[] = [];
+  private addresstypescanbeadded: AddressType[] = [];
   private preferredtypes: PreferredType[] = [];
 
   private personalForm: FormGroup;
@@ -69,8 +71,7 @@ export class MyTraderAccountComponent implements OnInit {
   private defaultDateOfBirth: Date;
 
   private personalAddEdit: boolean = false;
-  private addressEdit: boolean = false;
-  private addressAdd: boolean = false;
+  private addressAddEdit: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -130,7 +131,11 @@ export class MyTraderAccountComponent implements OnInit {
 
 
   private onSuccessPersonal(pd: PersonalDetails) {
-    this.personalDetails = pd;           
+    // empty records returned 
+    if (pd.id != 0) { this.personalDetails = pd; }
+    else { this.personalDetails == null; }
+
+    // now get the states
     this.getStates();    
   }
 
@@ -159,8 +164,11 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
-  private onSuccessAddresses(addresses: Address[]) { 
-    this.availableAddresses = addresses;
+  private onSuccessAddresses(addresses: Address[]) {    
+    // collections return zero length when no record found 
+    if (addresses.length == 0) { this.availableAddresses = null; }
+    else { this.availableAddresses = addresses; }
+
     this.getAddressTypes();
   }
 
@@ -175,28 +183,53 @@ export class MyTraderAccountComponent implements OnInit {
 
 
   private onSuccessAddressTypes(types: AddressType[]) {
-    this.addresstypes = types;   
-    this.defineAddressesAndTypes(this.availableAddresses);
+
+    if (types.length == 0) { this.alladdresstypes = null; }
+    else { this.alladdresstypes = types; }
+ 
+    // handle no records returned for either of these
+    if (this.alladdresstypes && this.availableAddresses) { this.addressInViewAnAddressTypes(); }
+    else {
+      if (this.alladdresstypes) {
+        // add all address types if they exist
+        this.addresstypescanbeadded = this.alladdresstypes;
+        this.existingaddresstypes = null;
+      }
+    }
+
     this.preparePreferredList();
   
   }
 
 
-  private defineAddressesAndTypes(addresses:Address[]) {
+  private addressInViewAnAddressTypes() {
     
     this.addressInView = this.availableAddresses[0];    
     this.availableAddressesCount = this.availableAddresses.length;
 
     let m: number = 0;
     let n: number = 0;
-    for (m = 0; m < this.addresstypes.length; m++) {
+    // get the existing address types
+    for (m = 0; m < this.alladdresstypes.length; m++) {
       for (n = 0; n < this.availableAddresses.length; n++) {
-        if (this.addresstypes[m].addressType == this.availableAddresses[n].addressType) {
-          this.availableaddtypes.push(this.addresstypes[m]);
-        }
+        if (this.alladdresstypes[m].addressType == this.availableAddresses[n].addressType) {        
+          this.existingaddresstypes.push(this.alladdresstypes[m]);
+        } 
       }     
     }
 
+    let exist: boolean = false;
+    // get the addres types which can be added
+    for (m = 0; m < this.alladdresstypes.length; m++) {
+      for (n = 0; n < this.existingaddresstypes.length; n++) {
+        if (this.alladdresstypes[m].addressType == this.existingaddresstypes[n].addressType) {
+          exist = true;
+          break;
+        }
+      }
+      if (!exist) { this.addresstypescanbeadded.push(this.alladdresstypes[m]); }
+      exist = false;
+    }
   }
 
 
@@ -269,6 +302,7 @@ export class MyTraderAccountComponent implements OnInit {
     }, 0);
   }
 
+
   private setAddressFormDefaults() {
 
     let m: number = 0;
@@ -290,8 +324,8 @@ export class MyTraderAccountComponent implements OnInit {
       if (localPostcodes[m].number == this.addressInView.postcode) { this.defaultPostcode = localPostcodes[m]; }
     }
 
-    for (m = 0; m < this.addresstypes.length; m++) {
-      if (this.addresstypes[m].addressType == this.addressInView.addressType) { this.defaultAddressType = this.addresstypes[m]; }
+    for (m = 0; m < this.alladdresstypes.length; m++) {
+      if (this.alladdresstypes[m].addressType == this.addressInView.addressType) { this.defaultAddressType = this.alladdresstypes[m]; }
     }
 
     for (m = 0; m < this.preferredtypes.length; m++) {
@@ -329,7 +363,6 @@ export class MyTraderAccountComponent implements OnInit {
       day: value.getDate()
     }
   }
-
 
 
   private onDateChanged(event: IMyDateModel) {
@@ -384,13 +417,26 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
+  private onAddressAdd() {
+    this.addressAddEdit = true;
+    this.setAddressForm();
+
+    if (this.addressInView) {
+      this.tempAddress = this.addressInView;
+      this.addressInView = null;
+    }
+  }
+
+
   private onToggleAddress() {
-    this.addressEdit = !this.addressEdit;
-    if (this.addressEdit) {        
+    this.addressAddEdit = !this.addressAddEdit;
+    if (this.addressAddEdit) {
       this.setAddressForm();
       this.setAddressFormDefaults();
       this.cities = null;
       this.postcodes = null;
+    } else {
+      if (this.tempAddress) { this.addressInView = this.tempAddress; }  
     }
   }
 
@@ -432,33 +478,25 @@ export class MyTraderAccountComponent implements OnInit {
 
 
 
-  //private prepareUpdatePersonal(): PersonalDetails {
-  //  const formModel = this.personalForm.value;  
+  private onAddUpdateAddress() {
 
-  //  const savePersonal: PersonalDetails = {
-  //    id: this.personalDetails.id,         
-  //    traderId: this.personalDetails.traderId,
-  //    firstName: formModel.fname as string,
-  //    middleName: formModel.mname as string,
-  //    lastName: formModel.lname as string,          
-  //    dateOfBirth: formModel.dbirth.jsdate
-  //  };
-  //  return savePersonal;
-  //}
+    let address: Address = this.prepareAddUpdateAddress();
 
-
-
-  private onUpdateAddress() {
-
-    let address: Address = this.prepareSaveAddress();
-
-    this.addressService.updateAddress(address).subscribe((res: Address) => {
-      this.addressInView = res;
-    }, (serviceError: Response) => this.onError(serviceError, "onUpdateAddress"));
-
+    if (this.addressInView == null) {
+      this.addressService.addAddress(address).subscribe((res: Address) => {
+        this.addressInView = res;
+      }, (serviceError: Response) => this.onError(serviceError, "onAddAddress"));
+    }
+    else {
+      this.addressService.updateAddress(address).subscribe((res: Address) => {
+        this.addressInView = res;
+      }, (serviceError: Response) => this.onError(serviceError, "onUpdateAddress"));
+    }
   }
 
-  private prepareSaveAddress(): Address {
+
+  private prepareAddUpdateAddress(): Address {
+
     const formModel = this.addressForm.value;
 
     let state: State = formModel.state;
@@ -467,25 +505,22 @@ export class MyTraderAccountComponent implements OnInit {
     let preferredflag: PreferredType = formModel.preferredtype;
     let addresstype: AddressType = formModel.addresstype;
 
+    let addUpdateAddress: Address = new Address();
 
-    const updateAddress: Address = {
-
-      id:this.addressInView.id as number,
-      traderId: this.addressInView.traderId  as string,         
-      country: this.addressInView.country as string,      
-      number: formModel.number as string, 
-      unit: formModel.unit as string,    
-      street: formModel.street as string,   
-      suburb: formModel.suburb as string,  
-      city: city.name,
-      postcode: postcode.number,
-      state: state.name, 
-      preferredFlag: preferredflag.value,
-      addressTypeId: addresstype.addressTypeId,
-      addressType: addresstype.addressType
-      
-    };
-    return updateAddress;
+    if (this.addressInView != null) { addUpdateAddress.id = this.addressInView.id; }    
+    addUpdateAddress.traderId = this.traderId as string,
+    addUpdateAddress.country = "";      
+    addUpdateAddress.number = formModel.number as string; 
+    addUpdateAddress.unit= formModel.unit as string;   
+    addUpdateAddress.street = formModel.street as string;   
+    addUpdateAddress.suburb = formModel.suburb as string;
+    addUpdateAddress.city = city.name;
+    addUpdateAddress.postcode = postcode.number;
+    addUpdateAddress.state = state.name;
+    addUpdateAddress.preferredFlag = preferredflag.value;
+    addUpdateAddress.addressTypeId = addresstype.addressTypeId;
+       
+    return addUpdateAddress;
   }
 
 

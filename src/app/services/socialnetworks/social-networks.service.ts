@@ -16,6 +16,7 @@ import { UserSession, UserIdentity, SocialNetwork, SocialNetworkType } from '../
 
 let socialnetworksUrl = CONFIG.baseUrls.socialnetworks;
 let socialnetworksbytraderid = CONFIG.baseUrls.socialnetworksbytraderid;
+let preferredsocialnetwork = CONFIG.baseUrls.preferredsocialnetwork;
 let socialnetworkUrl = CONFIG.baseUrls.socialnetworks;
 let updateSocialNetworkUrl = CONFIG.baseUrls.updatesocialnetwork
 let addSocialNetworkUrl = CONFIG.baseUrls.addsocialnetwork;
@@ -65,7 +66,7 @@ export class SocialNetworksService {
 
 
   //******************************************************
-  // GET SOCIAL NETWORK
+  // GET SOCIAL NETWORK BY TRADER ID
   //******************************************************
   public getSocialNetworksByTraderId(traderId: string): Observable<SocialNetwork[]> {
 
@@ -82,6 +83,25 @@ export class SocialNetworksService {
     return this.httpClientService.get<SocialNetwork[]>(this.localUrl, httpOptions).retry(1);
   }
 
+
+
+  //******************************************************
+  // GET PREFERRED SOCIAL NETWORK
+  //******************************************************
+  public getPreferredSocialNetwork(traderId: string, flag: string): Observable<SocialNetwork> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    this.localUrl = `${preferredsocialnetwork}?traderId=${traderId}&preferredFlag=${flag}`;
+    return this.httpClientService.get<SocialNetwork>(this.localUrl, httpOptions).retry(1);
+  }
 
   //******************************************************
   // ADD SOCIAL NETWORK

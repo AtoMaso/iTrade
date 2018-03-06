@@ -100,15 +100,7 @@
     addtrader: 'http://localhost:5700/api/account/PostTrader',
     deletetrader: 'http://localhost:5700/api/account/DeleteTrader',
 
-    // contact details
-    contactdetails: 'http://localhost:5700/api/contactdetails',
-    contactdetailsbytraderid: 'http://localhost:5700/api/contactdetails/GetContactDetailsByTraderId',
-    contactdetail: 'http://localhost:5700/api/contactdetails/',
-    updatecontactdetail: 'http://localhost:5700/api/contactdetails/PutContactDetail',
-    addcontactdetail: 'http://localhost:5700/api/contactdetails/PostContactDetail',
-    deletecontactdetail: 'http://localhost:5700/api/contactdetails/DeleteContactDetail',
-
-    // personal details
+      // personal details
     personaldetails: 'http://localhost:5700/api/personaldetails',
     personaldetailsbytraderid: 'http://localhost:5700/api/personaldetails/GetPersonalDetailsByTraderId',    
     personaldetail: 'http://localhost:5700/api/personaldetails/',
@@ -128,6 +120,7 @@
     addresses: 'http://localhost:5700/api/addresses',
     address: 'http://localhost:5700/api/addresses/',
     addressesbytraderid: 'http://localhost:5700/api/addresses/GetAddressesByTraderId',
+    preferredaddress: 'http://localhost:5700/api/addresses/GetPreferredAddress',
     updateaddress: 'http://localhost:5700/api/addresses/PutAddress',
     addaddress: 'http://localhost:5700/api/addresses/PostAddress',
     deleteaddress: 'http://localhost:5700/api/addresses/DeleteAddress',
@@ -157,6 +150,7 @@
     phones: 'http://localhost:5700/api/phones',
     phone: 'http://localhost:5700/api/phones/',
     phonesbytraderid: 'http://localhost:5700/api/phones/GetPhonesByTraderId',
+    preferredphone: 'http://localhost:5700/api/phones/GetPreferredPhone',
     updatephone: 'http://localhost:5700/api/phones/PutPhone',
     addphone: 'http://localhost:5700/api/phones/PostPhone',
     deletephone: 'http://localhost:5700/api/phones/DeletePhone',
@@ -172,6 +166,7 @@
     emails: 'http://localhost:5700/api/emails',
     email: 'http://localhost:5700/api/emails/',
     emailsbytraderid: 'http://localhost:5700/api/emails/GetEmailsByTraderId',
+    preferredemail: 'http://localhost:5700/api/emails/GetPreferredEmail',
     updateemail: 'http://localhost:5700/api/emails/PutEmail',
     addemail: 'http://localhost:5700/api/emails/PostEmail',
     deleteemail: 'http://localhost:5700/api/emails/DeleteEmail',
@@ -187,6 +182,7 @@
     socialnetworks: 'http://localhost:5700/api/socialnetworks',
     socialnetwork: 'http://localhost:5700/api/socialnetworks/',
     socialnetworksbytraderid: 'http://localhost:5700/api/socialnetworks/GetSocialNetworksByTraderId',
+    preferredsocialnetwork: 'http://localhost:5700/api/socialnetworks/GetPreferredSocialNetwork',
     updatesocialnetwork: 'http://localhost:5700/api/socialnetworks/PutSocialNetwork',
     addsocialnetwork: 'http://localhost:5700/api/socialnetworks/PostSocialNetwork',
     deletesocialnetwork: 'http://localhost:5700/api/socialnetworks/DeleteSocialNetwork',

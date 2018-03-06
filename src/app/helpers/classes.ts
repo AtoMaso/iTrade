@@ -115,7 +115,6 @@ class SecurityDetails implements ISecurityDetails {
   email: string;
   password: string;
   confirmPassword: string;
-  securityAnswers: SecurityAnswer [];
   traderId: string;
 
   constructor() {
@@ -124,7 +123,6 @@ class SecurityDetails implements ISecurityDetails {
     this.email = "";
     this.password = "";   
     this.confirmPassword = "";
-    this.securityAnswers = [];
     this.traderId = "";
   }
 }
@@ -244,17 +242,17 @@ class SocialNetworkType implements ISocialNetworkType {
 
 class SecurityAnswer implements ISecurityAnswer {
   answerId: number;
+  questionAnswer: string;
   questionId: number;
   questionText: string;
-  questionAnswer: string;
-  securityDetailsId: number;
+  traderId: string;
 
   constructor() {
     this.answerId = 0;
     this.questionAnswer = "";
     this.questionId = 0;
     this.questionText = "";
-    this.securityDetailsId = 0;
+    this.traderId = "";
   }
   
 }

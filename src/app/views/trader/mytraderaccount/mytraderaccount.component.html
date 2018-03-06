@@ -11,12 +11,12 @@
 
                             <div class="panel panel-heading colapse in col-md-12 footerdiv" id="collapsePersonal" style="margin-top:-20px;">
 
-                                  <div *ngIf="!personalAddEdit" class="row col-md-12">
+                                  <div *ngIf="!personalAddEdit" class="row col-md-11 col-md-offset-1">
 
                                         <div class="col-md-12" style="text-align:right;">
-                                          <div *ngIf="!personalDetails" class="col-md-3"><a (click)="onAddPersonal()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
-                                          <div *ngIf="personalDetails" class="col-md-4"><a (click)="onTogglePersonal()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>
-                                          <div *ngIf="personalDetails" class="col-md-5"><a (click)="onDeletePersonal()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
+                                          <div *ngIf="!personalDetails" class="col-md-4"><a (click)="onAddPersonal()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
+                                          <div *ngIf="personalDetails" class="col-md-6"><a (click)="onTogglePersonal()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>
+                                          <div *ngIf="personalDetails" class="col-md-6"><a (click)="onDeletePersonal()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
                                         </div>
 
                                         <div *ngIf="personalDetails != null">
@@ -125,7 +125,7 @@
                                 Select address:                                                                                                                 
                                   <select id="atype" name="atype" class="smalltext" style="background-color:moccasin;" (change)="onViewAddressTypeChange($event)">
                                     <option></option>
-                                    <option *ngFor="let atype of availableaddtypes" [ngValue]="atype">
+                                    <option *ngFor="let atype of existingaddresstypes" [ngValue]="atype">
                                       {{ atype.addressType }}
                                     </option>
                                   </select>                               
@@ -134,15 +134,15 @@
                                                                                 
                             <div class="panel panel-heading colapse in col-md-12 footerdiv" id="collapseAddress" style="margin-top:-20px;">
 
-                              <div *ngIf="!addressEdit" class="row col-md-12">
+                              <div *ngIf="!addressAddEdit" class="row col-md-12">
 
                                 <div class="col-md-12" style="text-align:right;">
-                                  <div *ngIf="availableAddressesCount < 3" class="col-md-4"><a (click)="onAddressAdd()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
-                                  <div *ngIf="availableAddressesCount >1"  class="col-md-4"><a (click)="onToggleAddress()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>                                  
-                                  <div *ngIf="availableAddressesCount >1"  class="col-md-4"><a (click)="onAddressDelete()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
+                                  <div *ngIf="availableAddressesCount < 3"  class="col-md-2"><a (click)="onAddressAdd()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
+                                  <div *ngIf="availableAddressesCount > 1"  class="col-md-8" style="text-align:center;"><a (click)="onToggleAddress()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>                                  
+                                  <div *ngIf="availableAddressesCount > 1"  class="col-md-2"><a (click)="onAddressDelete()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div *ngIf="availableAddresses != null" class="col-md-12">
 
                                   <div class="col-md-6 col-md-offset-1">
 
@@ -170,9 +170,7 @@
                                       <label for="street">Street Name: </label>
                                       <span class="smalltextbold text-info text-uppercase"> {{ addressInView.street }}</span>
                                     </div>
-
-                               
-
+                            
                                   </div>
 
                                   <div class="col-md-5">
@@ -203,9 +201,9 @@
 
                               </div>
 
-                              <div *ngIf="addressEdit" class="row col-md-12">
+                              <div *ngIf="addressAddEdit" class="row col-md-12">
 
-                                <form novalidate [formGroup]="addressForm" (submit) ="onUpdateAddress()">
+                                   <form novalidate [formGroup]="addressForm" (submit) ="onAddUpdateAddress()">
 
                                   <div class="col-md-12">
 
@@ -231,7 +229,7 @@
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
                                             <select formControlName="addresstype" id="addresstype" name="addresstype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onChangeAddressType($event)">
                                               <option></option>
-                                              <option *ngFor="let addtype of addresstypes" [ngValue]="addtype">
+                                              <option *ngFor="let addtype of alladdresstypes" [ngValue]="addtype">                                             
                                                 {{ addtype.addressType }}
                                               </option>
                                             </select>
@@ -341,6 +339,7 @@
                                   </div>
 
                                 </form>
+
                               </div>
 
                             </div>
