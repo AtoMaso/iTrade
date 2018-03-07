@@ -4,18 +4,17 @@
 
        <div  class="row col-md-9">        
 
-              <div class="panel panel-heading">
+              <div class="panel panel-heading footerdiv">
 
                      <span class="correspondence panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCorrespondence">
                           <span class="glyphicon glyphicon-minus"></span> 
-                           Latest Correspondence 
-                           <span *ngIf="!hasCorres" class="textoker">- The system can not find any new correspondence for you!</span>  
+                           Latest Correspondence <span *ngIf="!hasCorres" class="textoker">- The system can not find any new correspondence for you!</span>  
                      </span>
 
                     <!-- Collapsable Correspondence -->
-                     <div *ngIf ="hasCorres" id="collapseCorrespondence" class="collapse in" >
+                     <div *ngIf ="hasCorres" id="collapseCorrespondence" class="collapse in panel-heading" >
 
-                           <div class="panel-heading">
+                           <!--<div class="panel-heading">-->
 
                                 <!-- Table-->
                                  <div class="table-responsive">
@@ -91,7 +90,7 @@
                                 </div>
                             
                                  <br/>
-                         </div>
+                         <!--</div>-->
 
                     </div>
 
@@ -99,7 +98,7 @@
               </div>
             
 
-              <div class="panel panel-heading">
+              <div class="panel panel-heading footerdiv">
 
                        <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
                           <span class="glyphicon glyphicon-minus"></span>
@@ -107,10 +106,8 @@
                       </span>
 
                       <!-- Collapsable Trade Status -->                   
-                      <div *ngIf="hasTrades" id="collapseTrades" class="collapse in">
-
-                              <div class="panel-heading">
-
+                      <div *ngIf="hasTrades" id="collapseTrades" class="collapse in  panel-heading">
+                        
                                   <!-- Table-->
                                    <div class="table-responsive">
 
@@ -179,8 +176,7 @@
                                     </div>
 
                                    <br />                            
-
-                    </div>
+                       
                   </div>
              </div>                                
      </div>

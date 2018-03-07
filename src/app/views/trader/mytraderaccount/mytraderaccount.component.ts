@@ -46,8 +46,8 @@ export class MyTraderAccountComponent implements OnInit {
   private availableAddresses: Address[] = [];
   private availableAddressesCount: number = 0;
   private addressInView: Address; 
-  private tempAddress: Address;
-  private updateAddress: Address
+  private tempAddUpdateAddress: Address;
+  //private updateAddress: Address
 
 
   private states: State[] = [];
@@ -175,7 +175,7 @@ export class MyTraderAccountComponent implements OnInit {
 
 
   private onSuccessAddresses(addresses: Address[]) {    
-    // collections return zero length when no record found 
+    // collections return zero length when no record found as it is initialised
     if (addresses.length == 0) { this.availableAddresses = null; }
     else { this.availableAddresses = addresses; }
 
@@ -203,7 +203,7 @@ export class MyTraderAccountComponent implements OnInit {
     else { this.alladdresstypes = types; }
  
     // handle no records returned for either of these
-    if (this.alladdresstypes && this.availableAddresses) { this.addressInViewAnAddressTypes(); }
+    if (this.alladdresstypes && this.availableAddresses) { this.setAddressInViewAnAddressTypes(); }
     else {
       if (this.alladdresstypes) {
         // add all address types if they exist
@@ -214,7 +214,7 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
   
-  private addressInViewAnAddressTypes() {
+  private setAddressInViewAnAddressTypes() {
     
     this.addressInView = this.availableAddresses[0];    
     this.availableAddressesCount = this.availableAddresses.length;
@@ -303,8 +303,8 @@ export class MyTraderAccountComponent implements OnInit {
       this.datePickerOptions = {
         dateFormat: 'dd/mm/yyyy',
         firstDayOfWeek: 'mo',
-        selectorWidth: '325px',
-        width: '325px',
+        selectorWidth: '330px',
+        width: '330px',
         minYear: 1900,
         maxYear: 2100,
         editableDateField: false
@@ -349,7 +349,7 @@ export class MyTraderAccountComponent implements OnInit {
 
       this.addressForm.setValue({
         number: this.addressInView.number,
-        unit: this.addressInView.unit,
+        unit: this.addressInView.unit || "",
         street: this.addressInView.street,
         suburb: this.addressInView.suburb,
         state: this.defaultState,
@@ -417,17 +417,21 @@ export class MyTraderAccountComponent implements OnInit {
     }
   }
 
+
  private openModal() {
     this.displayAddressTypeModal = "block";
   }
+
 
   private onCloseHandled() {
     this.displayAddressTypeModal = "none";
   }
 
+
   private onPreferredTypeChange(event: any) {
 
   }
+
 
   private onViewAddressTypeChange(type:any) {
     let m: number = 0;
@@ -440,60 +444,63 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
-  private onAddPersonalShow() {
+  private onPersonalAddClick() {
+    this.messagesService.emitRoute("nill"); 
     this.isPersonalAddEdit= true;
     this.setPersonalForm();
     this.personalDetails = null;
   }
 
 
-  private onTogglePersonal() {
+  private onPersonalEditClick() {
     this.messagesService.emitRoute("nill"); 
-    this.isPersonalAddEdit = !this.isPersonalAddEdit;    
+    this.isPersonalAddEdit = true;  
 
     if (this.isPersonalAddEdit) {
       this.setPersonalForm();
       this.setPersonalFormDefaults();
       this.updatePersonal = this.personalDetails;
-    }
-   
+    }   
   }
 
 
-  private onAddAddressShow() {
+  private onPersonalEditCancel() {
+     this.isPersonalAddEdit = !this.isPersonalAddEdit;    
+  }
+
+
+  private onAddressAddClick() {
+    this.messagesService.emitRoute("nill"); 
     this.isAddressAddEdit = true;
-    this.setAddressForm();
-
+    this.setAddressForm();  
+    this.cities = [];
+    this.postcodes = [];
+    // if address in view take it as temp so we can go back if
+    // adding has been cancelled
     if (this.addressInView) {
-      this.tempAddress = this.addressInView;
-      this.addressInView = null;
+      this.tempAddUpdateAddress = this.addressInView;    
     }
   }
 
 
-  private onToggleAddress() {
+  private onAddressEditClick() {
 
     this.messagesService.emitRoute("nill"); 
-    this.isAddressAddEdit = !this.isAddressAddEdit;
-
-    if (this.isAddressAddEdit) {
-
-      this.updateAddress = this.addressInView;
-      this.setAddressForm();
-      this.setAddressFormDefaults();
-      this.cities = null;
-      this.postcodes = null;
-
-    } else {
-      if (this.tempAddress) { this.addressInView = this.tempAddress; }  
-    }
+    this.isAddressAddEdit = true;   
+    this.tempAddUpdateAddress = this.addressInView;
+    this.setAddressForm();
+    this.setAddressFormDefaults();  
   }
 
+  private onAddressEditCancel() {
+    this.isAddressAddEdit = !this.isAddressAddEdit;
+    this.addressInView = this.tempAddUpdateAddress;   
+  }
 
   //*****************************************************
-  // ADD UPDATE PERSONAL
+  // PERSONAL ADD UPDATE
   //*****************************************************
-  private onAddUpdatePersonal() {    
+  private onPersonalAddUpdateSubmit() {    
       
         this.messagesService.emitRoute("nill");
         let pd = this.prepareAddUpdatePersonal();
@@ -502,12 +509,10 @@ export class MyTraderAccountComponent implements OnInit {
         if (this.personalDetails == null) {
           // add new address   
           this.personalService.addPersonalDetails(pd).subscribe((res: PersonalDetails) => {
-
-            // get the new data from the server
-            this.getPersonalDetailsByTraderId(this.traderId);
             // show the success
             if (this.personalDetails != null) { this.messagesService.emitProcessMessage("PMSAPd"); }
-
+            // get the new data from the server
+            this.getPersonalDetailsByTraderId(this.traderId);        
           }, (serviceError: Response) => this.onError(serviceError, "onAddPersonal"));
         }
         else {
@@ -560,9 +565,9 @@ export class MyTraderAccountComponent implements OnInit {
  
 
   //********************************************************************
-  // ADD UPDATE ADDRESS
+  // ADDRESS ADD UPDATE
   //********************************************************************
-  private onAddUpdateAddress() {
+  private onAddressAddUpdateSubmit() {
 
         this.messagesService.emitRoute("nill");
         let address: Address = this.prepareAddUpdateAddress();
@@ -606,25 +611,25 @@ export class MyTraderAccountComponent implements OnInit {
     let preferredflag: PreferredType = formModel.preferredtype;
     let addresstype: AddressType = formModel.addresstype;
 
-    let addUpdateAddress: Address = new Address();
+    let newAddUpdateAddress: Address = new Address();
 
-    if (this.addressInView != null) { addUpdateAddress.id = this.addressInView.id; }    
-    addUpdateAddress.traderId = this.traderId as string,
-    addUpdateAddress.country = "";      
-    addUpdateAddress.number = formModel.number as string; 
-    addUpdateAddress.unit= formModel.unit as string;   
-    addUpdateAddress.street = formModel.street as string;   
-    addUpdateAddress.suburb = formModel.suburb as string;
-    addUpdateAddress.city = city.name;
-    addUpdateAddress.postcode = postcode.number;
-    addUpdateAddress.state = state.name;
-    addUpdateAddress.preferredFlag = preferredflag.value;
-    addUpdateAddress.addressTypeId = addresstype.addressTypeId;
+    if (this.addressInView != null) { newAddUpdateAddress.id = this.addressInView.id; }    
+    newAddUpdateAddress.traderId = this.traderId as string,
+      newAddUpdateAddress.country = "";      
+    newAddUpdateAddress.number = formModel.number as string; 
+    newAddUpdateAddress.unit= formModel.unit as string;   
+    newAddUpdateAddress.street = formModel.street as string;   
+    newAddUpdateAddress.suburb = formModel.suburb as string;
+    newAddUpdateAddress.city = city.name;
+    newAddUpdateAddress.postcode = postcode.number;
+    newAddUpdateAddress.state = state.name;
+    newAddUpdateAddress.preferredFlag = preferredflag.value;
+    newAddUpdateAddress.addressTypeId = addresstype.addressTypeId;
 
     // has anything beeing changed in the form and we are updating
-    if   ( this.updateAddress != undefined &&  this.compareAddresses(addUpdateAddress, this.updateAddress) ) { this.messagesService.emitProcessMessage("PMEUAd"); return null;}
+    if (this.tempAddUpdateAddress != undefined && this.compareAddresses(newAddUpdateAddress, this.tempAddUpdateAddress) ) { this.messagesService.emitProcessMessage("PMEUAd"); return null;}
 
-    return addUpdateAddress;
+    return newAddUpdateAddress;
   }
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed

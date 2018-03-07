@@ -233,6 +233,10 @@
   border: 1px solid Darkgray;
 }
 
+.hrstylered {
+  border: 1px solid #FF223A3A;
+}
+
 
 .lineargradient {
 	height:100px;

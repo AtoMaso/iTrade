@@ -84,10 +84,10 @@ export class TraderDetailsComponent implements OnInit {
 
 
       jQuery("#collapsePersonal").on("hide.bs.collapse", function () {
-           jQuery(".personal").html('<span class="glyphicon glyphicon-plus"></span> Personal Details');
+        jQuery(".personal").html('<span class="glyphicon glyphicon-plus"></span> Personal Details');
       });
       jQuery("#collapsePersonal").on("show.bs.collapse", function () {
-           jQuery(".personal").html('<span class="glyphicon glyphicon-minus"></span> Personal Details');
+        jQuery(".personal").html('<span class="glyphicon glyphicon-minus"></span> Personal Details');
       });
 
       jQuery("#collapseContact").on("hide.bs.collapse", function () {

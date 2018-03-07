@@ -78,6 +78,7 @@ export class TradeDetailsComponent implements OnInit {
 
   ngAfterViewInit() {
 
+    setTimeout(() => {
     jQuery(document).ready(function () {
 
       jQuery("#collapseDescription").on("hide.bs.collapse", function () {
@@ -102,9 +103,9 @@ export class TradeDetailsComponent implements OnInit {
         jQuery(".history").html('<span class="glyphicon glyphicon-minus"></span> Viewing History (max 10)');
       });
 
-
     });
 
+    }, 30);
   }
 
 

@@ -11,33 +11,34 @@
 
                             <div class="panel panel-heading colapse in col-md-12 footerdiv" id="collapsePersonal" style="margin-top:-20px;">
 
-                                  <div *ngIf="!isPersonalAddEdit" class="row col-md-11 col-md-offset-1">
+                                  <div *ngIf="!isPersonalAddEdit" class="col-md-12">
 
-                                        <div class="col-md-12" style="text-align:right;">
-                                          <div *ngIf="!personalDetails" class="col-md-4"><a (click)="onAddPersonalShow()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
-                                          <div *ngIf="personalDetails" class="col-md-6"><a (click)="onTogglePersonal()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>
-                                          <div *ngIf="personalDetails" class="col-md-6"><a (click)="onDeletePersonal()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
+                                        <div class="col-md-12">
+                                          <div *ngIf="!personalDetails" class="col-md-4"><a (click)="onPersonalAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                          <div *ngIf="personalDetails" class="col-md-4 col-md-offset-2"><a (click)="onPersonalEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                                          <div *ngIf="personalDetails" class="col-md-6"><a (click)="onPersonalDeleteClick()" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                                          <!--<hr class="hrstylered" />-->
                                         </div>
 
                                         <div *ngIf="personalDetails != null">
-                                              <div class="smalltextbold col-md-12" style="height:50px; margin-top:20px;">
-                                                <div class="col-md-6"> <label for="fname">First Name: </label></div>
-                                                <div class="col-md-6"><span class="smalltextbold text-info text-uppercase">{{ personalDetails.firstName }}</span></div>
+                                              <div class="smalltextbold col-md-10 col-md-offset-2" style="height:50px; margin-top:20px;">
+                                                <label for="fname">First Name: </label>
+                                                <span class="smalltextbold text-info text-uppercase">{{ personalDetails.firstName }}</span>
                                               </div>
 
-                                              <div class="smalltextbold col-md-12" style="height:50px;">
-                                                <div class="col-md-6">  <label for="mname">Middle Name: </label></div>
-                                                <div class="col-md-6">  <span class="smalltextbold text-info text-uppercase">{{ personalDetails.middleName }}</span></div>
+                                              <div class="smalltextbold col-md-10 col-md-offset-2" style="height:50px;">
+                                               <label for="mname">Middle Name: </label>
+                                                 <span class="smalltextbold text-info text-uppercase">{{ personalDetails.middleName }}</span>
                                               </div>
 
-                                              <div class="smalltextbold col-md-12" style="height:50px;">
-                                                <div class="col-md-6">  <label for="lname">Last Name: </label></div>
-                                                <div class="col-md-6">  <span class="smalltextbold text-info text-uppercase">{{ personalDetails.lastName }}</span></div>
+                                              <div class="smalltextbold col-md-10 col-md-offset-2" style="height:50px;">
+                                                <label for="lname">Last Name: </label>
+                                                <span class="smalltextbold text-info text-uppercase">{{ personalDetails.lastName }}</span>
                                               </div>
 
-                                              <div class="smalltextbold col-md-12" style="height:50px;">
-                                                <div class="col-md-6"> <label for="lname">Date Of Birth: </label></div>
-                                                <div class="col-md-6"> <span class="smalltextbold text-info text-uppercase">{{ personalDetails.dateOfBirth | date }}</span></div>
+                                              <div class="smalltextbold col-md-10 col-md-offset-2" style="height:50px;">
+                                               <label for="lname">Date Of Birth: </label>
+                                                <span class="smalltextbold text-info text-uppercase">{{ personalDetails.dateOfBirth | date }}</span>
                                               </div>
                                         </div>
 
@@ -45,7 +46,7 @@
 
                                   <div *ngIf="isPersonalAddEdit" class="row col-md-12">
 
-                                        <form novalidate [formGroup]="personalForm" (submit)="onAddUpdatePersonal()">
+                                        <form novalidate [formGroup]="personalForm" (submit)="onPersonalAddUpdateSubmit()">
 
                                           <div class="form-group smalltext col-md-12" style="height:70px; margin-top:20px;">                                          
                                               <label for="fname">First Name:</label>
@@ -93,7 +94,7 @@
 
                                           <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
                                             <div class="col-md-6">
-                                              <button  id="personalcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onTogglePersonal()">
+                                              <button  id="personalcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPersonalEditCancel()">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                               </button>
                                             </div>
@@ -136,15 +137,16 @@
 
                               <div *ngIf="!isAddressAddEdit" class="row col-md-12">
 
-                                <div class="col-md-12" style="text-align:right;">
-                                  <div *ngIf="availableAddressesCount < 3"  class="col-md-2"><a (click)="onAddAddressShow()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
-                                  <div *ngIf="availableAddressesCount > 1"  class="col-md-8" style="text-align:center;"><a (click)="onToggleAddress()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>                                  
-                                  <div *ngIf="availableAddressesCount > 1"  class="col-md-2"><a (click)="onAddressDelete()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
+                                <div class="col-md-12">
+                                  <div *ngIf="availableAddressesCount < 3"  class="col-md-2 col-md-offset-1"><a (click)="onAddressAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                  <div *ngIf="availableAddressesCount > 0"  class="col-md-7" style="text-align:center;"><a (click)="onAddressEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>                                  
+                                  <div *ngIf="availableAddressesCount > 0"  class="col-md-2"><a (click)="onAddressDeleteClick()" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                                  <!--<hr class="hrstyle" />-->
                                 </div>
 
                                 <div *ngIf="availableAddresses != null" class="col-md-12">
 
-                                  <div class="col-md-6 col-md-offset-1">
+                                  <div class="col-md-5 col-md-offset-2">
 
                                     <div class="smalltextbold col-md-12" style="height:50px;margin-top:20px;">
                                        <label for="preferredtype">Preferred: </label>
@@ -203,7 +205,7 @@
 
                               <div *ngIf="isAddressAddEdit" class="row col-md-12">
 
-                                   <form novalidate [formGroup]="addressForm" (submit) ="onAddUpdateAddress()">
+                                   <form novalidate [formGroup]="addressForm" (submit) ="onAddressAddUpdateSubmit()">
 
                                   <div class="col-md-12">
 
@@ -321,7 +323,7 @@
 
                                       <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
                                         <div class="col-md-6">
-                                          <button id="addresscancel" class="btn btn-warning text-capitalize smalltext" style="width:auto; height:30px;" (click)="onToggleAddress()">
+                                          <button id="addresscancel" class="btn btn-warning text-capitalize smalltext" style="width:auto; height:30px;" (click)="onAddressEditCancel()">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                           </button>
                                         </div>
