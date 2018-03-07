@@ -492,10 +492,12 @@ export class MyTraderAccountComponent implements OnInit {
     this.setAddressFormDefaults();  
   }
 
+
   private onAddressEditCancel() {
     this.isAddressAddEdit = !this.isAddressAddEdit;
     this.addressInView = this.tempAddUpdateAddress;   
   }
+
 
   //*****************************************************
   // PERSONAL ADD UPDATE
@@ -563,6 +565,7 @@ export class MyTraderAccountComponent implements OnInit {
     return false;
   }
  
+
 
   //********************************************************************
   // ADDRESS ADD UPDATE
