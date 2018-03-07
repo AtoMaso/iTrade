@@ -32,8 +32,8 @@ export class ValidationService {
       'invalidAddressType': 'The address type must be selected',
       'invalidNumber': 'The number must be a numerical value.',
       'invalidUnit': 'The unit number must be a numerical value.',
-      'invalidSteeet': 'The street name can not be longer than 30 characters.',
-      'invalidSuburb': 'The suburb name can not be longer than 30 characters.',
+      'invalidStreet': 'The street name can not be longer than 30 char.',
+      'invalidSuburb': 'The suburb name can not be longer than 30 char.',
 
       'invalidFirstName': 'Your first name should contain only alphabetical characters with maximum lenght of 15 characters. ',
       'invalidMiddleName': 'Your middle name should contain only alphabetical characters with maximum lenght of 15 characters. ',

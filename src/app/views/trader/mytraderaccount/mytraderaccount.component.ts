@@ -36,6 +36,8 @@ export class MyTraderAccountComponent implements OnInit {
   private isAuthenticated: boolean = false;
 
   private personalDetails: PersonalDetails = null; 
+  private updatePersonal: PersonalDetails = null;
+
   private securityDetails: SecurityDetails = null;   
   private emails: Email[] = [];
   private phones: Phone[] = [];
@@ -45,6 +47,8 @@ export class MyTraderAccountComponent implements OnInit {
   private availableAddressesCount: number = 0;
   private addressInView: Address; 
   private tempAddress: Address;
+  private updateAddress: Address
+
 
   private states: State[] = [];
   private cities: Place[] = [];
@@ -68,10 +72,10 @@ export class MyTraderAccountComponent implements OnInit {
   private defaultPostcode: Postcode = null;
   private defaultPreferredType: PreferredType = null;
   private defaultAddressType: AddressType = null;
-  private defaultDateOfBirth: Date;
 
-  private personalAddEdit: boolean = false;
-  private addressAddEdit: boolean = false;
+  private isPersonalAddEdit: boolean = false;
+  private isAddressAddEdit: boolean = false;
+  private displayAddressTypeModal: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -88,9 +92,12 @@ export class MyTraderAccountComponent implements OnInit {
  public ngOnInit() {
     this.getUseridentity();
     this.initialiseComponent();
+    this.preparePreferredList();
 
-    this.getPersonalDetailsByTraderId(this.traderId); 
-   
+    this.getPersonalDetailsByTraderId(this.traderId);  
+    this.getStates();    
+    this.getAddressesByTraderId(this.traderId);
+
   }
 
 
@@ -118,11 +125,12 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
-
   //************************************************************
   // GET DATA FOR THE FORMS
   //************************************************************
   private getPersonalDetailsByTraderId(traderId: string) {
+
+    this.personalDetails = null;
     this.personalService.getPersonalDetailsByTraderId(traderId)
       .subscribe((personalResult: PersonalDetails) => {
         this.onSuccessPersonal(personalResult);
@@ -130,17 +138,15 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
-  private onSuccessPersonal(pd: PersonalDetails) {
+  private onSuccessPersonal(pd: PersonalDetails) { 
     // empty records returned 
     if (pd.id != 0) { this.personalDetails = pd; }
-    else { this.personalDetails == null; }
-
-    // now get the states
-    this.getStates();    
-  }
+ }
 
 
+  // all states from the server
   public getStates() {
+    this.states = [];
     this.statesService.getStates()
       .subscribe((res: State[]) => {
         this.onSuccessStates(res);                        
@@ -151,11 +157,15 @@ export class MyTraderAccountComponent implements OnInit {
 
   private onSuccessStates(res: State[]) {
     this.states = res;     
-    this.getAddressesByTraderId(this.traderId);   
+    //this.getAddressesByTraderId(this.traderId);   
   }
 
 
+  // all the addresses for the trader from the server
   private getAddressesByTraderId(traderId: string) {
+
+    this.availableAddresses = [];
+    this.availableAddressesCount = 0;
 
     this.addressService.getAddressesByTraderId(traderId)
       .subscribe((addressResult: Address[]) => {
@@ -172,8 +182,13 @@ export class MyTraderAccountComponent implements OnInit {
     this.getAddressTypes();
   }
 
-
+  // get all address types from the server
   public getAddressTypes() {
+
+    this.alladdresstypes = [];
+    this.existingaddresstypes = [];
+    this.addresstypescanbeadded = [];
+
     this.addressService.getAddressTypes()
       .subscribe((res: AddressType[]) => {       
         this.onSuccessAddressTypes(res);
@@ -196,12 +211,9 @@ export class MyTraderAccountComponent implements OnInit {
         this.existingaddresstypes = null;
       }
     }
-
-    this.preparePreferredList();
-  
   }
 
-
+  
   private addressInViewAnAddressTypes() {
     
     this.addressInView = this.availableAddresses[0];    
@@ -232,6 +244,22 @@ export class MyTraderAccountComponent implements OnInit {
     }
   }
 
+ 
+
+  //*****************************************************
+  //SET FORMS and DEFAULTS
+  //*****************************************************
+  private preparePreferredList() {
+    let pre1: PreferredType = new PreferredType();
+    pre1.id = 1;
+    pre1.value = "Yes";
+    let pre2: PreferredType = new PreferredType();
+    pre2.id = 2;
+    pre2.value = "No";
+    this.preferredtypes.push(pre1);
+    this.preferredtypes.push(pre2);
+  }
+
 
   private setPersonalForm() {
     this.personalForm = this.formBuilder.group({
@@ -246,35 +274,20 @@ export class MyTraderAccountComponent implements OnInit {
   private setAddressForm() {
     this.addressForm = this.formBuilder.group({
 
-      preferredtype: new FormControl('', [ValidationService.preferredValidator]),
-      addresstype: new FormControl('', [ValidationService.addresstypeValidator]),
-      number: new FormControl('', [ValidationService.numberValidator]),
+      preferredtype: new FormControl('', [Validators.required, ValidationService.preferredValidator]),
+      addresstype: new FormControl('', [Validators.required, ValidationService.addresstypeValidator]),
+      number: new FormControl('', [Validators.required, ValidationService.numberValidator]),
       unit: new FormControl('', [ValidationService.unitValidator]),
-      street: new FormControl('', [ValidationService.streetValidator]),
-      suburb: new FormControl('', [ValidationService.suburbValidator]),
-      postcode: new FormControl('', [ValidationService.postcodeValidator]),
-      city: new FormControl(this.cities[0], [ValidationService.placeValidator]),
-      state: new FormControl('', [ValidationService.stateValidator]),
+      street: new FormControl('', [Validators.required, ValidationService.streetValidator]),
+      suburb: new FormControl('', [Validators.required, ValidationService.suburbValidator]),
+      postcode: new FormControl('', [Validators.required, ValidationService.postcodeValidator]),
+      city: new FormControl(this.cities[0], [Validators.required, ValidationService.placeValidator]),
+      state: new FormControl('', [Validators.required, ValidationService.stateValidator]),
 
     });
   }
 
 
-  private preparePreferredList() {
-    let pre1: PreferredType = new PreferredType();
-    pre1.id = 1;
-    pre1.value = "Yes";
-    let pre2: PreferredType = new PreferredType();
-    pre2.id = 2;
-    pre2.value = "No";
-    this.preferredtypes.push(pre1);
-    this.preferredtypes.push(pre2);
-  }
-
-
-  //*****************************************************
-  //SET DEFAULTS
-  //*****************************************************
   private setPersonalFormDefaults() {
 
     setTimeout(() => {
@@ -290,8 +303,8 @@ export class MyTraderAccountComponent implements OnInit {
       this.datePickerOptions = {
         dateFormat: 'dd/mm/yyyy',
         firstDayOfWeek: 'mo',
-        selectorWidth: '310px',
-        width: '310px',
+        selectorWidth: '325px',
+        width: '325px',
         minYear: 1900,
         maxYear: 2100,
         editableDateField: false
@@ -364,21 +377,23 @@ export class MyTraderAccountComponent implements OnInit {
     }
   }
 
-
-  private onDateChanged(event: IMyDateModel) {
-    // Update value of selDate variable
-    this.selectDate = event.date;
-  }
-
-
-  private clearDate(): void {
-    // Clear the date using the patchValue function
-    this.personalForm.patchValue({ dbirth: null });
-  }
+ 
 
   //*****************************************************
   //GET THE SCREEN INPUT
   //*****************************************************
+ private onDateChanged(event: IMyDateModel) {
+   // Update value of selDate variable
+   this.selectDate = event.date;
+ }
+
+
+ private clearDate(): void {
+   // Clear the date using the patchValue function
+   this.personalForm.patchValue({ dbirth: null });
+ }
+
+
   private onStateChange(state: State) {    
     this.postcodes = null;   
     this.cities = state.places;
@@ -389,6 +404,30 @@ export class MyTraderAccountComponent implements OnInit {
     this.postcodes = city.postcodes;
   }
 
+
+  private onAddressTypeChange(type: AddressType) {
+    // only check it when we are adding address
+    if (!this.addressInView) {
+          let m: number = 0;
+          for (m = 0; m < this.existingaddresstypes.length; m++) {
+            if (this.existingaddresstypes[m].addressType == type.addressType) {
+              this.openModal();
+            }
+          }
+    }
+  }
+
+ private openModal() {
+    this.displayAddressTypeModal = "block";
+  }
+
+  private onCloseHandled() {
+    this.displayAddressTypeModal = "none";
+  }
+
+  private onPreferredTypeChange(event: any) {
+
+  }
 
   private onViewAddressTypeChange(type:any) {
     let m: number = 0;
@@ -401,24 +440,28 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
-  private onAddPersonal() {
-    this.personalAddEdit= true;
+  private onAddPersonalShow() {
+    this.isPersonalAddEdit= true;
     this.setPersonalForm();
     this.personalDetails = null;
   }
 
 
   private onTogglePersonal() {
-    this.personalAddEdit = !this.personalAddEdit;    
-    if (this.personalAddEdit) {
+    this.messagesService.emitRoute("nill"); 
+    this.isPersonalAddEdit = !this.isPersonalAddEdit;    
+
+    if (this.isPersonalAddEdit) {
       this.setPersonalForm();
       this.setPersonalFormDefaults();
+      this.updatePersonal = this.personalDetails;
     }
+   
   }
 
 
-  private onAddressAdd() {
-    this.addressAddEdit = true;
+  private onAddAddressShow() {
+    this.isAddressAddEdit = true;
     this.setAddressForm();
 
     if (this.addressInView) {
@@ -429,12 +472,18 @@ export class MyTraderAccountComponent implements OnInit {
 
 
   private onToggleAddress() {
-    this.addressAddEdit = !this.addressAddEdit;
-    if (this.addressAddEdit) {
+
+    this.messagesService.emitRoute("nill"); 
+    this.isAddressAddEdit = !this.isAddressAddEdit;
+
+    if (this.isAddressAddEdit) {
+
+      this.updateAddress = this.addressInView;
       this.setAddressForm();
       this.setAddressFormDefaults();
       this.cities = null;
       this.postcodes = null;
+
     } else {
       if (this.tempAddress) { this.addressInView = this.tempAddress; }  
     }
@@ -442,28 +491,46 @@ export class MyTraderAccountComponent implements OnInit {
 
 
   //*****************************************************
-  // SAVe ADDRESS
+  // ADD UPDATE PERSONAL
   //*****************************************************
-  private onAddUpdatePersonal() {
+  private onAddUpdatePersonal() {    
+      
+        this.messagesService.emitRoute("nill");
+        let pd = this.prepareAddUpdatePersonal();
 
-    let pd = this.prepareAddUpdatePersonal();
-    if (this.personalDetails== null) {
+
+        if (this.personalDetails == null) {
           // add new address   
           this.personalService.addPersonalDetails(pd).subscribe((res: PersonalDetails) => {
-            this.personalDetails = res;
+
+            // get the new data from the server
+            this.getPersonalDetailsByTraderId(this.traderId);
+            // show the success
+            if (this.personalDetails != null) { this.messagesService.emitProcessMessage("PMSAPd"); }
+
           }, (serviceError: Response) => this.onError(serviceError, "onAddPersonal"));
-    }
-    else {
-      // update address     
-      this.personalService.updatePersonalDetails(pd).subscribe((res: PersonalDetails) => {
-        this.personalDetails = res;
-      }, (serviceError: Response) => this.onError(serviceError, "onUpdatePersonal"));
-    }
- }
+        }
+        else {
+          if (pd) {
 
+            // update address     
+            this.personalService.updatePersonalDetails(pd).subscribe((res: PersonalDetails) => {
+              // grab the new details 
+              this.personalDetails = res;
+              // show success
+              if (this.personalDetails != null) { this.messagesService.emitProcessMessage("PMSUPd"); }
+
+            }, (serviceError: Response) => this.onError(serviceError, "onUpdatePersonal"));
+          }
+
+        }
+         this.isPersonalAddEdit = !this.isPersonalAddEdit;   
+  }
+
+  // prepare for add or update - get the data from the form
   private prepareAddUpdatePersonal(): PersonalDetails {
-    const formModel = this.personalForm.value;
 
+    const formModel = this.personalForm.value;
     let addUpdatePersonal: PersonalDetails = new PersonalDetails();
 
     if (this.personalDetails != null) { addUpdatePersonal.id = this.personalDetails.id;     }
@@ -473,28 +540,62 @@ export class MyTraderAccountComponent implements OnInit {
     addUpdatePersonal.lastName = formModel.lname as string;
     addUpdatePersonal.dateOfBirth = formModel.dbirth.jsdate;
 
+    // is anything changed in the form when we are updating
+    if ( this.updatePersonal != undefined && this.comparePersonal(addUpdatePersonal, this.updatePersonal)) { this.messagesService.emitProcessMessage("PMEUPd"); return null; }
+
     return addUpdatePersonal;
   }
 
+  // as the update has alredy dirty the form we can not use the form dirty of changed
+  // custom method to compare th new and old
+  private comparePersonal(newPersonal: PersonalDetails, oldPersonal: PersonalDetails) {
 
+    if (oldPersonal.firstName == newPersonal.firstName &&
+      oldPersonal.middleName == newPersonal.middleName &&
+      oldPersonal.lastName == newPersonal.lastName &&
+      Date.parse(oldPersonal.dateOfBirth) == Date.parse(newPersonal.dateOfBirth)) { return true; }
 
+    return false;
+  }
+ 
+
+  //********************************************************************
+  // ADD UPDATE ADDRESS
+  //********************************************************************
   private onAddUpdateAddress() {
 
-    let address: Address = this.prepareAddUpdateAddress();
+        this.messagesService.emitRoute("nill");
+        let address: Address = this.prepareAddUpdateAddress();
+     
+        if (this.addressInView == null) {
+          // add new address
+          this.addressService.addAddress(address).subscribe((res: Address) => {
+            // get the new data from the server
+            this.getAddressesByTraderId(this.traderId);
+            // show success
+            if (this.addressInView != null) { this.messagesService.emitProcessMessage("PMSAAd"); }
 
-    if (this.addressInView == null) {
-      this.addressService.addAddress(address).subscribe((res: Address) => {
-        this.addressInView = res;
-      }, (serviceError: Response) => this.onError(serviceError, "onAddAddress"));
-    }
-    else {
-      this.addressService.updateAddress(address).subscribe((res: Address) => {
-        this.addressInView = res;
-      }, (serviceError: Response) => this.onError(serviceError, "onUpdateAddress"));
-    }
+          }, (serviceError: Response) => this.onError(serviceError, "onAddAddress"));
+        }
+        else {
+
+          if (address) {
+
+            // update address
+            this.addressService.updateAddress(address).subscribe((res: Address) => {
+              // grab the new update values
+              this.addressInView = res;
+              // show success
+              if (this.addressInView != null) { this.messagesService.emitProcessMessage("PMSUAd"); }
+
+            }, (serviceError: Response) => this.onError(serviceError, "onUpdateAddress"));
+          }
+        }
+
+        this.isAddressAddEdit = !this.isAddressAddEdit;      
   }
 
-
+  // prepare the new add or update data - get it from the form
   private prepareAddUpdateAddress(): Address {
 
     const formModel = this.addressForm.value;
@@ -519,9 +620,32 @@ export class MyTraderAccountComponent implements OnInit {
     addUpdateAddress.state = state.name;
     addUpdateAddress.preferredFlag = preferredflag.value;
     addUpdateAddress.addressTypeId = addresstype.addressTypeId;
-       
+
+    // has anything beeing changed in the form and we are updating
+    if   ( this.updateAddress != undefined &&  this.compareAddresses(addUpdateAddress, this.updateAddress) ) { this.messagesService.emitProcessMessage("PMEUAd"); return null;}
+
     return addUpdateAddress;
   }
+
+  // as the form has been prepopulated when updating we can not use the form dirty on changed
+  // we have custom method to compare the new and old
+  private compareAddresses(newAddress:Address, oldAddress:Address) : boolean {
+
+    if (newAddress.addressTypeId == oldAddress.addressTypeId &&
+      newAddress.city == oldAddress.city &&
+      newAddress.number == oldAddress.number &&
+      newAddress.unit == oldAddress.unit &&
+      newAddress.postcode == oldAddress.postcode &&
+      newAddress.preferredFlag == oldAddress.preferredFlag &&
+      newAddress.state == oldAddress.state &&
+      newAddress.street == oldAddress.street &&
+      newAddress.suburb == oldAddress.suburb) {
+      return true;
+    }
+
+    return false;
+  }
+
 
 
   //************************************************************
@@ -546,7 +670,6 @@ export class MyTraderAccountComponent implements OnInit {
     this.isRequesting = true;
     this.pageTitleService.emitPageTitle(new PageTitle("My Account"));
   }
-
 
 
   //****************************************************

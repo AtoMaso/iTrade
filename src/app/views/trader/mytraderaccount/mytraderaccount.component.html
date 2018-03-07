@@ -11,10 +11,10 @@
 
                             <div class="panel panel-heading colapse in col-md-12 footerdiv" id="collapsePersonal" style="margin-top:-20px;">
 
-                                  <div *ngIf="!personalAddEdit" class="row col-md-11 col-md-offset-1">
+                                  <div *ngIf="!isPersonalAddEdit" class="row col-md-11 col-md-offset-1">
 
                                         <div class="col-md-12" style="text-align:right;">
-                                          <div *ngIf="!personalDetails" class="col-md-4"><a (click)="onAddPersonal()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
+                                          <div *ngIf="!personalDetails" class="col-md-4"><a (click)="onAddPersonalShow()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
                                           <div *ngIf="personalDetails" class="col-md-6"><a (click)="onTogglePersonal()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>
                                           <div *ngIf="personalDetails" class="col-md-6"><a (click)="onDeletePersonal()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
                                         </div>
@@ -43,7 +43,7 @@
 
                                 </div>
 
-                                  <div *ngIf="personalAddEdit" class="row col-md-12">
+                                  <div *ngIf="isPersonalAddEdit" class="row col-md-12">
 
                                         <form novalidate [formGroup]="personalForm" (submit)="onAddUpdatePersonal()">
 
@@ -122,7 +122,7 @@
                                 <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Address Details</span>
                               </div>                              
                               <div class="panel panel-heading smalltext col-md-6" style="text-align:right;z-index:1000;">     
-                                Select address:                                                                                                                 
+                                Select your address:                                                                                                                 
                                   <select id="atype" name="atype" class="smalltext" style="background-color:moccasin;" (change)="onViewAddressTypeChange($event)">
                                     <option></option>
                                     <option *ngFor="let atype of existingaddresstypes" [ngValue]="atype">
@@ -134,10 +134,10 @@
                                                                                 
                             <div class="panel panel-heading colapse in col-md-12 footerdiv" id="collapseAddress" style="margin-top:-20px;">
 
-                              <div *ngIf="!addressAddEdit" class="row col-md-12">
+                              <div *ngIf="!isAddressAddEdit" class="row col-md-12">
 
                                 <div class="col-md-12" style="text-align:right;">
-                                  <div *ngIf="availableAddressesCount < 3"  class="col-md-2"><a (click)="onAddressAdd()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
+                                  <div *ngIf="availableAddressesCount < 3"  class="col-md-2"><a (click)="onAddAddressShow()" class="textoker smalltext">Add <i class="glyphicon glyphicon-plus-sign"></i></a></div>
                                   <div *ngIf="availableAddressesCount > 1"  class="col-md-8" style="text-align:center;"><a (click)="onToggleAddress()" class="textoker smalltext">Edit <i class="glyphicon glyphicon-edit"></i></a></div>                                  
                                   <div *ngIf="availableAddressesCount > 1"  class="col-md-2"><a (click)="onAddressDelete()" class="textoker smalltext">Delete <i class="glyphicon glyphicon-trash"></i></a></div>
                                 </div>
@@ -201,7 +201,7 @@
 
                               </div>
 
-                              <div *ngIf="addressAddEdit" class="row col-md-12">
+                              <div *ngIf="isAddressAddEdit" class="row col-md-12">
 
                                    <form novalidate [formGroup]="addressForm" (submit) ="onAddUpdateAddress()">
 
@@ -213,7 +213,7 @@
                                           <label for="preferredtype">Preferred Address:</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
-                                            <select formControlName="preferredtype" id="preferredtype" name="preferredtype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onChangePreferredType($event)">
+                                            <select formControlName="preferredtype" id="preferredtype" name="preferredtype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredTypeChange($event)">
                                               <option></option>
                                               <option *ngFor="let preferredtype of preferredtypes" [ngValue]="preferredtype">
                                                 {{ preferredtype.value }}
@@ -227,7 +227,7 @@
                                           <label for="addresstype">Address Type:</label>
                                           <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
-                                            <select formControlName="addresstype" id="addresstype" name="addresstype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onChangeAddressType($event)">
+                                            <select formControlName="addresstype" id="addresstype" name="addresstype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onAddressTypeChange($event)">
                                               <option></option>
                                               <option *ngFor="let addtype of alladdresstypes" [ngValue]="addtype">                                             
                                                 {{ addtype.addressType }}
@@ -353,4 +353,30 @@
             </div>
          
   </div>
+
+
+
+<div class="backdrop" [ngStyle]="{'display':displayAddressTypeModal}"></div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayAddressTypeModal}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <!--<button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Warning</h4>-->
+
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+       <div class="modal-body text-warning">
+          <p>You have address with type allready! Please change the existing addres type first</p>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onCloseHandled()">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal !-->
 
