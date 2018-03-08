@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
   private registerModel = new RegisterBindingModel();
   private submitted = false;
   private registerGroup: any;
+  private isRequesting: boolean = false;
 
 
   //*****************************************************
@@ -63,7 +64,7 @@ export class RegisterComponent implements OnInit {
     this.registerModel.Role = "Trader";
 
     if (this.ComparePasswords(this.registerModel)) {
-
+      this.isRequesting = true;
       this.authenticationService.register(this.registerModel)
         .subscribe(res => this.onSucessRegistering(res)
         , (error: Response) => this.onError(error, "Register"));
@@ -81,6 +82,7 @@ export class RegisterComponent implements OnInit {
 
 
   private onSucessRegistering(res: any) {
+    this.isRequesting = false;
     this.submitted = true;
     this.messagesService.emitProcessMessage("PMSCTr");
   }
@@ -95,6 +97,9 @@ export class RegisterComponent implements OnInit {
   // LOGGING METHODS
   //****************************************************
   private onError(serviceError: any, operation: string) {
+
+    this.isRequesting = false;
+
     let message: string = "";
 
     // audit log the error passed

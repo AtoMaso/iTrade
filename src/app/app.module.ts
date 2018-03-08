@@ -5,7 +5,6 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
-import { MomentModule } from 'angular2-moment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { Ng2TableModule} from 'ng2-table';
@@ -140,7 +139,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
   imports: [    
     BrowserAnimationsModule, BrowserModule, MatButtonModule, MatCheckboxModule,
     AppRoutingModule, HttpClientModule, HttpModule,
-    JsonpModule, MomentModule,
+    JsonpModule, 
     FormsModule, ReactiveFormsModule,
     Ng2TableModule, FileUploadModule,  TabsModule,  
     NgxPaginationModule,PaginationModule,          

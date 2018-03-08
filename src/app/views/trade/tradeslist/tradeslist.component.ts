@@ -105,7 +105,7 @@ export class TradesListComponent implements OnInit {
         jQuery(".gliphfil").html('Filters  <span class="glyphicon glyphicon-chevron-up"></span>');
       });
 
-
+      //TODO find a sulution to stop the scrolling when the viewport is small
       //// scrolling of the filter block
       //var element = jQuery('#follow-scroll'),
       //  originalY = element.offset().top;

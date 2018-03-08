@@ -58,7 +58,9 @@ export class LoginComponent implements OnInit {
     this.keeplogin = this.loginGroup.controls.keeplogin.value;
 
     if (this.loginGroup.dirty && this.loginGroup.valid) {
-     
+
+      this.isRequesting = true;
+
       this.authenticationService.loginClient(this.trader)
           .subscribe(res => this.onLoginSuccess(res)
            , (error: Response) => this.onError(error, "Login"));
@@ -88,8 +90,7 @@ export class LoginComponent implements OnInit {
   // HELPER METHODS
   //****************************************************
   private initialiseComponent() {
-    this.messagesService.emitRoute("nill");
-    this.isRequesting = true;
+    this.messagesService.emitRoute("nill");  
     this.pageTitleService.emitPageTitle(new PageTitle("Login"));
   }
 
@@ -99,6 +100,8 @@ export class LoginComponent implements OnInit {
   // LOGGING METHODS
   //****************************************************
   private onError(serviceError: any, operation: string) {   
+
+    this.isRequesting = false;
 
     let message: string = "";
 

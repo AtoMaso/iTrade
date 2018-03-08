@@ -26,7 +26,7 @@ export class AuthenticationService implements OnDestroy {
   private timer: any = null;
   private authentication: Authentication;
   private userIdentity: UserIdentity;
-  public userSession: UserSession = new UserSession();
+  public userSession: UserSession;
 
   public subjectSessionStore = new Subject<UserSession>();
   public subjectSessionObserver$ = this.subjectSessionStore.asObservable();
@@ -93,7 +93,6 @@ export class AuthenticationService implements OnDestroy {
   }
 
 
-
   //******************************************************
   // Logout the logged in user
   //******************************************************
@@ -115,49 +114,46 @@ export class AuthenticationService implements OnDestroy {
 
     if (body.emailConfirmed == "True") {  // this means the account has not been confirmed
 
-    this.userIdentity = new UserIdentity();
-    this.authentication = new Authentication();
-    this.userSession = new UserSession();
+        this.userIdentity = new UserIdentity();
+        this.authentication = new Authentication();
+        this.userSession = new UserSession();
      
-     // identity
-    this.userIdentity.accessToken = body.access_token;
-    this.userIdentity.refreshToken = body.refresh_token;
-    this.userIdentity.accessTokenType = body.token_type;      
-    this.userIdentity.accessTokenExpiresIn = body.expires_in;   
-    this.userIdentity.accessTokenExpiresDate = this.tokenExpiresInDate(this.userIdentity.accessTokenExpiresIn)
-    this.userIdentity.userName = body.userName;
-    this.userIdentity.email = body.email;
-    this.userIdentity.emailConfirmed = body.emailConfirmed;
-    this.userIdentity.userId = body.Id;
-    this.userIdentity.name = body.firstName + " " + body.middleName + " " + body.lastName;
-    this.userIdentity.roles = body.roles.split(",");
+         // identity
+        this.userIdentity.accessToken = body.access_token;
+        this.userIdentity.refreshToken = body.refresh_token;
+        this.userIdentity.accessTokenType = body.token_type;      
+        this.userIdentity.accessTokenExpiresIn = body.expires_in;   
+        this.userIdentity.accessTokenExpiresDate = this.tokenExpiresInDate(this.userIdentity.accessTokenExpiresIn)
+        this.userIdentity.userName = body.userName;
+        this.userIdentity.email = body.email;
+        this.userIdentity.emailConfirmed = body.emailConfirmed;
+        this.userIdentity.userId = body.Id;
+        this.userIdentity.name = body.firstName + " " + body.middleName + " " + body.lastName;
+        this.userIdentity.roles = body.roles.split(",");
 
-    // authentication
-    this.authentication.isAuthenticated = true;
-    this.authentication.authenticationType = this.userIdentity.accessTokenType;
+        // authentication
+        this.authentication.isAuthenticated = true;
+        this.authentication.authenticationType = this.userIdentity.accessTokenType;
 
-    // session
-    this.userSession.authentication = this.authentication;
-    this.userSession.userIdentity = this.userIdentity;
+        // session
+        this.userSession.authentication = this.authentication;
+        this.userSession.userIdentity = this.userIdentity;
+       
+        // then create session with the session timer
+        this.storeUserIdentity(this.userIdentity);
+        this.storeAuthData(this.authentication);
+        this.storeUsersSession(this.userSession);
 
-    //  TODO  check has the email beeing confirmed???
-  
+        // we do emit from the login component as we do not need to emit new session every time is created
+        // if we are planning to pass different sesssion values of expiry values then we need the following line
+        // and remove the emiting of the session in the login component
+        // this.emitUserSession(this._userSession);
 
-      // then create session with the session timer
-      this.storeUserIdentity(this.userIdentity);
-      this.storeAuthData(this.authentication);
-      this.storeUsersSession(this.userSession);
+        // clear the webapi session timer if one exist, this is needed when IDLE has done the refresh of the token
+        this.clearSessionTimer();
 
-      // we do emit from the login component as we do not need to emit new session every time is created
-      // if we are planning to pass different sesssion values of expiry values then we need the following line
-      // and remove the emiting of the session in the login component
-      // this.emitUserSession(this._userSession);
-
-      // clear the webapi session timer if one exist, this is needed when IDLE has done the refresh of the token
-      this.clearSessionTimer();
-
-      // start the webapi session timer
-      this.startSessionTimer(this.userIdentity.accessTokenExpiresIn);
+        // start the webapi session timer
+        this.startSessionTimer(this.userIdentity.accessTokenExpiresIn);
 
     }
     else { this.removeUserSession(); }  
@@ -273,9 +269,10 @@ export class AuthenticationService implements OnDestroy {
       sessionStorage["UserSession"] = "null";
   }
 
-  private initUserSession() {
+  private initUserSession(): UserSession{
       if (sessionStorage["UserSession"] != "null") {
-          this.userSession = JSON.parse(sessionStorage["UserSession"]);
+        this.userSession = JSON.parse(sessionStorage["UserSession"]);
+        return this.userSession;
       }
   }
 
