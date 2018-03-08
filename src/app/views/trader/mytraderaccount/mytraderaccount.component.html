@@ -11,7 +11,7 @@
 
                             <div class="panel panel-heading colapse in col-md-12 footerdiv" id="collapsePersonal" style="margin-top:-20px;">
 
-                                  <div *ngIf="!isPersonalAddEdit" class="col-md-12">
+                                  <div *ngIf="!isPersonalAddOn && !isPersonalEditOn" class="col-md-12">
 
                                         <div class="col-md-12">
                                           <div *ngIf="!personalDetails" class="col-md-4"><a (click)="onPersonalAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
@@ -44,7 +44,7 @@
 
                                 </div>
 
-                                  <div *ngIf="isPersonalAddEdit" class="row col-md-12">
+                                  <div *ngIf="isPersonalAddOn || isPersonalEditOn" class="row col-md-12">
 
                                         <form novalidate [formGroup]="personalForm" (submit)="onPersonalAddUpdateSubmit()">
 
@@ -94,7 +94,7 @@
 
                                           <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
                                             <div class="col-md-6">
-                                              <button  id="personalcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPersonalEditCancel()">
+                                              <button  id="personalcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPersonalAddEditCancel()">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                               </button>
                                             </div>
@@ -135,75 +135,75 @@
                                                                                 
                             <div class="panel panel-heading colapse in col-md-12 footerdiv" id="collapseAddress" style="margin-top:-20px;">
 
-                              <div *ngIf="!isAddressAddEdit" class="row col-md-12">
+                              <div *ngIf="!isAddressAddOn && !isAddressEditOn" class="row col-md-12">
 
-                                <div class="col-md-12">
-                                  <div *ngIf="availableAddressesCount < 3"  class="col-md-2 col-md-offset-1"><a (click)="onAddressAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
-                                  <div *ngIf="availableAddressesCount > 0"  class="col-md-7" style="text-align:center;"><a (click)="onAddressEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>                                  
-                                  <div *ngIf="availableAddressesCount > 0"  class="col-md-2"><a (click)="onAddressDeleteClick()" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
-                                  <!--<hr class="hrstyle" />-->
-                                </div>
-
-                                <div *ngIf="availableAddresses != null" class="col-md-12">
-
-                                  <div class="col-md-5 col-md-offset-2">
-
-                                    <div class="smalltextbold col-md-12" style="height:50px;margin-top:20px;">
-                                       <label for="preferredtype">Preferred: </label>
-                                       <span class="smalltextbold text-info text-uppercase"> {{ addressInView.preferredFlag }}</span>
+                                    <div class="col-md-12">
+                                          <div *ngIf="availableAddressesCount < 3"  class="col-md-2 col-md-offset-1"><a (click)="onAddressAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                          <div *ngIf="availableAddressesCount > 0"  class="col-md-7" style="text-align:center;"><a (click)="onAddressEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>                                  
+                                          <div *ngIf="availableAddressesCount > 0"  class="col-md-2"><a (click)="onAddressDeleteClick()" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                                          <!--<hr class="hrstyle" />-->
                                     </div>
 
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="addresstype">Address Type: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.addressType }}</span>
-                                    </div>
+                                    <div *ngIf="availableAddresses != null" class="col-md-12">
 
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="number">Street Number: </label>
-                                       <span class="smalltextbold text-info text-uppercase"> {{ addressInView.number }}</span>
-                                    </div>            
+                                            <div class="col-md-5 col-md-offset-2">
+
+                                                  <div class="smalltextbold col-md-12" style="height:50px;margin-top:20px;">
+                                                     <label for="preferredtype">Preferred: </label>
+                                                     <span class="smalltextbold text-info text-uppercase"> {{ addressInView.preferredFlag }}</span>
+                                                  </div>
+
+                                                  <div class="smalltextbold col-md-12" style="height:50px;">
+                                                    <label for="addresstype">Address Type: </label>
+                                                    <span class="smalltextbold text-info text-uppercase"> {{ addressInView.addressType }}</span>
+                                                  </div>
+
+                                                  <div class="smalltextbold col-md-12" style="height:50px;">
+                                                    <label for="number">Street Number: </label>
+                                                     <span class="smalltextbold text-info text-uppercase"> {{ addressInView.number }}</span>
+                                                  </div>            
                                     
-                                    <div *ngIf="addressInView.unit !=''" class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="number">Unit Number: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.unit }}</span>
-                                    </div>                               
+                                                  <div *ngIf="addressInView.unit !=''" class="smalltextbold col-md-12" style="height:50px;">
+                                                    <label for="number">Unit Number: </label>
+                                                    <span class="smalltextbold text-info text-uppercase"> {{ addressInView.unit }}</span>
+                                                  </div>                               
 
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="street">Street Name: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.street }}</span>
-                                    </div>
+                                                  <div class="smalltextbold col-md-12" style="height:50px;">
+                                                    <label for="street">Street Name: </label>
+                                                    <span class="smalltextbold text-info text-uppercase"> {{ addressInView.street }}</span>
+                                                  </div>
                             
-                                  </div>
+                                            </div>
 
-                                  <div class="col-md-5">
+                                            <div class="col-md-5">
 
-                                    <div class="smalltextbold col-md-12" style="height:50px;margin-top:20px;">
-                                        <label for="suburb">Suburb: </label>
-                                        <span class="smalltextbold text-info text-uppercase"> {{ addressInView.suburb }}</span>
+                                                    <div class="smalltextbold col-md-12" style="height:50px;margin-top:20px;">
+                                                        <label for="suburb">Suburb: </label>
+                                                        <span class="smalltextbold text-info text-uppercase"> {{ addressInView.suburb }}</span>
+                                                    </div>
+
+                                                    <div class="smalltextbold col-md-12" style="height:50px;">
+                                                      <label for="state">State: </label>
+                                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.state }}</span>
+                                                    </div>
+
+                                                    <div class="smalltextbold col-md-12" style="height:50px;">
+                                                     <label for="city">City: </label>
+                                                     <span class="smalltextbold text-info text-uppercase"> {{ addressInView.city }}</span>
+                                                    </div>
+
+                                                    <div class="smalltextbold col-md-12" style="height:50px;">
+                                                      <label for="postcode">Postcode: </label>
+                                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.postcode }}</span>
+                                                    </div>
+
+                                            </div>
+
                                     </div>
-
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="state">State: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.state }}</span>
-                                    </div>
-
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
-                                     <label for="city">City: </label>
-                                     <span class="smalltextbold text-info text-uppercase"> {{ addressInView.city }}</span>
-                                    </div>
-
-                                    <div class="smalltextbold col-md-12" style="height:50px;">
-                                      <label for="postcode">Postcode: </label>
-                                      <span class="smalltextbold text-info text-uppercase"> {{ addressInView.postcode }}</span>
-                                    </div>
-
-                                  </div>
-
-                                </div>
 
                               </div>
 
-                              <div *ngIf="isAddressAddEdit" class="row col-md-12">
+                              <div *ngIf="isAddressAddOn || isAddressEditOn" class="row col-md-12">
 
                                    <form novalidate [formGroup]="addressForm" (submit) ="onAddressAddUpdateSubmit()">
 
@@ -217,7 +217,7 @@
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
                                             <select formControlName="preferredtype" id="preferredtype" name="preferredtype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredTypeChange($event)">
                                               <option></option>
-                                              <option *ngFor="let preferredtype of preferredtypes" [ngValue]="preferredtype">
+                                              <option *ngFor="let preferredtype of allpreferredtypes" [ngValue]="preferredtype">
                                                 {{ preferredtype.value }}
                                               </option>
                                             </select>
@@ -323,7 +323,7 @@
 
                                       <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
                                         <div class="col-md-6">
-                                          <button id="addresscancel" class="btn btn-warning text-capitalize smalltext" style="width:auto; height:30px;" (click)="onAddressEditCancel()">
+                                          <button id="addresscancel" class="btn btn-warning text-capitalize smalltext" style="width:auto; height:30px;" (click)="onAddressAddEditCancel()">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                           </button>
                                         </div>
@@ -347,12 +347,7 @@
                             </div>
                     </div>
 
-            </div>
-
-            <div class="row">
-
-
-            </div>
+            </div>      
          
   </div>
 
@@ -360,25 +355,44 @@
 
 <div class="backdrop" [ngStyle]="{'display':displayAddressTypeModal}"></div>
 
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayAddressTypeModal}">
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayAddressTypeModal}" id="addressTypeModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
-        <!--<button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Warning</h4>-->
-
-        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <button type="button" class="close" aria-label="Close" (click)="onCloseAddressHandled()"><span aria-hidden="true">&times;</span></button>
         <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
       </div>
 
        <div class="modal-body text-warning">
-          <p>You have address with type allready! Please change the existing addres type first</p>
+          <p>An address with that type is allready registered against you account! Please update the existing addres first.</p>
         </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="onCloseHandled()">Close</button>
+        <button type="button" class="btn btn-danger" (click)="onCloseAddressHandled()">Close</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal !-->
+    </div>
+  </div>
+</div>
+
+
+<div class="backdrop" [ngStyle]="{'display':displayPreferredTypeModal}"></div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredTypeModal }" id="preferredTypeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="onClosePreferredHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>An preffered address is allready registered against you account! Please update the preferrence type of the existing addres first.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onClosePreferredHandled()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
