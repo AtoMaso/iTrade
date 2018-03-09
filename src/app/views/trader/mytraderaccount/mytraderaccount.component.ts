@@ -96,16 +96,16 @@ export class MyTraderAccountComponent implements OnInit {
  public ngOnInit() {
     this.getUseridentity();
     this.initialiseComponent();
-    // get the preferred types first
     if (this.allpreferredtypes = []) { this.preparePreferredList(); }
 
-    this.getPersonalDetailsByTraderId(this.traderId);  
+    this.getAddressesByTraderId(this.traderId);  
+    this.getPersonalDetailsByTraderId(this.traderId);   
     this.getStates();    
-    this.getAddressesByTraderId(this.traderId);
+   
 
   }
 
-
+ // toggling done with jquery
   public ngAfterViewInit() {
 
     jQuery(document).ready(function () {
@@ -360,8 +360,8 @@ export class MyTraderAccountComponent implements OnInit {
       this.datePickerOptions = {
         dateFormat: 'dd/mm/yyyy',
         firstDayOfWeek: 'mo',
-        selectorWidth: '330px',
-        width: '330px',
+        selectorWidth: 'auto',
+        width: 'auto',
         minYear: 1900,
         maxYear: 2100,
         editableDateField: false
@@ -635,9 +635,8 @@ export class MyTraderAccountComponent implements OnInit {
                if (this.personalDetails != null) { this.messagesService.emitProcessMessage("PMSUPd"); }
                 // grab the details from server              
                 this.getPersonalDetailsByTraderId(this.traderId);             
-           }, (serviceError: Response) => this.onError(serviceError, "onUpdatePersonal"));
-           // stay on edit
-         }
+           }, (serviceError: Response) => this.onError(serviceError, "onUpdatePersonal"));           
+        }
       }
   }
         

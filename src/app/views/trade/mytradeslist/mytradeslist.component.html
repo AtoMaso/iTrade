@@ -115,17 +115,17 @@
 
                   <!--<td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeIdStr  }}</td>-->
 
-                  <td class="col-md-1 smalltext text-capitalize textgray">{{ trade.status  }}</td>
+                  <td class="col-md-1 smalltextbold text-capitalize textgray">{{ trade.status  }}</td>
 
                   <td class="col-md-2">
                     <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.name  }}</i></a>
                   </td>
 
-                  <td class="col-md-1 smalltext text-capitalize textgray"> {{ trade.tradeFor  }}</td>
+                  <td class="col-md-1 smalltextbold text-capitalize textgray"> {{ trade.tradeFor  }}</td>
 
-                  <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.categoryDescription  }}</td>
+                  <td class="col-md-2 smalltextbold text-capitalize textgray">{{ trade.categoryDescription  }}</td>
 
-                  <td class="col-md-2 smalltext text-capitalize textgray">{{ trade.datePublished | date }}</td>
+                  <td class="col-md-2 smalltextbold text-capitalize textgray">{{ trade.datePublished | date }}</td>
 
                   <td class="col-md-4">
 
@@ -251,7 +251,6 @@
     </div>
   </div>
 </div>
-<!-- End of modal form -->
 
 
 <!-- MODAL form to show it when REMOVE trade is clicked and user is ALLOWED -->
@@ -283,7 +282,6 @@
     </div>
   </div>
 </div>
-<!-- End of modal form -->
 
 
 
@@ -310,7 +308,6 @@
   </div>
 </div>
 
-<!-- End of modal form -->
 <!-- MODAL form to show it when REMOVE trade is clicked and user is NOT ALLOWED -->
 <div class="modal" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="RemoveWarning">
   <div class="modal-dialog" role="document">
@@ -329,4 +326,4 @@
     </div>
   </div>
 </div>
-<!-- End of modal form -->
+

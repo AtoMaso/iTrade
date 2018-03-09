@@ -103,7 +103,6 @@ import { CorrespondenceDetailsComponent } from './views/correspondence/correspon
 import { AddCorrespondenceComponent } from './views/correspondence/addcorrespondence/addcorrespondence.component';
 
 
-
 //initialises the process message service to get all process messages on start of the application
 export function getprocessmessages(processMessageService: ProcessMessageService) {
   return () => processMessageService.getProcessMessage();
@@ -137,7 +136,8 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
   ],  
 
   imports: [    
-    BrowserAnimationsModule, BrowserModule, MatButtonModule, MatCheckboxModule,
+    BrowserAnimationsModule, BrowserModule,
+    MatButtonModule, MatCheckboxModule,
     AppRoutingModule, HttpClientModule, HttpModule,
     JsonpModule, 
     FormsModule, ReactiveFormsModule,

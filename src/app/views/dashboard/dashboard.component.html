@@ -4,7 +4,7 @@
     <div class="panel-group col-md-3" *ngFor="let trade of trades | SortTradesByDatePipe: D">
 
       <div class="panel-heading" style="background-color:dimgray;">
-        <span class="smalltext textwhite restriction">
+        <span class="smalltext textgray restriction">
           <strong>Trading a
             <a href="" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{  trade.name }}</i></a>
           </strong>

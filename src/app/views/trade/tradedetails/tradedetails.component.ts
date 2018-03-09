@@ -81,6 +81,13 @@ export class TradeDetailsComponent implements OnInit {
     setTimeout(() => {
     jQuery(document).ready(function () {
 
+      jQuery("#tradeDetails").on("hide.bs.collapse", function () {
+        jQuery(".tradedetails").html('<span class="glyphicon glyphicon-plus"></span><span class="textlightcoral medium text-uppercase"> Trade Details</span>');
+      });
+      jQuery("#tradeDetails").on("show.bs.collapse", function () {
+        jQuery(".tradedetails").html('<span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Trade Details</span>');
+      });
+
       jQuery("#collapseDescription").on("hide.bs.collapse", function () {
         jQuery(".description").html('<span class="glyphicon glyphicon-plus"></span> Trade Description');
       });

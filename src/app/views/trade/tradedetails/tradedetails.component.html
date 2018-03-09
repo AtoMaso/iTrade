@@ -2,101 +2,85 @@
 
       <div class="row">
 
-         <!-- PERSONAL DETAILS -->
-          <div *ngIf="trade != null" class="col-md-3" >
+        <div class="col-md-3  panel panel-heading footerdiv">
 
-              <div class="row">
-                <div class="panel panel-heading col-md-12 smalltext">
-                  Status:<span class="text-uppercase text-info"> {{ trade.status }}</span>
-                </div>
+          <span class="tradedetails collapsed col-md-12" data-toggle="collapse" data-target="#tradeDetails">
+            <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Trade Details</span>
+          </span>
+
+          <!-- PERSONAL DETAILS -->
+          <div class="collapse in col-md-12 " id="tradeDetails" style="margin-top:20px;">
+
+            <div *ngIf="trade != null">
+
+              <div class="row smalltextbold panel panel-heading col-md-12">
+                Status:<span class="smalltext  text-uppercase text-info"> {{ trade.status }}</span>
               </div>
 
-
-              <div class="row">
-                <div class="panel panel-heading col-md-12 smalltext">
-                  Trading:<span class="text-uppercase text-info"> {{ trade.name }}</span>
-                </div>
+              <div class="row smalltextbold panel panel-heading col-md-12">
+                Trading:<span class="smalltext  text-uppercase text-info"> {{ trade.name }}</span>
               </div>
 
+             <!-- <div class="col-md-12 smalltextbold" style="height:50px;">-->
 
-              <div class="row">
-                <div class="panel panel-heading smalltext">
-                                      
-                      <span class="description panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseDescription">
-                        <span class="glyphicon glyphicon-plus"></span> Trade Description
-                      </span>
-                           
-                  <!-- colapsable description -->
-                    <div id="collapseDescription" class="collapse">
-                        <div class="panel-heading text-info smalltext"> {{ trade.description}}</div>
+                <!--<span class="description collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseDescription">
+                  <span class="glyphicon glyphicon-plus"></span> Trade Description
+                </span>-->
+
+                <!-- colapsable description -->
+                <!--<div id="collapseDescription" class="col-md-12">-->
+              <div class="row smalltextbold panel panel-heading col-md-12">
+                Trade Description:<span class="panel-heading smalltext text-info"> {{ trade.description}}</span>
+              </div>
+              <!--</div>-->
+
+              <div class="row smalltextbold panel panel-heading col-md-12">
+                Trading for:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeFor }}</span>
+              </div>
+
+              <div class="row smalltextbold panel panel-heading col-md-12">
+                Category: <span class="smalltext  text-uppercase text-info"> {{ trade.categoryDescription }}</span>
+              </div>
+
+              <div class="row smalltextbold panel panel-heading col-md-12">
+                Date Published: <span class="smalltext  text-uppercase text-info"> {{ trade.datePublished | date }}</span>
+              </div>
+
+              <div class="row smalltextbold panel panel-heading col-md-12">
+                Place: <span class="smalltext  text-uppercase text-info"> {{ trade.place }} / {{ trade.state }} </span>
+              </div>
+
+              <div class="row smalltextbold panel panel-heading col-md-12">
+                Trader: <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase underline"><span> <i>{{ trade.traderFullName }}</i></span></a>
+              </div>
+
+              <div class="row smalltextbold panel panel-heading col-md-12" style="text-align:center;">
+
+                <div *ngIf="!isAuthenticated">
+                  <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading </button>
+                </div>
+
+                <div *ngIf="isAuthenticated">
+
+                  <div *ngIf="canTrade">
+                    <button type="button" [routerLink]="['/correspondenceall']" [queryParams]="{id: trade.tradeId}" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading</button>
+                  </div>
+                  <div *ngIf="!canTrade">
+                    <button type="button" data-target="#canNotTrade" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading</button>
                   </div>
 
                 </div>
+
               </div>
 
-
-              <div class="row">
-                <div class="panel panel-heading col-md-12 smalltext">
-                  Trading for:<span class="text-uppercase text-info"> {{ trade.tradeFor }}</span>
-                </div>
-              </div>
-
-
-              <div class="row">
-                <div class="panel panel-heading col-md-12 smalltext">
-                  Category: <span class="text-uppercase text-info"> {{ trade.categoryDescription }} / {{ trade.subcategoryDescription }}</span> 
-                </div>
-              </div>
-
-
-              <div class="row">
-                <div class="panel panel-heading col-md-12 smalltext">
-                  Date Published: <span class="text-uppercase text-info"> {{ trade.datePublished | date }}</span> 
-                </div>
-              </div>
-
-
-              <div class="row">
-              <div class="panel panel-heading col-md-12 smalltext">
-                Place: <span class="text-uppercase text-info"> {{ trade.place }} / {{ trade.state }} </span>
-              </div>
             </div>
+          </div>
 
 
-              <div class="row">
-                <div class="panel panel-heading col-md-12 smalltext">
-                  Trader: <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase"><span> <i>{{ trade.traderFullName }}</i></span></a>                    
-                </div>
-              </div>
-
-
-              <div class="row">
-                <div class="panel panel-heading col-md-12 smalltext" style="text-align:center;">
-
-                  <div *ngIf="!isAuthenticated">                   
-                    <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading </button>                                                
-                  </div>
-
-                  <div *ngIf="isAuthenticated">
-
-                    <div *ngIf="canTrade">  
-                        <button type="button" [routerLink]="['/correspondenceall']" [queryParams]="{id: trade.tradeId}" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading</button>            
-                    </div>     
-                    <div *ngIf="!canTrade">  
-                          <button type="button" data-target="#canNotTrade" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading</button>                   
-                    </div>     
-
-                  </div>
-
-                </div>
-            </div>
-
-         </div>
-
-        <div *ngIf="trade == null" class="personal panel panel-heading smalltext text-uppercase col-md-3 smalltext">
-          Trade Details<span class="textoker"> - The system can not find any personal details for this trade!</span>
+          <div *ngIf="trade == null" class="personal smalltext text-uppercase col-md-3">
+            Trade Details<span class="textoker"> - The system can not find any details for this trade!</span>
+          </div>
         </div>
-
 
 
          
@@ -111,31 +95,30 @@
               </span>
 
               <!-- collapsable trade images -->
-              <div *ngIf="hasImages" id="collapseImages" class="collapse in">
+              <div  id="collapseImages" class="collapse in panel panel-heading col-md-12">
 
-                <div class="panel panel-heading col-md-12">
+                      <div *ngIf="hasImages" id="collapseImages">
+                      
+                          <div class="col-md-4">
+                            <div *ngIf="hasImage1">
+                              <!-- TODO individual check of image 1, 2,3 -->
+                              <img src="{{ images[0].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+                            </div>
+                          </div>
 
-                  <div class="col-md-4">
-                    <div *ngIf="hasImage1">
-                      <!-- TODO individual check of image 1, 2,3 -->
-                      <img src="{{ images[0].imageUrl }}" alt="" style="height: 250px;width: 250px;">
-                    </div>
-                  </div>
+                          <div class="col-md-4">
+                            <div *ngIf="hasImage2">
+                              <img src="{{ images[1].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+                            </div>
+                          </div>
 
-                  <div class="col-md-4">
-                    <div *ngIf="hasImage2">
-                      <img src="{{ images[1].imageUrl }}" alt="" style="height: 250px;width: 250px;">
-                    </div>
-                  </div>
+                          <div class="col-md-4">
+                            <div *ngIf="hasImage3">
+                              <img src="{{ images[2].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+                            </div>
+                          </div>                       
 
-                  <div class="col-md-4">
-                    <div *ngIf="hasImage3">
-                      <img src="{{ images[2].imageUrl }}" alt="" style="height: 250px;width: 250px;">
-                    </div>
-                  </div>
-
-                </div>
-
+                      </div>
               </div>
 
             </div>
@@ -151,89 +134,86 @@
               </span>
 
               <!-- collapsable trade history , history will minimum one record when trade is created-->
-              <div *ngIf="hasHistory"  id="collapseHistory" class="collapse in">
+              <div  id="collapseHistory" class="collapse in panel-heading">
 
-                <div class="panel-heading">
+                          <div *ngIf="hasHistory">
 
-                  <!-- Table -->
-                  <div class="row table-responsive">
+                            <!-- Table -->
+                            <div class="row table-responsive">
 
-                    <table class="table table-bordered table-hover">
+                              <table class="table table-bordered table-hover">
 
-                      <!-- Table header -->
-                      <thead>
-                        <tr>
-                          
-
-                          <th class="col-md-1" style="background-color:#FF223A3A">
-                            <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Trade Id</span>
-                          </th>
-
-                          <th class="col-md-3" style="background-color:#FF223A3A">
-                            <a (click)="sortTable('createdDate')" class="text-uppercase textgray smalltext" style="width:auto">
-                              Created Date
-                              <span *ngIf="isDateAsc" class="glyphicon glyphicon-chevron-down"></span>
-                              <span *ngIf="!isDateAsc" class="glyphicon glyphicon-chevron-up"></span>
-                            </a>
-                          </th>
-
-                          <th class="col-md-2" style="background-color:#FF223A3A">
-                            <a (click)="sortTable('status')" class="text-uppercase textgray smalltext" style="width:auto">
-                              Action                        
-                            </a>
-                          </th>
-
-                          <th class="col-md-1" style="background-color:#FF223A3A">
-                            <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Viewer</span>
-                          </th>
-
-                        </tr>
-                      </thead>
-
-                      <!-- Table rows-->
-                      <tr *ngFor="let history of rows | paginate:config ">
-
-                   
-
-                        <td class="col-md-1 smalltext text-capitalize textgray "> {{ history.tradeId }}</td>
-
-                        <td class="col-md-3 smalltext text-capitalize textgray">{{ history.createdDate | date:'medium'  }}</td>
-
-                        <td class="col-md-2 smalltext text-capitalize textgray">{{ history.status}}</td>
-
-                        <td class="col-md-1 smalltext text-capitalize textgray">{{ history.viewer  }}</td>
-                      </tr>
-
-                    </table>
-
-                  </div>
+                                <!-- Table header -->
+                                <thead>
+                                  <tr>
 
 
-                  <!-- Table navigation -->
-                  <div class="row col-md-12">
+                                    <th class="col-md-1" style="background-color:#FF223A3A">
+                                      <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Trade Id</span>
+                                    </th>
 
-                    <div class="col-md-5">
+                                    <th class="col-md-3" style="background-color:#FF223A3A">
+                                      <a (click)="sortTable('createdDate')" class="text-uppercase textgray smalltext" style="width:auto">
+                                        Created Date
+                                        <span *ngIf="isDateAsc" class="glyphicon glyphicon-chevron-down"></span>
+                                        <span *ngIf="!isDateAsc" class="glyphicon glyphicon-chevron-up"></span>
+                                      </a>
+                                    </th>
 
-                      <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
-                                           (pageChange)="onPageChange($event)" 
-                                           maxSize="5"
-                                           directionLinks="true"
-                                           autoHide="true"
-                                           previousLabel="Previous"
-                                           nextLabel="Next"
-                                           screenReaderPaginationLabel="Pagination"
-                                           screenReaderPageLabel="page"
-                                           screenReaderCurrentLabel="You're on page"
-                                           [(ngModel)]="config.currentPage"
-                                           (numPages)="numPages = $event"
-                                           [maxSize]="maxSize">
-                      </pagination-controls>
+                                    <th class="col-md-2" style="background-color:#FF223A3A">
+                                      <a (click)="sortTable('status')" class="text-uppercase textgray smalltext" style="width:auto">
+                                        Action
+                                      </a>
+                                    </th>
+
+                                    <th class="col-md-1" style="background-color:#FF223A3A">
+                                      <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Viewer</span>
+                                    </th>
+
+                                  </tr>
+                                </thead>
+
+                                <!-- Table rows-->
+                                <tr *ngFor="let history of rows | paginate:config ">
+
+
+
+                                  <td class="col-md-1 smalltextbold text-capitalize textgray "> {{ history.tradeId }}</td>
+
+                                  <td class="col-md-3 smalltextbold text-capitalize textgray">{{ history.createdDate | date:'medium'  }}</td>
+
+                                  <td class="col-md-2 smalltextbold text-capitalize textgray">{{ history.status}}</td>
+
+                                  <td class="col-md-1 smalltextbold text-capitalize textgray">{{ history.viewer  }}</td>
+                                </tr>
+
+                              </table>
+
+                            </div>
+
+
+                            <!-- Table navigation -->
+                            <div class="row col-md-12">
+                              <div class="col-md-5">
+                                <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
+                                                     (pageChange)="onPageChange($event)"
+                                                     maxSize="5"
+                                                     directionLinks="true"
+                                                     autoHide="true"
+                                                     previousLabel="Previous"
+                                                     nextLabel="Next"
+                                                     screenReaderPaginationLabel="Pagination"
+                                                     screenReaderPageLabel="page"
+                                                     screenReaderCurrentLabel="You're on page"
+                                                     [(ngModel)]="config.currentPage"
+                                                     (numPages)="numPages = $event"
+                                                     [maxSize]="maxSize">
+                                </pagination-controls>
+                              </div>
+                            </div>
+
 
                     </div>
-                  </div>
-
-
-                </div>
 
               </div>
 

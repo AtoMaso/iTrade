@@ -1,94 +1,82 @@
 
 <div class="container col-md-12">
 
-  <div class="row">      
+        <div class="row">      
 
               <!-- Personal Details -->
-              <div class="col-md-4 col-md-offset-1">
+              <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">               
 
-                <span class="personal panel panel-heading col-md-12 collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapsePersonal">
-                    <span class="glyphicon glyphicon-minus"></span>
-                    Personal Details<span *ngIf="!hasPersonal" class="textoker"> - The system can not find any personal details for this trader!</span>
-                </span>
+                          <div class="personal collapsed" data-toggle="collapse" data-target="#collapsePersonal">
+                              <span class="glyphicon glyphicon-minus"></span><span class="smalltext text-uppercase textlightcoral"> Personal Details</span>
+                              <span *ngIf="!hasPersonal" class="textoker"> - The system can not find any personal details for this trader!</span>
+                          </div>
 
 
-                <div *ngIf="hasPersonal" id="collapsePersonal" class="collapse in">
+                              <div class="collapse in col-md-12" style="margin-top:20px;" id="collapsePersonal">
 
-                      <div class="col-md-12">
+                                <div *ngIf="hasPersonal" >
 
-                              <div class="row">
-                                <div class="panel panel-heading col-md-12 smalltext">
-                                  First Name:<span class="smalltext  text-uppercase text-info"> {{ personal.firstName }}</span>
+                                        <div class="row smalltextbold panel panel-heading col-md-12">
+                                          First Name:<span class="smalltext  text-uppercase text-info"> {{ personal.firstName }}</span>
+                                        </div>
+
+                                        <div class="row smalltextbold panel panel-heading col-md-12">
+                                          Middle Name:
+                                          <span *ngIf="hasMiddleName" class="smalltext  text-uppercase text-info"> {{ personal.middleName }}</span>
+                                          <span *ngIf="!hasMiddleName" class="smalltext  text-uppercase textoker">No Middle Name</span>
+                                        </div>
+
+                                        <div class="row smalltextbold panel panel-heading col-md-12">
+                                          Last Name:<span class="smalltext  text-uppercase text-info"> {{ personal.lastName }}</span>
+                                        </div>
+
+                                        <div class="row smalltextbold panel panel-heading col-md-12">
+                                          Trading From:
+                                          <span *ngIf="hasAddress" class="smalltext  text-uppercase text-info"> {{ prefAddress.city }}</span>
+                                          <span *ngIf="!hasAddress" class="smalltext  text-uppercase textoker">No Address Details</span>
+                                        </div>
+
                                 </div>
+
                               </div>
-
-                              <div class="row">
-                                <div class="panel panel-heading col-md-12 smalltext">
-                                  Middle Name:
-                                  <span *ngIf="hasMiddleName" class="smalltext  text-uppercase text-info"> {{ personal.middleName }}</span>
-                                  <span *ngIf="!hasMiddleName" class="smalltext  text-uppercase textoker">No Middle Name</span>
-                                </div>
-                              </div>
-
-                              <div class="row">
-                                <div class="panel panel-heading col-md-12 smalltext">
-                                  Last Name:<span class="smalltext  text-uppercase text-info"> {{ personal.lastName }}</span>
-                                </div>
-                              </div>
-
-                              <div class="row">
-                                <div class="panel panel-heading col-md-12 smalltext">
-                                  Trading From:
-                                  <span *ngIf="hasAddress" class="smalltext  text-uppercase text-info"> {{ prefAddress.city }}</span>
-                                  <span *ngIf="!hasAddress" class="smalltext  text-uppercase textoker">No Address Details</span>
-                                </div>
-                              </div>
-
-                      </div>
-
-                </div>
-
-              </div>
+                        
+                            </div>
      
 
 
 
             <!-- Contact Details -->
-            <div class="col-md-5 col-md-offset-1">
+            <div class="col-md-5 col-md-offset-1 panel panel-heading  footerdiv">
+                 
+                    <div class="contact collapsed" data-toggle="collapse" data-target="#collapseContact" >
+                      <span class="glyphicon glyphicon-minus"></span><span class="smalltext text-uppercase textlightcoral"> Preferred Contact Details</span>
+                      <span *ngIf="!hasEmails && !hasPhones && !hasSocials" class="textoker"> - The system can not find any contact details for this trader</span>
+                    </div>
 
-                  <span class="contact panel panel-heading col-md-12 collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseContact">
-                        <span class="glyphicon glyphicon-minus"></span>
-                        Preferred Contact Details<span *ngIf="!hasEmails && !hasPhones && !hasSocials" class="textoker"> - The system can not find any contact details for this trader</span>
-                  </span>
 
+                    <div class="collapse in col-md-12" style="margin-top:20px;" id="collapseContact">
 
-                   <div *ngIf="hasEmails || hasPhones || hasSocials" id="collapseContact" class="collapse in">
+                      <div *ngIf="hasEmails || hasPhones || hasSocials" >
 
-                          <div class="col-md-12">
-
-                            <div class="row">
-                              <div class="panel panel-heading col-md-12 smalltext">
-                                Phone:<span class="smalltext  text-uppercase text-info"> {{ prefPhone.countryCode }} {{ prefPhone.cityCode }}  {{ prefPhone.number }}</span>
-                              </div>
+                            <div class="row smalltextbold panel panel-heading col-md-12">
+                              Phone:<span class="smalltext  text-uppercase text-info"> {{ prefPhone.countryCode }} {{ prefPhone.cityCode }}  {{ prefPhone.number }}</span>
                             </div>
 
-                            <div class="row">
-                              <div class="panel panel-heading col-md-12 smalltext">
-                                Email Account:<span class="smalltext  text-uppercase text-info"> {{ prefEmail.account }}</span>
-                              </div>
+                            <div class="row smalltextbold panel panel-heading col-md-12">
+                              Email Account:<span class="smalltext  text-uppercase text-info"> {{ prefEmail.account }}</span>
                             </div>
 
-                            <div class="row">
-                              <div class="panel panel-heading col-md-12 smalltext">
-                                Social Network:<span class="smalltext  text-uppercase text-info"> {{ prefSocial.account }}</span>
-                              </div>
+                            <div class="row smalltextbold panel panel-heading col-md-12">
+                              Social Network:<span class="smalltext  text-uppercase text-info"> {{ prefSocial.account }}</span>
                             </div>
 
+                            <div class="row smalltextbold panel panel-heading col-md-12">
+                              Preferred contact details
+                            </div>
 
                       </div>
-             
-                </div>
-
+                    </div>
+                                                                        
           </div>
 
     </div>
@@ -107,82 +95,80 @@
                   </span>
 
                  <!-- Collapsable Current Trade -->     
-                 <div *ngIf="hasTrades" id="collapseTrades" class="collapse in">
+                   <div  id="collapseTrades" class="collapse in">
 
-                           <div class="panel-heading">
+                         <div *ngIf="hasTrades" class="panel-heading">
+                     
+                                   <!-- Table-->
+                                   <div class="row table-responsive">
 
-                                 <!-- Table-->
-                                 <div class="row table-responsive">
+                                     <table class="table table-bordered table-hover table-condensed col-md-9">
 
-                                   <table class="table table-bordered table-hover table-condensed col-md-9">
+                                       <!-- Table Header -->
+                                       <thead>
+                                         <tr>
 
-                                     <!-- Table Header -->
-                                     <thead>
-                                       <tr>
+                                           <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                             <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>
+                                           </th>
 
-                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                       
-                                             <span class="textgray smalltext  text-uppercase" style="width:auto">Trading </span>                                        
-                                         </th>
+                                           <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                             <span class="textgray smalltext text-uppercase" style="width:auto">For</span>
+                                           </th>
 
-                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                      
-                                             <span class="textgray smalltext text-uppercase" style="width:auto">For</span>                                          
-                                         </th>
+                                           <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                             <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>
+                                           </th>
 
-                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                        
-                                             <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>                                         
-                                         </th>
+                                           <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                             <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>
+                                           </th>
+                                         </tr>
+                                       </thead>
 
-                                         <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                           
-                                             <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>                                        
-                                         </th>
+                                       <!-- Table Rows-->
+                                       <tr *ngFor="let trade of rows |  paginate:config ">
+
+                                         <td class="col-md-2" style="vertical-align:middle">
+                                           <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltextbold text-uppercase textlightcoral"><i>{{ trade.name  }}</i></a>
+                                         </td>
+
+                                         <td class="col-md-2 smalltextbold text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeFor  }}</td>
+
+                                         <td class="col-md-2 smalltextbold text-capitalize textgray" style="vertical-align:middle">{{ trade.datePublished | date }}</td>
+
+                                         <td class="col-md-2 smalltextbold text-capitalize textgray" style="vertical-align:middle">{{ trade.status }}</td>
+
                                        </tr>
-                                     </thead>
 
-                                     <!-- Table Rows-->
-                                     <tr *ngFor="let trade of rows |  paginate:config ">
+                                     </table>
 
-                                       <td class="col-md-2" style="vertical-align:middle">
-                                         <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.name  }}</i></a>
-                                       </td>
-
-                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ trade.tradeFor  }}</td>
-
-                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.datePublished | date }}</td>
-
-                                       <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ trade.status }}</td>
-
-                                     </tr>
-
-                                   </table>
-
-                                 </div>
-
-                                 <!-- Table pagination -->
-                                 <div class="row col-md-12">
-                                   <div class="col-md-5">
-                                     <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
-                                                          (pageChange)="onPageChange($event)"
-                                                          maxSize="5"
-                                                          directionLinks="true"
-                                                          autoHide="true"
-                                                          previousLabel="Previous"
-                                                          nextLabel="Next"
-                                                          screenReaderPaginationLabel="Pagination"
-                                                          screenReaderPageLabel="page"
-                                                          screenReaderCurrentLabel="You're on page"
-                                                          [(ngModel)]="config.currentPage"
-                                                          (numPages)="numPages = $event"
-                                                          [maxSize]="maxSize">
-                                     </pagination-controls>
                                    </div>
-                                 </div>
 
-                                 <br />
+                                   <!-- Table pagination -->
+                                   <div class="row col-md-12">
+                                     <div class="col-md-5">
+                                       <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
+                                                            (pageChange)="onPageChange($event)"
+                                                            maxSize="5"
+                                                            directionLinks="true"
+                                                            autoHide="true"
+                                                            previousLabel="Previous"
+                                                            nextLabel="Next"
+                                                            screenReaderPaginationLabel="Pagination"
+                                                            screenReaderPageLabel="page"
+                                                            screenReaderCurrentLabel="You're on page"
+                                                            [(ngModel)]="config.currentPage"
+                                                            (numPages)="numPages = $event"
+                                                            [maxSize]="maxSize">
+                                       </pagination-controls>
+                                     </div>
+                                   </div>
 
-                     </div>
+                                 <br />                     
 
-                   </div>
-
+                         </div>
+                    </div>
             </div>
 
 
@@ -197,87 +183,84 @@
                  </span>
 
 
-                  <div *ngIf="hasHistory" id="collapseHistory" class="collapse in">
+                   <div  id="collapseHistory" class="collapse in">
 
-                           <div class="panel-heading">
+                             <div *ngIf="hasHistory" class="panel-heading">
+                     
+                                           <!-- Table-->
+                                           <div class="row table-responsive">
 
-                                <!-- Table-->
-                                <div class="row table-responsive">
+                                             <table class="table table-bordered table-hover table-condensed col-md-9">
 
-                                <table class="table table-bordered table-hover table-condensed col-md-9">
+                                               <!-- Table Header -->
+                                               <thead>
+                                                 <tr>
 
-                                  <!-- Table Header -->
-                                  <thead>
-                                    <tr>
+                                                   <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                                     <span class="textgray smalltext  text-uppercase" style="width:auto">Traded </span>
+                                                   </th>
 
-                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                        
-                                          <span class="textgray smalltext  text-uppercase" style="width:auto">Traded </span>                                     
-                                      </th>
+                                                   <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                                     <span class="textgray smalltext text-uppercase" style="width:auto">For</span>
+                                                   </th>
 
-                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                      
-                                          <span class="textgray smalltext text-uppercase" style="width:auto">For</span>                                       
-                                      </th>
+                                                   <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                                     <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>
+                                                   </th>
 
-                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                       
-                                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Published </span>                                       
-                                      </th>
+                                                   <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">
+                                                     <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>
 
-                                      <th class="col-md-2" style="vertical-align:middle;background-color:#FF223A3A">                                       
-                                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Trade Status</span>
-                                        
-                                      </th>
-                                    </tr>
-                                  </thead>
+                                                   </th>
+                                                 </tr>
+                                               </thead>
 
-                                  <!-- Table Rows-->
-                                  <tr *ngFor="let tradeHis of rowsHis |  paginate:configHis ">
+                                               <!-- Table Rows-->
+                                               <tr *ngFor="let tradeHis of rowsHis |  paginate:configHis ">
 
-                                    <td class="col-md-2" style="vertical-align:middle">
-                                      <a [routerLink]="['/tradedetails']" [queryParams]="{id: tradeHis.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ tradeHis.name  }}</i></a>
-                                    </td>
+                                                 <td class="col-md-2" style="vertical-align:middle">
+                                                   <a [routerLink]="['/tradedetails']" [queryParams]="{id: tradeHis.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ tradeHis.name  }}</i></a>
+                                                 </td>
 
-                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ tradeHis.tradeFor  }}</td>
-
-
-                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ tradeHis.datePublished | date }}</td>
-
-                                    <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ tradeHis.status }}</td>
-
-                                  </tr>
-
-                                </table>
-
-                              </div>
-
-                               <!-- Table pagination -->
-                                <div class="row col-md-12">
-                                <div class="col-md-5">
-                                  <pagination-controls id="paginationHis" *ngIf="configHis.paging" ngDefaultControl
-                                                     (pageChange)="onPageChangeHis($event)"
-                                                     maxSize="5"
-                                                     directionLinks="false"
-                                                     autoHide="true"
-                                                     previousLabel="Previous"
-                                                     nextLabel="Next"
-                                                     screenReaderPaginationLabel="Pagination"
-                                                     screenReaderPageLabel="page"
-                                                     screenReaderCurrentLabel="You're on page"
-                                                     [(ngModel)]="configHis.currentPage"
-                                                     (numPages)="numPagesHis = $event"
-                                                     [maxSize]="maxSizeHis">
-                                </pagination-controls>
-                              </div>
-                            </div>
-
-                            <br />
-
-                        </div>
-
-                  </div>
+                                                 <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle"> {{ tradeHis.tradeFor  }}</td>
 
 
-            </div>
+                                                 <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ tradeHis.datePublished | date }}</td>
 
+                                                 <td class="col-md-2 smalltext text-capitalize textgray" style="vertical-align:middle">{{ tradeHis.status }}</td>
+
+                                               </tr>
+
+                                             </table>
+
+                                           </div>
+
+                                           <!-- Table pagination -->
+                                           <div class="row col-md-12">
+                                             <div class="col-md-5">
+                                               <pagination-controls id="paginationHis" *ngIf="configHis.paging" ngDefaultControl
+                                                                    (pageChange)="onPageChangeHis($event)"
+                                                                    maxSize="5"
+                                                                    directionLinks="false"
+                                                                    autoHide="true"
+                                                                    previousLabel="Previous"
+                                                                    nextLabel="Next"
+                                                                    screenReaderPaginationLabel="Pagination"
+                                                                    screenReaderPageLabel="page"
+                                                                    screenReaderCurrentLabel="You're on page"
+                                                                    [(ngModel)]="configHis.currentPage"
+                                                                    (numPages)="numPagesHis = $event"
+                                                                    [maxSize]="maxSizeHis">
+                                               </pagination-controls>
+                                             </div>
+                                           </div>
+
+                                           <br />
+
+                                </div>
+
+                   </div>
+          </div>
     </div>
 
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, VERSION, AfterViewInit} from '@angular/core';
+import { Component, OnInit, NgModule, VERSION, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder, FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -65,7 +65,7 @@ export class TraderDetailsComponent implements OnInit {
     private loggerService: LoggerService) { }
 
 
-  ngOnInit() {
+  public ngOnInit() {
 
     this.route.queryParams.subscribe(params => { this.traderId = params['id']; });
 
@@ -74,44 +74,48 @@ export class TraderDetailsComponent implements OnInit {
     this.initialiseComponent();
 
     this.getPersonalDetails(this.traderId);
+
   }
 
 
-  // toggling done with jquery
-  ngAfterViewInit() {
+ // toggling done with jquery
+  public ngAfterViewInit() {
 
-    jQuery(document).ready(function () {
+    setTimeout(() => {
 
+      jQuery(document).ready(function () {
 
-      jQuery("#collapsePersonal").on("hide.bs.collapse", function () {
-        jQuery(".personal").html('<span class="glyphicon glyphicon-plus"></span> Personal Details');
-      });
-      jQuery("#collapsePersonal").on("show.bs.collapse", function () {
-        jQuery(".personal").html('<span class="glyphicon glyphicon-minus"></span> Personal Details');
+        jQuery("#collapsePersonal").on("hide.bs.collapse", function () {
+          jQuery(".personal").html('<span class="glyphicon glyphicon-plus"></span> <span class="smalltext text-uppercase textlightcoral"> Personal Details</span>');
+        });
+        jQuery("#collapsePersonal").on("show.bs.collapse", function () {
+          jQuery(".personal").html('<span class="glyphicon glyphicon-minus"></span> <span class="smalltext text-uppercase textlightcoral"> Personal Details</span>');
+        });
+
+        jQuery("#collapseContact").on("hide.bs.collapse", function () {
+          jQuery(".contact").html('<span class="glyphicon glyphicon-plus"></span> <span class="smalltext text-uppercase textlightcoral"> Contact Details</span>');
+        });
+        jQuery("#collapseContact").on("show.bs.collapse", function () {
+          jQuery(".contact").html('<span class="glyphicon glyphicon-minus"></span> <span class="smalltext text-uppercase textlightcoral"> Contact Details</span>');
+        });
+
+        jQuery("#collapseTrades").on("hide.bs.collapse", function () {
+          jQuery(".currenttrades").html('<span class="glyphicon glyphicon-plus"></span> Current Trades');
+        });
+        jQuery("#collapseTrades").on("show.bs.collapse", function () {
+          jQuery(".currenttrades").html('<span class="glyphicon glyphicon-minus"></span> Current Trades');
+        });
+
+        jQuery("#collapseHistory").on("hide.bs.collapse", function () {
+          jQuery(".tradinghistory").html('<span class="glyphicon glyphicon-plus"></span> Trading History');
+        });
+        jQuery("#collapseHistory").on("show.bs.collapse", function () {
+          jQuery(".tradinghistory").html('<span class="glyphicon glyphicon-minus"></span> Trading History');
+        });
+
       });
 
-      jQuery("#collapseContact").on("hide.bs.collapse", function () {
-            jQuery(".contact").html('<span class="glyphicon glyphicon-plus"></span> Contact Details');
-      });
-      jQuery("#collapseContact").on("show.bs.collapse", function () {
-            jQuery(".contact").html('<span class="glyphicon glyphicon-minus"></span> Contact Details');
-      });
-
-      jQuery("#collapseTrades").on("hide.bs.collapse", function () {
-        jQuery(".currenttrades").html('<span class="glyphicon glyphicon-plus"></span> Current Trades ');
-      });
-      jQuery("#collapseTrades").on("show.bs.collapse", function () {
-        jQuery(".currenttrades").html('<span class="glyphicon glyphicon-minus"></span> Current Trades');
-      });
-
-      jQuery("#collapseHistory").on("hide.bs.collapse", function () {
-        jQuery(".tradinghistory").html('<span class="glyphicon glyphicon-plus"></span> Trading History');
-      });
-      jQuery("#collapseHistory").on("show.bs.collapse", function () {
-        jQuery(".tradinghistory").html('<span class="glyphicon glyphicon-minus"></span> Trading History');
-      });
-   
-    });
+    }, 50);
   }
 
 
@@ -134,11 +138,11 @@ export class TraderDetailsComponent implements OnInit {
       this.hasPersonal = true;      
     }             
     // call now get addresses 
-    this.getAddressesByTraderId(this.traderId);
+    this.gePreferredAddresse(this.traderId);
   }
 
 
-  private getAddressesByTraderId(traderId: string) {
+  private gePreferredAddresse(traderId: string) {
 
     this.addressService.getPreferredAddress(traderId, "Yes")
       .subscribe((addressResult: Address) => {
@@ -149,7 +153,7 @@ export class TraderDetailsComponent implements OnInit {
 
 
   private onSuccessAddresses(address: Address) {
-   
+     // handles the zero record
     if (address.id == 0 ) { this.hasAddress = false; }
     else {
       this.prefAddress = address;
@@ -157,24 +161,24 @@ export class TraderDetailsComponent implements OnInit {
     }
   
     // get contact details
-    this.getEmails(this.traderId);
+    this.getPreferredEmails(this.traderId);
   }
 
 
   //***********************************************************
   // GET Contact Details 
   //***********************************************************
-  private getEmails(traderId) {
+  private getPreferredEmails(traderId) {
 
     this.emailsService.getPreferredEmail(traderId, "Yes")
       .subscribe((returnedEmail:Email) => {
-        this.onSuccessEmails(returnedEmail);
+        this.onSuccessEmail(returnedEmail);
       },
       (res: Response) => this.onError(res, "getPreferredEmail"));
   }
 
 
-  private onSuccessEmails(email: Email) {
+  private onSuccessEmail(email: Email) {
     // new phone is returned when there is no record in a webapi
     if (email.id == 0) { this.hasEmails = false; }
     else {
@@ -183,11 +187,11 @@ export class TraderDetailsComponent implements OnInit {
     }
 
     // now call the get phones
-    this.getPhones(this.traderId);
+    this.getPreferredPhone(this.traderId);
   }
 
 
-  private getPhones(traderId) {
+  private getPreferredPhone(traderId) {
     this.phonesService.getPreferredPhone(traderId, "Yes")
       .subscribe((returnedPhone: Phone) => {
         this.onSuccessPhones(returnedPhone);
@@ -197,6 +201,7 @@ export class TraderDetailsComponent implements OnInit {
 
 
   private onSuccessPhones(phone: Phone) {
+      // handles the zero record
     if (phone.id == 0) { this.hasPhones = false; }
     else {
       this.prefPhone = phone;   
@@ -204,11 +209,11 @@ export class TraderDetailsComponent implements OnInit {
     }
 
     // now get the social networks
-    this.getSocial(this.traderId);  
+    this.getPreferredSocial(this.traderId);  
   }
 
 
-  private getSocial(traderId) {
+  private getPreferredSocial(traderId) {
     this.socialslNetworksService.getPreferredSocialNetwork(traderId, "Yes")
       .subscribe((returnedSocial: SocialNetwork) => {
         this.onSuccessSocial(returnedSocial);
@@ -219,6 +224,7 @@ export class TraderDetailsComponent implements OnInit {
 
 
   private onSuccessSocial(social: SocialNetwork) {
+    // handles the zero record
     if (social.id == 0) { this.hasSocial = false; }
     else {
       this.prefSocial = social;     

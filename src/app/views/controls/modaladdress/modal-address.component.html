@@ -1,0 +1,17 @@
+<div *ngIf="modalIsVisible" class="modal fade show in danger" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title  text-warning">{{ modalTitle}}</h4>
+      </div>
+      <div class="modal-body text-warning">
+        <p>{{ modalMessage }}</p>
+      </div>    
+      <div class="modal-footer text-warning">
+        <button type="button" class="btn btn-danger" closeModal()>Close</button>    
+      </div>
+    </div>
+  </div>
+</div>
