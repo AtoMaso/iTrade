@@ -16,6 +16,7 @@ import { UserSession, UserIdentity, PersonalDetails} from '../../helpers/classes
 let personaldetailsbytraderid = CONFIG.baseUrls.personaldetailsbytraderid;
 let updatepersonaldetail = CONFIG.baseUrls.updatepersonaldetail;
 let addpersonaldetail = CONFIG.baseUrls.addpersonaldetail;
+let deletepersonaldetails = CONFIG.baseUrls.deletepersonaldetail;
 
 @Injectable()
 export class PersonalDetailsService {
@@ -86,6 +87,23 @@ export class PersonalDetailsService {
     return this.httpClientService.put<PersonalDetails>(this.localUrl, pd, httpOptions).retry(1);
   }
 
+
+  //******************************************************
+  // DELETE PERSONAL
+  //******************************************************
+  public deletePersonaDetails(pd: PersonalDetails): Observable<PersonalDetails> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    this.localUrl = `${deletepersonaldetails}?id=${pd.id}`;
+    return this.httpClientService.delete<PersonalDetails>(this.localUrl, httpOptions).retry(1);
+  }
 
   //*****************************************************
   // HELPER METHODS

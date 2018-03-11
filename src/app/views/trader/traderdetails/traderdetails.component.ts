@@ -25,9 +25,7 @@ export class TraderDetailsComponent implements OnInit {
 
   private traderId: string;
   private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
   private isRequesting: boolean = false;
-  private isAuthenticated: boolean = false; 
  
   private personal: PersonalDetails = new PersonalDetails();
   private emails: Email[] = [];
@@ -69,7 +67,7 @@ export class TraderDetailsComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => { this.traderId = params['id']; });
 
-    this.getUseridentity();
+    this.getUserSession();
 
     this.initialiseComponent();
 
@@ -123,13 +121,16 @@ export class TraderDetailsComponent implements OnInit {
   //***********************************************************
   // GET Personal Details
   //***********************************************************
-  private getPersonalDetails(traderId){
+  private getPersonalDetails(traderId) {
+    this.isRequesting = true;  
+
     this.personalService.getPersonalDetailsByTraderId(traderId)
       .subscribe((returnedPersonalDetails: PersonalDetails) => {
         this.onSuccessPersonal(returnedPersonalDetails);    
       },
       (res: Response) => this.onError(res, "getPersonalDetails"));
   }
+
 
   private onSuccessPersonal(personalD: PersonalDetails) {
     if (personalD === null) { this.hasPersonal = false; }
@@ -222,7 +223,6 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-
   private onSuccessSocial(social: SocialNetwork) {
     // handles the zero record
     if (social.id == 0) { this.hasSocial = false; }
@@ -248,6 +248,7 @@ export class TraderDetailsComponent implements OnInit {
       (res: Response) => this.onError(res, "getTrades"));
 
   }
+
 
   private onSuccessTrades(trades: Trade[]) {
    
@@ -276,6 +277,7 @@ export class TraderDetailsComponent implements OnInit {
         if (returnedTrades.length === 0) { this.hasHistory = false; }
         else {
           this.dataHis = this.TransformData(returnedTrades),
+            this.isRequesting = false; // finish requesting
             this.hasHistory = true;
             this.isNewLoadHis = true;
             this.onChangeTableHis(this.configHis),
@@ -285,18 +287,15 @@ export class TraderDetailsComponent implements OnInit {
       (res: Response) => this.onError(res, "getTrades"));
   }
 
-
  
 
   //*****************************************************
   // HELPER METHODS 
   //*****************************************************
-  private getUseridentity() {
+  private getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
-        this.session = JSON.parse(sessionStorage["UserSession"])
-        this.isAuthenticated = this.session.authentication.isAuthenticated;
-        this.identity.roles = this.session.userIdentity.roles;     
+        this.session = JSON.parse(sessionStorage["UserSession"])        
       }
       catch (ex) {
         this.messagesService.emitProcessMessage("PMG");
@@ -305,8 +304,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
-    this.isRequesting = true;  
+  private initialiseComponent() { 
     this.pageTitleService.emitPageTitle(new PageTitle("Trader Details"));    
     this.messagesService.emitRoute("nill");
   }
@@ -362,14 +360,12 @@ export class TraderDetailsComponent implements OnInit {
 
 
 
-
   //****************************************************
   // LOGGING METHODS
   //****************************************************
   private onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
-
     let message: string = "";
 
     // audit log the error passed
@@ -393,7 +389,7 @@ export class TraderDetailsComponent implements OnInit {
       this.messagesService.emitProcessMessage("PME", message);
     }
     else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
-    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.Message); }
     else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
   }
  

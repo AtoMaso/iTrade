@@ -2,53 +2,49 @@
 
   <div class="container col-md-12">
 
-          <div class="row" >
+            <div class="row" >
 
-            <div class=" col-md-10 col-md-offset-1">
-                  <!-- Filters -->
-                  <div class="col-md-2 textgray">
-                    <!-- this is ng2-table filtering section used but the rest of it is independent table done by me-->
-                    <span class="smalltextbold">Filter in all columns</span>
-                    <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
-                  </div>
-
-
-                  <div class="col-md-2 textgray">
-                    <span class="smalltextbold">Items Per Page</span>
-                    <input type="number" min="10" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" class="form-control">
-                  </div>
+                  <div class="col-md-10 col-md-offset-1">
+                        <!-- Filters -->
+                        <div class="col-md-2 textgray">
+                          <!-- this is ng2-table filtering section used but the rest of it is independent table done by me-->
+                          <span class="smalltextbold">Filter in all columns</span>
+                          <input *ngIf="config.filtering" placeholder="Filter" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" class="form-control" />
+                        </div>
 
 
-                  <!--<div class="col-md-2 textgray">
-                    <span class="smalltextbold">Current Page</span>
-                    <input type="number" min="1" [(ngModel)]="config.currentPage" class="form-control">
-                  </div>
-
-                  <div class="col-md-1 textgray">
-                    <span class="smalltextbold">Max Size</span>
-                    <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
-                  </div>-->
+                        <div class="col-md-2 textgray">
+                          <span class="smalltextbold">Items Per Page</span>
+                          <input type="number" min="10" max="{{ recordsPerSet -1}}" [(ngModel)]="config.itemsPerPage" class="form-control">
+                        </div>
 
 
-                  <div class="col-md-2 col-md-offset-6" style="text-align:right;">
-                    <br />
-                    <div *ngIf="isAuthenticated">
-                      <button class="btn btn-sm btn-success" (click)="addTrade()">
-                        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Post Trade
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                        <!--<div class="col-md-2 textgray">
+                          <span class="smalltextbold">Current Page</span>
+                          <input type="number" min="1" [(ngModel)]="config.currentPage" class="form-control">
+                        </div>
+
+                        <div class="col-md-1 textgray">
+                          <span class="smalltextbold">Max Size</span>
+                          <input type="number" min="5" max="100" [(ngModel)]="maxSize" class="form-control">
+                        </div>-->
 
 
-            </div>
-        
+                        <div class="col-md-2 col-md-offset-6" style="text-align:right;">
+                          <br />
+                          <div *ngIf="isAuthenticated">
+                            <button class="btn btn-sm btn-success" (click)="addTrade()">
+                              <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Post Trade
+                            </button>
+                          </div>
+                        </div>
+                      </div>
 
-          <br />
-
-          <!-- Table -->
+            </div>       
+          <br />        
           <div class="row">
-            
+
+            <!-- Table -->
             <div class="table-responsive col-md-10 col-md-offset-1">
 
               <table class="table table-bordered table-hover table-condensed">
@@ -155,33 +151,33 @@
 
             </div>
 
-          </div>
 
-          <!-- Table pagination -->
-          <div class="row col-md-10 col-md-offset-1">
-            <div class="col-md-5">
-              <!--the stylesheet of the pagination is overwritten in the host component sass -->
-              <pagination-controls id="pagination" *ngIf="config.paging"
-                                   (pageChange)="onPageChange($event)" ngDefaultControl
-                                   maxSize="5"
-                                   directionLinks="false"
-                                   autoHide="true"
-                                   previousLabel="Previous"
-                                   nextLabel="Next"
-                                   screenReaderPaginationLabel="Pagination"
-                                   screenReaderPageLabel="page"
-                                   screenReaderCurrentLabel="You're on page"
-                                   [(ngModel)]="config.currentPage"
-                                   (numPages)="numPages = $event"
-                                   [maxSize]="maxSize">
-              </pagination-controls>
-            </div>
-            <div class="col-md-2 textgray">
-              <span class="smalltextbold">Set of records: {{ setsCounter }} of {{ totalNumberOfSets}}</span>
-            </div>
-            <div class="col-md-3 col-md-offset-2">
-              <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
-              <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+            <!-- Table pagination -->
+            <div class="row col-md-10 col-md-offset-1">
+              <div class="col-md-5">
+                <!--the stylesheet of the pagination is overwritten in the host component sass -->
+                <pagination-controls id="pagination" *ngIf="config.paging"
+                                     (pageChange)="onPageChange($event)" ngDefaultControl
+                                     maxSize="5"
+                                     directionLinks="false"
+                                     autoHide="true"
+                                     previousLabel="Previous"
+                                     nextLabel="Next"
+                                     screenReaderPaginationLabel="Pagination"
+                                     screenReaderPageLabel="page"
+                                     screenReaderCurrentLabel="You're on page"
+                                     [(ngModel)]="config.currentPage"
+                                     (numPages)="numPages = $event"
+                                     [maxSize]="maxSize">
+                </pagination-controls>
+              </div>
+              <div class="col-md-2 textgray">
+                <span class="smalltextbold">Set of records: {{ setsCounter }} of {{ totalNumberOfSets}}</span>
+              </div>
+              <div class="col-md-3 col-md-offset-2">
+                <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
+                <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+              </div>
             </div>
           </div>
 
@@ -190,7 +186,7 @@
 </div>
 
 
-<span *ngIf="!hasTrades" class="textoker"> The system can not find any trades under your account!</span>
+<span *ngIf="!hasTrades" class="small text-uppercase textoker"> The system can not find any trades under your account!</span>
 
 
 <my-spinner [isRunning]="isRequesting"></my-spinner>

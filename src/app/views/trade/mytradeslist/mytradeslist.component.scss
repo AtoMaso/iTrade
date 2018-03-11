@@ -12,3 +12,6 @@
 :host /deep/ .ngx-pagination a, .ngx-pagination button { cursor: pointer;   padding: 0.1875rem 0.625rem; border-radius: 0;   display: block;  } // number button here
 :host /deep/ .ngx-pagination .show-for-sr {  position: absolute !important;  width: 1px;  height: 1px;  overflow: hidden;  clip: rect(0, 0, 0, 0); color:green }
 :host /deep/ .ngx-pagination li {  -moz-user-select: none;  -webkit-user-select: none;   -ms-user-select: none;  margin-right: 0.0625rem;   border-radius: 0; font-family:Arial;    font-size:small; font-size:small; font-weight:bold;}  // size manipulated here
+
+
+.footerdiv {border-width:initial;border-color:#FF223A3A;}

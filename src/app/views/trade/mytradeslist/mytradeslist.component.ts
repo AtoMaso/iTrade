@@ -294,7 +294,7 @@ export class MyTradesListComponent implements OnInit {
       this.messagesService.emitProcessMessage("PME", message);
     }
     else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
-    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.Message); }
     else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
 
 

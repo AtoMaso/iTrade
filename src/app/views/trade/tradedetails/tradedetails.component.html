@@ -4,11 +4,12 @@
 
         <div class="col-md-3  panel panel-heading footerdiv">
 
-          <span class="tradedetails collapsed col-md-12" data-toggle="collapse" data-target="#tradeDetails">
-            <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Trade Details</span>
-          </span>
+          <div class="tradedetails collapsed  smalltext text-uppercase" data-toggle="collapse" data-target="#tradeDetails">
+            <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral"> Trade Details</span>
+            <span *ngIf="trade == null" class="textoker">- The system can not find any details for the trade!</span>
+          </div>
 
-          <!-- PERSONAL DETAILS -->
+          <!-- TRADE DETAILS -->
           <div class="collapse in col-md-12 " id="tradeDetails" style="margin-top:20px;">
 
             <div *ngIf="trade != null">
@@ -20,19 +21,10 @@
               <div class="row smalltextbold panel panel-heading col-md-12">
                 Trading:<span class="smalltext  text-uppercase text-info"> {{ trade.name }}</span>
               </div>
-
-             <!-- <div class="col-md-12 smalltextbold" style="height:50px;">-->
-
-                <!--<span class="description collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseDescription">
-                  <span class="glyphicon glyphicon-plus"></span> Trade Description
-                </span>-->
-
-                <!-- colapsable description -->
-                <!--<div id="collapseDescription" class="col-md-12">-->
+         
               <div class="row smalltextbold panel panel-heading col-md-12">
                 Trade Description:<span class="panel-heading smalltext text-info"> {{ trade.description}}</span>
-              </div>
-              <!--</div>-->
+              </div>           
 
               <div class="row smalltextbold panel panel-heading col-md-12">
                 Trading for:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeFor }}</span>
@@ -47,7 +39,11 @@
               </div>
 
               <div class="row smalltextbold panel panel-heading col-md-12">
-                Place: <span class="smalltext  text-uppercase text-info"> {{ trade.place }} / {{ trade.state }} </span>
+                Place: <span class="smalltext  text-uppercase text-info"> {{ trade.place }}</span>
+              </div>
+
+              <div class="row smalltextbold panel panel-heading col-md-12">
+                State: <span class="smalltext  text-uppercase text-info"> {{ trade.state }} </span>
               </div>
 
               <div class="row smalltextbold panel panel-heading col-md-12">
@@ -75,11 +71,7 @@
 
             </div>
           </div>
-
-
-          <div *ngIf="trade == null" class="personal smalltext text-uppercase col-md-3">
-            Trade Details<span class="textoker"> - The system can not find any details for this trade!</span>
-          </div>
+     
         </div>
 
 
@@ -89,10 +81,10 @@
             <!-- IMAGES -->
             <div class="row panel panel-heading footerdiv">
 
-              <span class="images panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseImages">
-                <span class="glyphicon glyphicon-minus"></span> Trade Images
-                <span *ngIf="!hasImages" class="textoker">- The system can not find images for your trade!</span>
-              </span>
+              <div class="images collapsed smalltext text-uppercase" data-toggle="collapse" data-target="#collapseImages">
+                  <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral"> Trade Images</span>
+                  <span *ngIf="!hasImages" class="textoker">- The system can not find images for the trade!</span>
+              </div>
 
               <!-- collapsable trade images -->
               <div  id="collapseImages" class="collapse in panel panel-heading col-md-12">
@@ -100,21 +92,20 @@
                       <div *ngIf="hasImages" id="collapseImages">
                       
                           <div class="col-md-4">
-                            <div *ngIf="hasImage1">
-                              <!-- TODO individual check of image 1, 2,3 -->
-                              <img src="{{ images[0].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+                            <div *ngIf="hasImage1" class="item">                             
+                              <img src="{{ images[0].imageUrl }}" alt=""  class="img-thumbnail img-responsive" style="height:250px;width:auto;">
                             </div>
                           </div>
 
                           <div class="col-md-4">
-                            <div *ngIf="hasImage2">
-                              <img src="{{ images[1].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+                            <div *ngIf="hasImage2" class="item">     
+                              <img src="{{ images[1].imageUrl }}" alt=""  class="img-thumbnail img-responsive"  style="height:250px;width:auto;">
                             </div>
                           </div>
 
                           <div class="col-md-4">
-                            <div *ngIf="hasImage3">
-                              <img src="{{ images[2].imageUrl }}" alt="" style="height: 250px;width: 250px;">
+                            <div *ngIf="hasImage3" class="item">     
+                              <img src="{{ images[2].imageUrl }}" alt="" class="img-thumbnail img-responsive"  style="height:250px;width:auto;">
                             </div>
                           </div>                       
 
@@ -128,10 +119,10 @@
             <!-- HISTORY -->
             <div class="row panel panel-heading footerdiv">
 
-              <span class="history panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
-                <span class="glyphicon glyphicon-minus"></span> Viewing History (max 10)
-                <span *ngIf="!hasHistory" class="textoker">- The system can not find any history for your trade!</span>
-              </span>
+              <div class="history collapsed smalltext text-uppercase" data-toggle="collapse" data-target="#collapseHistory">
+                    <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral"> Viewing History (max 10)</span>
+                    <span *ngIf="!hasHistory" class="textoker">- The system can not find any history for the trade!</span>
+              </div>
 
               <!-- collapsable trade history , history will minimum one record when trade is created-->
               <div  id="collapseHistory" class="collapse in panel-heading">
@@ -146,8 +137,6 @@
                                 <!-- Table header -->
                                 <thead>
                                   <tr>
-
-
                                     <th class="col-md-1" style="background-color:#FF223A3A">
                                       <span class="text-uppercase textgray smalltext" style="vertical-align:middle;width:auto;">Trade Id</span>
                                     </th>
@@ -175,8 +164,6 @@
 
                                 <!-- Table rows-->
                                 <tr *ngFor="let history of rows | paginate:config ">
-
-
 
                                   <td class="col-md-1 smalltextbold text-capitalize textgray "> {{ history.tradeId }}</td>
 

@@ -24,8 +24,8 @@ let serviceAccount = CONFIG.baseUrls.accounts;
 export class AuthenticationService implements OnDestroy {
 
   private timer: any = null;
-  private authentication: Authentication;
-  private userIdentity: UserIdentity;
+  private authentication: Authentication = new Authentication();
+  private userIdentity: UserIdentity = new UserIdentity();
   public userSession: UserSession = new UserSession();
 
   public subjectSessionStore = new Subject<UserSession>();

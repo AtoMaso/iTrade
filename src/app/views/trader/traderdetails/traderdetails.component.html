@@ -6,10 +6,10 @@
               <!-- Personal Details -->
               <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">               
 
-                          <div class="personal collapsed" data-toggle="collapse" data-target="#collapsePersonal">
-                              <span class="glyphicon glyphicon-minus"></span><span class="smalltext text-uppercase textlightcoral"> Personal Details</span>
-                              <span *ngIf="!hasPersonal" class="textoker"> - The system can not find any personal details for this trader!</span>
-                          </div>
+                              <div class="personal collapsed smalltext text-uppercase" data-toggle="collapse" data-target="#collapsePersonal">
+                                  <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral"> Personal Details</span>
+                                  <span *ngIf="!hasPersonal" class="textoker"> - The system can not find any personal details for this trader!</span>
+                              </div>
 
 
                               <div class="collapse in col-md-12" style="margin-top:20px;" id="collapsePersonal">
@@ -48,8 +48,8 @@
             <!-- Contact Details -->
             <div class="col-md-5 col-md-offset-1 panel panel-heading  footerdiv">
                  
-                    <div class="contact collapsed" data-toggle="collapse" data-target="#collapseContact" >
-                      <span class="glyphicon glyphicon-minus"></span><span class="smalltext text-uppercase textlightcoral"> Preferred Contact Details</span>
+                    <div class="contact collapsed smalltext text-uppercase" data-toggle="collapse" data-target="#collapseContact" >
+                      <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral"> Preferred Contact Details</span>
                       <span *ngIf="!hasEmails && !hasPhones && !hasSocials" class="textoker"> - The system can not find any contact details for this trader</span>
                     </div>
 
@@ -89,10 +89,10 @@
             <!-- Current Trades -->
            <div class="panel panel-heading col-md-10 col-md-offset-1 footerdiv">
 
-                  <span class="currenttrades panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
-                      <span class="glyphicon glyphicon-minus"></span>
-                      Current Trades <span *ngIf="!hasTrades" class="textoker">- The system can not find any open trades associated with this trader!</span>
-                  </span>
+                  <div class="currenttrades panel-title collapsed smalltext text-uppercase" data-toggle="collapse" data-target="#collapseTrades">
+                      <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral">  Current Trades</span>
+                      <span *ngIf="!hasTrades" class="textoker">- The system can not find any open trades associated with this trader!</span>
+                  </div>
 
                  <!-- Collapsable Current Trade -->     
                    <div  id="collapseTrades" class="collapse in">
@@ -177,10 +177,10 @@
            <!-- Trading History -->
            <div class="panel panel-heading col-md-10 col-md-offset-1 footerdiv">
 
-                  <span class="tradinghistory panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
-                          <span class="glyphicon glyphicon-minus"></span>
-                          Trading History<span *ngIf="!hasHistory" class="textoker">- The system can not find any trading history associated with this trader!</span>
-                 </span>
+                  <div class="tradinghistory panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseHistory">
+                        <span class="glyphicon glyphicon-minus"></span> <span class="textlightcoral">  Trading History</span>
+                        <span *ngIf="!hasHistory" class="textoker">- The system can not find any trading history associated with this trader!</span>
+                  </div>
 
 
                    <div  id="collapseHistory" class="collapse in">
@@ -264,3 +264,5 @@
     </div>
 
 </div>
+
+<my-spinner [isRunning]="isRequesting"></my-spinner>

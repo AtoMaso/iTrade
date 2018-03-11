@@ -34,9 +34,7 @@ export class TradeDetailsComponent implements OnInit {
   private hasImage2: boolean = true;
   private hasImage3: boolean = true;
   private session: UserSession;
-  private identity: UserIdentity;
   private isRequesting: boolean = false;
-  private isAuthenticated: boolean = false;
   private canTrade: boolean = false;
   private flagnew: boolean = false;
   private isFirstLoad: boolean = false;
@@ -63,22 +61,29 @@ export class TradeDetailsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.tradeId = params['id'];
       this.flagnew = params['flagnew'];
+   
+      //if (!Number(parseInt(params['id']))) {        
+      //  this.messagesService.emitProcessMessage("PMEWTN");
+      //}
+      //else {
+       
+
+        this.getUserSession();
+
+        this.initialiseComponent();
+
+        if (this.flagnew) { this.messagesService.emitProcessMessage("PMSAT"); }
+
+        // starts with gettrade end up with get images separatelly
+        this.getATrade(this.tradeId);
+      //}
     });
-
-    this.getUseridentity();
-
-    this.initialiseComponent(); 
- 
-    if (this.flagnew) { this.messagesService.emitProcessMessage("PMSAT"); }
-
-    // starts with gettrade end up with get images separatelly
-    this.getATrade(this.tradeId);
+   
   }
 
 
   ngAfterViewInit() {
 
-    setTimeout(() => {
     jQuery(document).ready(function () {
 
       jQuery("#tradeDetails").on("hide.bs.collapse", function () {
@@ -112,7 +117,6 @@ export class TradeDetailsComponent implements OnInit {
 
     });
 
-    }, 30);
   }
 
 
@@ -120,6 +124,7 @@ export class TradeDetailsComponent implements OnInit {
   // GET A TRADE
   /*******************************************************/
   private getATrade(tradeId: number) {
+    this.isRequesting = true;
 
     this.tradeApiService.getSingleTrade(tradeId)
       .subscribe((tradeResult: Trade) => {
@@ -139,13 +144,13 @@ export class TradeDetailsComponent implements OnInit {
     if (sessionStorage["UserSession"] != "null") {
       // logged in
       if (this.trade.traderId !== this.session.userIdentity.userId) { this.canTrade = true; }
-      // if new and logged on trader is trying to view his trade do not add history ??? TODO
+      
       if (this.flagnew) { this.getTradeHistory(this.tradeId); }
-      else { this.addHistoryRecord(trade); }
+      else { this.addHistoryRecord(trade, "Internal"); }
     }
     else {   
-      // if not logged on, we do not now who is the viewer so add history 
-      this.addHistoryRecord(trade); 
+      // if not logged on, the viewer is an "External"
+      this.addHistoryRecord(trade, "External"); 
     }
   
   }
@@ -155,7 +160,7 @@ export class TradeDetailsComponent implements OnInit {
 /*******************************************************/
 // ADD HISTORY RECORD
 /*******************************************************/
-  private addHistoryRecord(trade) {
+  private addHistoryRecord(trade:Trade, viewer:string) {
 
     // create new trdae history
     let trhis: TradeHistory = new TradeHistory();
@@ -164,20 +169,17 @@ export class TradeDetailsComponent implements OnInit {
     trhis.createdDate = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours(), dt.getMinutes(), dt.getSeconds());
     trhis.status = "Viewed";
     trhis.tradeId = trade.tradeId;
-    if (sessionStorage["UserSession"] != "null") {
+    if (viewer === "Internal") {
       if (this.session.userIdentity.userId == trade.traderId) { trhis.viewer = "Owner"; }
       else { trhis.viewer = "Trader"; }
     }
-    else { trhis.viewer = "External";}
-
+    else { trhis.viewer  = viewer;}
 
 
     this.tradeHistoryService.addTradeHistory(trhis)
       .subscribe((returnedHistory: TradeHistory) => {
-
         this.onSuccessAddHistory(returnedHistory);
-
-      }, (serviceError: Response) => this.onError(serviceError, "addTradeHistory"));
+      }, (serviceError: Response) => this.onError(serviceError, "addHistoryRecord"));
   }
 
 
@@ -213,8 +215,7 @@ export class TradeDetailsComponent implements OnInit {
   /*******************************************************/
   private getTradeImages(tradeId: number) {
   this.imageServise.getImagesByTradeId(tradeId)
-    .subscribe((returnedImages: Image[]) => {
-      //this.images = returnedImages;
+    .subscribe((returnedImages: Image[]) => {    
       this.onSuccessGetImages(returnedImages);
       if (this.images !== null) { this.hasImages = true; }
     }
@@ -223,7 +224,9 @@ export class TradeDetailsComponent implements OnInit {
 }
 
 
-  private onSuccessGetImages(images:Image[]) {
+  private onSuccessGetImages(images: Image[]) {
+    this.isRequesting = false;
+
     this.images = images;
     if (this.images.length == 0) {
       this.hasImages = false;
@@ -242,12 +245,10 @@ export class TradeDetailsComponent implements OnInit {
   //*****************************************************
   // HELPER METHODS
   //*****************************************************
-  private getUseridentity() {
-    if (sessionStorage["UserSession"] != "undefined") {
+  private getUserSession() {
+    if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
-        this.identity = this.session.userIdentity;
-        this.isAuthenticated = this.session.authentication.isAuthenticated;       
       }
       catch (ex) {
         this.messagesService.emitProcessMessage("PMG");
@@ -319,7 +320,7 @@ export class TradeDetailsComponent implements OnInit {
       this.messagesService.emitProcessMessage("PME", message);
     }
     else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }  
-    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.Message); }
     else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
   }
 

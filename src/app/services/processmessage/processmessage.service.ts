@@ -45,19 +45,20 @@ export class ProcessMessageService {
   //******************************************************
   // GET PROCESS MESSAGE USING HTTPCLIENT MODULE
   //******************************************************
-  // method called from the appmodule to initialis all process messages
+  // method called from the appmodule to initialis all process messages!!!!!!!!!!!!!!!
   public getProcessMessage() {
 
     this.getProcessMessagesFromRepository().subscribe(
-      (messages: ProcessMessage[]) => this.allProcessMessages = messages);
+      (messages: ProcessMessage[]) => {
+        this.allProcessMessages = messages
+      });
   }
 
 
   // get the process messages from the api json repository
   public getProcessMessagesFromRepository(): Observable<ProcessMessage[]> {
 
-    return this.httpClientService.get<ProcessMessage[]>(messagessUrl)  
-      .retry(3)
+    return this.httpClientService.get<ProcessMessage[]>(messagessUrl).retry(1)
       .catch((err: HttpErrorResponse, result) => {
 
         if (err.error instanceof Error) { this.handleError("getTradesApi method in the tradeapi service error", err); }

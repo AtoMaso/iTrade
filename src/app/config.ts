@@ -106,7 +106,7 @@
     personaldetail: 'http://localhost:5700/api/personaldetails/',
     updatepersonaldetail: 'http://localhost:5700/api/personaldetails/PutPersonalDetail',
     addpersonaldetail: 'http://localhost:5700/api/personaldetails/PostPersonalDetails',
-    deletepersonaldetail: 'http://localhost:5700/personaldetails/DeletePersonalDetail',
+    deletepersonaldetail: 'http://localhost:5700/personaldetails/DeletePersonalDetails',
   
     // security details
     securitydetails: 'http://localhost:5700/api/securitydetails',

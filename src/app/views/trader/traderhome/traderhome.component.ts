@@ -79,7 +79,7 @@ export class TraderHomeComponent implements OnInit {
   // GET TRADES -- this will get all trades for the trader closed and open, if there are no any will show message
   //**************************************************************************************
   private getTrades(traderId: string, status: string) {
-
+    this.isRequesting = true;  
     this.tradeService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
         this.onSuccessTrades(returnedTrades);
@@ -133,9 +133,7 @@ export class TraderHomeComponent implements OnInit {
   private getUseridentity() {
     if (sessionStorage["UserSession"] != "null") {
       try {
-        this.session = JSON.parse(sessionStorage["UserSession"])
-        this.isAuthenticated = this.session.authentication.isAuthenticated;
-        this.identity.roles = this.session.userIdentity.roles;
+        this.session = JSON.parse(sessionStorage["UserSession"])         
         this.traderId = this.session.userIdentity.userId;
       }
       catch (ex) {
@@ -145,8 +143,7 @@ export class TraderHomeComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
-    this.isRequesting = true;  
+  private initialiseComponent() { 
     this.pageTitleService.emitPageTitle(new PageTitle("Trader Home"));    
     this.messagesService.emitRoute("nill");   
   }
@@ -195,7 +192,6 @@ export class TraderHomeComponent implements OnInit {
   private onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
-
     let message: string = "";
 
     // audit log the error passed
@@ -219,7 +215,7 @@ export class TraderHomeComponent implements OnInit {
       this.messagesService.emitProcessMessage("PME", message);
     }
     else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
-    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.Message); }
     else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
 
 

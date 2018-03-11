@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
 
 
   private onLoginSuccess(res:any) {    
-    if (sessionStorage["UserSession"] != "null") {
+    if (sessionStorage["UserSession"] !== "null") {
       this.router.navigate(['/traderhome']);
       this.emitUserSession(res);
       this.isRequesting = false;
@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
     }  
     else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
     else if (serviceError.status === 400 && serviceError.error.substring("password") !== null) { this.messagesService.emitProcessMessage("PMEPUI"); }
-    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error); }
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.Message); }
     else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
 
   }

@@ -42,18 +42,18 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
 
   //t r a d e s
-  { path: 'tradeslist', component: TradesListComponent }, 
+  { path: 'tradeslist', component: TradesListComponent}, 
   { path: 'tradedetails', component: TradeDetailsComponent }, // this should be accessible from the dashboard or the list of all trades or my trades view
   { path: 'addtrade', component: AddTradeComponent, canActivate: [AuthGuard]},
   { path: 'mytradeslist', component: MyTradesListComponent, canActivate: [AuthGuard] },
 
   // t r a d e r
+  { path: 'traderdetails', component: TraderDetailsComponent}, // this should be accessible from the dashboard of all trades view  
   { path: 'traderhome', component: TraderHomeComponent, canActivate: [AuthGuard] },   
   { path: 'mytraderaccount', component: MyTraderAccountComponent, canActivate: [AuthGuard] },
   { path: 'personaldetails', component: PersonalDetailsComponent, canActivate: [AuthGuard] },
   { path: 'contactdetails', component: ContactlDetailsComponent, canActivate: [AuthGuard] },
-  { path: 'securitydetails', component: SecurityDetailsComponent, canActivate: [AuthGuard] },
-  { path: 'traderdetails', component: TraderDetailsComponent }, // this should be accessible from the dashboard of all trades view  
+  { path: 'securitydetails', component: SecurityDetailsComponent, canActivate: [AuthGuard] },  
   { path: 'traderslist', component: TradersListComponent, canActivate: [AuthGuard] },
 
   // correspondence

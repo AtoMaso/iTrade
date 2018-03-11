@@ -102,7 +102,6 @@ import { CorrespondenceListComponent } from './views/correspondence/corresponden
 import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
 import { AddCorrespondenceComponent } from './views/correspondence/addcorrespondence/addcorrespondence.component';
 
-
 //initialises the process message service to get all process messages on start of the application
 export function getprocessmessages(processMessageService: ProcessMessageService) {
   return () => processMessageService.getProcessMessage();

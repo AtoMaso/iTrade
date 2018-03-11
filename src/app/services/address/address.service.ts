@@ -132,7 +132,7 @@ export class AddressService {
       })
     };
 
-    this.localUrl = `${deleteAddressUrl}/${address.id}`;
+    this.localUrl = `${deleteAddressUrl}?id=${address.id}`;
     return this.httpClientService.delete<Address>(this.localUrl, httpOptions).retry(1);
   }
 

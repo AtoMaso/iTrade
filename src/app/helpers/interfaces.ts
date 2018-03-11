@@ -62,6 +62,7 @@ interface IAddress {
   id: number; 
   number: string;
   unit: string;
+  pobox: string;
   street: string;
   suburb: string;
   city: string;

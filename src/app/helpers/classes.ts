@@ -133,6 +133,7 @@ class Address implements IAddress {
   id: number; 
   number: string;
   unit: string;
+  pobox: string;
   street: string;
   suburb: string;
   postcode: string;
@@ -148,6 +149,7 @@ class Address implements IAddress {
   constructor() {
     this.id = 0;
     this.number = "";
+    this.pobox = "";
     this.unit = "";
     this.street = "";
     this.suburb = "";
@@ -575,7 +577,7 @@ class UserIdentity implements IUserIdentity {
     this.accessToken = "";
     this.refreshToken = "";
     this.accessTokenType = "";
-    this.accessTokenExpiresDate = new Date();
+    this.accessTokenExpiresDate = null;
     this.accessTokenExpiresIn = 0;
     this.userName = "";
     this.email = "";
