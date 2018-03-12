@@ -45,9 +45,9 @@ export class AppComponent implements OnDestroy, OnInit {
   private subscriptionTitle: Subscription;
   private subscriptionRouter: Subscription;
 
-  private authentication: Authentication;
-  private userSession: UserSession;
-  private userIdentity: UserIdentity;
+  private authentication: Authentication  = new Authentication();
+  private userSession: UserSession= new UserSession();
+  private userIdentity: UserIdentity = new UserIdentity();
   private isUserAuthenticated: boolean = false;
   private isUserAllowed: boolean = false;
 
@@ -131,6 +131,7 @@ export class AppComponent implements OnDestroy, OnInit {
   //*******************************************************
   // called from the session modal dialog when session needs to be closed
   public onCloseSession() {
+    this.idle.stop();
     this.logOut();
     this.isUserAuthenticated = false;
     this.isUserAllowed = false;
@@ -176,7 +177,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
       // when the timeout has been kill the modal and kill the session
       this.idle.onTimeout.subscribe(() => {
-        this.modalComponent.closeSession();
+        this.modalComponent.closeModal();
         this.onCloseSession();   
       });
 

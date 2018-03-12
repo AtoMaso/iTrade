@@ -44,10 +44,10 @@ export class TraderHomeComponent implements OnInit {
 
   ngOnInit() {
     
-    this.getUseridentity();
+    this.getUserSession();
     this.initialiseComponent();
 
-    this.getTrades(this.traderId, this.status);    
+    this.getCorres(this.traderId, this.statusCorr);    
   }
 
 
@@ -73,6 +73,34 @@ export class TraderHomeComponent implements OnInit {
     });
   }
 
+  //****************************************************************************************
+  // GET CORRESPONDENCE - -- this wil get all correspondence, if there are no any will show the message
+  //****************************************************************************************
+  private getCorres(traderId: string, statusCorres: string = "All") {
+
+    this.corresService.getCorresByTraderIdWithStatusOrAll(traderId, statusCorres)
+      .subscribe((returnedCorres: Correspondence[]) => {
+        if (returnedCorres.length === 0) { this.hasCorres = false; }
+        else {
+          this.onSuccessCorres(returnedCorres);
+        }
+      },
+      (res: Response) => this.onError(res, "getCorres"));
+
+  }
+
+  private onSuccessCorres(corres) {
+    if (corres.length === 0) { this.hasCorres = false; }
+    else {
+      this.dataCorr = corres;
+      this.hasCorres = true;
+      this.isFirstLoadCorr = true;
+      this.onChangeTableCorr(this.configCorr);
+      this.onPageChangeCorr(1);
+    }
+
+    this.getTrades(this.traderId, this.status);
+  }
 
 
   //**************************************************************************************
@@ -92,45 +120,24 @@ export class TraderHomeComponent implements OnInit {
   private onSuccessTrades(trades: Trade[]) {
     if (trades.length === 0) { this.hasTrades = false; }
     else {
-      this.data = this.TransformData(trades),
+        this.data = this.TransformData(trades),
+        this.isRequesting = false,
         this.hasTrades = true,
         this.isFirstLoad = true;
         this.onChangeTable(this.config),
-        this.onPageChange(1)
+        this.onPageChange(1);
     }
 
     // now call the correspondence
-    this.getCorres(this.traderId, this.statusCorr);
+    //this.getCorres(this.traderId, this.statusCorr);
   }
 
-
-
-  //****************************************************************************************
-  // GET CORRESPONDENCE - -- this wil get all correspondence, if there are no any will show the message
-  //****************************************************************************************
-  private getCorres(traderId: string, status: string = "All") {
-
-    this.corresService.getCorresByTraderIdWithStatusOrAll(traderId, status)
-      .subscribe((returnedCorres: Correspondence []) => {
-        if (returnedCorres.length === 0) { this.hasCorres = false; } 
-        else {
-          this.dataCorr = returnedCorres,
-            this.isRequesting = false,
-            this.hasCorres = true,
-            this.isFirstLoadCorr = true;
-            this.onChangeTableCorr(this.configCorr),
-            this.onPageChangeCorr(1)
-        }
-      },
-      (res: Response) => this.onError(res, "getCorres"));
-
-  }
 
 
   //*****************************************************
   // HELPER METHODS 
   //*****************************************************
-  private getUseridentity() {
+  private getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])         

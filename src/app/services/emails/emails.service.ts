@@ -36,9 +36,6 @@ export class EmailsService {
   private localUrl: string;
   private args: RequestOptionsArgs;
   private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
-  private token: string;
-
 
   constructor(private httpClientService: HttpClient) {
     this.getUseridentity();
@@ -55,7 +52,7 @@ export class EmailsService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.session.userIdentity.accessToken}`
       })
     };
 
@@ -75,7 +72,7 @@ export class EmailsService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.session.userIdentity.accessToken}`
       })
     };
 
@@ -94,7 +91,7 @@ export class EmailsService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.session.userIdentity.accessToken}`
       })
     };
 
@@ -111,7 +108,7 @@ export class EmailsService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.session.userIdentity.accessToken}`
       })
     };
 
@@ -128,7 +125,7 @@ export class EmailsService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.session.userIdentity.accessToken}`
       })
     };
 
@@ -146,7 +143,7 @@ export class EmailsService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.session.userIdentity.accessToken}`
       })
     };
 
@@ -166,7 +163,7 @@ export class EmailsService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.session.userIdentity.accessToken}`
       })
     };
 
@@ -181,9 +178,7 @@ export class EmailsService {
   //*****************************************************
   private getUseridentity() {
     if (sessionStorage["UserSession"] != "null") {
-      this.session = JSON.parse(sessionStorage["UserSession"])
-      this.identity = this.session.userIdentity;
-      this.token = this.identity.accessToken;
+      this.session = JSON.parse(sessionStorage["UserSession"]);    
     }
   }
 

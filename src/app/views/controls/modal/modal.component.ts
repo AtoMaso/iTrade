@@ -18,7 +18,7 @@ export class ModalComponent {
       }
 
 
-      public closeSession() {        
+      public closeModal() {        
         this.modalIsVisible = false;      
       }
 }

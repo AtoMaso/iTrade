@@ -102,7 +102,7 @@
 
       // personal details
     personaldetails: 'http://localhost:5700/api/personaldetails',
-    personaldetailsbytraderid: 'http://localhost:5700/api/personaldetails/GetPersonalDetailsByTraderId',    
+    personaldetailsbytraderid: 'http://localhost:5700/api/personaldetails/GetPersonalDetailsByTraderId', 
     personaldetail: 'http://localhost:5700/api/personaldetails/',
     updatepersonaldetail: 'http://localhost:5700/api/personaldetails/PutPersonalDetail',
     addpersonaldetail: 'http://localhost:5700/api/personaldetails/PostPersonalDetails',

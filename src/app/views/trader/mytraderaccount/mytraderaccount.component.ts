@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router'
 import { FormBuilder, FormGroup, FormControl, FormArray, ReactiveFormsModule, Validators  } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 // services
+import { AuthenticationService } from '../../../services/authentication/authentication.service';
 import { PersonalDetailsService } from '../../../services/personaldetails/personaldetails.service';
 import { AddressService } from '../../../services/address/address.service';
 import { StatesService } from '../../../services/states/states.service';
@@ -90,6 +91,7 @@ export class MyTraderAccountComponent implements OnInit {
   private passedToModalObject: Object;
 
   constructor(
+    private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -106,8 +108,7 @@ export class MyTraderAccountComponent implements OnInit {
     this.getUserSession();
     this.initialiseComponent();
    
-    this.getStates();   
-    this.getPersonalDetailsByTraderId(this.traderId);   
+    this.getStates();     
 
     this.setAddressForm();
     this.setPersonalForm();
@@ -179,12 +180,12 @@ export class MyTraderAccountComponent implements OnInit {
     // collections return zero length when no record found as it is initialised
     if (res.length == 0) { this.states = null; }
     else { this.states = res; }
-    this.getAddressesByTraderId(this.traderId);
+    this.getPersonalDetailsByTraderId(this.traderId);
   }
 
 
   private getPersonalDetailsByTraderId(traderId: string) {
-       
+
     this.personalService.getPersonalDetailsByTraderId(traderId)
       .subscribe((personalResult: PersonalDetails) => {
         this.onSuccessPersonal(personalResult);
@@ -192,12 +193,15 @@ export class MyTraderAccountComponent implements OnInit {
   }
 
 
-  private onSuccessPersonal(pd: PersonalDetails) { 
+  private onSuccessPersonal(pd: PersonalDetails) {
     // empty records returned 
     if (pd.id != 0) { this.personalDetails = pd; }
- }
+
+    this.getAddressesByTraderId(this.traderId);
+  }
 
 
+ 
   // get addresses for the trader from the server
   private getAddressesByTraderId(traderId: string) {
 
@@ -566,6 +570,7 @@ export class MyTraderAccountComponent implements OnInit {
       .subscribe((personalResult: PersonalDetails) => {
         this.personalToRemove = personalResult;
         this.getPersonalDetailsByTraderId(this.traderId);
+
       }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeletePersonal"));
 
   }

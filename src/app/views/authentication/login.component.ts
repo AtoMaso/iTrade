@@ -69,10 +69,10 @@ export class LoginComponent implements OnInit {
 
 
   private onLoginSuccess(res:any) {    
-    if (sessionStorage["UserSession"] !== "null") {
-      this.router.navigate(['/traderhome']);
+    if (sessionStorage["UserSession"] !== "null") {   
       this.emitUserSession(res);
       this.isRequesting = false;
+      this.router.navigate(['/traderhome']);
     }
     else {
       this.messagesService.emitProcessMessage("PMEANC"); // account not confirmed

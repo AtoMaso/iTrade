@@ -10,6 +10,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry'; 
 
+import {AuthenticationService } from '../authentication/authentication.service';
 import { Trade, PostTrade, UserSession, UserIdentity} from '../../helpers/classes';
 
 let allTrades = CONFIG.baseUrls.alltrades;
@@ -39,13 +40,9 @@ export class TradeApiService {
 
   private args: RequestOptionsArgs;
   private localUrl: string; 
-  private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
-  private token: string;
   private newTrade = new PostTrade();
 
-  constructor(
-    private httpClientService: HttpClient ) { };
+    constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
  
 
   //******************************************************
@@ -146,15 +143,13 @@ export class TradeApiService {
   // ADD TRADE
   //******************************************************
   public AddTrade(trade: PostTrade):Observable<PostTrade> {
-    // get the session details
-    this.getUseridentity(); 
-
+    
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
     // post the trade
@@ -168,15 +163,13 @@ export class TradeApiService {
   // UPDATE TRADE
   //******************************************************
   public UpdateTrade(trade: Trade): Observable<Trade>{
-    // get the session details
-    this.getUseridentity();
-
+  
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
     // post the trade
@@ -190,15 +183,13 @@ export class TradeApiService {
   // DELETE TRADE
   //******************************************************
   public DeleteTrade(tradeid:number): Observable<PostTrade> {
-    // get the session details
-    this.getUseridentity();
-
+ 
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
     this.localUrl = `${deleteTrade}?tradeId=${tradeid}`; // DELETE api/trades/DeleteTrade?tradeId=1
@@ -219,14 +210,4 @@ export class TradeApiService {
   //  );
   //}
 
-  //*****************************************************
-  // HELPER METHODS
-  //*****************************************************
-  private getUseridentity() {
-    if (sessionStorage["UserSession"] != "null") {    
-        this.session = JSON.parse(sessionStorage["UserSession"])       
-        this.identity = this.session.userIdentity;   
-        this.token = this.identity.accessToken;      
-    }
-  }
 }

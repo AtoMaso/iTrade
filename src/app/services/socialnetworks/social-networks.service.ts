@@ -10,6 +10,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry';
 
+import {AuthenticationService } from '../authentication/authentication.service';
 import { LoggerService } from '../logger/logger.service';
 import { Address, AddressType } from '../../helpers/classes';
 import { UserSession, UserIdentity, SocialNetwork, SocialNetworkType } from '../../helpers/classes';
@@ -36,13 +37,8 @@ export class SocialNetworksService {
   private localUrl: string;
   private args: RequestOptionsArgs;
   private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
-  private token: string;
 
-
-  constructor(private httpClientService: HttpClient) {
-    this.getUseridentity();
-  };
+  constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
   //******************************************************
@@ -55,7 +51,7 @@ export class SocialNetworksService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
@@ -75,7 +71,7 @@ export class SocialNetworksService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
@@ -95,7 +91,7 @@ export class SocialNetworksService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
@@ -112,7 +108,7 @@ export class SocialNetworksService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
@@ -129,7 +125,7 @@ export class SocialNetworksService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
@@ -147,7 +143,7 @@ export class SocialNetworksService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
@@ -167,25 +163,13 @@ export class SocialNetworksService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
     this.localUrl = `${socialnetworkTypesUrl}`;
     return this.httpClientService.get<SocialNetworkType[]>(this.localUrl, httpOptions).retry(1);
 
-  }
-
-
-  //*****************************************************
-  // HELPER METHODS
-  //*****************************************************
-  private getUseridentity() {
-    if (sessionStorage["UserSession"] != "null") {
-      this.session = JSON.parse(sessionStorage["UserSession"])
-      this.identity = this.session.userIdentity;
-      this.token = this.identity.accessToken;
-    }
   }
 
 }

@@ -10,7 +10,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry'; 
 
-import { LoggerService } from '../logger/logger.service';
+import {AuthenticationService } from '../authentication/authentication.service';
 import { Image } from '../../helpers/classes';
 
 
@@ -23,10 +23,7 @@ let removeimageUrl = CONFIG.baseUrls.removeimage;
 @Injectable()
 export class ImageService {
 
-  constructor(
-    private httpClientService: HttpClient,
-    private http: Http,
-    private loggerService: LoggerService) { };
+  constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
     //******************************************************

@@ -9,7 +9,6 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry';
 
-import { LoggerService } from '../logger/logger.service';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { TradeHistory, UserSession, UserIdentity} from '../../helpers/classes';
 
@@ -25,9 +24,7 @@ let removeTradeHistoryUrl = CONFIG.baseUrls.removetradehistory;
 @Injectable()
 export class TradeHistoryService {
 
-  constructor(
-    private httpClientService: HttpClient,
-    private loggerService: LoggerService) { };
+  constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
   //******************************************************

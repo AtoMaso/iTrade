@@ -11,6 +11,7 @@ import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry';
 
 
+import {AuthenticationService } from '../authentication/authentication.service';
 import { LoggerService } from '../logger/logger.service';
 import { Correspondence, UserSession, UserIdentity, PersonalDetails } from '../../helpers/classes';
 
@@ -30,13 +31,10 @@ let deletecorres = CONFIG.baseUrls.deletecorres;
 export class CorrespondenceService {
   private localUrl: string;
   private args: RequestOptionsArgs;
-  private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
-  private token: string;
+  private session: UserSession; 
+ 
 
-  constructor(private httpClientService: HttpClient) {
-    this.getUseridentity();
-  };
+  constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
    //**********************************************************
@@ -44,12 +42,14 @@ export class CorrespondenceService {
   //***********************************************************
   public getCorres(status:string): Observable<Correspondence[]> {
 
+    this.getUserSession();
+
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
@@ -72,7 +72,7 @@ export class CorrespondenceService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
    
@@ -93,7 +93,7 @@ export class CorrespondenceService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
   
@@ -114,7 +114,7 @@ export class CorrespondenceService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
@@ -135,7 +135,7 @@ export class CorrespondenceService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
@@ -148,11 +148,9 @@ export class CorrespondenceService {
   //*****************************************************
   // HELPER METHODS
   //*****************************************************
-  private getUseridentity() {
+  private getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
-      this.session = JSON.parse(sessionStorage["UserSession"])
-      this.identity = this.session.userIdentity;
-      this.token = this.identity.accessToken;
+      this.session = JSON.parse(sessionStorage["UserSession"]);
     }
   }
 }

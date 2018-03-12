@@ -9,8 +9,9 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry'; 
 
+import {AuthenticationService } from '../authentication/authentication.service';
 import { LoggerService } from '../logger/logger.service';
-import { Category, UserSession} from '../../helpers/classes';
+import { Category, UserSession, UserIdentity} from '../../helpers/classes';
 
 let categoriesUrl = CONFIG.baseUrls.categories;
 let categoryUrl = CONFIG.baseUrls.category;
@@ -22,16 +23,9 @@ let deleteCategoryUrl = CONFIG.baseUrls.deletecategory;
 
 @Injectable()
 export class CategoryService {   
-    private localUrl: string;
-    private session: UserSession;
+  private localUrl: string;
 
-  constructor(private httpClientService: HttpClient, private loggerService: LoggerService) {
-
-      if (sessionStorage["UserSession"] !== "null") {
-        this.session = JSON.parse(sessionStorage["UserSession"]);
-      }
-    };   
-
+  constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
     //******************************************************

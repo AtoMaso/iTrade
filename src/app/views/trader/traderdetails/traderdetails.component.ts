@@ -224,6 +224,7 @@ export class TraderDetailsComponent implements OnInit {
 
 
   private onSuccessSocial(social: SocialNetwork) {
+  
     // handles the zero record
     if (social.id == 0) { this.hasSocial = false; }
     else {
@@ -272,12 +273,13 @@ export class TraderDetailsComponent implements OnInit {
  //***********************************************************
   private getTradesHistory(traderId: string, status: string = "Closed") {
 
+    this.isRequesting = false; // finish requesting
+
     this.tradeService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) { this.hasHistory = false; }
         else {
-          this.dataHis = this.TransformData(returnedTrades),
-            this.isRequesting = false; // finish requesting
+          this.dataHis = this.TransformData(returnedTrades),          
             this.hasHistory = true;
             this.isNewLoadHis = true;
             this.onChangeTableHis(this.configHis),

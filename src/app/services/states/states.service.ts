@@ -10,7 +10,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry'; 
 
-import { LoggerService } from '../logger/logger.service';
+import {AuthenticationService } from '../authentication/authentication.service';
 import { State } from '../../helpers/classes';
 
 
@@ -23,9 +23,7 @@ let deleteStateUrl = CONFIG.baseUrls.deletestate;
 @Injectable()
 export class StatesService {
 
-  constructor(
-    private httpClientService: HttpClient,
-    private loggerService: LoggerService) { };
+  constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
     //******************************************************

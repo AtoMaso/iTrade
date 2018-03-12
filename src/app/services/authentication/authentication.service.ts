@@ -24,9 +24,9 @@ let serviceAccount = CONFIG.baseUrls.accounts;
 export class AuthenticationService implements OnDestroy {
 
   private timer: any = null;
-  private authentication: Authentication = new Authentication();
-  private userIdentity: UserIdentity = new UserIdentity();
-  public userSession: UserSession = new UserSession();
+  private authentication: Authentication;
+  private userIdentity: UserIdentity;
+  public userSession: UserSession;
 
   public subjectSessionStore = new Subject<UserSession>();
   public subjectSessionObserver$ = this.subjectSessionStore.asObservable();
@@ -113,6 +113,10 @@ export class AuthenticationService implements OnDestroy {
     let body = JSON.parse(res);   //.json(); use it with Http
 
     if (body.emailConfirmed == "True") {  // this means the account has not been confirmed
+
+        this.removeUserSession();
+        this.removeUserIdentity();
+        this.removeAuthData();
 
         this.userIdentity = new UserIdentity();
         this.authentication = new Authentication();
@@ -226,14 +230,9 @@ export class AuthenticationService implements OnDestroy {
 
   private removeUserIdentity() {
       this.userIdentity = null;
-      sessionStorage["UserIdentity"] = "null";
+      sessionStorage["UserIdentity"] = null;
   }
 
-  private init() {
-      if (sessionStorage["UserIdentity"] != "null")  {
-          this.userIdentity = JSON.parse(sessionStorage["UserIdentity"]);
-      }
-  }
 
  // authentication section
   private storeAuthData(authData: Authentication) {
@@ -246,13 +245,7 @@ export class AuthenticationService implements OnDestroy {
 
   private removeAuthData() {
     this.authentication = null;    
-    sessionStorage["Authentication"] = "null";
-  }
-
-  private initAuthData() {
-    if (sessionStorage["Authentication"] != "null") {
-      this.authentication = JSON.parse(sessionStorage["Authentication"]);
-    }
+    sessionStorage["Authentication"] = null;
   }
 
   // session section
@@ -260,15 +253,27 @@ export class AuthenticationService implements OnDestroy {
       sessionStorage["UserSession"] = JSON.stringify(session);
   }
 
-  public getUserSession() {
+  public getUserSession(): UserSession {
       return this.userSession;
   }
 
   private removeUserSession() {
       this.userSession = null;
-      sessionStorage["UserSession"] = "null";
+      sessionStorage["UserSession"] = null;
   }
 
+
+  private initIdentity() {
+    if (sessionStorage["UserIdentity"] != "null") {
+      this.userIdentity = JSON.parse(sessionStorage["UserIdentity"]);
+    }
+  }
+
+  private initAuthData() {
+    if (sessionStorage["Authentication"] != "null") {
+      this.authentication = JSON.parse(sessionStorage["Authentication"]);
+    }
+  }
   private initUserSession(): UserSession{
       if (sessionStorage["UserSession"] != "null") {
         this.userSession = JSON.parse(sessionStorage["UserSession"]);

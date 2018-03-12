@@ -10,7 +10,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry';
 
-import { LoggerService } from '../logger/logger.service';
+import {AuthenticationService } from '../authentication/authentication.service';
 import { UserSession, UserIdentity, SecurityDetails} from '../../helpers/classes';
 
 let securitydetailsbytraderid = CONFIG.baseUrls.securitydetailsbytraderid;
@@ -20,14 +20,8 @@ export class SecurityDetailsService {
 
   private localUrl: string;
   private args: RequestOptionsArgs;
-  private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
-  private token: string;
 
-
-  constructor( private httpClientService: HttpClient) {
-    this.getUseridentity();
-  };
+  constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
   public getSecurityDetailsByTraderId(traderId: string): Observable<SecurityDetails> {
     // prepare the headesrs
@@ -35,7 +29,7 @@ export class SecurityDetailsService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
 
@@ -43,16 +37,5 @@ export class SecurityDetailsService {
     return this.httpClientService.get<SecurityDetails>(this.localUrl, httpOptions).retry(1);
   }
 
-
-  //*****************************************************
-  // HELPER METHODS
-  //*****************************************************
-  private getUseridentity() {
-    if (sessionStorage["UserSession"] != "null") {
-      this.session = JSON.parse(sessionStorage["UserSession"])
-      this.identity = this.session.userIdentity;
-      this.token = this.identity.accessToken;
-    }
-  }
 }
 
