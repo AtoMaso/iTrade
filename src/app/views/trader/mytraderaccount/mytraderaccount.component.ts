@@ -568,7 +568,10 @@ export class MyTraderAccountComponent implements OnInit {
     //delete personal here   
     this.personalService.deletePersonaDetails(personalToRemove)
       .subscribe((personalResult: PersonalDetails) => {
-        this.personalToRemove = personalResult;
+        if (personalResult) {
+          this.messagesService.emitProcessMessage("PMSDPD");
+        }
+      
         this.getPersonalDetailsByTraderId(this.traderId);
 
       }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeletePersonal"));

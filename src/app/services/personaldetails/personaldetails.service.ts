@@ -15,9 +15,9 @@ import { LoggerService } from '../logger/logger.service';
 import { UserSession, UserIdentity, PersonalDetails} from '../../helpers/classes';
 
 let personaldetailsbytraderid = CONFIG.baseUrls.personaldetailsbytraderid;
-let updatepersonaldetail = CONFIG.baseUrls.updatepersonaldetail;
-let addpersonaldetail = CONFIG.baseUrls.addpersonaldetail;
-let deletepersonaldetails = CONFIG.baseUrls.deletepersonaldetail;
+let updatepersonaldetails = CONFIG.baseUrls.updatepersonaldetail;
+let addpersonaldetails = CONFIG.baseUrls.addpersonaldetail;
+let deletepersonaldetails = CONFIG.baseUrls.deletepersonaldetails;
 
 @Injectable()
 export class PersonalDetailsService {
@@ -61,7 +61,7 @@ export class PersonalDetailsService {
       })
     };
 
-    this.localUrl = `${addpersonaldetail}`;
+    this.localUrl = `${addpersonaldetails}`;
     return this.httpClientService.post<PersonalDetails>(this.localUrl, pd, httpOptions).retry(1);
   }
 
@@ -79,7 +79,7 @@ export class PersonalDetailsService {
       })
     };
 
-    this.localUrl = `${updatepersonaldetail}?id=${pd.id}`;
+    this.localUrl = `${updatepersonaldetails}?id=${pd.id}`;
     return this.httpClientService.put<PersonalDetails>(this.localUrl, pd, httpOptions).retry(1);
   }
 
