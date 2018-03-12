@@ -15,8 +15,8 @@
 
                                               <div class="col-md-12">
                                                 <div *ngIf="!personalDetails" class="col-md-4"><a (click)="onPersonalAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
-                                                <div *ngIf="personalDetails" class="col-md-6"><a (click)="onPersonalEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-                                                <div *ngIf="personalDetails" class="col-md-6"><a  data-target="#removePersonal" data-toggle="modal" (click)="onPersonalDeleteClick(personalDetails)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>                                             
+                                                <div *ngIf="personalDetails" class="col-md-4"><a (click)="onPersonalEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                                                <!--<div *ngIf="personalDetails" class="col-md-6"><a  data-target="#removePersonal" data-toggle="modal" (click)="onPersonalDeleteClick(personalDetails)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>-->                                             
                                               </div>
 
                                               <div *ngIf="personalDetails != null" class="col-md-12">

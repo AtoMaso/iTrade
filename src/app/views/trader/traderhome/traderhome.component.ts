@@ -6,11 +6,12 @@ import { Response } from '@angular/http';
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { CorrespondenceService } from '../../../services/correspondence/correspondence.service';
+import { PersonalDetailsService } from '../../../services/personaldetails/personaldetails.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Correspondence } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Correspondence, PersonalDetails } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -29,12 +30,14 @@ export class TraderHomeComponent implements OnInit {
   private statusCorr: string = "New";
   private hasTrades: boolean = true;
   private hasCorres: boolean = true;
+  private hasPersonal: boolean = false;
   private isFirstLoad: boolean = false;
   private isFirstLoadCorr: boolean = false;
 
   constructor(
     private tradeService: TradeApiService,
     private corresService: CorrespondenceService,
+    private personalService: PersonalDetailsService,
     private route: ActivatedRoute,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
@@ -46,8 +49,9 @@ export class TraderHomeComponent implements OnInit {
     
     this.getUserSession();
     this.initialiseComponent();
-
+    this.getTrades(this.traderId, this.status);
     this.getCorres(this.traderId, this.statusCorr);    
+    this.getPersonalDetails(this.traderId);
   }
 
 
@@ -89,17 +93,12 @@ export class TraderHomeComponent implements OnInit {
 
   }
 
-  private onSuccessCorres(corres) {
-    if (corres.length === 0) { this.hasCorres = false; }
-    else {
+  private onSuccessCorres(corres) {   
       this.dataCorr = corres;
       this.hasCorres = true;
       this.isFirstLoadCorr = true;
       this.onChangeTableCorr(this.configCorr);
-      this.onPageChangeCorr(1);
-    }
-
-    this.getTrades(this.traderId, this.status);
+      this.onPageChangeCorr(1);   
   }
 
 
@@ -110,26 +109,36 @@ export class TraderHomeComponent implements OnInit {
     this.isRequesting = true;  
     this.tradeService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
-        this.onSuccessTrades(returnedTrades);
+        if (returnedTrades.length === 0) { this.hasTrades = false; }
+        else { this.onSuccessTrades(returnedTrades); }
       },
       (res: Response) => this.onError(res, "getTrades"));
 
   }
 
 
-  private onSuccessTrades(trades: Trade[]) {
-    if (trades.length === 0) { this.hasTrades = false; }
-    else {
+  private onSuccessTrades(trades: Trade[]) {  
         this.data = this.TransformData(trades),
         this.isRequesting = false,
         this.hasTrades = true,
         this.isFirstLoad = true;
         this.onChangeTable(this.config),
-        this.onPageChange(1);
-    }
+        this.onPageChange(1);   
+  }
 
-    // now call the correspondence
-    //this.getCorres(this.traderId, this.statusCorr);
+  //**************************************************************************************
+  // GET PERSONAL -- this will get all personal details for the trader, will be used for the post trade link
+  //**************************************************************************************
+  private getPersonalDetails(traderId) {
+    this.isRequesting = true;
+
+    this.personalService.getPersonalDetailsByTraderId(traderId)
+      .subscribe((returnedPersonalDetails: PersonalDetails) => {
+        this.isRequesting = false;
+        if (returnedPersonalDetails.id === 0) { this.hasPersonal = false; }
+        else { this.hasPersonal = true; }      
+      },
+      (res: Response) => this.onError(res, "getPersonalDetails"));
   }
 
 

@@ -211,7 +211,15 @@
            <div class="panel panel-heading"><a href="" [routerLink]="['/securitydetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Security Details</i></span></a> </div>
          </div>-->       
          <div class="row">
-           <div class="panel panel-heading"> <a href="" [routerLink]="['/addtrade']"><span class="smalltext text-uppercase textlightcoral"><i>Post Trade</i></span></a> </div>
+           <div *ngIf="hasPersonal" class="panel panel-heading"> 
+                <a  href="" [routerLink]="['/addtrade']"><span class="smalltext text-uppercase textlightcoral"><i>Post Trade</i></span></a> 
+           </div>
+           <div *ngIf="!hasPersonal" class="panel panel-heading">
+             <a href="#posttrade" data-toggle="modal" ><span class="smalltext text-uppercase textlightcoral"><i>Post Trade</i></span></a> 
+             <!--<button  type="button" data-target="#posttrade" data-toggle="modal" class="btn btn-sm btn-warning smalltext" (click)="passToModal(trade)">
+                Close Trade
+             </button>-->
+           </div>
          </div>
                             
        
@@ -223,4 +231,25 @@
 
 <my-spinner [isRunning]="isRequesting"></my-spinner>
 
-    
+    <div class="modal fade" id="posttrade" tabindex="-1" role="dialog" aria-labelledby="postttrade">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Post Trade Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Please provide your personal details before post a trade. Do you want to go your account?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" [routerLink]="['/mytraderaccount']" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>

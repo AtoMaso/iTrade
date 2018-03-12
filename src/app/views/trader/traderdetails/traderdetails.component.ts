@@ -132,10 +132,10 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessPersonal(personalD: PersonalDetails) {
-    if (personalD === null) { this.hasPersonal = false; }
+  private onSuccessPersonal(personal: PersonalDetails) {
+    if (personal.id === 0) { this.hasPersonal = false; }
     else {
-      this.personal = this.TransformDataPersonal(personalD);
+      this.personal = this.TransformDataPersonal(personal);
       this.hasPersonal = true;      
     }             
     // call now get addresses 
