@@ -139,11 +139,11 @@ export class TraderDetailsComponent implements OnInit {
       this.hasPersonal = true;      
     }             
     // call now get addresses 
-    this.gePreferredAddresse(this.traderId);
+    this.gePreferredAddress(this.traderId);
   }
 
 
-  private gePreferredAddresse(traderId: string) {
+  private gePreferredAddress(traderId: string) {
 
     this.addressService.getPreferredAddress(traderId, "Yes")
       .subscribe((addressResult: Address) => {

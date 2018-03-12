@@ -86,17 +86,18 @@ export class SocialNetworksService {
   //******************************************************
   public getPreferredSocialNetwork(traderId: string, flag: string): Observable<SocialNetwork> {
 
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
+    //// prepare the headesrs
+    //const httpOptions = {
+    //  headers: new HttpHeaders({
+    //    'Accept': 'application/json',
+    //    'Content-Type': 'application/json',
+    //    'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+    //  })
+    //};
 
     this.localUrl = `${preferredsocialnetwork}?traderId=${traderId}&preferredFlag=${flag}`;
-    return this.httpClientService.get<SocialNetwork>(this.localUrl, httpOptions).retry(1);
+    //return this.httpClientService.get<SocialNetwork>(this.localUrl, httpOptions).retry(1);
+    return this.httpClientService.get<SocialNetwork>(this.localUrl).retry(1);
   }
 
   //******************************************************

@@ -34,17 +34,18 @@ export class PersonalDetailsService {
   //*****************************************************
   public getPersonalDetailsByTraderId(traderId: string): Observable<PersonalDetails>{
 
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
+    //// prepare the headesrs
+    //const httpOptions = {
+    //  headers: new HttpHeaders({
+    //    'Accept': 'application/json',
+    //    'Content-Type': 'application/json',
+    //    'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+    //  })
+    //};
 
     this.localUrl = `${personaldetailsbytraderid}?traderId=${traderId}`; 
-    return this.httpClientService.get<PersonalDetails>(this.localUrl, httpOptions).retry(1);
+    //return this.httpClientService.get<PersonalDetails>(this.localUrl, httpOptions).retry(1);
+    return this.httpClientService.get<PersonalDetails>(this.localUrl).retry(1);
   }
 
 

@@ -82,17 +82,18 @@ export class PhonesService {
   //******************************************************
   public getPreferredPhone(traderId: string, flag: string): Observable<Phone> {
 
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
+    //// prepare the headesrs
+    //const httpOptions = {
+    //  headers: new HttpHeaders({
+    //    'Accept': 'application/json',
+    //    'Content-Type': 'application/json',
+    //    'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+    //  })
+    //};
 
     this.localUrl = `${preferedphone}?traderId=${traderId}&preferredFlag=${flag}`;
-    return this.httpClientService.get<Phone>(this.localUrl, httpOptions).retry(1);
+   // return this.httpClientService.get<Phone>(this.localUrl, httpOptions).retry(1);
+    return this.httpClientService.get<Phone>(this.localUrl).retry(1);
   }
 
   //******************************************************

@@ -86,17 +86,18 @@ export class EmailsService {
   //******************************************************
   public getPreferredEmail(traderId: string, flag: string): Observable<Email> {
 
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.session.userIdentity.accessToken}`
-      })
-    };
+    //// prepare the headesrs
+    //const httpOptions = {
+    //  headers: new HttpHeaders({
+    //    'Accept': 'application/json',
+    //    'Content-Type': 'application/json',
+    //    'Authorization': `Bearer ${this.session.userIdentity.accessToken}`
+    //  })
+    //};
 
     this.localUrl = `${preferredemail}?traderId=${traderId}&preferredFlag=${flag}`;
-    return this.httpClientService.get<Email>(this.localUrl, httpOptions).retry(1);
+    //return this.httpClientService.get<Email>(this.localUrl, httpOptions).retry(1);
+    return this.httpClientService.get<Email>(this.localUrl).retry(1);
   }
 
   //******************************************************
