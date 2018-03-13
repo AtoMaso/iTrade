@@ -195,12 +195,10 @@
              <div class="panel panel-heading"><a href="" [routerLink]="['/correspondencelist']"><span class="smalltext text-uppercase textlightcoral"><i>My Correspondence</i></span></a> </div>
            </div>
 
-            <div class="row">
-              <div class="panel panel-heading"><a href="" [routerLink]="['/mytraderaccount']"><span class="smalltext text-uppercase textlightcoral"><i>My Account</i></span></a> </div>
-            </div>
+         
 
-            <!--<div class="row">
-              <div class="panel panel-heading"><a href="" [routerLink]="['/personaldetails']"><span class="smalltext text-uppercase textlightcoral"><i>My  Personal Details</i></span></a> </div>
+          <div class="row">
+             <div class="panel panel-heading"><a href="" [routerLink]="['/personaldetails']"><span class="smalltext text-uppercase textlightcoral"><i>My  Personal Details</i></span></a> </div>
           </div>
           
          <div class="row">
@@ -209,16 +207,15 @@
 
          <div class="row">
            <div class="panel panel-heading"><a href="" [routerLink]="['/securitydetails']"><span class="smalltext text-uppercase textlightcoral"><i>My Security Details</i></span></a> </div>
-         </div>-->       
+         </div>       
+
          <div class="row">
+
            <div *ngIf="hasPersonal" class="panel panel-heading"> 
                 <a  href="" [routerLink]="['/addtrade']"><span class="smalltext text-uppercase textlightcoral"><i>Post Trade</i></span></a> 
            </div>
            <div *ngIf="!hasPersonal" class="panel panel-heading">
-             <a href="#posttrade" data-toggle="modal" ><span class="smalltext text-uppercase textlightcoral"><i>Post Trade</i></span></a> 
-             <!--<button  type="button" data-target="#posttrade" data-toggle="modal" class="btn btn-sm btn-warning smalltext" (click)="passToModal(trade)">
-                Close Trade
-             </button>-->
+             <a href="#posttrade" data-toggle="modal" ><span class="smalltext text-uppercase textlightcoral"><i>Post Trade</i></span></a>       
            </div>
          </div>
                             

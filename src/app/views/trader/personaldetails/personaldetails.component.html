@@ -1,3 +1,443 @@
-<p>
-  personaldetails works!
-</p>
+<div class="container col-md-12">
+
+      <!-- personal deatils + address details row -->
+          <div class="row">
+    
+                      <div class="col-md-3 col-md-offset-1 panel panel-heading footerdiv">             
+
+                            <div class="personal collapsed col-md-12" data-toggle="collapse" data-target="#collapsePersonal">
+                              <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Personal Details</span>
+                            </div>
+
+                            <div class="colapse in col-md-12" id="collapsePersonal" style="margin-top:20px;">
+
+                                        <div *ngIf="!isPersonalAddOn && !isPersonalEditOn" class="col-md-12">
+
+                                              <div class="col-md-12">
+                                                <div *ngIf="!personalDetails" class="col-md-4"><a (click)="onPersonalAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                                <div *ngIf="personalDetails" class="col-md-4"><a (click)="onPersonalEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                                                <!--<div *ngIf="personalDetails" class="col-md-6"><a  data-target="#removePersonal" data-toggle="modal" (click)="onPersonalDeleteClick(personalDetails)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>-->                                             
+                                              </div>
+
+                                              <div *ngIf="personalDetails != null" class="col-md-12">
+
+                                                    <div class="row smalltextbold panel panel-heading col-md-11 col-md-offset-1" style="height:50px; margin-top:20px;">
+                                                      First Name:
+                                                      <span class="text-info text-uppercase">{{ personalDetails.firstName }}</span>
+                                                    </div>
+
+                                                    <div class="row smalltextbold panel panel-heading col-md-11 col-md-offset-1" style="height:50px;">
+                                                     Middle Name:
+                                                       <span class="text-info text-uppercase">{{ personalDetails.middleName }}</span>
+                                                    </div>
+
+                                                    <div class="row smalltextbold panel panel-heading col-md-11 col-md-offset-1" style="height:50px;">
+                                                      Last Name
+                                                      <span class="text-info text-uppercase">{{ personalDetails.lastName }}</span>
+                                                    </div>
+
+                                                    <div class="row smalltextbold panel panel-heading col-md-11 col-md-offset-1" style="height:50px;">
+                                                     Date Of Birth:
+                                                      <span class="text-info text-uppercase">{{ personalDetails.dateOfBirth | date }}</span>
+                                                    </div>
+                                              </div>
+
+                                      </div>
+
+                                        <div *ngIf="isPersonalAddOn || isPersonalEditOn" class="row col-md-12">
+
+                                              <form novalidate [formGroup]="personalForm" (submit)="onSubmitPersonalAddUpdate()">
+
+                                                <div class="form-group smalltextbold col-md-12" style="height:70px;">                                          
+                                                      First Name:
+                                                    <div class="input-group">
+                                                      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                      <input type="text" formControlName="fname" id="fname" name="fname" required class="form-control smalltext" style="background-color:moccasin" />
+                                                    </div>                                          
+                                                     <control-messages [control]="personalForm.controls.fname"></control-messages>
+                                                </div>
+
+                                                <div class="form-group smalltextbold col-md-12" style="height:70px;">                                           
+                                                      Middle Name:
+                                                    <div class="input-group">
+                                                      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                      <input type="text" formControlName="mname" id="mname" name="mname" class="form-control smalltext" style="background-color:moccasin" />
+                                                    </div>
+                                                    <control-messages [control]="personalForm.controls.mname"></control-messages>                                          
+                                                </div>
+
+                                                <div class="form-group smalltextbold col-md-12" style="height:70px;">                                            
+                                                     Last Name:
+                                                    <div class="input-group">
+                                                      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                      <input type="text" formControlName="lname" id="lname" name="lname" class="form-control smalltext" style="background-color:moccasin" />
+                                                    </div>
+                                                    <control-messages [control]="personalForm.controls.lname"></control-messages>                                            
+                                                </div>
+
+                                                <div class="form-group smalltextbold col-md-12" style="height:70px;">                                           
+                                                      Date Of Birth:                                                                                       
+                                                      <my-date-picker name="dbirth" formControlName="dbirth"
+                                                                      visibleMonth.monthTxt=""
+                                                                      #dbirth
+                                                                      placeholder="Select a date..."
+                                                                      [options]="datePickerOptions"
+                                                                      (dateChanged)="onDateChanged($event)"
+                                                                      [locale]="currentLocale"
+                                                                      [selDate]="selectDate">
+                                                      </my-date-picker>                                                  
+                                                    <control-messages [control]="personalForm.controls.dbirth"></control-messages>                                           
+                                                </div>
+
+                                                <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
+                                                  <div class="col-md-6">
+                                                    <button  id="personalcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPersonalAddEditCancel()">
+                                                      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                                                    </button>
+                                                  </div>
+
+                                                  <div class="col-md-6">
+                                                    <button  id="personalsave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!personalForm.valid" style="width:auto; height:30px;">
+                                                      <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                                      Save
+                                                    </button>
+                                                  </div>
+                                                </div>
+
+                                              </form>
+
+                                          </div>
+
+                              </div>
+
+                      </div>
+
+
+                      <div class="col-md-6 col-md-offset-1 panel panel-heading footerdiv">
+                          
+                              <div class="address col-md-6 collapsed" data-toggle="collapse" data-target="#collapseAddress">
+                                <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Address Details</span>
+                              </div>          
+                                            
+                              <div class="smalltextbold col-md-6" style="text-align:right;z-index:1000;">     
+                                Select your address:                                                                                                                 
+                                  <select id="atype" name="atype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewAddressTypeChange($event)">
+                                    <option></option>
+                                    <option *ngFor="let atype of existingaddresstypes" [ngValue]="atype">
+                                      {{ atype.addressType }}
+                                    </option>
+                                  </select>                               
+                              </div>                            
+                                                                                
+
+                              <div class="colapse in col-md-12" id="collapseAddress" style="margin-top:20px;">
+
+                                        <div *ngIf="!isAddressAddOn && !isAddressEditOn" class="col-md-12">
+
+                                              <div class="col-md-12"> <!--style="background-color:#FF223A3A;height:30px;">-->
+                                                    <div *ngIf="availableAddressesCount < 3"  class="col-md-2 col-md-offset-1"><a (click)="onAddressAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                                    <div *ngIf="availableAddressesCount > 0"  class="col-md-7" style="text-align:center;"><a (click)="onAddressEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>                                  
+                                                    <div *ngIf="availableAddressesCount > 0"  class="col-md-2"><a data-target="#removeAddress" data-toggle="modal" (click)="onAddressDeleteClick(addressInView)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>                                                                                            
+                                              </div>
+
+                                              <div *ngIf="availableAddresses != null" class="col-md-12">
+
+                                                      <div class="col-md-6">
+
+                                                            <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;margin-top:20px;">
+                                                               Preferred:
+                                                               <span class="text-info text-uppercase"> {{ addressInView.preferredFlag }}</span>
+                                                            </div>
+
+                                                            <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                              Address Type: 
+                                                              <span class="text-info text-uppercase"> {{ addressInView.addressType }}</span>
+                                                            </div>
+
+                                                            <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                              Street Number:
+                                                               <span class="text-info text-uppercase"> {{ addressInView.number }}</span>
+                                                            </div>            
+                                    
+                                                            <div *ngIf="addressInView.unit !=''" class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                              Unit Number:
+                                                              <span class="text-info text-uppercase"> {{ addressInView.unit }}</span>
+                                                            </div>                               
+
+                                                            <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                              Street Name:
+                                                              <span class="text-info text-uppercase"> {{ addressInView.street }}</span>
+                                                            </div>
+                            
+                                                      </div>
+
+                                                      <div class="col-md-5 col-md-offset-1">
+                                                        
+                                                              <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;margin-top:20px;">
+                                                                State:
+                                                                <span class="text-info text-uppercase"> {{ addressInView.state }}</span>
+                                                              </div>
+
+                                                              <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                               City:
+                                                               <span class="text-info text-uppercase"> {{ addressInView.city }}</span>
+                                                              </div>
+
+                                                              <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                                Postcode:
+                                                                <span class="text-info text-uppercase"> {{ addressInView.postcode }}</span>
+                                                              </div>
+
+                                                              <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                                Suburb:
+                                                                <span class="text-info text-uppercase"> {{ addressInView.suburb }}</span>
+                                                              </div>
+                                                      </div>
+
+                                              </div>
+
+                                        </div>
+
+
+                                        <div *ngIf="isAddressAddOn || isAddressEditOn" class="row col-md-12">
+
+                                             <form novalidate [formGroup]="addressForm" (submit) ="onSubmitAddressAddUpdate()">
+
+                                                    <div class="col-md-12">
+
+                                                        <div class="col-md-6">
+
+                                                          <div class="form-group smalltextbold col-md-12" style="height:70px;">                                      
+                                                              Preferred Address:
+                                                              <div class="input-group">
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                                                <select formControlName="preferredtype" id="preferredtype" name="preferredtype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredTypeChange($event)">
+                                                                  <option></option>
+                                                                  <option *ngFor="let preferredtype of allpreferredtypes" [ngValue]="preferredtype">
+                                                                    {{ preferredtype.value }}
+                                                                  </option>
+                                                                </select>
+                                                              </div>                                        
+                                                            <control-messages [control]="addressForm.controls.preferredtype"></control-messages>
+                                                          </div>
+
+                                                          <div class="form-group smalltextbold col-md-12" style="height:70px;">                                     
+                                                               Address Type:
+                                                              <div class="input-group">
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                                                <select formControlName="addresstype" id="addresstype" name="addresstype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onAddressTypeChange($event)">
+                                                                  <option></option>
+                                                                  <option *ngFor="let addtype of alladdresstypes" [ngValue]="addtype">                                             
+                                                                    {{ addtype.addressType }}
+                                                                  </option>
+                                                                </select>
+                                                              </div>
+                                                              <control-messages [control]="addressForm.controls.addresstype"></control-messages>                                        
+                                                          </div>         
+                                                                                                    
+                                                          <div class="form-group smalltextbold col-md-12" style="height:70px;">                                         
+                                                              Street Number
+                                                              <div class="input-group">
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-home" aria-hidden="true"></i></span>
+                                                                <input type="text" formControlName="number" id="number" name="number" class="form-control smalltext" style="background-color:moccasin" />
+                                                              </div>                                          
+                                                            <control-messages [control]="addressForm.controls.number"></control-messages>
+                                                          </div>
+
+                                                          <div class="form-group smalltext col-md-12" style="height:70px;">                                         
+                                                              <label for="unit">Unit Number</label>
+                                                              <div class="input-group">
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-home" aria-hidden="true"></i></span>
+                                                                <input type="text" formControlName="unit" id="unit" name="unit" class="form-control smalltext" style="background-color:moccasin" />
+                                                              </div>
+                                                              <control-messages [control]="addressForm.controls.unit"></control-messages>                                          
+                                                          </div>
+                                    
+                                                          <div class="form-group smalltextbold col-md-12" style="height:70px;">                                       
+                                                              Street
+                                                              <div class="input-group">
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-road" aria-hidden="true"></i></span>
+                                                                <input type="text" formControlName="street" id="street" name="street" class="form-control smalltext" style="background-color:moccasin" />
+                                                              </div>
+                                                              <control-messages [control]="addressForm.controls.street"></control-messages>                                       
+                                                          </div>         
+                                                                
+                                                        </div>
+
+                                                        <div class="col-md-6">                                                          
+
+                                                          <div class="form-group smalltextbold col-md-12" style="height:70px;">                                       
+                                                              State
+                                                              <div class="input-group">
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></i></span>
+                                                                <select formControlName="state" id="state" name="state" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onStateChange($event)">
+                                                                  <option></option>
+                                                                  <option *ngFor="let state of states" [ngValue]="state">
+                                                                    {{ state.name }}
+                                                                  </option>
+                                                                </select>
+                                                              </div>
+                                                              <control-messages [control]="addressForm.controls.state"></control-messages>                                      
+                                                          </div>
+
+                                                          <div class="form-group smalltextbold col-md-12" style="height:70px;">                                       
+                                                              City
+                                                              <div class="input-group">
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-left" aria-hidden="true"></i></span>
+                                                                <select formControlName="city" id="city" name="city" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onCityChange($event)">
+                                                                  <option></option>
+                                                                  <option *ngFor="let city of cities" [ngValue]="city">
+                                                                    {{ city.name }}
+                                                                  </option>
+                                                                </select>
+                                                              </div>
+                                                              <control-messages [control]="addressForm.controls.city"></control-messages>                                     
+                                                          </div>
+
+                                                          <div class="form-group smalltextbold col-md-12" style="height:70px;">                                     
+                                                              Postcode
+                                                              <div class="input-group">
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
+                                                                <select formControlName="postcode" id="postcode" name="postcode" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPostcodeChange($event)">
+                                                                  <option></option>
+                                                                  <option *ngFor="let postcode of postcodes" [ngValue]="postcode">
+                                                                    {{ postcode.number }}
+                                                                  </option>
+                                                                </select>
+                                                              </div>
+                                                              <control-messages [control]="addressForm.controls.postcode"></control-messages>                                     
+                                                          </div>
+
+                                                          <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                                            Suburb
+                                                            <div class="input-group">
+                                                              <span class="input-group-addon"><i class="glyphicon glyphicon-tower" aria-hidden="true"></i></span>
+                                                              <input type="text" formControlName="suburb" id="suburb" name="suburb" class="form-control smalltext" style="background-color:moccasin" />
+                                                            </div>
+                                                            <control-messages [control]="addressForm.controls.suburb"></control-messages>
+                                                          </div>
+
+                                                          <div class="col-md-12 panel panel-heading" style="height:70px;">
+                                                            <div class="col-md-6">
+                                                              <button id="addresscancel" class="btn btn-warning text-capitalize smalltext" style="width:auto; height:30px;" (click)="onAddressAddEditCancel()">
+                                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                                                              </button>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                              <button  id="addresssave" class="btn btn-success text-capitalize smalltext" type="submit" [disabled]="!addressForm.valid" style="width:auto; height:30px;">
+                                                                <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                                                Save
+                                                              </button>
+                                                            </div>
+                                                          </div>
+
+                                                        </div>
+
+                                              </div>
+
+                                        </form>
+
+                                    </div>
+
+                            </div>
+                    </div>
+
+            </div>      
+
+
+
+
+        
+  </div>
+
+<my-spinner [isRunning]="isRequesting"></my-spinner>
+
+<div class="backdrop" [ngStyle]="{'display':displayAddressTypeModal}"></div>
+<!-- Address Type Forbidden Modal -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayAddressTypeModal}" id="addressTypeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="onCloseAddressHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+       <div class="modal-body text-warning">
+          <p>An address with that type is allready registered against you account! Please update or remove an existing address first.</p>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onCloseAddressHandled()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="backdrop" [ngStyle]="{'display':displayPreferredTypeModal}"></div>
+<!-- Preferred Type Forbidden Modal -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredTypeModal }" id="preferredTypeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="onClosePreferredHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>An preffered address is allready registered against you account! Please update the preferrence type of the existing address first.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onClosePreferredHandled()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Person Details Remove-->
+<div class="modal fade" id="removePersonal" tabindex="-1" role="dialog" aria-labelledby="RemovePersonal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">   
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to delete your personal details?</p>
+      </div>
+
+      <div class="modal-footer">        
+          <button class="btn btn-danger" data-dismiss="modal">No</button>
+          <button class="btn btn-success" (click)="onSubmitDeletePersonal(personalToRemove)" data-dismiss="modal">Yes</button>     
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Address Remove Modal-->
+<div class="modal fade" id="removeAddress" tabindex="-1" role="dialog" aria-labelledby="RemoveAddress">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to delete this address?</p>
+      </div>
+
+      <div class="modal-footer">            
+          <button class="btn btn-danger" data-dismiss="modal">No</button>
+          <button class="btn btn-success" (click)="onSubmitDeleteAddress(addressToRemove)" data-dismiss="modal">Yes</button>        
+      </div>
+
+    </div>
+  </div>
+</div>

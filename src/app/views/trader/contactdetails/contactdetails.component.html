@@ -1,3 +1,615 @@
-<p>
-  contactdetails works!
-</p>
+    <!--  phones email and social networks -->
+<div class="container col-md-12">
+
+      <div class="row">
+
+            <!-- phones -->
+            <div class="col-md-3 panel panel-heading footerdiv">
+
+                  <div class="phones collapsed col-md-6" data-toggle="collapse" data-target="#collapsePhones">
+                    <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Phones</span>
+                  </div>
+
+
+                  <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
+                        Type:
+                        <select id="atype" name="atype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPhoneTypeChange($event)">
+                          <option></option>
+                          <option *ngFor="let phtype of existingphonetypes" [ngValue]="phtype">
+                            {{ phtype.phoneType }}
+                          </option>
+                        </select>
+                  </div>
+
+
+                  <div class="colapse in col-md-12" id="collapsePhones" style="margin-top:20px;">
+
+
+                            <div *ngIf="!isPhoneAddOn && !isPhoneEditOn" class="col-md-12">
+
+                                  <div class="col-md-12">
+                                    <div *ngIf="availablephones.length < 3" class="col-md-3"><a (click)="onPhoneAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a (click)="onPhoneEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                                    <div *ngIf="availablephones.length > 0" class="col-md-5"><a data-target="#removePhone" data-toggle="modal" (click)="onPhoneDeleteClick(phone)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                                  </div>
+
+                                  <div *ngIf="availablephones.length  !== 0" class="col-md-12">
+
+                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px; margin-top:20px;">
+                                          Preferred:
+                                          <span class="text-info text-uppercase"> {{ phoneInView.preferredFlag }}</span>
+                                        </div>
+
+                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                          Type:
+                                          <span class="text-info text-uppercase"> {{ phoneInView.phoneType }}</span>
+                                        </div>
+
+                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                          Number:
+                                          <span class="text-info text-uppercase"> {{ phoneInView.number }}</span>
+                                        </div>
+
+                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                          City Code:
+                                          <span class="text-info text-uppercase"> {{ phoneInView.cityCode}}</span>
+                                        </div>
+
+                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                          Country Code:
+                                          <span class="text-info text-uppercase"> {{ phoneInView.countryCode}}</span>
+                                        </div>
+
+                                  </div>
+
+                            </div>
+
+
+                            <div *ngIf="isPhoneAddOn || isPhoneEditOn" class="row col-md-12">
+
+                                  <form novalidate [formGroup]="phoneForm" (submit)="onSubmitPhoneAddUpdate()">
+
+                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                          Preferred:
+                                          <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                            <select formControlName="preferredphone" id="preferredphone" name="preferredphone" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredPhoneTypeChange($event)">
+                                              <option></option>
+                                              <option *ngFor="let preferredphonetype of allpreferredphonetypes" [ngValue]="preferredphonetype">
+                                                {{ preferredphonetype.value }}
+                                              </option>
+                                            </select>
+                                          </div>
+                                          <control-messages [control]="phoneForm.controls.preferredphone"></control-messages>
+                                        </div>
+
+
+                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                          Type:
+                                          <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                            <select formControlName="phonetype" id="phonetype" name="phonetype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPhoneTypeChange($event)">
+                                              <option></option>
+                                              <option *ngFor="let phtype of allaphonetypes" [ngValue]="phtype">
+                                                {{ phtype.phoneType }}
+                                              </option>
+                                            </select>
+                                          </div>
+                                          <control-messages [control]="phoneForm.controls.phonetype"></control-messages>
+                                        </div>
+
+
+                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                           Number:
+                                          <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                            <input type="text" formControlName="phonenumber" id="phonenumber" name="phonenumber" required class="form-control smalltext" style="background-color:moccasin" />
+                                          </div>
+                                          <control-messages [control]="phoneForm.controls.phonenumber"></control-messages>
+                                        </div>
+
+
+                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                          City Code:
+                                          <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                            <input type="text" formControlName="citycode" id="citycode" name="citycode" class="form-control smalltext" style="background-color:moccasin" />
+                                          </div>
+                                          <control-messages [control]="phoneForm.controls.citycode"></control-messages>
+                                        </div>
+
+
+                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                          Country Code:
+                                          <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                            <input type="text" formControlName="countrycode" id="countrycode" name="countrycode" class="form-control smalltext" style="background-color:moccasin" />
+                                          </div>
+                                          <control-messages [control]="phoneForm.controls.countrycode"></control-messages>
+                                        </div>
+
+
+                                        <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
+                                          <div class="col-md-6">
+                                            <button id="phonecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPhoneAddEditCancel()">
+                                              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                                            </button>
+                                          </div>
+
+                                          <div class="col-md-6">
+                                            <button id="phonesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!phoneForm.valid" style="width:auto; height:30px;">
+                                              <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                              Save
+                                            </button>
+                                          </div>
+                                        </div>
+
+                                  </form>
+
+                            </div>
+
+                  </div>
+
+            </div>
+
+
+
+              <!-- emails-->
+              <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">
+
+
+                <!-- emails-->
+                <div class="emails collapsed col-md-6" data-toggle="collapse" data-target="#collapseEmails">
+                  <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Emails</span>
+                </div>
+
+
+                <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
+                  Type:
+                  <select id="emtype" name="emtype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewEmailTypeChange($event)">
+                    <option></option>
+                    <option *ngFor="let emtype of existingemailtypes" [ngValue]="emtype">
+                      {{ emtype.emailType }}
+                    </option>
+                  </select>
+                </div>
+
+
+                <div class="colapse in col-md-12" id="collapseEmails" style="margin-top:20px; margin-bottom:140px;">
+
+
+                        <div *ngIf="!isEmailAddOn && !isEmailEditOn" class="col-md-12">
+
+                          <div class="col-md-12">
+                            <div *ngIf="availableemails.length < 3" class="col-md-3"><a (click)="onEmailAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a (click)="onEmailEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                            <div *ngIf="availableemails.length > 0" class="col-md-5"><a data-target="#removeEmail" data-toggle="modal" (click)="onEmailDeleteClick(phone)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                          </div>
+
+                          <div *ngIf="availableemails.length  !== 0" class="col-md-12">
+
+                                  <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px; margin-top:20px;">
+                                    Preferred:
+                                    <span class="text-info text-uppercase"> {{ emailInView.preferredFlag }}</span>
+                                  </div>
+
+                                  <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                    Type:
+                                    <span class="text-info text-uppercase"> {{ emailInView.emailType }}</span>
+                                  </div>
+
+                                  <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                    Account:
+                                    <span class="text-info text-uppercase"> {{ emailInView.account }}</span>
+                                  </div>                    
+
+                                </div>
+
+                        </div>
+
+
+                        <div *ngIf="isEmailAddOn || isEmailEditOn" class="row col-md-12">
+
+                          <form novalidate [formGroup]="emailForm" (submit)="onSubmitEmailAddUpdate()">
+
+
+                                <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                  Preferred:
+                                  <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                    <select formControlName="preferredemail" id="preferredemail" name="preferredemail" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredPhoneTypeChange($event)">
+                                      <option></option>
+                                      <option *ngFor="let preferredemailtype of allpreferredemailtypes" [ngValue]="preferredemailtype">
+                                        {{ preferredemailtype.value }}
+                                      </option>
+                                    </select>
+                                  </div>
+                                  <control-messages [control]="emailForm.controls.preferredemail"></control-messages>
+                                </div>
+
+
+                                <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                  Type:
+                                  <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                    <select formControlName="emailtype" id="emailtype" name="emailtype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPhoneTypeChange($event)">
+                                      <option></option>
+                                      <option *ngFor="let emtype of allemailtypes" [ngValue]="emtype">
+                                        {{ emtype.emailType }}
+                                      </option>
+                                    </select>
+                                  </div>
+                                  <control-messages [control]="emailForm.controls.emailtype"></control-messages>
+                                </div>
+
+
+                                <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                  Account:
+                                  <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input type="text" formControlName="emailaccount" id="emailaccount" name="emailaccount" required class="form-control smalltext" style="background-color:moccasin" />
+                                  </div>
+                                  <control-messages [control]="emailForm.controls.emailaccount"></control-messages>
+                                </div>                      
+
+
+                                <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
+                                  <div class="col-md-6">
+                                    <button id="phonecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onEmailAddEditCancel()">
+                                      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                                    </button>
+                                  </div>
+
+                                  <div class="col-md-6">
+                                    <button id="emailsave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!emailForm.valid" style="width:auto; height:30px;">
+                                      <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                      Save
+                                    </button>
+                                  </div>
+                                </div>
+
+                          </form>
+
+                        </div>
+
+                </div>
+
+              </div>
+
+
+
+              <!--social networks-->
+              <div class="col-md-3 col-md-offset-1  panel panel-heading footerdiv">
+
+                <div class="social collapsed col-md-6" data-toggle="collapse" data-target="#collapseSocials">
+                  <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Socials</span>
+                </div>
+
+
+                <div class="smalltextbold col-md-6" style="text-align:right;z-index:1200;">
+                  Type:
+                  <select id="sltype" name="sltype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewSocialTypeChange($event)">
+                    <option></option>
+                    <option *ngFor="let sltype of existingsocialtypes" [ngValue]="sltype">
+                      {{ sltype.socialType }}
+                    </option>
+                  </select>
+                </div>
+
+
+                <div class="colapse in col-md-12" id="collapseSocials" style="margin-top:20px; margin-bottom:140px;">
+
+
+                        <div *ngIf="!isSocialAddOn && !isSocialEditOn" class="col-md-12">
+
+                          <div class="col-md-12">
+                            <div *ngIf="availablesocials.length < 3" class="col-md-3"><a (click)="onSocialAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a (click)="onSocialEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                            <div *ngIf="availablesocials.length > 0" class="col-md-5"><a data-target="#removeSocial" data-toggle="modal" (click)="onSocialDeleteClick(phone)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                          </div>
+
+                          <div *ngIf="availablesocials.length  !== 0" class="col-md-12">
+
+                                <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px; margin-top:20px;">
+                                  Preferred:
+                                  <span class="text-info text-uppercase"> {{ socialInView.preferredFlag }}</span>
+                                </div>
+
+                                <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                  Type:
+                                  <span class="text-info text-uppercase"> {{ socialInView.socialType }}</span>
+                                </div>
+
+                                <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                  Account:
+                                  <span class="text-info text-uppercase"> {{ socialInView.account }}</span>
+                                </div>                   
+
+                          </div>
+
+                        </div>
+
+
+                        <div *ngIf="isSocialAddOn || isSocialEditOn" class="row col-md-12">
+
+                          <form novalidate [formGroup]="socialForm" (submit)="onSubmitSocialAddUpdate()">
+
+                                  <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                    Preferred:
+                                    <div class="input-group">
+                                      <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                      <select formControlName="preferredsocial" id="preferredsocial" name="preferredsocial" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredSocialTypeChange($event)">
+                                        <option></option>
+                                        <option *ngFor="let preferredsocialtype of allpreferredsocialtypes" [ngValue]="preferredsocialtype">
+                                          {{ preferredsocialtype.value }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                    <control-messages [control]="socialForm.controls.preferredsocial"></control-messages>
+                                  </div>
+
+
+                                  <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                    Type:
+                                    <div class="input-group">
+                                      <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                      <select formControlName="socialtype" id="socialtype" name="socialtype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onSocialTypeChange($event)">
+                                        <option></option>
+                                        <option *ngFor="let sltype of allsocialtypes" [ngValue]="sltype">
+                                          {{ sltype.phoneType }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                    <control-messages [control]="socialForm.controls.socialtype"></control-messages>
+                                  </div>
+
+
+                                  <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                    Account:
+                                    <div class="input-group">
+                                      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                      <input type="text" formControlName="socialaccount" id="socialaccount" name="socialaccount" required class="form-control smalltext" style="background-color:moccasin" />
+                                    </div>
+                                    <control-messages [control]="socialForm.controls.socialaccount"></control-messages>
+                                  </div>
+                     
+
+
+                                  <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
+                                    <div class="col-md-6">
+                                      <button id="phonecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onSocialAddEditCancel()">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                                      </button>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                      <button id="phonelsave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!socialForm.valid" style="width:auto; height:30px;">
+                                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                        Save
+                                      </button>
+                                    </div>
+                                  </div>
+
+                          </form>
+
+                        </div>
+
+                </div>
+              </div>
+
+    </div>
+</div>
+
+
+
+<my-spinner [isRunning]="isRequesting"></my-spinner>
+
+<div class="backdrop" [ngStyle]="{'display':displayPhoneTypeModal}"></div>
+<!-- Phone Type Forbidden Modal -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPhoneTypeModal}" id="phoneTypeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="onClosePhoneHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>An phone with that type is allready registered against you account! Please update or remove the existing phone type first.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onClosePhoneHandled()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="backdrop" [ngStyle]="{'display':displayPreferredPhoneTypeModal}"></div>
+<!-- Preferred Type Forbidden Modal -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredPhoneTypeModal }" id="preferredPhoneTypeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="onClosePreferredPhoneHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>An preffered phone is allready registered against you account! Please update the preferrence type of the existing phone account first.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onClosePreferredPhoneHandled()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+
+<div class="backdrop" [ngStyle]="{'display':displayEmailTypeModal}"></div>
+<!-- Email Type Forbidden Modal -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayEmailTypeModal}" id="emailTypeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="onCloseEmailHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>An email with that type is allready registered against you account! Please update or remove the existing email account type first.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onCloseEmailHandled()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="backdrop" [ngStyle]="{'display':displayPreferredEmailTypeModal}"></div>
+<!-- Preferred Type Forbidden Modal -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredEmailTypeModal }" id="preferredEmailTypeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="onClosePreferredEmailHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>An preffered email account is allready registered against you account! Please update the preferrence type of the existing email account first.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onClosePreferredEmailHandled()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+
+<div class="backdrop" [ngStyle]="{'display':displaySocialTypeModal}"></div>
+<!-- Social Network Type Forbidden Modal -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displaySocialTypeModal}" id="socialTypeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="onCloseSocialHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>An social network account with that type is allready registered against you account! Please update or remove an existing social network account first.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onCloseSocialHandled()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="backdrop" [ngStyle]="{'display':displayPreferredSocialTypeModal}"></div>
+<!-- Preferred Type Forbidden Modal -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredSocialTypeModal }" id="preferredSocialTypeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="onClosePreferredSocialHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>An preffered social network account is allready registered against you account! Please update the preferrence type of the existing social network account first.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="onClosePreferredSocialHandled()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+
+<!-- Phone Details Remove-->
+<div class="modal fade" id="removePhone" tabindex="-1" role="dialog" aria-labelledby="RemovePhone">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to delete this phone account?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="onSubmitDeletePhone(phoneToRemove)" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+
+<!-- Email Remove Modal-->
+<div class="modal fade" id="removeEmail" tabindex="-1" role="dialog" aria-labelledby="RemoveEmail">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to delete this email account?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="onSubmitDeleteEmail(emailToRemove)" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+
+<!-- Social Remove Modal-->
+<div class="modal fade" id="removeSocial" tabindex="-1" role="dialog" aria-labelledby="RemoveSocial">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to delete this social networkaccount?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="onSubmitDeleteSocial(socialToRemove)" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>

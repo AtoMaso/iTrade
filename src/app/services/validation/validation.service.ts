@@ -38,7 +38,14 @@ export class ValidationService {
       'invalidFirstName': 'Your first name should contain only alphabetical characters with maximum lenght of 15 characters. ',
       'invalidMiddleName': 'Your middle name should contain only alphabetical characters with maximum lenght of 15 characters. ',
       'invalidLastName': 'Your last name should contain only alphabetical characters with maximum lenght of 20 characters. ',
-      'invalidDate': 'Date must be selected.'
+      'invalidDate': 'Date must be selected.',
+
+      'invalidCityCode': 'City code must be numeric value 2 to 4 digits!',
+      'invalidCountryCode': 'Country code must be numeric value 2 to 4 digits!',
+      'invalidPhoneType': 'The phone type must be selecte!.',
+
+      'invalidEmailType': 'Email type must be selected!',
+      'invalidSocialType': 'Social type must be selected!',
     };
     return config[validatorName];
   }
@@ -267,20 +274,7 @@ static firstNameValidator(control: any) {
     }
   }
 
-  //********************************************************
-  // contact details validations
-  //********************************************************
-  // GOOD
-  static phoneValidator(control: any) {
-    // {1-10}-Assert phone is numeric only
-    if (control.value) {
-      if (control.value.match(/^(\d{10})$/)) {
-        return null;
-      } else {
-        return { 'invalidPhone': true };
-      }
-    }
-  }
+
 
   //********************************************************
   // address details validations
@@ -353,6 +347,89 @@ static firstNameValidator(control: any) {
       }
     }
   }
+
+
+  //*******************************************************
+  //  PHONES
+  //*******************************************************
+  // GOOD
+  static phoneValidator(control: any) {
+    // {1-10}-Assert phone is numeric only
+    if (control.value) {
+      if (control.value.match(/^(\d{10})$/)) {
+        return null;
+      } else {
+        return { 'invalidPhone': true };
+      }
+    }
+  }
+
+  static citycodeValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([0-9]){2,4}$/)) {
+        return null;
+      } else {
+        return { 'invalidCityCode': true };
+      }
+    }
+  }
+
+  static countrycodeValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([0-9]){2,4}$/)) {
+        return null;
+      } else {
+        return { 'invalidCountryCode': true };
+      }
+    }
+  }
+
+
+  static phonetypeValidator(control) {
+    if (control.value) {
+      if (control.value.number !== "") {
+        return null;
+      }
+      else {
+        return { 'invalidPhoneType': true };
+      }
+    }
+  }
+
+
+
+  //*******************************************************
+  //  EMAILS
+  //*******************************************************
+  static emailtypeValidator(control) {
+    if (control.value) {
+      if (control.value.number !== "") {
+        return null;
+      }
+      else {
+        return { 'invalidEmailType': true };
+      }
+    }
+  }
+
+
+  //*******************************************************
+  //  EMAILS
+  //*******************************************************
+  static socialtypeValidator(control) {
+    if (control.value) {
+      if (control.value.number !== "") {
+        return null;
+      }
+      else {
+        return { 'invalidSocialType': true };
+      }
+    }
+  }
+
+  
 
 
 

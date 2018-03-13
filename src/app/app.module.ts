@@ -72,7 +72,6 @@ import { TradeDetailsComponent } from './views/trade/tradedetails/tradedetails.c
 import { TradersListComponent } from './views/trader/traderslist/traderslist.component';
 import { TraderDetailsComponent } from './views/trader/traderdetails/traderdetails.component';
 import { TraderHomeComponent } from './views/trader/traderhome/traderhome.component';
-import { MyTraderAccountComponent } from './views/trader/mytraderaccount/mytraderaccount.component';
 
 import { PersonalDetailsComponent } from './views/trader/personaldetails/personaldetails.component';
 import { SecurityDetailsComponent } from './views/trader/securitydetails/securitydetails.component';
@@ -119,7 +118,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
 
     DashboardComponent, AboutComponent, ContactComponent, LoginComponent, RegisterComponent,   
  
-    TradersListComponent, TraderDetailsComponent, TraderHomeComponent,MyTraderAccountComponent,
+    TradersListComponent, TraderDetailsComponent, TraderHomeComponent,
     AddTradeComponent, TradesListComponent, MyTradesListComponent, TradeDetailsComponent,   
     AddCategoryComponent, CategoryListComponent,
     AddPhoneTypeComponent, PhoneTypeListComponent,   
