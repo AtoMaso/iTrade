@@ -1,17 +1,11 @@
 ﻿import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { CONFIG } from '../../config';
 import { Observable} from 'rxjs/Observable';
-import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry'; 
 
 import {AuthenticationService } from '../authentication/authentication.service';
-import { Trade, PostTrade, UserSession, UserIdentity} from '../../helpers/classes';
+import { Trade, PostTrade } from '../../helpers/classes';
 
 let allTrades = CONFIG.baseUrls.alltrades;
 let tradesWithStatus = CONFIG.baseUrls.tradeswithstatus;
@@ -38,7 +32,6 @@ let deleteTrade = CONFIG.baseUrls.deletetrade;
 @Injectable()
 export class TradeApiService {
 
-  private args: RequestOptionsArgs;
   private localUrl: string; 
   private newTrade = new PostTrade();
 

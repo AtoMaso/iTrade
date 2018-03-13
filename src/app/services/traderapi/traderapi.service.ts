@@ -1,17 +1,11 @@
 ﻿import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { CONFIG } from '../../config';
-import { Observable} from 'rxjs/Observable';
-import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/retry';
 
 import { AuthenticationService } from '../authentication/authentication.service';
-import { Trader, UserSession, UserIdentity} from '../../helpers/classes';
+import { Trader } from '../../helpers/classes';
 
 let tradersUrl = CONFIG.baseUrls.traders;
 let traderByTraderIdUrl = CONFIG.baseUrls.traderbytraderid;
@@ -23,7 +17,6 @@ let deleteTraderUrl = CONFIG.baseUrls.deletetrader;
 @Injectable()
 export class TraderApiService {
   private localUrl: string;
-  private args: RequestOptionsArgs;
 
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 

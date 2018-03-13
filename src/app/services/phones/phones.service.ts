@@ -1,17 +1,10 @@
 import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { CONFIG } from '../../config';
 import { Observable } from 'rxjs/Observable';
-import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry';
 
 import {AuthenticationService } from '../authentication/authentication.service';
-import { Address, AddressType } from '../../helpers/classes';
 import { UserSession, UserIdentity, Phone, PhoneType } from '../../helpers/classes';
 
 let phonesUrl = CONFIG.baseUrls.phones;
@@ -34,7 +27,6 @@ let deletePhoneTypeUrl = CONFIG.baseUrls.deletephonetype;
 export class PhonesService {
 
   private localUrl: string;
-  private args: RequestOptionsArgs;
 
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
@@ -77,6 +69,7 @@ export class PhonesService {
     return this.httpClientService.get<Phone[]>(this.localUrl, httpOptions).retry(1);
   }
 
+
   //******************************************************
   // GET PREFERRED PHONE
   //******************************************************
@@ -96,6 +89,7 @@ export class PhonesService {
     return this.httpClientService.get<Phone>(this.localUrl).retry(1);
   }
 
+
   //******************************************************
   // ADD PHONE
   //******************************************************
@@ -112,6 +106,7 @@ export class PhonesService {
     this.localUrl = `${addPhoneUrl}`;
     return this.httpClientService.post<Phone>(this.localUrl, phone, httpOptions).retry(1);
   }
+
 
   //******************************************************
   // DELETE PHONE
@@ -147,7 +142,6 @@ export class PhonesService {
     this.localUrl = `${updatePhoneUrl}?id=${phone.id}`;
     return this.httpClientService.put<Phone>(this.localUrl, phone, httpOptions).retry(1);
   }
-
 
 
   //******************************************************

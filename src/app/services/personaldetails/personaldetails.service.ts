@@ -1,18 +1,11 @@
 import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { CONFIG } from '../../config';
 import { Observable} from 'rxjs/Observable';
-import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry';
 
 import {AuthenticationService } from '../authentication/authentication.service';
-import { LoggerService } from '../logger/logger.service';
-import { UserSession, UserIdentity, PersonalDetails} from '../../helpers/classes';
+import { PersonalDetails} from '../../helpers/classes';
 
 let personaldetailsbytraderid = CONFIG.baseUrls.personaldetailsbytraderid;
 let updatepersonaldetails = CONFIG.baseUrls.updatepersonaldetail;
@@ -23,9 +16,6 @@ let deletepersonaldetails = CONFIG.baseUrls.deletepersonaldetails;
 export class PersonalDetailsService {
 
   private localUrl: string;
-  private args: RequestOptionsArgs;
-  private session: UserSession;
-
 
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 

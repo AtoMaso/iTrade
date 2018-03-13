@@ -3,17 +3,15 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { CONFIG } from '../../config';
 import { Observable } from 'rxjs/Observable';
-import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
-import 'rxjs/add/operator/retry';
+import { catchError, map, tap } from 'rxjs/operators'; // left here as an example
+import { of } from 'rxjs/observable/of';   // left here as an example
+import 'rxjs/add/operator/catch'; // left here as an example
+import 'rxjs/add/observable/of'; // left here as an example
+import 'rxjs/add/observable/empty'; // left here as an example
+import 'rxjs/add/operator/retry'; // left here as an example
 
 import {AuthenticationService } from '../authentication/authentication.service';
-import { LoggerService } from '../logger/logger.service';
 import { Address, AddressType } from '../../helpers/classes';
-import { UserSession, UserIdentity, PersonalDetails } from '../../helpers/classes';
 
 let addressesUrl = CONFIG.baseUrls.addresses;
 let addressUrl = CONFIG.baseUrls.address;
@@ -36,7 +34,6 @@ export class AddressService {
 
   private localUrl: string;
   private args: RequestOptionsArgs;
-  private session: UserSession;
 
 
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };

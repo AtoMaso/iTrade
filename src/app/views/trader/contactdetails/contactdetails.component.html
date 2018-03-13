@@ -13,7 +13,7 @@
 
                   <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
                         Type:
-                        <select id="atype" name="atype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPhoneTypeChange($event)">
+                        <select id="atype" name="phtype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPhoneTypeChange($event)">
                           <option></option>
                           <option *ngFor="let phtype of existingphonetypes" [ngValue]="phtype">
                             {{ phtype.phoneType }}
@@ -72,11 +72,11 @@
                                         <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                           Preferred:
                                           <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt" aria-hidden="true"></i></span>
                                             <select formControlName="preferredphone" id="preferredphone" name="preferredphone" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredPhoneTypeChange($event)">
                                               <option></option>
-                                              <option *ngFor="let preferredphonetype of allpreferredphonetypes" [ngValue]="preferredphonetype">
-                                                {{ preferredphonetype.value }}
+                                              <option *ngFor="let preferredphone of allpreferredphonetypes" [ngValue]="preferredphone">
+                                                {{ preferredphone.value }}
                                               </option>
                                             </select>
                                           </div>
@@ -87,10 +87,10 @@
                                         <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                           Type:
                                           <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt" aria-hidden="true"></i></span>
                                             <select formControlName="phonetype" id="phonetype" name="phonetype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPhoneTypeChange($event)">
                                               <option></option>
-                                              <option *ngFor="let phtype of allaphonetypes" [ngValue]="phtype">
+                                              <option *ngFor="let phtype of allphonetypes" [ngValue]="phtype">
                                                 {{ phtype.phoneType }}
                                               </option>
                                             </select>
@@ -102,7 +102,7 @@
                                         <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                            Number:
                                           <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
                                             <input type="text" formControlName="phonenumber" id="phonenumber" name="phonenumber" required class="form-control smalltext" style="background-color:moccasin" />
                                           </div>
                                           <control-messages [control]="phoneForm.controls.phonenumber"></control-messages>
@@ -112,7 +112,7 @@
                                         <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                           City Code:
                                           <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
                                             <input type="text" formControlName="citycode" id="citycode" name="citycode" class="form-control smalltext" style="background-color:moccasin" />
                                           </div>
                                           <control-messages [control]="phoneForm.controls.citycode"></control-messages>
@@ -122,7 +122,7 @@
                                         <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                           Country Code:
                                           <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
                                             <input type="text" formControlName="countrycode" id="countrycode" name="countrycode" class="form-control smalltext" style="background-color:moccasin" />
                                           </div>
                                           <control-messages [control]="phoneForm.controls.countrycode"></control-messages>
@@ -406,7 +406,7 @@
 
 <div class="backdrop" [ngStyle]="{'display':displayPhoneTypeModal}"></div>
 <!-- Phone Type Forbidden Modal -->
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPhoneTypeModal}" id="phoneTypeModal">
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPhoneTypeModal}" id="phoneTypeModal" style="z-index:1500;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 

@@ -149,6 +149,104 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
+  // toggling done with jquery
+  public ngAfterViewInit() {
+
+    jQuery(document).ready(function () {
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapsePhones").on("hide.bs.collapse", function () {
+        jQuery(".phones").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Phones</span>  ');
+      });
+      jQuery("#collapsePhones").on("show.bs.collapse", function () {
+        jQuery(".phones").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Phones</span>');
+      });
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapseEmails").on("hide.bs.collapse", function () {
+        jQuery(".emails").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Emails</span>  ');
+      });
+      jQuery("#collapseEmails").on("show.bs.collapse", function () {
+        jQuery(".emails").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Emails</span>');
+      });
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapseSocials").on("hide.bs.collapse", function () {
+        jQuery(".socials").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Socials</span>  ');
+      });
+      jQuery("#collapseSocials").on("show.bs.collapse", function () {
+        jQuery(".socials").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Socials</span>');
+      });
+
+
+
+
+      // this will remove the selected phone type which is not allowed
+      jQuery("#phoneTypeModal").on("click", function () {
+        jQuery("#phonetype").val("").attr("selected", "selected");
+      });
+
+      // this will remove the selected preferred phone type which is not allowed
+      jQuery("#preferredPhoneTypeModal").on("click", function () {
+        jQuery("#preferredphonetype").val("").attr("selected", "selected");
+      });
+
+      // this will remove the selected email type which is not allowed
+      jQuery("#emailTypeModal").on("click", function () {
+        jQuery("#emailtype").val("").attr("selected", "selected");
+      });
+
+      // this will remove the selected preferred type which is not allowed
+      jQuery("#preferredEmailTypeModal").on("click", function () {
+        jQuery("#preferredemailtype").val("").attr("selected", "selected");
+      });
+
+      // this will remove the selected address type which is not allowed
+      jQuery("#socialTypeModal").on("click", function () {
+        jQuery("#socialtype").val("").attr("selected", "selected");
+      });
+
+      // this will remove the selected preferred type which is not allowed
+      jQuery("#preferredSocialTypeModal").on("click", function () {
+        jQuery("#preferredsocialtype").val("").attr("selected", "selected");
+      });
+
+
+
+      // this will set the first item from of the select phone type dropdown
+      var counter = 0;
+      if (jQuery('#phtype option')) {
+        jQuery('#phtype option').each(function () {
+          if (this.text != "" && counter == 1) {
+            jQuery(this).attr("selected", "selected");
+          }
+          counter = counter + 1;
+        });
+      }
+
+      // this will set the first item from of the select email type dropdown
+      var counter = 0;
+      if (jQuery('#emtype option')) {
+        jQuery('#emtype option').each(function () {
+          if (this.text != "" && counter == 1) {
+            jQuery(this).attr("selected", "selected");
+          }
+          counter = counter + 1;
+        });
+      }
+
+      // this will set the first item from of the select social type dropdown
+      var counter = 0;
+      if (jQuery('#sltype option')) {
+        jQuery('#sltype option').each(function () {
+          if (this.text != "" && counter == 1) {
+            jQuery(this).attr("selected", "selected");
+          }
+          counter = counter + 1;
+        });
+      }
+    });
+  }
 
 
 
@@ -163,6 +261,7 @@ export class ContactlDetailsComponent implements OnInit {
 
   }
 
+
   private onSuccessPhones(phones: Phone[]) {
     // collections return zero length when no record found as it is initialised
     if (phones.length == 0) {
@@ -173,7 +272,6 @@ export class ContactlDetailsComponent implements OnInit {
 
     this.getPhoneTypes();
   }
-
 
   // get all address types from the server
   private getPhoneTypes() {
@@ -334,7 +432,6 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-
   private onViewPhoneTypeChange(type:any) {
     let m: number = 0;
     for (m = 0; m < this.availablephones.length; m++) {
@@ -419,7 +516,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onPhonesAddClick() {
+  private onPhoneAddClick() {
     this.messagesService.emitRoute("nill");
     this.isPhoneAddOn = true;
     this.setPhoneForm();
@@ -432,7 +529,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onPhonesEditClick() {
+  private onPhoneEditClick() {
     this.messagesService.emitRoute("nill");
     this.isPhoneEditOn = true;
 
@@ -525,12 +622,12 @@ export class ContactlDetailsComponent implements OnInit {
     let newAddUpdatePhone: Phone = new Phone();
 
     if (this.isPhoneEditOn) { newAddUpdatePhone.id = this.phoneInView.id; }
-    newAddUpdatePhone.traderId = this.traderId as string,
-    newAddUpdatePhone.phoneTypeId = phonetype.phoneTypeId,
-    newAddUpdatePhone.number = formModel.number as string;  
+    newAddUpdatePhone.traderId = this.traderId as string;
+    newAddUpdatePhone.number = formModel.phonenumber as string;  
     newAddUpdatePhone.cityCode = formModel.citycode;
     newAddUpdatePhone.countryCode = formModel.countrycode;
     newAddUpdatePhone.preferredFlag = preferredflag.value;
+    newAddUpdatePhone.phoneTypeId = phonetype.phoneTypeId;
 
     // has anything beeing changed in the form and we are updating
     if (this.isPhoneEditOn && this.comparePhones(newAddUpdatePhone, this.tempAddUpdatePhone)) { this.messagesService.emitProcessMessage("PMEUPh"); return null; } // TODO new process message here
@@ -543,17 +640,19 @@ export class ContactlDetailsComponent implements OnInit {
   // we have custom method to compare the new and old
   private comparePhones(newPhone: Phone, oldPhone: Phone): boolean {
 
-    if (newPhone.phoneTypeId == oldPhone.phoneTypeId &&
-      newPhone.phoneType == oldPhone.phoneType &&
-      newPhone.cityCode == oldPhone.cityCode &&
-      newPhone.number == oldPhone.number &&
-      newPhone.countryCode == oldPhone.countryCode &&
-      newPhone.preferredFlag == oldPhone.preferredFlag ) {
+    if (newPhone.phoneTypeId === oldPhone.phoneTypeId &&   
+      newPhone.cityCode === oldPhone.cityCode &&
+      newPhone.number === oldPhone.number &&
+      newPhone.countryCode === oldPhone.countryCode &&
+      newPhone.preferredFlag === oldPhone.preferredFlag ) {
       return true;
     }
 
     return false;
   }
+
+
+
 
   //************************************************************
   // EMAILS SECTION

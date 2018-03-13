@@ -1,19 +1,12 @@
 import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Http, Response, Headers, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { CONFIG } from '../../config';
 import { Observable} from 'rxjs/Observable';
-import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry';
 
 
 import {AuthenticationService } from '../authentication/authentication.service';
-import { LoggerService } from '../logger/logger.service';
-import { Correspondence, UserSession, UserIdentity, PersonalDetails } from '../../helpers/classes';
+import { Correspondence } from '../../helpers/classes';
 
 let corres = CONFIG.baseUrls.corres;
 let correswithstatus = CONFIG.baseUrls.correswithstatus;
@@ -30,8 +23,6 @@ let deletecorres = CONFIG.baseUrls.deletecorres;
 @Injectable()
 export class CorrespondenceService {
   private localUrl: string;
-  private args: RequestOptionsArgs;
-  private session: UserSession; 
  
 
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
@@ -41,8 +32,6 @@ export class CorrespondenceService {
   // GET CORRES
   //***********************************************************
   public getCorres(status:string): Observable<Correspondence[]> {
-
-    this.getUserSession();
 
     // prepare the headesrs
     const httpOptions = {
@@ -140,17 +129,7 @@ export class CorrespondenceService {
     };
 
     const localUrl = `${addcorres}`;
-
     return this.httpClientService.post<Correspondence>(localUrl, corres, httpOptions);
   }
 
-
-  //*****************************************************
-  // HELPER METHODS
-  //*****************************************************
-  private getUserSession() {
-    if (sessionStorage["UserSession"] != "null") {
-      this.session = JSON.parse(sessionStorage["UserSession"]);
-    }
-  }
 }

@@ -356,7 +356,7 @@ static firstNameValidator(control: any) {
   static phoneValidator(control: any) {
     // {1-10}-Assert phone is numeric only
     if (control.value) {
-      if (control.value.match(/^(\d{10})$/)) {
+      if (control.value.match(/^([0-9]){6,10}$/)) {
         return null;
       } else {
         return { 'invalidPhone': true };

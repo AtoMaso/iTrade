@@ -2,15 +2,10 @@ import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CONFIG } from '../../config';
 import { Observable} from 'rxjs/Observable';
-import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/retry';
 
 import { AuthenticationService } from '../authentication/authentication.service';
-import { TradeHistory, UserSession, UserIdentity} from '../../helpers/classes';
+import { TradeHistory } from '../../helpers/classes';
 
 let tradehistoriesUrl = CONFIG.baseUrls.tradehistories;
 let tradehistoriesbytradeid = CONFIG.baseUrls.tradehistoriesbytradeid;
