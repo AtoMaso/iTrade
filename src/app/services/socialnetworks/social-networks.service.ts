@@ -120,7 +120,7 @@ export class SocialNetworksService {
       })
     };
 
-    this.localUrl = `${deleteSocialNetworkUrl}/${socialnetwork.id}`;
+    this.localUrl = `${deleteSocialNetworkUrl}?id=${socialnetwork.id}`;
     return this.httpClientService.delete<SocialNetwork>(this.localUrl, httpOptions).retry(1);
   }
 

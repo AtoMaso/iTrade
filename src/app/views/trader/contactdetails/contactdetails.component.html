@@ -28,9 +28,9 @@
                             <div *ngIf="!isPhoneAddOn && !isPhoneEditOn" class="col-md-12">
 
                                   <div class="col-md-12">
-                                    <div *ngIf="availablephones.length < 3" class="col-md-3"><a (click)="onPhoneAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
-                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a (click)="onPhoneEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-                                    <div *ngIf="availablephones.length > 0" class="col-md-5"><a data-target="#removePhone" data-toggle="modal" (click)="onPhoneDeleteClick(phone)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                                    <div *ngIf="availablephones.length < 3" class="col-md-4"><a (click)="onPhoneAddClick()" class="textoker smalltextbold">Add </a></div>
+                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a (click)="onPhoneEditClick()" class="textoker smalltextbold">Edit </a></div>
+                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a data-target="#removePhone" data-toggle="modal" (click)="onPhoneDeleteClick()" class="textoker smalltextbold">Delete </a></div>
                                   </div>
 
                                   <div *ngIf="availablephones.length  !== 0" class="col-md-12">
@@ -175,15 +175,15 @@
                 </div>
 
 
-                <div class="colapse in col-md-12" id="collapseEmails" style="margin-top:20px; margin-bottom:140px;">
+                <div class="colapse in col-md-12" id="collapseEmails" style="margin-top:20px;">
 
 
-                        <div *ngIf="!isEmailAddOn && !isEmailEditOn" class="col-md-12">
+                        <div *ngIf="!isEmailAddOn && !isEmailEditOn" class="col-md-12" style="margin-bottom:140px;">
 
                           <div class="col-md-12">
-                            <div *ngIf="availableemails.length < 3" class="col-md-3"><a (click)="onEmailAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
-                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a (click)="onEmailEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-                            <div *ngIf="availableemails.length > 0" class="col-md-5"><a data-target="#removeEmail" data-toggle="modal" (click)="onEmailDeleteClick(phone)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                            <div *ngIf="availableemails.length < 3" class="col-md-4"><a (click)="onEmailAddClick()" class="textoker smalltextbold">Add </a></div>
+                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a (click)="onEmailEditClick()" class="textoker smalltextbold">Edit</a></div>
+                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a data-target="#removeEmail" data-toggle="modal" (click)="onEmailDeleteClick()" class="textoker smalltextbold">Delete </a></div>
                           </div>
 
                           <div *ngIf="availableemails.length  !== 0" class="col-md-12">
@@ -216,7 +216,7 @@
                                 <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                   Preferred:
                                   <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
                                     <select formControlName="preferredemail" id="preferredemail" name="preferredemail" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredPhoneTypeChange($event)">
                                       <option></option>
                                       <option *ngFor="let preferredemailtype of allpreferredemailtypes" [ngValue]="preferredemailtype">
@@ -231,7 +231,7 @@
                                 <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                   Type:
                                   <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
                                     <select formControlName="emailtype" id="emailtype" name="emailtype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPhoneTypeChange($event)">
                                       <option></option>
                                       <option *ngFor="let emtype of allemailtypes" [ngValue]="emtype">
@@ -246,7 +246,7 @@
                                 <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                   Account:
                                   <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                                     <input type="text" formControlName="emailaccount" id="emailaccount" name="emailaccount" required class="form-control smalltext" style="background-color:moccasin" />
                                   </div>
                                   <control-messages [control]="emailForm.controls.emailaccount"></control-messages>
@@ -281,8 +281,8 @@
               <!--social networks-->
               <div class="col-md-3 col-md-offset-1  panel panel-heading footerdiv">
 
-                <div class="social collapsed col-md-6" data-toggle="collapse" data-target="#collapseSocials">
-                  <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Socials</span>
+                <div class="socials collapsed col-md-6" data-toggle="collapse" data-target="#collapseSocials">
+                  <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Socials </span>
                 </div>
 
 
@@ -297,15 +297,15 @@
                 </div>
 
 
-                <div class="colapse in col-md-12" id="collapseSocials" style="margin-top:20px; margin-bottom:140px;">
+                <div class="colapse in col-md-12" id="collapseSocials" style="margin-top:20px;">
 
 
-                        <div *ngIf="!isSocialAddOn && !isSocialEditOn" class="col-md-12">
+                        <div *ngIf="!isSocialAddOn && !isSocialEditOn" class="col-md-12" style="margin-bottom:140px;">
 
                           <div class="col-md-12">
-                            <div *ngIf="availablesocials.length < 3" class="col-md-3"><a (click)="onSocialAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
-                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a (click)="onSocialEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-                            <div *ngIf="availablesocials.length > 0" class="col-md-5"><a data-target="#removeSocial" data-toggle="modal" (click)="onSocialDeleteClick(phone)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                            <div *ngIf="availablesocials.length < 3" class="col-md-4"><a (click)="onSocialAddClick()" class="textoker smalltextbold">Add </a></div>
+                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a (click)="onSocialEditClick()" class="textoker smalltextbold">Edit </a></div>
+                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a data-target="#removeSocial" data-toggle="modal" (click)="onSocialDeleteClick()" class="textoker smalltextbold" >Delete </a></div>
                           </div>
 
                           <div *ngIf="availablesocials.length  !== 0" class="col-md-12">
@@ -337,7 +337,7 @@
                                   <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                     Preferred:
                                     <div class="input-group">
-                                      <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                      <span class="input-group-addon"><i class="glyphicon glyphicon-film" aria-hidden="true"></i></span>
                                       <select formControlName="preferredsocial" id="preferredsocial" name="preferredsocial" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredSocialTypeChange($event)">
                                         <option></option>
                                         <option *ngFor="let preferredsocialtype of allpreferredsocialtypes" [ngValue]="preferredsocialtype">
@@ -352,11 +352,11 @@
                                   <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                     Type:
                                     <div class="input-group">
-                                      <span class="input-group-addon"><i class="glyphicon glyphicon-" aria-hidden="true"></i></span>
+                                      <span class="input-group-addon"><i class="glyphicon glyphicon-film" aria-hidden="true"></i></span>
                                       <select formControlName="socialtype" id="socialtype" name="socialtype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onSocialTypeChange($event)">
                                         <option></option>
                                         <option *ngFor="let sltype of allsocialtypes" [ngValue]="sltype">
-                                          {{ sltype.phoneType }}
+                                          {{ sltype.socialType }}
                                         </option>
                                       </select>
                                     </div>
@@ -367,7 +367,7 @@
                                   <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                     Account:
                                     <div class="input-group">
-                                      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                      <span class="input-group-addon"><i class="glyphicon glyphicon-film"></i></span>
                                       <input type="text" formControlName="socialaccount" id="socialaccount" name="socialaccount" required class="form-control smalltext" style="background-color:moccasin" />
                                     </div>
                                     <control-messages [control]="socialForm.controls.socialaccount"></control-messages>
@@ -428,7 +428,7 @@
 
 <div class="backdrop" [ngStyle]="{'display':displayPreferredPhoneTypeModal}"></div>
 <!-- Preferred Type Forbidden Modal -->
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredPhoneTypeModal }" id="preferredPhoneTypeModal">
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredPhoneTypeModal }" id="preferredPhoneTypeModal" style="z-index:1501;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -451,7 +451,7 @@
 
 <div class="backdrop" [ngStyle]="{'display':displayEmailTypeModal}"></div>
 <!-- Email Type Forbidden Modal -->
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayEmailTypeModal}" id="emailTypeModal">
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayEmailTypeModal}" id="emailTypeModal"  style="z-index:1600;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -473,7 +473,7 @@
 
 <div class="backdrop" [ngStyle]="{'display':displayPreferredEmailTypeModal}"></div>
 <!-- Preferred Type Forbidden Modal -->
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredEmailTypeModal }" id="preferredEmailTypeModal">
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredEmailTypeModal }" id="preferredEmailTypeModal" style="z-index:1601;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -497,7 +497,7 @@
 
 <div class="backdrop" [ngStyle]="{'display':displaySocialTypeModal}"></div>
 <!-- Social Network Type Forbidden Modal -->
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displaySocialTypeModal}" id="socialTypeModal">
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displaySocialTypeModal}" id="socialTypeModal" style="z-index:1700;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -519,7 +519,7 @@
 
 <div class="backdrop" [ngStyle]="{'display':displayPreferredSocialTypeModal}"></div>
 <!-- Preferred Type Forbidden Modal -->
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredSocialTypeModal }" id="preferredSocialTypeModal">
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPreferredSocialTypeModal }" id="preferredSocialTypeModal" style="z-index:1701;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -543,7 +543,7 @@
 <!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
 
 <!-- Phone Details Remove-->
-<div class="modal fade" id="removePhone" tabindex="-1" role="dialog" aria-labelledby="RemovePhone">
+<div class="modal fade" id="removePhone" tabindex="-1" role="dialog" aria-labelledby="RemovePhone" style="z-index:1800;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -567,7 +567,7 @@
 <!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
 
 <!-- Email Remove Modal-->
-<div class="modal fade" id="removeEmail" tabindex="-1" role="dialog" aria-labelledby="RemoveEmail">
+<div class="modal fade" id="removeEmail" tabindex="-1" role="dialog" aria-labelledby="RemoveEmail" style="z-index:1801;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -592,7 +592,7 @@
 <!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
 
 <!-- Social Remove Modal-->
-<div class="modal fade" id="removeSocial" tabindex="-1" role="dialog" aria-labelledby="RemoveSocial">
+<div class="modal fade" id="removeSocial" tabindex="-1" role="dialog" aria-labelledby="RemoveSocial" style="z-index:1802;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 

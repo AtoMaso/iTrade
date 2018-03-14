@@ -15,7 +15,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 import { CapsPipe } from '../../../helpers/pipes';
-import { UserSession, UserIdentity, Authentication, PageTitle,  Phone, PhoneType, Email, EmailType, SocialNetwork, SocialNetworkType, PreferredType} from '../../../helpers/classes';
+import { UserSession, PageTitle,  Phone, PhoneType, Email, EmailType, SocialNetwork, SocialNetworkType, PreferredType} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -96,7 +96,7 @@ export class ContactlDetailsComponent implements OnInit {
   // SOCIAL
   private isSocialAddOn: boolean = false;
   private isSocialEditOn: boolean = false;
-  private isSaveSociallOn: boolean = false;
+  private isSaveSocialOn: boolean = false;
 
   private availablesocials: SocialNetwork[] = [];
   private socialInView: SocialNetwork;
@@ -477,7 +477,7 @@ export class ContactlDetailsComponent implements OnInit {
 
   private onClosePreferredPhoneHandled() {
     this.displayPreferredPhoneTypeModal = "none";
-    this.phoneForm.patchValue({ preferredtype: null });
+    this.phoneForm.patchValue({ preferredphone: null });
   }
 
 
@@ -549,8 +549,8 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onPhonesDeleteClick(phoneInView: Phone) {
-    this.phoneToRemove = phoneInView;
+  private onPhoneDeleteClick() {
+    this.phoneToRemove = this.phoneInView;
   }
 
 
@@ -558,11 +558,11 @@ export class ContactlDetailsComponent implements OnInit {
     // delete phone here 
     this.phonesService.deletePhone(phoneToRemove)
       .subscribe((phoneResult: Phone) => {
+        this.messagesService.emitProcessMessage("PMSDPh");
 
         this.getPhonesByTraderId(this.traderId);
-      }, (serviceError: Response) => this.onError(serviceError, "onSubmitPhoneAddUpdate"));
+      }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeletePhone"));
   }
-
 
 
   private onSubmitPhoneAddUpdate() {
@@ -577,7 +577,7 @@ export class ContactlDetailsComponent implements OnInit {
 
         this.addedPhone = res;
         // show success
-        this.messagesService.emitProcessMessage("PMSAPn");  // TODO new message here
+        this.messagesService.emitProcessMessage("PMSAPh");  // TODO new message here
         // get the new data from the server
         this.getPhonesByTraderId(this.traderId);
 
@@ -598,7 +598,7 @@ export class ContactlDetailsComponent implements OnInit {
           // get the saved address so when we 
           this.updatedPhone = res;
           // show success
-          this.messagesService.emitProcessMessage("PMSUAd");
+          this.messagesService.emitProcessMessage("PMSUPh");
           // get the new data from the server
           this.getPhonesByTraderId(this.traderId);
 
@@ -650,6 +650,8 @@ export class ContactlDetailsComponent implements OnInit {
 
     return false;
   }
+
+
 
 
 
@@ -831,39 +833,221 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onViewEmailTypeChange(event) {
+  private onViewEmailTypeChange(type:any) {
+    let m: number = 0;
+    for (m = 0; m < this.availableemails.length; m++) {
+      if (this.availableemails[m].emailType === type.target.value) {
+        this.emailInView = this.availableemails[m];
+        this.tempAddUpdateEmail = this.availableemails[m];
+        this.setEmailFormDefaults();
+      }
+    }
   }
 
-  private onPreferredEmailTypeChange(event: any) {
+
+  private onPreferredEmailTypeChange(preferredemailtype: PreferredType) {
+    // only check it when we are adding address
+    if (this.isEmailEditOn && !this.isSaveEmailOn) {
+      if (preferredemailtype.value == "Yes" && this.tempAddUpdateEmail.preferredFlag != "Yes") {
+        let m: number = 0;
+        for (m = 0; m < this.existingpreferredphonetypes.length; m++) {
+          if (this.existingpreferredemailtypes[m].value == preferredemailtype.value) {
+            this.openPreferredEmailTypeModal();
+          }
+        }
+      }
+    }
+
+    if (this.isEmailAddOn && this.existingpreferredemailtypes != []) {
+      if (preferredemailtype.value == "Yes") {
+        let m: number = 0;
+        for (m = 0; m < this.existingpreferredemailtypes.length; m++) {
+          if (this.existingpreferredemailtypes[m].value == preferredemailtype.value) {
+            this.openPreferredEmailTypeModal();
+          }
+        }
+      }
+    }
   }
 
-  private onEmailTypeChange(event: any) {
+
+  private openPreferredEmailTypeModal() {
+    this.displayPreferredEmailTypeModal = "block";
   }
 
-  private onEmailAddClick() {
-  }
-
-  private onEmailEditClick() {
-  }
-
-  private onEmailAddEditCancel() {
-  }
-
-  private onSubmitEmailAddUpdate() {
-  }
-
-  private onEmailDeleteClick(phone: Phone) {
-  }
-
-  private onCloseEmailHandled() {
-  }
 
   private onClosePreferredEmailHandled() {
+    this.displayPreferredEmailTypeModal = "none";
+    this.emailForm.patchValue({ preferredemail: null });
   }
+
+
+  private onEmailTypeChange(type: EmailType) {
+    if (this.isEmailEditOn) {
+      // check when we adding or when updating is there already existing addres
+      if (this.emailInView.emailType != type.emailType) {
+        let m: number = 0;
+        for (m = 0; m < this.existingemailtypes.length; m++) {
+          if (this.existingemailtypes[m].emailType == type.emailType) {
+            this.openEmailTypeModal();
+          }
+        }
+      }
+    }
+
+    if (this.isEmailAddOn && this.existingemailtypes != []) {
+      let m: number = 0;
+      for (m = 0; m < this.existingemailtypes.length; m++) {
+        if (this.existingemailtypes[m].emailType == type.emailType) {
+          this.openEmailTypeModal();
+        }
+      }
+    }
+  }
+
+
+  private openEmailTypeModal() {
+    this.displayEmailTypeModal = "block";
+  }
+
+
+  private onCloseEmailHandled() {
+    this.displayEmailTypeModal = "none";
+    this.emailForm.patchValue({ emailtype: null });
+  }
+
+
+  private onEmailAddClick() {
+    this.messagesService.emitRoute("nill");
+    this.isEmailAddOn = true;
+    this.setEmailForm();
+
+    // if address in view take it as temp so we can go back if adding has been cancelled
+    if (this.emailInView) {
+      this.tempAddUpdateEmail = this.emailInView;
+      this.emailInView = null;
+    }
+  }
+
+
+  private onEmailEditClick() {
+    this.messagesService.emitRoute("nill");
+    this.isEmailEditOn = true;
+
+    // if phone in view take it as temp so we can go back if editing has been cancelled
+    this.tempAddUpdateEmail = this.emailInView;
+    this.setEmailForm();
+    this.setEmailFormDefaults();
+  }
+
+
+  private onEmailAddEditCancel() {
+    this.messagesService.emitRoute(null);
+    if (this.isEmailAddOn == true) { this.isEmailAddOn = false; }
+    if (this.isEmailEditOn == true) { this.isEmailEditOn = false; }
+    // if we are cancelling the adding or editing
+    if (this.tempAddUpdateEmail) { this.emailInView = this.tempAddUpdateEmail; }
+  }
+
+
+  private onEmailDeleteClick() {
+    this.emailToRemove =this.emailInView;
+  }
+
 
   private onSubmitDeleteEmail(emailToRemove: Email) {
+    // delete phone here 
+    this.emailsService.deleteEmail(emailToRemove)
+      .subscribe((emailResult: Email) => {
+
+        this.messagesService.emitProcessMessage("PMSDEm");
+        this.getEmailsByTraderId(this.traderId);
+      }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeleteEmail"));
   }
 
+
+
+  private onSubmitEmailAddUpdate() {
+    this.messagesService.emitRoute("nill");
+    let email: Email = this.prepareAddUpdateEmail();
+
+    if (this.isEmailAddOn) {
+
+      // add new phone
+      this.emailsService.addEmail(email).subscribe((res: Email) => {
+
+        this.addedEmail = res;
+        // show success
+        this.messagesService.emitProcessMessage("PMSAEm");  // TODO new message here
+        // get the new data from the server
+        this.getEmailsByTraderId(this.traderId);
+
+      }, (serviceError: Response) => this.onError(serviceError, "onAddEmail"));
+
+      // go back to view
+      this.isEmailAddOn = !this.isEmailAddOn;
+    }
+
+
+    if (this.isEmailEditOn) {
+
+      if (email) { // if phone changed
+
+        // update phoens
+        this.emailsService.updateEmail(email).subscribe((res: Email) => {
+
+          // get the saved address so when we 
+          this.updatedEmail = res;
+          // show success
+          this.messagesService.emitProcessMessage("PMSUEm"); // TODO new message here
+          // get the new data from the server
+          this.getEmailsByTraderId(this.traderId);
+
+        }, (serviceError: Response) => this.onError(serviceError, "onUpdateEmail"));
+
+        // go back to view
+        this.isEmailEditOn = !this.isEmailEditOn;
+      }
+    }
+  }
+
+
+  // prepare the new add or update data - get it from the form
+  private prepareAddUpdateEmail(): Email {
+
+    const formModel = this.emailForm.value;
+
+    let preferredflag: PreferredType = formModel.preferredemail;
+    let emtype: EmailType = formModel.emailtype;
+
+    let newAddUpdateEmail: Email = new Email();
+
+    if (this.isEmailEditOn) { newAddUpdateEmail.id = this.emailInView.id; }
+    newAddUpdateEmail.traderId = this.traderId as string;
+    newAddUpdateEmail.account = formModel.emailaccount as string;    
+    newAddUpdateEmail.preferredFlag = preferredflag.value;
+    newAddUpdateEmail.emailTypeId = emtype.emailTypeId;   
+
+    // has anything beeing changed in the form and we are updating
+    if (this.isEmailEditOn && this.compareEmails(newAddUpdateEmail, this.tempAddUpdateEmail)) { this.messagesService.emitProcessMessage("PMEUEm"); return null; } // TODO new process message here
+
+    return newAddUpdateEmail;
+  }
+
+
+  // as the form has been prepopulated when updating we can not use the form dirty on changed
+  // we have custom method to compare the new and old
+  private compareEmails(newEmail: Email, oldEmail: Email): boolean {
+
+    if (newEmail.emailTypeId === oldEmail.emailTypeId &&
+      newEmail.emailType === oldEmail.emailType &&
+      newEmail.account === oldEmail.account &&  
+      newEmail.preferredFlag === oldEmail.preferredFlag) {
+      return true;
+    }
+
+    return false;
+  }
 
 
 
@@ -879,6 +1063,7 @@ export class ContactlDetailsComponent implements OnInit {
       }, (serviceError: Response) => this.onError(serviceError, "getSocialsByTraderId"));
 
   }
+
 
   private onSuccessSocials(socials: SocialNetwork[]) {
     // collections return zero length when no record found as it is initialised
@@ -942,7 +1127,6 @@ export class ContactlDetailsComponent implements OnInit {
     this.allpreferredsocialtypes.push(pre1);
     this.allpreferredsocialtypes.push(pre2);
   }
-
 
 
   private setSocialInViewSocialTypesAndPreferredSocialTypes() {
@@ -1012,10 +1196,6 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-
-  //********************************************************************
-  // FORM SECTION
-  //********************************************************************
   private setSocialForm() {
     this.socialForm = this.formBuilder.group({
   
@@ -1041,7 +1221,7 @@ export class ContactlDetailsComponent implements OnInit {
 
     setTimeout(() => {
 
-      this.phoneForm.setValue({
+      this.socialForm.setValue({
         socialaccount: this.socialInView.account,    
         socialtype: this.defaultSocialType,
         preferredsocial: this.defaultPreferredSocialType
@@ -1051,39 +1231,223 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  //********************************************************************
-  // SCREEN INPUT
-  //********************************************************************
-
-  private onViewSocialTypeChange(event) {
+  private onViewSocialTypeChange(type: any) {
+    let m: number = 0;
+    for (m = 0; m < this.availablesocials.length; m++) {
+      if (this.availablesocials[m].socialType === type.target.value) {
+        this.socialInView = this.availablesocials[m];
+        this.tempAddUpdateSocial = this.availablesocials[m];
+        this.setSocialFormDefaults();
+      }
+    }
   }
 
-  private onPreferredSocialTypeChange(event: any) {
+
+  private onPreferredSocialTypeChange(preferredsocialtype: PreferredType) {
+    // only check it when we are adding address
+    if (this.isSocialEditOn && !this.isSaveSocialOn) {
+      if (preferredsocialtype.value == "Yes" && this.tempAddUpdateSocial.preferredFlag != "Yes") {
+        let m: number = 0;
+        for (m = 0; m < this.existingpreferredsocialtypes.length; m++) {
+          if (this.existingpreferredsocialtypes[m].value == preferredsocialtype.value) {
+            this.openPreferredSocialTypeModal();
+          }
+        }
+      }
+    }
+
+    if (this.isSocialAddOn && this.existingpreferredsocialtypes != []) {
+      if (preferredsocialtype.value == "Yes") {
+        let m: number = 0;
+        for (m = 0; m < this.existingpreferredsocialtypes.length; m++) {
+          if (this.existingpreferredsocialtypes[m].value == preferredsocialtype.value) {
+            this.openPreferredSocialTypeModal();
+          }
+        }
+      }
+    }
   }
 
-  private onSocialTypeChange(event: any) {
+
+  private openPreferredSocialTypeModal() {
+    this.displayPreferredSocialTypeModal = "block";
   }
 
-  private onSocialAddClick() {
-  }
-
-  private onSocialEditClick() {
-  }
-
-  private onSocialAddEditCancel() {
-  }
-
-  private onSubmitSocialAddUpdate() {
-  }
-
-  private onSocialDeleteClick(Social: SocialNetwork) {
-  }
-
-  private onCloseSocialHandled() {
-  }
 
   private onClosePreferredSocialHandled() {
+    this.displayPreferredSocialTypeModal = "none";
+    this.socialForm.patchValue({ preferredsocial: null });
   }
+
+
+  private onSocialTypeChange(type: SocialNetworkType) {
+    if (this.isSocialEditOn) {
+      // check when we adding or when updating is there already existing addres
+      if (this.socialInView.socialType != type.socialType) {
+        let m: number = 0;
+        for (m = 0; m < this.existingsocialtypes.length; m++) {
+          if (this.existingsocialtypes[m].socialType == type.socialType) {
+            this.openSocialTypeModal();
+          }
+        }
+      }
+    }
+
+    if (this.isSocialAddOn && this.existingsocialtypes != []) {
+      let m: number = 0;
+      for (m = 0; m < this.existingsocialtypes.length; m++) {
+        if (this.existingsocialtypes[m].socialType == type.socialType) {
+          this.openSocialTypeModal();
+        }
+      }
+    }
+  }
+
+
+  private openSocialTypeModal() {
+    this.displaySocialTypeModal = "block";
+  }
+
+
+  private onCloseSocialHandled() {
+    this.displaySocialTypeModal = "none";
+    this.socialForm.patchValue({ socialltype: null });
+  }
+
+
+  private onSocialAddClick() {
+    this.messagesService.emitRoute("nill");
+    this.isSocialAddOn = true;
+    this.setSocialForm();
+
+    // if address in view take it as temp so we can go back if adding has been cancelled
+    if (this.socialInView) {
+      this.tempAddUpdateSocial = this.socialInView;
+      this.socialInView = null;
+    }
+  }
+
+
+  private onSocialEditClick() {
+    this.messagesService.emitRoute("nill");
+    this.isSocialEditOn = true;
+
+    // if phone in view take it as temp so we can go back if editing has been cancelled
+    this.tempAddUpdateSocial = this.socialInView;
+    this.setSocialForm();
+    this.setSocialFormDefaults();
+  }
+
+
+  private onSocialAddEditCancel() {
+    this.messagesService.emitRoute(null);
+    if (this.isSocialAddOn == true) { this.isSocialAddOn = false; }
+    if (this.isSocialEditOn == true) { this.isSocialEditOn = false; }
+    // if we are cancelling the adding or editing
+    if (this.tempAddUpdateSocial) { this.socialInView = this.tempAddUpdateSocial; }
+  }
+
+
+  private onSocialDeleteClick() {
+    this.socialToRemove = this.socialInView;
+  }
+
+
+  private onSubmitDeleteSocial(socialToRemove: SocialNetwork) {
+    // delete phone here 
+    this.socialsService.deleteSocialNetwork(socialToRemove)
+      .subscribe((socialResult: SocialNetwork) => {
+
+        this.messagesService.emitProcessMessage("PMSDSo");
+
+        this.getSocialsByTraderId(this.traderId);
+      }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeleteSocial"));
+  }
+
+
+  private onSubmitSocialAddUpdate() {
+    this.messagesService.emitRoute("nill");
+    let social: SocialNetwork = this.prepareAddUpdateSocial();
+
+    if (this.isSocialAddOn) {
+
+      // add new phone
+      this.socialsService.addSocialNetwork(social).subscribe((res: SocialNetwork) => {
+
+        this.addedSocial = res;
+        // show success
+        this.messagesService.emitProcessMessage("PMSASo");  // TODO new message here
+        // get the new data from the server
+        this.getSocialsByTraderId(this.traderId);
+
+      }, (serviceError: Response) => this.onError(serviceError, "onAddSocial"));
+
+      // go back to view
+      this.isSocialAddOn = !this.isSocialAddOn;
+    }
+
+
+    if (this.isSocialEditOn) {
+
+      if (social) { // if phone changed
+
+        // update phoens
+        this.socialsService.updateSocialNetwork(social).subscribe((res: SocialNetwork) => {
+
+          // get the saved address so when we 
+          this.updatedSocial = res;
+          // show success
+          this.messagesService.emitProcessMessage("PMSUSo"); // TODO new message here
+          // get the new data from the server
+          this.getSocialsByTraderId(this.traderId);
+
+        }, (serviceError: Response) => this.onError(serviceError, "onUpdateSocial"));
+
+        // go back to view
+        this.isSocialEditOn = !this.isSocialEditOn;
+      }
+    }
+  }
+
+
+  // prepare the new add or update data - get it from the form
+  private prepareAddUpdateSocial(): SocialNetwork {
+
+    const formModel = this.socialForm.value;
+
+    let preferredflag: PreferredType = formModel.preferredsocial;
+    let socialtype: SocialNetworkType = formModel.socialtype;
+
+    let newAddUpdateSocial: SocialNetwork = new SocialNetwork();
+
+    if (this.isSocialEditOn) { newAddUpdateSocial.id = this.socialInView.id; }
+    newAddUpdateSocial.traderId = this.traderId as string;
+    newAddUpdateSocial.account = formModel.socialaccount as string;
+    newAddUpdateSocial.preferredFlag = preferredflag.value;
+    newAddUpdateSocial.socialTypeId = socialtype.socialTypeId;
+    newAddUpdateSocial.socialType = socialtype.socialType;
+
+    // has anything beeing changed in the form and we are updating
+    if (this.isSocialEditOn && this.compareSocials(newAddUpdateSocial, this.tempAddUpdateSocial)) { this.messagesService.emitProcessMessage("PMEUSo"); return null; } // TODO new process message here
+
+    return newAddUpdateSocial;
+  }
+
+
+  // as the form has been prepopulated when updating we can not use the form dirty on changed
+  // we have custom method to compare the new and old
+  private compareSocials(newSocial: SocialNetwork, oldSocial: SocialNetwork): boolean {
+
+    if (newSocial.socialTypeId === oldSocial.socialTypeId &&
+      newSocial.socialType === oldSocial.socialType &&
+      newSocial.account === oldSocial.account &&
+      newSocial.preferredFlag === oldSocial.preferredFlag) {
+      return true;
+    }
+
+    return false;
+  }
+
 
 
 

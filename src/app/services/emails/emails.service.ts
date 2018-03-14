@@ -119,7 +119,7 @@ export class EmailsService {
       })
     };
 
-    this.localUrl = `${deleteEmailUrl}/${emails.id}`;
+    this.localUrl = `${deleteEmailUrl}?id=${emails.id}`;
     return this.httpClientService.delete<Email>(this.localUrl, httpOptions).retry(1);
   }
 

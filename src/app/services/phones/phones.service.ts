@@ -121,7 +121,7 @@ export class PhonesService {
       })
     };
 
-    this.localUrl = `${deletePhoneUrl}/${phone.id}`;
+    this.localUrl = `${deletePhoneUrl}?id=${phone.id}`;
     return this.httpClientService.delete<Phone>(this.localUrl, httpOptions).retry(1);
   }
 
