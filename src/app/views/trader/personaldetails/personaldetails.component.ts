@@ -486,7 +486,7 @@ export class PersonalDetailsComponent implements OnInit {
 
   private onPreferredTypeChange(preferredtype: PreferredType) {
     // only check it when we are adding address
-    if (this.isAddressEditOn && !this.isSaveAddressOn) {
+    if (this.isAddressEditOn) {
       if (preferredtype.value == "Yes" && this.tempAddUpdateAddress.preferredFlag != "Yes") {
         let m: number = 0;
         for (m = 0; m < this.existingpreferredtypes.length; m++) {

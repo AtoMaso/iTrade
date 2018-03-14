@@ -847,10 +847,10 @@ export class ContactlDetailsComponent implements OnInit {
 
   private onPreferredEmailTypeChange(preferredemailtype: PreferredType) {
     // only check it when we are adding address
-    if (this.isEmailEditOn && !this.isSaveEmailOn) {
+    if (this.isEmailEditOn) {
       if (preferredemailtype.value == "Yes" && this.tempAddUpdateEmail.preferredFlag != "Yes") {
         let m: number = 0;
-        for (m = 0; m < this.existingpreferredphonetypes.length; m++) {
+        for (m = 0; m < this.existingpreferredemailtypes.length; m++) {
           if (this.existingpreferredemailtypes[m].value == preferredemailtype.value) {
             this.openPreferredEmailTypeModal();
           }
@@ -978,7 +978,7 @@ export class ContactlDetailsComponent implements OnInit {
 
         this.addedEmail = res;
         // show success
-        this.messagesService.emitProcessMessage("PMSAEm");  // TODO new message here
+        this.messagesService.emitProcessMessage("PMSAEm"); 
         // get the new data from the server
         this.getEmailsByTraderId(this.traderId);
 
@@ -999,7 +999,7 @@ export class ContactlDetailsComponent implements OnInit {
           // get the saved address so when we 
           this.updatedEmail = res;
           // show success
-          this.messagesService.emitProcessMessage("PMSUEm"); // TODO new message here
+          this.messagesService.emitProcessMessage("PMSUEm"); 
           // get the new data from the server
           this.getEmailsByTraderId(this.traderId);
 
@@ -1026,10 +1026,10 @@ export class ContactlDetailsComponent implements OnInit {
     newAddUpdateEmail.traderId = this.traderId as string;
     newAddUpdateEmail.account = formModel.emailaccount as string;    
     newAddUpdateEmail.preferredFlag = preferredflag.value;
-    newAddUpdateEmail.emailTypeId = emtype.emailTypeId;   
+    newAddUpdateEmail.emailTypeId = emtype.emailTypeId;      
 
     // has anything beeing changed in the form and we are updating
-    if (this.isEmailEditOn && this.compareEmails(newAddUpdateEmail, this.tempAddUpdateEmail)) { this.messagesService.emitProcessMessage("PMEUEm"); return null; } // TODO new process message here
+    if (this.isEmailEditOn && this.compareEmails(newAddUpdateEmail, this.tempAddUpdateEmail)) { this.messagesService.emitProcessMessage("PMEUEm"); return null; } 
 
     return newAddUpdateEmail;
   }
@@ -1039,8 +1039,8 @@ export class ContactlDetailsComponent implements OnInit {
   // we have custom method to compare the new and old
   private compareEmails(newEmail: Email, oldEmail: Email): boolean {
 
-    if (newEmail.emailTypeId === oldEmail.emailTypeId &&
-      newEmail.emailType === oldEmail.emailType &&
+    if (newEmail.emailTypeId === oldEmail.emailTypeId &&    
+      newEmail.traderId === oldEmail.traderId &&
       newEmail.account === oldEmail.account &&  
       newEmail.preferredFlag === oldEmail.preferredFlag) {
       return true;

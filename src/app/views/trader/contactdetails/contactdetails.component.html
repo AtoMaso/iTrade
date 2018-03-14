@@ -4,7 +4,7 @@
       <div class="row">
 
             <!-- phones -->
-            <div class="col-md-3 panel panel-heading footerdiv">
+            <div class="col-md-4 panel panel-heading footerdiv">
 
                   <div class="phones collapsed col-md-6" data-toggle="collapse" data-target="#collapsePhones">
                     <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Phones</span>
@@ -28,11 +28,11 @@
                             <div *ngIf="!isPhoneAddOn && !isPhoneEditOn" class="col-md-12">
 
                                   <div class="col-md-12">
-                                    <div *ngIf="availablephones.length < 3" class="col-md-4"><a (click)="onPhoneAddClick()" class="textoker smalltextbold">Add </a></div>
-                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a (click)="onPhoneEditClick()" class="textoker smalltextbold">Edit </a></div>
-                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a data-target="#removePhone" data-toggle="modal" (click)="onPhoneDeleteClick()" class="textoker smalltextbold">Delete </a></div>
+                                    <div *ngIf="availablephones.length < 3" class="col-md-4"><a (click)="onPhoneAddClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a (click)="onPhoneEditClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a data-target="#removePhone" data-toggle="modal" (click)="onPhoneDeleteClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
                                   </div>
-
+                                  <hr class="hrstylered" />
                                   <div *ngIf="availablephones.length  !== 0" class="col-md-12">
 
                                         <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px; margin-top:20px;">
@@ -155,7 +155,7 @@
 
 
               <!-- emails-->
-              <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">
+              <div class="col-md-4 panel panel-heading footerdiv">
 
 
                 <!-- emails-->
@@ -181,11 +181,11 @@
                         <div *ngIf="!isEmailAddOn && !isEmailEditOn" class="col-md-12" style="margin-bottom:140px;">
 
                           <div class="col-md-12">
-                            <div *ngIf="availableemails.length < 3" class="col-md-4"><a (click)="onEmailAddClick()" class="textoker smalltextbold">Add </a></div>
-                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a (click)="onEmailEditClick()" class="textoker smalltextbold">Edit</a></div>
-                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a data-target="#removeEmail" data-toggle="modal" (click)="onEmailDeleteClick()" class="textoker smalltextbold">Delete </a></div>
+                            <div *ngIf="availableemails.length < 3" class="col-md-4"><a (click)="onEmailAddClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a (click)="onEmailEditClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-edit"></i> Edit</a></div>
+                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a data-target="#removeEmail" data-toggle="modal" (click)="onEmailDeleteClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
                           </div>
-
+                          <hr class="hrstylered" />
                           <div *ngIf="availableemails.length  !== 0" class="col-md-12">
 
                                   <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px; margin-top:20px;">
@@ -217,7 +217,7 @@
                                   Preferred:
                                   <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
-                                    <select formControlName="preferredemail" id="preferredemail" name="preferredemail" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredPhoneTypeChange($event)">
+                                    <select formControlName="preferredemail" id="preferredemail" name="preferredemail" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredEmailTypeChange($event)">
                                       <option></option>
                                       <option *ngFor="let preferredemailtype of allpreferredemailtypes" [ngValue]="preferredemailtype">
                                         {{ preferredemailtype.value }}
@@ -279,7 +279,7 @@
 
 
               <!--social networks-->
-              <div class="col-md-3 col-md-offset-1  panel panel-heading footerdiv">
+              <div class="col-md-4  panel panel-heading footerdiv">
 
                 <div class="socials collapsed col-md-6" data-toggle="collapse" data-target="#collapseSocials">
                   <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Socials </span>
@@ -295,7 +295,7 @@
                     </option>
                   </select>
                 </div>
-
+    
 
                 <div class="colapse in col-md-12" id="collapseSocials" style="margin-top:20px;">
 
@@ -303,11 +303,11 @@
                         <div *ngIf="!isSocialAddOn && !isSocialEditOn" class="col-md-12" style="margin-bottom:140px;">
 
                           <div class="col-md-12">
-                            <div *ngIf="availablesocials.length < 3" class="col-md-4"><a (click)="onSocialAddClick()" class="textoker smalltextbold">Add </a></div>
-                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a (click)="onSocialEditClick()" class="textoker smalltextbold">Edit </a></div>
-                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a data-target="#removeSocial" data-toggle="modal" (click)="onSocialDeleteClick()" class="textoker smalltextbold" >Delete </a></div>
+                            <div *ngIf="availablesocials.length < 3" class="col-md-4"><a (click)="onSocialAddClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a (click)="onSocialEditClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a data-target="#removeSocial" data-toggle="modal" (click)="onSocialDeleteClick()" class="textoker smalltextbold"> <i class="glyphicon glyphicon-trash"></i>Delete </a></div>
                           </div>
-
+                          <hr class="hrstylered" />
                           <div *ngIf="availablesocials.length  !== 0" class="col-md-12">
 
                                 <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px; margin-top:20px;">
