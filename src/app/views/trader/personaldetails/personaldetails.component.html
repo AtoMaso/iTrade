@@ -14,10 +14,11 @@
                                         <div *ngIf="!isPersonalAddOn && !isPersonalEditOn" class="col-md-12">
 
                                               <div class="col-md-12">
-                                                <div *ngIf="!personalDetails" class="col-md-4"><a (click)="onPersonalAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
-                                                <div *ngIf="personalDetails" class="col-md-4"><a (click)="onPersonalEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-                                                <!--<div *ngIf="personalDetails" class="col-md-6"><a  data-target="#removePersonal" data-toggle="modal" (click)="onPersonalDeleteClick(personalDetails)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>-->                                             
-                                              </div>
+                                                <div *ngIf="!personalDetails" class="col-md-6" style="text-align:right;"><a (click)="onPersonalAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                                <div *ngIf="personalDetails" class="col-md-6"></div>
+                                                  <div *ngIf="personalDetails" class="col-md-6" style="text-align:left;"><a (click)="onPersonalEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                                                  <!--<div *ngIf="personalDetails" class="col-md-6"><a  data-target="#removePersonal" data-toggle="modal" (click)="onPersonalDeleteClick(personalDetails)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>-->
+                                                </div>
 
                                               <div *ngIf="personalDetails != null" class="col-md-12">
 
@@ -135,9 +136,10 @@
                                         <div *ngIf="!isAddressAddOn && !isAddressEditOn" class="col-md-12">
 
                                               <div class="col-md-12"> <!--style="background-color:#FF223A3A;height:30px;">-->
-                                                    <div *ngIf="availableAddressesCount < 3"  class="col-md-2 col-md-offset-1"><a (click)="onAddressAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
-                                                    <div *ngIf="availableAddressesCount > 0"  class="col-md-7" style="text-align:center;"><a (click)="onAddressEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>                                  
-                                                    <div *ngIf="availableAddressesCount > 0"  class="col-md-2"><a data-target="#removeAddress" data-toggle="modal" (click)="onAddressDeleteClick(addressInView)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>                                                                                            
+                                                    <div *ngIf="availableAddressesCount < 3"  class="col-md-4" style="text-align:right;"><a (click)="onAddressAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                                    <div *ngIf="availableAddressesCount == 3" class="col-md-4"></div>
+                                                    <div *ngIf="availableAddressesCount > 0"  class="col-md-4" style="text-align:center;"><a (click)="onAddressEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>                                  
+                                                    <div *ngIf="availableAddressesCount > 0"  class="col-md-4" style="text-align:left;"><a data-target="#removeAddress" data-toggle="modal" (click)="onAddressDeleteClick(addressInView)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>                                                                                            
                                               </div>
 
                                               <div *ngIf="availableAddresses != null" class="col-md-12">

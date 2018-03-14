@@ -17,8 +17,8 @@ export class ValidationService {
       'invalidUsername': 'Invalid username. Username must be 5 alphanumeric characters long. ',
 
       'invalidTradeName': 'Name should be 3-20 characters. ',
-      'invalidTradeDescription': 'Description should be 10-200 characters. ',
-      'invalidTradeTradeFor': 'Trade for name should be 3-20 characters. ',
+      'invalidTradeDescription': 'Description can be 10-200 characters. ',
+      'invalidTradeTradeFor': 'Trading for name can be 3-20 characters. ',
       'invalidCategory': 'You must select a category. ',
       'invalidSubcategory': 'You must select a subcategory. ',
       'invalidState': 'You must select a state. ',
@@ -26,26 +26,26 @@ export class ValidationService {
       'invalidDatePublished': 'Published date can not be in the past. ',
       'invalidPostCode': 'You must select postcode.',
   
-      'invalidPhone': 'Phone must contain 10 numeric characters. ',
+      'invalidPhone': 'Numeric 7-10 digits. ',
 
       'invalidPreferredFlag': 'The preferred flag must be selected',
       'invalidAddressType': 'The address type must be selected',
-      'invalidNumber': 'The number must be a numerical value.',
-      'invalidUnit': 'The unit number must be a numerical value.',
-      'invalidStreet': 'The street name can not be longer than 30 char.',
-      'invalidSuburb': 'The suburb name can not be longer than 30 char.',
+      'invalidNumber': 'Must be a numerical value.',
+      'invalidUnit': 'Must be a numerical value.',
+      'invalidStreet': 'The street name longer than 30 char.',
+      'invalidSuburb': 'The suburb name longer than 30 char.',
 
-      'invalidFirstName': 'Your first name should contain only alphabetical characters with maximum lenght of 15 characters. ',
-      'invalidMiddleName': 'Your middle name should contain only alphabetical characters with maximum lenght of 15 characters. ',
-      'invalidLastName': 'Your last name should contain only alphabetical characters with maximum lenght of 20 characters. ',
+      'invalidFirstName': 'Your first name maximum lenght of 15 characters. ',
+      'invalidMiddleName': 'Your middle name maximum lenght of 15 characters. ',
+      'invalidLastName': 'Your last name maximum lenght of 20 characters. ',
       'invalidDate': 'Date must be selected.',
 
-      'invalidCityCode': 'City code must be numeric value 2 to 4 digits!',
-      'invalidCountryCode': 'Country code must be numeric value 2 to 4 digits!',
-      'invalidPhoneType': 'The phone type must be selecte!.',
+      'invalidCityCode': 'Numeric 2 to 4 digits!',
+      'invalidCountryCode': 'Numeric 3 to 5 digits!',
+      'invalidPhoneType': 'Must be selected!',
 
-      'invalidEmailType': 'Email type must be selected!',
-      'invalidSocialType': 'Social type must be selected!',
+      'invalidEmailType': 'Must be selected!',
+      'invalidSocialType': 'Must be selected!',
     };
     return config[validatorName];
   }
@@ -357,7 +357,7 @@ static firstNameValidator(control: any) {
   static phoneValidator(control: any) {
     // {1-10}-Assert phone is numeric only
     if (control.value) {
-      if (control.value.match(/^([0-9]){6,10}$/)) {
+      if (control.value.match(/^([0-9]){7,10}$/)) {
         return null;
       } else {
         return { 'invalidPhone': true };
@@ -379,7 +379,7 @@ static firstNameValidator(control: any) {
   static countrycodeValidator(control) {
 
     if (control.value) {
-      if (control.value.match(/^([0-9]){2,4}$/)) {
+      if (control.value.match(/^([0-9]){3,5}$/)) {
         return null;
       } else {
         return { 'invalidCountryCode': true };

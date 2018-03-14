@@ -29,13 +29,19 @@
 
                                   <div class="col-md-12">
                                     <div *ngIf="availablephones.length < 3" class="col-md-4"><a (click)="onPhoneAddClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                    <div *ngIf="availablephones.length == 3" class="col-md-4"></div>
                                     <div *ngIf="availablephones.length > 0" class="col-md-4"><a (click)="onPhoneEditClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
                                     <div *ngIf="availablephones.length > 0" class="col-md-4"><a data-target="#removePhone" data-toggle="modal" (click)="onPhoneDeleteClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
-                                  </div>
-                                  <hr class="hrstylered" />
-                                  <div *ngIf="availablephones.length  !== 0" class="col-md-12">
+                                    </div>
+                                 
 
-                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px; margin-top:20px;">
+                                  <div *ngIf="availablephones.length  !== 0" class="col-md-12" style="margin-top:20px;">
+
+                                    <div class="row">
+
+                                      <div class="col-md-6">
+
+                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
                                           Preferred:
                                           <span class="text-info text-uppercase"> {{ phoneInView.preferredFlag }}</span>
                                         </div>
@@ -44,12 +50,10 @@
                                           Type:
                                           <span class="text-info text-uppercase"> {{ phoneInView.phoneType }}</span>
                                         </div>
+                                      </div>
 
-                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
-                                          Number:
-                                          <span class="text-info text-uppercase"> {{ phoneInView.number }}</span>
-                                        </div>
 
+                                      <div class="col-md-6">
                                         <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
                                           City Code:
                                           <span class="text-info text-uppercase"> {{ phoneInView.cityCode}}</span>
@@ -59,6 +63,14 @@
                                           Country Code:
                                           <span class="text-info text-uppercase"> {{ phoneInView.countryCode}}</span>
                                         </div>
+                                      </div>
+
+                                    </div>
+
+                                    <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                      Number:
+                                      <span class="text-info text-uppercase"> {{ phoneInView.number }}</span>
+                                    </div>
 
                                   </div>
 
@@ -69,83 +81,94 @@
 
                                   <form novalidate [formGroup]="phoneForm" (submit)="onSubmitPhoneAddUpdate()">
 
-                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                                          Preferred:
-                                          <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt" aria-hidden="true"></i></span>
-                                            <select formControlName="preferredphone" id="preferredphone" name="preferredphone" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredPhoneTypeChange($event)">
-                                              <option></option>
-                                              <option *ngFor="let preferredphone of allpreferredphonetypes" [ngValue]="preferredphone">
-                                                {{ preferredphone.value }}
-                                              </option>
-                                            </select>
-                                          </div>
-                                          <control-messages [control]="phoneForm.controls.preferredphone"></control-messages>
-                                        </div>
+                                          <!--<div class="row">-->
+
+                                                  <div class="col-md-6">
+                                                    <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                                      Preferred:
+                                                      <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt" aria-hidden="true"></i></span>
+                                                        <select formControlName="preferredphone" id="preferredphone" name="preferredphone" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPreferredPhoneTypeChange($event)">
+                                                          <option></option>
+                                                          <option *ngFor="let preferredphone of allpreferredphonetypes" [ngValue]="preferredphone">
+                                                            {{ preferredphone.value }}
+                                                          </option>
+                                                        </select>
+                                                      </div>
+                                                      <control-messages [control]="phoneForm.controls.preferredphone"></control-messages>
+                                                    </div>
 
 
-                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                                          Type:
-                                          <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt" aria-hidden="true"></i></span>
-                                            <select formControlName="phonetype" id="phonetype" name="phonetype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPhoneTypeChange($event)">
-                                              <option></option>
-                                              <option *ngFor="let phtype of allphonetypes" [ngValue]="phtype">
-                                                {{ phtype.phoneType }}
-                                              </option>
-                                            </select>
-                                          </div>
-                                          <control-messages [control]="phoneForm.controls.phonetype"></control-messages>
-                                        </div>
+                                                    <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                                      Type:
+                                                      <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt" aria-hidden="true"></i></span>
+                                                        <select formControlName="phonetype" id="phonetype" name="phonetype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPhoneTypeChange($event)">
+                                                          <option></option>
+                                                          <option *ngFor="let phtype of allphonetypes" [ngValue]="phtype">
+                                                            {{ phtype.phoneType }}
+                                                          </option>
+                                                        </select>
+                                                      </div>
+                                                      <control-messages [control]="phoneForm.controls.phonetype"></control-messages>
+                                                    </div>
 
 
-                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                                           Number:
-                                          <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
-                                            <input type="text" formControlName="phonenumber" id="phonenumber" name="phonenumber" required class="form-control smalltext" style="background-color:moccasin" />
-                                          </div>
-                                          <control-messages [control]="phoneForm.controls.phonenumber"></control-messages>
-                                        </div>
+                                                    <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                                      Number:
+                                                      <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                                                        <input type="text" formControlName="phonenumber" id="phonenumber" name="phonenumber" required class="form-control smalltext" style="background-color:moccasin" />
+                                                      </div>
+                                                      <control-messages [control]="phoneForm.controls.phonenumber"></control-messages>
+                                                    </div>
+                                                  </div>
 
 
-                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                                          City Code:
-                                          <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
-                                            <input type="text" formControlName="citycode" id="citycode" name="citycode" class="form-control smalltext" style="background-color:moccasin" />
-                                          </div>
-                                          <control-messages [control]="phoneForm.controls.citycode"></control-messages>
-                                        </div>
+                                                 <div class="col-md-6">
+
+                                                    <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                                      City Code:
+                                                      <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                                                        <input type="text" formControlName="citycode" id="citycode" name="citycode" class="form-control smalltext" style="background-color:moccasin" />
+                                                      </div>
+                                                      <control-messages [control]="phoneForm.controls.citycode"></control-messages>
+                                                    </div>
 
 
-                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                                          Country Code:
-                                          <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
-                                            <input type="text" formControlName="countrycode" id="countrycode" name="countrycode" class="form-control smalltext" style="background-color:moccasin" />
-                                          </div>
-                                          <control-messages [control]="phoneForm.controls.countrycode"></control-messages>
-                                        </div>
+                                                    <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                                      Country Code:
+                                                      <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                                                        <input type="text" formControlName="countrycode" id="countrycode" name="countrycode" class="form-control smalltext" style="background-color:moccasin" />
+                                                      </div>
+                                                      <control-messages [control]="phoneForm.controls.countrycode"></control-messages>
+                                                    </div>
 
+                                            </div>
 
-                                        <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
-                                          <div class="col-md-6">
-                                            <button id="phonecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPhoneAddEditCancel()">
-                                              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
-                                            </button>
-                                          </div>
+                                          <!--</div>-->
 
-                                          <div class="col-md-6">
-                                            <button id="phonesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!phoneForm.valid" style="width:auto; height:30px;">
-                                              <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-                                              Save
-                                            </button>
-                                          </div>
-                                        </div>
+                                          <!--<div class="row">-->
+                                            <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
+                                              <div class="col-md-6" style="text-align:right;">
+                                                <button id="phonecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPhoneAddEditCancel()">
+                                                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                                                </button>
+                                              </div>
+
+                                              <div class="col-md-6" style="text-align:left;">
+                                                <button id="phonesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!phoneForm.valid" style="width:auto; height:30px;">
+                                                  <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                                  Save
+                                                </button>
+                                              </div>
+                                            </div>
+                                          <!--</div>-->
 
                                   </form>
-
+                            
                             </div>
 
                   </div>
@@ -178,17 +201,18 @@
                 <div class="colapse in col-md-12" id="collapseEmails" style="margin-top:20px;">
 
 
-                        <div *ngIf="!isEmailAddOn && !isEmailEditOn" class="col-md-12" style="margin-bottom:140px;">
+                        <div *ngIf="!isEmailAddOn && !isEmailEditOn" class="col-md-12">
 
                           <div class="col-md-12">
                             <div *ngIf="availableemails.length < 3" class="col-md-4"><a (click)="onEmailAddClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                            <div *ngIf="availableemails.length == 3" class="col-md-4"></div>
                             <div *ngIf="availableemails.length > 0" class="col-md-4"><a (click)="onEmailEditClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-edit"></i> Edit</a></div>
                             <div *ngIf="availableemails.length > 0" class="col-md-4"><a data-target="#removeEmail" data-toggle="modal" (click)="onEmailDeleteClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
-                          </div>
-                          <hr class="hrstylered" />
-                          <div *ngIf="availableemails.length  !== 0" class="col-md-12">
+                            </div>                       
 
-                                  <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px; margin-top:20px;">
+                          <div *ngIf="availableemails.length  !== 0" class="col-md-12" style="margin-top:20px;">
+
+                                  <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
                                     Preferred:
                                     <span class="text-info text-uppercase"> {{ emailInView.preferredFlag }}</span>
                                   </div>
@@ -254,13 +278,13 @@
 
 
                                 <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
-                                  <div class="col-md-6">
+                                  <div class="col-md-6" style="text-align:right;">
                                     <button id="phonecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onEmailAddEditCancel()">
                                       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                     </button>
                                   </div>
 
-                                  <div class="col-md-6">
+                                  <div class="col-md-6" style="text-align:left;">
                                     <button id="emailsave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!emailForm.valid" style="width:auto; height:30px;">
                                       <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                                       Save
@@ -300,17 +324,18 @@
                 <div class="colapse in col-md-12" id="collapseSocials" style="margin-top:20px;">
 
 
-                        <div *ngIf="!isSocialAddOn && !isSocialEditOn" class="col-md-12" style="margin-bottom:140px;">
+                        <div *ngIf="!isSocialAddOn && !isSocialEditOn" class="col-md-12">
 
                           <div class="col-md-12">
                             <div *ngIf="availablesocials.length < 3" class="col-md-4"><a (click)="onSocialAddClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                            <div *ngIf="availablesocials.length == 3" class="col-md-4"></div>
                             <div *ngIf="availablesocials.length > 0" class="col-md-4"><a (click)="onSocialEditClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
                             <div *ngIf="availablesocials.length > 0" class="col-md-4"><a data-target="#removeSocial" data-toggle="modal" (click)="onSocialDeleteClick()" class="textoker smalltextbold"> <i class="glyphicon glyphicon-trash"></i>Delete </a></div>
-                          </div>
-                          <hr class="hrstylered" />
-                          <div *ngIf="availablesocials.length  !== 0" class="col-md-12">
+                            </div>
+                       
+                          <div *ngIf="availablesocials.length  !== 0" class="col-md-12" style="margin-top:20px;">
 
-                                <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px; margin-top:20px;">
+                                <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
                                   Preferred:
                                   <span class="text-info text-uppercase"> {{ socialInView.preferredFlag }}</span>
                                 </div>
@@ -374,15 +399,14 @@
                                   </div>
                      
 
-
                                   <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="text-align:right;">
                                       <button id="phonecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onSocialAddEditCancel()">
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                                       </button>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="text-align:left;">
                                       <button id="phonelsave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!socialForm.valid" style="width:auto; height:30px;">
                                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                                         Save

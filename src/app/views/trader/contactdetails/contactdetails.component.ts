@@ -395,10 +395,10 @@ export class ContactlDetailsComponent implements OnInit {
   private setPhoneForm() {
     this.phoneForm = this.formBuilder.group({
       preferredphone: new FormControl('', [Validators.required, ValidationService.preferredValidator]),
-      phonetype: new FormControl('', [ValidationService.phonetypeValidator]),
+      phonetype: new FormControl('', [Validators.required,ValidationService.phonetypeValidator]),
       phonenumber: new FormControl('', [Validators.required, ValidationService.phoneValidator]),
-      citycode: new FormControl('', [ValidationService.citycodeValidator]),
-      countrycode: new FormControl('', [ValidationService.countrycodeValidator])
+      citycode: new FormControl('', [Validators.required, ValidationService.citycodeValidator]),
+      countrycode: new FormControl('', [Validators.required, ValidationService.countrycodeValidator])
 
     });
   }
@@ -802,7 +802,7 @@ export class ContactlDetailsComponent implements OnInit {
   private setEmailForm() {
     this.emailForm = this.formBuilder.group({
       emailaccount: new FormControl('', [Validators.required, ValidationService.emailValidator]),       
-      emailtype: new FormControl('', [ValidationService.emailtypeValidator]),
+      emailtype: new FormControl('', [Validators.required, ValidationService.emailtypeValidator]),
       preferredemail: new FormControl('', [Validators.required, ValidationService.preferredValidator]),
 
     });
@@ -1200,7 +1200,7 @@ export class ContactlDetailsComponent implements OnInit {
     this.socialForm = this.formBuilder.group({
   
       socialaccount: new FormControl('', [Validators.required, ValidationService.emailValidator]),    
-      socialtype: new FormControl('', [ValidationService.socialtypeValidator]),
+      socialtype: new FormControl('', [Validators.required, ValidationService.socialtypeValidator]),
       preferredsocial: new FormControl('', [Validators.required, ValidationService.preferredValidator]),
 
     });
@@ -1425,7 +1425,7 @@ export class ContactlDetailsComponent implements OnInit {
     newAddUpdateSocial.account = formModel.socialaccount as string;
     newAddUpdateSocial.preferredFlag = preferredflag.value;
     newAddUpdateSocial.socialTypeId = socialtype.socialTypeId;
-    newAddUpdateSocial.socialType = socialtype.socialType;
+    //newAddUpdateSocial.socialType = socialtype.socialType;
 
     // has anything beeing changed in the form and we are updating
     if (this.isSocialEditOn && this.compareSocials(newAddUpdateSocial, this.tempAddUpdateSocial)) { this.messagesService.emitProcessMessage("PMEUSo"); return null; } // TODO new process message here
