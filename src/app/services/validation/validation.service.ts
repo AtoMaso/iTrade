@@ -181,8 +181,7 @@ export class ValidationService {
 /**************************************************/
   static emailValidator(control) {
     // RFC 2822 compliant regex
-    if (control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)
-      || control.value.match(/[A - Z0 - 9._#$%&'* +-]+@[A - Z0 - 9. -]+\.[A - Z]{2, 4 }?/ ) ) {
+    if (control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/) ) {
       return null;
     } else {
       return { 'invalidEmailAddress': true };

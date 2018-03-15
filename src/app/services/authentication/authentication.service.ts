@@ -93,16 +93,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
 
-  //******************************************************
-  // Logout the logged in user
-  //******************************************************
-  public logOut() {
-    // TODO send the web api logout request
-    this.clearSessionTimer();
-    this.removeUserIdentity();
-    this.removeAuthData();
-    this.removeUserSession();   
-  }
+
 
 
   //******************************************************
@@ -163,6 +154,17 @@ export class AuthenticationService implements OnDestroy {
     else { this.removeUserSession(); }  
   }
 
+  //******************************************************
+  // Logout the logged in user
+  //******************************************************
+  public logOut() {
+    // TODO send the web api logout request
+    this.clearSessionTimer();
+    this.removeUserIdentity();
+    this.removeAuthData();
+    this.removeUserSession();
+    this.emitUserSession(this.userSession);
+  }
 
   public emitUserSession(passedSession: UserSession) {
     this.behaviorSessionStore.next(passedSession);

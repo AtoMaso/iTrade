@@ -80,8 +80,7 @@
                             <div *ngIf="isPhoneAddOn || isPhoneEditOn" class="row col-md-12">
 
                                   <form novalidate [formGroup]="phoneForm" (submit)="onSubmitPhoneAddUpdate()">
-
-                                          <!--<div class="row">-->
+                                      
 
                                                   <div class="col-md-6">
                                                     <div class="form-group smalltextbold col-md-12" style="height:70px;">
@@ -147,25 +146,23 @@
                                                     </div>
 
                                             </div>
+                                       
+                                         
+                                                <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
+                                                  <div class="col-md-6" style="text-align:right;">
+                                                    <button id="phonecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPhoneAddEditCancel()">
+                                                      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                                                    </button>
+                                                  </div>
 
-                                          <!--</div>-->
-
-                                          <!--<div class="row">-->
-                                            <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
-                                              <div class="col-md-6" style="text-align:right;">
-                                                <button id="phonecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPhoneAddEditCancel()">
-                                                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
-                                                </button>
-                                              </div>
-
-                                              <div class="col-md-6" style="text-align:left;">
-                                                <button id="phonesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!phoneForm.valid" style="width:auto; height:30px;">
-                                                  <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-                                                  Save
-                                                </button>
-                                              </div>
-                                            </div>
-                                          <!--</div>-->
+                                                  <div class="col-md-6" style="text-align:left;">
+                                                    <button id="phonesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!phoneForm.valid" style="width:auto; height:30px;">
+                                                      <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                                      Save
+                                                    </button>
+                                                  </div>
+                                                </div>
+                                        
 
                                   </form>
                             

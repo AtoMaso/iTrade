@@ -120,6 +120,7 @@ export class AppComponent implements OnDestroy, OnInit {
   }
 
   private logOut() {
+    this.isUserAuthenticated = false;
     this.authenticationService.logOut();
     let route = ['/dashboard']
     this.router.navigate(route);
