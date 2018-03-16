@@ -15,10 +15,12 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
 import { LoggerService } from '../logger/logger.service';
-import { RegisterBindingModel, LoginModel, UserSession, Authentication, UserIdentity } from '../../helpers/classes';
+import { RegisterBindingModel, LoginModel, UserSession, Authentication, UserIdentity, UserInfoViewModel } from '../../helpers/classes';
 
 let serviceBase = CONFIG.baseUrls.servicebase;
 let serviceAccount = CONFIG.baseUrls.accounts;
+let userInfoUrl = CONFIG.baseUrls.getUserInfo;
+
 
 @Injectable()
 export class AuthenticationService implements OnDestroy {
@@ -76,6 +78,12 @@ export class AuthenticationService implements OnDestroy {
       .subscribe(res => this.onLoginSuccess(res));
      
   }
+
+
+
+  public changeUserpassword() {
+  }
+
 
   
   //******************************************************

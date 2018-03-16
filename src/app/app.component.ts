@@ -145,7 +145,7 @@ export class AppComponent implements OnDestroy, OnInit {
   public IdleSetup(sessiontimeout: number) {
 
       // sets an idle timeout , in this case this is returned from webapi as 2 minutes
-      // and we are giving a minute he user to refresh the session token before is logged out.
+      // and we are giving a minute the user to refresh the session token before is logged out.
       // the session will be session-2 minutes. One minute as set for the dialog box to be shown
       // and the next minute to refresh the token before the original token expires
       this.idle.setIdle(sessiontimeout - 2 * 60);
@@ -153,7 +153,7 @@ export class AppComponent implements OnDestroy, OnInit {
       //this.idle.setIdle(30);
 
       // sets the session timeout warning period, the user will be considered 
-      // timed out when we add setIdle and setTimeout times are add together
+      // timed out when setIdle and setTimeout times are add together
       // we are giving the warning shown for 30 seconds????   
       this.idle.setTimeout(30);
 

@@ -6,7 +6,7 @@
                       <div class="col-md-3 col-md-offset-1 panel panel-heading footerdiv">             
 
                             <div class="personal collapsed col-md-12" data-toggle="collapse" data-target="#collapsePersonal">
-                              <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Personal Details</span>
+                              <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Personal Details</span>
                             </div>
 
                             <div class="colapse in col-md-12" id="collapsePersonal" style="margin-top:20px;">
@@ -14,32 +14,32 @@
                                         <div *ngIf="!isPersonalAddOn && !isPersonalEditOn" class="col-md-12">
 
                                               <div class="col-md-12">
-                                                <div *ngIf="!personalDetails" class="col-md-6" style="text-align:right;"><a (click)="onPersonalAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                                <div *ngIf="!personalDetails" class="col-md-6" style="text-align:right;"><a (click)="onPersonalAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
                                                 <div *ngIf="personalDetails" class="col-md-6"></div>
-                                                  <div *ngIf="personalDetails" class="col-md-6" style="text-align:left;"><a (click)="onPersonalEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-                                                  <!--<div *ngIf="personalDetails" class="col-md-6"><a  data-target="#removePersonal" data-toggle="modal" (click)="onPersonalDeleteClick(personalDetails)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>-->
+                                                  <div *ngIf="personalDetails" class="col-md-6" style="text-align:left;"><a (click)="onPersonalEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                                                  <!--<div *ngIf="personalDetails" class="col-md-6"><a  data-target="#removePersonal" data-toggle="modal" (click)="onPersonalDeleteClick(personalDetails)" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>-->
                                                 </div>
 
                                               <div *ngIf="personalDetails != null" class="col-md-12">
 
-                                                    <div class="row smalltextbold panel panel-heading col-md-11 col-md-offset-1" style="height:50px; margin-top:20px;">
+                                                    <div class="row mediumtext panel panel-heading" style="height:50px; margin-top:20px;">
                                                       First Name:
-                                                      <span class="text-info text-uppercase">{{ personalDetails.firstName }}</span>
+                                                      <span class="text-info">{{ personalDetails.firstName }}</span>
                                                     </div>
 
-                                                    <div class="row smalltextbold panel panel-heading col-md-11 col-md-offset-1" style="height:50px;">
+                                                    <div class="row mediumtext panel panel-heading" style="height:50px;">
                                                      Middle Name:
-                                                       <span class="text-info text-uppercase">{{ personalDetails.middleName }}</span>
+                                                       <span class="text-info">{{ personalDetails.middleName }}</span>
                                                     </div>
 
-                                                    <div class="row smalltextbold panel panel-heading col-md-11 col-md-offset-1" style="height:50px;">
+                                                    <div class="row mediumtext panel panel-heading" style="height:50px;">
                                                       Last Name
-                                                      <span class="text-info text-uppercase">{{ personalDetails.lastName }}</span>
+                                                      <span class="text-info">{{ personalDetails.lastName }}</span>
                                                     </div>
 
-                                                    <div class="row smalltextbold panel panel-heading col-md-11 col-md-offset-1" style="height:50px;">
+                                                    <div class="row mediumtext panel panel-heading" style="height:50px;">
                                                      Date Of Birth:
-                                                      <span class="text-info text-uppercase">{{ personalDetails.dateOfBirth | date }}</span>
+                                                      <span class="text-info">{{ personalDetails.dateOfBirth | date }}</span>
                                                     </div>
                                               </div>
 
@@ -117,16 +117,16 @@
                       <div class="col-md-6 col-md-offset-1 panel panel-heading footerdiv">
                           
                               <div class="address col-md-6 collapsed" data-toggle="collapse" data-target="#collapseAddress">
-                                <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Address Details</span>
+                                <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Address Details</span>
                               </div>          
                                             
                               <div class="smalltextbold col-md-6" style="text-align:right;z-index:1000;">     
                                    Type:                                                                                                                 
                                   <select id="atype" name="atype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewAddressTypeChange($event)">
-                                    <option></option>
-                                    <option *ngFor="let atype of existingaddresstypes" [ngValue]="atype">
-                                      {{ atype.addressType }}
-                                    </option>
+                                        <option></option>
+                                        <option *ngFor="let atype of existingaddresstypes" [ngValue]="atype">
+                                          {{ atype.addressType }}
+                                        </option>
                                   </select>                               
                               </div>                            
                                                                                 
@@ -136,63 +136,63 @@
                                         <div *ngIf="!isAddressAddOn && !isAddressEditOn" class="col-md-12">
 
                                               <div class="col-md-12"> <!--style="background-color:#FF223A3A;height:30px;">-->
-                                                    <div *ngIf="availableAddressesCount < 3"  class="col-md-4" style="text-align:right;"><a (click)="onAddressAddClick()" class="textoker smalltext"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                                    <div *ngIf="availableAddressesCount < 3"  class="col-md-4" style="text-align:right;"><a (click)="onAddressAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
                                                     <div *ngIf="availableAddressesCount == 3" class="col-md-4"></div>
-                                                    <div *ngIf="availableAddressesCount > 0"  class="col-md-4" style="text-align:center;"><a (click)="onAddressEditClick()" class="textoker smalltext"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>                                  
-                                                    <div *ngIf="availableAddressesCount > 0"  class="col-md-4" style="text-align:left;"><a data-target="#removeAddress" data-toggle="modal" (click)="onAddressDeleteClick(addressInView)" class="textoker smalltext"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>                                                                                            
+                                                    <div *ngIf="availableAddressesCount > 0"  class="col-md-4" style="text-align:center;"><a (click)="onAddressEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>                                  
+                                                    <div *ngIf="availableAddressesCount > 0"  class="col-md-4" style="text-align:left;"><a data-target="#removeAddress" data-toggle="modal" (click)="onAddressDeleteClick(addressInView)" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>                                                                                            
                                               </div>
 
                                               <div *ngIf="availableAddresses != null" class="col-md-12">
 
                                                       <div class="col-md-6">
 
-                                                            <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;margin-top:20px;">
+                                                            <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;margin-top:20px;">
                                                                Preferred:
-                                                               <span class="text-info text-uppercase"> {{ addressInView.preferredFlag }}</span>
+                                                               <span class="text-info"> {{ addressInView.preferredFlag }}</span>
                                                             </div>
 
-                                                            <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                            <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                                               Address Type: 
-                                                              <span class="text-info text-uppercase"> {{ addressInView.addressType }}</span>
+                                                              <span class="text-info"> {{ addressInView.addressType }}</span>
                                                             </div>
 
-                                                            <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                            <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                                               Street Number:
-                                                               <span class="text-info text-uppercase"> {{ addressInView.number }}</span>
+                                                               <span class="text-info"> {{ addressInView.number }}</span>
                                                             </div>            
                                     
                                                             <div *ngIf="addressInView.unit !=''" class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
                                                               Unit Number:
-                                                              <span class="text-info text-uppercase"> {{ addressInView.unit }}</span>
+                                                              <span class="text-info"> {{ addressInView.unit }}</span>
                                                             </div>                               
 
-                                                            <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                            <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                                               Street Name:
-                                                              <span class="text-info text-uppercase"> {{ addressInView.street }}</span>
+                                                              <span class="text-info"> {{ addressInView.street }}</span>
                                                             </div>
                             
                                                       </div>
 
                                                       <div class="col-md-5 col-md-offset-1">
                                                         
-                                                              <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;margin-top:20px;">
+                                                              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;margin-top:20px;">
                                                                 State:
-                                                                <span class="text-info text-uppercase"> {{ addressInView.state }}</span>
+                                                                <span class="text-info"> {{ addressInView.state }}</span>
                                                               </div>
 
-                                                              <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                                                City:
-                                                               <span class="text-info text-uppercase"> {{ addressInView.city }}</span>
+                                                               <span class="text-info"> {{ addressInView.city }}</span>
                                                               </div>
 
-                                                              <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                                                 Postcode:
-                                                                <span class="text-info text-uppercase"> {{ addressInView.postcode }}</span>
+                                                                <span class="text-info"> {{ addressInView.postcode }}</span>
                                                               </div>
 
-                                                              <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                                              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                                                 Suburb:
-                                                                <span class="text-info text-uppercase"> {{ addressInView.suburb }}</span>
+                                                                <span class="text-info"> {{ addressInView.suburb }}</span>
                                                               </div>
                                                       </div>
 

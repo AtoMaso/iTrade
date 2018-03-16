@@ -2,14 +2,17 @@ import { Component, Input, OnInit, Inject, Injectable, AfterViewInit } from '@an
 import { Response } from '@angular/http';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
+import { FormBuilder, FormGroup, FormControl, FormArray, ReactiveFormsModule, Validators  } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 // services
+import { TraderApiService } from '../../../services/traderapi/traderapi.service';
+import { ValidationService } from '../../../services/validation/validation.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 import { CapsPipe } from '../../../helpers/pipes';
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../../helpers/classes';
+import { UserSession, PageTitle, Trader, ChangePasswordBindingModel } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -24,12 +27,24 @@ export class SecurityDetailsComponent implements OnInit {
   private traderId: string;
   private isRequesting: boolean;
   private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
-  private isAuthenticated: boolean = false;
+
+  private changePasswordForm: FormGroup;
+
+  private isChangePasswordOn: boolean = false;
+  private isSavePasswordOn: boolean = false;
+
+  private trader: Trader = new Trader();
+  private updatedTrader: Trader;
+  private traderToRemove: Trader;
+
+  private changePasswordInfo: ChangePasswordBindingModel;
+
 
   constructor(
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private traderService: TraderApiService,
     private pageTitleService: PageTitleService,
     private messagesService: ProcessMessageService,
     private loggerService: LoggerService) {
@@ -37,18 +52,76 @@ export class SecurityDetailsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getUseridentity();
+    this.getUserSession();
     this.initialiseComponent();
+
+    this.getTraderInfo();
+    this.setChangePasswordForm();
+
   }
 
 
+  // toggling done with jquery
+  public ngAfterViewInit() {
 
-  private getUseridentity() {
+    jQuery(document).ready(function () {
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapseLoginDetails").on("hide.bs.collapse", function () {
+        jQuery(".logindetails").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Login Details</span>  ');
+      });
+      jQuery("#collapseLoginDetails").on("show.bs.collapse", function () {
+        jQuery(".logindetails").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Login Details</span>');
+      });
+    });
+
+  }
+
+  //************************************************************
+  // GET DATA SECTION
+  //************************************************************
+  private getTraderInfo() {
+    this.traderService.getTraderByTraderId(this.traderId)
+      .subscribe((response: Trader) => {       
+        this.onSuccessUserInfo(response); 
+      });
+  }
+
+
+  private onSuccessUserInfo(response: Trader) {
+    this.trader = response;       
+    this.trader.password = "***************";     
+  }
+
+  private setChangePasswordForm() {
+    this.changePasswordForm = this.formBuilder.group({
+      oldpassword: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
+      newpassword: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
+      confirmpassword: new FormControl('', [Validators.required, ValidationService.confirmPasswordValidator]),  
+    });
+  }
+
+
+  private onChangePasswordClick() {
+    this.isChangePasswordOn = true;
+  }
+
+  private onChangePasswordCancel() {
+    this.isChangePasswordOn = false;
+  }
+
+  private onChangePasswordSubmit() {
+
+  }
+
+
+  //************************************************************
+  // HELPER METHODS SECTION
+  //************************************************************
+  private getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
-        this.isAuthenticated = this.session.authentication.isAuthenticated;
-        this.identity.roles = this.session.userIdentity.roles;
         this.traderId = this.session.userIdentity.userId;
       }
       catch (ex) {
@@ -59,30 +132,8 @@ export class SecurityDetailsComponent implements OnInit {
 
 
   private initialiseComponent() {
-    this.messagesService.emitRoute("nill");
-    this.isRequesting = true;
+    this.messagesService.emitRoute("nill"); 
     this.pageTitleService.emitPageTitle(new PageTitle("My Security Details"));
   }
 
 }
-
-//private getContactDetails(traderId: string) {
-  //  this.contactService.getContactDetailsByTraderId(traderId)
-  //    .subscribe((contactResult: ContactDetails) => {       
-  //      this.onSuccessContact(contactResult);
-  //    }, (serviceError: Response) => this.onError(serviceError, "getContactDetails"));
-  //}
-
-
-  //private onSuccessContact(cd: ContactDetails) {
-  //  this.contactDetails = cd;
-  //  this.getSecurityDetails(this.traderId);
-  //}
-
-
-  //private getSecurityDetails(traderId: string) {
-  //  this.securityService.getSecurityDetailsByTraderId(traderId)
-  //    .subscribe((securityResult: SecurityDetails) => {
-  //      this.securityDetails = securityResult;       
-  //    }, (serviceError: Response) => this.onError(serviceError, "getSecurityDetails"));
-  //}

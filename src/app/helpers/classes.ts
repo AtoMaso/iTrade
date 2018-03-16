@@ -11,8 +11,27 @@
   ITrade, IImage, ICategory, ITradeHistory,  
   IUserSession, IAuthentication, IUserIdentity,
   IProcessMessage, IProcessMessageType,
-  IPageTitle, IAttachement
+  IPageTitle, IAttachement, IUserInfoViewModel,
 } from './interfaces';
+
+
+class UserInfoViewModel implements IUserInfoViewModel {
+
+  Email: string;
+  Username: string;
+  Password: string;
+  HasRegitered: boolean;
+  LoginProvider: string;
+
+  constructor() {
+    this.Email = "";
+    this.Username = "";
+    this.Password = "***********";
+    this.HasRegitered = true;
+    this.LoginProvider = "";
+  }
+}
+
 
 
 class LoginModel implements ILoginModel{
@@ -68,21 +87,20 @@ class SetPasswordBindingModel implements ISetPasswordBindingModel {
 
 class Trader implements ITraderList {
   traderId: string;
-  traderFirstName: string;
-  traderMiddleName: string;
-  traderLastName: string;
-  traderContactEmail: string;
-  traderContactPhone: string;
-  traderSocialNetwork: string;
+  userName: string;
+  email: string;
+  EmailConfirmed: boolean;
+  password: string;
+  passwordHash: string;
+  
 
   constructor() {    
-    this.traderId = ""
-    this.traderFirstName = "";
-    this.traderMiddleName = "";
-    this.traderLastName = " ";
-    this.traderContactEmail = "";  
-    this.traderContactPhone = "";
-    this.traderSocialNetwork = "";
+    this.traderId = "";
+    this.email = "";
+    this.EmailConfirmed = false;
+    this.userName = "";
+    this.password = "************";
+    this.passwordHash = "";
   }
 }
 
@@ -664,7 +682,7 @@ class PreferredType {
 }
 
 export {
-  ChangePasswordBindingModel, RegisterBindingModel,
+ChangePasswordBindingModel, RegisterBindingModel, UserInfoViewModel,
   SetPasswordBindingModel, LoginModel, Subcategory,
   Trader, PostTrade, State, Place, Postcode,
   PersonalDetails, SecurityDetails,

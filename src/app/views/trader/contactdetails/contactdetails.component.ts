@@ -57,7 +57,6 @@ export class ContactlDetailsComponent implements OnInit {
 
   private defaultPhoneType: PhoneType;
   private defaultPreferredPhoneType: PreferredType;
-
   private displayPhoneTypeModal: string;
   private displayPreferredPhoneTypeModal: string;
 
@@ -212,39 +211,37 @@ export class ContactlDetailsComponent implements OnInit {
       });
 
 
+      setTimeout( function() {
 
-      // this will set the first item from of the select phone type dropdown
-      var counter = 0;
-      if (jQuery('#phtype option')) {
-        jQuery('#phtype option').each(function () {
-          if (this.text != "" && counter == 1) {
-            jQuery(this).attr("selected", "selected");
-          }
-          counter = counter + 1;
-        });
-      }
+        // this will set the first item from of the select phone type dropdown
+        var counter: number = 0;
+        if (jQuery('#phtype option')) {
+          jQuery('#phtype option').each(function () {
+            if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+            counter = counter + 1;
+          });
+        }
 
-      // this will set the first item from of the select email type dropdown
-      var counter = 0;
-      if (jQuery('#emtype option')) {
-        jQuery('#emtype option').each(function () {
-          if (this.text != "" && counter == 1) {
-            jQuery(this).attr("selected", "selected");
-          }
-          counter = counter + 1;
-        });
-      }
+        // this will set the first item from of the select email type dropdown
+        let mcounter: number = 0;
+        if (jQuery('#emtype option')) {
+          jQuery('#emtype option').each(function () {
+            if (this.text != "" && mcounter == 1) { jQuery(this).attr("selected", "selected"); }
+            mcounter = mcounter + 1;
+          });
+        }
 
-      // this will set the first item from of the select social type dropdown
-      var counter = 0;
-      if (jQuery('#sltype option')) {
-        jQuery('#sltype option').each(function () {
-          if (this.text != "" && counter == 1) {
-            jQuery(this).attr("selected", "selected");
-          }
-          counter = counter + 1;
-        });
-      }
+        // this will set the first item from of the select social type dropdown
+        let ncounter: number = 0;
+        if (jQuery('#sltype option')) {
+          jQuery('#sltype option').each(function () {
+            if (this.text != "" && ncounter == 1) { jQuery(this).attr("selected", "selected"); }
+            ncounter = ncounter + 1;
+          });
+        }
+
+      }, 200);
+
     });
   }
 
@@ -573,9 +570,9 @@ export class ContactlDetailsComponent implements OnInit {
     if (this.isPhoneAddOn) {
 
       // add new phone
-      this.phonesService.addPhone(phone).subscribe((res: Phone) => {
+      this.phonesService.addPhone(phone).subscribe((response: Phone) => {
 
-        this.addedPhone = res;
+        this.addedPhone = response;
         // show success
         this.messagesService.emitProcessMessage("PMSAPh");  // TODO new message here
         // get the new data from the server
@@ -593,10 +590,10 @@ export class ContactlDetailsComponent implements OnInit {
       if (phone) { // if phone changed
 
         // update phoens
-        this.phonesService.updatePhone(phone).subscribe((res: Phone) => {
+        this.phonesService.updatePhone(phone).subscribe((response: Phone) => {
 
           // get the saved address so when we 
-          this.updatedPhone = res;
+          this.updatedPhone = response;
           // show success
           this.messagesService.emitProcessMessage("PMSUPh");
           // get the new data from the server

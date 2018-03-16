@@ -1,3 +1,92 @@
-<p>
-  securitydetails works!
-</p>
+<div class="container col-md-12">
+
+    <!-- personal deatils + address details row -->
+    <div class="row">
+
+                <div class="col-md-5 panel panel-heading footerdiv">
+
+                  <div class="logindetails collapsed col-md-12" data-toggle="collapse" data-target="#collapseLoginDetails">
+                    <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Login Details</span>
+                  </div>
+
+                  <div class="colapse in col-md-12" id="collapseLoginDetails" style="margin-top:20px;">
+
+                            <div *ngIf="!isChangePasswordOn" class="col-md-12">
+
+                                                 
+                                <div *ngIf="trader!= null" class="col-md-12" style="text-align:right;">
+                                      <a (click)="onChangePasswordClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-pencil"></i> Change Password </a>
+                                </div>                              
+
+                                  <div *ngIf="trader != null" class="col-md-12">
+
+                                        <div class="row mediumtext panel panel-heading col-md-11 col-md-offset-1" style="height:50px; margin-top:20px;">
+                                          Username:
+                                          <span class="text-info">{{ trader.username }}</span>
+                                        </div>
+
+                                        <div class="row mediumtext panel panel-heading col-md-11 col-md-offset-1" style="height:50px;">
+                                          Password:
+                                          <span class="text-inf0">{{ trader.password }}</span>
+                                        </div>                                                                                                             
+                                                           
+                                   </div>
+
+                            </div>
+
+
+                            <div *ngIf="isChangePasswordOn" class="row col-md-10 col-md-offset-1">
+
+                              <form novalidate [formGroup]="changePasswordForm" (submit)="onChangePasswordSubmit()">
+
+                                      <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                            Old Password
+                                            <div class="input-group">
+                                              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                              <input type="text" formControlName="oldpassword" id="oldpassword" name="oldpassword" required class="form-control smalltext" style="background-color:moccasin" />
+                                            </div>
+                                            <control-messages [control]="changePasswordForm.controls.oldpassword"></control-messages>
+                                      </div>
+
+                                      <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                            New Password:
+                                            <div class="input-group">
+                                              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                              <input type="text" formControlName="newpassword" id="newpassword" name="newpassword" class="form-control smalltext" style="background-color:moccasin" />
+                                            </div>
+                                            <control-messages [control]="changePasswordForm.controls.newpassword"></control-messages>
+                                      </div>
+
+                                      <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                           Confirm New Password
+                                            <div class="input-group">
+                                              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                              <input type="text" formControlName="confirmpassword" id="confirmpassword" name="confirmpassword" class="form-control smalltext" style="background-color:moccasin" />
+                                            </div>
+                                            <control-messages [control]="changePasswordForm.controls.lname"></control-messages>
+                                      </div>                              
+
+                                      <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
+                                            <div class="col-md-6" style="text-align:right;">
+                                              <button id="passwordcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onChangePasswordCancel()">
+                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                                              </button>
+                                            </div>
+
+                                            <div class="col-md-6" style="text-align:left;">
+                                              <button id="passwordsave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!changePasswordForm.valid" style="width:auto; height:30px;">
+                                                <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                                Save
+                                              </button>
+                                            </div>
+                                      </div>
+
+                              </form>
+
+                            </div>
+
+                  </div>
+
+            </div>
+    </div>
+</div>

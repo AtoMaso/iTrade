@@ -41,6 +41,8 @@ export class TraderApiService {
         return this.httpClientService.get(this.localUrl, httpOptions).retry(1);
     }
 
+
+
     // page of members
     public getSetOfTraders(page: number, perpage: number) {
      

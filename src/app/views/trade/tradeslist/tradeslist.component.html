@@ -189,7 +189,7 @@
 
                      <tr *ngFor="let trade of rows  | paginate:config">
 
-                        <td class="row col-md-12">
+                        <td class="row col-md-12" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}">
 
                                <div class="col-md-4 container">
                                  <carousel id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>

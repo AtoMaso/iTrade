@@ -7,17 +7,17 @@
             <div class="col-md-4 panel panel-heading footerdiv">
 
                   <div class="phones collapsed col-md-6" data-toggle="collapse" data-target="#collapsePhones">
-                    <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Phones</span>
+                    <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Phones</span>
                   </div>
 
 
                   <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
                         Type:
-                        <select id="atype" name="phtype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPhoneTypeChange($event)">
-                          <option></option>
-                          <option *ngFor="let phtype of existingphonetypes" [ngValue]="phtype">
-                            {{ phtype.phoneType }}
-                          </option>
+                        <select id="phtype" name="phtype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPhoneTypeChange($event)">
+                              <option></option>
+                              <option *ngFor="let phtype of existingphonetypes" [ngValue]="phtype">
+                                {{ phtype.phoneType }}
+                              </option>
                         </select>
                   </div>
 
@@ -28,10 +28,10 @@
                             <div *ngIf="!isPhoneAddOn && !isPhoneEditOn" class="col-md-12">
 
                                   <div class="col-md-12">
-                                    <div *ngIf="availablephones.length < 3" class="col-md-4"><a (click)="onPhoneAddClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                                    <div *ngIf="availablephones.length < 3" class="col-md-4"><a (click)="onPhoneAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
                                     <div *ngIf="availablephones.length == 3" class="col-md-4"></div>
-                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a (click)="onPhoneEditClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a data-target="#removePhone" data-toggle="modal" (click)="onPhoneDeleteClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a (click)="onPhoneEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a data-target="#removePhone" data-toggle="modal" (click)="onPhoneDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
                                     </div>
                                  
 
@@ -41,35 +41,35 @@
 
                                       <div class="col-md-6">
 
-                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                        <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                           Preferred:
-                                          <span class="text-info text-uppercase"> {{ phoneInView.preferredFlag }}</span>
+                                          <span class="text-info"> {{ phoneInView.preferredFlag }}</span>
                                         </div>
 
-                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                        <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                           Type:
-                                          <span class="text-info text-uppercase"> {{ phoneInView.phoneType }}</span>
+                                          <span class="text-info"> {{ phoneInView.phoneType }}</span>
                                         </div>
                                       </div>
 
 
                                       <div class="col-md-6">
-                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                        <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                           City Code:
-                                          <span class="text-info text-uppercase"> {{ phoneInView.cityCode}}</span>
+                                          <span class="text-info"> {{ phoneInView.cityCode}}</span>
                                         </div>
 
-                                        <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                        <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                           Country Code:
-                                          <span class="text-info text-uppercase"> {{ phoneInView.countryCode}}</span>
+                                          <span class="text-info"> {{ phoneInView.countryCode}}</span>
                                         </div>
                                       </div>
 
                                     </div>
 
-                                    <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                    <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                       Number:
-                                      <span class="text-info text-uppercase"> {{ phoneInView.number }}</span>
+                                      <span class="text-info"> {{ phoneInView.number }}</span>
                                     </div>
 
                                   </div>
@@ -180,7 +180,7 @@
 
                 <!-- emails-->
                 <div class="emails collapsed col-md-6" data-toggle="collapse" data-target="#collapseEmails">
-                  <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Emails</span>
+                  <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Emails</span>
                 </div>
 
 
@@ -201,27 +201,27 @@
                         <div *ngIf="!isEmailAddOn && !isEmailEditOn" class="col-md-12">
 
                           <div class="col-md-12">
-                            <div *ngIf="availableemails.length < 3" class="col-md-4"><a (click)="onEmailAddClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                            <div *ngIf="availableemails.length < 3" class="col-md-4"><a (click)="onEmailAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
                             <div *ngIf="availableemails.length == 3" class="col-md-4"></div>
-                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a (click)="onEmailEditClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-edit"></i> Edit</a></div>
-                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a data-target="#removeEmail" data-toggle="modal" (click)="onEmailDeleteClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a (click)="onEmailEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit</a></div>
+                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a data-target="#removeEmail" data-toggle="modal" (click)="onEmailDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
                             </div>                       
 
                           <div *ngIf="availableemails.length  !== 0" class="col-md-12" style="margin-top:20px;">
 
-                                  <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                  <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                     Preferred:
-                                    <span class="text-info text-uppercase"> {{ emailInView.preferredFlag }}</span>
+                                    <span class="text-info"> {{ emailInView.preferredFlag }}</span>
                                   </div>
 
-                                  <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                  <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                     Type:
-                                    <span class="text-info text-uppercase"> {{ emailInView.emailType }}</span>
+                                    <span class="text-info"> {{ emailInView.emailType }}</span>
                                   </div>
 
-                                  <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                  <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                     Account:
-                                    <span class="text-info text-uppercase"> {{ emailInView.account }}</span>
+                                    <span class="text-info"> {{ emailInView.account }}</span>
                                   </div>                    
 
                                 </div>
@@ -253,7 +253,7 @@
                                   Type:
                                   <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
-                                    <select formControlName="emailtype" id="emailtype" name="emailtype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPhoneTypeChange($event)">
+                                    <select formControlName="emailtype" id="emailtype" name="emailtype" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onEmailTypeChange($event)">
                                       <option></option>
                                       <option *ngFor="let emtype of allemailtypes" [ngValue]="emtype">
                                         {{ emtype.emailType }}
@@ -303,7 +303,7 @@
               <div class="col-md-4  panel panel-heading footerdiv">
 
                 <div class="socials collapsed col-md-6" data-toggle="collapse" data-target="#collapseSocials">
-                  <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral medium text-uppercase"> Socials </span>
+                  <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Socials </span>
                 </div>
 
 
@@ -324,27 +324,27 @@
                         <div *ngIf="!isSocialAddOn && !isSocialEditOn" class="col-md-12">
 
                           <div class="col-md-12">
-                            <div *ngIf="availablesocials.length < 3" class="col-md-4"><a (click)="onSocialAddClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+                            <div *ngIf="availablesocials.length < 3" class="col-md-4"><a (click)="onSocialAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
                             <div *ngIf="availablesocials.length == 3" class="col-md-4"></div>
-                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a (click)="onSocialEditClick()" class="textoker smalltextbold"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a data-target="#removeSocial" data-toggle="modal" (click)="onSocialDeleteClick()" class="textoker smalltextbold"> <i class="glyphicon glyphicon-trash"></i>Delete </a></div>
+                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a (click)="onSocialEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a data-target="#removeSocial" data-toggle="modal" (click)="onSocialDeleteClick()" class="textoker smalltext text-uppercase"> <i class="glyphicon glyphicon-trash"></i> Delete </a></div>
                             </div>
                        
                           <div *ngIf="availablesocials.length  !== 0" class="col-md-12" style="margin-top:20px;">
 
-                                <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                   Preferred:
-                                  <span class="text-info text-uppercase"> {{ socialInView.preferredFlag }}</span>
+                                  <span class="text-info"> {{ socialInView.preferredFlag }}</span>
                                 </div>
 
-                                <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                   Type:
-                                  <span class="text-info text-uppercase"> {{ socialInView.socialType }}</span>
+                                  <span class="text-info"> {{ socialInView.socialType }}</span>
                                 </div>
 
-                                <div class="row smalltextbold panel panel-heading col-md-12" style="height:50px;">
+                                <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
                                   Account:
-                                  <span class="text-info text-uppercase"> {{ socialInView.account }}</span>
+                                  <span class="text-info"> {{ socialInView.account }}</span>
                                 </div>                   
 
                           </div>

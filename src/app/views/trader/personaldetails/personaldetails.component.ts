@@ -142,14 +142,13 @@ export class PersonalDetailsComponent implements OnInit {
       var counter = 0;
       if (jQuery('#atype option')) {
         jQuery('#atype option').each(function () {
-          if (this.text != "" && counter == 1) {
-            jQuery(this).attr("selected", "selected");
-          }
+          if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
           counter = counter + 1;
         });
       }
 
     });
+
   }
 
 
@@ -193,6 +192,7 @@ export class PersonalDetailsComponent implements OnInit {
     this.getAddressesByTraderId(this.traderId);
   }
 
+
   // get addresses for the trader from the server
   private getAddressesByTraderId(traderId: string) {
 
@@ -216,6 +216,7 @@ export class PersonalDetailsComponent implements OnInit {
 
     this.getAddressTypes();
   }
+
 
   // get all address types from the server
   private getAddressTypes() {
@@ -254,6 +255,7 @@ export class PersonalDetailsComponent implements OnInit {
       }
     }
   }
+
 
   // get preferred types
   private getPreferredTypes() {

@@ -1,4 +1,12 @@
 ﻿
+interface IUserInfoViewModel {
+  Email: string;
+  Username: string;
+  HasRegitered: boolean;
+  LoginProvider: string;
+}
+
+
 interface ILoginModel {
   Email: string;
   UserName: string;
@@ -27,13 +35,12 @@ interface ISetPasswordBindingModel {
 
 
 interface ITraderList {
-  traderId: string,
-  traderFirstName: string,
-  traderMiddleName: string,
-  traderLastName: string,
-  traderContactEmail: string;
-  traderContactPhone: string
-  traderSocialNetwork: string;
+  traderId: string;
+  userName: string;
+  email: string;
+  EmailConfirmed: boolean;
+  password: string;
+  passwordHash: string;
 }
 
 
@@ -311,7 +318,7 @@ interface IProcessMessageType {
 
 
 export {
-  IChangePasswordBindingModel, IRegisterBindingModel,
+IChangePasswordBindingModel, IRegisterBindingModel, IUserInfoViewModel,
   ISetPasswordBindingModel, ILoginModel,
   ITraderList, IPostTrade, IPlace, IState, ISubcategory, IPostcode,
   IPersonalDetails, ISecurityDetails,
