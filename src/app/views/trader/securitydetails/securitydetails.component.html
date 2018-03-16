@@ -39,31 +39,31 @@
 
                               <form novalidate [formGroup]="changePasswordForm" (submit)="onChangePasswordSubmit()">
 
-                                      <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                      <div class="form-group smalltextbold col-md-12" style="height:80px;">
                                             Old Password
                                             <div class="input-group">
                                               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                              <input type="text" formControlName="oldpassword" id="oldpassword" name="oldpassword" required class="form-control smalltext" style="background-color:moccasin" />
+                                              <input type="password" formControlName="oldpassword" id="oldpassword" name="oldpassword" required class="form-control smalltext" style="background-color:moccasin" />
                                             </div>
                                             <control-messages [control]="changePasswordForm.controls.oldpassword"></control-messages>
                                       </div>
 
-                                      <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                      <div class="form-group smalltextbold col-md-12" style="height:80px;">
                                             New Password:
                                             <div class="input-group">
                                               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                              <input type="text" formControlName="newpassword" id="newpassword" name="newpassword" class="form-control smalltext" style="background-color:moccasin" />
+                                              <input type="password" formControlName="newpassword" id="newpassword" name="newpassword" class="form-control smalltext" style="background-color:moccasin" />
                                             </div>
                                             <control-messages [control]="changePasswordForm.controls.newpassword"></control-messages>
                                       </div>
 
-                                      <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                      <div class="form-group smalltextbold col-md-12" style="height:80px;">
                                            Confirm New Password
                                             <div class="input-group">
                                               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                              <input type="text" formControlName="confirmpassword" id="confirmpassword" name="confirmpassword" class="form-control smalltext" style="background-color:moccasin" />
+                                              <input type="password" formControlName="confirmpassword" id="confirmpassword" name="confirmpassword" class="form-control smalltext" style="background-color:moccasin" />
                                             </div>
-                                            <control-messages [control]="changePasswordForm.controls.lname"></control-messages>
+                                            <control-messages [control]="changePasswordForm.controls.confirmpassword"></control-messages>
                                       </div>                              
 
                                       <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">

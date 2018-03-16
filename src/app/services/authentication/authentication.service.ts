@@ -15,11 +15,12 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
 import { LoggerService } from '../logger/logger.service';
-import { RegisterBindingModel, LoginModel, UserSession, Authentication, UserIdentity, UserInfoViewModel } from '../../helpers/classes';
+import { RegisterBindingModel, LoginModel, UserSession, Authentication, UserIdentity, ChangePasswordBindingModel } from '../../helpers/classes';
 
 let serviceBase = CONFIG.baseUrls.servicebase;
 let serviceAccount = CONFIG.baseUrls.accounts;
 let userInfoUrl = CONFIG.baseUrls.getUserInfo;
+let changepasswordUrl = CONFIG.baseUrls.changepassword;
 
 
 @Injectable()
@@ -81,7 +82,17 @@ export class AuthenticationService implements OnDestroy {
 
 
 
-  public changeUserpassword() {
+  public changeUserPassword(model: ChangePasswordBindingModel) {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.post(changepasswordUrl, model, httpOptions).retry(1);         
   }
 
 

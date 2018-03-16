@@ -9,6 +9,7 @@
   servicebase: 'http://localhost:5700/',
   accounts: 'http://localhost:5700/api/account/',
   getUserInfo: 'http://localhost:5700/api/account/UserInfo',
+  changepassword: 'http://localhost:5700/api/account/ChangePassword',
 
     //trades
     alltrades: 'http://localhost:5700/api/trades',

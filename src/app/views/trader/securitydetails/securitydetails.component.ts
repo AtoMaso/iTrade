@@ -5,6 +5,7 @@ import { NgClass, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl, FormArray, ReactiveFormsModule, Validators  } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 // services
+import { AuthenticationService } from '../../../services/authentication/authentication.service';
 import { TraderApiService } from '../../../services/traderapi/traderapi.service';
 import { ValidationService } from '../../../services/validation/validation.service';
 import { LoggerService } from '../../../services/logger/logger.service';
@@ -33,7 +34,7 @@ export class SecurityDetailsComponent implements OnInit {
   private isChangePasswordOn: boolean = false;
   private isSavePasswordOn: boolean = false;
 
-  private trader: Trader = new Trader();
+  private trader: Trader;
   private updatedTrader: Trader;
   private traderToRemove: Trader;
 
@@ -42,8 +43,7 @@ export class SecurityDetailsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
+    private authenticationService: AuthenticationService,
     private traderService: TraderApiService,
     private pageTitleService: PageTitleService,
     private messagesService: ProcessMessageService,
@@ -102,6 +102,9 @@ export class SecurityDetailsComponent implements OnInit {
   }
 
 
+  //************************************************************
+  // SCREEN INPUT SECTION
+  //************************************************************
   private onChangePasswordClick() {
     this.isChangePasswordOn = true;
   }
@@ -111,7 +114,38 @@ export class SecurityDetailsComponent implements OnInit {
   }
 
   private onChangePasswordSubmit() {
+    this.changePasswordInfo = new ChangePasswordBindingModel();
+    this.changePasswordInfo.OldPassword = this.changePasswordForm.controls.oldpassword.value;
+    this.changePasswordInfo.NewPassword = this.changePasswordForm.controls.newpassword.value;
+    this.changePasswordInfo.ConfirmPassword = this.changePasswordForm.controls.confirmpassword.value;  
 
+
+
+    if (this.ComparePasswords(this.changePasswordInfo)) {
+
+      this.isRequesting = true;
+
+      this.authenticationService.changeUserPassword(this.changePasswordInfo)
+        .subscribe((response: Trader) => {
+          this.isRequesting = false;
+          this.trader = response;
+          this.trader.password = "************";
+          if (this.trader) {
+            this.messagesService.emitProcessMessage("PMSUPas");
+            this.isChangePasswordOn = false;
+          }
+        },
+        (res: Response) => this.onError(res, "changeUserPassword"));
+    }
+  }
+
+
+  private ComparePasswords(passedtrader: ChangePasswordBindingModel): boolean {
+    if (passedtrader.NewPassword === passedtrader.ConfirmPassword) { return true; }
+    else {
+      this.messagesService.emitProcessMessage("PMEPNM");
+      return false;
+    }
   }
 
 
@@ -134,6 +168,41 @@ export class SecurityDetailsComponent implements OnInit {
   private initialiseComponent() {
     this.messagesService.emitRoute("nill"); 
     this.pageTitleService.emitPageTitle(new PageTitle("My Security Details"));
+  }
+
+
+
+  //****************************************************
+  // LOGGING METHODS
+  //****************************************************
+  private onError(serviceError: any, operation: string) {
+
+    this.isRequesting = false;
+    let message: string = "";
+
+    // audit log the error passed
+    this.loggerService.addError(serviceError, `${operation} failed: ${serviceError.message},  the URL: ${serviceError.url}, was:  ${serviceError.statusText}`);
+
+    // PME used to pass the message 
+    if (serviceError.error === undefined) {
+
+      var data = serviceError.json();
+
+      if (data.ModelState !== undefined) {
+
+        for (var key in data.ModelState) {
+          for (var i = 0; i < data.ModelState[key].length; i++) {
+
+            if (message == null) { message = data.ModelState[key][i]; }
+            else { message = message + data.ModelState[key][i]; }
+          }
+        }
+      }
+      this.messagesService.emitProcessMessage("PME", message);
+    }
+    else if (serviceError.error.ModelState !== undefined) { this.messagesService.emitProcessMessage("PME", serviceError.error.ModelState.Message); }
+    else if (serviceError.error !== null) { this.messagesService.emitProcessMessage("PME", serviceError.error.Message); }
+    else { this.messagesService.emitProcessMessage("PMEUEO"); } // unexpected error
   }
 
 }
