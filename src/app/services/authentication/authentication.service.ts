@@ -15,13 +15,15 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
 import { LoggerService } from '../logger/logger.service';
-import { RegisterBindingModel, LoginModel, UserSession, Authentication, UserIdentity, ChangePasswordBindingModel } from '../../helpers/classes';
+import { RegisterBindingModel, LoginModel, UserSession, Authentication, UserIdentity, ChangePasswordBindingModel, ForgotPasswordBindingModel, SetPasswordBindingModel } from '../../helpers/classes';
 
 let serviceBase = CONFIG.baseUrls.servicebase;
 let serviceAccount = CONFIG.baseUrls.accounts;
 let userInfoUrl = CONFIG.baseUrls.getUserInfo;
 let changepasswordUrl = CONFIG.baseUrls.changepassword;
-
+let logoutUrls = CONFIG.baseUrls.logout;
+let forgotPasswordUrl = CONFIG.baseUrls.forgotpassword
+let resetPasswordUrl = CONFIG.baseUrls.resetPassword;
 
 @Injectable()
 export class AuthenticationService implements OnDestroy {
@@ -49,7 +51,7 @@ export class AuthenticationService implements OnDestroy {
     this.behaviorSessionObserver$ = null;
   }
 
- 
+ // GOOD
   //******************************************************
   // Login/Get token  using HTTP CLIENT
   //****************************************************** 
@@ -69,6 +71,7 @@ export class AuthenticationService implements OnDestroy {
 }
 
 
+// GOOD
 // grabs the refresh token when IDLE requires or WORKING session is close to expiry
   public refreshTokenClient() {
     var data = "grant_type=refresh_token&refresh_token=" + this.userIdentity.refreshToken + "&client_id=";
@@ -82,6 +85,7 @@ export class AuthenticationService implements OnDestroy {
 
 
 
+  // GOOD
   public changeUserPassword(model: ChangePasswordBindingModel) {
     // prepare the headesrs
     const httpOptions = {
@@ -95,8 +99,20 @@ export class AuthenticationService implements OnDestroy {
     return this.httpClientService.post(changepasswordUrl, model, httpOptions).retry(1);         
   }
 
+  // GOOD
+  // start reseting of the password procedure
+  public forgotMyPasswod(model: ForgotPasswordBindingModel) {
+ 
+    return this.httpClientService.post(forgotPasswordUrl, model).retry(1);   
+}
 
-  
+  // reset the password
+  public resetPassword(model: SetPasswordBindingModel) {
+    return this.httpClientService.post(resetPasswordUrl, model).retry(1);   
+  }
+
+
+  // GOOD
   //******************************************************
   // Register new account
   //******************************************************
@@ -112,7 +128,9 @@ export class AuthenticationService implements OnDestroy {
   }
 
 
-
+  private onSucessRegistering(response: any) {
+    // !!! maybe some logic here but for now code below causes issues as is treated as error passed to the component        
+  }
 
 
   //******************************************************
@@ -173,6 +191,7 @@ export class AuthenticationService implements OnDestroy {
     else { this.removeUserSession(); }  
   }
 
+
   //******************************************************
   // Logout the logged in user
   //******************************************************
@@ -183,15 +202,25 @@ export class AuthenticationService implements OnDestroy {
     this.removeAuthData();
     this.removeUserSession();
     this.emitUserSession(this.userSession);
+
+
+    //const httpOptions = {
+    //  headers: new HttpHeaders({
+    //    'Accept': 'application/json',
+    //    'Content-Type': 'application/json',
+    //    'Authorization': `Bearer ${this.userSession.userIdentity.accessToken}`
+    //  })
+    //};
+    //return this.httpClientService.post(logoutUrls, httpOptions)
+    //  .subscribe(res => this.userSession == res);
+
   }
+
 
   public emitUserSession(passedSession: UserSession) {
     this.behaviorSessionStore.next(passedSession);
   } 
  
-  private onSucessRegistering(response: any) {
-     // !!! maybe some logic here but for now code below causes issues as is treated as error passed to the component        
-  }
 
   
    //******************************************************

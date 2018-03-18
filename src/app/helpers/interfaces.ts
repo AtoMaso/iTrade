@@ -27,12 +27,22 @@ interface IRegisterBindingModel {
   ConfirmPassword: string
 }
 
-
-interface ISetPasswordBindingModel {
-    NewPassword: string;
-    ConfirmPassword: string;
+interface IForgotPasswordBindingModel{
+  Email: string;
 }
 
+
+interface ISetPasswordBindingModel {
+  NewPassword: string;
+  ConfirmPassword: string;
+}
+
+interface IResetPasswordBindingModel {
+  Email: string;
+  NewPassword: string;
+  ConfirmPassword: string;
+  Code: string;
+}
 
 interface ITraderList {
   traderId: string;
@@ -319,7 +329,7 @@ interface IProcessMessageType {
 
 export {
 IChangePasswordBindingModel, IRegisterBindingModel, IUserInfoViewModel,
-  ISetPasswordBindingModel, ILoginModel,
+  ISetPasswordBindingModel, ILoginModel, IForgotPasswordBindingModel, IResetPasswordBindingModel,
   ITraderList, IPostTrade, IPlace, IState, ISubcategory, IPostcode,
   IPersonalDetails, ISecurityDetails,
   IAddress, IAddressType, IPhone, IPhoneType,

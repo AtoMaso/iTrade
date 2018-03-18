@@ -1,6 +1,6 @@
 ﻿import {
-  IChangePasswordBindingModel, IRegisterBindingModel,
-  ISetPasswordBindingModel, ILoginModel,
+  IChangePasswordBindingModel, IRegisterBindingModel, IResetPasswordBindingModel,
+  ISetPasswordBindingModel, ILoginModel, IForgotPasswordBindingModel,
   ITraderList, IPostTrade,
   IPersonalDetails, ISecurityDetails,
   IAddress, IAddressType, IState, IPlace, IPostcode,
@@ -74,15 +74,39 @@ class RegisterBindingModel implements  IRegisterBindingModel {
 }
 
 
-class SetPasswordBindingModel implements ISetPasswordBindingModel {
+class SetPasswordBindingModel implements ISetPasswordBindingModel {  
   NewPassword: string;
   ConfirmPassword: string;
 
-  constructor() {
+  constructor() {    
     this.NewPassword = "";
     this.ConfirmPassword = "";
   }
 }
+
+
+class ResetPasswordBindingModel implements IResetPasswordBindingModel {
+  Email: string;
+  NewPassword: string;
+  ConfirmPassword: string;
+  Code: string;
+
+  constructor() {
+    this.Email = "";
+    this.NewPassword = "";
+    this.ConfirmPassword = "";
+    this.Code = "";
+  }
+}
+
+class ForgotPasswordBindingModel implements IForgotPasswordBindingModel {
+  Email: string;
+
+  constructor() {
+    this.Email = "";
+  }
+}
+
 
 
 class Trader implements ITraderList {
@@ -682,8 +706,9 @@ class PreferredType {
 }
 
 export {
-ChangePasswordBindingModel, RegisterBindingModel, UserInfoViewModel,
-  SetPasswordBindingModel, LoginModel, Subcategory,
+  ChangePasswordBindingModel, RegisterBindingModel,
+  UserInfoViewModel, ForgotPasswordBindingModel, ResetPasswordBindingModel,
+  SetPasswordBindingModel, LoginModel, Subcategory, 
   Trader, PostTrade, State, Place, Postcode,
   PersonalDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,

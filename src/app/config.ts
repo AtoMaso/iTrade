@@ -6,11 +6,13 @@
 
   baseUrls: {
   
-  servicebase: 'http://localhost:5700/',
-  accounts: 'http://localhost:5700/api/account/',
-  getUserInfo: 'http://localhost:5700/api/account/UserInfo',
-  changepassword: 'http://localhost:5700/api/account/ChangePassword',
-
+    servicebase: 'http://localhost:5700/',
+    accounts: 'http://localhost:5700/api/account/',
+    getUserInfo: 'http://localhost:5700/api/account/UserInfo',
+    changepassword: 'http://localhost:5700/api/account/ChangePassword',
+    logout: 'http://localhost:5700/api/account/Logout',
+    forgotpassword: 'http://localhost:5700/api/account/ForgotPassword',
+    resetPassword: 'http://localhost:5700/api/account/ResetPassword',
     //trades
     alltrades: 'http://localhost:5700/api/trades',
     tradeswithstatus: 'http://localhost:5700/api/trades/GetTradesWithStatus',

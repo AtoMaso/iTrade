@@ -1466,8 +1466,7 @@ export class ContactlDetailsComponent implements OnInit {
 
 
   private initialiseComponent() {
-    this.messagesService.emitRoute("nill");
-    this.isRequesting = true;
+    this.messagesService.emitRoute("nill");   
     this.pageTitleService.emitPageTitle(new PageTitle("My Contact Details"));
   }
 

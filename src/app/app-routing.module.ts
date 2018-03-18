@@ -25,8 +25,8 @@ import { CorrespondenceListComponent } from './views/correspondence/corresponden
 import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
 import { AddCorrespondenceComponent } from './views/correspondence/addcorrespondence/addcorrespondence.component';
 
-import { ForgotPasswordComponent } from './views/password/forgotpassword/forgotpassword.component';
-import { ChangePasswordComponent } from './views/password/changepassword/changepassword.component';
+import { ForgotPasswordComponent } from './views/trader/forgotpassword/forgotpassword.component';
+import { ResetPasswordComponent } from './views/trader/resetpassword/resetpassword.component';
 
 // cmport the AuthGuard helper
 import { AuthGuard } from './helpers/auth.guard';
@@ -53,16 +53,15 @@ const routes: Routes = [
   { path: 'contactdetails', component: ContactlDetailsComponent, canActivate: [AuthGuard] },
   { path: 'securitydetails', component: SecurityDetailsComponent, canActivate: [AuthGuard] },  
   { path: 'traderslist', component: TradersListComponent, canActivate: [AuthGuard] },
+  { path: 'forgotpassword', component: ForgotPasswordComponent },
+  { path: 'resetpassword', component: ResetPasswordComponent },
 
   // correspondence
   { path: 'correspondencelist', component: CorrespondenceListComponent, canActivate: [AuthGuard]}, // correspondence should available only when authenticated , canActivate: [AuthGuard]
   { path: 'correspondencedetails', component: CorrespondenceDetailsComponent, canActivate: [AuthGuard] }, // correspondence should available only when authenticated , canActivate: [AuthGuard]
   { path: 'addcorrespondence', component: AddCorrespondenceComponent, canActivate: [AuthGuard] }, // correspondence should available only when authenticated , canActivate: [AuthGuard]
 
-
-  // password 
-  { path: 'forgotpassword', component: ForgotPasswordComponent },
-  { path: 'changepassword', component: ChangePasswordComponent },
+  
 ];
 
 

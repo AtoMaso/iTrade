@@ -59,8 +59,6 @@ import { CarouselComponent } from './views/controls/carousel/carousel.component'
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { LoginComponent } from './views/authentication/login.component';
 import { RegisterComponent } from './views/authentication/register.component';
-import { ForgotPasswordComponent } from './views/password/forgotpassword/forgotpassword.component';
-import { ChangePasswordComponent } from './views/password/changepassword/changepassword.component';
 import { AboutComponent } from './views/info/about.component';
 import { ContactComponent } from './views/info/contact.component';
 
@@ -72,7 +70,7 @@ import { TradeDetailsComponent } from './views/trade/tradedetails/tradedetails.c
 import { TradersListComponent } from './views/trader/traderslist/traderslist.component';
 import { TraderDetailsComponent } from './views/trader/traderdetails/traderdetails.component';
 import { TraderHomeComponent } from './views/trader/traderhome/traderhome.component';
-
+import { ForgotPasswordComponent } from './views/trader/forgotpassword/forgotpassword.component';
 import { PersonalDetailsComponent } from './views/trader/personaldetails/personaldetails.component';
 import { SecurityDetailsComponent } from './views/trader/securitydetails/securitydetails.component';
 import { ContactlDetailsComponent } from './views/trader/contactdetails/contactdetails.component';
@@ -100,6 +98,7 @@ import { ProcessMessageListComponent } from './views/processmessage/processmessa
 import { CorrespondenceListComponent } from './views/correspondence/correspondencelist/correspondencelist.component';
 import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
 import { AddCorrespondenceComponent } from './views/correspondence/addcorrespondence/addcorrespondence.component';
+import { ResetPasswordComponent } from './views/trader/resetpassword/resetpassword.component';
 
 //initialises the process message service to get all process messages on start of the application
 export function getprocessmessages(processMessageService: ProcessMessageService) {
@@ -128,7 +127,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     AddSecurityQuestionComponent, SecurityQuestionListComponent,
     AddProcessMessageComponent, ProcessMessageListComponent,
     CorrespondenceListComponent, CorrespondenceDetailsComponent, AddCorrespondenceComponent,  
-    ForgotPasswordComponent, ChangePasswordComponent,
+    ForgotPasswordComponent, ResetPasswordComponent,
   
     //TokenInterceptor,
   ],  
