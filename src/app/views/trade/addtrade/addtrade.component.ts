@@ -148,8 +148,6 @@ export class AddTradeComponent implements OnInit {
     this.messagesService.emitRoute("nill");
      
     let dt = new Date();
-    let today = new Date(dt.getFullYear(), dt.getMonth(), dt.getDay());
-        
     if (this.addForm.dirty && this.addForm.valid) {
 
       this.isMessageVisible = false;
@@ -161,7 +159,7 @@ export class AddTradeComponent implements OnInit {
       this.newTrade.tradeFor = this.addForm.controls.tradingfor.value;
       this.newTrade.datePublished = this.addForm.controls.publishDate.value.jsdate;     
        
-      if (today < this.newTrade.datePublished) { this.newTrade.status = "Not Published"; }
+      if (dt < this.newTrade.datePublished) { this.newTrade.status = "Not Published"; }
       else { this.newTrade.status = "Open";}
      
       this.newTrade.categoryId = this.addForm.controls.category.value.categoryId;
