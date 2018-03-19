@@ -14,43 +14,43 @@
 
             <div *ngIf="trade != null">
 
-              <div class="row smalltextbold panel panel-heading col-md-12">
+              <div class="row mediumtext panel panel-heading col-md-12">
                 Status:<span class="smalltext  text-uppercase text-info"> {{ trade.status }}</span>
               </div>
 
-              <div class="row smalltextbold panel panel-heading col-md-12">
+              <div class="row mediumtext panel panel-heading col-md-12">
                 Trading:<span class="smalltext  text-uppercase text-info"> {{ trade.name }}</span>
               </div>
          
-              <div class="row smalltextbold panel panel-heading col-md-12">
+              <div class="row mediumtext panel panel-heading col-md-12">
                 Trade Description:<span class="panel-heading smalltext text-info"> {{ trade.description}}</span>
               </div>           
 
-              <div class="row smalltextbold panel panel-heading col-md-12">
+              <div class="row mediumtext panel panel-heading col-md-12">
                 Trading for:<span class="smalltext  text-uppercase text-info"> {{ trade.tradeFor }}</span>
               </div>
 
-              <div class="row smalltextbold panel panel-heading col-md-12">
+              <div class="row mediumtext panel panel-heading col-md-12">
                 Category: <span class="smalltext  text-uppercase text-info"> {{ trade.categoryDescription }}</span>
               </div>
 
-              <div class="row smalltextbold panel panel-heading col-md-12">
+              <div class="row mediumtext panel panel-heading col-md-12">
                 Date Published: <span class="smalltext  text-uppercase text-info"> {{ trade.datePublished | date }}</span>
               </div>
 
-              <div class="row smalltextbold panel panel-heading col-md-12">
+              <div class="row mediumtext panel panel-heading col-md-12">
                 Place: <span class="smalltext  text-uppercase text-info"> {{ trade.place }}</span>
               </div>
 
-              <div class="row smalltextbold panel panel-heading col-md-12">
+              <div class="row mediumtext panel panel-heading col-md-12">
                 State: <span class="smalltext  text-uppercase text-info"> {{ trade.state }} </span>
               </div>
 
-              <div class="row smalltextbold panel panel-heading col-md-12">
+              <div class="row mediumtext panel panel-heading col-md-12">
                 Trader: <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase underline"><span> <i>{{ trade.traderFullName }}</i></span></a>
               </div>
 
-              <div class="row smalltextbold panel panel-heading col-md-12" style="text-align:center;">
+              <div class="row mediumtext panel panel-heading col-md-12" style="text-align:center;">
 
                 <div *ngIf="!isAuthenticated">
                   <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading </button>

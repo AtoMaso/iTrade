@@ -19,7 +19,7 @@ import { TraderHomeComponent } from './views/trader/traderhome/traderhome.compon
 
 import { PersonalDetailsComponent } from './views/trader/personaldetails/personaldetails.component';
 import { ContactlDetailsComponent } from './views/trader/contactdetails/contactdetails.component';
-import { SecurityDetailsComponent } from './views/trader/securitydetails/securitydetails.component';
+import { LoginDetailsComponent } from './views/trader/logindetails/logindetails.component';
 
 import { CorrespondenceListComponent } from './views/correspondence/correspondencelist/correspondencelist.component';
 import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
@@ -51,7 +51,7 @@ const routes: Routes = [
   { path: 'traderhome', component: TraderHomeComponent, canActivate: [AuthGuard] },   
   { path: 'personaldetails', component: PersonalDetailsComponent, canActivate: [AuthGuard] },
   { path: 'contactdetails', component: ContactlDetailsComponent, canActivate: [AuthGuard] },
-  { path: 'securitydetails', component: SecurityDetailsComponent, canActivate: [AuthGuard] },  
+  { path: 'logindetails', component: LoginDetailsComponent, canActivate: [AuthGuard] },  
   { path: 'traderslist', component: TradersListComponent, canActivate: [AuthGuard] },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
   { path: 'resetpassword', component: ResetPasswordComponent },

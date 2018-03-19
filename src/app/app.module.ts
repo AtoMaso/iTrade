@@ -37,7 +37,7 @@ import { ImageService } from './services/image/image.service';
 import { TradeHistoryService } from './services/tradehistory/trade-history.service';
 import { CorrespondenceService } from './services/correspondence/correspondence.service';
 import { PersonalDetailsService } from './services/personaldetails/personaldetails.service';
-import { SecurityDetailsService } from './services/securitydetails/securitydetails.service';
+import { LoginDetailsService } from './services/logindetails/logindetails.service';
 import { CategoryService } from './services/categories/category.service';
 import { SubcategoriesService } from './services/subcategories/subcategories.service';
 import { StatesService } from './services/states/states.service';
@@ -72,7 +72,7 @@ import { TraderDetailsComponent } from './views/trader/traderdetails/traderdetai
 import { TraderHomeComponent } from './views/trader/traderhome/traderhome.component';
 import { ForgotPasswordComponent } from './views/trader/forgotpassword/forgotpassword.component';
 import { PersonalDetailsComponent } from './views/trader/personaldetails/personaldetails.component';
-import { SecurityDetailsComponent } from './views/trader/securitydetails/securitydetails.component';
+import { LoginDetailsComponent } from './views/trader/logindetails/logindetails.component';
 import { ContactlDetailsComponent } from './views/trader/contactdetails/contactdetails.component';
 
 import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
@@ -80,17 +80,12 @@ import { ProcessMessagesComponent } from './views/controls/processmessages/proce
 
 import { AddCategoryComponent } from './views/category/addcategory/addcategory.component';
 import { CategoryListComponent } from './views/category/categorylist/categorylist.component';
-
 import { AddPhoneTypeComponent } from './views/phone/addphonetype/addphonetype.component';
 import { PhoneTypeListComponent } from './views/phone/phonetypelist/phonetypelist.component';
-
 import { AddressTypeListComponent } from './views/address/addresstypelist/addresstypelist.component';
 import { AddAddressTypeComponent } from './views/address/addaddresstype/addaddresstype.component';
 import { AddSocialNetworkTypeComponent } from './views/socialnetwork/addsocialnetworktype/addsocialnetworktype.component';
-
 import { SocialNetworkTypeListComponent } from './views/socialnetwork/socialnetworktypelist/socialnetworktypelist.component';
-import { AddSecurityQuestionComponent } from './views/securityquestion/addsecurityquestion/addsecurityquestion.component';
-import { SecurityQuestionListComponent } from './views/securityquestion/securityquestionlist/securityquestionlist.component';
 
 import { AddProcessMessageComponent } from './views/processmessage/addprocessmessage/addprocessmessage.component';
 import { ProcessMessageListComponent } from './views/processmessage/processmessagelist/processmessagelist.component';
@@ -122,9 +117,8 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     AddCategoryComponent, CategoryListComponent,
     AddPhoneTypeComponent, PhoneTypeListComponent,   
     AddressTypeListComponent, AddAddressTypeComponent,
-    PersonalDetailsComponent, SecurityDetailsComponent, ContactlDetailsComponent,
+    PersonalDetailsComponent, LoginDetailsComponent, ContactlDetailsComponent,
     AddSocialNetworkTypeComponent, SocialNetworkTypeListComponent,
-    AddSecurityQuestionComponent, SecurityQuestionListComponent,
     AddProcessMessageComponent, ProcessMessageListComponent,
     CorrespondenceListComponent, CorrespondenceDetailsComponent, AddCorrespondenceComponent,  
     ForgotPasswordComponent, ResetPasswordComponent,
@@ -152,7 +146,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
   providers: [
     TradeApiService, ValidationService, ImageService, TradeHistoryService, StatesService,
     AuthenticationService, ProcessMessageService, CorrespondenceService, PlacesService,
-    PersonalDetailsService, SecurityDetailsService, SubcategoriesService, SocialNetworksService, EmailsService, PhonesService,
+    PersonalDetailsService, LoginDetailsService, SubcategoriesService, SocialNetworksService, EmailsService, PhonesService,
     PageTitleService, LoggerService, AuthGuard, TraderApiService, CategoryService, AddressService,
     // to inercept every request for authentication purposes
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

@@ -11,7 +11,7 @@ import { SecurityDetails} from '../../helpers/classes';
 let securitydetailsbytraderid = CONFIG.baseUrls.securitydetailsbytraderid;
 
 @Injectable()
-export class SecurityDetailsService {
+export class LoginDetailsService {
 
   private localUrl: string;
 

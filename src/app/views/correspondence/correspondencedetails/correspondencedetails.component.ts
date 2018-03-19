@@ -71,7 +71,7 @@ export class CorrespondenceDetailsComponent implements OnInit {
           var html = jQuery.parseHTML(hid);
           var inp = jQuery('#receivedContent');
           inp.append(html);
-        }), 100);
+        }), 300);
 
 
 

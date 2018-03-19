@@ -6,78 +6,92 @@
     <!-- DETAILS -->
      <div  class="row">
 
-           <div class="col-md-3 col-md-offset-1">
+           <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">
 
-                <div class="row">
-                  <div class="panel panel-heading col-md-12 smalltext">
-                    Status:<span class="text-uppercase text-info"> {{ recievedCorres.status }}</span>
-                  </div>
-                </div>
-
-
-                <div class="row">
-                  <div class="panel panel-heading col-md-12 smalltext">
-                    Send from:<span class="text-uppercase text-info"> {{ recievedCorres.sender }}</span>
-                  </div>
-                </div>
+                 <div class="corresdetails collapsed  smalltext text-uppercase">
+                    <span class="textlightcoral"> Correspondence Details</span>
+                   <span *ngIf="!hasCorres == null" class="textoker">- The system can not find any details for the correspondence!</span>
+                 </div>
 
 
-                <div class="row">
-                  <div class="panel panel-heading col-md-12 smalltext">
-                    Sent on:<span class="text-uppercase text-info"> {{ recievedCorres.dateSent | date }}</span>
-                  </div>
-                </div>
+             <div id="corresDetails" style="margin-top:20px;">
 
-
-                <div class="row">
-                  <div class="panel panel-heading col-md-12 smalltext">
-                    Trade:<span class="text-uppercase text-info"> {{ recievedCorres.subject }}</span>
-                  </div>
-                </div>
-
-             <div class="row">
-               <div class="panel panel-heading col-md-12 smalltext">
-                 Trade id:<span class="text-uppercase text-info"> {{ recievedCorres.tradeId }}</span>
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Status:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.status }}</span>
+                 </div>
                </div>
+
+
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Send from:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.sender }}</span>
+                 </div>
+               </div>
+
+
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Sent on:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.dateSent | date }}</span>
+                 </div>
+               </div>
+
+
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Trade:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.subject }}</span>
+                 </div>
+               </div>
+
+
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Trade id:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.tradeId }}</span>
+                 </div>
+               </div>
+
+
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Flash:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.message }}</span>
+                 </div>
+               </div>
+
              </div>
 
-             <div class="row">
-               <div class="panel panel-heading col-md-12 smalltext">
-                 Flash:<span class="text-uppercase text-info"> {{ recievedCorres.message }}</span>
-               </div>
-             </div>
           </div>
         
 
-           <div class="col-md-6 col-md-offset-1">
+           <div class="col-md-5 col-md-offset-1">
 
                 <div class="row">
-                  <div class="panel panel-heading col-md-12 smalltext">
+                  <div class="panel panel-heading col-md-12 smalltext textlightcoral text-uppercase">
                       Message content:
                   </div>
                 </div>
 
-              <div class="row">
+              <div class="row">                   
                 <div class="panel panel-heading col-md-12 ">
-                  <div  class="smalltext" id="receivedContent"
-                            style="width:inherit;background-color:moccasin;white-space: normal; text-align: justify;-moz-text-align-last: left; text-align-last: left;height:auto;" 
-                            wrap="soft"  rows="6" maxlength="500" readonly> 
-                  </div>
-                  <input type="hidden"  id="hiddencontrol" value="{{ recievedCorres.content }}"/>
+                        <div  class="smalltext" id="receivedContent"
+                                style="width:inherit;background-color:moccasin;white-space: normal; text-align: justify;-moz-text-align-last: left; text-align-last: left;height:120px;" 
+                                wrap="soft"  rows="6" maxlength="500" readonly> 
+                        </div>
+                        <input type="hidden"  id="hiddencontrol" value="{{ recievedCorres.content }}"/>
                 </div>
               </div>
 
               <!-- BUTTONS -->
               <div class="row">
-                <div class="col-md-3"><button class="btn btn-success smalltext" style="width:auto; height:30px;" 
-                                              id="Reply" (click)="WriteCorres"  data-target="#writeMessage" data-toggle="collapse">Reply</button></div>              
+                <div class="col-md-3">
+                <button class="btn btn-success mediumtext" style="width:auto; height:auto;" id="Reply" (click)="WriteCorres"  data-target="#writeMessage" data-toggle="collapse">Reply</button>
+                </div>              
               </div>
 
              <br/>
 
            
               <!-- REPLY -->
-             <div id="writeMessage" class="row collapse">
+             <div id="writeMessage" class="row collapse footerdiv">
 
                      <form [formGroup]="sendCorresGroup" (submit)="sendCorres()">
 
@@ -87,7 +101,7 @@
                          </div>
 
                          <div class="col-md-5">
-                           <button id="Send" class="btn btn-success smalltext" type="submit" style="width:auto; height:30px;" value="Send" disabled>Send</button>
+                           <button id="Send" class="btn btn-success smalltext" type="submit" style="width:auto; height:auto;" value="Send" disabled>Send</button>
                          </div>
 
                      </form>

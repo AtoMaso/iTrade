@@ -16,21 +16,21 @@
 
                                 <div *ngIf="hasPersonal" >
 
-                                        <div class="row smalltextbold panel panel-heading col-md-12">
+                                        <div class="row mediumtext panel panel-heading col-md-12">
                                           First Name:<span class="smalltext  text-uppercase text-info"> {{ personal.firstName }}</span>
                                         </div>
 
-                                        <div class="row smalltextbold panel panel-heading col-md-12">
+                                        <div class="row mediumtext panel panel-heading col-md-12">
                                           Middle Name:
                                           <span *ngIf="hasMiddleName" class="smalltext  text-uppercase text-info"> {{ personal.middleName }}</span>
                                           <span *ngIf="!hasMiddleName" class="smalltext  text-uppercase textoker">No Middle Name</span>
                                         </div>
 
-                                        <div class="row smalltextbold panel panel-heading col-md-12">
+                                        <div class="row mediumtext panel panel-heading col-md-12">
                                           Last Name:<span class="smalltext  text-uppercase text-info"> {{ personal.lastName }}</span>
                                         </div>
 
-                                        <div class="row smalltextbold panel panel-heading col-md-12">
+                                        <div class="row mediumtext panel panel-heading col-md-12">
                                           Trading From:
                                           <span *ngIf="hasAddress" class="smalltext  text-uppercase text-info"> {{ prefAddress.city }}</span>
                                           <span *ngIf="!hasAddress" class="smalltext  text-uppercase textoker">No Address Details</span>
@@ -58,19 +58,19 @@
 
                       <div *ngIf="hasEmails || hasPhones || hasSocials" >
 
-                            <div class="row smalltextbold panel panel-heading col-md-12">
+                            <div class="row mediumtext panel panel-heading col-md-12">
                               Phone:<span class="smalltext  text-uppercase text-info"> {{ prefPhone.countryCode }} {{ prefPhone.cityCode }}  {{ prefPhone.number }}</span>
                             </div>
 
-                            <div class="row smalltextbold panel panel-heading col-md-12">
+                            <div class="row mediumtext panel panel-heading col-md-12">
                               Email Account:<span class="smalltext  text-uppercase text-info"> {{ prefEmail.account }}</span>
                             </div>
 
-                            <div class="row smalltextbold panel panel-heading col-md-12">
+                            <div class="row mediumtext panel panel-heading col-md-12">
                               Social Network:<span class="smalltext  text-uppercase text-info"> {{ prefSocial.account }}</span>
                             </div>
 
-                            <div class="row smalltextbold panel panel-heading col-md-12">
+                            <div class="row mediumtext panel panel-heading col-md-12">
                               Preferred contact details
                             </div>
 

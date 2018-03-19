@@ -18,11 +18,11 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 
 
 @Component({
-  selector: 'app-securitydetails',
-  templateUrl: './securitydetails.component.html',
-  styleUrls: ['./securitydetails.component.scss']
+  selector: 'app-logindetails',
+  templateUrl: './logindetails.component.html',
+  styleUrls: ['./logindetails.component.scss']
 })
-export class SecurityDetailsComponent implements OnInit {
+export class LoginDetailsComponent implements OnInit {
 
   private traderId: string;
   private isRequesting: boolean;
