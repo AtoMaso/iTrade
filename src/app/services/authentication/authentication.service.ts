@@ -108,7 +108,7 @@ export class AuthenticationService implements OnDestroy {
 
   // reset the password
   public resetPassword(model: SetPasswordBindingModel) {
-    return this.httpClientService.post(resetPasswordUrl, model).retry(1);   
+    return this.httpClientService.post(resetPasswordUrl, model);   
   }
 
 

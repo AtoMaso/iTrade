@@ -21,7 +21,7 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 })
 export class ResetPasswordComponent implements OnInit {
   private isRequesting: boolean = false;
-  private isSubmited: boolean = false;
+  private isSubmitted: boolean = false;
   private code: string = "";
   private resetPasswordForm: FormGroup;
   private model: ResetPasswordBindingModel = new ResetPasswordBindingModel();
@@ -74,8 +74,8 @@ export class ResetPasswordComponent implements OnInit {
 
   private onSucessSendRequest(res: any) {
     this.isRequesting = false;
-    this.isSubmited = true;
-    this.messagesService.emitProcessMessage("PMSCPa");
+    this.isSubmitted = true;
+    //this.messagesService.emitProcessMessage("PMSCPa");
   }
 
 
