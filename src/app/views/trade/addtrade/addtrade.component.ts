@@ -74,7 +74,7 @@ export class AddTradeComponent implements OnInit {
    
 
     this.uploader = new FileUploader({
-      maxFileSize: 1024 * 1024,    
+      maxFileSize: 1024 * 1024*10,    
       url: uploadFileUrl,         
       allowedMimeType: ['image/png', 'image/gif', 'image/jpeg', 'image/tif', 'image/bmp'],   
     });
@@ -202,6 +202,7 @@ export class AddTradeComponent implements OnInit {
     this.addedTrade = trade;
     let m: number = 0;
     if (this.uploader.queue.length > 0) {
+
       for (m = 0; m < this.uploader.queue.length; m++) {
         this.uploader.queue[m].file.name = trade.Images[m].imageTitle;        
         this.uploadSingleFile(this.uploader.queue[m]);
@@ -209,7 +210,10 @@ export class AddTradeComponent implements OnInit {
     
       // is no point of changing of isRequested as we go to another page here
       this.isSubmitted = true;     
-      this.router.navigate(['/tradedetails'], { queryParams: { id: trade.tradeId, flagnew: true }});          
+
+      // wait for a while untill the images are uploaded
+      this.wait(trade);
+     // this.router.navigate(['/tradedetails'], { queryParams: { id: trade.tradeId, flagnew: true }});          
     }      
   }
 
@@ -220,6 +224,16 @@ export class AddTradeComponent implements OnInit {
     // we are making the name unique even if the file is the same and does exist on the server upload side
     item.upload();
   }
+
+  // 
+private async wait(trade:PostTrade) {   
+    await this.delay(500);         
+    this.router.navigate(['/tradedetails'], { queryParams: { id: trade.tradeId, flagnew: true } });   
+}
+
+private  delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
   // when files selected change the status

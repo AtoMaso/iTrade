@@ -59,24 +59,16 @@ export class TradeDetailsComponent implements OnInit {
   ngOnInit() {
 
     this.route.queryParams.subscribe(params => {
-      this.tradeId = params['id'];
-      this.flagnew = params['flagnew'];
-   
-      //if (!Number(parseInt(params['id']))) {        
-      //  this.messagesService.emitProcessMessage("PMEWTN");
-      //}
-      //else {
-       
-
+        this.tradeId = params['id'];
+        this.flagnew = params['flagnew'];              
         this.getUserSession();
-
         this.initialiseComponent();
 
         if (this.flagnew) { this.messagesService.emitProcessMessage("PMSAT"); }
 
         // starts with gettrade end up with get images separatelly
         this.getATrade(this.tradeId);
-      //}
+     
     });
    
   }
