@@ -42,6 +42,7 @@
 
             </div>       
           <br />        
+
           <div class="row">
 
             <!-- Table -->
@@ -190,32 +191,6 @@
 
 
 <my-spinner [isRunning]="isRequesting"></my-spinner>
-
-
-<!-- MODAL form to show when ADD/REMOVE trade is clicked and user is NOT LOGGED IN -->
-<div class="modal fade" id="addremoveLogin" tabindex="-1" role="dialog" aria-labelledby="AddRemoveLogin">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
-        <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>       
-      </div>
-
-      <div class="modal-body text-warning">
-        <p>You need to be logged in to do this action. Do you want to log in?</p>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" [routerLink]="['/login']" data-dismiss="modal">Yes</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!--End of modal form -->
 
 
 <!-- MODAL form to show it when REMOVE trade is clicked and user is ALLOWED -->

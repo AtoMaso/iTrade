@@ -1,3 +1,597 @@
-<p>
-  correspondence list works!
-</p>
+<div class="container col-md-12">
+
+  <div class="row  col-md-10 col-md-offset-1">
+
+
+      <!-- Inbox section -->
+      <div class="panel panel-heading footerdiv  col-md-12">
+
+        <span class="inbox panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseInbox">
+          <span class="glyphicon glyphicon-minus"></span>
+          Received Mail <span *ngIf="!hasInbox" class="textoker">- The system can not find any new correspondence for you!</span>
+        </span>
+
+        <!-- Collapsable Correspondence -->
+        <div  id="collapseInbox" class="collapse in panel-heading">
+
+             <div *ngIf="hasInbox">
+
+                    <!-- Table-->
+                    <div class="table-responsive">
+
+                      <table class="table table-bordered table-hover table-condensed">
+
+                        <!-- Table Header -->
+                        <thead>
+                          <tr>
+                            <th class="col-md-1" style="background-color:#FF223A3A">
+                              <span class="textgray smalltext  text-uppercase" style="width:auto">Trade </span>
+                            </th>
+
+                            <th class="col-md-2" style="background-color:#FF223A3A">
+                              <span class="textgray smalltext text-uppercase" style="width:auto">Message</span>
+                            </th>
+
+                            <th class="col-md-2" style="background-color:#FF223A3A">
+                              <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent On</span>
+                            </th>
+
+                            <th class="col-md-2" style="background-color:#FF223A3A">
+                              <span class="textgray  smalltext  text-uppercase" style="width:auto">Sender</span>
+                            </th>
+
+                            <th class="col-md-1" style="background-color:#FF223A3A">
+                              <span class="textgray  smalltext  text-uppercase" style="width:auto">Status</span>
+                            </th>
+
+                            <th class="col-md-3" style="background-color:#FF223A3A">
+                              <span class="textgray  smalltext  text-uppercase" style="width:auto">Actions</span>
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <!-- Table Rows -->
+                        <tr *ngFor="let coress of rowsInbox |  paginate:configInbox ">
+
+                          <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.subject  }}</td>
+
+                          <td class="col-md-2">
+                            <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
+                          </td>
+
+                          <td class="col-md-2 smalltextbold text-capitalize textgray">{{ coress.dateSent | date:'medium' }}</td>
+
+                          <td class="col-md-2">
+                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.sender  }}</i></a>
+                          </td>
+
+                          <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.statusReceiver }}</td>
+
+                          <td class="col-md-3">
+
+                            <div class="col-md-12">
+                              <div class="col-md-6">
+                                <!-- archive the inbox mail -->
+                                <button type="button" data-target="#archiveInbox" data-toggle="modal"
+                                        class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveInbox(inboxToArchive)">
+                                  <span class="glyphicon glyphicon-briefcase"></span>&nbsp; Archive Mail
+                                </button>
+                              </div>
+
+                              <div class="col-md-6">
+                                <!-- delete the inbox mail -->
+                                <button type="button" data-target="#deleteInbox" data-articleid=(trade.tradeId)
+                                        data-toggle="modal" class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteInbox(inboxToDelete)">
+                                  <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+
+                      </table>
+
+                    </div>
+
+                    <!-- Table pagination -->
+                    <div class="row col-md-12">
+                      <div class="col-md-5">
+                        <pagination-controls id="paginationInbox" *ngIf="configInbox.paging" ngDefaultControl
+                                             (pageChange)="onPageChangeInbox($event)"
+                                             maxSize="5"
+                                             directionLinks="true"
+                                             autoHide="true"
+                                             previousLabel="Previous"
+                                             nextLabel="Next"
+                                             screenReaderPaginationLabel="Pagination"
+                                             screenReaderPageLabel="pageMes"
+                                             screenReaderCurrentLabel="You're on page"
+                                             [(ngModel)]="configInbox.currentPage"
+                                             (numPages)="numPagesInbox = $event"
+                                             [maxSize]="maxSizeInbox">
+                        </pagination-controls>
+                      </div>
+                    </div>
+
+              </div>
+
+          <br />
+
+        </div>
+
+
+      </div>
+
+
+      <!-- Sent section -->
+      <div class="panel panel-heading footerdiv  col-md-12">
+
+        <span class="sent panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseSent">
+          <span class="glyphicon glyphicon-minus"></span>
+          Sent Mail<span *ngIf="!hasSent" class="textoker">- The system can not find any sent correspondence under you account!</span>
+        </span>
+
+        <!-- Collapsable Trade Status -->
+        <div id="collapseSent" class="collapse in  panel-heading">
+
+          <div *ngIf="hasSent">
+            <!-- Table-->
+            <div class="table-responsive">
+
+              <table class="table table-bordered table-hover table-condensed">
+
+                <!-- Table Header -->
+                <thead>
+                  <tr>
+                    <th class="col-md-1" style="background-color:#FF223A3A">
+                      <span class="textgray smalltext  text-uppercase" style="width:auto">Trade </span>
+                    </th>
+
+                    <th class="col-md-2" style="background-color:#FF223A3A">
+                      <span class="textgray smalltext text-uppercase" style="width:auto">Message</span>
+                    </th>
+
+                    <th class="col-md-2" style="background-color:#FF223A3A">
+                      <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent On</span>
+                    </th>
+
+                    <th class="col-md-2" style="background-color:#FF223A3A">
+                      <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent To</span>
+                    </th>
+
+                    <th class="col-md-1" style="background-color:#FF223A3A">
+                      <span class="textgray  smalltext  text-uppercase" style="width:auto">Status</span>
+                    </th>
+
+                    <th class="col-md-3" style="background-color:#FF223A3A">
+                      <span class="textgray  smalltext  text-uppercase" style="width:auto">Actions</span>
+                    </th>
+                  </tr>
+                </thead>
+
+                <!-- Table Rows -->
+                <tr *ngFor="let coress of rowsSent |  paginate:configSent ">
+
+                  <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.subject  }}</td>
+
+                  <td class="col-md-2">
+                    <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
+                  </td>
+
+                  <td class="col-md-2 smalltextbold text-capitalize textgray">{{ coress.dateSent | date:'medium' }}</td>
+
+                  <td class="col-md-2">
+                    <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.receiver  }}</i></a>
+                  </td>
+
+                  <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.statusSender }}</td>
+
+                  <td class="col-md-3">
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                        <!-- archive the sent mail -->
+                        <button type="button" data-target="#archiveSent" data-toggle="modal"
+                                class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveSent(sentToArchive)">
+                          <span class="glyphicon glyphicon-briefcase"></span>&nbsp; Archive Mail
+                        </button>
+                      </div>
+
+                      <div class="col-md-6">
+                        <!-- delete the sent mail -->
+                        <button type="button" data-target="#deleteSent" data-toggle="modal"
+                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteSent(sentToDelete)">
+                          <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+              </table>
+
+            </div>
+
+            <!-- Table pagination -->
+            <div class="row col-md-12">
+              <div class="col-md-5">
+                <pagination-controls id="paginationSent" *ngIf="configSent.paging" ngDefaultControl
+                                     (pageChange)="onPageChangeSent($event)"
+                                     maxSize="5"
+                                     directionLinks="true"
+                                     autoHide="true"
+                                     previousLabel="Previous"
+                                     nextLabel="Next"
+                                     screenReaderPaginationLabel="Pagination"
+                                     screenReaderPageLabel="pageMes"
+                                     screenReaderCurrentLabel="You're on page"
+                                     [(ngModel)]="configSent.currentPage"
+                                     (numPages)="numPagesSent = $event"
+                                     [maxSize]="maxSizeSent">
+                </pagination-controls>
+              </div>
+            </div>
+
+          </div>
+
+          <br />
+
+        </div>
+
+      </div>
+
+
+
+      <div class="panel panel-heading footerdiv  col-md-12">
+
+        <span class="archiveinbox panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseArchiveInbox">
+          <span class="glyphicon glyphicon-minus"></span>
+          Archived Received Mail <span *ngIf="!hasArchivedInbox" class="textoker">- The system can not find any archived received correspondence under you account!</span>
+        </span>
+
+        <!-- Collapsable Trade Status -->
+        <div id="collapseArchiveInbox" class="collapse in  panel-heading">
+
+          <div *ngIf="hasArchivedInbox">
+
+                <!-- Table-->
+                <div class="table-responsive">
+
+                  <table class="table table-bordered table-hover table-condensed">
+
+                    <!-- Table Header -->
+                    <thead>
+                      <tr>
+                        <th class="col-md-1" style="background-color:#FF223A3A">
+                          <span class="textgray smalltext  text-uppercase" style="width:auto">Trade </span>
+                        </th>
+
+                        <th class="col-md-2" style="background-color:#FF223A3A">
+                          <span class="textgray smalltext text-uppercase" style="width:auto">Message</span>
+                        </th>
+
+                        <th class="col-md-2" style="background-color:#FF223A3A">
+                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent On</span>
+                        </th>
+
+                        <th class="col-md-2" style="background-color:#FF223A3A">
+                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Sender</span>
+                        </th>
+
+                        <th class="col-md-1" style="background-color:#FF223A3A">
+                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Status</span>
+                        </th>
+
+                        <th class="col-md-2" style="background-color:#FF223A3A">
+                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Actions</span>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <!-- Table Rows -->
+                    <tr *ngFor="let coress of rowsArchivedInbox |  paginate:configArchivedInbox ">
+
+                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.subject  }}</td>
+
+                      <td class="col-md-2">
+                        <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
+                      </td>
+
+                      <td class="col-md-2 smalltextbold text-capitalize textgray">{{ coress.dateSent | date:'medium' }}</td>
+
+                      <td class="col-md-2">
+                        <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.sender  }}</i></a>
+                      </td>
+
+                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.statusReceiver }}</td>
+
+
+                      <td class="col-md-3" style="text-align:center;">
+
+                        <!-- delete the archived inbox mail -->
+                        <button type="button" data-target="#deleteArchiveInbox" data-toggle="modal"
+                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeletInbox(inboxToRemove)">
+                          <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
+                        </button>
+
+                      </td>
+                    </tr>
+
+                  </table>
+
+                </div>
+
+                <!-- Table pagination -->
+                <div class="row col-md-12">
+                  <div class="col-md-5">
+                    <pagination-controls id="paginationArchivedInbox" *ngIf="configArchivedInbox.paging" ngDefaultControl
+                                         (pageChange)="onPageChangeArchivedInbox($event)"
+                                         maxSize="5"
+                                         directionLinks="true"
+                                         autoHide="true"
+                                         previousLabel="Previous"
+                                         nextLabel="Next"
+                                         screenReaderPaginationLabel="Pagination"
+                                         screenReaderPageLabel="pageMes"
+                                         screenReaderCurrentLabel="You're on page"
+                                         [(ngModel)]="configArchivedInbox.currentPage"
+                                         (numPages)="numPagesArchivedInbox = $event"
+                                         [maxSize]="maxSizeArchivedInbox">
+                    </pagination-controls>
+                  </div>
+                </div>
+          </div>
+
+          <br />
+
+        </div>
+
+      </div>
+
+
+
+      <div class="panel panel-heading footerdiv  col-md-12">
+
+        <span class="archivesent panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseArchiveSent">
+          <span class="glyphicon glyphicon-minus"></span>
+          Archived Sent Mail <span *ngIf="!hasArchivedSent" class="textoker">- The system can not find any archived sent correspondence under you account!</span>
+        </span>
+
+        <!-- Collapsable Trade Status -->
+        <div id="collapseArchiveSent" class="collapse in  panel-heading">
+
+          <div *ngIf="hasArchivedSent" >
+                <!-- Table-->
+                <div class="table-responsive">
+
+                  <table class="table table-bordered table-hover table-condensed">
+
+                    <!-- Table Header -->
+                    <thead>
+                      <tr>
+                        <th class="col-md-1" style="background-color:#FF223A3A">
+                          <span class="textgray smalltext  text-uppercase" style="width:auto">Trade </span>
+                        </th>
+
+                        <th class="col-md-2" style="background-color:#FF223A3A">
+                          <span class="textgray smalltext text-uppercase" style="width:auto">Message</span>
+                        </th>
+
+                        <th class="col-md-2" style="background-color:#FF223A3A">
+                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent On</span>
+                        </th>
+
+                        <th class="col-md-2" style="background-color:#FF223A3A">
+                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Send To</span>
+                        </th>
+
+                        <th class="col-md-1" style="background-color:#FF223A3A">
+                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Status</span>
+                        </th>
+
+                        <th class="col-md-2" style="background-color:#FF223A3A">
+                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Actions</span>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <!-- Table Rows -->
+                    <tr *ngFor="let coress of rowsArchivedSent |  paginate:configArchivedSent ">
+
+                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.subject  }}</td>
+
+                      <td class="col-md-2">
+                        <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
+                      </td>
+
+                      <td class="col-md-2 smalltextbold text-capitalize textgray">{{ coress.dateSent | date:'medium' }}</td>
+
+                      <td class="col-md-2">
+                        <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.receiver  }}</i></a>
+                      </td>
+
+                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.statusSender }}</td>
+
+                      <td class="col-md-3" style="text-align:center;">
+                        <!-- delete the archived sent mail -->
+                        <button type="button" data-target="#deleteArchiveSent" data-toggle="modal"
+                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteSent(sentToRemove)">
+                          <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
+                        </button>
+
+                      </td>
+                    </tr>
+
+                  </table>
+
+                </div>
+
+                <!-- Table pagination -->
+                <div class="row col-md-12">
+                  <div class="col-md-5">
+                    <pagination-controls id="paginationArchivedSent" *ngIf="configArchivedSent.paging" ngDefaultControl
+                                         (pageChange)="onPageChangeArchivedSent($event)"
+                                         maxSize="5"
+                                         directionLinks="true"
+                                         autoHide="true"
+                                         previousLabel="Previous"
+                                         nextLabel="Next"
+                                         screenReaderPaginationLabel="Pagination"
+                                         screenReaderPageLabel="pageMes"
+                                         screenReaderCurrentLabel="You're on page"
+                                         [(ngModel)]="configArchivedSent.currentPage"
+                                         (numPages)="numPagesArchivedSent = $event"
+                                         [maxSize]="maxSizeArchivedSent">
+                    </pagination-controls>
+                  </div>
+                </div>
+
+          </div>
+          <br />
+
+        </div>
+      </div>
+
+  
+
+  </div>
+
+</div>
+
+
+<!-- inbox section -->
+<div class="modal fade" id="archiveInbox" tabindex="-1" role="dialog" aria-labelledby="ArchiveInbox">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">      
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Archive Inbox Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to archive this correspondence?</p>
+      </div>
+
+      <div class="modal-footer">               
+          <button class="btn btn-danger" data-dismiss="modal">No</button>
+          <button class="btn btn-success" (click)="archiveInbox(inboxToArchive)" data-dismiss="modal">Yes</button>        
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteInbox" tabindex="-1" role="dialog" aria-labelledby="DeleteInbox">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">      
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Delete Inbox Warning!</h4>
+      </div>
+
+      <div class="modal-body text-danger">
+        <p>Are you sure you want to delete this correspondence?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="deleteInbox(inboxToRemove)" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- sent section -->
+<div class="modal fade" id="archiveSent" tabindex="-1" role="dialog" aria-labelledby="ArchiveSent">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Archive Sent Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to archive this correspondence?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="archiveSent(sentToArchive)" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteSent" tabindex="-1" role="dialog" aria-labelledby="DeleteSent">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Delete Sent Warning!</h4>
+      </div>
+
+      <div class="modal-body text-danger">
+        <p>Are you sure you want to delete this correspondence?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="deleteSent(sentToRemove)" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- archive inbox section -->
+<div class="modal fade" id="deleteArchiveInbox" tabindex="-1" role="dialog" aria-labelledby="DeleteArchiveInbox">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Delete Archived Inbox Warning!</h4>
+      </div>
+
+      <div class="modal-body text-danger">
+        <p>Are you sure you want to delete this correspondence?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="deleteArchiveInbox(inboxToDelete)" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- archive sent section-->
+<div class="modal fade" id="deleteAchiveSent" tabindex="-1" role="dialog" aria-labelledby="DeleteArchiveSent">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Delete Archive Sent Warning!</h4>
+      </div>
+
+      <div class="modal-body text-danger">
+        <p>Are you sure you want to delete this correspondence?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="deleteArchiveSent(sentToDelete)" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>

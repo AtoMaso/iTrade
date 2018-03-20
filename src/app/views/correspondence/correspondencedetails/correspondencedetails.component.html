@@ -1,7 +1,7 @@
 <!-- DETAILS SECTION-->
 <div class="container col-md-12">
 
-  <div *ngIf="recievedCorres != null">
+  <div *ngIf="receivedCorres != null">
 
     <!-- DETAILS -->
      <div  class="row">
@@ -16,44 +16,55 @@
 
              <div id="corresDetails" style="margin-top:20px;">
 
+               <div *ngIf="isReceiver" class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Status:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.statusReceiver }}</span>
+                 </div>
+               </div>
+
+               <div *ngIf="isSender" class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Status:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.statusSender }}</span>
+                 </div>
+               </div>
+
+
+               <div *ngIf="isReceiver" class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Send From:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.sender }}</span>
+                 </div>
+               </div>
+
+               <div *ngIf="isSender" class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Send To:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.receiver }}</span>
+                 </div>
+               </div>
+
                <div class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
-                   Status:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.status }}</span>
+                   Sent on:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.dateSent | date }}</span>
                  </div>
                </div>
 
 
                <div class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
-                   Send from:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.sender }}</span>
+                   Trade:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.subject }}</span>
                  </div>
                </div>
 
 
                <div class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
-                   Sent on:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.dateSent | date }}</span>
+                   Trade id:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.tradeId }}</span>
                  </div>
                </div>
 
 
                <div class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
-                   Trade:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.subject }}</span>
-                 </div>
-               </div>
-
-
-               <div class="row">
-                 <div class="panel panel-heading col-md-12 mediumtext">
-                   Trade id:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.tradeId }}</span>
-                 </div>
-               </div>
-
-
-               <div class="row">
-                 <div class="panel panel-heading col-md-12 mediumtext">
-                   Flash:<span class="text-uppercase text-info smalltext"> {{ recievedCorres.message }}</span>
+                   Flash:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.message }}</span>
                  </div>
                </div>
 
@@ -76,7 +87,7 @@
                                 style="width:inherit;background-color:moccasin;white-space: normal; text-align: justify;-moz-text-align-last: left; text-align-last: left;height:120px;" 
                                 wrap="soft"  rows="6" maxlength="500" readonly> 
                         </div>
-                        <input type="hidden"  id="hiddencontrol" value="{{ recievedCorres.content }}"/>
+                        <input type="hidden"  id="hiddencontrol" value="{{ receivedCorres.content }}"/>
                 </div>
               </div>
 
@@ -113,7 +124,7 @@
 
 
   <!-- NO DETAILS SECTION-->
-  <div *ngIf="recievedCorres == null">
+  <div *ngIf="receivedCorres == null">
        
        <div class="panel panel-heading col-md-12 ">
          <span class="smalltext textoker text-uppercase">The system can not find the details of that correspondence!</span>

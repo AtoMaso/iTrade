@@ -552,25 +552,29 @@ class Correspondence implements ICorrespondence {
   id: number;  
   message: string;
   content: string;
-  status: string;
+  statusSender: string;
+  statusReceiver: string;
   dateSent: Date;
   subject: string;  // this is the object of trade
   tradeId: number;
   traderIdReciever: string; // this is the trader viewing it
   traderIdSender: string;  //this is the trader sending it
   sender: string;   // this is the trader name sending the correspondence
+  receiver: string; // this is the trader name receiving the corresponding 
 
   constructor() {
     this.id = 0;
     this.subject = "";
     this.message = "";
     this.content = "";
-    this.status = "";
+    this.statusSender = "";
+    this.statusReceiver = "";
     this.dateSent = new Date(9999, 1, 1);
     this.tradeId = 0;
     this.traderIdReciever = "";
     this.traderIdSender = "";
     this.sender = "";
+    this.receiver = "";
   }
 }
 

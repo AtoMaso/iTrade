@@ -12,8 +12,13 @@ let corres = CONFIG.baseUrls.corres;
 let correswithstatus = CONFIG.baseUrls.correswithstatus;
 let corresbytradeid = CONFIG.baseUrls.corresbytradeid; 
 let corresbytradeidwithstatus = CONFIG.baseUrls.corresbytradeidwithstatus;
-let corresbytraderid = CONFIG.baseUrls.corresbytraderid;
-let corresbytraderidwithstatus = CONFIG.baseUrls.corresbytraderidwithstatus;
+
+let corresbytraderidinbox = CONFIG.baseUrls.corresbytraderidinbox;
+let corresbytraderidwithstatusinbox = CONFIG.baseUrls.corresbytraderidwithstatusinbox;
+
+let corresbytraderidsent = CONFIG.baseUrls.corresbytraderidsent;
+let corresbytraderidwithstatussent = CONFIG.baseUrls.corresbytraderidwithstatussent;
+
 let singlecorres = CONFIG.baseUrls.singlecorres
 let updatecorres = CONFIG.baseUrls.updatecorres;
 let addcorres= CONFIG.baseUrls.addcorres;
@@ -94,9 +99,9 @@ export class CorrespondenceService {
 
 
   //**********************************************************
-  // GET CORRES BY TRADER ID
+  // GET ALL CORESPONDENCE BY TRADER ID
   //***********************************************************
-  public getCorresByTraderIdWithStatusOrAll(traderId: string, status: string): Observable<Correspondence[]> {
+  public getInboxByTraderIdWithStatusOrAll(traderId: string, status: string): Observable<Correspondence[]> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -107,12 +112,32 @@ export class CorrespondenceService {
       })
     };
 
-    if (status === "All") { if (traderId !== null || traderId != undefined) { this.localUrl = `${corresbytraderid}?traderId=${traderId}`; } }
-    else { if (traderId !== null || traderId !== undefined) { this.localUrl = `${corresbytraderidwithstatus}?traderId=${traderId}&status=${status}`; } }
+    if (status === "All") { if (traderId !== null || traderId != undefined) { this.localUrl = `${corresbytraderidinbox}?traderId=${traderId}`; } }
+    else { if (traderId !== null || traderId !== undefined) { this.localUrl = `${corresbytraderidwithstatusinbox}?traderId=${traderId}&status=${status}`; } }
 
     return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
   }
 
+
+
+
+  // sent correspondence
+  public getSentByTraderIdWithStatusOrAll(traderId: string, status: string): Observable<Correspondence[]> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    if (status === "All") { if (traderId !== null || traderId != undefined) { this.localUrl = `${corresbytraderidsent}?traderId=${traderId}`; } }
+    else { if (traderId !== null || traderId !== undefined) { this.localUrl = `${corresbytraderidwithstatussent}?traderId=${traderId}&status=${status}`; } }
+
+    return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
+  }
 
   //**********************************************************
   // ADD SINGLE CORRES

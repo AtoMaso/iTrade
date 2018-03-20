@@ -1,0 +1,16 @@
+:host /deep/ .ngx-pagination { margin-left: 0;  margin-bottom: 1rem; } 
+:host /deep/ .ngx-pagination::before, .ngx-pagination::after { content: ' ';  display: table; }  
+:host /deep/ .ngx-pagination::after { clear: both; } 
+:host /deep/  .ngx-pagination li { display: inline-block; }  
+:host /deep/ .ngx-pagination a,  .ngx-pagination button {   color: lightcoral;  display: block;  padding: 0.1875rem 0.625rem; border-radius: 0;}   
+:host /deep/ .ngx-pagination a:hover,   .ngx-pagination button:hover {      background: transparent; } 
+:host /deep/ .ngx-pagination .current {  padding: 0.1875rem 0.625rem;    background: #808080;    color: #fefefe;    cursor: default; } 
+:host /deep/ .ngx-pagination .disabled {  padding: 0.1875rem 0.625rem;    color: #cacaca;    cursor: default; }     
+:host /deep/ .ngx-pagination .disabled:hover {   background: transparent; }  
+:host /deep/ .ngx-pagination .ellipsis::after {  content: '...';    padding: 0.1875rem 0.625rem;    color: green; } 
+:host /deep/ .ngx-pagination a, .ngx-pagination button { cursor: pointer;   padding: 0.1875rem 0.625rem; border-radius: 0;   display: block;  } // number button here
+:host /deep/ .ngx-pagination .show-for-sr {  position: absolute !important;  width: 1px;  height: 1px;  overflow: hidden;  clip: rect(0, 0, 0, 0); color:green }
+:host /deep/ .ngx-pagination li {  -moz-user-select: none;  -webkit-user-select: none;   -ms-user-select: none;  margin-right: 0.0625rem;   border-radius: 0; font-family:Arial;    font-size:small; font-size:small; font-weight:bold;}  // size manipulated here
+
+
+.footerdiv {border-width:initial;border-color:#FF223A3A;}

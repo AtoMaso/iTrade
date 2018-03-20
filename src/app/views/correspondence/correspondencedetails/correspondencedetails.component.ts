@@ -20,15 +20,16 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 
 export class CorrespondenceDetailsComponent implements OnInit {
 
-  private recievedCorres: Correspondence = new Correspondence();
+  private receivedCorres: Correspondence = new Correspondence();
+  private isSender: boolean = false;
+  private isReceiver: boolean = false;
   private corresId: number;
   private hasCorres: boolean = false;  
   private session: UserSession = new UserSession();
-  private identity: UserIdentity = new UserIdentity();
-  private isAuthenticated: boolean = false;
   private isRequesting: boolean = false;
   private content: string = "";
   private sendCorresGroup: any;
+  private traderId: string = "";
 
   constructor(      
     private corresService: CorrespondenceService,
@@ -51,7 +52,7 @@ export class CorrespondenceDetailsComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => { this.corresId = params['id']; });
 
-    this.getUseridentity();   
+    this.getUserSession();   
 
     this.initialiseComponent();
 
@@ -71,7 +72,7 @@ export class CorrespondenceDetailsComponent implements OnInit {
           var html = jQuery.parseHTML(hid);
           var inp = jQuery('#receivedContent');
           inp.append(html);
-        }), 300);
+        }), 500);
 
 
 
@@ -116,7 +117,9 @@ export class CorrespondenceDetailsComponent implements OnInit {
     this.corresService.getSingleCorres(corresId)
       .subscribe((corresResult: Correspondence) => {
         this.hasCorres = true;
-        this.recievedCorres = corresResult;
+        this.receivedCorres = corresResult;
+        if (this.receivedCorres.traderIdReciever === this.traderId) { this.isReceiver = true; }
+        else { this.isSender = true;  }
 
       }, (serviceError: Response) => this.onError(serviceError, "getACorrespondence"));
   }
@@ -126,14 +129,15 @@ export class CorrespondenceDetailsComponent implements OnInit {
     let sendCorres = new Correspondence();
     let dt: Date = new Date();
 
-    sendCorres.subject = this.recievedCorres.subject;
+    sendCorres.subject = this.receivedCorres.subject;
     sendCorres.content = "&nbsp" + this.sendCorresGroup.controls.content.value.replace(/\n\r?/g, '&nbsp; <br />  &nbsp');   // replace the normal escape characters with html ones
     sendCorres.dateSent = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours(), dt.getMinutes(), dt.getSeconds());
     sendCorres.message = "Reply to your message";
-    sendCorres.status = "New";
-    sendCorres.traderIdReciever = this.recievedCorres.traderIdSender;
-    sendCorres.traderIdSender = this.recievedCorres.traderIdReciever;
-    sendCorres.tradeId = this.recievedCorres.tradeId;
+    sendCorres.statusSender = "New";
+    sendCorres.statusReceiver = "New";
+    sendCorres.traderIdReciever = this.receivedCorres.traderIdSender;
+    sendCorres.traderIdSender = this.receivedCorres.traderIdReciever;
+    sendCorres.tradeId = this.receivedCorres.tradeId;
 
     this.corresService.addCorres(sendCorres)
       .subscribe(returnedCorres => this.onCorresSuccess(returnedCorres)
@@ -150,11 +154,11 @@ export class CorrespondenceDetailsComponent implements OnInit {
   //*****************************************************
   // HELPER METHODS
   //*****************************************************
-  private getUseridentity() {
+  private getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
-        this.session = JSON.parse(sessionStorage["UserSession"])
-        this.isAuthenticated = this.session.authentication.isAuthenticated;   
+        this.session = JSON.parse(sessionStorage["UserSession"])      
+        this.traderId = this.session.userIdentity.userId;
       }
       catch (ex) {
         this.messagesService.emitProcessMessage("PMG");

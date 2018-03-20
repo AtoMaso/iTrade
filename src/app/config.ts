@@ -57,8 +57,13 @@
     correswithstatus: 'http://localhost:5700/api/correspondences/GetCorrespondencesWithStatus',
     corresbytradeid: 'http://localhost:5700/api/correspondences/GetCorrespondencesByTradeId',
     corresbytradeidwithstatus: 'http://localhost:5700/api/correspondences/GetCorrespondencesByTradeIdWithStatus',
-    corresbytraderid: 'http://localhost:5700/api/correspondences/GetCorrespondencesByTraderId',
-    corresbytraderidwithstatus: 'http://localhost:5700/api/correspondences/GetCorrespondencesByTraderIdWithStatus',
+
+    corresbytraderidinbox: 'http://localhost:5700/api/correspondences/GetInboxByTraderId',
+    corresbytraderidwithstatusinbox: 'http://localhost:5700/api/correspondences/GetInboxByTraderIdWithStatus',
+
+    corresbytraderidsent: 'http://localhost:5700/api/correspondences/GetSentByTraderId',
+    corresbytraderidwithstatussent: 'http://localhost:5700/api/correspondences/GetSentByTraderIdWithStatus',
+
     singlecorres: 'http://localhost:5700/api/correspondences/',
     updatecorres: 'http://localhost:5700/api/correspondences/PutCorrespondence',
     addcorres: 'http://localhost:5700/api/correspondences/PostCorrespondence',

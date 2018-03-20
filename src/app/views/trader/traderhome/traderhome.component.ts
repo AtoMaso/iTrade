@@ -11,7 +11,7 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Correspondence, PersonalDetails } from '../../../helpers/classes';
+import { UserSession, Trade, PageTitle, Correspondence, PersonalDetails } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -23,9 +23,7 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 export class TraderHomeComponent implements OnInit {
   private traderId: string;
   private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
   private isRequesting: boolean = false;
-  private isAuthenticated: boolean = false;
   private status: string = "Open";
   private statusCorr: string = "New";
   private hasTrades: boolean = true;
@@ -38,10 +36,8 @@ export class TraderHomeComponent implements OnInit {
     private tradeService: TradeApiService,
     private corresService: CorrespondenceService,
     private personalService: PersonalDetailsService,
-    private route: ActivatedRoute,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
-    private router: Router,
     private loggerService: LoggerService) {}
 
 
@@ -82,7 +78,7 @@ export class TraderHomeComponent implements OnInit {
   //****************************************************************************************
   private getCorres(traderId: string, statusCorres: string = "All") {
 
-    this.corresService.getCorresByTraderIdWithStatusOrAll(traderId, statusCorres)
+    this.corresService.getInboxByTraderIdWithStatusOrAll(traderId, statusCorres)
       .subscribe((returnedCorres: Correspondence[]) => {
         if (returnedCorres.length === 0) { this.hasCorres = false; }
         else {

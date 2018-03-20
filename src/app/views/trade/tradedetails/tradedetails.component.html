@@ -59,10 +59,10 @@
                 <div *ngIf="isAuthenticated">
 
                   <div *ngIf="canTrade">
-                    <button type="button" [routerLink]="['/correspondenceall']" [queryParams]="{id: trade.tradeId}" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading</button>
+                    <button type="button" [routerLink]="['/correspondenceall']" [queryParams]="{id: trade.tradeId}" class="btn btn-success btn-sm smalltext" style="width:auto;"> Start Trading</button>
                   </div>
                   <div *ngIf="!canTrade">
-                    <button type="button" data-target="#canNotTrade" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:200px"> Start Trading</button>
+                    <button type="button" data-target="#canNotTrade" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:auto;"> Start Trading</button>
                   </div>
 
                 </div>
