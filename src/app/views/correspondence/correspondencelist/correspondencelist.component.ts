@@ -42,6 +42,13 @@ export class CorrespondenceListComponent implements OnInit {
   private removedArchivedInboxId: number = 0;
   private removedArchivedSentId: number = 0
 
+  private inboxToArchive: Correspondence;
+  private inboxToDelete: Correspondence;
+  private sentToArchive: Correspondence;
+  private sentToDelete: Correspondence;
+  private archiveInboxToDelete: Correspondence;
+  private archiveSentToDelete: Correspondence;
+
 
   constructor(  
     private corresService: CorrespondenceService,
@@ -69,10 +76,10 @@ export class CorrespondenceListComponent implements OnInit {
 
 
       jQuery("#collapseInbox").on("hide.bs.collapse", function () {
-        jQuery(".inbox").html('<span class="glyphicon glyphicon-plus"></span>   Received Mail ');
+        jQuery(".inbox").html('<span class="glyphicon glyphicon-plus"></span>   Received Mail');
       });
       jQuery("#collapseInbox").on("show.bs.collapse", function () {
-        jQuery(".inbox").html('<span class="glyphicon glyphicon-minus"></span>   Received Mail  ');
+        jQuery(".inbox").html('<span class="glyphicon glyphicon-minus"></span>   Received Mail');
       });
 
       jQuery("#collapseSent").on("hide.bs.collapse", function () {
@@ -83,10 +90,10 @@ export class CorrespondenceListComponent implements OnInit {
       });
 
       jQuery("#collapseArchiveInbox").on("hide.bs.collapse", function () {
-        jQuery(".archiveinbox").html('<span class="glyphicon glyphicon-plus"></span> Archived  Received Mail ');
+        jQuery(".archiveinbox").html('<span class="glyphicon glyphicon-plus"></span> Archived  Received Mail');
       });
       jQuery("#collapseArchiveInbox").on("show.bs.collapse", function () {
-        jQuery(".archiveinbox").html('<span class="glyphicon glyphicon-minus"></span> Archived  Received Mail  ');
+        jQuery(".archiveinbox").html('<span class="glyphicon glyphicon-minus"></span> Archived  Received Mail');
       });
 
       jQuery("#collapseArchiveSent").on("hide.bs.collapse", function () {
@@ -199,41 +206,115 @@ export class CorrespondenceListComponent implements OnInit {
   // SCREEN ITERACTIONS METHODS 
   //*****************************************************
   private passToModalArchiveInbox(corres: Correspondence) {
-
+    this.inboxToArchive = corres;
   }
 
   private passToModalDeleteInbox(corres: Correspondence) {
+    this.inboxToDelete = corres;
   }
 
   private passToModalArchiveSent(corres: Correspondence) {
+    this.sentToArchive = corres
   }
 
   private passToModalDeleteSent(corres: Correspondence) {
+    this.sentToDelete = corres
   }
 
   private passToModalDeleteArchiveInbox(corres: Correspondence) {
+    this.archiveInboxToDelete = corres
   }
 
   private passToModalDeleteArchiveSent(corres: Correspondence) {
+    this.archiveSentToDelete = corres
   }
+
 
   private archiveInbox(inboxToArchive: Correspondence) {
+    // update the status of the correspondence to archived
+    inboxToArchive.statusReceiver = "Archived";
+    this.corresService.updateCorrespondence(inboxToArchive)
+      .subscribe((response: Correspondence) => {
 
+        this.messagesService.emitProcessMessage("PMSUCo");  
+        // get the inbox and archived inbox
+        this.getInbox(this.traderId, this.statusInbox);  
+        this.getArchivedInbox(this.traderId, this.statusArchivedInbox);
+
+    }, (serviceError: Response) => this.onError(serviceError, "archiveInbox"));
   }
 
-  private deleteInbox(inboxToDelete : Correspondence) {
+ 
+
+  private deleteInbox(inboxToDelete: Correspondence) {
+    // update the status of the correspondence to deleted 
+    inboxToDelete.statusReceiver = "Deleted";
+    this.corresService.updateCorrespondence(inboxToDelete)
+      .subscribe((response: Correspondence) => {
+
+        this.messagesService.emitProcessMessage("PMSUCo");
+        // get the inbox
+        this.getInbox(this.traderId, this.statusInbox);
+        //this.getArchivedInbox(this.traderId, this.statusArchivedInbox);
+
+      }, (serviceError: Response) => this.onError(serviceError, "deleteInbox"));
   }
+
 
   private archiveSent(sentToArchive: Correspondence) {
+    // update the status of the correspondence to archived
+    sentToArchive.statusSender = "Archived";
+    this.corresService.updateCorrespondence(sentToArchive)
+      .subscribe((response: Correspondence) => {
+
+        this.messagesService.emitProcessMessage("PMSUCo");
+        // get the sent and archived sent
+        this.getSent(this.traderId, this.statusSent);
+        this.getArchivedSent(this.traderId, this.statusArchivedSent);
+
+      }, (serviceError: Response) => this.onError(serviceError, "archiveSent"));
   }
 
-  private deleteSent(sentToRemove: Correspondence) {
+
+  private deleteSent(sentToDelete: Correspondence) {
+    // update the status of the correspondence to deleted 
+    sentToDelete.statusSender = "Deleted";
+    this.corresService.updateCorrespondence(sentToDelete)
+      .subscribe((response: Correspondence) => {
+
+        this.messagesService.emitProcessMessage("PMSUCo");
+        // get the sent
+        this.getSent(this.traderId, this.statusSent);
+        //this.getArchivedSent(this.traderId, this.statusArchivedSent);
+
+      }, (serviceError: Response) => this.onError(serviceError, "deleteSent"));
   }
 
-  private deleteArchiveInbox(archiveInboxToDelete: Correspondence) {
+
+
+  private deleteArchivedInbox(archiveInboxToDelete: Correspondence) {
+    // update the status of the correspondence to deleted 
+    archiveInboxToDelete.statusReceiver = "Deleted";
+    this.corresService.updateCorrespondence(archiveInboxToDelete)
+      .subscribe((response: Correspondence) => {
+
+        this.messagesService.emitProcessMessage("PMSUCo");
+        // get the archived inbox
+        this.getArchivedInbox(this.traderId, this.statusArchivedInbox);      
+      }, (serviceError: Response) => this.onError(serviceError, "deleteArchivedInbox"));
   }
 
-  private deleteArchiveSent(archiveSentToDelete:Correspondence) {
+
+  private deleteArchivedSent(archivedSentToDelete: Correspondence) {
+    // update the status of the correspondence to deleted 
+    archivedSentToDelete.statusSender = "Deleted";
+    this.corresService.updateCorrespondence(archivedSentToDelete)
+      .subscribe((response: Correspondence) => {
+
+        this.messagesService.emitProcessMessage("PMSUCo");
+        // get the archived sent
+        this.getArchivedSent(this.traderId, this.statusArchivedSent);
+      }, (serviceError: Response) => this.onError(serviceError, "deleteArchivedSent"));
   }
 
 

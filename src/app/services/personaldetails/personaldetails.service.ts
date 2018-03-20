@@ -33,9 +33,9 @@ export class PersonalDetailsService {
     //  })
     //};
 
-    this.localUrl = `${personaldetailsbytraderid}?traderId=${traderId}`; 
+    const localUrl = `${personaldetailsbytraderid}?traderId=${traderId}`; 
     //return this.httpClientService.get<PersonalDetails>(this.localUrl, httpOptions).retry(1);
-    return this.httpClientService.get<PersonalDetails>(this.localUrl).retry(1);
+    return this.httpClientService.get<PersonalDetails>(localUrl).retry(1);
   }
 
 
@@ -52,8 +52,8 @@ export class PersonalDetailsService {
       })
     };
 
-    this.localUrl = `${addpersonaldetails}`;
-    return this.httpClientService.post<PersonalDetails>(this.localUrl, pd, httpOptions).retry(1);
+    const localUrl = `${addpersonaldetails}`;
+    return this.httpClientService.post<PersonalDetails>(localUrl, pd, httpOptions).retry(1);
   }
 
   //*****************************************************
@@ -70,8 +70,8 @@ export class PersonalDetailsService {
       })
     };
 
-    this.localUrl = `${updatepersonaldetails}?id=${pd.id}`;
-    return this.httpClientService.put<PersonalDetails>(this.localUrl, pd, httpOptions).retry(1);
+    const localUrl = `${updatepersonaldetails}?id=${pd.id}`;
+    return this.httpClientService.put<PersonalDetails>(localUrl, pd, httpOptions).retry(1);
   }
 
 
@@ -88,8 +88,8 @@ export class PersonalDetailsService {
       })
     };
 
-    this.localUrl = `${deletepersonaldetails}?id=${pd.id}`;
-    return this.httpClientService.delete<PersonalDetails>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${deletepersonaldetails}?id=${pd.id}`;
+    return this.httpClientService.delete<PersonalDetails>(localUrl, httpOptions).retry(1);
   }
 
  

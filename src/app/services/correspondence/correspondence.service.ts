@@ -157,4 +157,21 @@ export class CorrespondenceService {
     return this.httpClientService.post<Correspondence>(localUrl, corres, httpOptions);
   }
 
+  //**********************************************************
+  // UPDATE SINGLE CORRES
+  //***********************************************************
+  public updateCorrespondence(corres: Correspondence): Observable<Correspondence> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updatecorres}?id=${corres.id}`;
+    return this.httpClientService.put<Correspondence>(localUrl, corres, httpOptions);
+  }
+
 }

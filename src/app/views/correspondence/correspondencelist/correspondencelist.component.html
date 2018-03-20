@@ -8,7 +8,7 @@
 
         <span class="inbox panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseInbox">
           <span class="glyphicon glyphicon-minus"></span>
-          Received Mail <span *ngIf="!hasInbox" class="textoker">- The system can not find any new correspondence for you!</span>
+          Received Mail <span *ngIf="!hasInbox" class="textoker">- The system can not find any new correspondence under your account!</span>
         </span>
 
         <!-- Collapsable Correspondence -->
@@ -51,21 +51,21 @@
                         </thead>
 
                         <!-- Table Rows -->
-                        <tr *ngFor="let coress of rowsInbox |  paginate:configInbox ">
+                        <tr *ngFor="let corres of rowsInbox |  paginate:configInbox ">
 
-                          <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.subject  }}</td>
-
-                          <td class="col-md-2">
-                            <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
-                          </td>
-
-                          <td class="col-md-2 smalltextbold text-capitalize textgray">{{ coress.dateSent | date:'medium' }}</td>
+                          <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
 
                           <td class="col-md-2">
-                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.sender  }}</i></a>
+                            <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: corres.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ corres.message  }}</i></a>
                           </td>
 
-                          <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.statusReceiver }}</td>
+                          <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
+
+                          <td class="col-md-2">
+                            <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.sender  }}</i></a>
+                          </td>
+
+                          <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusReceiver }}</td>
 
                           <td class="col-md-3">
 
@@ -170,21 +170,21 @@
                 </thead>
 
                 <!-- Table Rows -->
-                <tr *ngFor="let coress of rowsSent |  paginate:configSent ">
+                <tr *ngFor="let corres of rowsSent |  paginate:configSent ">
 
-                  <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.subject  }}</td>
-
-                  <td class="col-md-2">
-                    <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
-                  </td>
-
-                  <td class="col-md-2 smalltextbold text-capitalize textgray">{{ coress.dateSent | date:'medium' }}</td>
+                  <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
 
                   <td class="col-md-2">
-                    <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.receiver  }}</i></a>
+                    <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: corres.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ corres.message  }}</i></a>
                   </td>
 
-                  <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.statusSender }}</td>
+                  <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
+
+                  <td class="col-md-2">
+                    <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver  }}</i></a>
+                  </td>
+
+                  <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusSender }}</td>
 
                   <td class="col-md-3">
                     <div class="col-md-12">
@@ -288,27 +288,27 @@
                     </thead>
 
                     <!-- Table Rows -->
-                    <tr *ngFor="let coress of rowsArchivedInbox |  paginate:configArchivedInbox ">
+                    <tr *ngFor="let corres of rowsArchivedInbox |  paginate:configArchivedInbox ">
 
-                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.subject  }}</td>
-
-                      <td class="col-md-2">
-                        <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
-                      </td>
-
-                      <td class="col-md-2 smalltextbold text-capitalize textgray">{{ coress.dateSent | date:'medium' }}</td>
+                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
 
                       <td class="col-md-2">
-                        <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.sender  }}</i></a>
+                        <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: corres.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ corres.message  }}</i></a>
                       </td>
 
-                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.statusReceiver }}</td>
+                      <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
+
+                      <td class="col-md-2">
+                        <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.sender  }}</i></a>
+                      </td>
+
+                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusReceiver }}</td>
 
 
                       <td class="col-md-3" style="text-align:center;">
 
                         <!-- delete the archived inbox mail -->
-                        <button type="button" data-target="#deleteArchiveInbox" data-toggle="modal"
+                        <button type="button" data-target="#deleteArchivedInbox" data-toggle="modal"
                                 class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteArchiveInbox(corres)">
                           <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
                         </button>
@@ -395,26 +395,26 @@
                     </thead>
 
                     <!-- Table Rows -->
-                    <tr *ngFor="let coress of rowsArchivedSent |  paginate:configArchivedSent ">
+                    <tr *ngFor="let corres of rowsArchivedSent |  paginate:configArchivedSent ">
 
-                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.subject  }}</td>
-
-                      <td class="col-md-2">
-                        <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
-                      </td>
-
-                      <td class="col-md-2 smalltextbold text-capitalize textgray">{{ coress.dateSent | date:'medium' }}</td>
+                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
 
                       <td class="col-md-2">
-                        <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.receiver  }}</i></a>
+                        <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: corres.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ corres.message  }}</i></a>
                       </td>
 
-                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.statusSender }}</td>
+                      <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
+
+                      <td class="col-md-2">
+                        <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver  }}</i></a>
+                      </td>
+
+                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusSender }}</td>
 
                       <td class="col-md-3" style="text-align:center;">
                         <!-- delete the archived sent mail -->
-                        <button type="button" data-target="#deleteArchiveSent" data-toggle="modal"
-                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteSent(corres)">
+                        <button type="button" data-target="#deleteAchivedSent" data-toggle="modal"
+                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteArchiveSent(corres)">
                           <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
                         </button>
 
@@ -542,7 +542,7 @@
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="deleteSent(sentToRemove)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="deleteSent(sentToDelete)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
@@ -551,7 +551,7 @@
 
 
 <!-- archive inbox section -->
-<div class="modal fade" id="deleteArchiveInbox" tabindex="-1" role="dialog" aria-labelledby="DeleteArchiveInbox">
+<div class="modal fade" id="deleteArchivedInbox" tabindex="-1" role="dialog" aria-labelledby="DeleteArchivedInbox">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -566,7 +566,7 @@
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="deleteArchiveInbox(archiveInboxToDelete)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="deleteArchivedInbox(archiveInboxToDelete)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
@@ -574,7 +574,7 @@
 </div>
 
 <!-- archive sent section-->
-<div class="modal fade" id="deleteAchiveSent" tabindex="-1" role="dialog" aria-labelledby="DeleteArchiveSent">
+<div class="modal fade" id="deleteAchivedSent" tabindex="-1" role="dialog" aria-labelledby="DeleteArchivedSent">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -589,7 +589,7 @@
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="deleteArchiveSent(archiveSentToDelete)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="deleteArchivedSent(archiveSentToDelete)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
