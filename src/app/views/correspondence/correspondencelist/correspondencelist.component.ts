@@ -37,6 +37,12 @@ export class CorrespondenceListComponent implements OnInit {
   private isFirstLoadArchivedInbox: boolean = false;
   private isFirstLoadArchivedSent: boolean = false;
 
+  private removedInboxId: number = 0;
+  private removedSentId: number = 0;
+  private removedArchivedInboxId: number = 0;
+  private removedArchivedSentId: number = 0
+
+
   constructor(  
     private corresService: CorrespondenceService,
     private route: ActivatedRoute,
@@ -188,6 +194,50 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
+
+  //*****************************************************
+  // SCREEN ITERACTIONS METHODS 
+  //*****************************************************
+  private passToModalArchiveInbox(corres: Correspondence) {
+
+  }
+
+  private passToModalDeleteInbox(corres: Correspondence) {
+  }
+
+  private passToModalArchiveSent(corres: Correspondence) {
+  }
+
+  private passToModalDeleteSent(corres: Correspondence) {
+  }
+
+  private passToModalDeleteArchiveInbox(corres: Correspondence) {
+  }
+
+  private passToModalDeleteArchiveSent(corres: Correspondence) {
+  }
+
+  private archiveInbox(inboxToArchive: Correspondence) {
+
+  }
+
+  private deleteInbox(inboxToDelete : Correspondence) {
+  }
+
+  private archiveSent(sentToArchive: Correspondence) {
+  }
+
+  private deleteSent(sentToRemove: Correspondence) {
+  }
+
+  private deleteArchiveInbox(archiveInboxToDelete: Correspondence) {
+  }
+
+  private deleteArchiveSent(archiveSentToDelete:Correspondence) {
+  }
+
+
+
   //*****************************************************
   // HELPER METHODS 
   //*****************************************************
@@ -299,7 +349,8 @@ export class CorrespondenceListComponent implements OnInit {
     }
 
     if (!this.isFirstLoadInbox) {
-      let filteredData = this.changeFilterInbox(this.dataInbox, this.configInbox);
+      let removedData = this.changeRemoveInbox(this.dataInbox, this.configInbox);
+      let filteredData = this.changeFilterInbox(removedData, this.configInbox);    
       let sortedData = this.changeSortInbox(filteredData, this.configInbox);
       this.rowsInbox = sortedData;
       this.configInbox.totalItems = sortedData.length;
@@ -419,6 +470,15 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
+  private changeRemoveInbox(data: any, config: any): any {
+    if (this.removedInboxId == null) { return data; }
+
+    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedInboxId);
+    this.dataInbox = null;
+    this.dataInbox = removedData;
+    return this.dataInbox;
+  }
+
 
 
   /**********************************************/
@@ -475,7 +535,8 @@ export class CorrespondenceListComponent implements OnInit {
     }
 
     if (!this.isFirstLoadArchivedInbox) {
-      let filteredData = this.changeFilterArchivedInbox(this.dataArchivedInbox, this.configArchivedInbox);
+      let removedData = this.changeRemoveArchivedInbox(this.dataArchivedInbox, this.configArchivedInbox);
+      let filteredData = this.changeFilterArchivedInbox(removedData, this.configArchivedInbox);
       let sortedData = this.changeSortArchivedInbox(filteredData, this.configArchivedInbox);
       this.rowsArchivedInbox = sortedData;
       this.configArchivedInbox.totalItems = sortedData.length;
@@ -595,6 +656,14 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
+  private changeRemoveArchivedInbox(data: any, config: any): any {
+    if (this.removedArchivedInboxId == null) { return data; }
+
+    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedArchivedInboxId);
+    this.dataArchivedInbox = null;
+    this.dataArchivedInbox = removedData;
+    return this.dataArchivedInbox;
+  }
 
 
 
@@ -652,7 +721,8 @@ export class CorrespondenceListComponent implements OnInit {
     }
 
     if (!this.isFirstLoadSent) {
-      let filteredData = this.changeFilterSent(this.dataSent, this.configSent);
+      let removedData = this.changeRemoveSent(this.dataSent, this.configSent);
+      let filteredData = this.changeFilterSent(removedData, this.configSent);       
       let sortedData = this.changeSortSent(filteredData, this.configSent);
       this.rowsSent = sortedData;
       this.configSent.totalItems = sortedData.length;
@@ -772,6 +842,15 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
+  private changeRemoveSent(data: any, config: any): any {
+    if (this.removedSentId == null) { return data; }
+
+    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedSentId);
+    this.dataSent = null;
+    this.dataSent = removedData;
+    return this.dataSent;
+  }
+
 
 
   /**********************************************/
@@ -828,7 +907,8 @@ export class CorrespondenceListComponent implements OnInit {
     }
 
     if (!this.isFirstLoadArchivedSent) {
-      let filteredData = this.changeFilterArchivedSent(this.dataArchivedSent, this.configArchivedSent);
+      let removedData = this.changeRemoveArchivedSent(this.dataArchivedSent, this.configArchivedSent);
+      let filteredData = this.changeFilterArchivedSent(removedData, this.configArchivedSent);    
       let sortedData = this.changeSortArchivedSent(filteredData, this.configArchivedSent);
       this.rowsArchivedSent = sortedData;
       this.configArchivedSent.totalItems = sortedData.length;
@@ -945,6 +1025,16 @@ export class CorrespondenceListComponent implements OnInit {
       }
       return 0;
     });
+  }
+
+
+  private changeRemoveArchivedSent(data: any, config: any): any {
+    if (this.removedArchivedSentId == null) { return data; }
+
+    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedArchivedSentId);
+    this.dataArchivedSent = null;
+    this.dataArchivedSent = removedData;
+    return this.dataArchivedSent;
   }
 }
 

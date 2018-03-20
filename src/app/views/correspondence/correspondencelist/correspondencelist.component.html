@@ -73,7 +73,7 @@
                               <div class="col-md-6">
                                 <!-- archive the inbox mail -->
                                 <button type="button" data-target="#archiveInbox" data-toggle="modal"
-                                        class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveInbox(inboxToArchive)">
+                                        class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveInbox(corres)">
                                   <span class="glyphicon glyphicon-briefcase"></span>&nbsp; Archive Mail
                                 </button>
                               </div>
@@ -81,7 +81,7 @@
                               <div class="col-md-6">
                                 <!-- delete the inbox mail -->
                                 <button type="button" data-target="#deleteInbox" data-articleid=(trade.tradeId)
-                                        data-toggle="modal" class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteInbox(inboxToDelete)">
+                                        data-toggle="modal" class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteInbox(corres)">
                                   <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
                                 </button>
                               </div>
@@ -191,7 +191,7 @@
                       <div class="col-md-6">
                         <!-- archive the sent mail -->
                         <button type="button" data-target="#archiveSent" data-toggle="modal"
-                                class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveSent(sentToArchive)">
+                                class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveSent(corres)">
                           <span class="glyphicon glyphicon-briefcase"></span>&nbsp; Archive Mail
                         </button>
                       </div>
@@ -199,7 +199,7 @@
                       <div class="col-md-6">
                         <!-- delete the sent mail -->
                         <button type="button" data-target="#deleteSent" data-toggle="modal"
-                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteSent(sentToDelete)">
+                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteSent(corres)">
                           <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
                         </button>
                       </div>
@@ -309,7 +309,7 @@
 
                         <!-- delete the archived inbox mail -->
                         <button type="button" data-target="#deleteArchiveInbox" data-toggle="modal"
-                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeletInbox(inboxToRemove)">
+                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteArchiveInbox(corres)">
                           <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
                         </button>
 
@@ -414,7 +414,7 @@
                       <td class="col-md-3" style="text-align:center;">
                         <!-- delete the archived sent mail -->
                         <button type="button" data-target="#deleteArchiveSent" data-toggle="modal"
-                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteSent(sentToRemove)">
+                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteSent(corres)">
                           <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
                         </button>
 
@@ -496,7 +496,7 @@
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="deleteInbox(inboxToRemove)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="deleteInbox(inboxToDelete)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
@@ -566,7 +566,7 @@
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="deleteArchiveInbox(inboxToDelete)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="deleteArchiveInbox(archiveInboxToDelete)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
@@ -589,7 +589,7 @@
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="deleteArchiveSent(sentToDelete)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="deleteArchiveSent(archiveSentToDelete)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
