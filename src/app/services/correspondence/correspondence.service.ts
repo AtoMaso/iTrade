@@ -18,6 +18,7 @@ let corresbytraderidwithstatusinbox = CONFIG.baseUrls.corresbytraderidwithstatus
 
 let corresbytraderidsent = CONFIG.baseUrls.corresbytraderidsent;
 let corresbytraderidwithstatussent = CONFIG.baseUrls.corresbytraderidwithstatussent;
+let deletedcorrespondencebytraderid = CONFIG.baseUrls.deletedcorrespondencebytraderid;
 
 let singlecorres = CONFIG.baseUrls.singlecorres
 let updatecorres = CONFIG.baseUrls.updatecorres;
@@ -99,7 +100,29 @@ export class CorrespondenceService {
 
 
   //**********************************************************
-  // GET ALL CORESPONDENCE BY TRADER ID
+  // GET DELETED CORRESPONDENCE BY TRADER ID
+  //***********************************************************
+  public getDeletedCorresByTraderId(traderId:string): Observable<Correspondence[]> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    .
+    this.localUrl = `${deletedcorrespondencebytraderid}?traderId=${traderId}`;
+    return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
+  }
+
+
+
+
+  //**********************************************************
+  // GET INBOX or ARCHIVED INBOX CORRESPONDENCE BY TRADER ID
   //***********************************************************
   public getInboxByTraderIdWithStatusOrAll(traderId: string, status: string): Observable<Correspondence[]> {
 
@@ -120,8 +143,9 @@ export class CorrespondenceService {
 
 
 
-
-  // sent correspondence
+  //**********************************************************
+  // GET SENT or SENT ARHIVED CORRESPONDENCE BY TRADER ID
+  //***********************************************************
   public getSentByTraderIdWithStatusOrAll(traderId: string, status: string): Observable<Correspondence[]> {
 
     // prepare the headesrs

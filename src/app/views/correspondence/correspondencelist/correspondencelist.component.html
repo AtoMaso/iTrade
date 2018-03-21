@@ -240,7 +240,7 @@
       </div>
 
 
-
+     <!-- inbox archived -->
       <div class="panel panel-heading footerdiv  col-md-12">
 
         <span class="archiveinbox panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseArchiveInbox">
@@ -348,7 +348,7 @@
       </div>
 
 
-
+     <!-- sent archived -->
       <div class="panel panel-heading footerdiv  col-md-12">
 
         <span class="archivesent panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseArchiveSent">
@@ -356,7 +356,7 @@
           Archived Sent Mail <span *ngIf="!hasArchivedSent" class="textoker">- The system can not find any archived sent correspondence under you account!</span>
         </span>
 
-        <!-- Collapsable Trade Status -->
+  
         <div id="collapseArchiveSent" class="collapse in  panel-heading">
 
           <div *ngIf="hasArchivedSent" >
@@ -452,6 +452,127 @@
       </div>
 
   
+    <!-- all deleted -->
+    <div class="panel panel-heading footerdiv  col-md-12">
+
+      <span class="deleted panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseDeleted">
+        <span class="glyphicon glyphicon-minus"></span>
+        Deleted Mail <span *ngIf="!hasDeleted" class="textoker">- The system can not find any deleted correspondence under your account!</span>
+      </span>
+
+      <!-- Collapsable Correspondence -->
+      <div id="collapseDeleted" class="collapse in panel-heading">
+
+              <div *ngIf="hasDeleted">
+
+                        <!-- Table-->
+                        <div class="table-responsive">
+
+                          <table class="table table-bordered table-hover table-condensed">
+
+                            <!-- Table Header -->
+                            <thead>
+                              <tr>
+                                <th class="col-md-1" style="background-color:#FF223A3A">
+                                  <span class="textgray smalltext  text-uppercase" style="width:auto">Trade </span>
+                                </th>
+
+                                <th class="col-md-2" style="background-color:#FF223A3A">
+                                  <span class="textgray smalltext text-uppercase" style="width:auto">Message</span>
+                                </th>
+
+                                <th class="col-md-2" style="background-color:#FF223A3A">
+                                  <span class="textgray  smalltext  text-uppercase" style="width:auto">Date</span>
+                                </th>
+
+                                <!-- TODO alternate for received and sent emails-->
+                                <th class="col-md-2" style="background-color:#FF223A3A">
+                                  <span class="textgray  smalltext  text-uppercase" style="width:auto">Sender</span>
+                                </th>
+                                <th class="col-md-2" style="background-color:#FF223A3A">
+                                  <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent To</span>
+                                </th>
+                          
+                                <th class="col-md-3" style="background-color:#FF223A3A">
+                                  <span class="textgray  smalltext  text-uppercase" style="width:auto">Actions</span>
+                                </th>
+                              </tr>
+                            </thead>
+
+                            <!-- Table Rows -->
+                            <tr *ngFor="let corres of rowsDeleted |  paginate:configDeleted ">
+
+                              <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
+
+                              <td class="col-md-2">
+                                <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: corres.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ corres.message  }}</i></a>
+                              </td>
+
+                              <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
+
+                              <td class="col-md-2">
+                                <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver }}</i></a>
+                              </td>
+
+                              <td class="col-md-2">
+                                <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdReceiver}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.sender  }}</i></a>
+                              </td>
+                          
+
+                              <td class="col-md-3">
+
+                                <div class="col-md-12">
+                                  <div class="col-md-6">
+                                    <!-- archive the inbox mail -->
+                                    <button type="button" data-target="#archiveDeleted" data-toggle="modal"
+                                            class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveDeleted(corres)">
+                                      <span class="glyphicon glyphicon-briefcase"></span>&nbsp; Archive Mail
+                                    </button>
+                                  </div>
+
+                                  <div class="col-md-6">
+                                    <!-- delete the inbox mail -->
+                                    <button type="button" data-target="#activateDeleted" data-articleid=(trade.tradeId)
+                                            data-toggle="modal" class="btn btn-sm btn-warning smalltext" (click)="passToModalActivateDeleted(corres)">
+                                      <span class="glyphicon glyphicon-trash"></span>&nbsp; Activate Mail
+                                    </button>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+
+                          </table>
+
+                        </div>
+
+                        <!-- Table pagination -->
+                        <div class="row col-md-12">
+                          <div class="col-md-5">
+                            <pagination-controls id="paginationDeleted" *ngIf="configDeleted.paging" ngDefaultControl
+                                                 (pageChange)="onPageChangeDeleted($event)"
+                                                 maxSize="5"
+                                                 directionLinks="true"
+                                                 autoHide="true"
+                                                 previousLabel="Previous"
+                                                 nextLabel="Next"
+                                                 screenReaderPaginationLabel="Pagination"
+                                                 screenReaderPageLabel="pageMes"
+                                                 screenReaderCurrentLabel="You're on page"
+                                                 [(ngModel)]="configDeleted.currentPage"
+                                                 (numPages)="numPagesDeleted = $event"
+                                                 [maxSize]="maxSizeDeleted">
+                            </pagination-controls>
+                          </div>
+                        </div>
+
+              </div>
+
+              <br />
+
+      </div>
+
+
+    </div>
 
   </div>
 
@@ -590,6 +711,53 @@
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
         <button class="btn btn-success" (click)="deleteArchivedSent(archiveSentToDelete)" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- archive deleted section -->
+<div class="modal fade" id="archiveDeleted" tabindex="-1" role="dialog" aria-labelledby="archiveDeleted">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Archive Deleted Warning!</h4>
+      </div>
+
+      <div class="modal-body text-danger">
+        <p>Are you sure you want to archive this deleted correspondence?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="archiveDeleted(deletedToArchive)" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- activate deleted section-->
+<div class="modal fade" id="activateDeleted" tabindex="-1" role="dialog" aria-labelledby="activateDeleted">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Activate Deleted Warning!</h4>
+      </div>
+
+      <div class="modal-body text-danger">
+        <p>Are you sure you want to activate this deleted correspondence?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="activateDeleted(deletedToActivate)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>

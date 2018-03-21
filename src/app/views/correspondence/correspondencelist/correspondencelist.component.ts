@@ -26,21 +26,25 @@ export class CorrespondenceListComponent implements OnInit {
   private statusSent: string = "New";
   private statusArchivedInbox: string = "Archived";
   private statusArchivedSent: string = "Archived";
+  private statusDeleted: string = "Deleted";
 
   private hasInbox: boolean = true;
   private hasSent: boolean = true;
   private hasArchivedInbox: boolean = true;
   private hasArchivedSent: boolean = true;
+  private hasDeleted: boolean = true;
 
   private isFirstLoadInbox: boolean = false;
   private isFirstLoadSent: boolean = false;
   private isFirstLoadArchivedInbox: boolean = false;
   private isFirstLoadArchivedSent: boolean = false;
+  private isFirstLoadDeleted: boolean = false;
 
   private removedInboxId: number = 0;
   private removedSentId: number = 0;
   private removedArchivedInboxId: number = 0;
   private removedArchivedSentId: number = 0
+  private removedDeletedId: number = 0;
 
   private inboxToArchive: Correspondence;
   private inboxToDelete: Correspondence;
@@ -48,6 +52,8 @@ export class CorrespondenceListComponent implements OnInit {
   private sentToDelete: Correspondence;
   private archiveInboxToDelete: Correspondence;
   private archiveSentToDelete: Correspondence;
+  private deletedToArchive: Correspondence;
+  private deletedToActivate: Correspondence;
 
 
   constructor(  
@@ -67,6 +73,7 @@ export class CorrespondenceListComponent implements OnInit {
     this.getSent(this.traderId, this.statusInbox);    
     this.getArchivedInbox(this.traderId, this.statusArchivedInbox);
     this.getArchivedSent(this.traderId, this.statusArchivedSent);
+    this.getDeletedCorrespondence(this.traderId);
   }
 
 
@@ -101,6 +108,13 @@ export class CorrespondenceListComponent implements OnInit {
       });
       jQuery("#collapseArchiveSent").on("show.bs.collapse", function () {
         jQuery(".archivesent").html('<span class="glyphicon glyphicon-minus"></span> Archived Sent Mail');
+      });
+
+      jQuery("#collapseDeleted").on("hide.bs.collapse", function () {
+        jQuery(".deleted").html('<span class="glyphicon glyphicon-plus"></span> Deleted Mail');
+      });
+      jQuery("#collapseDeleted").on("show.bs.collapse", function () {
+        jQuery(".deleted").html('<span class="glyphicon glyphicon-minus"></span> Deleted Mail');
       });
 
     });
@@ -192,7 +206,7 @@ export class CorrespondenceListComponent implements OnInit {
 
   }
 
-  private onSuccessArchivedSent(archivedsent: Correspondence[]) {
+    private onSuccessArchivedSent(archivedsent: Correspondence[]) {
     this.dataArchivedSent = archivedsent;
     this.hasArchivedSent = true;
     this.isFirstLoadArchivedSent = true;
@@ -200,6 +214,28 @@ export class CorrespondenceListComponent implements OnInit {
     this.onPageChangeArchivedSent(1);
   }
 
+
+
+  private getDeletedCorrespondence(traderId: string) {
+
+    this.corresService.getDeletedCorresByTraderId(traderId)
+      .subscribe((returnedDeleted: Correspondence[]) => {
+        if (returnedDeleted.length === 0) { this.hasDeleted = false; }
+        else {
+          this.onSuccessDeleted(returnedDeleted);
+        }
+      },
+      (res: Response) => this.onError(res, "getDeletedCorrespondence"));
+
+  }
+  
+  private onSuccessDeleted(deleted: Correspondence[]) {
+    this.dataDeleted = deleted;
+    this.hasDeleted = true;
+    this.isFirstLoadDeleted = true;
+    this.onChangeTableDeleted(this.configDeleted);
+    this.onPageChangeDeleted(1);
+  }
 
 
   //*****************************************************
@@ -229,7 +265,15 @@ export class CorrespondenceListComponent implements OnInit {
     this.archiveSentToDelete = corres
   }
 
+  private passToModalArchiveDeleted(corres: Correspondence) {
+    this.deletedToArchive = corres;
+  }
 
+  private passToModalActivateDeleted(corres: Correspondence) {
+    this.deletedToActivate = corres;
+  }
+
+  
   private archiveInbox(inboxToArchive: Correspondence) {
     // update the status of the correspondence to archived
     inboxToArchive.statusReceiver = "Archived";
@@ -245,7 +289,6 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
  
-
   private deleteInbox(inboxToDelete: Correspondence) {
     // update the status of the correspondence to deleted 
     inboxToDelete.statusReceiver = "Deleted";
@@ -255,7 +298,7 @@ export class CorrespondenceListComponent implements OnInit {
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the inbox
         this.getInbox(this.traderId, this.statusInbox);
-        //this.getArchivedInbox(this.traderId, this.statusArchivedInbox);
+        this.getDeletedCorrespondence(this.traderId);
 
       }, (serviceError: Response) => this.onError(serviceError, "deleteInbox"));
   }
@@ -285,11 +328,10 @@ export class CorrespondenceListComponent implements OnInit {
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the sent
         this.getSent(this.traderId, this.statusSent);
-        //this.getArchivedSent(this.traderId, this.statusArchivedSent);
+        this.getDeletedCorrespondence(this.traderId);
 
       }, (serviceError: Response) => this.onError(serviceError, "deleteSent"));
   }
-
 
 
   private deleteArchivedInbox(archiveInboxToDelete: Correspondence) {
@@ -317,6 +359,13 @@ export class CorrespondenceListComponent implements OnInit {
       }, (serviceError: Response) => this.onError(serviceError, "deleteArchivedSent"));
   }
 
+
+  private archiveDeleted(deletedToArchive: Correspondence) {
+  }
+
+
+  private activateDeleted(deletedToActivate: Correspondence) {
+  }
 
 
   //*****************************************************
@@ -554,7 +603,7 @@ export class CorrespondenceListComponent implements OnInit {
   private changeRemoveInbox(data: any, config: any): any {
     if (this.removedInboxId == null) { return data; }
 
-    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedInboxId);
+    let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.removedInboxId);
     this.dataInbox = null;
     this.dataInbox = removedData;
     return this.dataInbox;
@@ -740,7 +789,7 @@ export class CorrespondenceListComponent implements OnInit {
   private changeRemoveArchivedInbox(data: any, config: any): any {
     if (this.removedArchivedInboxId == null) { return data; }
 
-    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedArchivedInboxId);
+    let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.removedArchivedInboxId);
     this.dataArchivedInbox = null;
     this.dataArchivedInbox = removedData;
     return this.dataArchivedInbox;
@@ -926,7 +975,7 @@ export class CorrespondenceListComponent implements OnInit {
   private changeRemoveSent(data: any, config: any): any {
     if (this.removedSentId == null) { return data; }
 
-    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedSentId);
+    let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.removedSentId);
     this.dataSent = null;
     this.dataSent = removedData;
     return this.dataSent;
@@ -1112,10 +1161,196 @@ export class CorrespondenceListComponent implements OnInit {
   private changeRemoveArchivedSent(data: any, config: any): any {
     if (this.removedArchivedSentId == null) { return data; }
 
-    let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedArchivedSentId);
+    let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.removedArchivedSentId);
     this.dataArchivedSent = null;
     this.dataArchivedSent = removedData;
     return this.dataArchivedSent;
+  }
+
+
+
+  /**********************************************/
+  //Deleted Correspondence
+  /***********************************************/
+  private isDateSentDeletedAsc = true;
+  private isSubjectDeletedAsc = true;
+  private isStatusDeletedAsc = true;
+  private isSenderDeletedAsc = true;
+
+  private sortDateSentDeleted: string = 'desc'
+  private sortSubjectDeleted: string = 'desc';
+  private sortStatusDeleted: string = 'desc';
+  private sortSenderDeleted: string = 'desc';
+
+  private dataDeleted: Array<any> = [];     // full data from the server
+  public rowsDeleted: Array<any> = [];      // rows passed to the table
+  public maxSizeDeleted: number = 5;
+  public numPagesDeleted: number = 1;
+
+  public columnsDeleted: Array<any> =
+  [
+    { title: 'Sent', name: 'dateSent', sort: true, filtering: { filterString: '', placeholder: 'Filter by correspondence date sent.' } },
+    { title: 'Status', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by correspondence status.' } },
+    { title: 'Subject', name: 'subject', sort: true, filtering: { filterString: '', placeholder: 'Filter by correspondence subject' } },
+    { title: 'Sender', name: 'sender', sort: true, filtering: { filterString: '', placeholder: 'Filter by correspondence sender.' } }
+  ];
+
+
+  public configDeleted: any = {
+    id: 'paginationDeleted',
+    itemsPerPage: 5,
+    currentPage: 1,
+    totalItems: 0,
+    paging: true,
+    sorting: { columns: this.columnsDeleted },
+    filtering: { filterString: '' },
+    className: ['table-striped', 'table-bordered']
+  };
+
+
+  private onPageChangeDeleted(passedpage: number) {
+
+    this.configDeleted.currentPage = passedpage;
+  }
+
+
+  private onChangeTableDeleted(config: any, page: any = { page: this.configDeleted.currentPage, itemsPerPage: this.configDeleted.itemsPerPage }) {
+    if (config.filtering) {
+      Object.apply(this.configDeleted.filtering, config.filtering);
+    }
+    if (config.sorting) {
+      (<any>Object).assign(this.configDeleted.sorting, config.sorting);
+    }
+
+    if (!this.isFirstLoadDeleted) {
+      let removedData = this.changeRemoveDeleted(this.dataDeleted, this.configDeleted);
+      let filteredData = this.changeFilterDeleted(removedData, this.configDeleted);
+      let sortedData = this.changeSortDeleted(filteredData, this.configDeleted);
+      this.rowsDeleted = sortedData;
+      this.configDeleted.totalItems = sortedData.length;
+    } else {
+      this.rowsDeleted = this.dataDeleted;
+      this.configDeleted.totalItems = this.dataDeleted.length;
+      this.isFirstLoadDeleted = false;
+    }
+  }
+
+
+  private sortTableDeleted(column: string) {
+    // reset the array of columns
+    this.configDeleted.sorting.columns = [];
+
+    switch (column) {
+
+      case 'dateSent':
+        this.configDeleted.sorting.columns = [{ name: 'dateSent', sort: this.sortDateSentDeleted }];
+        this.onChangeTableDeleted(this.configDeleted);
+        this.isDateSentDeletedAsc = !this.isDateSentDeletedAsc;
+        this.sortDateSentDeleted = this.isDateSentDeletedAsc ? 'desc' : 'asc';
+        break;
+
+      case 'status':
+        this.configDeleted.sorting.columns = [{ name: 'status', sort: this.sortStatusDeleted }];
+        this.onChangeTableDeleted(this.configDeleted);
+        this.isStatusDeletedAsc = !this.isStatusDeletedAsc;
+        this.sortStatusDeleted = this.isStatusDeletedAsc ? 'desc' : 'asc';
+        break;
+
+      case 'subject':
+        this.configDeleted.sorting.columns = [{ name: 'subject', sort: this.sortSubjectDeleted }];
+        this.onChangeTableDeleted(this.configDeleted);
+        this.isSubjectDeletedAsc = !this.isSubjectDeletedAsc;
+        this.sortSubjectDeleted = this.isSubjectDeletedAsc ? 'desc' : 'asc';
+        break;
+
+      case 'sender':
+        this.configDeleted.sorting.columns = [{ name: 'sender', sort: this.sortSenderDeleted }];
+        this.onChangeTableDeleted(this.configDeleted);
+        this.isSenderDeletedAsc = !this.isSenderDeletedAsc;
+        this.sortSenderDeleted = this.isSenderDeletedAsc ? 'desc' : 'asc';
+        break;
+
+      default:
+    }
+  }
+
+
+  public changeFilterDeleted(data: any, config: any): any {
+
+    let filteredData: Array<any> = data;
+
+    this.columnsDeleted.forEach((column: any) => {
+
+      if (column.filtering) {
+        filteredData = filteredData.filter((item: any) => { return item[column.name].match(column.filtering.filterString); });
+      }
+
+    });
+
+    if (!config.filtering) {
+      return filteredData;
+    }
+
+    if (config.filtering.columnName) {
+      return filteredData.filter((item: any) =>
+        item[config.filtering.columnName].match(this.configDeleted.filtering.filterString));
+    }
+
+    let tempArray: Array<any> = [];
+    filteredData.forEach((item: any) => {
+
+      // find the string in each coloumn
+      let flag = false;
+      this.columnsDeleted.forEach((column: any) => {
+        if (item[column.name].toString().match(this.configDeleted.filtering.filterString)) { flag = true; }
+      });
+      if (flag) { tempArray.push(item); }
+
+    });
+
+    filteredData = tempArray;
+
+    return filteredData;
+  }
+
+
+  private changeSortDeleted(data: any, config: any) {
+    if (!config.sorting) {
+      return data;
+    }
+
+    let columns = this.configDeleted.sorting.columns || [];
+    let columnName: string = null;
+    let sort: string = null;
+
+    for (let i = 0; i < columns.length; i++) {
+      if (columns[i].sort != '') {
+        columnName = columns[i].name;
+        sort = columns[i].sort;
+      }
+    }
+    if (!columnName) {
+      return data;
+    }
+
+    return data.sort((previous: any, current: any) => {
+      if (previous[columnName] > current[columnName]) {
+        return sort === 'desc' ? -1 : 1;
+      } else if (previous[columnName] < current[columnName]) {
+        return sort === 'asc' ? -1 : 1;
+      }
+      return 0;
+    });
+  }
+
+
+  private changeRemoveDeleted(data: any, config: any): any {
+    if (this.removedDeletedId == null) { return data; }
+
+    let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.removedDeletedId);
+    this.dataDeleted = null;
+    this.dataDeleted = removedData;
+    return this.dataDeleted;
   }
 }
 
