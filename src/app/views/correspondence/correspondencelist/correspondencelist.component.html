@@ -511,11 +511,11 @@
                               <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
 
                               <td class="col-md-2">
-                                <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver }}</i></a>
+                                <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.sender }}</i></a>
                               </td>
 
                               <td class="col-md-2">
-                                <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdReceiver}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.sender  }}</i></a>
+                                <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdReceiver}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver  }}</i></a>
                               </td>
                           
 

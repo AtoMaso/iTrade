@@ -126,7 +126,7 @@ export class CorrespondenceListComponent implements OnInit {
   //****************************************************************************************
   private getInbox(traderId: string, statusInboxes: string) {
 
-    this.corresService.getInboxByTraderIdWithStatusOrAll(traderId, statusInboxes)
+    this.corresService.getInboxByTraderIdWithStatus(traderId, statusInboxes)
       .subscribe((returnedInboxes: Correspondence[]) => {
         if (returnedInboxes.length === 0) { this.hasInbox = false; }
         else {
@@ -149,7 +149,7 @@ export class CorrespondenceListComponent implements OnInit {
 
   private getSent(traderId: string, statusSent: string) {
 
-    this.corresService.getSentByTraderIdWithStatusOrAll(traderId, statusSent)
+    this.corresService.getSentByTraderIdWithStatus(traderId, statusSent)
       .subscribe((returnedSent: Correspondence[]) => {
         if (returnedSent.length === 0) { this.hasSent = false; }
         else {
@@ -172,7 +172,7 @@ export class CorrespondenceListComponent implements OnInit {
 
   private getArchivedInbox(traderId: string, statusArchivedInboxes: string = "Archived") {
 
-    this.corresService.getInboxByTraderIdWithStatusOrAll(traderId, statusArchivedInboxes)
+    this.corresService.getInboxByTraderIdWithStatus(traderId, statusArchivedInboxes)
       .subscribe((returnedArchivedInboxes: Correspondence[]) => {
         if (returnedArchivedInboxes.length === 0) { this.hasArchivedInbox = false; }
         else {
@@ -195,7 +195,7 @@ export class CorrespondenceListComponent implements OnInit {
 
   private getArchivedSent(traderId: string, statusArchivedSent: string = "Archived") {
 
-    this.corresService.getSentByTraderIdWithStatusOrAll(traderId, statusArchivedSent)
+    this.corresService.getSentByTraderIdWithStatus(traderId, statusArchivedSent)
       .subscribe((returnedArchivedSent: Correspondence[]) => {
         if (returnedArchivedSent.length === 0) { this.hasArchivedSent = false; }
         else {
@@ -206,7 +206,7 @@ export class CorrespondenceListComponent implements OnInit {
 
   }
 
-    private onSuccessArchivedSent(archivedsent: Correspondence[]) {
+  private onSuccessArchivedSent(archivedsent: Correspondence[]) {
     this.dataArchivedSent = archivedsent;
     this.hasArchivedSent = true;
     this.isFirstLoadArchivedSent = true;
@@ -342,7 +342,8 @@ export class CorrespondenceListComponent implements OnInit {
 
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the archived inbox
-        this.getArchivedInbox(this.traderId, this.statusArchivedInbox);      
+        this.getArchivedInbox(this.traderId, this.statusArchivedInbox);    
+        this.getDeletedCorrespondence(this.traderId);  
       }, (serviceError: Response) => this.onError(serviceError, "deleteArchivedInbox"));
   }
 
@@ -356,15 +357,46 @@ export class CorrespondenceListComponent implements OnInit {
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the archived sent
         this.getArchivedSent(this.traderId, this.statusArchivedSent);
+        this.getDeletedCorrespondence(this.traderId);
       }, (serviceError: Response) => this.onError(serviceError, "deleteArchivedSent"));
   }
 
 
   private archiveDeleted(deletedToArchive: Correspondence) {
+   
+    // update the status of the correspondence to archived
+    if (deletedToArchive.traderIdReciever === this.traderId) { deletedToArchive.statusReceiver = "Archived"; }
+    else { deletedToArchive.statusSender = "Archived"; }
+
+    this.corresService.updateCorrespondence(deletedToArchive)
+      .subscribe((response: Correspondence) => {
+
+        this.messagesService.emitProcessMessage("PMSUCo");
+        // get the inbox and archived inbox       
+        this.getArchivedInbox(this.traderId, this.statusArchivedInbox);
+        this.getArchivedSent(this.traderId, this.statusArchivedSent);
+        this.getDeletedCorrespondence(this.traderId);
+
+      }, (serviceError: Response) => this.onError(serviceError, "archiveDeleted"));
+
   }
 
 
   private activateDeleted(deletedToActivate: Correspondence) {
+    // update the status of the correspondence to archived
+    if (deletedToActivate.traderIdReciever === this.traderId) { deletedToActivate.statusReceiver = "New"; }
+    else { deletedToActivate.statusSender = "New"; }
+
+    this.corresService.updateCorrespondence(deletedToActivate)
+      .subscribe((response: Correspondence) => {
+
+        this.messagesService.emitProcessMessage("PMSUCo");
+        // get the inbox and archived inbox       
+        this.getInbox(this.traderId, this.statusInbox);
+        this.getSent(this.traderId, this.statusSent);
+        this.getDeletedCorrespondence(this.traderId);
+
+      }, (serviceError: Response) => this.onError(serviceError, "activateDeleted"));
   }
 
 

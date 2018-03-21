@@ -78,7 +78,7 @@ export class TraderHomeComponent implements OnInit {
   //****************************************************************************************
   private getCorres(traderId: string, statusCorres: string = "All") {
 
-    this.corresService.getInboxByTraderIdWithStatusOrAll(traderId, statusCorres)
+    this.corresService.getInboxByTraderIdWithStatus(traderId, statusCorres)
       .subscribe((returnedCorres: Correspondence[]) => {
         if (returnedCorres.length === 0) { this.hasCorres = false; }
         else {

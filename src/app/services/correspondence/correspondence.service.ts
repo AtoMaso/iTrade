@@ -81,7 +81,7 @@ export class CorrespondenceService {
   // GET CORRES BY TRADE ID
   //***********************************************************
   // get corres by trade id with or without status
-  public getCorresByTradeIdWithStatusOrAll(tradeId: number, status: string): Observable<Correspondence[]> {
+  public getCorresByTradeIdWithStatus(tradeId: number, status: string): Observable<Correspondence[]> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -92,9 +92,8 @@ export class CorrespondenceService {
       })
     };
   
-    if (status === "All") { if (tradeId !== 0 || tradeId !== undefined) { this.localUrl = `${corresbytradeid}?traderId=${tradeId}`; }  }
-    else {  if (tradeId !== 0 || tradeId !== undefined) { this.localUrl = `${corresbytradeidwithstatus}?traderId=${tradeId}&status=${status}`; } }  
-
+   
+    this.localUrl = `${corresbytradeidwithstatus}?traderId=${tradeId}&status=${status}`; 
     return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
   }
 
@@ -112,8 +111,7 @@ export class CorrespondenceService {
         'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
-
-    .
+    
     this.localUrl = `${deletedcorrespondencebytraderid}?traderId=${traderId}`;
     return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
   }
@@ -124,7 +122,7 @@ export class CorrespondenceService {
   //**********************************************************
   // GET INBOX or ARCHIVED INBOX CORRESPONDENCE BY TRADER ID
   //***********************************************************
-  public getInboxByTraderIdWithStatusOrAll(traderId: string, status: string): Observable<Correspondence[]> {
+  public getInboxByTraderIdWithStatus(traderId: string, status: string): Observable<Correspondence[]> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -135,9 +133,8 @@ export class CorrespondenceService {
       })
     };
 
-    if (status === "All") { if (traderId !== null || traderId != undefined) { this.localUrl = `${corresbytraderidinbox}?traderId=${traderId}`; } }
-    else { if (traderId !== null || traderId !== undefined) { this.localUrl = `${corresbytraderidwithstatusinbox}?traderId=${traderId}&status=${status}`; } }
 
+   this.localUrl = `${corresbytraderidwithstatusinbox}?traderId=${traderId}&status=${status}`; 
     return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
   }
 
@@ -146,7 +143,7 @@ export class CorrespondenceService {
   //**********************************************************
   // GET SENT or SENT ARHIVED CORRESPONDENCE BY TRADER ID
   //***********************************************************
-  public getSentByTraderIdWithStatusOrAll(traderId: string, status: string): Observable<Correspondence[]> {
+  public getSentByTraderIdWithStatus(traderId: string, status: string): Observable<Correspondence[]> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -157,9 +154,8 @@ export class CorrespondenceService {
       })
     };
 
-    if (status === "All") { if (traderId !== null || traderId != undefined) { this.localUrl = `${corresbytraderidsent}?traderId=${traderId}`; } }
-    else { if (traderId !== null || traderId !== undefined) { this.localUrl = `${corresbytraderidwithstatussent}?traderId=${traderId}&status=${status}`; } }
-
+   
+   this.localUrl = `${corresbytraderidwithstatussent}?traderId=${traderId}&status=${status}`; 
     return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
   }
 
