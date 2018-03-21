@@ -118,7 +118,7 @@ export class CorrespondenceDetailsComponent implements OnInit {
       .subscribe((corresResult: Correspondence) => {
         this.hasCorres = true;
         this.receivedCorres = corresResult;
-        if (this.receivedCorres.traderIdReciever === this.traderId) { this.isReceiver = true; }
+        if (this.receivedCorres.traderIdReceiver === this.traderId) { this.isReceiver = true; }
         else { this.isSender = true;  }
 
       }, (serviceError: Response) => this.onError(serviceError, "getACorrespondence"));
@@ -135,8 +135,8 @@ export class CorrespondenceDetailsComponent implements OnInit {
     sendCorres.message = "Reply to your message";
     sendCorres.statusSender = "New";
     sendCorres.statusReceiver = "New";
-    sendCorres.traderIdReciever = this.receivedCorres.traderIdSender;
-    sendCorres.traderIdSender = this.receivedCorres.traderIdReciever;
+    sendCorres.traderIdReceiver = this.receivedCorres.traderIdSender;
+    sendCorres.traderIdSender = this.receivedCorres.traderIdReceiver;
     sendCorres.tradeId = this.receivedCorres.tradeId;
 
     this.corresService.addCorres(sendCorres)

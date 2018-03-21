@@ -62,7 +62,7 @@
     corresbytraderidwithstatusinbox: 'http://localhost:5700/api/correspondences/GetInboxByTraderIdWithStatus',
     corresbytraderidsent: 'http://localhost:5700/api/correspondences/GetSentByTraderId',
     corresbytraderidwithstatussent: 'http://localhost:5700/api/correspondences/GetSentByTraderIdWithStatus',
-    deletedcorrespondencebytraderid: 'http://localhost:5700/api/correspondences/GetDeletedCorrespondenceByTraderId',
+    removedcorrespondencebytraderid: 'http://localhost:5700/api/correspondences/GetRemovedCorrespondenceByTraderId',
 
     singlecorres: 'http://localhost:5700/api/correspondences/',
     updatecorres: 'http://localhost:5700/api/correspondences/PutCorrespondence',

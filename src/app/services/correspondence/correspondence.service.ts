@@ -18,7 +18,7 @@ let corresbytraderidwithstatusinbox = CONFIG.baseUrls.corresbytraderidwithstatus
 
 let corresbytraderidsent = CONFIG.baseUrls.corresbytraderidsent;
 let corresbytraderidwithstatussent = CONFIG.baseUrls.corresbytraderidwithstatussent;
-let deletedcorrespondencebytraderid = CONFIG.baseUrls.deletedcorrespondencebytraderid;
+let removedcorrespondencebytraderid = CONFIG.baseUrls.removedcorrespondencebytraderid;
 
 let singlecorres = CONFIG.baseUrls.singlecorres
 let updatecorres = CONFIG.baseUrls.updatecorres;
@@ -101,7 +101,7 @@ export class CorrespondenceService {
   //**********************************************************
   // GET DELETED CORRESPONDENCE BY TRADER ID
   //***********************************************************
-  public getDeletedCorresByTraderId(traderId:string): Observable<Correspondence[]> {
+  public getRemovedCorresByTraderId(traderId:string): Observable<Correspondence[]> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -112,7 +112,7 @@ export class CorrespondenceService {
       })
     };
     
-    this.localUrl = `${deletedcorrespondencebytraderid}?traderId=${traderId}`;
+    this.localUrl = `${removedcorrespondencebytraderid}?traderId=${traderId}`;
     return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
   }
 

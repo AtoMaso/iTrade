@@ -70,19 +70,20 @@
                           <td class="col-md-3">
 
                             <div class="col-md-12">
-                              <div class="col-md-6">
+
+                              <div class="col-md-6" style="text-align:right;">
                                 <!-- archive the inbox mail -->
                                 <button type="button" data-target="#archiveInbox" data-toggle="modal"
                                         class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveInbox(corres)">
-                                  <span class="glyphicon glyphicon-briefcase"></span>&nbsp; Archive Mail
+                                  <span class="glyphicon glyphicon-briefcase"></span>&nbsp;Archive
                                 </button>
                               </div>
 
-                              <div class="col-md-6">
+                              <div class="col-md-6" style="text-align:left;">
                                 <!-- delete the inbox mail -->
-                                <button type="button" data-target="#deleteInbox" data-articleid=(trade.tradeId)
-                                        data-toggle="modal" class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteInbox(corres)">
-                                  <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
+                                <button type="button" data-target="#removeInbox" data-articleid=(trade.tradeId)
+                                        data-toggle="modal" class="btn btn-sm btn-danger smalltext" (click)="passToModalRemoveInbox(corres)">
+                                  <span class="glyphicon glyphicon-trash"></span>&nbsp;Remove
                                 </button>
                               </div>
                             </div>
@@ -181,26 +182,26 @@
                   <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
 
                   <td class="col-md-2">
-                    <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver  }}</i></a>
+                    <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdReceiver}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver  }}</i></a>
                   </td>
 
                   <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusSender }}</td>
 
                   <td class="col-md-3">
                     <div class="col-md-12">
-                      <div class="col-md-6">
+                      <div class="col-md-6" style="text-align:right;">
                         <!-- archive the sent mail -->
                         <button type="button" data-target="#archiveSent" data-toggle="modal"
                                 class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveSent(corres)">
-                          <span class="glyphicon glyphicon-briefcase"></span>&nbsp; Archive Mail
+                          <span class="glyphicon glyphicon-briefcase"></span>&nbsp;Archive
                         </button>
                       </div>
 
-                      <div class="col-md-6">
+                      <div class="col-md-6" style="text-align:left;">
                         <!-- delete the sent mail -->
-                        <button type="button" data-target="#deleteSent" data-toggle="modal"
-                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteSent(corres)">
-                          <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
+                        <button type="button" data-target="#removeSent" data-toggle="modal"
+                                class="btn btn-sm btn-danger smalltext" (click)="passToModalRemoveSent(corres)">
+                          <span class="glyphicon glyphicon-trash"></span>&nbsp;Remove
                         </button>
                       </div>
                     </div>
@@ -249,7 +250,7 @@
         </span>
 
         <!-- Collapsable Trade Status -->
-        <div id="collapseArchiveInbox" class="collapse in  panel-heading">
+        <div id="collapseArchiveInbox" class="collapse in panel-heading">
 
           <div *ngIf="hasArchivedInbox">
 
@@ -308,9 +309,9 @@
                       <td class="col-md-3" style="text-align:center;">
 
                         <!-- delete the archived inbox mail -->
-                        <button type="button" data-target="#deleteArchivedInbox" data-toggle="modal"
-                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteArchiveInbox(corres)">
-                          <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
+                        <button type="button" data-target="#removeArchivedInbox" data-toggle="modal"
+                                class="btn btn-sm btn-danger smalltext" (click)="passToModalRemoveArchivedInbox(corres)">
+                          <span class="glyphicon glyphicon-trash"></span>&nbsp;Remove
                         </button>
 
                       </td>
@@ -357,7 +358,7 @@
         </span>
 
   
-        <div id="collapseArchiveSent" class="collapse in  panel-heading">
+        <div id="collapseArchiveSent" class="collapse in panel-heading">
 
           <div *ngIf="hasArchivedSent" >
                 <!-- Table-->
@@ -406,16 +407,16 @@
                       <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
 
                       <td class="col-md-2">
-                        <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver  }}</i></a>
+                        <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdReceiver}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver  }}</i></a>
                       </td>
 
                       <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusSender }}</td>
 
                       <td class="col-md-3" style="text-align:center;">
                         <!-- delete the archived sent mail -->
-                        <button type="button" data-target="#deleteAchivedSent" data-toggle="modal"
-                                class="btn btn-sm btn-danger smalltext" (click)="passToModalDeleteArchiveSent(corres)">
-                          <span class="glyphicon glyphicon-trash"></span>&nbsp; Delete Mail
+                        <button type="button" data-target="#removeArchivedSent" data-toggle="modal"
+                                class="btn btn-sm btn-danger smalltext" (click)="passToModalRemoveArchivedSent(corres)">
+                          <span class="glyphicon glyphicon-trash"></span>&nbsp;Remove
                         </button>
 
                       </td>
@@ -452,18 +453,18 @@
       </div>
 
   
-    <!-- all deleted -->
+    <!-- all removed -->
     <div class="panel panel-heading footerdiv  col-md-12">
 
-      <span class="deleted panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseDeleted">
+      <span class="removed panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseRemoved">
         <span class="glyphicon glyphicon-minus"></span>
-        Deleted Mail <span *ngIf="!hasDeleted" class="textoker">- The system can not find any deleted correspondence under your account!</span>
+        Removed Mail <span *ngIf="!hasRemoved" class="textoker">- The system can not find any removed correspondence under your account!</span>
       </span>
 
       <!-- Collapsable Correspondence -->
-      <div id="collapseDeleted" class="collapse in panel-heading">
+      <div id="collapseRemoved" class="collapse in panel-heading">
 
-              <div *ngIf="hasDeleted">
+              <div *ngIf="hasRemoved">
 
                         <!-- Table-->
                         <div class="table-responsive">
@@ -500,7 +501,7 @@
                             </thead>
 
                             <!-- Table Rows -->
-                            <tr *ngFor="let corres of rowsDeleted |  paginate:configDeleted ">
+                            <tr *ngFor="let corres of rowsRemoved |  paginate:configRemoved ">
 
                               <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
 
@@ -521,23 +522,33 @@
 
                               <td class="col-md-3">
 
-                                <div class="col-md-12">
-                                  <div class="col-md-6">
+                                <!--<div class="col-md-12">-->
+
+                                  <div class="col-md-4" style="text-align:left;margin-left:-10px;">
                                     <!-- archive the inbox mail -->
-                                    <button type="button" data-target="#archiveDeleted" data-toggle="modal"
-                                            class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveDeleted(corres)">
-                                      <span class="glyphicon glyphicon-briefcase"></span>&nbsp; Archive Mail
+                                    <button type="button" data-target="#archiveRemoved" data-toggle="modal"
+                                            class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveRemoved(corres)">
+                                      <span class="glyphicon glyphicon-briefcase"></span>&nbsp;Archive
                                     </button>
                                   </div>
 
-                                  <div class="col-md-6">
+                                  <div class="col-md-4" style="text-align:left;margin-left:-5px;">
                                     <!-- delete the inbox mail -->
-                                    <button type="button" data-target="#activateDeleted" data-articleid=(trade.tradeId)
-                                            data-toggle="modal" class="btn btn-sm btn-warning smalltext" (click)="passToModalActivateDeleted(corres)">
-                                      <span class="glyphicon glyphicon-trash"></span>&nbsp; Activate Mail
+                                    <button type="button" data-target="#activateRemoved"   data-toggle="modal"
+                                           class="btn btn-sm btn-warning smalltext" (click)="passToModalActivateRemoved(corres)">
+                                      <span class="glyphicon glyphicon-trash"></span>&nbsp;Activate
                                     </button>
                                   </div>
-                                </div>
+
+                                  <div class="col-md-4" style="text-align:left;">
+                                    <!-- delete the inbox mail -->
+                                    <button type="button" data-target="#completellyDelete"   data-toggle="modal"
+                                           class="btn btn-sm btn-warning smalltext" (click)="passToModalCompletellyDelete(corres)">
+                                      <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+                                    </button>
+                                  </div>
+
+                                <!--</div>-->
                               </td>
                             </tr>
 
@@ -548,8 +559,8 @@
                         <!-- Table pagination -->
                         <div class="row col-md-12">
                           <div class="col-md-5">
-                            <pagination-controls id="paginationDeleted" *ngIf="configDeleted.paging" ngDefaultControl
-                                                 (pageChange)="onPageChangeDeleted($event)"
+                            <pagination-controls id="paginationRemoved" *ngIf="configRemoved.paging" ngDefaultControl
+                                                 (pageChange)="onPageChangeRemoved($event)"
                                                  maxSize="5"
                                                  directionLinks="true"
                                                  autoHide="true"
@@ -558,9 +569,9 @@
                                                  screenReaderPaginationLabel="Pagination"
                                                  screenReaderPageLabel="pageMes"
                                                  screenReaderCurrentLabel="You're on page"
-                                                 [(ngModel)]="configDeleted.currentPage"
-                                                 (numPages)="numPagesDeleted = $event"
-                                                 [maxSize]="maxSizeDeleted">
+                                                 [(ngModel)]="configRemoved.currentPage"
+                                                 (numPages)="numPagesRemoved = $event"
+                                                 [maxSize]="maxSizeRemoved">
                             </pagination-controls>
                           </div>
                         </div>
@@ -602,22 +613,22 @@
   </div>
 </div>
 
-<div class="modal fade" id="deleteInbox" tabindex="-1" role="dialog" aria-labelledby="DeleteInbox">
+<div class="modal fade" id="removeInbox" tabindex="-1" role="dialog" aria-labelledby="RemoveInbox">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
       <div class="modal-header">      
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Delete Inbox Warning!</h4>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Inbox Warning!</h4>
       </div>
 
       <div class="modal-body text-danger">
-        <p>Are you sure you want to delete this correspondence?</p>
+        <p>Are you sure you want to remove this correspondence?</p>
       </div>
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="deleteInbox(inboxToDelete)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="removeInbox(inboxToRemove)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
@@ -648,22 +659,22 @@
   </div>
 </div>
 
-<div class="modal fade" id="deleteSent" tabindex="-1" role="dialog" aria-labelledby="DeleteSent">
+<div class="modal fade" id="removeSent" tabindex="-1" role="dialog" aria-labelledby="RemoveSent">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Delete Sent Warning!</h4>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Sent Warning!</h4>
       </div>
 
       <div class="modal-body text-danger">
-        <p>Are you sure you want to delete this correspondence?</p>
+        <p>Are you sure you want to remove this correspondence?</p>
       </div>
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="deleteSent(sentToDelete)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="removeSent(sentToRemove)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
@@ -672,22 +683,22 @@
 
 
 <!-- archive inbox section -->
-<div class="modal fade" id="deleteArchivedInbox" tabindex="-1" role="dialog" aria-labelledby="DeleteArchivedInbox">
+<div class="modal fade" id="removeArchivedInbox" tabindex="-1" role="dialog" aria-labelledby="RemoveArchivedInbox">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Delete Archived Inbox Warning!</h4>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Archived Inbox Warning!</h4>
       </div>
 
       <div class="modal-body text-danger">
-        <p>Are you sure you want to delete this correspondence?</p>
+        <p>Are you sure you want to remove this correspondence?</p>
       </div>
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="deleteArchivedInbox(archiveInboxToDelete)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="removeArchivedInbox(archivedInboxToRemove)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
@@ -695,22 +706,22 @@
 </div>
 
 <!-- archive sent section-->
-<div class="modal fade" id="deleteAchivedSent" tabindex="-1" role="dialog" aria-labelledby="DeleteArchivedSent">
+<div class="modal fade" id="removeArchivedSent" tabindex="-1" role="dialog" aria-labelledby="RemoveAchivedSent">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Delete Archive Sent Warning!</h4>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Archive Sent Warning!</h4>
       </div>
 
       <div class="modal-body text-danger">
-        <p>Are you sure you want to delete this correspondence?</p>
+        <p>Are you sure you want to remove this correspondence?</p>
       </div>
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="deleteArchivedSent(archiveSentToDelete)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="removeArchivedSent(archivedSentToRemove)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
@@ -718,46 +729,46 @@
 </div>
 
 
-<!-- archive deleted section -->
-<div class="modal fade" id="archiveDeleted" tabindex="-1" role="dialog" aria-labelledby="archiveDeleted">
+<!-- archive removed section -->
+<div class="modal fade" id="archiveRemoved" tabindex="-1" role="dialog" aria-labelledby="archiveRemoved">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Archive Deleted Warning!</h4>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Archive Removed Warning!</h4>
       </div>
 
       <div class="modal-body text-danger">
-        <p>Are you sure you want to archive this deleted correspondence?</p>
+        <p>Are you sure you want to archive this removed correspondence?</p>
       </div>
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="archiveDeleted(deletedToArchive)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="archiveRemoved(removedToArchive)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>
   </div>
 </div>
 
-<!-- activate deleted section-->
-<div class="modal fade" id="activateDeleted" tabindex="-1" role="dialog" aria-labelledby="activateDeleted">
+<!-- activate removed section-->
+<div class="modal fade" id="activateRemoved" tabindex="-1" role="dialog" aria-labelledby="activateRemoved">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Activate Deleted Warning!</h4>
+        <h4 class="text-danger"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Activate Removed Warning!</h4>
       </div>
 
       <div class="modal-body text-danger">
-        <p>Are you sure you want to activate this deleted correspondence?</p>
+        <p>Are you sure you want to activate this removed correspondence?</p>
       </div>
 
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
-        <button class="btn btn-success" (click)="activateDeleted(deletedToActivate)" data-dismiss="modal">Yes</button>
+        <button class="btn btn-success" (click)="activateRemoved(removedToActivate)" data-dismiss="modal">Yes</button>
       </div>
 
     </div>

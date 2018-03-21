@@ -557,7 +557,7 @@ class Correspondence implements ICorrespondence {
   dateSent: Date;
   subject: string;  // this is the object of trade
   tradeId: number;
-  traderIdReciever: string; // this is the trader viewing it
+  traderIdReceiver: string; // this is the trader viewing it
   traderIdSender: string;  //this is the trader sending it
   sender: string;   // this is the trader name sending the correspondence
   receiver: string; // this is the trader name receiving the corresponding 
@@ -571,7 +571,7 @@ class Correspondence implements ICorrespondence {
     this.statusReceiver = "";
     this.dateSent = new Date(9999, 1, 1);
     this.tradeId = 0;
-    this.traderIdReciever = "";
+    this.traderIdReceiver = "";
     this.traderIdSender = "";
     this.sender = "";
     this.receiver = "";
