@@ -2,14 +2,14 @@
 
   <!-- menu section-->
   <div class="col-md-2">
-    <div class="panel panel-heading footerdiv  col-md-12">
-      <div class="row panel panel-heading"><a class="smalltext text-uppercase  textlightcoral" (click)="showInbox()"><i>Inbox</i></a></div>
-      <div class="row panel panel-heading"><a class="smalltext text-uppercase  textlightcoral" (click)="showSent()"><i>Sent</i></a></div>
-      <div class="row panel panel-heading"><a class="smalltext text-uppercase  textlightcoral" (click)="showArchivedInbox()"><i>Archived Inbox</i></a></div>
-      <div class="row panel panel-heading"><a class="smalltext text-uppercase  textlightcoral" (click)="showArchivedSent()"><i>Archived Sent</i></a></div>
-      <div class="row panel panel-heading"><a class="smalltext text-uppercase  textlightcoral" (click)="showRemoved()"><i>Removed</i></a></div>
+      <div class="panel panel-heading footerdiv  col-md-12">
+              <div class="row panel panel-heading"><a class="smalltext text-uppercase  textlightcoral" (click)="showInbox()"><i>Inbox Items</i></a></div>
+              <div class="row panel panel-heading"><a class="smalltext text-uppercase  textlightcoral" (click)="showSent()"><i>Sent Items</i></a></div>
+              <div class="row panel panel-heading"><a class="smalltext text-uppercase  textlightcoral" (click)="showArchivedInbox()"><i>Archived Inbox</i></a></div>
+              <div class="row panel panel-heading"><a class="smalltext text-uppercase  textlightcoral" (click)="showArchivedSent()"><i>Archived Sent</i></a></div>
+              <div class="row panel panel-heading"><a class="smalltext text-uppercase  textlightcoral" (click)="showRemoved()"><i>Removed Items</i></a></div>
       </div>
-    </div>
+   </div>
 
 
   <div class="col-md-10">
@@ -19,7 +19,7 @@
 
         <span class="inbox panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseInbox">
           <span class="glyphicon glyphicon-minus"></span>
-          Inbox <span *ngIf="!hasInbox" class="textoker"> - The system can not find any new correspondence under your account!</span>
+          Inbox Items <span *ngIf="!hasInbox" class="textoker"> - The system can not find any new correspondence under your account!</span>
         </span>
 
         <!-- Collapsable Correspondence -->
@@ -125,13 +125,8 @@
                       </div>
                     </div>
 
-              </div>
-
-          <br />
-
+              </div>        
         </div>
-
-
       </div>
 
 
@@ -140,7 +135,7 @@
 
         <span class="sent panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseSent">
           <span class="glyphicon glyphicon-minus"></span>
-          Sent<span *ngIf="!hasSent" class="textoker"> - The system can not find any sent correspondence under you account!</span>
+          Sent Items<span *ngIf="!hasSent" class="textoker"> - The system can not find any sent correspondence under you account!</span>
         </span>
 
         <!-- Collapsable Trade Status -->
@@ -244,8 +239,6 @@
             </div>
 
           </div>
-
-          <br />
 
         </div>
 
@@ -457,11 +450,8 @@
                     </div>
                   </div>
 
-            </div>
-            <br />
-
+            </div>         
           </div>
-
       </div>
 
   
@@ -470,7 +460,7 @@
 
       <span class="removed panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseRemoved">
         <span class="glyphicon glyphicon-minus"></span>
-        Removed<span *ngIf="!hasRemoved" class="textoker"> - The system can not find any removed correspondence under your account!</span>
+        Removed Items<span *ngIf="!hasRemoved" class="textoker"> - The system can not find any removed correspondence under your account!</span>
       </span>
 
       <!-- Collapsable Correspondence -->
@@ -588,10 +578,7 @@
                           </div>
                         </div>
 
-              </div>
-
-              <br />
-
+              </div>            
       </div>
 
 

@@ -46,6 +46,9 @@ export class ValidationService {
 
       'invalidEmailType': 'Must be selected!',
       'invalidSocialType': 'Must be selected!',
+
+      'invalidMessage': 'The subject must 5 to 70 characters in length!',
+      'invalidContent': 'The content must be 10 to 500 characters in length!',
     };
     return config[validatorName];
   }
@@ -430,7 +433,27 @@ static firstNameValidator(control: any) {
   }
 
   
+  static messageValidator(control) {
 
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z\s]){10,70}$/)) {
+        return null;
+      } else {
+        return { 'invalidMessage': true };
+      }
+    }
+  }
+
+  static contentValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z\s]){10,500}$/)) {
+        return null;
+      } else {
+        return { 'invalidContent': true };
+      }
+    }
+  }
 
 
   //********************************************************

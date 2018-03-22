@@ -90,17 +90,17 @@ export class CorrespondenceListComponent implements OnInit {
 
 
       jQuery("#collapseInbox").on("hide.bs.collapse", function () {
-        jQuery(".inbox").html('<span class="glyphicon glyphicon-plus"></span>   Inbox');
+        jQuery(".inbox").html('<span class="glyphicon glyphicon-plus"></span> Inbox Items');
       });
       jQuery("#collapseInbox").on("show.bs.collapse", function () {
-        jQuery(".inbox").html('<span class="glyphicon glyphicon-minus"></span>   Inbox');
+        jQuery(".inbox").html('<span class="glyphicon glyphicon-minus"></span> Inbox Items');
       });
 
       jQuery("#collapseSent").on("hide.bs.collapse", function () {
-        jQuery(".sent").html('<span class="glyphicon glyphicon-plus"></span> Sent Mail');
+        jQuery(".sent").html('<span class="glyphicon glyphicon-plus"></span> Sent Items');
       });
       jQuery("#collapseSent").on("show.bs.collapse", function () {
-        jQuery(".sent").html('<span class="glyphicon glyphicon-minus"></span> Sent Mail');
+        jQuery(".sent").html('<span class="glyphicon glyphicon-minus"></span> Sent Items');
       });
 
       jQuery("#collapseArchiveInbox").on("hide.bs.collapse", function () {
@@ -118,10 +118,10 @@ export class CorrespondenceListComponent implements OnInit {
       });
 
       jQuery("#collapseRemoved").on("hide.bs.collapse", function () {
-        jQuery(".removed").html('<span class="glyphicon glyphicon-plus"></span> Removed');
+        jQuery(".removed").html('<span class="glyphicon glyphicon-plus"></span> Removed Items');
       });
       jQuery("#collapseRemoved").on("show.bs.collapse", function () {
-        jQuery(".removed").html('<span class="glyphicon glyphicon-minus"></span> Removed');
+        jQuery(".removed").html('<span class="glyphicon glyphicon-minus"></span> Removed Items');
       });
 
     });

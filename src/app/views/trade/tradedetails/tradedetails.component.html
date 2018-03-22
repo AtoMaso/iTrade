@@ -15,7 +15,7 @@
             <div *ngIf="trade != null">
 
               <div class="row mediumtext panel panel-heading col-md-12">
-                Status:<span class="smalltext  text-uppercase text-info"> {{ trade.status }}</span>
+                Status:<span class="smalltext  text-uppercase text-info"> {{ traderName }}</span>
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12">
@@ -50,7 +50,7 @@
                 Trader: <a [routerLink]="['/traderdetails']" [queryParams]="{id: trade.traderId}" class="smalltext textlightcoral text-uppercase underline"><span> <i>{{ trade.traderFullName }}</i></span></a>
               </div>
 
-              <div class="row mediumtext panel panel-heading col-md-12" style="text-align:center;">
+              <div class="row mediumtext panel panel-heading col-md-12" style="text-align:left;">
 
                 <div *ngIf="!isAuthenticated">
                   <button type="button" data-target="#addremoveLogin" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:200px"> Send Request</button>
