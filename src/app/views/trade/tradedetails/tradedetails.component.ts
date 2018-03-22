@@ -34,6 +34,7 @@ export class TradeDetailsComponent implements OnInit {
   private hasImage2: boolean = true;
   private hasImage3: boolean = true;
   private session: UserSession;
+  private isAuthenticated: boolean = false;
   private isRequesting: boolean = false;
   private canTrade: boolean = false;
   private flagnew: boolean = false;
@@ -60,7 +61,8 @@ export class TradeDetailsComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
         this.tradeId = params['id'];
-        this.flagnew = params['flagnew'];              
+        this.flagnew = params['flagnew'];      
+              
         this.getUserSession();
         this.initialiseComponent();
 
@@ -241,6 +243,7 @@ export class TradeDetailsComponent implements OnInit {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
+        this.isAuthenticated = this.session.authentication.isAuthenticated;
       }
       catch (ex) {
         this.messagesService.emitProcessMessage("PMG");

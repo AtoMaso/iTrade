@@ -1,4 +1,4 @@
-<!-- DETAILS SECTION-->
+
 <div class="container col-md-12">
 
   <div *ngIf="receivedCorres != null">
@@ -101,22 +101,22 @@
              <br/>
 
            
-              <!-- REPLY -->
-             <div id="writeMessage" class="row collapse footerdiv">
+                  <!-- REPLY -->
+                 <div id="writeMessage" class="row collapse footerdiv">
 
-                     <form [formGroup]="sendCorresGroup" (submit)="sendCorres()">
+                         <form [formGroup]="sendCorresGroup" (submit)="sendCorres()">
 
-                         <div class="panel panel-heading col-md-12">
-                           <textarea formControlName="content" id="content" class="smalltext" style="width:inherit;" rows="6" spellcheck="true" maxlength="500" placeholder="Write your message here..."></textarea>
-                           <span id="characterCount" class="smalltext textgray"></span>
-                         </div>
+                             <div class="panel panel-heading col-md-12">
+                               <textarea formControlName="content" id="content" class="smalltext" style="width:inherit;" rows="6" spellcheck="true" maxlength="500" placeholder="Write your message here..."></textarea>
+                               <span id="characterCount" class="smalltext textgray"></span>
+                             </div>
 
-                         <div class="col-md-5">
-                           <button id="Send" class="btn btn-success smalltext" type="submit" style="width:auto; height:auto;" value="Send" disabled>Send</button>
-                         </div>
+                             <div class="col-md-5">
+                               <button id="Send" class="btn btn-success smalltext" type="submit" style="width:auto; height:auto;" value="Send" disabled>Send</button>
+                             </div>
 
-                     </form>
-             </div>
+                         </form>
+                    </div>
             </div>     
       </div>   
   </div>

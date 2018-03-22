@@ -126,7 +126,7 @@ export class TradeApiService {
   public getSingleTrade(tradeId: number): any {
 
      // get single trade by tradeId list
-    if (tradeId != 0 || tradeId != undefined) { this.localUrl = `${allTrades}/${tradeId}`; }  
+    if (tradeId !== 0 || tradeId !== undefined) { this.localUrl = `${allTrades}/${tradeId}`; }  
   
     // errors are handled in the component
     return this.httpClientService.get(this.localUrl).retry(1);

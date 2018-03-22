@@ -1,3 +1,46 @@
-<p>
-  addcorrespondence works!
-</p>
+<div class="container col-md-12">
+
+  <div class="row">
+    <div class="col-md-3 panel panel-heading footerdiv">
+
+      <div class="panel panel-heading col-md-12 mediumtext">
+        To:<span class="text-uppercase text-info smalltext"> {{ actualTrade.traderFirstName }} {{ actualTrade.traderMiddleName }}  {{ actualTrade.traderLastName }}</span>
+      </div>
+
+      <div class="panel panel-heading col-md-12 mediumtext">
+        About Trade:<span class="text-uppercase text-info smalltext"> {{ actualTrade.name }}</span>
+      </div>
+
+      <div class="panel panel-heading col-md-12 mediumtext">
+        With Category:<span class="text-uppercase text-info smalltext"> {{ actualTrade.categoryDescription }}</span>
+      </div>
+
+      <div class="panel panel-heading col-md-12 mediumtext">
+        Published On:<span class="text-uppercase text-info smalltext"> {{ actualTrade.datePublished | date }}</span>
+      </div>  
+    
+    </div>
+
+    <div id="writeMessage" class="row col-md-8 col-md-offset-1 footerdiv">
+
+      <form [formGroup]="addCorresForm" (submit)="sendCorres()">
+
+        <div class="panel panel-heading col-md-12">
+          <input type="text" formControlName="message" id="message" name="message" required class="form-control smalltextbold" style="background-color:moccasin;width:inherit;" spellcheck="true" maxlength="70" placeholder="Write your subject here..." />
+        </div>
+
+        <div class="panel panel-heading col-md-12">
+          <textarea formControlName="content" id="content" required class="form-contro smalltextbold" style="background-color:moccasin;width:inherit;" rows="6" spellcheck="true" maxlength="500" placeholder="Write your message here..."></textarea>
+          <span id="characterCount" class="smalltext textgray"></span>
+        </div>
+
+        <div class="col-md-5">
+          <button id="Send" class="btn btn-success smalltext" type="submit" style="width:auto; height:auto;" value="Send" [disabled]="!addCorresForm.valid">Send</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>

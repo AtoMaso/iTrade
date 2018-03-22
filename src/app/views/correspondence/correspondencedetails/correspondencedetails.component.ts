@@ -9,7 +9,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 import { CorrespondenceService } from '../../../services/correspondence/correspondence.service';
 
-import { UserSession, UserIdentity, Authentication, Correspondence, PageTitle } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Correspondence, PageTitle } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 @Component({
