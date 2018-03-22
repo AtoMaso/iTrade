@@ -43,7 +43,8 @@ export class CorrespondenceListComponent implements OnInit {
   private removedSentId: number = 0;
   private removedArchivedInboxId: number = 0;
   private removedArchivedSentId: number = 0
-  private removedRemovedId: number = 0;
+  private deletedRemovedId: number = 0;
+
 
   private inboxToArchive: Correspondence;
   private inboxToRemove: Correspondence;
@@ -53,6 +54,13 @@ export class CorrespondenceListComponent implements OnInit {
   private archivedSentToRemove: Correspondence;
   private removedToArchive: Correspondence;
   private removedToActivate: Correspondence;
+  private removedToDelete: Correspondence;
+
+  private toggleInbox: boolean = true;
+  private toggleSent: boolean = false;
+  private toggleArchivedInbox: boolean = false;
+  private toggleArchivedSent: boolean = false;
+  private toggleRemoved: boolean = false;
 
 
   constructor(  
@@ -82,10 +90,10 @@ export class CorrespondenceListComponent implements OnInit {
 
 
       jQuery("#collapseInbox").on("hide.bs.collapse", function () {
-        jQuery(".inbox").html('<span class="glyphicon glyphicon-plus"></span>   Received Mail');
+        jQuery(".inbox").html('<span class="glyphicon glyphicon-plus"></span>   Inbox');
       });
       jQuery("#collapseInbox").on("show.bs.collapse", function () {
-        jQuery(".inbox").html('<span class="glyphicon glyphicon-minus"></span>   Received Mail');
+        jQuery(".inbox").html('<span class="glyphicon glyphicon-minus"></span>   Inbox');
       });
 
       jQuery("#collapseSent").on("hide.bs.collapse", function () {
@@ -96,24 +104,24 @@ export class CorrespondenceListComponent implements OnInit {
       });
 
       jQuery("#collapseArchiveInbox").on("hide.bs.collapse", function () {
-        jQuery(".archiveinbox").html('<span class="glyphicon glyphicon-plus"></span> Archived  Received Mail');
+        jQuery(".archiveinbox").html('<span class="glyphicon glyphicon-plus"></span> Archived  Inbox');
       });
       jQuery("#collapseArchiveInbox").on("show.bs.collapse", function () {
-        jQuery(".archiveinbox").html('<span class="glyphicon glyphicon-minus"></span> Archived  Received Mail');
+        jQuery(".archiveinbox").html('<span class="glyphicon glyphicon-minus"></span> Archived  Inbox');
       });
 
       jQuery("#collapseArchiveSent").on("hide.bs.collapse", function () {
-        jQuery(".archivesent").html('<span class="glyphicon glyphicon-plus"></span> Archived Sent Mail');
+        jQuery(".archivesent").html('<span class="glyphicon glyphicon-plus"></span> Archived Sent');
       });
       jQuery("#collapseArchiveSent").on("show.bs.collapse", function () {
-        jQuery(".archivesent").html('<span class="glyphicon glyphicon-minus"></span> Archived Sent Mail');
+        jQuery(".archivesent").html('<span class="glyphicon glyphicon-minus"></span> Archived Sent');
       });
 
       jQuery("#collapseRemoved").on("hide.bs.collapse", function () {
-        jQuery(".removed").html('<span class="glyphicon glyphicon-plus"></span> Removed Mail');
+        jQuery(".removed").html('<span class="glyphicon glyphicon-plus"></span> Removed');
       });
       jQuery("#collapseRemoved").on("show.bs.collapse", function () {
-        jQuery(".removed").html('<span class="glyphicon glyphicon-minus"></span> Removed Mail');
+        jQuery(".removed").html('<span class="glyphicon glyphicon-minus"></span> Removed');
       });
 
     });
@@ -240,6 +248,53 @@ export class CorrespondenceListComponent implements OnInit {
   //*****************************************************
   // SCREEN ITERACTIONS METHODS 
   //*****************************************************
+  private showInbox() {
+    this.messagesService.emitRoute("nill");
+    this.toggleInbox = true;
+    this.toggleSent = false;
+    this.toggleArchivedInbox = false;
+    this.toggleArchivedSent = false;
+    this.toggleRemoved = false;
+  }
+
+  private showSent() {
+    this.messagesService.emitRoute("nill");
+    this.toggleInbox = false;
+    this.toggleSent = true;
+    this.toggleArchivedInbox = false;
+    this.toggleArchivedSent = false;
+    this.toggleRemoved = false;
+  }
+
+  private showArchivedInbox() {
+    this.messagesService.emitRoute("nill");
+    this.toggleInbox = false;
+    this.toggleSent = false;
+    this.toggleArchivedInbox = true;
+    this.toggleArchivedSent = false;
+    this.toggleRemoved = false;
+  }
+
+  private showArchivedSent() {
+    this.messagesService.emitRoute("nill");
+    this.toggleInbox = false;
+    this.toggleSent = false;
+    this.toggleArchivedInbox = false;
+    this.toggleArchivedSent = true;
+    this.toggleRemoved = false;
+  }
+
+  private showRemoved() {
+    this.messagesService.emitRoute("nill");
+    this.toggleInbox = false;
+    this.toggleSent = false;
+    this.toggleArchivedInbox = false;
+    this.toggleArchivedSent = false;
+    this.toggleRemoved = true;
+  }
+
+
+
   private passToModalArchiveInbox(corres: Correspondence) {
     this.inboxToArchive = corres;
   }
@@ -270,6 +325,11 @@ export class CorrespondenceListComponent implements OnInit {
 
   private passToModalActivateRemoved(corres: Correspondence) {
     this.removedToActivate = corres;
+  }
+
+
+  private passToModalCompletellyDelete(corres: Correspondence) {
+    this.removedToDelete = corres;
   }
 
   
@@ -397,6 +457,25 @@ export class CorrespondenceListComponent implements OnInit {
 
       }, (serviceError: Response) => this.onError(serviceError, "activateRemoved"));
   }
+
+
+
+  private deleteRemoved(removedToDelete: Correspondence) {
+    // update the status of the correspondence to archived
+    if (removedToDelete.traderIdReceiver === this.traderId) { removedToDelete.statusReceiver = "Deleted"; }
+    else { removedToDelete.statusSender = "Deleted"; }
+
+    this.corresService.updateCorrespondence(removedToDelete)
+      .subscribe((response: Correspondence) => {
+
+        this.messagesService.emitProcessMessage("PMSUCo");
+        // get the inbox and archived inbox             
+        this.getRemovedCorrespondence(this.traderId);
+
+      }, (serviceError: Response) => this.onError(serviceError, "activateRemoved"));
+  }
+
+
 
 
   //*****************************************************
@@ -1376,9 +1455,9 @@ export class CorrespondenceListComponent implements OnInit {
 
 
   private changeRemoveRemoved(data: any, config: any): any {
-    if (this.removedRemovedId == null) { return data; }
+    if (this.deletedRemovedId == null) { return data; }
 
-    let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.removedRemovedId);
+    let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.deletedRemovedId);
     this.dataRemoved = null;
     this.dataRemoved = removedData;
     return this.dataRemoved;
