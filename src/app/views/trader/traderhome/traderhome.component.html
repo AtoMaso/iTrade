@@ -4,6 +4,7 @@
 
        <div  class="row col-md-9">        
 
+              <!-- CORRESPONDENCE-->
               <div class="panel panel-heading footerdiv">
 
                      <span class="correspondence panel-title collapsed  smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseCorrespondence">
@@ -46,21 +47,21 @@
                                    </thead>
 
                                    <!-- Table Rows -->
-                                   <tr *ngFor="let coress of rowsCorr |  paginate:configCorr ">
+                                   <tr *ngFor="let corres of rowsCorr |  paginate:configCorr ">
 
-                                     <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.subject  }}</td>
+                                     <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
 
                                       <td class="col-md-2">
-                                       <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: coress.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ coress.message  }}</i></a>
+                                       <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: corres.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ corres.message  }}</i></a>
                                      </td>
 
-                                     <td class="col-md-2 smalltextbold text-capitalize textgray">{{ coress.dateSent | date:'medium' }}</td>
+                                     <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
 
                                      <td class="col-md-2">
-                                       <a [routerLink]="['/traderdetails']" [queryParams]="{id: coress.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ coress.sender  }}</i></a>
+                                       <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.sender  }}</i></a>
                                      </td>        
 
-                                     <td class="col-md-1 smalltextbold text-capitalize textgray">{{ coress.statusReceiver }}</td>    
+                                     <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusReceiver }}</td>    
                                                                                    
                                    </tr>
 
@@ -96,6 +97,8 @@
               </div>
             
 
+              
+            <!-- TRADES -->
               <div class="panel panel-heading footerdiv">
 
                        <span class="status panel-title collapsed smalltext text-uppercase textlightcoral" data-toggle="collapse" data-target="#collapseTrades">
@@ -180,7 +183,7 @@
      </div>
 
 
-
+      <!-- MENU -->
        <div class="col-md-2  col-md-offset-1">
              <!-- you can not manage trades if there are no any -->
              <div *ngIf="hasTrades">
@@ -224,9 +227,12 @@
 
 </div>
 
+
 <my-spinner [isRunning]="isRequesting"></my-spinner>
 
-    <div class="modal fade" id="posttrade" tabindex="-1" role="dialog" aria-labelledby="postttrade">
+
+<!-- POST MODAL -->
+ <div class="modal fade" id="posttrade" tabindex="-1" role="dialog" aria-labelledby="postttrade">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 

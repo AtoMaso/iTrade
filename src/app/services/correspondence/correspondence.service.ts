@@ -12,7 +12,8 @@ let corres = CONFIG.baseUrls.corres;
 let correswithstatus = CONFIG.baseUrls.correswithstatus;
 let corresbytradeid = CONFIG.baseUrls.corresbytradeid; 
 let corresbytradeidwithstatus = CONFIG.baseUrls.corresbytradeidwithstatus;
-
+let corresbysenderidandid = CONFIG.baseUrls.corresbysenderidandid;
+  
 let corresbytraderidinbox = CONFIG.baseUrls.corresbytraderidinbox;
 let corresbytraderidwithstatusinbox = CONFIG.baseUrls.corresbytraderidwithstatusinbox;
 
@@ -55,7 +56,6 @@ export class CorrespondenceService {
   }
 
 
-
    //**********************************************************
   // GET SINGLE CORRES
   //***********************************************************
@@ -76,6 +76,22 @@ export class CorrespondenceService {
     return this.httpClientService.get<Correspondence>(this.localUrl, httpOptions).retry(1);
   }
 
+  // get single correspondence by corres id and sender id
+  public getSingleCorresByTraderIdAndId(loggedonTrader:string, corresId: number): Observable<Correspondence> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    this.localUrl = `${corresbysenderidandid}?loggedOnTrader=${loggedonTrader}&id=${corresId}`;
+
+    return this.httpClientService.get<Correspondence>(this.localUrl, httpOptions).retry(1);
+  }
 
    //**********************************************************
   // GET CORRES BY TRADE ID

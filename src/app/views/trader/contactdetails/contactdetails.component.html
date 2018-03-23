@@ -31,7 +31,7 @@
                                     <div *ngIf="availablephones.length < 3" class="col-md-4"><a (click)="onPhoneAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
                                     <div *ngIf="availablephones.length == 3" class="col-md-4"></div>
                                     <div *ngIf="availablephones.length > 0" class="col-md-4"><a (click)="onPhoneEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a data-target="#removePhone" data-toggle="modal" (click)="onPhoneDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                                    <div *ngIf="availablephones.length > 0" class="col-md-4"><a data-target="#removePhone" data-toggle="modal" (click)="onPhoneDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
                                     </div>
                                  
 
@@ -204,7 +204,7 @@
                             <div *ngIf="availableemails.length < 3" class="col-md-4"><a (click)="onEmailAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
                             <div *ngIf="availableemails.length == 3" class="col-md-4"></div>
                             <div *ngIf="availableemails.length > 0" class="col-md-4"><a (click)="onEmailEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit</a></div>
-                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a data-target="#removeEmail" data-toggle="modal" (click)="onEmailDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                            <div *ngIf="availableemails.length > 0" class="col-md-4"><a data-target="#removeEmail" data-toggle="modal" (click)="onEmailDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
                             </div>                       
 
                           <div *ngIf="availableemails.length  !== 0" class="col-md-12" style="margin-top:20px;">
@@ -327,7 +327,7 @@
                             <div *ngIf="availablesocials.length < 3" class="col-md-4"><a (click)="onSocialAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
                             <div *ngIf="availablesocials.length == 3" class="col-md-4"></div>
                             <div *ngIf="availablesocials.length > 0" class="col-md-4"><a (click)="onSocialEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a data-target="#removeSocial" data-toggle="modal" (click)="onSocialDeleteClick()" class="textoker smalltext text-uppercase"> <i class="glyphicon glyphicon-trash"></i> Delete </a></div>
+                            <div *ngIf="availablesocials.length > 0" class="col-md-4"><a data-target="#removeSocial" data-toggle="modal" (click)="onSocialDeleteClick()" class="textoker smalltext text-uppercase"> <i class="glyphicon glyphicon-erase"></i> Delete </a></div>
                             </div>
                        
                           <div *ngIf="availablesocials.length  !== 0" class="col-md-12" style="margin-top:20px;">

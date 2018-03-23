@@ -6,7 +6,7 @@
     <!-- DETAILS -->
      <div  class="row">
 
-           <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">
+           <div class="col-md-3 col-md-offset-1 panel panel-heading footerdiv">
 
                  <div class="corresdetails collapsed  smalltext text-uppercase">
                     <span class="textlightcoral"> Correspondence Details</span>
@@ -28,10 +28,27 @@
                  </div>
                </div>
 
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Subject:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.message }}</span>
+                 </div>
+               </div> 
+
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   About Trade:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.subject }}</span>
+                 </div>
+               </div>
+
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   With Id:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.tradeId }}</span>
+                 </div>
+               </div>
 
                <div *ngIf="isReceiver" class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
-                   Send From:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.sender }}</span>
+                   From Trader:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.sender }}</span>
                  </div>
                </div>
 
@@ -46,59 +63,39 @@
                    Sent on:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.dateSent | date }}</span>
                  </div>
                </div>
-
-
-               <div class="row">
-                 <div class="panel panel-heading col-md-12 mediumtext">
-                   Trade:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.subject }}</span>
-                 </div>
-               </div>
-
-
-               <div class="row">
-                 <div class="panel panel-heading col-md-12 mediumtext">
-                   Trade id:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.tradeId }}</span>
-                 </div>
-               </div>
-
-
-               <div class="row">
-                 <div class="panel panel-heading col-md-12 mediumtext">
-                   Flash:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.message }}</span>
-                 </div>
-               </div>
-
+                                      
              </div>
 
           </div>
         
 
-           <div class="col-md-5 col-md-offset-1">
+           <div class="col-md-6 col-md-offset-1">
 
-                <div class="row">
-                  <div class="panel panel-heading col-md-12 smalltext textlightcoral text-uppercase">
-                      Message content:
-                  </div>
-                </div>
+                   <div class="row">
+                      <div class="panel panel-heading col-md-12 smalltext textlightcoral text-uppercase">
+                          Message content:
+                      </div>
+                   </div>
 
-              <div class="row">                   
-                <div class="panel panel-heading col-md-12 ">
-                        <div  class="smalltext" id="receivedContent"
-                                style="width:inherit;background-color:moccasin;white-space: normal; text-align: justify;-moz-text-align-last: left; text-align-last: left;height:120px;" 
-                                wrap="soft"  rows="6" maxlength="500" readonly> 
+                  <div class="row">                   
+                        <div class="panel panel-heading col-md-12 ">
+                                <div  class="form-control smalltext" id="receivedContent"
+                                        style="width:inherit;background-color:moccasin;white-space: normal; text-align: justify;-moz-text-align-last: left; text-align-last: left;height:120px;" 
+                                        wrap="soft"  rows="7" maxlength="500" readonly> 
+                                </div>
+                                <input type="hidden"  id="hiddencontrol" value="{{ receivedCorres.content }}"/>
                         </div>
-                        <input type="hidden"  id="hiddencontrol" value="{{ receivedCorres.content }}"/>
-                </div>
-              </div>
+                  </div>
 
-              <!-- BUTTONS -->
-              <div class="row">
-                <div class="col-md-3">
-                <button class="btn btn-success mediumtext" style="width:auto; height:auto;" id="Reply" (click)="WriteCorres"  data-target="#writeMessage" data-toggle="collapse">Reply</button>
-                </div>              
-              </div>
+                  <!-- BUTTONS -->
+                  <div *ngIf="isReceiver " class="row">
+                        <div class="col-md-3">
+                            <button class="btn btn-success mediumtext" style="width:auto; height:auto;" id="Reply" (click)="WriteCorres()"  
+                                data-target="#writeMessage" data-toggle="collapse">Reply</button>
+                        </div>              
+                  </div>
 
-             <br/>
+                 <br/>
 
            
                   <!-- REPLY -->
@@ -107,8 +104,12 @@
                          <form [formGroup]="sendCorresGroup" (submit)="sendCorres()">
 
                              <div class="panel panel-heading col-md-12">
-                               <textarea formControlName="content" id="content" class="smalltext" style="width:inherit;" rows="6" spellcheck="true" maxlength="500" placeholder="Write your message here..."></textarea>
-                               <span id="characterCount" class="smalltext textgray"></span>
+                               <textarea formControlName="content" id="content" class="form-control smalltext" style="width:inherit;" rows="7" 
+                                         spellcheck="true" maxlength="500" placeholder="Write your message here...">
+
+                               </textarea>
+                               <control-messages [control]="sendCorresGroup.controls.content"></control-messages>  
+                                <span id="characterCount" class="smalltext textgray"></span>
                              </div>
 
                              <div class="col-md-5">
@@ -132,4 +133,4 @@
 
   </div>
 
- </div>
+</div>

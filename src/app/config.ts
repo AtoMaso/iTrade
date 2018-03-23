@@ -57,6 +57,7 @@
     correswithstatus: 'http://localhost:5700/api/correspondences/GetCorrespondencesWithStatus',
     corresbytradeid: 'http://localhost:5700/api/correspondences/GetCorrespondencesByTradeId',
     corresbytradeidwithstatus: 'http://localhost:5700/api/correspondences/GetCorrespondencesByTradeIdWithStatus',
+    corresbysenderidandid: 'http://localhost:5700/api/correspondences/GetCorrespondenceByTradeIdAndId',
 
     corresbytraderidinbox: 'http://localhost:5700/api/correspondences/GetInboxByTraderId',
     corresbytraderidwithstatusinbox: 'http://localhost:5700/api/correspondences/GetInboxByTraderIdWithStatus',

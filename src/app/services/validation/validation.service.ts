@@ -436,7 +436,7 @@ static firstNameValidator(control: any) {
   static messageValidator(control) {
 
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z\s]){10,70}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){10,500}$/)) {
         return null;
       } else {
         return { 'invalidMessage': true };
@@ -447,7 +447,7 @@ static firstNameValidator(control: any) {
   static contentValidator(control) {
 
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z\s]){10,500}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){10,500}$/)) {
         return null;
       } else {
         return { 'invalidContent': true };

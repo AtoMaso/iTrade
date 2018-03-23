@@ -159,7 +159,7 @@ export class AddCorrespondenceComponent implements OnInit {
             if (response) {
               this.isRequesting = false;
               this.isSubmited = true;
-              this.messagesService.emitProcessMessage("");
+              this.messagesService.emitProcessMessage("PMSSCo");
             }
           },
           (serviceError: Response) => this.onError(serviceError, "addCorrespondence"));

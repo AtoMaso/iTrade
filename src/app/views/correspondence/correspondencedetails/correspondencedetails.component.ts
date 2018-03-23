@@ -4,12 +4,13 @@ import { Observable } from 'rxjs/Observable';
 import { Response } from '@angular/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 
+import { ValidationService } from '../../../services/validation/validation.service';
+import { CorrespondenceService } from '../../../services/correspondence/correspondence.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
-import { CorrespondenceService } from '../../../services/correspondence/correspondence.service';
 
-import { UserSession, UserIdentity, Correspondence, PageTitle } from '../../../helpers/classes';
+import { UserSession, Correspondence, PageTitle } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 @Component({
@@ -29,7 +30,8 @@ export class CorrespondenceDetailsComponent implements OnInit {
   private isRequesting: boolean = false;
   private content: string = "";
   private sendCorresGroup: any;
-  private traderId: string = "";
+  private loggedOnTrader: string;
+  private senderId: string;
 
   constructor(      
     private corresService: CorrespondenceService,
@@ -47,16 +49,20 @@ export class CorrespondenceDetailsComponent implements OnInit {
   ngOnInit() {
 
     this.sendCorresGroup = this.formBuilder.group({
-      content: new FormControl('', [Validators.required]),  
+      content: new FormControl('', [Validators.required, ValidationService.contentValidator]),  
     });
 
-    this.route.queryParams.subscribe(params => { this.corresId = params['id']; });
+    this.route.queryParams.subscribe(params => {
+      this.corresId = params['id'];       
+    });
 
     this.getUserSession();   
 
     this.initialiseComponent();
 
-    this.getACorrespondence(this.corresId );
+    //this.getACorrespondence(this.corresId);
+
+    this.getACorrespondenceByTraderIdAndId(this.loggedOnTrader, this.corresId);
   }
 
 
@@ -118,9 +124,21 @@ export class CorrespondenceDetailsComponent implements OnInit {
       .subscribe((corresResult: Correspondence) => {
         this.hasCorres = true;
         this.receivedCorres = corresResult;
-        if (this.receivedCorres.traderIdReceiver === this.traderId) { this.isReceiver = true; }
+        if (this.receivedCorres.traderIdReceiver === this.loggedOnTrader) { this.isReceiver = true; }
         else { this.isSender = true;  }
 
+      }, (serviceError: Response) => this.onError(serviceError, "getACorrespondence"));
+  }
+
+  // by ids
+  private getACorrespondenceByTraderIdAndId(loggedOnTrader: string, corresId: number) {
+
+    this.corresService.getSingleCorresByTraderIdAndId(loggedOnTrader, corresId)
+      .subscribe((corresResult: Correspondence) => {
+            this.hasCorres = true;
+            this.receivedCorres = corresResult;
+            if (this.receivedCorres.traderIdReceiver === this.loggedOnTrader) { this.isReceiver = true; }
+            else { this.isSender = true; }
       }, (serviceError: Response) => this.onError(serviceError, "getACorrespondence"));
   }
 
@@ -158,7 +176,7 @@ export class CorrespondenceDetailsComponent implements OnInit {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])      
-        this.traderId = this.session.userIdentity.userId;
+        this.loggedOnTrader = this.session.userIdentity.userId;
       }
       catch (ex) {
         this.messagesService.emitProcessMessage("PMG");

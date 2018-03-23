@@ -6,9 +6,11 @@ import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 import { PageTitle } from '../../helpers/classes';
 
 @Component({
-    selector: 'contact-view',
-    templateUrl: './contact.component.html'
+  selector: 'contact-view',
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.scss']
 })
+    
 
 
 export class ContactComponent {

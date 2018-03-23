@@ -86,7 +86,7 @@
                                 <!-- archive the inbox mail -->
                                 <button type="button" data-target="#archiveInbox" data-toggle="modal"
                                         class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveInbox(corres)">
-                                  <span class="glyphicon glyphicon-briefcase"></span>&nbsp;Archive
+                                  <span class="glyphicon glyphicon-duplicate"></span>&nbsp;Archive
                                 </button>
                               </div>
 
@@ -199,7 +199,7 @@
                         <!-- archive the sent mail -->
                         <button type="button" data-target="#archiveSent" data-toggle="modal"
                                 class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveSent(corres)">
-                          <span class="glyphicon glyphicon-briefcase"></span>&nbsp;Archive
+                          <span class="glyphicon glyphicon-duplicate"></span>&nbsp;Archive
                         </button>
                       </div>
 
@@ -508,7 +508,7 @@
                               <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
 
                               <td class="col-md-2">
-                                <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: corres.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ corres.message  }}</i></a>
+                                <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: corres.id }" class="smalltext text-uppercase textlightcoral restriction"><i>{{ corres.message  }}</i></a>
                               </td>
 
                               <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
@@ -530,7 +530,7 @@
                                     <!-- archive the inbox mail -->
                                     <button type="button" data-target="#archiveRemoved" data-toggle="modal"
                                             class="btn btn-sm btn-warning smalltext" (click)="passToModalArchiveRemoved(corres)">
-                                      <span class="glyphicon glyphicon-briefcase"></span>&nbsp;Archive
+                                      <span class="glyphicon glyphicon-duplicate"></span>&nbsp;Archive
                                     </button>
                                   </div>
 
@@ -538,7 +538,7 @@
                                     <!-- delete the inbox mail -->
                                     <button type="button" data-target="#activateRemoved"   data-toggle="modal"
                                            class="btn btn-sm btn-warning smalltext" (click)="passToModalActivateRemoved(corres)">
-                                      <span class="glyphicon glyphicon-trash"></span>&nbsp;Activate
+                                      <span class="glyphicon glyphicon-transfer"></span>&nbsp;Activate
                                     </button>
                                   </div>
 
@@ -546,7 +546,7 @@
                                     <!-- delete the inbox mail -->
                                     <button type="button" data-target="#deleteRemoved"   data-toggle="modal"
                                            class="btn btn-sm btn-warning smalltext" (click)="passToModalCompletellyDelete(corres)">
-                                      <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+                                      <span class="glyphicon glyphicon-erase"></span>&nbsp;Delete
                                     </button>
                                   </div>
 

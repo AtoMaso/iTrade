@@ -5,8 +5,9 @@ import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 import { PageTitle } from '../../helpers/classes';
 
 @Component({
-    selector: 'about-view',
-    templateUrl: './about.component.html'
+  selector: 'about-view',
+  templateUrl: './about.component.html',
+  styleUrls: ['./about.component.scss']
 })
 
 export class AboutComponent {
@@ -15,7 +16,7 @@ export class AboutComponent {
                    private titleService: PageTitleService) {
 
        
-          this.titleService.emitPageTitle(new PageTitle("About Us"));
+          this.titleService.emitPageTitle(new PageTitle("About The App"));
 
           this.messagesService.emitRoute("null");
     }
