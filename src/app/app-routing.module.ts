@@ -28,6 +28,8 @@ import { AddCorrespondenceComponent } from './views/correspondence/addcorrespond
 import { ForgotPasswordComponent } from './views/trader/forgotpassword/forgotpassword.component';
 import { ResetPasswordComponent } from './views/trader/resetpassword/resetpassword.component';
 
+import {CategoriesComponent } from './views/categories/categories.component';
+
 // cmport the AuthGuard helper
 import { AuthGuard } from './helpers/auth.guard';
 
@@ -61,6 +63,7 @@ const routes: Routes = [
   { path: 'correspondencedetails', component: CorrespondenceDetailsComponent, canActivate: [AuthGuard] }, // correspondence should available only when authenticated , canActivate: [AuthGuard]
   { path: 'addcorrespondence', component: AddCorrespondenceComponent, canActivate: [AuthGuard] }, // correspondence should available only when authenticated , canActivate: [AuthGuard]
 
+  { path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard] },
   
 ];
 

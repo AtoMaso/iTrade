@@ -50,7 +50,7 @@ export class AppComponent implements OnDestroy, OnInit {
   private userIdentity: UserIdentity = new UserIdentity();
   private isUserAuthenticated: boolean = false;
   private isUserAllowed: boolean = false;
-
+  private isAdmin: boolean = false;
 
   //******************************************************
   //CONSTRUCTOR AND CICLE METHODS
@@ -71,7 +71,8 @@ export class AppComponent implements OnDestroy, OnInit {
                         if (session !== null) {
                               this.userSession = session,
                               this.isUserAuthenticated = session.authentication.isAuthenticated;
-                              this.IsAllowed();
+                              this.isAdmin = session.userIdentity.isInRole("Admin", session.userIdentity.roles);
+                              this.IsAllowed();                             
                               this.IdleSetup(session.userIdentity.accessTokenExpiresIn);
                         }
             });

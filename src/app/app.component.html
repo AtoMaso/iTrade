@@ -28,7 +28,9 @@
                             <li class="nav" *ngIf="isUserAuthenticated"><a href="" routerLink="/traderhome"><span class="textgray"><i>Trader Home</i></span></a></li>
                             <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/login"><span class="textgray"><i>Login</i></span></a></li>
                             <li class="nav" *ngIf="!isUserAuthenticated"><a href="" routerLink="/register"><span class="textgray"><i>Register</i></span></a></li>
+                            <li class="nav" *ngIf="isUserAuthenticated && isAdmin"><a href="" routerLink="/categories"><span class="textgray"><i>Categories</i></span></a></li>
                             <li class="nav" *ngIf="isUserAuthenticated"><a href="" (click)="logOut()"><span class="textgray"><i>Logout</i></span></a></li>
+
                           </ul>
                         </div>
                       </div>

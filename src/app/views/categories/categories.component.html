@@ -1,0 +1,218 @@
+<div class="container col-md-12">
+
+  <div class="row">
+
+            <!-- Categories -->
+            <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">
+
+                      <div class="categories collapsed col-md-6" data-toggle="collapse" data-target="#collapseCategories">
+                        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Categories</span>
+                      </div>
+
+
+                      <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
+                        Category:
+                        <select id="category" name="category" class="smalltextbold" style="background-color:moccasin;" (change)="onViewCategoryChange($event)">
+                          <option></option>
+                          <option *ngFor="let category of categories" [ngValue]="category">
+                            {{ category.categoryDescription }}
+                          </option>
+                        </select>
+                      </div>
+
+
+                      <div class="colapse in col-md-12" id="collapseCategories" style="margin-top:20px;">
+
+                              <div *ngIf="!isCategoryAddOn && !isCategoryEditOn" class="col-md-12">
+
+                                      <div class="col-md-12">
+                                        <div class="col-md-4"><a (click)="onCategoryAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>                                   
+                                        <div class="col-md-4"><a (click)="onCategoryEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                                        <div class="col-md-4"><a data-target="#removeCategory" data-toggle="modal" (click)="onCategoryDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
+                                      </div>
+
+
+                                      <div *ngIf="categories.length  !== 0" class="col-md-12" style="margin-top:20px;">
+
+                                            <div class="row">                      
+                                                  <div class="col-md-12">
+
+                                                          <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                                                            Category Id:
+                                                            <span class="text-info"> {{ categoryInView.categoryId}}</span>
+                                                          </div>
+
+                                                          <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                                                            Category Description:
+                                                            <span class="text-info"> {{ categoryInView.categoryDescription}}</span>
+                                                          </div>
+
+                                                  </div>
+                                           </div>
+                                    </div>
+
+
+                                      <div *ngIf="isCategoryAddOn || isCategoryEditOn" class="row col-md-12">
+
+                                                <form novalidate [formGroup]="categoryForm" (submit)="onSubmitCategoryAddUpdate()">
+
+
+                                                    <div class="col-md-12">                    
+                                                        <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                                          Category Description:
+                                                          <div class="input-group">                
+                                                            <input type="text" formControlName="categorydescription" id="categorydescription" name="categorydescription" required class="form-control smalltext" style="background-color:moccasin" />
+                                                          </div>
+                                                          <control-messages [control]="categoryForm.controls.categorydescription"></control-messages>
+                                                        </div>
+                                                      </div>
+
+
+                                                    <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
+                                                          <div class="col-md-6" style="text-align:right;">
+                                                            <button id="categorycancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onCategoryAddEditCancel()">
+                                                              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                                                            </button>
+                                                          </div>
+
+                                                          <div class="col-md-6" style="text-align:left;">
+                                                                <button id="categorysave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!categoryForm.valid" style="width:auto; height:30px;">
+                                                                  <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                                                  Save
+                                                                </button>
+                                                         </div>
+                                                    </div>
+
+
+                                                </form>
+
+                                      </div>
+
+                            </div>
+
+                    </div>
+
+
+          </div>
+
+
+            <!--  Sub Categories-->
+            <div class="col-md-5 col-md-offset-1 panel panel-heading footerdiv">
+
+                       <div class="subcategories collapsed col-md-6" data-toggle="collapse" data-target="#collapseSubcategories">
+                          <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Subcategories</span>
+                        </div>
+
+                         <!-- drop down -->
+                       <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
+                          Subcategory:
+                          <select id="subcategory" name="subcategory" class="smalltextbold" style="background-color:moccasin;" (change)="onViewSubcategoryChange($event)">
+                            <option></option>
+                            <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory">
+                              {{ subcategory.subcategoryDescription }}
+                            </option>
+                          </select>
+                        </div>
+
+
+                       <div class="colapse in col-md-12" id="collapseSubcategories" style="margin-top:20px;">
+
+                                <div *ngIf="!isSubCategoryAddOn && !isSubCategoryEditOn" class="col-md-12">
+
+                                        <div class="col-md-12">
+                                          <div class="col-md-4"><a (click)="onSubCategoryAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>                    
+                                          <div class="col-md-4"><a (click)="onSubCategoryEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+                                          <div class="col-md-4"><a data-target="#removeSubCategory" data-toggle="modal" (click)="onSubCategoryDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
+                                        </div>
+
+
+                                        <div *ngIf="subcategories.length  !== 0" class="col-md-12" style="margin-top:20px;">
+
+                                            <div class="row">
+
+                                                  <div class="col-md-12">
+
+                                                          <!--<div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                                                                Category Id:
+                                                                <span class="text-info"> {{ categoryInView.categoryId}}</span>
+                                                          </div>
+
+                                                          <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                                                                Category Description:
+                                                                <span class="text-info"> {{ categoryInView.categoryDescription}}</span>
+                                                          </div>-->
+
+                                                          <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                                                                Subcategory Id:
+                                                                <span class="text-info"> {{ subcategoryInView.subcategoryId}}</span>
+                                                          </div>
+                                                   
+                                                          <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                                                                  Subcategory Dscription:
+                                                                  <span class="text-info"> {{ subcategoryInView.subcategoryDescription}}</span>
+                                                          </div>
+
+                                                </div>
+                                          </div>                                    
+                                  </div>
+
+
+                                <div *ngIf="isSubCategoryAddOn || isSubCategoryEditOn" class="row col-md-12">
+
+                                  <form novalidate [formGroup]="subcategoryForm" (submit)="onSubmitSubCategoryAddUpdate()">
+
+                                        <div class="col-md-12">
+                                          <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                            Category:
+                                            <div class="input-group">
+                                              <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt" aria-hidden="true"></i></span>
+                                              <select formControlName="category" id="category" name="category" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onCategoryChange($event)">
+                                                <option></option>
+                                                <option *ngFor="let category of categories" [ngValue]="category">
+                                                  {{ category.categoryDescription }}
+                                                </option>
+                                              </select>
+                                            </div>
+                                            <control-messages [control]="phoneForm.controls.category"></control-messages>
+                                          </div>
+                                      </div>
+
+
+                                        <div class="col-md-12">
+                                          <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                                            Sub Category Description:
+                                            <div class="input-group">
+                                              <input type="text" formControlName="subcategorydescription" id="subcategorydescription" name="subcategorydescription" required class="form-control smalltext" style="background-color:moccasin" />
+                                            </div>
+                                            <control-messages [control]="categoryForm.controls.subcategorydescription"></control-messages>
+                                          </div>
+                                        </div>
+
+
+                                        <div class="col-md-12 panel panel-heading" style="height:70px;margin-top:10px;">
+                                          <div class="col-md-6" style="text-align:right;">
+                                            <button id="subcategorycancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onSubCategoryAddEditCancel()">
+                                              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                                            </button>
+                                          </div>
+
+                                          <div class="col-md-6" style="text-align:left;">
+                                            <button id="subcategorysave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!subcategoryForm.valid" style="width:auto; height:30px;">
+                                              <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                                              Save
+                                            </button>
+                                          </div>
+                                        </div>
+
+
+                                    </form>
+
+                                </div>
+
+                          </div>
+
+              </div>
+
+
+            </div>
+</div>

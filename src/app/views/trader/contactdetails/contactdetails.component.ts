@@ -14,7 +14,6 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
-import { CapsPipe } from '../../../helpers/pipes';
 import { UserSession, PageTitle,  Phone, PhoneType, Email, EmailType, SocialNetwork, SocialNetworkType, PreferredType} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 

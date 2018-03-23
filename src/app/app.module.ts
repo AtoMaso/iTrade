@@ -78,8 +78,7 @@ import { ContactlDetailsComponent } from './views/trader/contactdetails/contactd
 import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
 
-import { AddCategoryComponent } from './views/category/addcategory/addcategory.component';
-import { CategoryListComponent } from './views/category/categorylist/categorylist.component';
+import { CategoriesComponent } from './views/categories/categories.component';
 import { AddPhoneTypeComponent } from './views/phone/addphonetype/addphonetype.component';
 import { PhoneTypeListComponent } from './views/phone/phonetypelist/phonetypelist.component';
 import { AddressTypeListComponent } from './views/address/addresstypelist/addresstypelist.component';
@@ -114,7 +113,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
  
     TradersListComponent, TraderDetailsComponent, TraderHomeComponent,
     AddTradeComponent, TradesListComponent, MyTradesListComponent, TradeDetailsComponent,   
-    AddCategoryComponent, CategoryListComponent,
+    CategoriesComponent,
     AddPhoneTypeComponent, PhoneTypeListComponent,   
     AddressTypeListComponent, AddAddressTypeComponent,
     PersonalDetailsComponent, LoginDetailsComponent, ContactlDetailsComponent,

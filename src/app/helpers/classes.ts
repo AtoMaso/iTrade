@@ -633,7 +633,14 @@ class UserIdentity implements IUserIdentity {
   }
 
   public isInRole(rolename: string, roles: string[]): boolean {
-    return true;
+
+    let m: number = 0;
+    for (m = 0; m < roles.length; m++) {
+      if (rolename === roles[m]) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 
