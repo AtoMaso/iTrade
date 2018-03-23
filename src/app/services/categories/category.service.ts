@@ -41,7 +41,18 @@ export class CategoryService {
     //******************************************************
     // ADD CATEGORY
     //******************************************************
-   
+  public addCategory(category: Category): Observable<Category> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.post<Category>(addCategoryUrl, category, httpOptions).retry(1);
+  }
 
     //******************************************************
     // DELETE CATEGORY
@@ -51,6 +62,18 @@ export class CategoryService {
     //******************************************************
     // UPDATE CATEGORY
     //******************************************************
- 
+  public updateCategory(category: Category): Observable<Category> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updateCategoryUrl}?categoryId=${category.categoryId}`;
+    return this.httpClientService.put<Category>(updateCategoryUrl, category, httpOptions).retry(1);
+  }
   
 }

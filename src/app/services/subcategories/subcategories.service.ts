@@ -25,8 +25,16 @@ export class SubcategoriesService {
   // GET places METHODS
   //******************************************************
     public getSubcategories(): Observable<Subcategory[]> {
-    //TODO header here for authentication to be added
-      return this.httpClientService.get<Subcategory[]>(subcategoriesUrl).retry(1);
+      // prepare the headesrs
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+        })
+      };
+
+      return this.httpClientService.get<Subcategory[]>(subcategoriesUrl, httpOptions).retry(1);
   }
 
 
@@ -36,9 +44,46 @@ export class SubcategoriesService {
   }
 
 
-    public getSubcategory(id: number): Observable<Subcategory> {
-    //TODO header here for authentication to be added
-      return this.httpClientService.get<Subcategory>(subcategoryUrl + `${id}`).retry(1);
+    public getSubcategory(id: number): Observable<Subcategory> {   
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+        })
+      };
+      return this.httpClientService.get<Subcategory>(subcategoryUrl + `${id}`, httpOptions).retry(1);
+
+  }
+
+  public addSubcategory(subcategory:Subcategory): Observable<Subcategory> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.post<Subcategory>(addSubcategoryUrl, subcategory, httpOptions ).retry(1);
+
+  }
+
+  public updateSubcategory(subcategory: Subcategory): Observable<Subcategory> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updateSubcategoryUrl}?subcategoryId=${subcategory.subcategoryId}`;
+    return this.httpClientService.put<Subcategory>(updateSubcategoryUrl, subcategory, httpOptions).retry(1);
 
   }
 
