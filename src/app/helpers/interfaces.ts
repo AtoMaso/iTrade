@@ -175,9 +175,14 @@ interface IPostcode {
   id: number;
   number: string;
   placeId: number;
+  suburbs: ISuburb[];
 }
 
-
+interface ISuburb {
+  id: number;
+  name: string;
+  postcodeId: number;
+}
 
 
 interface ITrade {
@@ -332,7 +337,7 @@ interface IProcessMessageType {
 export {
 IChangePasswordBindingModel, IRegisterBindingModel, IUserInfoViewModel,
   ISetPasswordBindingModel, ILoginModel, IForgotPasswordBindingModel, IResetPasswordBindingModel,
-  ITraderList, IPostTrade, IPlace, IState, ISubcategory, IPostcode,
+  ITraderList, IPostTrade, IPlace, IState, ISubcategory, IPostcode, ISuburb,
   IPersonalDetails, ISecurityDetails,
   IAddress, IAddressType, IPhone, IPhoneType,
   ISecurityAnswer, ISecurityQuestions,

@@ -20,17 +20,95 @@ export class StatesService {
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
-    //******************************************************
-    // GET STATES METHODS
-    //******************************************************
-   public getStates(): Observable<State[]> {
-    // this is anonymous
-    return this.httpClientService.get<State[]>(statesUrl).retry(1);
+  //******************************************************
+ // GET STATES METHODS
+  //******************************************************  
+  public getStates(): Observable<State[]> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = statesUrl;
+    return this.httpClientService.get<State[]>(localUrl, httpOptions).retry(1);
+
   }
 
-   public getState(id:number): Observable<State> {
-     //TODO heade here for authentication to be added
-     return this.httpClientService.get<State>(stateUrl +`${id}`).retry(1);
-   }
 
+  //******************************************************
+  // GET STATE
+  //****************************************************** 
+  public getState(id: number): Observable<State> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+     
+    return this.httpClientService.get<State>(stateUrl + `${id}`, httpOptions).retry(1);
+  }
+
+
+
+
+  //******************************************************
+  // ADD STATE
+  //******************************************************
+  public addState(state: State): Observable<State> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.post<State>(addStateUrl, state, httpOptions).retry(1);
+  }
+
+
+  //******************************************************
+  // UPDATE STATE
+  //******************************************************
+  public updateState(state: State): Observable<State> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updateStateUrl}?stateId=${state.id}`;
+    return this.httpClientService.put<State>(localUrl, state, httpOptions).retry(1);
+  }
+
+
+  //******************************************************
+  // DELETE STATE
+  //******************************************************
+  public deleteState(id: number): Observable<State> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${deleteStateUrl}/${id}`; // DELETE api/states/1
+    return this.httpClientService.delete<State>(localUrl, httpOptions);
+  }
 }

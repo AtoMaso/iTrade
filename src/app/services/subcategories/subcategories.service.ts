@@ -38,13 +38,20 @@ export class SubcategoriesService {
   }
 
 
-    public getSubcategoriesByCategoryId(categoryId: number): Observable<Subcategory[]> {
-    // this is anonymous
-      return this.httpClientService.get<Subcategory[]>(subcategoriesByCategoryIdUrl + `?categoryId=${categoryId}`).retry(1);
+  public getSubcategoriesByCategoryId(categoryId: number): Observable<Subcategory[]> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+      return this.httpClientService.get<Subcategory[]>(subcategoriesByCategoryIdUrl + `?categoryId=${categoryId}`, httpOptions).retry(1);
   }
 
 
-    public getSubcategory(id: number): Observable<Subcategory> {   
+  public getSubcategory(id: number): Observable<Subcategory> {   
       const httpOptions = {
         headers: new HttpHeaders({
           'Accept': 'application/json',
@@ -53,11 +60,11 @@ export class SubcategoriesService {
         })
       };
       return this.httpClientService.get<Subcategory>(subcategoryUrl + `${id}`, httpOptions).retry(1);
-
   }
 
-  public addSubcategory(subcategory:Subcategory): Observable<Subcategory> {
 
+
+  public addSubcategory(subcategory:Subcategory): Observable<Subcategory> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -68,11 +75,10 @@ export class SubcategoriesService {
     };
 
     return this.httpClientService.post<Subcategory>(addSubcategoryUrl, subcategory, httpOptions ).retry(1);
-
   }
 
-  public updateSubcategory(subcategory: Subcategory): Observable<Subcategory> {
 
+  public updateSubcategory(subcategory: Subcategory): Observable<Subcategory> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -83,8 +89,26 @@ export class SubcategoriesService {
     };
 
     const localUrl = `${updateSubcategoryUrl}?subcategoryId=${subcategory.subcategoryId}`;
-    return this.httpClientService.put<Subcategory>(updateSubcategoryUrl, subcategory, httpOptions).retry(1);
+    return this.httpClientService.put<Subcategory>(localUrl, subcategory, httpOptions).retry(1);
+  }
 
+
+  //******************************************************
+  // DELETE SUBCATEGORY
+  //******************************************************
+  public deleteSubcategory(subcategoryId: number): Observable<Subcategory> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${deleteSubcategoryUrl}?subcategoryId=${subcategoryId}`; // DELETE api/subcategories/DeleteSubCategory?subcategoryId=1
+    return this.httpClientService.delete<Subcategory>(localUrl, httpOptions);
   }
 
 }

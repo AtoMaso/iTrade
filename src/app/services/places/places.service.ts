@@ -25,20 +25,100 @@ export class PlacesService {
   // GET places METHODS
   //******************************************************
   public getPlaces(): Observable<Place[]> {
-    //TODO heade here for authentication to be added
-    return this.httpClientService.get<Place[]>(placesUrl).retry(1);
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+    return this.httpClientService.get<Place[]>(placesUrl, httpOptions).retry(1);
   }
 
 
   public getPlacesByStateId(stateId: number): Observable<Place[]> {
-    // this is anonymous
-    return this.httpClientService.get<Place[]>(placesByStateIdUrl +`?stateId=${stateId}`).retry(1);
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.get<Place[]>(placesByStateIdUrl +`?stateId=${stateId}`, httpOptions).retry(1);
   }
 
 
   public getPlace(id: number): Observable<Place> {
-     //TODO heade here for authentication to be added
-    return this.httpClientService.get<Place>(placeUrl + `${id}`).retry(1);
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.get<Place>(placeUrl + `${id}`, httpOptions).retry(1);
   }
 
+
+
+
+  //******************************************************
+  // ADD PLACE
+  //******************************************************
+  public addPlace(place: Place): Observable<Place> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.post<Place>(addPlaceUrl, place, httpOptions).retry(1);
+  }
+
+
+  //******************************************************
+  // UPDATE PLACE
+  //******************************************************
+  public updatePlace(place: Place): Observable<Place> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updatePlaceUrl}?stateId=${place.id}`;
+    return this.httpClientService.put<Place>(localUrl, place, httpOptions).retry(1);
+  }
+
+
+  //******************************************************
+  // DELETE PLACE
+  //******************************************************
+  public deletePlace(id: number): Observable<Place> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${deletePlaceUrl}/${id}`; // DELETE api/places/1
+    return this.httpClientService.delete<Place>(localUrl, httpOptions);
+  }
 }
+

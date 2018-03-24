@@ -42,6 +42,9 @@ import { CategoryService } from './services/categories/category.service';
 import { SubcategoriesService } from './services/subcategories/subcategories.service';
 import { StatesService } from './services/states/states.service';
 import { PlacesService } from './services/places/places.service';
+import { PostcodesService } from './services/postcodes/postcodes.service';
+import { SuburbsService } from './services/suburbs/suburbs.service';
+
 import { AddressService } from './services/address/address.service';
 import { EmailsService } from './services/emails/emails.service';
 import { PhonesService } from './services/phones/phones.service';
@@ -93,6 +96,7 @@ import { CorrespondenceListComponent } from './views/correspondence/corresponden
 import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
 import { AddCorrespondenceComponent } from './views/correspondence/addcorrespondence/addcorrespondence.component';
 import { ResetPasswordComponent } from './views/trader/resetpassword/resetpassword.component';
+import { PlacesComponent } from './views/places/places.component';
 
 //initialises the process message service to get all process messages on start of the application
 export function getprocessmessages(processMessageService: ProcessMessageService) {
@@ -120,7 +124,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     AddSocialNetworkTypeComponent, SocialNetworkTypeListComponent,
     AddProcessMessageComponent, ProcessMessageListComponent,
     CorrespondenceListComponent, CorrespondenceDetailsComponent, AddCorrespondenceComponent,  
-    ForgotPasswordComponent, ResetPasswordComponent,
+    ForgotPasswordComponent, ResetPasswordComponent, PlacesComponent,
   
     //TokenInterceptor,
   ],  
@@ -147,6 +151,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     AuthenticationService, ProcessMessageService, CorrespondenceService, PlacesService,
     PersonalDetailsService, LoginDetailsService, SubcategoriesService, SocialNetworksService, EmailsService, PhonesService,
     PageTitleService, LoggerService, AuthGuard, TraderApiService, CategoryService, AddressService,
+    PostcodesService, SuburbsService,
     // to inercept every request for authentication purposes
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 

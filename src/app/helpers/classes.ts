@@ -1,7 +1,7 @@
 ﻿import {
   IChangePasswordBindingModel, IRegisterBindingModel, IResetPasswordBindingModel,
   ISetPasswordBindingModel, ILoginModel, IForgotPasswordBindingModel,
-  ITraderList, IPostTrade,
+  ITraderList, IPostTrade,ISuburb,
   IPersonalDetails, ISecurityDetails,
   IAddress, IAddressType, IState, IPlace, IPostcode,
   IPhone, IPhoneType, ISubcategory,
@@ -374,14 +374,27 @@ class Postcode implements IPostcode {
   id: number;
   number: string;
   placeId: number;
+  suburbs: Suburb[];
 
   constructor() {
     this.id = 0;
     this.number = "";
     this.placeId = 0;
+    this.suburbs = [];
   }
 }
 
+class Suburb implements ISuburb {
+  id: number;
+  name: string;
+  postcodeId: number;
+
+  constructor() {
+    this.id = 0;
+    this.name = "";
+    this.postcodeId = 0;    
+  }
+}
 
 
 
@@ -720,7 +733,7 @@ export {
   ChangePasswordBindingModel, RegisterBindingModel,
   UserInfoViewModel, ForgotPasswordBindingModel, ResetPasswordBindingModel,
   SetPasswordBindingModel, LoginModel, Subcategory, 
-  Trader, PostTrade, State, Place, Postcode,
+  Trader, PostTrade, State, Place, Postcode,Suburb,
   PersonalDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType, Email, EmailType,

@@ -27,8 +27,17 @@ export class CategoryService {
     //******************************************************  
   public getCategories() {
 
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
     this.localUrl = categoriesUrl;
-    return this.httpClientService.get(this.localUrl).retry(1);   
+    return this.httpClientService.get(this.localUrl, httpOptions).retry(1);   
 
   }
 
@@ -54,9 +63,7 @@ export class CategoryService {
     return this.httpClientService.post<Category>(addCategoryUrl, category, httpOptions).retry(1);
   }
 
-    //******************************************************
-    // DELETE CATEGORY
-    //******************************************************
+ 
   
 
     //******************************************************
@@ -73,7 +80,25 @@ export class CategoryService {
     };
 
     const localUrl = `${updateCategoryUrl}?categoryId=${category.categoryId}`;
-    return this.httpClientService.put<Category>(updateCategoryUrl, category, httpOptions).retry(1);
+    return this.httpClientService.put<Category>(localUrl, category, httpOptions).retry(1);
   }
-  
+
+
+ //******************************************************
+ // DELETE CATEGORY
+ //******************************************************
+  public deleteCategory(categoryId: number): Observable<Category> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${deleteCategoryUrl}?categoryId=${categoryId}`; // DELETE api/categories/DeleteCategory?categoryId=1
+    return this.httpClientService.delete<Category>(localUrl, httpOptions);
+  }
 }

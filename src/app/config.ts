@@ -13,6 +13,8 @@
     logout: 'http://localhost:5700/api/account/Logout',
     forgotpassword: 'http://localhost:5700/api/account/ForgotPassword',
     resetPassword: 'http://localhost:5700/api/account/ResetPassword',
+
+
     //trades
     alltrades: 'http://localhost:5700/api/trades',
     tradeswithstatus: 'http://localhost:5700/api/trades/GetTradesWithStatus',
@@ -36,6 +38,7 @@
     addtrade: 'http://localhost:5700/api/trades/PostTrade',
     deletetrade: 'http://localhost:5700/api/trades/DeleteTrade',
 
+
     // trade history
     tradehistories: 'http://localhost:5700/api/tradehistories/',
     tradehistoriesbytradeid : 'http://localhost:5700/api/tradehistories/GetTradeHistoriesByTradeId/',   
@@ -45,12 +48,14 @@
     addtradehistory: 'http://localhost:5700/api/tradehistories/PostTradeHistory',
     removetradehistory: 'http://localhost:5700/api/tradehistories/DeleteTradeHistory',
 
+
      // images 
     images: 'http://localhost:5700/api/images',
     image: 'http://localhost:5700/api/images/',
     updateimage: 'http://localhost:5700/api/images/putimage',
     addimage: 'http://localhost:5700/api/images/postimage',
     removeimage: 'http://localhost:5700/api/images/deleteimage',
+
 
     // corresspondence
     corres: 'http://localhost:5700/api/correspondences',
@@ -70,6 +75,7 @@
     addcorres: 'http://localhost:5700/api/correspondences/PostCorrespondence',
     deletecorres: 'http://localhost:5700/api/correspondences/DeleteCorrespondence',
 
+
     // places
     places: 'http://localhost:5700/api/places',
     getplacesbystateid: 'http://localhost:5700/api/places/GetPlacesByStateId',
@@ -77,6 +83,7 @@
     updateplace: 'http://localhost:5700/api/places/PutPlace',
     addplace: 'http://localhost:5700/api/places/PostPlace',
     deleteplace: 'http://localhost:5700/api/places/DeletePlace',
+
 
     //states
     states: 'http://localhost:5700/api/states',
@@ -98,9 +105,9 @@
     subcategories: 'http://localhost:5700/api/subcategories',
     subcategoriesbycategoryid: 'http://localhost:5700/api/subcategories/GetSubcategoriesByCategoryId',
     subcategory: 'http://localhost:5700/api/subcategories/',
-    updatesubcategory: 'http://localhost:5700/api/categories/PutSubcategory',
-    addsubcategory: 'http://localhost:5700/api/categories/PostSubcategory',
-    deletesubcategory: 'http://localhost:5700/api/categories/DeleteSubcategory',
+    updatesubcategory: 'http://localhost:5700/api/subcategories/PutSubcategory',
+    addsubcategory: 'http://localhost:5700/api/subcategories/PostSubcategory',
+    deletesubcategory: 'http://localhost:5700/api/subcategories/DeleteSubcategory',
 
 
    //traders
@@ -204,19 +211,19 @@
     addsocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/PostSocialNetworktype',
     deletesocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/DeleteSocialNetworktype',
 
-    // security answers
-    securityanswers: 'http://localhost:5700/api/securityanswers',
-    securityanswer: 'http://localhost:5700/api/securityanswers/',
-    updatesecurityanswer: 'http://localhost:5700/api/securityanswers/putsecurityanswer',
-    addsecurityanswer: 'http://localhost:5700/api/securityanswers/postsecurityanswer',
-    deletesecurityanswer: 'http://localhost:5700/api/securityanswers/deletesecurityanswer',
+    //// security answers
+    //securityanswers: 'http://localhost:5700/api/securityanswers',
+    //securityanswer: 'http://localhost:5700/api/securityanswers/',
+    //updatesecurityanswer: 'http://localhost:5700/api/securityanswers/putsecurityanswer',
+    //addsecurityanswer: 'http://localhost:5700/api/securityanswers/postsecurityanswer',
+    //deletesecurityanswer: 'http://localhost:5700/api/securityanswers/deletesecurityanswer',
 
-    // security questions
-    securityquestions: 'http://localhost:5700/api/securityquestions',
-    securityquestion: 'http://localhost:5700/api/securityquestions/',
-    updatesecurityquestion: 'http://localhost:5700/api/securityquestions/putsecurityquestion',
-    addsecurityquestion: 'http://localhost:5700/api/securityquestions/postsecurityquestion',
-    deletesecurityquestion: 'http://localhost:5700/api/securityquestions/deletesecurityquestion',
+    //// security questions
+    //securityquestions: 'http://localhost:5700/api/securityquestions',
+    //securityquestion: 'http://localhost:5700/api/securityquestions/',
+    //updatesecurityquestion: 'http://localhost:5700/api/securityquestions/putsecurityquestion',
+    //addsecurityquestion: 'http://localhost:5700/api/securityquestions/postsecurityquestion',
+    //deletesecurityquestion: 'http://localhost:5700/api/securityquestions/deletesecurityquestion',
 
     // uploads
     uploadFileUrl: 'http://localhost:5700/api/uploads/UploadFile',

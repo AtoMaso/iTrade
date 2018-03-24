@@ -323,19 +323,17 @@ export class ContactlDetailsComponent implements OnInit {
 
   private setPhoneInViewPhoneTypesAndPreferredPhoneTypes() {
 
-    if (this.updatedPhone) { this.phoneInView = this.updatedPhone }
-    else if (this.addedPhone) { this.phoneInView = this.addedPhone; }
+    if (this.updatedPhone) { this.phoneInView = this.updatedPhone;   }
+    else if (this.addedPhone) { this.phoneInView = this.addedPhone;   }
     else { this.phoneInView = this.availablephones[0]; }
-
-    this.availablePhonesCount = this.availablephones.length;
+    // reset everything
+    this.availablePhonesCount = this.availablephones.length; 
     this.addedPhone = null;
     this.updatedPhone = null;
-
     this.existingphonetypes = [];
     this.phonetypescanbeadded = [];
     this.existingpreferredphonetypes = [];
     this.preferredphonetypestobeadded = [];
-
 
     let m: number = 0;
     let n: number = 0;
@@ -515,6 +513,7 @@ export class ContactlDetailsComponent implements OnInit {
   private onPhoneAddClick() {
     this.messagesService.emitRoute("nill");
     this.isPhoneAddOn = true;
+    this.isPhoneEditOn = false;
     this.setPhoneForm();
 
     // if address in view take it as temp so we can go back if adding has been cancelled
@@ -528,6 +527,7 @@ export class ContactlDetailsComponent implements OnInit {
   private onPhoneEditClick() {
     this.messagesService.emitRoute("nill");
     this.isPhoneEditOn = true;
+    this.isPhoneAddOn = false;
 
     // if phone in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdatePhone = this.phoneInView;
@@ -568,6 +568,7 @@ export class ContactlDetailsComponent implements OnInit {
 
     if (this.isPhoneAddOn) {
 
+      this.updatedPhone = null;
       // add new phone
       this.phonesService.addPhone(phone).subscribe((response: Phone) => {
 
@@ -587,6 +588,8 @@ export class ContactlDetailsComponent implements OnInit {
     if (this.isPhoneEditOn) {
 
       if (phone) { // if phone changed
+
+        this.addedPhone = null;
 
         // update phoens
         this.phonesService.updatePhone(phone).subscribe((response: Phone) => {
@@ -626,7 +629,10 @@ export class ContactlDetailsComponent implements OnInit {
     newAddUpdatePhone.phoneTypeId = phonetype.phoneTypeId;
 
     // has anything beeing changed in the form and we are updating
-    if (this.isPhoneEditOn && this.comparePhones(newAddUpdatePhone, this.tempAddUpdatePhone)) { this.messagesService.emitProcessMessage("PMEUPh"); return null; } // TODO new process message here
+    if (this.isPhoneEditOn && this.comparePhones(newAddUpdatePhone, this.tempAddUpdatePhone)) {
+      this.messagesService.emitProcessMessage("PMEUPh");
+      return null;
+    } 
 
     return newAddUpdatePhone;
   }
@@ -733,11 +739,10 @@ export class ContactlDetailsComponent implements OnInit {
     if (this.updatedEmail) { this.emailInView = this.updatedEmail }
     else if (this.addedEmail) { this.emailInView = this.addedEmail; }
     else { this.emailInView = this.availableemails[0]; }
-
+    // reset everything
     this.availableEmailsCount = this.availableemails.length;
     this.addedEmail = null;
     this.updatedEmail = null;
-
     this.existingemailtypes = [];
     this.emailtypescanbeadded = [];
     this.existingpreferredemailtypes = [];
@@ -916,6 +921,7 @@ export class ContactlDetailsComponent implements OnInit {
   private onEmailAddClick() {
     this.messagesService.emitRoute("nill");
     this.isEmailAddOn = true;
+    this.isEmailEditOn = false;
     this.setEmailForm();
 
     // if address in view take it as temp so we can go back if adding has been cancelled
@@ -929,6 +935,7 @@ export class ContactlDetailsComponent implements OnInit {
   private onEmailEditClick() {
     this.messagesService.emitRoute("nill");
     this.isEmailEditOn = true;
+    this.isEmailAddOn = false;
 
     // if phone in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdateEmail = this.emailInView;
@@ -1025,7 +1032,10 @@ export class ContactlDetailsComponent implements OnInit {
     newAddUpdateEmail.emailTypeId = emtype.emailTypeId;      
 
     // has anything beeing changed in the form and we are updating
-    if (this.isEmailEditOn && this.compareEmails(newAddUpdateEmail, this.tempAddUpdateEmail)) { this.messagesService.emitProcessMessage("PMEUEm"); return null; } 
+    if (this.isEmailEditOn && this.compareEmails(newAddUpdateEmail, this.tempAddUpdateEmail)) {
+      this.messagesService.emitProcessMessage("PMEUEm");
+      return null;
+    } 
 
     return newAddUpdateEmail;
   }
@@ -1130,11 +1140,10 @@ export class ContactlDetailsComponent implements OnInit {
     if (this.updatedSocial) { this.socialInView = this.updatedSocial }
     else if (this.addedSocial) { this.socialInView = this.addedSocial; }
     else { this.socialInView = this.availablesocials[0]; }
-
+    // reset everything
     this.availableSocialCount = this.availablesocials.length;
     this.addedSocial = null;
     this.updatedSocial = null;
-
     this.existingsocialtypes = [];
     this.socialtypescanbeadded = [];
     this.existingpreferredsocialtypes = [];
@@ -1314,6 +1323,7 @@ export class ContactlDetailsComponent implements OnInit {
   private onSocialAddClick() {
     this.messagesService.emitRoute("nill");
     this.isSocialAddOn = true;
+    this.isSocialEditOn = false;
     this.setSocialForm();
 
     // if address in view take it as temp so we can go back if adding has been cancelled
@@ -1327,6 +1337,7 @@ export class ContactlDetailsComponent implements OnInit {
   private onSocialEditClick() {
     this.messagesService.emitRoute("nill");
     this.isSocialEditOn = true;
+    this.isSocialAddOn = false;
 
     // if phone in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdateSocial = this.socialInView;
@@ -1393,7 +1404,7 @@ export class ContactlDetailsComponent implements OnInit {
           // get the saved address so when we 
           this.updatedSocial = res;
           // show success
-          this.messagesService.emitProcessMessage("PMSUSo"); // TODO new message here
+          this.messagesService.emitProcessMessage("PMSUSo"); 
           // get the new data from the server
           this.getSocialsByTraderId(this.traderId);
 
@@ -1424,8 +1435,10 @@ export class ContactlDetailsComponent implements OnInit {
     //newAddUpdateSocial.socialType = socialtype.socialType;
 
     // has anything beeing changed in the form and we are updating
-    if (this.isSocialEditOn && this.compareSocials(newAddUpdateSocial, this.tempAddUpdateSocial)) { this.messagesService.emitProcessMessage("PMEUSo"); return null; } // TODO new process message here
-
+    if (this.isSocialEditOn && this.compareSocials(newAddUpdateSocial, this.tempAddUpdateSocial)) {
+      this.messagesService.emitProcessMessage("PMEUSo");
+      return null;
+    } 
     return newAddUpdateSocial;
   }
 
