@@ -76,6 +76,14 @@
     deletecorres: 'http://localhost:5700/api/correspondences/DeleteCorrespondence',
 
 
+
+    //states
+    states: 'http://localhost:5700/api/states',
+    state: 'http://localhost:5700/api/states/',
+    updatestate: 'http://localhost:5700/api/states/PutState',
+    addstate: 'http://localhost:5700/api/states/PostState',
+    deletestate: 'http://localhost:5700/api/states/DeleteState',
+
     // places
     places: 'http://localhost:5700/api/places',
     getplacesbystateid: 'http://localhost:5700/api/places/GetPlacesByStateId',
@@ -85,12 +93,23 @@
     deleteplace: 'http://localhost:5700/api/places/DeletePlace',
 
 
-    //states
-    states: 'http://localhost:5700/api/states',
-    state: 'http://localhost:5700/api/states/',
-    updatestate: 'http://localhost:5700/api/states/PutState',
-    addstate: 'http://localhost:5700/api/states/PostState',
-    deletestate: 'http://localhost:5700/api/states/DeleteState',
+    // postcode
+    postcodes: 'http://localhost:5700/api/postcodes',
+    getpostcodesbyplaceid: 'http://localhost:5700/api/postcodes/GetPostcodesByPlaceId',
+    postcode: 'http://localhost:5700/api/postcodes/',
+    updatepostcode: 'http://localhost:5700/api/postcodes/PutPostcode',
+    addpostcode: 'http://localhost:5700/api/postcodes/PostPostcode',
+    deletepostcode: 'http://localhost:5700/api/postcodes/DeletePostcode',
+
+
+    //suburbs
+    suburbs: 'http://localhost:5700/api/suburbs',
+    getsuburbsbypostcodeid: 'http://localhost:5700/api/suburbs/GetSuburbsByPostcodeId',
+    suburb: 'http://localhost:5700/api/suburbs/',
+    updatesuburb: 'http://localhost:5700/api/suburbs/PutSuburb',
+    addsuburb: 'http://localhost:5700/api/suburbs/PostSuburb',
+    deletesuburb: 'http://localhost:5700/api/suburs/DeleteSuburb',
+
 
 
     // category

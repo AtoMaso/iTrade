@@ -89,7 +89,7 @@ export class StatesService {
       })
     };
 
-    const localUrl = `${updateStateUrl}?stateId=${state.id}`;
+    const localUrl = `${updateStateUrl}/${state.id}`;
     return this.httpClientService.put<State>(localUrl, state, httpOptions).retry(1);
   }
 

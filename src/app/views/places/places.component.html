@@ -2,43 +2,43 @@
 
   <div class="row">
 
-    <!-- Categories -->
+    <!-- States -->
     <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">
 
-      <div class="categories collapsed col-md-6" data-toggle="collapse" data-target="#collapseCategories">
-        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Categories</span>
+      <div class="states collapsed col-md-6" data-toggle="collapse" data-target="#collapseStates">
+        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> States</span>
       </div>
 
       <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
-        Category:
-        <select id="category" name="category" class="smalltextbold" style="background-color:moccasin;" (change)="onViewCategoryChange($event)">
+        State:
+        <select id="state" name="state" class="smalltextbold" style="background-color:moccasin;" (change)="onViewStateChange($event)">
           <option></option>
-          <option *ngFor="let category of categories" [ngValue]="category">
-            {{ category.categoryDescription }}
+          <option *ngFor="let state of states" [ngValue]="state">
+            {{ state.name }}
           </option>
         </select>
       </div>
 
-      <div class="colapse in col-md-12" id="collapseCategories" style="margin-top:20px;">
+      <div class="colapse in col-md-12" id="collapseStates" style="margin-top:20px;">
 
-        <div *ngIf="!isCategoryAddOn && !isCategoryEditOn" class="col-md-12">
+        <div *ngIf="!isStateAddOn && !isStateEditOn" class="col-md-12">
 
           <div class="col-md-12">
-            <div class="col-md-4"><a (click)="onCategoryAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
-            <div class="col-md-4"><a (click)="onCategoryEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-            <div class="col-md-4"><a data-target="#removeCategory" data-toggle="modal" (click)="onCategoryDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
+            <div class="col-md-4"><a (click)="onStateAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+            <div class="col-md-4"><a (click)="onStateEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+            <div class="col-md-4"><a data-target="#removeState" data-toggle="modal" (click)="onStateDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
           </div>
 
 
-          <div *ngIf="categories.length  !== 0" class="col-md-12" style="margin-top:20px;">
+          <div *ngIf="states !== null" class="col-md-12" style="margin-top:20px;">
 
             <div class="row">
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Id:<span class="text-info"> {{ categoryInView.categoryId}}</span>
+                Id:<span class="text-info"> {{ stateInView.id}}</span>
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Description:<span class="text-info"> {{ categoryInView.categoryDescription}}</span>
+                Name:<span class="text-info"> {{ stateInView.name}}</span>
               </div>
             </div>
           </div>
@@ -46,30 +46,30 @@
         </div>
 
 
-        <div *ngIf="isCategoryAddOn || isCategoryEditOn" class="row col-md-12">
+        <div *ngIf="isStateAddOn || isStateEditOn" class="row col-md-12">
 
 
-          <form novalidate [formGroup]="categoryForm" (submit)="onSubmitCategoryAddUpdate()">
+          <form novalidate [formGroup]="stateForm" (submit)="onSubmitStateAddUpdate()">
 
             <div class="col-md-10 col-md-offset-2">
               <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                Description:
+                Name:
                 <div class="input-group">
-                  <input type="text" formControlName="categorydescription" id="categorydescription" name="categorydescription" required class="form-control smalltext" style="background-color:moccasin" />
+                  <input type="text" formControlName="name" id="name" name="name" required class="form-control smalltext" style="background-color:moccasin" />
                 </div>
-                <control-messages [control]="categoryForm.controls.categorydescription"></control-messages>
+                <control-messages [control]="stateForm.controls.name"></control-messages>
               </div>
             </div>
 
             <div class="col-md-8 col-md-offset-2 panel panel-heading" style="height:70px;margin-top:10px;">
               <div class="col-md-6">
-                <button id="categorycancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onCategoryAddEditCancel()">
+                <button id="statecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onStateAddEditCancel()">
                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                 </button>
               </div>
 
               <div class="col-md-6" style="text-align:left;">
-                <button id="categorysave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!categoryForm.valid" style="width:auto; height:30px;">
+                <button id="statesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!stateForm.valid" style="width:auto; height:30px;">
                   <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                   Save
                 </button>
@@ -87,45 +87,45 @@
     </div>
 
 
-    <!--  Sub Categories-->
+    <!--  Places-->
     <div class="col-md-5 col-md-offset-1 panel panel-heading footerdiv">
 
-      <div class="subcategories collapsed col-md-6" data-toggle="collapse" data-target="#collapseSubcategories">
-        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Subcategories</span>
+      <div class="places collapsed col-md-6" data-toggle="collapse" data-target="#collapsePlaces">
+        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Cities</span>
       </div>
 
       <!-- drop down -->
       <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
-        Subcategory:
-        <select id="subcategory" name="subcategory" class="smalltextbold" style="background-color:moccasin;" (change)="onViewSubcategoryChange($event)">
+        Cities:
+        <select id="place" name="place" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPlaceChange($event)">
           <option></option>
-          <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory">
-            {{ subcategory.subcategoryDescription }}
+          <option *ngFor="let place of places" [ngValue]="place">
+            {{ place.name }}
           </option>
         </select>
       </div>
 
 
-      <div class="colapse in col-md-12" id="collapseSubcategories" style="margin-top:20px;">
+      <div class="colapse in col-md-12" id="collapsePlaces" style="margin-top:20px;">
 
-        <div *ngIf="!isSubCategoryAddOn && !isSubCategoryEditOn" class="col-md-12">
+        <div *ngIf="!isPlaceAddOn && !isPlaceEditOn" class="col-md-12">
 
           <div class="col-md-12">
-            <div class="col-md-4"><a (click)="onSubCategoryAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
-            <div class="col-md-4"><a (click)="onSubCategoryEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
-            <div class="col-md-4"><a data-target="#removeSubCategory" data-toggle="modal" (click)="onSubCategoryDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
+            <div class="col-md-4"><a (click)="onPlaceAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+            <div class="col-md-4"><a (click)="onPlaceEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+            <div class="col-md-4"><a data-target="#removePlace" data-toggle="modal" (click)="onPlaceDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
           </div>
 
-          <div *ngIf="subcategories.length  !== 0" class="col-md-12" style="margin-top:20px;">
+          <div *ngIf="places !== null" class="col-md-12" style="margin-top:20px;">
 
             <div class="row">
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Id: <span class="text-info"> {{ subcategoryInView.subcategoryId}}</span>
+                Id: <span class="text-info"> {{ placeInView.id}}</span>
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Description:<span class="text-info"> {{ subcategoryInView.subcategoryDescription}}</span>
+                Name:<span class="text-info"> {{ placeInView.name}}</span>
               </div>
 
 
@@ -134,30 +134,117 @@
         </div>
 
 
-        <div *ngIf="isSubCategoryAddOn || isSubCategoryEditOn" class="row col-md-12">
+        <div *ngIf="isPlaceAddOn || isPlaceEditOn" class="row col-md-12">
 
-          <form novalidate [formGroup]="subcategoryForm" (submit)="onSubmitSubCategoryAddUpdate()">
+          <form novalidate [formGroup]="placeForm" (submit)="onSubmitPlaceAddUpdate()">
         
             <div class="col-md-6 col-md-offset-3">
               <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                Description:
+                Name:
                 <div class="input-group">
-                  <input type="text" formControlName="subcategorydescription" id="subcategorydescription" name="subcategorydescription" required class="form-control smalltext" style="background-color:moccasin" />
+                  <input type="text" formControlName="name" id="name" name="name" required class="form-control smalltext" style="background-color:moccasin" />
                 </div>
-                <control-messages [control]="categoryForm.controls.subcategorydescription"></control-messages>
+                <control-messages [control]="placeForm.controls.name"></control-messages>
               </div>
             </div>
 
 
             <div class="col-md-6 col-md-offset-3 panel panel-heading" style="height:70px;margin-top:10px;">
               <div class="col-md-6">
-                <button id="subcategorycancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onSubCategoryAddEditCancel()">
+                <button id="placecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPlaceAddEditCancel()">
                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
                 </button>
               </div>
 
               <div class="col-md-6" style="text-align:left;">
-                <button id="subcategorysave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!subcategoryForm.valid" style="width:auto; height:30px;">
+                <button id="placesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!placeForm.valid" style="width:auto; height:30px;">
+                  <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="row">
+
+    <!-- Postcodes -->
+    <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">
+
+      <div class="postcodes collapsed col-md-6" data-toggle="collapse" data-target="#collapsePostcodes">
+        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Postcodes</span>
+      </div>
+
+      <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
+        Postcode:
+        <select id="postcode" name="postcode" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPostcodeChange($event)">
+          <option></option>
+          <option *ngFor="let postcode of postcodes" [ngValue]="postcode">
+            {{ postcode.number }}
+          </option>
+        </select>
+      </div>
+
+      <div class="colapse in col-md-12" id="collapsePostcodes" style="margin-top:20px;">
+
+        <div *ngIf="!isPostcodeAddOn && !isPostcodeEditOn" class="col-md-12">
+
+          <div class="col-md-12">
+            <div class="col-md-4"><a (click)="onPostcodeAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+            <div class="col-md-4"><a (click)="onPostcodeEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+            <div class="col-md-4"><a data-target="#removePostcode" data-toggle="modal" (click)="onPostcodeDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
+          </div>
+
+
+          <div *ngIf="postcodes !== null" class="col-md-12" style="margin-top:20px;">
+
+            <div class="row">
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Id:<span class="text-info"> {{ postcodeInView.id}}</span>
+              </div>
+
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Number:<span class="text-info"> {{ postcodeInView.number}}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="isPostcodeAddOn || isPostcodeEditOn" class="row col-md-12">
+
+
+          <form novalidate [formGroup]="postcodeForm" (submit)="onSubmitPostcodeAddUpdate()">
+
+            <div class="col-md-10 col-md-offset-2">
+              <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                Number:
+                <div class="input-group">
+                  <input type="text" formControlName="number" id="number" name="number" required class="form-control smalltext" style="background-color:moccasin" />
+                </div>
+                <control-messages [control]="postcodeForm.controls.number"></control-messages>
+              </div>
+            </div>
+
+            <div class="col-md-8 col-md-offset-2 panel panel-heading" style="height:70px;margin-top:10px;">
+              <div class="col-md-6">
+                <button id="postcodecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPostcodeAddEditCancel()">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                </button>
+              </div>
+
+              <div class="col-md-6" style="text-align:left;">
+                <button id="postcodesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!postcodeForm.valid" style="width:auto; height:30px;">
                   <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                   Save
                 </button>
@@ -169,10 +256,96 @@
 
         </div>
 
+      </div>
 
+
+    </div>
+
+
+    <!--  Suburbs-->
+    <div class="col-md-5 col-md-offset-1 panel panel-heading footerdiv">
+
+      <div class="suburbs collapsed col-md-6" data-toggle="collapse" data-target="#collapseSuburbs">
+        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Suburbs</span>
+      </div>
+
+      <!-- drop down -->
+      <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
+        Suburb:
+        <select id="suburb" name="suburb" class="smalltextbold" style="background-color:moccasin;" (change)="onViewSuburbChange($event)">
+          <option></option>
+          <option *ngFor="let suburb of suburbs" [ngValue]="suburb">
+            {{ suburb.name }}
+          </option>
+        </select>
+      </div>
+
+
+      <div class="colapse in col-md-12" id="collapseSuburbs" style="margin-top:20px;">
+
+        <div *ngIf="!isSuburbAddOn && !isSuburbEditOn" class="col-md-12">
+
+          <div class="col-md-12">
+            <div class="col-md-4"><a (click)="onSuburbAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+            <div class="col-md-4"><a (click)="onSuburbEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+            <div class="col-md-4"><a data-target="#removeSuburb" data-toggle="modal" (click)="onSuburbDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
+          </div>
+
+          <div *ngIf="suburbs !== null" class="col-md-12" style="margin-top:20px;">
+
+            <div class="row">
+
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Id: <span class="text-info"> {{ suburbInView.id}}</span>
+              </div>
+
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Name:<span class="text-info"> {{ suburbInView.name}}</span>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div *ngIf="isSuburbAddOn || isSuburbEditOn" class="row col-md-12">
+
+          <form novalidate [formGroup]="suburbForm" (submit)="onSubmitSuburbAddUpdate()">
+
+            <div class="col-md-6 col-md-offset-3">
+              <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                Name:
+                <div class="input-group">
+                  <input type="text" formControlName="name" id="name" name="name" required class="form-control smalltext" style="background-color:moccasin" />
+                </div>
+                <control-messages [control]="placeForm.controls.name"></control-messages>
+              </div>
+            </div>
+
+
+            <div class="col-md-6 col-md-offset-3 panel panel-heading" style="height:70px;margin-top:10px;">
+              <div class="col-md-6">
+                <button id="suburbcancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onSuburbAddEditCancel()">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                </button>
+              </div>
+
+              <div class="col-md-6" style="text-align:left;">
+                <button id="suburbsave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!suburbForm.valid" style="width:auto; height:30px;">
+                  <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+
+        </div>
       </div>
 
 
     </div>
 
   </div>
+
+</div>

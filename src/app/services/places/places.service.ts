@@ -98,7 +98,7 @@ export class PlacesService {
       })
     };
 
-    const localUrl = `${updatePlaceUrl}?stateId=${place.id}`;
+    const localUrl = `${updatePlaceUrl}/${place.id}`;
     return this.httpClientService.put<Place>(localUrl, place, httpOptions).retry(1);
   }
 

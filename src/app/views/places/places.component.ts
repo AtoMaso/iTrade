@@ -28,7 +28,7 @@ export class PlacesComponent implements OnInit {
   private isRequesting: boolean;
   private session: UserSession;
 
-  private statesForm: FormGroup;
+  private stateForm: FormGroup;
   private states: State[] = [];
   private stateInView: State;
   private tempAddUpdateState: State;
@@ -42,7 +42,7 @@ export class PlacesComponent implements OnInit {
   private defaultState: State;
 
 
-  private placesForm: FormGroup;
+  private placeForm: FormGroup;
   private places: Place[] = [];
   private placeInView: Place;
   private tempAddUpdatePlace: Place;
@@ -104,8 +104,8 @@ export class PlacesComponent implements OnInit {
 
     this.setStatesForm();
     this.setPlacesForm();
-    //this.setPostcodesForm();
-    //this.setSuburbsForm();
+    this.setPostcodesForm();
+    this.setSuburbsForm();
   }
 
 
@@ -115,13 +115,12 @@ export class PlacesComponent implements OnInit {
   public getStates() {
     this.statesService.getStates()
       .subscribe((res: State[]) => {
-        this.onSuccessCategories(res);
+        this.onSuccessStates(res);
       }
       , (error: Response) => this.onError(error, "getStates"));
   }
 
-
-  private onSuccessCategories(states: State[]) {
+  private onSuccessStates(states: State[]) {
     this.states = null;
     // collections return zero length when no record found as it is initialised
     if (states.length == 0) {
@@ -145,22 +144,30 @@ export class PlacesComponent implements OnInit {
       else { this.stateInView = this.states[0]; }
 
       // get the places for this state
-      this.getPlacesByState(this.stateInView);
+      this.getPlacesByStateId(this.stateInView.id);
     }
   }
 
 
 
-  private getPlacesByState(state: State) {
+  private getPlacesByStateId(stateid: number) {
+    this.placesService.getPlacesByStateId(this.stateInView.id)
+      .subscribe((res: Place[]) => {
+        this.onSuccessPlaces(res);
+      }
+      , (error: Response) => this.onError(error, "getPlacesByStateId"));
+  }
+
+  private onSuccessPlaces(passedplaces: Place[]) {
 
     this.places = null;
     // collections return zero length when no record found as it is initialised
-    if (state.places.length == 0) {
+    if (passedplaces.length == 0) {
       this.places = null;
       this.placeInView = null;
     }
     else {
-      this.places = state.places;
+      this.places = passedplaces;
       if (this.updatedPlace) {
         this.placeInView = this.updatedPlace;
         this.updatedPlace = null;
@@ -173,20 +180,29 @@ export class PlacesComponent implements OnInit {
     }
 
     // get the postcodes for this place
-    this.getPostcodesByPlace(this.placeInView);
+    this.getPostcodesByPlaceId(this.placeInView.id);
   }
 
 
-  private getPostcodesByPlace(place: Place) {
+
+  private getPostcodesByPlaceId(placeid: number) {
+    this.postcodesService.getPostcodesByPlaceId(placeid)
+      .subscribe((res: Postcode[]) => {
+        this.onSuccessPostcodes(res);
+      }
+      , (error: Response) => this.onError(error, "getPostcodesByPlaceid"));
+  }
+
+  private onSuccessPostcodes(passedpostcodes: Postcode[]) {
 
     this.postcodes = null;
     // collections return zero length when no record found as it is initialised
-    if (place.postcodes.length == 0) {
+    if (passedpostcodes.length == 0) {
       this.postcodes = null;
       this.postcodeInView = null;
     }
     else {
-      this.postcodes = place.postcodes;
+      this.postcodes = passedpostcodes;
       if (this.updatedPostcode) {
         this.postcodeInView = this.updatedPostcode;
         this.updatedPostcode = null;
@@ -198,21 +214,31 @@ export class PlacesComponent implements OnInit {
       else { this.postcodeInView = this.postcodes[0]; }
     }
 
-    // get the postcodes for this place
-    this.getSuburbByPostcode(this.postcodeInView);
+    // get the suburbs for this postcode
+    this.getSuburbsByPostcodeId(this.postcodeInView.id);
   }
 
 
-  private getSuburbByPostcode(postcode: Postcode) {
+
+  private getSuburbsByPostcodeId(postcodeid: number) {
+    this.suburbsService.getSuburbsByPostcodeId(postcodeid)
+      .subscribe((res: Suburb[]) => {
+        this.onSuccessSuburbs(res);
+      }
+      , (error: Response) => this.onError(error, "getSuburbsByPostcodeId"));
+  }
+
+
+  private onSuccessSuburbs(passedsuburbs: Suburb[]) {
 
     this.suburbs = null;
     // collections return zero length when no record found as it is initialised
-    if (postcode.suburbs.length == 0) {
+    if (passedsuburbs.length == 0) {
       this.suburbs = null;
       this.suburbInView = null;
     }
     else {
-      this.suburbs = postcode.suburbs;
+      this.suburbs = passedsuburbs;
       if (this.updatedSuburb) {
         this.suburbInView = this.updatedSuburb;
         this.updatedSuburb = null;
@@ -226,8 +252,109 @@ export class PlacesComponent implements OnInit {
   }
 
 
+
+
+  //************************************************************
+  // SETUP FORM METHODS
+  //************************************************************
+  private setStatesForm() {
+    this.stateForm = this.formBuilder.group({
+      name: new FormControl('', [Validators.required]),
+    });
+  }
+
+  private setPlacesForm() {
+    this.placeForm = this.formBuilder.group({
+      name: new FormControl('', [Validators.required]),
+    });
+  }
+
+  private setPostcodesForm() {
+    this.postcodeForm = this.formBuilder.group({
+      number: new FormControl('', [Validators.required]),
+    });
+  }
+
+  private setSuburbsForm() {
+    this.suburbForm = this.formBuilder.group({
+      name: new FormControl('', [Validators.required]),
+    });
+  }
+
+  private setStatesFormDefaults() {
+
+    let m: number = 0;
+    for (m = 0; m < this.states.length; m++) {
+      if (this.states[m].name == this.stateInView.name) {
+        this.defaultState = this.states[m];
+        break;
+      }
+    }
+
+    setTimeout(() => {
+      this.stateForm.setValue({
+        name: this.defaultState.name,
+      });
+    }, 30);
+  }
+
+  private setPlacesFormDefaults() {
+
+    let m: number = 0;
+
+    for (m = 0; m < this.places.length; m++) {
+      if (this.places[m].name == this.placeInView.name) {
+        this.defaultPlace = this.places[m];
+        break;
+      }
+    }
+
+    setTimeout(() => {
+      this.placeForm.setValue({
+        name: this.defaultPlace.name,
+      });
+    }, 30);
+  }
+
+  private setPostcodesFormDefaults() {
+
+    let m: number = 0;
+    for (m = 0; m < this.postcodes.length; m++) {
+      if (this.postcodes[m].number == this.postcodeInView.number) {
+        this.defaultPostcode = this.postcodes[m];
+        break;
+      }
+    }
+
+    setTimeout(() => {
+      this.postcodeForm.setValue({
+        number: this.defaultPostcode.number,
+      });
+    }, 30);
+  }
+
+  private setSuburbsFormDefaults() {
+
+    let m: number = 0;
+
+    for (m = 0; m < this.suburbs.length; m++) {
+      if (this.suburbs[m].name == this.suburbInView.name) {
+        this.defaultSuburb = this.suburbs[m];
+        break;
+      }
+    }
+
+    setTimeout(() => {
+      this.suburbForm.setValue({
+        name: this.defaultSuburb.name,
+      });
+    }, 30);
+  }
+
+
+
   //*****************************************************
-  // SCREEN CHANGE CATEGORIES 
+  // SCREEN CHANGE STATES 
   //*****************************************************
   private onViewStateChange(state: any) {
     let m: number = 0;
@@ -239,10 +366,14 @@ export class PlacesComponent implements OnInit {
         this.tempAddUpdateState = this.states[m];
         this.setStatesFormDefaults();
 
-        // reset set places
+        // reset places, postcodes and suburbs
         this.isPlaceAddOn = false;
         this.isPlaceEditOn = false;
-        this.getPlacesByState(this.stateInView);
+        this.isPostcodeAddOn = false;
+        this.isPostcodeEditOn = false;
+        this.isSuburbAddOn = false;
+        this.isSuburbEditOn = false;
+        this.getPlacesByStateId(this.stateInView.id);
         this.setPlacesFormDefaults();
       }
     }
@@ -343,7 +474,7 @@ export class PlacesComponent implements OnInit {
   // prepare the new add or update data - get it from the form
   private prepareAddUpdateState(): State {
 
-    const formModel = this.statesForm.value;
+    const formModel = this.stateForm.value;
 
     let newAddUpdateState: State = new State();
 
@@ -405,15 +536,24 @@ export class PlacesComponent implements OnInit {
 
 
   //*****************************************************
-  // SCREEN CHANGE SUBCATEGORIES 
+  // SCREEN CHANGE PLACES 
   //*****************************************************
-  private onViewPlacesChange(place: any) {
+  private onViewPlaceChange(place: any) {
     let m: number = 0;
     for (m = 0; m < this.places.length; m++) {
       if (this.places[m].name === place.target.value) {
+        //set places
         this.placeInView = this.places[m];
         this.tempAddUpdatePlace = this.places[m];
         this.setPlacesFormDefaults();
+
+        // reset postcodes and suburbs       
+        this.isPostcodeAddOn = false;
+        this.isPostcodeEditOn = false;
+        this.isSuburbAddOn = false;
+        this.isSuburbEditOn = false;
+        this.getPostcodesByPlaceId(this.placeInView.id);
+        this.setPostcodesFormDefaults();
       }
     }
   }
@@ -434,7 +574,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubCategoryEditClick() {
+  private onPlaceEditClick() {
     this.messagesService.emitRoute("nill");
     this.isPlaceEditOn = true;
     this.isPlaceAddOn = false;
@@ -455,7 +595,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubmitSubCategoryAddUpdate() {
+  private onSubmitPlacesAddUpdate() {
 
     this.messagesService.emitRoute("nill");
     let place: Place = this.prepareAddUpdatePlace();
@@ -475,7 +615,7 @@ export class PlacesComponent implements OnInit {
             // show success
             this.messagesService.emitProcessMessage("??????");
             // get the new data from the server
-            this.getPlacesByState(this.stateInView);
+            this.getPlacesByStateId(this.stateInView.id);
 
           }, (serviceError: Response) => this.onError(serviceError, "onSubmitPlaceAddUpdate"));
 
@@ -500,7 +640,7 @@ export class PlacesComponent implements OnInit {
             // show success
             this.messagesService.emitProcessMessage("??????");
             // get the new data from the server
-            this.getPlacesByState(this.stateInView);
+            this.getPlacesByStateId(this.stateInView.id);
 
           }, (serviceError: Response) => this.onError(serviceError, "onSubmitPlaceAddUpdate"));
 
@@ -514,7 +654,7 @@ export class PlacesComponent implements OnInit {
   // prepare the new add or update data - get it from the form
   private prepareAddUpdatePlace(): Place {
 
-    const formModel = this.placesForm.value;
+    const formModel = this.placeForm.value;
 
     let newAddUpdatePlace: Place = new Place();
 
@@ -578,61 +718,370 @@ export class PlacesComponent implements OnInit {
       }, (serviceError: Response) => this.onError(serviceError, "onSubSubmitPlaceDeleted"));
   }
 
-  //************************************************************
-  // SETUP FORM METHODS
-  //************************************************************
-  private setStatesForm() {
-    this.statesForm = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
-    });
-  }
 
 
-  private setPlacesForm() {
-    this.placesForm = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
-    });
-  }
 
 
-  private setStatesFormDefaults() {
 
+
+
+  //*****************************************************
+  // SCREEN CHANGE POSTCODE 
+  //*****************************************************
+  private onViewPostcodeChange(state: any) {
     let m: number = 0;
-    for (m = 0; m < this.states.length; m++) {
-      if (this.states[m].name == this.stateInView.name) {
-        this.defaultState = this.states[m];
-        break;
+    for (m = 0; m < this.postcodes.length; m++) {
+
+      if (this.postcodes[m].number === state.target.value) {
+        // set postcodes
+        this.postcodeInView = this.postcodes[m];
+        this.tempAddUpdatePostcode = this.postcodes[m];
+        this.setPostcodesFormDefaults();
+
+        // reset set places
+        this.isSuburbAddOn = false;
+        this.isSuburbEditOn = false;
+        this.getSuburbsByPostcodeId(this.postcodeInView.id);
+        this.setSuburbsFormDefaults();
+      }
+    }
+  }
+
+
+  private onPostcodeAddClick() {
+    this.messagesService.emitRoute("nill");
+    this.isPostcodeAddOn = true;
+    this.setPostcodesForm();
+
+    // if postcode in view take it as temp so we can go back if adding has been cancelled
+    if (this.postcodeInView) {
+      this.tempAddUpdatePostcode = this.postcodeInView;
+      this.postcodeInView = null;
+    }
+  }
+
+
+  private onPostcodeEditClick() {
+    this.messagesService.emitRoute("nill");
+    this.isPostcodeEditOn = true;
+
+    // if postcode in view take it as temp so we can go back if editing has been cancelled
+    this.tempAddUpdatePostcode = this.postcodeInView;
+    this.setPostcodesForm();
+    this.setPostcodesFormDefaults();
+  }
+
+
+  private onPostcodeAddEditCancel() {
+    this.messagesService.emitRoute("nill");
+    if (this.isPostcodeAddOn == true) { this.isPostcodeAddOn = false; }
+    if (this.isPostcodeEditOn == true) { this.isPostcodeEditOn = false; }
+    // if we are cancelling the adding or editing
+    if (this.tempAddUpdatePostcode) { this.postcodeInView = this.tempAddUpdatePostcode; }
+  }
+
+
+  private onSubmitPostcodeAddUpdate() {
+
+    this.removedPostcode = null;
+    this.messagesService.emitRoute("nill");
+    let postcode: Postcode = this.prepareAddUpdatePostcode();
+
+    if (this.isPostcodeAddOn) {
+
+      if (postcode) { // if state does not exist
+
+        // add new state
+        this.postcodesService.addPostcode(postcode)
+          .subscribe((response: Postcode) => {
+            // reset the others
+            this.updatedPostcode = null;
+            this.removedPostcode = null;
+            // get the new state so we can display it when we come from the server
+            this.addedPostcode = response;
+            // show success
+            this.messagesService.emitProcessMessage("?????");
+            // get the new data from the server
+            this.getPostcodesByPlaceId(this.placeInView.id);
+
+          }, (serviceError: Response) => this.onError(serviceError, "onSubmitStateAdd"));
+
+        // go back to view
+        this.isPostcodeAddOn = !this.isPostcodeAddOn;
       }
     }
 
-    setTimeout(() => {
-      this.statesForm.setValue({
-        name: this.defaultState.name,
-      });
-    }, 30);
-  }
 
+    if (this.isPostcodeEditOn) {
 
-  private setPlacesFormDefaults() {
+      if (postcode) { // if state changed or is not the same
 
-    let m: number = 0;
-    //for (m = 0; m < this.states.length; m++) {
-    //  if (this.states[m].categoryDescription == this.stateInView.categoryDescription) { this.defaultState = this.states[m]; }
-    //}
+        // update state
+        this.postcodesService.updatePostcode(postcode)
+          .subscribe((response: Postcode) => {
+            // reset the others
+            this.addedPostcode = null;
+            this.removedPostcode = null;
+            // get the saved state to pass it when we get the date from the server 
+            this.updatedPostcode = response;
+            // show success
+            this.messagesService.emitProcessMessage("??????");
+            // get the new data from the server
+            this.getPostcodesByPlaceId(this.placeInView.id);
 
-    for (m = 0; m < this.places.length; m++) {
-      if (this.places[m].name == this.placeInView.name) {
-        this.defaultPlace = this.places[m];
-        break;
+          }, (serviceError: Response) => this.onError(serviceError, "onSubmitStateUpdate"));
+
+        // go back to view
+        this.isStateEditOn = !this.isStateEditOn;
       }
     }
 
-    setTimeout(() => {
-      this.placesForm.setValue({
-        name: this.defaultPlace.name,
-      });
-    }, 30);
   }
+
+
+  // prepare the new add or update data - get it from the form
+  private prepareAddUpdatePostcode(): Postcode {
+
+    const formModel = this.postcodeForm.value;
+
+    let newAddUpdatePostcode: Postcode = new Postcode();
+
+    if (this.isPostcodeEditOn) { newAddUpdatePostcode.id = this.postcodeInView.id; }
+    newAddUpdatePostcode.number = formModel.number as string;
+
+
+    // has anything beeing changed in the form and we are updating
+    if (this.isStateEditOn && !this.isPostcodeChanged(newAddUpdatePostcode, this.tempAddUpdatePostcode)) {
+      this.messagesService.emitProcessMessage("??????");
+      return null;
+    }
+    if (this.postcodeExists(newAddUpdatePostcode)) {
+      this.messagesService.emitProcessMessage("?????");
+      return null;
+    }
+
+    return newAddUpdatePostcode;
+  }
+
+  // as the form has been prepopulated when updating we can not use the form dirty on changed
+  // we have custom method to compare the new and old
+  private isPostcodeChanged(newPostcode: Postcode, oldPostcode: Postcode): boolean {
+    if (newPostcode.number === oldPostcode.number) { return false; }
+    return false;
+  }
+
+
+  private postcodeExists(postcode: Postcode): boolean {
+    let m: number = 0;
+    for (m = 0; m < this.postcodes.length; m++) {
+      if (postcode.number === this.postcodes[m].number) { return true; }
+    }
+    return false;
+  }
+
+
+  private onPostcodeDeleteClick() {
+    this.postcodeToRemove = this.postcodeInView;
+  }
+
+
+  private onSubmitDeletePostcode(postcodeToRemove) {
+
+    this.postcodesService.deletePostcode(postcodeToRemove.id)
+      .subscribe((response: Postcode) => {
+        // reset the update and add
+        this.addedPostcode= null;
+        this.updatedPostcode = null;
+        // show success
+        this.messagesService.emitProcessMessage("??????");
+        // get the new data from the server and start again
+        this.getPlacesByStateId(this.stateInView.id);
+
+      }, (serviceError: Response) => this.onError(serviceError, "onSubmitPostcodeDelete"));
+  }
+
+
+
+
+
+
+  //*****************************************************
+  // SCREEN CHANGE SUBURBS 
+  //*****************************************************
+  private onViewSuburbChange(place: any) {
+    let m: number = 0;
+    for (m = 0; m < this.suburbs.length; m++) {
+      if (this.suburbs[m].name === place.target.value) {
+        // set suburbs
+        this.suburbInView = this.suburbs[m];
+        this.tempAddUpdateSuburb = this.suburbs[m];
+        this.setSuburbsFormDefaults();
+      }
+    }
+  }
+
+
+  private onSuburbAddClick() {
+    this.messagesService.emitRoute("nill");
+    this.isSuburbAddOn = true;
+    this.isSuburbEditOn = false;
+
+    this.setPlacesForm();
+
+    // if address in view take it as temp so we can go back if adding has been cancelled
+    if (this.suburbInView) {
+      this.tempAddUpdateSuburb= this.suburbInView;
+      this.suburbInView = null;
+    }
+  }
+
+
+  private onSubCategoryEditClick() {
+    this.messagesService.emitRoute("nill");
+    this.isSuburbEditOn = true;
+    this.isSuburbAddOn = false;
+
+    // if place in view take it as temp so we can go back if editing has been cancelled
+    this.tempAddUpdateSuburb = this.suburbInView;
+    this.setPlacesForm();
+    this.setPlacesFormDefaults();
+  }
+
+
+  private onSuburbAddEditCancel() {
+    this.messagesService.emitRoute("nill");
+    if (this.isSuburbAddOn == true) { this.isSuburbAddOn = false; }
+    if (this.isSuburbEditOn == true) { this.isSuburbEditOn = false; }
+    // if we are cancelling the adding or editing
+    if (this.tempAddUpdateSuburb) { this.suburbInView = this.tempAddUpdateSuburb; }
+  }
+
+
+  private onSubmitSuburbAddUpdate() {
+
+    this.messagesService.emitRoute("nill");
+    let suburb: Suburb = this.prepareAddUpdateSuburb();
+
+    if (this.isSuburbAddOn) {
+
+      if (suburb) {  // does place exists
+
+        // add new phone
+        this.suburbsService.addSuburb(suburb)
+          .subscribe((response: Suburb) => {
+            // reset the other
+            this.updatedSuburb = null;
+            this.removedSuburb = null;
+            // get the new added place so when we come back from the server we can display it in view
+            this.addedSuburb = response;
+            // show success
+            this.messagesService.emitProcessMessage("??????");
+            // get the new data from the server
+            this.getSuburbsByPostcodeId(this.postcodeInView.id);
+
+          }, (serviceError: Response) => this.onError(serviceError, "onSubmitSuburbAddUpdate"));
+
+        // go back to view
+        this.isSuburbAddOn = !this.isSuburbAddOn;
+      }
+    }
+
+
+    if (this.isSuburbEditOn) {
+
+      if (suburb) { // if place changed
+
+        // update place
+        this.suburbsService.updateSuburb(suburb)
+          .subscribe((response: Suburb) => {
+            // reset the athers
+            this.addedSuburb = null;
+            this.removedSuburb = null;
+            // get the saved place so when we can put it in view when we come back from the server
+            this.updatedSuburb = response;
+            // show success
+            this.messagesService.emitProcessMessage("??????");
+            // get the new data from the server
+            this.getSuburbsByPostcodeId(this.postcodeInView.id);
+
+          }, (serviceError: Response) => this.onError(serviceError, "onSubmitSuburbAddUpdate"));
+
+        // go back to view
+        this.isSuburbEditOn = !this.isSuburbEditOn;
+      }
+    }
+  }
+
+
+  // prepare the new add or update data - get it from the form
+  private prepareAddUpdateSuburb(): Suburb {
+
+    const formModel = this.suburbForm.value;
+
+    let newAddUpdateSuburb: Suburb = new Suburb();
+
+    if (this.isSuburbEditOn) { newAddUpdateSuburb.id = this.suburbInView.id; }
+    newAddUpdateSuburb.name = formModel.name as string;
+    newAddUpdateSuburb.postcodeId = this.suburbInView.postcodeId;
+
+    // has anything beeing changed in the form and we are updating
+    if (this.isSuburbEditOn && !this.isSuburbChanged(newAddUpdateSuburb, this.tempAddUpdateSuburb)) {
+      this.messagesService.emitProcessMessage("???????");
+      return null;
+    }
+    if (this.suburbExists(newAddUpdateSuburb)) {
+      this.messagesService.emitProcessMessage("??????");
+      return null;
+    }
+
+    return newAddUpdateSuburb;
+  }
+
+
+  // as the form has been prepopulated when updating we can not use the form dirty on changed
+  // we have custom method to compare the new and old
+  private isSuburbChanged(newSuburb: Suburb, oldSuburb: Suburb): boolean {
+
+    if (newSuburb.name === oldSuburb.name) { return false; }
+    return true;
+  }
+
+
+  private suburbExists(suburb: Suburb): boolean {
+    let m: number = 0;
+    for (m = 0; m < this.suburbs.length; m++) {
+      if (suburb.name === this.suburbs[m].name) { return true; }
+    }
+    return false;
+  }
+
+
+  private onSuburbDeleteClick() {
+    this.suburbToRemove = this.suburbInView;
+  }
+
+
+  private onSubmitDeleteSuburb(suburbToRemove) {
+
+    this.suburbsService.deleteSuburb(suburbToRemove.id)
+      .subscribe((response: Suburb) => {
+        // reset the update and add
+        this.addedSuburb = null;
+        this.updatedSuburb = null;
+        // initiate the flag that place has been deleted
+        this.removedSuburb = response;
+        // grab the parent category at the moment of deletetion
+        this.removedSuburb = this.suburbInView;
+        // show success
+        this.messagesService.emitProcessMessage("??????");
+        // get the new data from the server
+        this.getPostcodesByPlaceId(this.placeInView.id);
+
+      }, (serviceError: Response) => this.onError(serviceError, "onSubSubmitSuburbDeleted"));
+  }
+
+
+
 
 
   //************************************************************
