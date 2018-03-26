@@ -108,7 +108,7 @@
     suburb: 'http://localhost:5700/api/suburbs/',
     updatesuburb: 'http://localhost:5700/api/suburbs/PutSuburb',
     addsuburb: 'http://localhost:5700/api/suburbs/PostSuburb',
-    deletesuburb: 'http://localhost:5700/api/suburs/DeleteSuburb',
+    deletesuburb: 'http://localhost:5700/api/suburbs/DeleteSuburb',
 
 
 

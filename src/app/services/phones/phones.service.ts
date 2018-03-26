@@ -109,24 +109,6 @@ export class PhonesService {
 
 
   //******************************************************
-  // DELETE PHONE
-  //******************************************************
-  public deletePhone(phone: Phone): Observable<Phone> {
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
-
-    this.localUrl = `${deletePhoneUrl}?id=${phone.id}`;
-    return this.httpClientService.delete<Phone>(this.localUrl, httpOptions).retry(1);
-  }
-
-
-  //******************************************************
   // UPDATE PHONE
   //******************************************************
   public updatePhone(phone: Phone): Observable<Phone> {
@@ -141,6 +123,24 @@ export class PhonesService {
 
     this.localUrl = `${updatePhoneUrl}?id=${phone.id}`;
     return this.httpClientService.put<Phone>(this.localUrl, phone, httpOptions).retry(1);
+  }
+
+
+  //******************************************************
+  // DELETE PHONE
+  //******************************************************
+  public deletePhone(phone: Phone): Observable<Phone> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    this.localUrl = `${deletePhoneUrl}?id=${phone.id}`;
+    return this.httpClientService.delete<Phone>(this.localUrl, httpOptions).retry(1);
   }
 
 

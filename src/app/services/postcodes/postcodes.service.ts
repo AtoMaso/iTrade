@@ -98,7 +98,7 @@ export class PostcodesService {
       })
     };
 
-    const localUrl = `${updatePostcodeUrl}/${postcode.id}`;
+    const localUrl = `${updatePostcodeUrl}?id=${postcode.id}`;
     return this.httpClientService.put<Postcode>(localUrl, postcode, httpOptions).retry(1);
   }
 
@@ -117,7 +117,7 @@ export class PostcodesService {
       })
     };
 
-    const localUrl = `${deletePostcodeUrl}/${id}`; // DELETE api/postcodes/1
+    const localUrl = `${deletePostcodeUrl}?id=${id}`; // DELETE api/postcodes/DeletePostcode?id=1
     return this.httpClientService.delete<Postcode>(localUrl, httpOptions);
   }
 }

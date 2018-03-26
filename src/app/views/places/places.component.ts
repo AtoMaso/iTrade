@@ -14,7 +14,7 @@ import { LoggerService } from '../../services/logger/logger.service';
 import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 // components
-import { UserSession, PageTitle, Phone, PhoneType, State, Place, Postcode, Suburb} from '../../helpers/classes';
+import { UserSession, PageTitle, State, Place, Postcode, Suburb} from '../../helpers/classes';
 import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
 
 @Component({
@@ -32,15 +32,14 @@ export class PlacesComponent implements OnInit {
   private states: State[] = [];
   private stateInView: State;
   private tempAddUpdateState: State;
-  private State: State;
+  private defaultState: State;
   private isStateAddOn: boolean = false;
   private isStateEditOn: boolean = false;
   private updatedState: State;
   private addedState: State;
   private removedState: State;
   private stateToRemove: State;
-  private defaultState: State;
-
+ 
 
   private placeForm: FormGroup;
   private places: Place[] = [];
@@ -141,6 +140,10 @@ export class PlacesComponent implements OnInit {
         this.stateInView = this.removedState;
         this.removedState= null;
       }
+      else if (this.removedPlace) {
+        this.stateInView = this.removedState;
+        this.removedPlace = null;
+      }
       else { this.stateInView = this.states[0]; }
 
       // get the places for this state
@@ -175,6 +178,10 @@ export class PlacesComponent implements OnInit {
       else if (this.addedPlace) {
         this.placeInView = this.addedPlace;
         this.addedPlace = null;
+      }
+      else if (this.removedPostcode) {
+        this.placeInView = this.removedPlace;
+        this.removedPostcode = null;
       }
       else { this.placeInView = this.places[0]; }
     }
@@ -211,6 +218,10 @@ export class PlacesComponent implements OnInit {
         this.postcodeInView = this.addedPostcode;
         this.addedPostcode = null;
       }
+      else if (this.removedSuburb) {
+        this.postcodeInView = this.removedPostcode;
+        this.removedSuburb = null;
+      }
       else { this.postcodeInView = this.postcodes[0]; }
     }
 
@@ -227,7 +238,6 @@ export class PlacesComponent implements OnInit {
       }
       , (error: Response) => this.onError(error, "getSuburbsByPostcodeId"));
   }
-
 
   private onSuccessSuburbs(passedsuburbs: Suburb[]) {
 
@@ -383,6 +393,7 @@ export class PlacesComponent implements OnInit {
   private onStateAddClick() {
     this.messagesService.emitRoute("nill");
     this.isStateAddOn = true;
+    this.isStateEditOn = false;
     this.setStatesForm();
 
     // if address in view take it as temp so we can go back if adding has been cancelled
@@ -396,6 +407,7 @@ export class PlacesComponent implements OnInit {
   private onStateEditClick() {
     this.messagesService.emitRoute("nill");
     this.isStateEditOn = true;
+    this.isStateAddOn = false;
 
     // if phone in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdateState = this.stateInView;
@@ -419,9 +431,7 @@ export class PlacesComponent implements OnInit {
     this.messagesService.emitRoute("nill");
     let state: State = this.prepareAddUpdateState();
 
-    if (this.isStateAddOn) {
-
-      if (state) { // if state does not exist
+    if (this.isStateAddOn && state) {
 
         // add new state
         this.statesService.addState(state)
@@ -432,7 +442,7 @@ export class PlacesComponent implements OnInit {
             // get the new state so we can display it when we come from the server
             this.addedState = response;
             // show success
-            this.messagesService.emitProcessMessage("?????");
+            this.messagesService.emitProcessMessage("PMSASt");
             // get the new data from the server
             this.getStates();
 
@@ -440,14 +450,12 @@ export class PlacesComponent implements OnInit {
 
         // go back to view
         this.isStateAddOn = !this.isStateAddOn;
-      }
+           
     }
 
 
-    if (this.isStateEditOn) {
-
-      if (state) { // if state changed or is not the same
-
+    if (this.isStateEditOn && state) {
+  
         // update state
         this.statesService.updateState(state)
           .subscribe((response: State) => {
@@ -457,15 +465,14 @@ export class PlacesComponent implements OnInit {
             // get the saved state to pass it when we get the date from the server 
             this.updatedState = response;
             // show success
-            this.messagesService.emitProcessMessage("??????");
+            this.messagesService.emitProcessMessage("PMSUSt"); 
             // get the new data from the server
             this.getStates();
 
           }, (serviceError: Response) => this.onError(serviceError, "onSubmitStateUpdate"));
 
         // go back to view
-        this.isStateEditOn = !this.isStateEditOn;
-      }
+        this.isStateEditOn = !this.isStateEditOn;    
     }
 
   }
@@ -484,11 +491,11 @@ export class PlacesComponent implements OnInit {
 
     // has anything beeing changed in the form and we are updating
     if (this.isStateEditOn && !this.isStateChanged(newAddUpdateState, this.tempAddUpdateState)) {
-      this.messagesService.emitProcessMessage("??????");
+      this.messagesService.emitProcessMessage("PMEUSt"); 
       return null;
     }
     if (this.stateExists(newAddUpdateState)) {
-      this.messagesService.emitProcessMessage("?????");
+      this.messagesService.emitProcessMessage("PMEUStE");
       return null;
     }
 
@@ -499,11 +506,13 @@ export class PlacesComponent implements OnInit {
   // we have custom method to compare the new and old
   private isStateChanged(newState: State, oldState: State): boolean {
     if (newState.name === oldState.name) { return false; }
-    return false;
+    return true;
   }
 
 
   private stateExists(state: State): boolean {
+    // is this the first state??
+    if (this.states === null) { return false; }
     let m: number = 0;
     for (m = 0; m < this.states.length; m++) {
       if (state.name === this.states[m].name) { return true; }
@@ -525,11 +534,11 @@ export class PlacesComponent implements OnInit {
         this.addedState = null;
         this.updatedState = null;
         // show success
-        this.messagesService.emitProcessMessage("??????");
+        this.messagesService.emitProcessMessage("PMSDSt");
         // get the new data from the server and start again
         this.getStates();
 
-      }, (serviceError: Response) => this.onError(serviceError, "onSubmitStateDelete"));
+      }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeleteState"));
   }
 
 
@@ -595,15 +604,13 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubmitPlacesAddUpdate() {
+  private onSubmitPlaceAddUpdate() {
 
     this.messagesService.emitRoute("nill");
     let place: Place = this.prepareAddUpdatePlace();
 
-    if (this.isPlaceAddOn) {
+    if (this.isPlaceAddOn && place) {
 
-      if (place) {  // does place exists
-   
         // add new phone
         this.placesService.addPlace(place)
           .subscribe((response: Place) => {
@@ -613,21 +620,19 @@ export class PlacesComponent implements OnInit {
             // get the new added place so when we come back from the server we can display it in view
             this.addedPlace = response;
             // show success
-            this.messagesService.emitProcessMessage("??????");
+            this.messagesService.emitProcessMessage("PMSAPl");
             // get the new data from the server
             this.getPlacesByStateId(this.stateInView.id);
 
-          }, (serviceError: Response) => this.onError(serviceError, "onSubmitPlaceAddUpdate"));
+          }, (serviceError: Response) => this.onError(serviceError, "onSubmitPlaceAdd"));
 
         // go back to view
         this.isPlaceAddOn = !this.isPlaceAddOn;
-      }
+     
     }
 
 
-    if (this.isPlaceEditOn) {
-
-      if (place) { // if place changed
+    if (this.isPlaceEditOn && place) {
              
         // update place
         this.placesService.updatePlace(place)
@@ -638,15 +643,15 @@ export class PlacesComponent implements OnInit {
             // get the saved place so when we can put it in view when we come back from the server
             this.updatedPlace = response;
             // show success
-            this.messagesService.emitProcessMessage("??????");
+            this.messagesService.emitProcessMessage("PMSUPl");
             // get the new data from the server
             this.getPlacesByStateId(this.stateInView.id);
 
-          }, (serviceError: Response) => this.onError(serviceError, "onSubmitPlaceAddUpdate"));
+          }, (serviceError: Response) => this.onError(serviceError, "onSubmitPlaceUpdate"));
 
         // go back to view
         this.isPlaceEditOn = !this.isPlaceEditOn;
-      }
+  
     }
   }
 
@@ -660,15 +665,15 @@ export class PlacesComponent implements OnInit {
 
     if (this.isPlaceEditOn) { newAddUpdatePlace.id = this.placeInView.id; }
     newAddUpdatePlace.name = formModel.name as string;
-    newAddUpdatePlace.stateId = this.placeInView.stateId;
+    newAddUpdatePlace.stateId = this.stateInView.id;
 
     // has anything beeing changed in the form and we are updating
     if (this.isPlaceEditOn && !this.isPlaceChanged(newAddUpdatePlace, this.tempAddUpdatePlace)) {
-      this.messagesService.emitProcessMessage("???????");
+      this.messagesService.emitProcessMessage("PMEUPl");
       return null;
     }
     if (this.placeExists(newAddUpdatePlace)) {
-      this.messagesService.emitProcessMessage("??????");
+      this.messagesService.emitProcessMessage("PMEUPlE");
       return null;
     }
 
@@ -680,12 +685,14 @@ export class PlacesComponent implements OnInit {
   // we have custom method to compare the new and old
   private isPlaceChanged(newPlace: Place, oldPlace: Place): boolean {
 
-    if (newPlace.name === oldPlace.name) { return false; }
+    if (newPlace.name === oldPlace.name && newPlace.stateId === oldPlace.stateId) { return false; }
     return true;
   }
 
 
   private placeExists(place: Place): boolean {
+    // is this the first place??
+    if (this.places === null) { return false; }
     let m: number = 0;
     for (m = 0; m < this.places.length; m++) {
       if (place.name === this.places[m].name) { return true; }
@@ -711,11 +718,11 @@ export class PlacesComponent implements OnInit {
         // grab the parent category at the moment of deletetion
         this.removedState = this.stateInView;
         // show success
-        this.messagesService.emitProcessMessage("PMSDSCa");
+        this.messagesService.emitProcessMessage("PMSDPl");
         // get the new data from the server
         this.getStates();
 
-      }, (serviceError: Response) => this.onError(serviceError, "onSubSubmitPlaceDeleted"));
+      }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeletePlace"));
   }
 
 
@@ -751,6 +758,7 @@ export class PlacesComponent implements OnInit {
   private onPostcodeAddClick() {
     this.messagesService.emitRoute("nill");
     this.isPostcodeAddOn = true;
+    this.isPostcodeEditOn = false;
     this.setPostcodesForm();
 
     // if postcode in view take it as temp so we can go back if adding has been cancelled
@@ -764,6 +772,7 @@ export class PlacesComponent implements OnInit {
   private onPostcodeEditClick() {
     this.messagesService.emitRoute("nill");
     this.isPostcodeEditOn = true;
+    this.isPostcodeAddOn = false;
 
     // if postcode in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdatePostcode = this.postcodeInView;
@@ -787,9 +796,7 @@ export class PlacesComponent implements OnInit {
     this.messagesService.emitRoute("nill");
     let postcode: Postcode = this.prepareAddUpdatePostcode();
 
-    if (this.isPostcodeAddOn) {
-
-      if (postcode) { // if state does not exist
+    if (this.isPostcodeAddOn && postcode) {
 
         // add new state
         this.postcodesService.addPostcode(postcode)
@@ -800,21 +807,19 @@ export class PlacesComponent implements OnInit {
             // get the new state so we can display it when we come from the server
             this.addedPostcode = response;
             // show success
-            this.messagesService.emitProcessMessage("?????");
+            this.messagesService.emitProcessMessage("PMSAPc");
             // get the new data from the server
             this.getPostcodesByPlaceId(this.placeInView.id);
 
-          }, (serviceError: Response) => this.onError(serviceError, "onSubmitStateAdd"));
+          }, (serviceError: Response) => this.onError(serviceError, "onSubmitPostcodeAdd"));
 
         // go back to view
         this.isPostcodeAddOn = !this.isPostcodeAddOn;
-      }
+     
     }
 
 
-    if (this.isPostcodeEditOn) {
-
-      if (postcode) { // if state changed or is not the same
+    if (this.isPostcodeEditOn && postcode) {
 
         // update state
         this.postcodesService.updatePostcode(postcode)
@@ -825,15 +830,15 @@ export class PlacesComponent implements OnInit {
             // get the saved state to pass it when we get the date from the server 
             this.updatedPostcode = response;
             // show success
-            this.messagesService.emitProcessMessage("??????");
+            this.messagesService.emitProcessMessage("PMSUPc");
             // get the new data from the server
             this.getPostcodesByPlaceId(this.placeInView.id);
 
-          }, (serviceError: Response) => this.onError(serviceError, "onSubmitStateUpdate"));
+          }, (serviceError: Response) => this.onError(serviceError, "onSubmitPostcodeUpdate"));
 
         // go back to view
-        this.isStateEditOn = !this.isStateEditOn;
-      }
+        this.isPostcodeEditOn = !this.isPostcodeEditOn;
+     
     }
 
   }
@@ -848,15 +853,16 @@ export class PlacesComponent implements OnInit {
 
     if (this.isPostcodeEditOn) { newAddUpdatePostcode.id = this.postcodeInView.id; }
     newAddUpdatePostcode.number = formModel.number as string;
+    newAddUpdatePostcode.placeId = this.placeInView.id;
 
 
     // has anything beeing changed in the form and we are updating
     if (this.isStateEditOn && !this.isPostcodeChanged(newAddUpdatePostcode, this.tempAddUpdatePostcode)) {
-      this.messagesService.emitProcessMessage("??????");
+      this.messagesService.emitProcessMessage("PMEUPc");
       return null;
     }
     if (this.postcodeExists(newAddUpdatePostcode)) {
-      this.messagesService.emitProcessMessage("?????");
+      this.messagesService.emitProcessMessage("PMEUPcE");
       return null;
     }
 
@@ -866,12 +872,14 @@ export class PlacesComponent implements OnInit {
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
   private isPostcodeChanged(newPostcode: Postcode, oldPostcode: Postcode): boolean {
-    if (newPostcode.number === oldPostcode.number) { return false; }
-    return false;
+    if (newPostcode.number === oldPostcode.number && newPostcode.placeId === oldPostcode .id) { return false; }
+    return true;
   }
 
 
   private postcodeExists(postcode: Postcode): boolean {
+    // is this the first postcode??
+    if (this.postcodes === null) { return false; }
     let m: number = 0;
     for (m = 0; m < this.postcodes.length; m++) {
       if (postcode.number === this.postcodes[m].number) { return true; }
@@ -891,13 +899,17 @@ export class PlacesComponent implements OnInit {
       .subscribe((response: Postcode) => {
         // reset the update and add
         this.addedPostcode= null;
-        this.updatedPostcode = null;
-        // show success
-        this.messagesService.emitProcessMessage("??????");
+        this.updatedPostcode = null;       
+        // initiate the flag that place has been deleted
+        this.removedPostcode = response;
+        // grab the parent category at the moment of deletetion
+        this.removedPlace = this.placeInView;
+         // show success
+        this.messagesService.emitProcessMessage("PMSDPc");
         // get the new data from the server and start again
         this.getPlacesByStateId(this.stateInView.id);
 
-      }, (serviceError: Response) => this.onError(serviceError, "onSubmitPostcodeDelete"));
+      }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeletePostcode"));
   }
 
 
@@ -926,7 +938,7 @@ export class PlacesComponent implements OnInit {
     this.isSuburbAddOn = true;
     this.isSuburbEditOn = false;
 
-    this.setPlacesForm();
+    this.setSuburbsForm();
 
     // if address in view take it as temp so we can go back if adding has been cancelled
     if (this.suburbInView) {
@@ -936,15 +948,15 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubCategoryEditClick() {
+  private onSuburbEditClick() {
     this.messagesService.emitRoute("nill");
     this.isSuburbEditOn = true;
     this.isSuburbAddOn = false;
 
     // if place in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdateSuburb = this.suburbInView;
-    this.setPlacesForm();
-    this.setPlacesFormDefaults();
+    this.setSuburbsForm();
+    this.setSuburbsFormDefaults();
   }
 
 
@@ -962,9 +974,7 @@ export class PlacesComponent implements OnInit {
     this.messagesService.emitRoute("nill");
     let suburb: Suburb = this.prepareAddUpdateSuburb();
 
-    if (this.isSuburbAddOn) {
-
-      if (suburb) {  // does place exists
+    if (this.isSuburbAddOn && suburb) {  
 
         // add new phone
         this.suburbsService.addSuburb(suburb)
@@ -975,7 +985,7 @@ export class PlacesComponent implements OnInit {
             // get the new added place so when we come back from the server we can display it in view
             this.addedSuburb = response;
             // show success
-            this.messagesService.emitProcessMessage("??????");
+            this.messagesService.emitProcessMessage("PMSASu");
             // get the new data from the server
             this.getSuburbsByPostcodeId(this.postcodeInView.id);
 
@@ -983,13 +993,11 @@ export class PlacesComponent implements OnInit {
 
         // go back to view
         this.isSuburbAddOn = !this.isSuburbAddOn;
-      }
+
     }
 
 
-    if (this.isSuburbEditOn) {
-
-      if (suburb) { // if place changed
+    if (this.isSuburbEditOn && suburb) {
 
         // update place
         this.suburbsService.updateSuburb(suburb)
@@ -1000,7 +1008,7 @@ export class PlacesComponent implements OnInit {
             // get the saved place so when we can put it in view when we come back from the server
             this.updatedSuburb = response;
             // show success
-            this.messagesService.emitProcessMessage("??????");
+            this.messagesService.emitProcessMessage("PMSUSu");
             // get the new data from the server
             this.getSuburbsByPostcodeId(this.postcodeInView.id);
 
@@ -1008,7 +1016,7 @@ export class PlacesComponent implements OnInit {
 
         // go back to view
         this.isSuburbEditOn = !this.isSuburbEditOn;
-      }
+     
     }
   }
 
@@ -1022,15 +1030,15 @@ export class PlacesComponent implements OnInit {
 
     if (this.isSuburbEditOn) { newAddUpdateSuburb.id = this.suburbInView.id; }
     newAddUpdateSuburb.name = formModel.name as string;
-    newAddUpdateSuburb.postcodeId = this.suburbInView.postcodeId;
+    newAddUpdateSuburb.postcodeId = this.postcodeInView.id;
 
     // has anything beeing changed in the form and we are updating
     if (this.isSuburbEditOn && !this.isSuburbChanged(newAddUpdateSuburb, this.tempAddUpdateSuburb)) {
-      this.messagesService.emitProcessMessage("???????");
+      this.messagesService.emitProcessMessage("PMEUSu");
       return null;
     }
     if (this.suburbExists(newAddUpdateSuburb)) {
-      this.messagesService.emitProcessMessage("??????");
+      this.messagesService.emitProcessMessage("PMEUSuE");
       return null;
     }
 
@@ -1042,12 +1050,14 @@ export class PlacesComponent implements OnInit {
   // we have custom method to compare the new and old
   private isSuburbChanged(newSuburb: Suburb, oldSuburb: Suburb): boolean {
 
-    if (newSuburb.name === oldSuburb.name) { return false; }
+    if (newSuburb.name === oldSuburb.name && newSuburb.postcodeId === oldSuburb.postcodeId) { return false; }
     return true;
   }
 
 
   private suburbExists(suburb: Suburb): boolean {
+    // is this the first suburb??
+    if (this.suburbs === null) { return false; }
     let m: number = 0;
     for (m = 0; m < this.suburbs.length; m++) {
       if (suburb.name === this.suburbs[m].name) { return true; }
@@ -1071,13 +1081,13 @@ export class PlacesComponent implements OnInit {
         // initiate the flag that place has been deleted
         this.removedSuburb = response;
         // grab the parent category at the moment of deletetion
-        this.removedSuburb = this.suburbInView;
+        this.removedPostcode = this.postcodeInView;
         // show success
-        this.messagesService.emitProcessMessage("??????");
+        this.messagesService.emitProcessMessage("PMSDSu");
         // get the new data from the server
         this.getPostcodesByPlaceId(this.placeInView.id);
 
-      }, (serviceError: Response) => this.onError(serviceError, "onSubSubmitSuburbDeleted"));
+      }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeleteSuburb"));
   }
 
 

@@ -67,7 +67,6 @@ export class PlacesService {
 
 
 
-
   //******************************************************
   // ADD PLACE
   //******************************************************
@@ -98,7 +97,7 @@ export class PlacesService {
       })
     };
 
-    const localUrl = `${updatePlaceUrl}/${place.id}`;
+    const localUrl = `${updatePlaceUrl}?id=${place.id}`;
     return this.httpClientService.put<Place>(localUrl, place, httpOptions).retry(1);
   }
 
@@ -117,7 +116,7 @@ export class PlacesService {
       })
     };
 
-    const localUrl = `${deletePlaceUrl}/${id}`; // DELETE api/places/1
+    const localUrl = `${deletePlaceUrl}?id=${id}`; // DELETE api/places/DeletePlace?id=1
     return this.httpClientService.delete<Place>(localUrl, httpOptions);
   }
 }

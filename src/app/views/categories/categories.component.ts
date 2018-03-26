@@ -295,7 +295,7 @@ export class CategoriesComponent implements OnInit {
   // we have custom method to compare the new and old
   private isCategoryChanged(newCategory: Category, oldCategory: Category): boolean {
     if (newCategory.categoryDescription === oldCategory.categoryDescription) {  return false; }
-    return false;
+    return true;
   }
 
 

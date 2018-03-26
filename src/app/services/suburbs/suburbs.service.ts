@@ -98,7 +98,7 @@ export class SuburbsService {
       })
     };
 
-    const localUrl = `${updateSuburbUrl}/${suburb.id}`;
+    const localUrl = `${updateSuburbUrl}?id=${suburb.id}`;
     return this.httpClientService.put<Suburb>(localUrl, suburb, httpOptions).retry(1);
   }
 
@@ -117,7 +117,7 @@ export class SuburbsService {
       })
     };
 
-    const localUrl = `${deleteSuburbUrl}/${id}`; // DELETE api/suburbs/1
+    const localUrl = `${deleteSuburbUrl}?id=${id}`; // DELETE api/places/DeleteSuburb?id=1
     return this.httpClientService.delete<Suburb>(localUrl, httpOptions);
   }
 }

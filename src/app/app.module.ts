@@ -89,14 +89,14 @@ import { AddAddressTypeComponent } from './views/address/addaddresstype/addaddre
 import { AddSocialNetworkTypeComponent } from './views/socialnetwork/addsocialnetworktype/addsocialnetworktype.component';
 import { SocialNetworkTypeListComponent } from './views/socialnetwork/socialnetworktypelist/socialnetworktypelist.component';
 
-import { AddProcessMessageComponent } from './views/processmessage/addprocessmessage/addprocessmessage.component';
-import { ProcessMessageListComponent } from './views/processmessage/processmessagelist/processmessagelist.component';
 
 import { CorrespondenceListComponent } from './views/correspondence/correspondencelist/correspondencelist.component';
 import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
 import { AddCorrespondenceComponent } from './views/correspondence/addcorrespondence/addcorrespondence.component';
 import { ResetPasswordComponent } from './views/trader/resetpassword/resetpassword.component';
 import { PlacesComponent } from './views/places/places.component';
+import { ProcessMessagesAdminComponent } from './views/processmessagesadmin/processmessagesadmin.component';
+
 
 //initialises the process message service to get all process messages on start of the application
 export function getprocessmessages(processMessageService: ProcessMessageService) {
@@ -117,12 +117,11 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
  
     TradersListComponent, TraderDetailsComponent, TraderHomeComponent,
     AddTradeComponent, TradesListComponent, MyTradesListComponent, TradeDetailsComponent,   
-    CategoriesComponent,
+    CategoriesComponent, ProcessMessagesAdminComponent,
     AddPhoneTypeComponent, PhoneTypeListComponent,   
     AddressTypeListComponent, AddAddressTypeComponent,
     PersonalDetailsComponent, LoginDetailsComponent, ContactlDetailsComponent,
-    AddSocialNetworkTypeComponent, SocialNetworkTypeListComponent,
-    AddProcessMessageComponent, ProcessMessageListComponent,
+    AddSocialNetworkTypeComponent, SocialNetworkTypeListComponent, ProcessMessagesComponent,
     CorrespondenceListComponent, CorrespondenceDetailsComponent, AddCorrespondenceComponent,  
     ForgotPasswordComponent, ResetPasswordComponent, PlacesComponent,
   

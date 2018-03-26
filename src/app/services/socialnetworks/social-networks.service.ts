@@ -107,23 +107,6 @@ export class SocialNetworksService {
     return this.httpClientService.post<SocialNetwork>(this.localUrl, socialnetwork, httpOptions).retry(1);
   }
 
-  //******************************************************
-  // DELETE SOCIAL NETWORK
-  //******************************************************
-  public deleteSocialNetwork(socialnetwork: SocialNetwork): Observable<SocialNetwork> {
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
-
-    this.localUrl = `${deleteSocialNetworkUrl}?id=${socialnetwork.id}`;
-    return this.httpClientService.delete<SocialNetwork>(this.localUrl, httpOptions).retry(1);
-  }
-
 
   //******************************************************
   // UPDATE SOCIAL NETWORK
@@ -142,6 +125,23 @@ export class SocialNetworksService {
     return this.httpClientService.put<SocialNetwork>(this.localUrl, socialnetwork, httpOptions).retry(1);
   }
 
+
+  //******************************************************
+  // DELETE SOCIAL NETWORK
+  //******************************************************
+  public deleteSocialNetwork(socialnetwork: SocialNetwork): Observable<SocialNetwork> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    this.localUrl = `${deleteSocialNetworkUrl}?id=${socialnetwork.id}`;
+    return this.httpClientService.delete<SocialNetwork>(this.localUrl, httpOptions).retry(1);
+  }
 
 
   //******************************************************

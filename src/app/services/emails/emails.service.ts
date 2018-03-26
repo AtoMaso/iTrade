@@ -106,23 +106,6 @@ export class EmailsService {
     return this.httpClientService.post<Email>(this.localUrl, email, httpOptions).retry(1);
   }
 
-  //******************************************************
-  // DELETE EMAIL
-  //******************************************************
-  public deleteEmail(emails: Email): Observable<Email> {
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
-
-    this.localUrl = `${deleteEmailUrl}?id=${emails.id}`;
-    return this.httpClientService.delete<Email>(this.localUrl, httpOptions).retry(1);
-  }
-
 
   //******************************************************
   // UPDATE EMAIL
@@ -139,6 +122,23 @@ export class EmailsService {
 
     this.localUrl = `${updateEmailUrl}?id=${emails.id}`;
     return this.httpClientService.put<Email>(this.localUrl, emails, httpOptions).retry(1);
+  }
+
+  //******************************************************
+  // DELETE EMAIL
+  //******************************************************
+  public deleteEmail(emails: Email): Observable<Email> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    this.localUrl = `${deleteEmailUrl}?id=${emails.id}`;
+    return this.httpClientService.delete<Email>(this.localUrl, httpOptions).retry(1);
   }
 
 

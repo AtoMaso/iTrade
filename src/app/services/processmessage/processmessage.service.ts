@@ -1,4 +1,5 @@
 ﻿import { Inject, Injectable, OnInit} from '@angular/core';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -6,13 +7,12 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
-
+import { AuthenticationService } from '../authentication/authentication.service';
 import { LoggerService } from '../logger/logger.service';
-import {ProcessMessage } from '../../helpers/classes';
+import {ProcessMessage, ProcessMessageType} from '../../helpers/classes';
 import { CONFIG } from '../../config';
 
 let messagessUrl = CONFIG.baseUrls.messages;
@@ -21,6 +21,11 @@ let updateMessageUrl = CONFIG.baseUrls.updatemessage;
 let addMessageUrl = CONFIG.baseUrls.addmessage;
 let deleteMessageUrl = CONFIG.baseUrls.deletemessage;
 
+let messageTypesUrl = CONFIG.baseUrls.messagetypes;
+let messageTypeUrl = CONFIG.baseUrls.messagetype;
+let updateMessageTypeUrl = CONFIG.baseUrls.updatemessagetype;
+let addMessageTypeUrl = CONFIG.baseUrls.addmessagetype;
+let deleteMessageTypeUrl = CONFIG.baseUrls.deletemessagetype;
 
 @Injectable()
 export class ProcessMessageService {
@@ -38,6 +43,7 @@ export class ProcessMessageService {
   
 
   constructor(     
+      private authenticationService: AuthenticationService,
       private httpClientService: HttpClient,
       private loggerService: LoggerService) { };
 
@@ -55,17 +61,9 @@ export class ProcessMessageService {
   }
 
 
-  // get the process messages from the api json repository
+  // get the process messages from the server
   public getProcessMessagesFromRepository(): Observable<ProcessMessage[]> {
-
-    return this.httpClientService.get<ProcessMessage[]>(messagessUrl).retry(1)
-      .catch((err: HttpErrorResponse, result) => {
-
-        if (err.error instanceof Error) { this.handleError("getTradesApi method in the tradeapi service error", err); }
-        else { this.handleError("getTradesApi method in the tradeapi service error", err); }       
-        return Observable.of<any>();
-      });
-
+    return this.httpClientService.get<ProcessMessage[]>(messagessUrl).retry(1);   
   }
 
 
@@ -120,19 +118,132 @@ export class ProcessMessageService {
   }
 
 
-  ///*****************************************************
-  // HELPER METHODS
-  //*****************************************************
-  private handleError(operation: string, err: HttpErrorResponse) {
 
-    let errMsg = `error in ${operation}() retrieving ${err.url}`;
+  //******************************************************
+  // ADD MESSAGE
+  //******************************************************
+  public addProcessMessage(message: ProcessMessage): Observable<ProcessMessage> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
 
-    // audit log the error on the server side
-    this.loggerService.addError(err, `${operation} failed: ${err.message},  the URL: ${err.url}, was:  ${err.statusText}`);
+    return this.httpClientService.post<ProcessMessage>(addMessageUrl, message, httpOptions).retry(1);
+  }
 
-    // Let the app keep running by throwing the error to the calling component where it will be couth and friendly message displayed
-    return Observable.throw(errMsg);
-  };
+
+  //******************************************************
+  // UPDATE MESSAGE
+  //******************************************************
+  public updateMessage(message: ProcessMessage): Observable<ProcessMessage> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updateMessageUrl}?messageId=${message.messageId}`;
+    return this.httpClientService.put<ProcessMessage>(localUrl, message, httpOptions).retry(1);
+  }
+
+
+  //******************************************************
+  // DELETE MESSAGE
+  //******************************************************
+  public deleteMessage(id: number): Observable<ProcessMessage> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${deleteMessageUrl}?messageId=${id}`; // DELETE api/postcodes/DeleteProcessMessage?messageId=1
+    return this.httpClientService.delete<ProcessMessage>(localUrl, httpOptions);
+  }
+
+
+  //******************************************************
+  // GET PROCESS MESSAGE TYPES  HTTPCLIENT MODULE
+  //******************************************************
+  public getMessageTypes() {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.get<ProcessMessageType[]>(messageTypesUrl).retry(1);
+
+  }
+
+
+  //******************************************************
+  // ADD MESSAGE MESSAGE TYPE
+  //******************************************************
+  public addMessageType(messagetype: ProcessMessageType): Observable<ProcessMessageType> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.post<ProcessMessageType>(addMessageTypeUrl, messagetype, httpOptions).retry(1);
+  }
+
+
+  //******************************************************
+  // UPDATE MESSAGE TYPE
+  //******************************************************
+  public updateMessageType(messagetype: ProcessMessageType): Observable<ProcessMessageType> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updateMessageTypeUrl}?messageTypeId=${messagetype.messageTypeId}`;
+    return this.httpClientService.put<ProcessMessageType>(localUrl, messagetype, httpOptions).retry(1);
+  }
+
+
+  //******************************************************
+  // DELETE POSTCODE
+  //******************************************************
+  public deletePostcode(id: number): Observable<ProcessMessageType> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${deleteMessageTypeUrl}?id=${id}`; // DELETE api/postcodes/DeletePostcode?id=1
+    return this.httpClientService.delete<ProcessMessageType>(localUrl, httpOptions);
+  }
+
 }
 
 

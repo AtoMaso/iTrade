@@ -89,7 +89,7 @@ export class StatesService {
       })
     };
 
-    const localUrl = `${updateStateUrl}/${state.id}`;
+    const localUrl = `${updateStateUrl}?id=${state.id}`;
     return this.httpClientService.put<State>(localUrl, state, httpOptions).retry(1);
   }
 
@@ -108,7 +108,7 @@ export class StatesService {
       })
     };
 
-    const localUrl = `${deleteStateUrl}/${id}`; // DELETE api/states/1
+    const localUrl = `${deleteStateUrl}?id=${id}`; // DELETE api/states/DeleteState?id=1
     return this.httpClientService.delete<State>(localUrl, httpOptions);
   }
 }
