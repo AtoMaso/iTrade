@@ -78,6 +78,54 @@ export class CategoriesComponent implements OnInit {
   }
 
 
+  // toggling done with jquery
+  public ngAfterViewInit() {
+
+    jQuery(document).ready(function () {
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapseCategories").on("hide.bs.collapse", function () {
+        jQuery(".categories").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Categories</span>  ');
+      });
+      jQuery("#collapseCategories").on("show.bs.collapse", function () {
+        jQuery(".categories").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Categories</span>');
+      });
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapseSubcategories").on("hide.bs.collapse", function () {
+        jQuery(".subcategories").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Subcategories</span>  ');
+      });
+      jQuery("#collapseSubcategories").on("show.bs.collapse", function () {
+        jQuery(".subcategories").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Subcategories</span>');
+      });
+
+    
+
+      setTimeout(function () {
+
+        // this will set the first item from of the select phone type dropdown
+        var counter: number = 0;
+        if (jQuery('#subcategory option')) {
+          jQuery('#subcategory option').each(function () {
+            if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+            counter = counter + 1;
+          });
+        }
+
+        // this will set the first item from of the select email type dropdown
+        let mcounter: number = 0;
+        if (jQuery('#category option')) {
+          jQuery('#category option').each(function () {
+            if (this.text != "" && mcounter == 1) { jQuery(this).attr("selected", "selected"); }
+            mcounter = mcounter + 1;
+          });
+        }
+
+      }, 200);
+
+    });
+  }
+
   //************************************************************
   // GET DATA METHODS
   //************************************************************
@@ -151,6 +199,63 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
+
+
+  //************************************************************
+  // SETUP FORM METHODS
+  //************************************************************
+  private setCategoryForm() {
+    this.categoryForm = this.formBuilder.group({
+      categorydescription: new FormControl('', [Validators.required, ValidationService.categoryInputValidator]),
+    });
+  }
+
+
+  private setSubCategoryForm() {
+    this.subcategoryForm = this.formBuilder.group({
+      subcategorydescription: new FormControl('', [Validators.required, ValidationService.subcategoryInputValidator]),
+    });
+  }
+
+
+  private setCategoryFormDefaults() {
+
+    let m: number = 0;
+    for (m = 0; m < this.categories.length; m++) {
+      if (this.categories[m].categoryDescription == this.categoryInView.categoryDescription) {
+        this.defaultCategory = this.categories[m];
+        break;
+      }
+    }
+
+    setTimeout(() => {
+      this.categoryForm.setValue({
+        categorydescription: this.defaultCategory.categoryDescription,
+      });
+    }, 30);
+  }
+
+
+  private setSubCategoryFormDefaults() {
+
+    let m: number = 0;
+    //for (m = 0; m < this.categories.length; m++) {
+    //  if (this.categories[m].categoryDescription == this.categoryInView.categoryDescription) { this.defaultCategory = this.categories[m]; }
+    //}
+
+    for (m = 0; m < this.subcategories.length; m++) {
+      if (this.subcategories[m].subcategoryDescription == this.subcategoryInView.subcategoryDescription) {
+        this.defaultSubcategory = this.subcategories[m];
+        break;
+      }
+    }
+
+    setTimeout(() => {
+      this.subcategoryForm.setValue({
+        subcategorydescription: this.defaultSubcategory.subcategoryDescription,
+      });
+    }, 30);
+  }
 
 
   //*****************************************************
@@ -511,61 +616,7 @@ export class CategoriesComponent implements OnInit {
       }, (serviceError: Response) => this.onError(serviceError, "onSubSubmitSubCategoryDeleted"));
   }
 
-  //************************************************************
-  // SETUP FORM METHODS
-  //************************************************************
-  private setCategoryForm() {
-    this.categoryForm = this.formBuilder.group({
-      categorydescription: new FormControl('', [Validators.required]),
-    });
-  }
-
-
-  private setSubCategoryForm() {
-    this.subcategoryForm = this.formBuilder.group({      
-      subcategorydescription: new FormControl('', [Validators.required]),   
-    });
-  }
-
-
-  private setCategoryFormDefaults() {
-
-    let m: number = 0;
-    for (m = 0; m < this.categories.length; m++) {
-      if (this.categories[m].categoryDescription == this.categoryInView.categoryDescription) {
-        this.defaultCategory = this.categories[m];
-        break;
-      }
-    }
-
-    setTimeout(() => {
-      this.categoryForm.setValue({
-        categorydescription: this.defaultCategory.categoryDescription,
-      });
-    }, 30);   
-  }
-
-
-  private setSubCategoryFormDefaults() {
-
-    let m: number = 0;
-    //for (m = 0; m < this.categories.length; m++) {
-    //  if (this.categories[m].categoryDescription == this.categoryInView.categoryDescription) { this.defaultCategory = this.categories[m]; }
-    //}
-
-    for (m = 0; m < this.subcategories.length; m++) {
-      if (this.subcategories[m].subcategoryDescription == this.subcategoryInView.subcategoryDescription) {
-        this.defaultSubcategory = this.subcategories[m];
-        break;
-      }
-    }
-
-    setTimeout(() => {
-      this.subcategoryForm.setValue({    
-        subcategorydescription: this.defaultSubcategory.subcategoryDescription,
-      });
-    }, 30);
-  }
+ 
 
 
   //************************************************************

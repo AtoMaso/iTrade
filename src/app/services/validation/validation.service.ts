@@ -49,6 +49,14 @@ export class ValidationService {
 
       'invalidMessage': 'The subject must 5 to 70 characters in length!',
       'invalidContent': 'The content must be 10 to 500 characters in length!',
+
+      'invalidInputCategory': 'Please provide max 30 alphanumeric characters.',
+      'invalidInputSubcategory': 'Please provide max 30 alphanumeric characters.',
+
+      'invalidInputState': 'Please provide max 30 alphanumeric characters.',
+      'invalidInputPlace': 'Please provide max 30 alphamueric characters.',
+      'invalidInputPostcode': 'Please provide 4 numeric characters.',
+      'invalidInputSuburb': 'Plase provide max 30 alphanumeric characters.'
     };
     return config[validatorName];
   }
@@ -417,6 +425,76 @@ static firstNameValidator(control: any) {
     }
   }
 
+
+  static categoryInputValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
+        return null;
+      } else {
+        return { 'invalidInputCategory': true };
+      }
+    }
+  }
+
+
+  static subcategoryInputValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
+        return null;
+      } else {
+        return { 'invalidInputSubcategory': true };
+      }
+    }
+  }
+
+
+  static stateInputValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
+        return null;
+      } else {
+        return { 'invalidInputState': true };
+      }
+    }
+  }
+
+
+  static placeInputValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
+        return null;
+      } else {
+        return { 'invalidInputPlace': true };
+      }
+    }
+  }
+
+
+  static postcodeInputValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([0-9\s]){4}$/)) {
+        return null;
+      } else {
+        return { 'invalidInputPostcode': true };
+      }
+    }
+  }
+
+  static suburbInputValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
+        return null;
+      } else {
+        return { 'invalidInputSuburb': true };
+      }
+    }
+  }
 
   //*******************************************************
   //  EMAILS

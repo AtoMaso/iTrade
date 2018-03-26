@@ -108,6 +108,87 @@ export class PlacesComponent implements OnInit {
   }
 
 
+  // toggling done with jquery
+  public ngAfterViewInit() {
+
+    jQuery(document).ready(function () {
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapseStates").on("hide.bs.collapse", function () {
+        jQuery(".states").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> States</span>  ');
+      });
+      jQuery("#collapseStates").on("show.bs.collapse", function () {
+        jQuery(".states").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> States</span>');
+      });
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapsePlaces").on("hide.bs.collapse", function () {
+        jQuery(".places").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Places</span>  ');
+      });
+      jQuery("#collapsePlaces").on("show.bs.collapse", function () {
+        jQuery(".places").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Places</span>');
+      });
+
+      jQuery("#collapsePostcodes").on("hide.bs.collapse", function () {
+        jQuery(".postcodes").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Postcodes</span>  ');
+      });
+      jQuery("#collapsePostcodes").on("show.bs.collapse", function () {
+        jQuery(".postcodes").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Postcodes</span>');
+      });
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapseSuburbs").on("hide.bs.collapse", function () {
+        jQuery(".suburbs").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Suburbs</span>  ');
+      });
+      jQuery("#collapseSuburbs").on("show.bs.collapse", function () {
+        jQuery(".suburbs").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Suburbs</span>');
+      });
+
+
+
+      setTimeout(function () {
+
+        // this will set the first item from of the select phone type dropdown
+        var counter: number = 0;
+        if (jQuery('#state option')) {
+          jQuery('#state option').each(function () {
+            if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+            counter = counter + 1;
+          });
+        }
+        counter=0
+        // this will set the first item from of the select email type dropdown     
+        if (jQuery('#place option')) {
+          jQuery('#place option').each(function () {
+            if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+            counter = counter + 1;
+          });
+        }
+
+        // this will set the first item from of the select phone type dropdown
+        counter = 0
+        if (jQuery('#postcode option')) {
+          jQuery('#postcode option').each(function () {
+            if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+            counter = counter + 1;
+          });
+        }
+
+        // this will set the first item from of the select email type dropdown
+        counter = 0
+        if (jQuery('#suburb option')) {
+          jQuery('#suburb option').each(function () {
+            if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+            counter = counter + 1;
+          });
+        }
+
+      }, 100);
+
+    });
+  }
+
+
   //************************************************************
   // GET DATA METHODS
   //************************************************************
@@ -269,25 +350,25 @@ export class PlacesComponent implements OnInit {
   //************************************************************
   private setStatesForm() {
     this.stateForm = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, ValidationService.stateInputValidator]),
     });
   }
 
   private setPlacesForm() {
     this.placeForm = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, ValidationService.placeInputValidator]),
     });
   }
 
   private setPostcodesForm() {
     this.postcodeForm = this.formBuilder.group({
-      number: new FormControl('', [Validators.required]),
+      number: new FormControl('', [Validators.required, ValidationService.postcodeInputValidator]),
     });
   }
 
   private setSuburbsForm() {
     this.suburbForm = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, ValidationService.suburbInputValidator]),
     });
   }
 
