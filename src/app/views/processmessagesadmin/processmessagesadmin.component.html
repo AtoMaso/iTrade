@@ -68,8 +68,7 @@
                           <div class="col-md-10 col-md-offset-1">
                               <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                 Message Type
-                                <select formControlName="messagetype" id="messagetype" name="messagetype" class="form-control smalltextbold" 
-                                                                                                 style="background-color:moccasin;" (ngModelChange)="onMessageTypeChange($event)">
+                                <select formControlName="messagetype" id="messagetype" name="messagetype" class="form-control smalltextbold" style="background-color:moccasin;" (ngModelChange)="onMessageTypeChange($event)">
                                   <option></option>
                                   <option *ngFor="let type of types" [ngValue]="type">
                                     {{ type.messageTypeDescription }}
@@ -81,18 +80,19 @@
 
                           <div class="col-md-10 col-md-offset-1">
                             <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                              Message Code:                              
-                             <input type="text" formControlName="messagecode" id="messagecode" name="messagecode" required class="form-control smalltextbold" style="background-color:moccasin" />                             
+                              Message Code:                                   
+                              <input type="text" formControlName="messagecode" id="messagecode" name="messagecode" required class="form-control smalltextbold" style="background-color:moccasin" />                                                         
                               <control-messages [control]="messagesForm.controls.messagecode"></control-messages>
-                            </div>
+                              </div>
                           </div>
+
 
                           <div class="col-md-10 col-md-offset-1">
                             <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                              Message Text:                              
-                              <input type="text" formControlName="messagetext" id="messagetext" name="messagetext" required class="form-control smalltextbold" style="background-color:moccasin" />                             
+                              Message Text:                                                        
+                              <input type="text" formControlName="messagetext" id="messagetext" name="messagetext" required class="form-control smalltextbold" style="background-color:moccasin" />                                                        
                               <control-messages [control]="messagesForm.controls.messagetext"></control-messages>
-                            </div>
+                              </div>
                           </div>
 
 
@@ -113,12 +113,11 @@
                           </div>
 
 
-</form>
+                      </form>
 
-                    </div>
+                 </div>
 
             </div>
-
 
     </div>
 
@@ -176,10 +175,8 @@
 
                           <div class="col-md-6 col-md-offset-3">
                             <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                              Type Description:
-                              <div class="input-group">
-                                <input type="text" formControlName="typedescription" id="typedescription" name="typedescription" required class="form-control smalltext" style="background-color:moccasin" />
-                              </div>
+                              Type Description:                                       
+                              <input type="text" formControlName="typedescription" id="typedescription" name="typedescription" required class="form-control smalltext" style="background-color:moccasin" />                                                          
                               <control-messages [control]="typesForm.controls.typedescription"></control-messages>
                             </div>
                           </div>
@@ -193,7 +190,7 @@
                             </div>
 
                             <div class="col-md-6" style="text-align:left;">
-                              <button id="typesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!messageTypesForm.valid" style="width:auto; height:30px;">
+                              <button id="typesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!typesForm.valid" style="width:auto; height:30px;">
                                 <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
                                 Save
                               </button>

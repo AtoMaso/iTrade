@@ -152,15 +152,15 @@ export class ProcessMessagesAdminComponent implements OnInit {
   //************************************************************
   private setMessagesForm() {
     this.messagesForm = this.formBuilder.group({
-      messagetype: new FormControl('', [Validators.required]),  
-      messagecode: new FormControl('', [Validators.required]),
-      messagetext: new FormControl('', [Validators.required]),
+      messagetype: new FormControl('', [Validators.required ]),
+      messagecode: new FormControl('', [Validators.required, ValidationService.messageCodeValidator]),
+      messagetext: new FormControl('', [Validators.required, ValidationService.messageTextValidator]),
     });
   }
 
   private setMessageTypesForm() {
     this.typesForm = this.formBuilder.group({
-      typedescription: new FormControl('', [Validators.required]),
+      typedescription: new FormControl('', [Validators.required, ValidationService.messageTypeDescriptionValidator]),
     });
   }
 
@@ -293,7 +293,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
           // get the saved state to pass it when we get the date from the server 
           this.updatedMessage = response;
           // show success
-          this.processMessagesService.emitProcessMessage("??????");
+          this.processMessagesService.emitProcessMessage("PMSUPm");
           // get the new data from the server
           this.getMessages();
 
@@ -317,15 +317,16 @@ export class ProcessMessagesAdminComponent implements OnInit {
     newAddUpdateMessage.messageCode = formModel.messagecode;
     newAddUpdateMessage.messageText = formModel.messagetext as string;
     newAddUpdateMessage.messageTypeId = formModel.messagetype.messageTypeId;
+    newAddUpdateMessage.messageTypeDescription = formModel.messagetype.messageTypeDescription;
 
 
     // has anything beeing changed in the form and we are updating
     if (this.isMessageEditOn && !this.isMessageChanged(newAddUpdateMessage, this.tempAddUpdateMessage)) {
-      this.processMessagesService.emitProcessMessage("???????");
+      this.processMessagesService.emitProcessMessage("PMEUPm");
       return null;
     }
     if (this.messageExists(newAddUpdateMessage)) {
-      this.processMessagesService.emitProcessMessage("?????");
+      this.processMessagesService.emitProcessMessage("PMEUPmE");
       return null;
     }
 
@@ -365,12 +366,13 @@ export class ProcessMessagesAdminComponent implements OnInit {
         this.addedMessage = null;
         this.updatedMessage = null;
         // show success
-        this.processMessagesService.emitProcessMessage("??????");
+        this.processMessagesService.emitProcessMessage("PMSDPm");
         // get the new data from the server and start again
         this.getMessages();
 
       }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeleteMessage"));
   }
+
 
 
 
@@ -447,7 +449,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
           // get the new added type so when we come back from the server we can display it in view
           this.addedType = response;
           // show success
-          this.processMessagesService.emitProcessMessage("??????");
+          this.processMessagesService.emitProcessMessage("PMSAPmt");
           // get the new data from the server
           this.getMessageTypes();
 
@@ -470,7 +472,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
           // get the saved ty[e so when we can put it in view when we come back from the server
           this.updatedType = response;
           // show success
-          this.processMessagesService.emitProcessMessage("??????");
+          this.processMessagesService.emitProcessMessage("PMSUPmt");
           // get the new data from the server
           this.getMessageTypes();
 
@@ -491,16 +493,16 @@ export class ProcessMessagesAdminComponent implements OnInit {
     let newAddUpdateType: ProcessMessageType = new ProcessMessageType();
 
     if (this.isTypeEditOn) { newAddUpdateType.messageTypeId = this.typeInView.messageTypeId; }
-    newAddUpdateType.messageTypeDescription = formModel.messageTypeDescription as string;
+    newAddUpdateType.messageTypeDescription = formModel.typedescription as string;
    
 
     // has anything beeing changed in the form and we are updating
     if (this.isTypeEditOn && !this.isTypeChanged(newAddUpdateType, this.tempAddUpdateType)) {
-      this.processMessagesService.emitProcessMessage("???????");
+      this.processMessagesService.emitProcessMessage("PMEUPmt");
       return null;
     }
     if (this.typeExists(newAddUpdateType)) {
-      this.processMessagesService.emitProcessMessage("?????");
+      this.processMessagesService.emitProcessMessage("PMEUPmtE");
       return null;
     }
 
@@ -511,7 +513,6 @@ export class ProcessMessagesAdminComponent implements OnInit {
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
   private isTypeChanged(newType: ProcessMessageType, oldType: ProcessMessageType): boolean {
-
     if (newType.messageTypeDescription === oldType.messageTypeDescription) { return false; }
     return true;
   }
@@ -541,21 +542,13 @@ export class ProcessMessagesAdminComponent implements OnInit {
         // initiate the flag that type has been deleted
         this.removedType = response;       
         // show success
-        this.processMessagesService.emitProcessMessage("?????");
+        this.processMessagesService.emitProcessMessage("PMSDPmt");
         // get the new data from the server
         this.getMessageTypes();
 
       }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeleteType"));
   }
 
-
-
-
-
-
-
-
-  
 
 
 
@@ -578,7 +571,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
 
   private initialiseComponent() {
     this.processMessagesService.emitRoute("nill");
-    this.pageTitleService.emitPageTitle(new PageTitle("Categories"));
+    this.pageTitleService.emitPageTitle(new PageTitle("Process Messages"));
   }
 
 

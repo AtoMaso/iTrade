@@ -31,28 +31,28 @@ export class ProcessMessagesComponent {
       }
       else {                 
           this.style = "container panel panel-default col-md-12";
-          this.stylespan = "messagespan;"
+          this.stylespan = "messagespan "
           this.getControlStyle(message.messageTypeDescription);
            this.errorMessage = this.getThePrefix(message.messageTypeDescription)  + message.messageText ;           
       }
     }
     catch (error) {
       // Display friendly client message in case the error message can not be displayed          
-      this.getControlStyle("error");
-      this.errorMessage = this.getThePrefix("error") + "An error has occured. Please contact the application administration.";
+      this.getControlStyle("Error");
+      this.errorMessage = this.getThePrefix("Error") + "An error has occured. Please contact the application administration.";
     }
   }
 
 
   private getThePrefix(type: string): string {    
          switch (type) {
-          case "error":
+          case "Error":
               return "ERROR: ";            
-          case "warning":
+          case "Warning":
               return "WARNING: ";  
-          case "information":
+          case "Information":
               return "INFORMATION: ";  
-          case "success":
+          case "Success":
               return "SUCCESS: ";  
       }
   }
@@ -61,19 +61,19 @@ export class ProcessMessagesComponent {
   // gets the style of the control depending on the type of the message
   public getControlStyle(type: string) {  
     switch (type) {
-      case "error":
+      case "Error":
             this.style = this.style + " redbackground";          
             this.stylespan = this.stylespan + " textwhite";
         break;
-        case "warning":
+        case "Warning":
             this.style = this.style + " okerbackground";      
             this.stylespan = this.stylespan + " textwhite";
             break;
-        case "information":
+        case "Information":
             this.style = this.style + " yellowbackground";      
             this.stylespan = this.stylespan + " textblack";
             break;    
-        case "success":
+        case "Success":
             this.style = this.style + " greenbackground";     
             this.stylespan = this.stylespan + " textwhite"; 
             break;      

@@ -56,7 +56,11 @@ export class ValidationService {
       'invalidInputState': 'Please provide max 30 alphanumeric characters.',
       'invalidInputPlace': 'Please provide max 30 alphamueric characters.',
       'invalidInputPostcode': 'Please provide 4 numeric characters.',
-      'invalidInputSuburb': 'Plase provide max 30 alphanumeric characters.'
+      'invalidInputSuburb': 'Plase provide max 30 alphanumeric characters.',
+
+      'invalidaMessageCode': 'Please provide max 10 alpha characters.',
+      'invalidaMessageText': 'Please provide max 150 alpha characters.',
+      'invalidMessageTypeDescription': 'Please provide max 30 alpha chraacters.',
     };
     return config[validatorName];
   }
@@ -533,6 +537,51 @@ static firstNameValidator(control: any) {
     }
   }
 
+
+  static messageCodeValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){2,10}$/)) {
+        return null;
+      } else {
+        return { 'invalidMessageCode': true };
+      }
+    }
+  }
+
+
+  static messageTextValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){5,150}$/)) {
+        return null;
+      } else {
+        return { 'invalidMessageText': true };
+      }
+    }
+  }
+
+  static messageTypeDescriptionValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){3,30}$/)) {
+        return null;
+      } else {
+        return { 'invalidMessageTypeDescription': true };
+      }
+    }
+  }
+
+  static messageDescriptionTypeValidator(control) {
+
+    if (control.value) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){3,30}$/)) {
+        return null;
+      } else {
+        return { 'invalidMessageDescriptionType': true };
+      }
+    }
+  }
 
   //********************************************************
   // extra ones

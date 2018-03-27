@@ -63,6 +63,7 @@ export class ProcessMessageService {
 
   // get the process messages from the server
   public getProcessMessagesFromRepository(): Observable<ProcessMessage[]> {
+
     return this.httpClientService.get<ProcessMessage[]>(messagessUrl).retry(1);   
   }
 
