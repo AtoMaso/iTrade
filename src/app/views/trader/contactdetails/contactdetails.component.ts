@@ -433,6 +433,7 @@ export class ContactlDetailsComponent implements OnInit {
         this.phoneInView = this.availablephones[m];
         this.tempAddUpdatePhone = this.availablephones[m];
         this.setPhoneFormDefaults();
+        break;     
       }
     }
   }
@@ -446,6 +447,7 @@ export class ContactlDetailsComponent implements OnInit {
         for (m = 0; m < this.existingpreferredphonetypes.length; m++) {
           if (this.existingpreferredphonetypes[m].value == preferredphonetype.value) {
             this.openPreferredPhoneTypeModal();
+            break;     
           }
         }
       }
@@ -457,6 +459,7 @@ export class ContactlDetailsComponent implements OnInit {
         for (m = 0; m < this.existingpreferredphonetypes.length; m++) {
           if (this.existingpreferredphonetypes[m].value == preferredphonetype.value) {
             this.openPreferredPhoneTypeModal();
+            break;     
           }
         }
       }
@@ -483,6 +486,7 @@ export class ContactlDetailsComponent implements OnInit {
         for (m = 0; m < this.existingphonetypes.length; m++) {
           if (this.existingphonetypes[m].phoneType == type.phoneType) {
             this.openPhoneTypeModal();
+            break;     
           }
         }
       }
@@ -493,6 +497,7 @@ export class ContactlDetailsComponent implements OnInit {
       for (m = 0; m < this.existingphonetypes.length; m++) {
         if (this.existingphonetypes[m].phoneType == type.phoneType) {
           this.openPhoneTypeModal();
+          break;     
         }
       }
     }
@@ -841,6 +846,7 @@ export class ContactlDetailsComponent implements OnInit {
         this.emailInView = this.availableemails[m];
         this.tempAddUpdateEmail = this.availableemails[m];
         this.setEmailFormDefaults();
+        break;     
       }
     }
   }
@@ -854,6 +860,7 @@ export class ContactlDetailsComponent implements OnInit {
         for (m = 0; m < this.existingpreferredemailtypes.length; m++) {
           if (this.existingpreferredemailtypes[m].value == preferredemailtype.value) {
             this.openPreferredEmailTypeModal();
+            break;     
           }
         }
       }
@@ -865,6 +872,7 @@ export class ContactlDetailsComponent implements OnInit {
         for (m = 0; m < this.existingpreferredemailtypes.length; m++) {
           if (this.existingpreferredemailtypes[m].value == preferredemailtype.value) {
             this.openPreferredEmailTypeModal();
+            break;     
           }
         }
       }
@@ -891,6 +899,7 @@ export class ContactlDetailsComponent implements OnInit {
         for (m = 0; m < this.existingemailtypes.length; m++) {
           if (this.existingemailtypes[m].emailType == type.emailType) {
             this.openEmailTypeModal();
+            break;     
           }
         }
       }
@@ -901,6 +910,7 @@ export class ContactlDetailsComponent implements OnInit {
       for (m = 0; m < this.existingemailtypes.length; m++) {
         if (this.existingemailtypes[m].emailType == type.emailType) {
           this.openEmailTypeModal();
+          break;     
         }
       }
     }
@@ -1243,6 +1253,7 @@ export class ContactlDetailsComponent implements OnInit {
         this.socialInView = this.availablesocials[m];
         this.tempAddUpdateSocial = this.availablesocials[m];
         this.setSocialFormDefaults();
+        break;     
       }
     }
   }
@@ -1256,6 +1267,7 @@ export class ContactlDetailsComponent implements OnInit {
         for (m = 0; m < this.existingpreferredsocialtypes.length; m++) {
           if (this.existingpreferredsocialtypes[m].value == preferredsocialtype.value) {
             this.openPreferredSocialTypeModal();
+            break;     
           }
         }
       }
@@ -1267,6 +1279,7 @@ export class ContactlDetailsComponent implements OnInit {
         for (m = 0; m < this.existingpreferredsocialtypes.length; m++) {
           if (this.existingpreferredsocialtypes[m].value == preferredsocialtype.value) {
             this.openPreferredSocialTypeModal();
+            break;     
           }
         }
       }
@@ -1293,6 +1306,7 @@ export class ContactlDetailsComponent implements OnInit {
         for (m = 0; m < this.existingsocialtypes.length; m++) {
           if (this.existingsocialtypes[m].socialType == type.socialType) {
             this.openSocialTypeModal();
+            break;     
           }
         }
       }
@@ -1303,6 +1317,7 @@ export class ContactlDetailsComponent implements OnInit {
       for (m = 0; m < this.existingsocialtypes.length; m++) {
         if (this.existingsocialtypes[m].socialType == type.socialType) {
           this.openSocialTypeModal();
+          break;     
         }
       }
     }

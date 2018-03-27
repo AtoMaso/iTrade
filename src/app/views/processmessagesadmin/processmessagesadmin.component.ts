@@ -101,10 +101,6 @@ export class ProcessMessagesAdminComponent implements OnInit {
         this.messageInView = this.addedMessage;
         this.addedMessage = null;
       }
-      else if (this.updatedMessage) {
-        this.messageInView = this.updatedMessage;
-        this.updatedMessage = null;
-      }
       else if (this.removedType) {
         this.messageInView = this.removedMessage;
         this.removedType = null;
@@ -156,15 +152,15 @@ export class ProcessMessagesAdminComponent implements OnInit {
   //************************************************************
   private setMessagesForm() {
     this.messagesForm = this.formBuilder.group({
-      type: new FormControl('', [Validators.required]),
-      code: new FormControl('', [Validators.required]),
-      text: new FormControl('', [Validators.required]),
+      messagetype: new FormControl('', [Validators.required]),  
+      messagecode: new FormControl('', [Validators.required]),
+      messagetext: new FormControl('', [Validators.required]),
     });
   }
 
   private setMessageTypesForm() {
     this.typesForm = this.formBuilder.group({
-      descritpion: new FormControl('', [Validators.required]),
+      typedescription: new FormControl('', [Validators.required]),
     });
   }
 
@@ -173,36 +169,27 @@ export class ProcessMessagesAdminComponent implements OnInit {
   private setMessagesFormDefaults() {
 
     let m: number = 0;
-    for (m = 0; m < this.messages.length; m++) {
-      if (this.messages[m].messageCode == this.messageInView.messageCode) {
-        this.defaultMessage = this.messages[m];
-        break;
-      }
-    }
-
-    setTimeout(() => {
-      this.messagesForm.setValue({
-        type: this.defaultMessage.messageTypeDescription,
-        code: this.defaultMessage.messageCode,
-        text: this.defaultMessage.messageText,
-      });
-    }, 30);
-  }
-
-  private setMessageTypesFormDefaults() {
-
-    let m: number = 0;
-
     for (m = 0; m < this.types.length; m++) {
-      if (this.types[m].messageTypeId == this.typeInView.messageTypeId) {
+      if (this.types[m].messageTypeId == this.messageInView.messageTypeId) {        
         this.defaultType = this.types[m];
         break;
       }
     }
 
     setTimeout(() => {
+      this.messagesForm.setValue({
+        messagetype: this.defaultType,  
+        messagetext: this.messageInView.messageText,
+        messagecode: this.messageInView.messageCode,
+      });
+    }, 30);
+  }
+
+  private setMessageTypesFormDefaults() {
+
+    setTimeout(() => {
       this.typesForm.setValue({
-        description: this.defaultType.messageTypeDescription
+        typedescription: this.typeInView.messageTypeDescription,
       });
     }, 30);
   }
@@ -213,25 +200,19 @@ export class ProcessMessagesAdminComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE STATES 
   //*****************************************************
-  private onViewStateChange(state: any) {
+  private onViewMessageChange(state: any) {
     let m: number = 0;
     for (m = 0; m < this.messages.length; m++) {
 
-      if (this.messages[m].messageCode === state.target.messageCode) {
-        // set messages
-        this.messageInView = this.messages[m];
-        this.tempAddUpdateMessage = this.messages[m];
-        this.setMessagesFormDefaults();
-
-        // reset places, postcodes and suburbs
-        this.isMessageAddOn = false;
-        this.isMessageEditOn = false;
-        this.isMessageAddOn = false;
-        this.isMessageEditOn = false;
-        this.isTypeAddOn = false;
-        this.isTypeEditOn = false;
-        this.getMessages();
-        this.setMessagesFormDefaults();
+      if (this.messages[m].messageCode === state.target.value) {
+            // reset types    
+            this.isTypeAddOn = false;
+            this.isTypeEditOn = false;       
+            // set messages
+            this.messageInView = this.messages[m];
+            this.tempAddUpdateMessage = this.messages[m];
+            this.setMessagesFormDefaults();
+            break;       
       }
     }
   }
@@ -289,7 +270,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
           // get the new state so we can display it when we come from the server
           this.addedMessage = response;
           // show success
-          this.processMessagesService.emitProcessMessage("????");
+          this.processMessagesService.emitProcessMessage("PMSAPm");
           // get the new data from the server
           this.getMessages();
 
@@ -333,10 +314,9 @@ export class ProcessMessagesAdminComponent implements OnInit {
     let newAddUpdateMessage: ProcessMessage = new ProcessMessage();
 
     if (this.isMessageEditOn) { newAddUpdateMessage.messageId = this.messageInView.messageId; }
-    newAddUpdateMessage.messageCode = formModel.code as string;
-    newAddUpdateMessage.messageText = formModel.text as string;
-    newAddUpdateMessage.messageTypeId = formModel.messageTypeId;
-    newAddUpdateMessage.messageTypeDescription = formModel.messageTypeDescription;
+    newAddUpdateMessage.messageCode = formModel.messagecode;
+    newAddUpdateMessage.messageText = formModel.messagetext as string;
+    newAddUpdateMessage.messageTypeId = formModel.messagetype.messageTypeId;
 
 
     // has anything beeing changed in the form and we are updating
@@ -355,7 +335,10 @@ export class ProcessMessagesAdminComponent implements OnInit {
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
   private isMessageChanged(newMessage: ProcessMessage, oldMessage: ProcessMessage): boolean {
-    if (newMessage.messageCode === oldMessage.messageCode) { return false; }
+    if (newMessage.messageCode === oldMessage.messageCode && 
+        newMessage.messageText === oldMessage.messageText &&
+        newMessage.messageTypeId=== oldMessage.messageTypeId
+      ) { return false; }
     return true;
   }
 
@@ -392,184 +375,178 @@ export class ProcessMessagesAdminComponent implements OnInit {
 
 
 
-  ////*****************************************************
-  //// SCREEN CHANGE PLACES 
-  ////*****************************************************
-  //private onViewPlaceChange(place: any) {
-  //  let m: number = 0;
-  //  for (m = 0; m < this.places.length; m++) {
-  //    if (this.places[m].name === place.target.value) {
-  //      //set places
-  //      this.placeInView = this.places[m];
-  //      this.tempAddUpdatePlace = this.places[m];
-  //      this.setPlacesFormDefaults();
-
-  //      // reset postcodes and suburbs       
-  //      this.isPostcodeAddOn = false;
-  //      this.isPostcodeEditOn = false;
-  //      this.isSuburbAddOn = false;
-  //      this.isSuburbEditOn = false;
-  //      this.getPostcodesByPlaceId(this.placeInView.id);
-  //      this.setPostcodesFormDefaults();
-  //    }
-  //  }
-  //}
+  //*****************************************************
+  // SCREEN CHANGE TYPES 
+  //*****************************************************
+  private onViewTypeChange(type: any) {
+    let m: number = 0;
+    for (m = 0; m < this.types.length; m++) {
+      if (this.types[m].messageTypeDescription === type.target.value) {
+        // reset postcodes and suburbs       
+        this.isMessageAddOn = false;
+        this.isMessageEditOn = false;
+        //set places
+        this.typeInView = this.types[m];
+        this.tempAddUpdateType = this.types[m];
+        this.setMessageTypesFormDefaults();
+        break;     
+      }
+    }
+  }
 
 
-  //private onPlaceAddClick() {
-  //  this.messagesService.emitRoute("nill");
-  //  this.isPlaceAddOn = true;
-  //  this.isPlaceEditOn = false;
+  private onTypeAddClick() {
+    this.processMessagesService.emitRoute("nill");
+    this.isTypeAddOn = true;
+    this.isTypeEditOn = false;
 
-  //  this.setPlacesForm();
+    this.setMessageTypesForm();
 
-  //  // if address in view take it as temp so we can go back if adding has been cancelled
-  //  if (this.placeInView) {
-  //    this.tempAddUpdatePlace = this.placeInView;
-  //    this.placeInView = null;
-  //  }
-  //}
-
-
-  //private onPlaceEditClick() {
-  //  this.messagesService.emitRoute("nill");
-  //  this.isPlaceEditOn = true;
-  //  this.isPlaceAddOn = false;
-
-  //  // if place in view take it as temp so we can go back if editing has been cancelled
-  //  this.tempAddUpdatePlace = this.placeInView;
-  //  this.setPlacesForm();
-  //  this.setPlacesFormDefaults();
-  //}
+    // if address in view take it as temp so we can go back if adding has been cancelled
+    if (this.typeInView) {
+      this.tempAddUpdateType = this.typeInView;
+      this.typeInView = null;
+    }
+  }
 
 
-  //private onPlaceAddEditCancel() {
-  //  this.messagesService.emitRoute("nill");
-  //  if (this.isPlaceAddOn == true) { this.isPlaceAddOn = false; }
-  //  if (this.isPlaceEditOn == true) { this.isPlaceEditOn = false; }
-  //  // if we are cancelling the adding or editing
-  //  if (this.tempAddUpdatePlace) { this.placeInView = this.tempAddUpdatePlace; }
-  //}
+  private onTypeEditClick() {
+    this.processMessagesService.emitRoute("nill");
+    this.isTypeEditOn = true;
+    this.isTypeAddOn = false;
+
+    // if place in view take it as temp so we can go back if editing has been cancelled
+    this.tempAddUpdateType = this.typeInView;
+    this.setMessageTypesForm();
+    this.setMessageTypesFormDefaults();
+  }
 
 
-  //private onSubmitPlaceAddUpdate() {
-
-  //  this.messagesService.emitRoute("nill");
-  //  let place: Place = this.prepareAddUpdatePlace();
-
-  //  if (this.isPlaceAddOn && place) {
-
-  //    // add new phone
-  //    this.placesService.addPlace(place)
-  //      .subscribe((response: Place) => {
-  //        // reset the athers
-  //        this.updatedPlace = null;
-  //        this.removedType = null;
-  //        // get the new added place so when we come back from the server we can display it in view
-  //        this.addedPlace = response;
-  //        // show success
-  //        this.messagesService.emitProcessMessage("PMSAPl");
-  //        // get the new data from the server
-  //        this.getPlacesByStateId(this.messageInView.id);
-
-  //      }, (serviceError: Response) => this.onError(serviceError, "onSubmitPlaceAdd"));
-
-  //    // go back to view
-  //    this.isPlaceAddOn = !this.isPlaceAddOn;
-
-  //  }
+  private onTypeAddEditCancel() {
+    this.processMessagesService.emitRoute("nill");
+    if (this.isTypeAddOn == true) { this.isTypeAddOn = false; }
+    if (this.isTypeEditOn == true) { this.isTypeEditOn = false; }
+    // if we are cancelling the adding or editing
+    if (this.tempAddUpdateType) { this.typeInView = this.tempAddUpdateType; }
+  }
 
 
-  //  if (this.isPlaceEditOn && place) {
+  private onSubmitTypeAddUpdate() {
 
-  //    // update place
-  //    this.placesService.updatePlace(place)
-  //      .subscribe((response: Place) => {
-  //        // reset the athers
-  //        this.addedPlace = null;
-  //        this.removedType = null;
-  //        // get the saved place so when we can put it in view when we come back from the server
-  //        this.updatedPlace = response;
-  //        // show success
-  //        this.messagesService.emitProcessMessage("PMSUPl");
-  //        // get the new data from the server
-  //        this.getPlacesByStateId(this.messageInView.id);
+    this.processMessagesService.emitRoute("nill");
+    let type: ProcessMessageType = this.prepareAddUpdateType();
 
-  //      }, (serviceError: Response) => this.onError(serviceError, "onSubmitPlaceUpdate"));
+    if (this.isTypeAddOn && type) {
 
-  //    // go back to view
-  //    this.isPlaceEditOn = !this.isPlaceEditOn;
+      // add new type
+      this.processMessagesService.addMessageType(type)
+        .subscribe((response: ProcessMessageType) => {
+          // reset the athers
+          this.updatedType = null;
+          this.removedType = null;
+          // get the new added type so when we come back from the server we can display it in view
+          this.addedType = response;
+          // show success
+          this.processMessagesService.emitProcessMessage("??????");
+          // get the new data from the server
+          this.getMessageTypes();
 
-  //  }
-  //}
+        }, (serviceError: Response) => this.onError(serviceError, "onSubmitTypeAdd"));
 
+      // go back to view
+      this.isTypeAddOn = !this.isTypeAddOn;
 
-  //// prepare the new add or update data - get it from the form
-  //private prepareAddUpdatePlace(): Place {
-
-  //  const formModel = this.placeForm.value;
-
-  //  let newAddUpdatePlace: Place = new Place();
-
-  //  if (this.isPlaceEditOn) { newAddUpdatePlace.id = this.placeInView.id; }
-  //  newAddUpdatePlace.name = formModel.name as string;
-  //  newAddUpdatePlace.stateId = this.messageInView.id;
-
-  //  // has anything beeing changed in the form and we are updating
-  //  if (this.isPlaceEditOn && !this.isPlaceChanged(newAddUpdatePlace, this.tempAddUpdatePlace)) {
-  //    this.messagesService.emitProcessMessage("PMEUPl");
-  //    return null;
-  //  }
-  //  if (this.placeExists(newAddUpdatePlace)) {
-  //    this.messagesService.emitProcessMessage("PMEUPlE");
-  //    return null;
-  //  }
-
-  //  return newAddUpdatePlace;
-  //}
+    }
 
 
-  //// as the form has been prepopulated when updating we can not use the form dirty on changed
-  //// we have custom method to compare the new and old
-  //private isPlaceChanged(newPlace: Place, oldPlace: Place): boolean {
+    if (this.isTypeEditOn && type) {
 
-  //  if (newPlace.name === oldPlace.name && newPlace.stateId === oldPlace.stateId) { return false; }
-  //  return true;
-  //}
+      // update place
+      this.processMessagesService.updateMessageType(type)
+        .subscribe((response: ProcessMessageType) => {
+          // reset the athers
+          this.addedType = null;
+          this.removedType = null;
+          // get the saved ty[e so when we can put it in view when we come back from the server
+          this.updatedType = response;
+          // show success
+          this.processMessagesService.emitProcessMessage("??????");
+          // get the new data from the server
+          this.getMessageTypes();
+
+        }, (serviceError: Response) => this.onError(serviceError, "onSubmitTypeUpdate"));
+
+      // go back to view
+      this.isTypeEditOn = !this.isTypeEditOn;
+
+    }
+  }
 
 
-  //private placeExists(place: Place): boolean {
-  //  let m: number = 0;
-  //  for (m = 0; m < this.places.length; m++) {
-  //    if (place.name === this.places[m].name) { return true; }
-  //  }
-  //  return false;
-  //}
+  // prepare the new add or update data - get it from the form
+  private prepareAddUpdateType(): ProcessMessageType {
+
+    const formModel = this.typesForm.value;
+
+    let newAddUpdateType: ProcessMessageType = new ProcessMessageType();
+
+    if (this.isTypeEditOn) { newAddUpdateType.messageTypeId = this.typeInView.messageTypeId; }
+    newAddUpdateType.messageTypeDescription = formModel.messageTypeDescription as string;
+   
+
+    // has anything beeing changed in the form and we are updating
+    if (this.isTypeEditOn && !this.isTypeChanged(newAddUpdateType, this.tempAddUpdateType)) {
+      this.processMessagesService.emitProcessMessage("???????");
+      return null;
+    }
+    if (this.typeExists(newAddUpdateType)) {
+      this.processMessagesService.emitProcessMessage("?????");
+      return null;
+    }
+
+    return newAddUpdateType;
+  }
 
 
-  //private onPlaceDeleteClick() {
-  //  this.placeToRemove = this.placeInView;
-  //}
+  // as the form has been prepopulated when updating we can not use the form dirty on changed
+  // we have custom method to compare the new and old
+  private isTypeChanged(newType: ProcessMessageType, oldType: ProcessMessageType): boolean {
+
+    if (newType.messageTypeDescription === oldType.messageTypeDescription) { return false; }
+    return true;
+  }
 
 
-  //private onSubmitDeletePlace(placeToRemove) {
+  private typeExists(type: ProcessMessageType): boolean {
+    let m: number = 0;
+    for (m = 0; m < this.types.length; m++) {
+      if (type.messageTypeDescription === this.types[m].messageTypeDescription) { return true; }
+    }
+    return false;
+  }
 
-  //  this.placesService.deletePlace(placeToRemove.id)
-  //    .subscribe((response: Place) => {
-  //      // reset the update and add
-  //      this.addedPlace = null;
-  //      this.updatedPlace = null;
-  //      // initiate the flag that place has been deleted
-  //      this.removedType = response;
-  //      // grab the parent category at the moment of deletetion
-  //      this.removedState = this.messageInView;
-  //      // show success
-  //      this.messagesService.emitProcessMessage("PMSDPl");
-  //      // get the new data from the server
-  //      this.getStates();
 
-  //    }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeletePlace"));
-  //}
+  private onTypeDeleteClick() {
+    this.typeToRemove = this.typeInView;
+  }
+
+
+  private onSubmitDeleteType(typeToRemove: ProcessMessageType) {
+
+    this.processMessagesService.deleteMessageType(typeToRemove.messageTypeId)
+      .subscribe((response: ProcessMessageType) => {
+        // reset the update and add
+        this.addedType = null;
+        this.updatedType = null;
+        // initiate the flag that type has been deleted
+        this.removedType = response;       
+        // show success
+        this.processMessagesService.emitProcessMessage("?????");
+        // get the new data from the server
+        this.getMessageTypes();
+
+      }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeleteType"));
+  }
 
 
 

@@ -374,70 +374,36 @@ export class PlacesComponent implements OnInit {
 
   private setStatesFormDefaults() {
 
-    let m: number = 0;
-    for (m = 0; m < this.states.length; m++) {
-      if (this.states[m].name == this.stateInView.name) {
-        this.defaultState = this.states[m];
-        break;
-      }
-    }
-
     setTimeout(() => {
       this.stateForm.setValue({
-        name: this.defaultState.name,
+        name: this.stateInView.name,
       });
     }, 30);
   }
 
   private setPlacesFormDefaults() {
 
-    let m: number = 0;
-
-    for (m = 0; m < this.places.length; m++) {
-      if (this.places[m].name == this.placeInView.name) {
-        this.defaultPlace = this.places[m];
-        break;
-      }
-    }
-
     setTimeout(() => {
       this.placeForm.setValue({
-        name: this.defaultPlace.name,
+        name: this.placeInView.name, 
       });
     }, 30);
   }
 
   private setPostcodesFormDefaults() {
 
-    let m: number = 0;
-    for (m = 0; m < this.postcodes.length; m++) {
-      if (this.postcodes[m].number == this.postcodeInView.number) {
-        this.defaultPostcode = this.postcodes[m];
-        break;
-      }
-    }
-
     setTimeout(() => {
       this.postcodeForm.setValue({
-        number: this.defaultPostcode.number,
+        number: this.postcodeInView.number,
       });
     }, 30);
   }
 
   private setSuburbsFormDefaults() {
 
-    let m: number = 0;
-
-    for (m = 0; m < this.suburbs.length; m++) {
-      if (this.suburbs[m].name == this.suburbInView.name) {
-        this.defaultSuburb = this.suburbs[m];
-        break;
-      }
-    }
-
     setTimeout(() => {
       this.suburbForm.setValue({
-        name: this.defaultSuburb.name,
+        name: this.suburbInView.name,
       });
     }, 30);
   }

@@ -494,6 +494,7 @@ export class PersonalDetailsComponent implements OnInit {
         for (m = 0; m < this.existingpreferredtypes.length; m++) {
           if (this.existingpreferredtypes[m].value == preferredtype.value) {
             this.openPreferredTypeModal();
+            break;     
           }
         }
       }
@@ -505,6 +506,7 @@ export class PersonalDetailsComponent implements OnInit {
         for (m = 0; m < this.existingpreferredtypes.length; m++) {
           if (this.existingpreferredtypes[m].value == preferredtype.value) {
             this.openPreferredTypeModal();
+            break;     
           }
         }
       }
@@ -657,6 +659,7 @@ export class PersonalDetailsComponent implements OnInit {
         for (m = 0; m < this.existingaddresstypes.length; m++) {
           if (this.existingaddresstypes[m].addressType == type.addressType) {
             this.openAddressTypeModal();
+            break;     
           }
         }
       }
@@ -667,6 +670,7 @@ export class PersonalDetailsComponent implements OnInit {
       for (m = 0; m < this.existingaddresstypes.length; m++) {
         if (this.existingaddresstypes[m].addressType == type.addressType) {
           this.openAddressTypeModal();
+          break;     
         }
       }
     }
@@ -692,6 +696,7 @@ export class PersonalDetailsComponent implements OnInit {
         this.addressInView = this.availableAddresses[m];
         this.tempAddUpdateAddress = this.availableAddresses[m];
         this.setAddressFormDefaults();
+        break;     
       }
     }
   }

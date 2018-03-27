@@ -220,39 +220,18 @@ export class CategoriesComponent implements OnInit {
 
   private setCategoryFormDefaults() {
 
-    let m: number = 0;
-    for (m = 0; m < this.categories.length; m++) {
-      if (this.categories[m].categoryDescription == this.categoryInView.categoryDescription) {
-        this.defaultCategory = this.categories[m];
-        break;
-      }
-    }
-
     setTimeout(() => {
       this.categoryForm.setValue({
-        categorydescription: this.defaultCategory.categoryDescription,
+        categorydescription: this.categoryInView.categoryDescription, 
       });
     }, 30);
   }
 
 
   private setSubCategoryFormDefaults() {
-
-    let m: number = 0;
-    //for (m = 0; m < this.categories.length; m++) {
-    //  if (this.categories[m].categoryDescription == this.categoryInView.categoryDescription) { this.defaultCategory = this.categories[m]; }
-    //}
-
-    for (m = 0; m < this.subcategories.length; m++) {
-      if (this.subcategories[m].subcategoryDescription == this.subcategoryInView.subcategoryDescription) {
-        this.defaultSubcategory = this.subcategories[m];
-        break;
-      }
-    }
-
     setTimeout(() => {
       this.subcategoryForm.setValue({
-        subcategorydescription: this.defaultSubcategory.subcategoryDescription,
+        subcategorydescription: this.subcategoryInView.subcategoryDescription,
       });
     }, 30);
   }

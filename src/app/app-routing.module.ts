@@ -30,7 +30,7 @@ import { ResetPasswordComponent } from './views/trader/resetpassword/resetpasswo
 
 import { CategoriesComponent } from './views/categories/categories.component';
 import { PlacesComponent } from './views/places/places.component';
-
+import {ProcessMessagesAdminComponent} from './views/processmessagesadmin/processmessagesadmin.component';
 
 // cmport the AuthGuard helper
 import { AuthGuard } from './helpers/auth.guard';
@@ -67,7 +67,7 @@ const routes: Routes = [
 
   { path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard] },
   { path: 'places', component:PlacesComponent, canActivate: [AuthGuard] },
-
+  { path: 'message', component: ProcessMessagesAdminComponent, canActivate: [AuthGuard] },
   
 ];
 

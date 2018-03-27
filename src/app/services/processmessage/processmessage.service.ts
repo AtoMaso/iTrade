@@ -229,7 +229,7 @@ export class ProcessMessageService {
   //******************************************************
   // DELETE POSTCODE
   //******************************************************
-  public deletePostcode(id: number): Observable<ProcessMessageType> {
+  public deleteMessageType(id: number): Observable<ProcessMessageType> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -240,7 +240,7 @@ export class ProcessMessageService {
       })
     };
 
-    const localUrl = `${deleteMessageTypeUrl}?id=${id}`; // DELETE api/postcodes/DeletePostcode?id=1
+    const localUrl = `${deleteMessageTypeUrl}?messageTypeId=${id}`; // DELETE api/postcodes/DeletePostcode?messageTypeId=1
     return this.httpClientService.delete<ProcessMessageType>(localUrl, httpOptions);
   }
 
