@@ -38,7 +38,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
  
 
 
-  private typeForm: FormGroup;
+  private typesForm: FormGroup;
   private types: ProcessMessageType[] = [];
   private typeInView: ProcessMessageType;
   private tempAddUpdateType: ProcessMessageType;
@@ -66,17 +66,17 @@ export class ProcessMessagesAdminComponent implements OnInit {
     this.getUserSession();
     this.initialiseComponent();
 
-    this.getProcessMessages();
+    this.getMessages();
 
-    //this.setMessagesForm();
-    //this.setMessageTypesForm();
+    this.setMessagesForm();
+    this.setMessageTypesForm();
   }
 
 
   //************************************************************
   // GET DATA METHODS
   //************************************************************
-  public getProcessMessages() {
+  public getMessages() {
     this.processMessagesService.getProcessMessagesFromRepository()
       .subscribe((res: ProcessMessage[]) => {
         this.onSuccessMessages(res);
@@ -151,280 +151,243 @@ export class ProcessMessagesAdminComponent implements OnInit {
 
 
 
-  ////************************************************************
-  //// SETUP FORM METHODS
-  ////************************************************************
-  //private setStatesForm() {
-  //  this.stateForm = this.formBuilder.group({
-  //    name: new FormControl('', [Validators.required]),
-  //  });
-  //}
+  //************************************************************
+  // SETUP FORM METHODS
+  //************************************************************
+  private setMessagesForm() {
+    this.messagesForm = this.formBuilder.group({
+      type: new FormControl('', [Validators.required]),
+      code: new FormControl('', [Validators.required]),
+      text: new FormControl('', [Validators.required]),
+    });
+  }
 
-  //private setPlacesForm() {
-  //  this.placeForm = this.formBuilder.group({
-  //    name: new FormControl('', [Validators.required]),
-  //  });
-  //}
-
-  //private setPostcodesForm() {
-  //  this.postcodeForm = this.formBuilder.group({
-  //    number: new FormControl('', [Validators.required]),
-  //  });
-  //}
-
-  //private setSuburbsForm() {
-  //  this.suburbForm = this.formBuilder.group({
-  //    name: new FormControl('', [Validators.required]),
-  //  });
-  //}
-
-  //private setStatesFormDefaults() {
-
-  //  let m: number = 0;
-  //  for (m = 0; m < this.messages.length; m++) {
-  //    if (this.messages[m].name == this.messageInView.name) {
-  //      this.defaultState = this.messages[m];
-  //      break;
-  //    }
-  //  }
-
-  //  setTimeout(() => {
-  //    this.stateForm.setValue({
-  //      name: this.defaultState.name,
-  //    });
-  //  }, 30);
-  //}
-
-  //private setPlacesFormDefaults() {
-
-  //  let m: number = 0;
-
-  //  for (m = 0; m < this.places.length; m++) {
-  //    if (this.places[m].name == this.placeInView.name) {
-  //      this.defaultPlace = this.places[m];
-  //      break;
-  //    }
-  //  }
-
-  //  setTimeout(() => {
-  //    this.placeForm.setValue({
-  //      name: this.defaultPlace.name,
-  //    });
-  //  }, 30);
-  //}
-
-  //private setPostcodesFormDefaults() {
-
-  //  let m: number = 0;
-  //  for (m = 0; m < this.postcodes.length; m++) {
-  //    if (this.postcodes[m].number == this.postcodeInView.number) {
-  //      this.defaultPostcode = this.postcodes[m];
-  //      break;
-  //    }
-  //  }
-
-  //  setTimeout(() => {
-  //    this.postcodeForm.setValue({
-  //      number: this.defaultPostcode.number,
-  //    });
-  //  }, 30);
-  //}
-
-  //private setSuburbsFormDefaults() {
-
-  //  let m: number = 0;
-
-  //  for (m = 0; m < this.suburbs.length; m++) {
-  //    if (this.suburbs[m].name == this.suburbInView.name) {
-  //      this.defaultSuburb = this.suburbs[m];
-  //      break;
-  //    }
-  //  }
-
-  //  setTimeout(() => {
-  //    this.suburbForm.setValue({
-  //      name: this.defaultSuburb.name,
-  //    });
-  //  }, 30);
-  //}
+  private setMessageTypesForm() {
+    this.typesForm = this.formBuilder.group({
+      descritpion: new FormControl('', [Validators.required]),
+    });
+  }
 
 
 
-  ////*****************************************************
-  //// SCREEN CHANGE STATES 
-  ////*****************************************************
-  //private onViewStateChange(state: any) {
-  //  let m: number = 0;
-  //  for (m = 0; m < this.messages.length; m++) {
+  private setMessagesFormDefaults() {
 
-  //    if (this.messages[m].name === state.target.value) {
-  //      // set messages
-  //      this.messageInView = this.messages[m];
-  //      this.tempAddUpdateState = this.messages[m];
-  //      this.setStatesFormDefaults();
+    let m: number = 0;
+    for (m = 0; m < this.messages.length; m++) {
+      if (this.messages[m].messageCode == this.messageInView.messageCode) {
+        this.defaultMessage = this.messages[m];
+        break;
+      }
+    }
 
-  //      // reset places, postcodes and suburbs
-  //      this.isPlaceAddOn = false;
-  //      this.isPlaceEditOn = false;
-  //      this.isPostcodeAddOn = false;
-  //      this.isPostcodeEditOn = false;
-  //      this.isSuburbAddOn = false;
-  //      this.isSuburbEditOn = false;
-  //      this.getPlacesByStateId(this.messageInView.id);
-  //      this.setPlacesFormDefaults();
-  //    }
-  //  }
-  //}
+    setTimeout(() => {
+      this.messagesForm.setValue({
+        type: this.defaultMessage.messageTypeDescription,
+        code: this.defaultMessage.messageCode,
+        text: this.defaultMessage.messageText,
+      });
+    }, 30);
+  }
 
+  private setMessageTypesFormDefaults() {
 
-  //private onStateAddClick() {
-  //  this.messagesService.emitRoute("nill");
-  //  this.isStateAddOn = true;
-  //  this.isStateEditOn = false;
-  //  this.setStatesForm();
+    let m: number = 0;
 
-  //  // if address in view take it as temp so we can go back if adding has been cancelled
-  //  if (this.messageInView) {
-  //    this.tempAddUpdateState = this.messageInView;
-  //    this.messageInView = null;
-  //  }
-  //}
+    for (m = 0; m < this.types.length; m++) {
+      if (this.types[m].messageTypeId == this.typeInView.messageTypeId) {
+        this.defaultType = this.types[m];
+        break;
+      }
+    }
+
+    setTimeout(() => {
+      this.typesForm.setValue({
+        description: this.defaultType.messageTypeDescription
+      });
+    }, 30);
+  }
 
 
-  //private onStateEditClick() {
-  //  this.messagesService.emitRoute("nill");
-  //  this.isStateEditOn = true;
-  //  this.isStateAddOn = true;
-
-  //  // if phone in view take it as temp so we can go back if editing has been cancelled
-  //  this.tempAddUpdateState = this.messageInView;
-  //  this.setStatesForm();
-  //  this.setStatesFormDefaults();
-  //}
 
 
-  //private onStateAddEditCancel() {
-  //  this.messagesService.emitRoute("nill");
-  //  if (this.isStateAddOn == true) { this.isStateAddOn = false; }
-  //  if (this.isStateEditOn == true) { this.isStateEditOn = false; }
-  //  // if we are cancelling the adding or editing
-  //  if (this.tempAddUpdateState) { this.messageInView = this.tempAddUpdateState; }
-  //}
+  //*****************************************************
+  // SCREEN CHANGE STATES 
+  //*****************************************************
+  private onViewStateChange(state: any) {
+    let m: number = 0;
+    for (m = 0; m < this.messages.length; m++) {
+
+      if (this.messages[m].messageCode === state.target.messageCode) {
+        // set messages
+        this.messageInView = this.messages[m];
+        this.tempAddUpdateMessage = this.messages[m];
+        this.setMessagesFormDefaults();
+
+        // reset places, postcodes and suburbs
+        this.isMessageAddOn = false;
+        this.isMessageEditOn = false;
+        this.isMessageAddOn = false;
+        this.isMessageEditOn = false;
+        this.isTypeAddOn = false;
+        this.isTypeEditOn = false;
+        this.getMessages();
+        this.setMessagesFormDefaults();
+      }
+    }
+  }
 
 
-  //private onSubmitStateAddUpdate() {
+  private onMessageAddClick() {
+    this.processMessagesService.emitRoute("nill");
+    this.isMessageAddOn = true;
+    this.isMessageEditOn = false;
+    this.setMessagesForm();
 
-  //  this.removedState = null;
-  //  this.messagesService.emitRoute("nill");
-  //  let state: State = this.prepareAddUpdateState();
-
-  //  if (this.isStateAddOn && state) {
-
-  //    // add new state
-  //    this.statesService.addState(state)
-  //      .subscribe((response: State) => {
-  //        // reset the others
-  //        this.updatedMessage = null;
-  //        this.removedState = null;
-  //        // get the new state so we can display it when we come from the server
-  //        this.addedMessage = response;
-  //        // show success
-  //        this.messagesService.emitProcessMessage("PMSASt");
-  //        // get the new data from the server
-  //        this.getStates();
-
-  //      }, (serviceError: Response) => this.onError(serviceError, "onSubmitStateAdd"));
-
-  //    // go back to view
-  //    this.isStateAddOn = !this.isStateAddOn;
-
-  //  }
+    // if address in view take it as temp so we can go back if adding has been cancelled
+    if (this.messageInView) {
+      this.tempAddUpdateMessage = this.messageInView;
+      this.messageInView = null;
+    }
+  }
 
 
-  //  if (this.isStateEditOn && state) {
+  private onMessageEditClick() {
+    this.processMessagesService.emitRoute("nill");
+    this.isMessageEditOn = true;
+    this.isMessageAddOn = true;
 
-  //    // update state
-  //    this.statesService.updateState(state)
-  //      .subscribe((response: State) => {
-  //        // reset the others
-  //        this.addedMessage = null;
-  //        this.removedState = null;
-  //        // get the saved state to pass it when we get the date from the server 
-  //        this.updatedMessage = response;
-  //        // show success
-  //        this.messagesService.emitProcessMessage("PMSUSt");
-  //        // get the new data from the server
-  //        this.getStates();
-
-  //      }, (serviceError: Response) => this.onError(serviceError, "onSubmitStateUpdate"));
-
-  //    // go back to view
-  //    this.isStateEditOn = !this.isStateEditOn;
-  //  }
-
-  //}
+    // if phone in view take it as temp so we can go back if editing has been cancelled
+    this.tempAddUpdateMessage = this.messageInView;
+    this.setMessagesForm();
+    this.setMessagesFormDefaults();
+  }
 
 
-  //// prepare the new add or update data - get it from the form
-  //private prepareAddUpdateState(): State {
-
-  //  const formModel = this.stateForm.value;
-
-  //  let newAddUpdateState: State = new State();
-
-  //  if (this.isStateEditOn) { newAddUpdateState.id = this.messageInView.id; }
-  //  newAddUpdateState.name = formModel.name as string;
+  private onMessageAddEditCancel() {
+    this.processMessagesService.emitRoute("nill");
+    if (this.isMessageAddOn == true) { this.isMessageAddOn = false; }
+    if (this.isMessageEditOn == true) { this.isMessageEditOn = false; }
+    // if we are cancelling the adding or editing
+    if (this.tempAddUpdateMessage) { this.messageInView = this.tempAddUpdateMessage; }
+  }
 
 
-  //  // has anything beeing changed in the form and we are updating
-  //  if (this.isStateEditOn && !this.isStateChanged(newAddUpdateState, this.tempAddUpdateState)) {
-  //    this.messagesService.emitProcessMessage("PSEUSt");
-  //    return null;
-  //  }
-  //  if (this.stateExists(newAddUpdateState)) {
-  //    this.messagesService.emitProcessMessage("PMEUStE");
-  //    return null;
-  //  }
+  private onSubmitMessageAddUpdate() {
 
-  //  return newAddUpdateState;
-  //}
+    this.removedMessage = null;
+    this.processMessagesService.emitRoute("nill");
+    let message: ProcessMessage = this.prepareAddUpdateMessage();
 
-  //// as the form has been prepopulated when updating we can not use the form dirty on changed
-  //// we have custom method to compare the new and old
-  //private isStateChanged(newState: State, oldState: State): boolean {
-  //  if (newState.name === oldState.name) { return false; }
-  //  return true;
-  //}
+    if (this.isMessageAddOn && message) {
 
+      // add new state
+      this.processMessagesService.addProcessMessage(message)
+        .subscribe((response: ProcessMessage) => {
+          // reset the others
+          this.updatedMessage = null;
+          this.removedMessage = null;
+          // get the new state so we can display it when we come from the server
+          this.addedMessage = response;
+          // show success
+          this.processMessagesService.emitProcessMessage("????");
+          // get the new data from the server
+          this.getMessages();
 
-  //private stateExists(state: State): boolean {
-  //  let m: number = 0;
-  //  for (m = 0; m < this.messages.length; m++) {
-  //    if (state.name === this.messages[m].name) { return true; }
-  //  }
-  //  return false;
-  //}
+        }, (serviceError: Response) => this.onError(serviceError, "onSubmitMessageAdd"));
 
+      // go back to view
+      this.isMessageAddOn = !this.isMessageAddOn;
 
-  //private onStateDeleteClick() {
-  //  this.stateToRemove = this.messageInView;
-  //}
+    }
 
 
-  //private onSubmitDeleteState(stateToRemove) {
+    if (this.isMessageEditOn && message) {
 
-  //  this.statesService.deleteState(stateToRemove.id)
-  //    .subscribe((response: State) => {
-  //      // reset the update and add
-  //      this.addedMessage = null;
-  //      this.updatedMessage = null;
-  //      // show success
-  //      this.messagesService.emitProcessMessage("PMSDSt");
-  //      // get the new data from the server and start again
-  //      this.getStates();
+      // update state
+      this.processMessagesService.updateProcessMessage(message)
+        .subscribe((response: ProcessMessage) => {
+          // reset the others
+          this.addedMessage = null;
+          this.removedMessage = null;
+          // get the saved state to pass it when we get the date from the server 
+          this.updatedMessage = response;
+          // show success
+          this.processMessagesService.emitProcessMessage("??????");
+          // get the new data from the server
+          this.getMessages();
 
-  //    }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeleteState"));
-  //}
+        }, (serviceError: Response) => this.onError(serviceError, "onSubmitMessageUpdate"));
+
+      // go back to view
+      this.isMessageEditOn = !this.isMessageEditOn;
+    }
+
+  }
+
+
+  // prepare the new add or update data - get it from the form
+  private prepareAddUpdateMessage(): ProcessMessage {
+
+    const formModel = this.messagesForm.value;
+
+    let newAddUpdateMessage: ProcessMessage = new ProcessMessage();
+
+    if (this.isMessageEditOn) { newAddUpdateMessage.messageId = this.messageInView.messageId; }
+    newAddUpdateMessage.messageCode = formModel.code as string;
+    newAddUpdateMessage.messageText = formModel.text as string;
+    newAddUpdateMessage.messageTypeId = formModel.messageTypeId;
+    newAddUpdateMessage.messageTypeDescription = formModel.messageTypeDescription;
+
+
+    // has anything beeing changed in the form and we are updating
+    if (this.isMessageEditOn && !this.isMessageChanged(newAddUpdateMessage, this.tempAddUpdateMessage)) {
+      this.processMessagesService.emitProcessMessage("???????");
+      return null;
+    }
+    if (this.messageExists(newAddUpdateMessage)) {
+      this.processMessagesService.emitProcessMessage("?????");
+      return null;
+    }
+
+    return newAddUpdateMessage;
+  }
+
+  // as the form has been prepopulated when updating we can not use the form dirty on changed
+  // we have custom method to compare the new and old
+  private isMessageChanged(newMessage: ProcessMessage, oldMessage: ProcessMessage): boolean {
+    if (newMessage.messageCode === oldMessage.messageCode) { return false; }
+    return true;
+  }
+
+
+  private messageExists(message: ProcessMessage): boolean {
+    let m: number = 0;
+    for (m = 0; m < this.messages.length; m++) {
+      if (message.messageCode === this.messages[m].messageCode) { return true; }
+    }
+    return false;
+  }
+
+
+  private onMessageDeleteClick() {
+    this.messageToRemove = this.messageInView;
+  }
+
+
+  private onSubmitDeleteMessage(messageToRemove:ProcessMessage) {
+
+    this.processMessagesService.deleteProcessMessage(messageToRemove.messageId)
+      .subscribe((response: ProcessMessage) => {
+        // reset the update and add
+        this.addedMessage = null;
+        this.updatedMessage = null;
+        // show success
+        this.processMessagesService.emitProcessMessage("??????");
+        // get the new data from the server and start again
+        this.getMessages();
+
+      }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeleteMessage"));
+  }
 
 
 

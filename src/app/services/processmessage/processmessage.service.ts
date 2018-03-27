@@ -139,7 +139,7 @@ export class ProcessMessageService {
   //******************************************************
   // UPDATE MESSAGE
   //******************************************************
-  public updateMessage(message: ProcessMessage): Observable<ProcessMessage> {
+  public updateProcessMessage(message: ProcessMessage): Observable<ProcessMessage> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -157,7 +157,7 @@ export class ProcessMessageService {
   //******************************************************
   // DELETE MESSAGE
   //******************************************************
-  public deleteMessage(id: number): Observable<ProcessMessage> {
+  public deleteProcessMessage(id: number): Observable<ProcessMessage> {
 
     // prepare the headesrs
     const httpOptions = {
