@@ -282,6 +282,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
     }
 
 
+
     if (this.isMessageEditOn && message) {
 
       // update state
