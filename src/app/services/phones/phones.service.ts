@@ -163,4 +163,64 @@ export class PhonesService {
 
   }
 
+
+  //******************************************************
+  // ADD PHONE TYPE
+  //******************************************************
+  public addPhoneType(type: PhoneType): Observable<PhoneType>{
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${addPhoneTypeUrl}`;
+    return this.httpClientService.post<PhoneType>(localUrl, type, httpOptions).retry(1);
+  }
+
+
+
+ //******************************************************
+  // UPDATE PHONE TYPE
+  //******************************************************
+  public updatePhoneType(id: number): Observable<PhoneType>{
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updatePhoneTypeUrl}?phoneTypeid=${id}`;
+    return this.httpClientService.put<PhoneType>(localUrl, httpOptions).retry(1);
+  }
+
+
+   //******************************************************
+  // DELETE PHONE TYPE
+  //******************************************************
+  public deletePhoneType(id: number): Observable<PhoneType> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${deletePhoneTypeUrl}?phoneTypeId = ${id}`;
+    return this.httpClientService.delete<PhoneType>(localUrl, httpOptions).retry(1);
+  }
 }
+
+
+

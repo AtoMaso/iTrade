@@ -144,6 +144,7 @@ export class SocialNetworksService {
   }
 
 
+
   //******************************************************
   // GET SOCIAL NETWORK TYPES
   //******************************************************
@@ -158,9 +159,66 @@ export class SocialNetworksService {
       })
     };
 
-    this.localUrl = `${socialnetworkTypesUrl}`;
+    const localUrl = `${socialnetworkTypesUrl}`;
     return this.httpClientService.get<SocialNetworkType[]>(this.localUrl, httpOptions).retry(1);
 
   }
 
+
+ //******************************************************
+  // ADD SOCIAL TYPE
+  //******************************************************
+  public addSocialNetworkType(type: SocialNetworkType): Observable<SocialNetworkType>{
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${addSocialNetworkTypeUrl}`; 
+    return this.httpClientService.post<SocialNetworkType>(localUrl, type, httpOptions).retry(1);
+  }
+
+
+
+ //******************************************************
+  // UPDATE SOCIAL TYPE
+  //******************************************************
+  public updateSocialNetworkType(id: number): Observable<SocialNetworkType>{
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updateSocialNetworkTypeUrl}?socialTypeid=${id}`;
+    return this.httpClientService.put<SocialNetworkType>(localUrl, httpOptions).retry(1);
+  }
+
+
+   //******************************************************
+  // DELETE SOCIAL TYPE
+  //******************************************************
+  public deleteSocialNetworkType(id: number): Observable<SocialNetworkType> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${deleteSocialNetworkTypeUrl}?socialTypeId = ${id}`;
+    return this.httpClientService.delete<SocialNetworkType>(localUrl, httpOptions).retry(1);
+  }
 }

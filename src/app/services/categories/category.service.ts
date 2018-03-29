@@ -27,17 +27,9 @@ export class CategoryService {
     //******************************************************  
   public getCategories() {
 
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
-
+    // this does not need a token as it is called also from unauthorised users on the trade list
     this.localUrl = categoriesUrl;
-    return this.httpClientService.get(this.localUrl, httpOptions).retry(1);   
+    return this.httpClientService.get(this.localUrl).retry(1);   
 
   }
 

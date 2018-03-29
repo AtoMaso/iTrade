@@ -73,6 +73,53 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
+  // toggling done with jquery
+  public ngAfterViewInit() {
+
+    jQuery(document).ready(function () {
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapseMessages").on("hide.bs.collapse", function () {
+        jQuery(".messages").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Messages</span>  ');
+      });
+      jQuery("#collapseMessages").on("show.bs.collapse", function () {
+        jQuery(".messages").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Messages</span>');
+      });
+
+      // toggling the chevrons up and down of the colapsable panel   
+      jQuery("#collapseTypes").on("hide.bs.collapse", function () {
+        jQuery(".types").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Message Types</span>  ');
+      });
+      jQuery("#collapseTypes").on("show.bs.collapse", function () {
+        jQuery(".types").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Message Types</span>');
+      });
+
+
+
+      setTimeout(function () {
+
+        // this will set the first item from of the select phone type dropdown
+        var counter: number = 0;
+        if (jQuery('#message option')) {
+          jQuery('#message option').each(function () {
+            if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+            counter = counter + 1;
+          });
+        }
+        counter = 0
+        // this will set the first item from of the select email type dropdown     
+        if (jQuery('#type option')) {
+          jQuery('#type option').each(function () {
+            if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+            counter = counter + 1;
+          });
+        }
+
+      }, 100);
+
+    });
+  }
+
   //************************************************************
   // GET DATA METHODS
   //************************************************************

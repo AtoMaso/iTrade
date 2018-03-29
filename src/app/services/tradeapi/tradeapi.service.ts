@@ -104,16 +104,16 @@ export class TradeApiService {
   //******************************************************
   // SET FILTERS - SET or ALL
   //******************************************************
-  public getAllTradesWithSetFilters(catIdClicked?: number, subcatIdClicked?: number, stateIdClicked?: number, placeIdClicked?: number) {
+  public getAllTradesWithSetFilters(catIdClicked?: number, subcatIdClicked?: number, stateIdClicked?: number, placeIdClicked?: number, postcodeid?:number) {
 
-    this.localUrl = `${tradesWithSetFilters}?categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}`; 
+    this.localUrl = `${tradesWithSetFilters}?categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}&postcodeid=${postcodeid}`; 
     // errors are handled in the component
     return this.httpClientService.get(this.localUrl).retry(1);
 }
 
-  public getSetOfTradesWithSetFilters(setCounter: number, recordsPerSet: number, status: string, catIdClicked?: number, subcatIdClicked?: number, stateIdClicked?: number, placeIdClicked?: number)  {
+  public getSetOfTradesWithSetFilters(setCounter: number, recordsPerSet: number, status: string, catIdClicked?: number, subcatIdClicked?: number, stateIdClicked?: number, placeIdClicked?: number, postcodeidClicked?:number)  {
 
-    this.localUrl = `${setOfTradesWithSetFilters}?setCounter=${setCounter}&recordsPerSet=${recordsPerSet}&status=${status}&categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}`;
+    this.localUrl = `${setOfTradesWithSetFilters}?setCounter=${setCounter}&recordsPerSet=${recordsPerSet}&status=${status}&categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}&postcodeId=${postcodeidClicked}`;
     // errors are handled in the component
     return this.httpClientService.get(this.localUrl).retry(1);
   }
@@ -190,17 +190,5 @@ export class TradeApiService {
     return this.httpClientService.delete<PostTrade>(this.localUrl, httpOptions);    
 
   }
-
-
-  ///** DELETE: delete the hero from the server */
-  //deleteHero(hero: Hero | number): Observable<Hero> {
-  //  const id = typeof hero === 'number' ? hero : hero.id;
-  //  const url = `${this.heroesUrl}/${id}`;
-
-  //  return this.http.delete<Hero>(url, httpOptions).pipe(
-  //    tap(_ => this.log(`deleted hero id=${id}`)),
-  //    catchError(this.handleError<Hero>('deleteHero'))
-  //  );
-  //}
 
 }

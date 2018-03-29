@@ -172,14 +172,16 @@ export class TradesListComponent implements OnInit {
     let subcatid: number = 0
     let plaid: number = 0
     let staid: number = 0;
+    let pcid: number = 0;
 
     if (this.selectedCategory != null) { catid = this.selectedCategoryId; }
     if (this.selectedSubcategory != null) { subcatid = this.selectedSubcategoryId; }
     if (this.selectedState != null) { staid = this.selectedStateId; }
     if (this.selectedPlace != null) { plaid = this.selectedPlaceId; }
+    if (this.selectedPostcode != null) { pcid = this.selectedPostcodeId; }
 
     // get set of records with set filters
-    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, catid, subcatid, staid, plaid)
+    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, catid, subcatid, staid, plaid, pcid)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
@@ -238,13 +240,15 @@ export class TradesListComponent implements OnInit {
     let subcatid: number = 0
     let plaid: number = 0
     let staid: number = 0;
+    let pcid: number = 0;
 
     if (this.selectedCategory != null) { catid = this.selectedCategoryId; }
     if (this.selectedSubcategory != null) { subcatid = this.selectedSubcategoryId; }
     if (this.selectedState != null) { staid = this.selectedStateId; }
     if (this.selectedPlace != null) { plaid = this.selectedPlaceId; }
+    if (this.selectedPostcode != null) { pcid = this.selectedPostcodeId; }
 
-    this.tradeApiService.getAllTradesWithSetFilters(catid, subcatid, staid, plaid)
+    this.tradeApiService.getAllTradesWithSetFilters(catid, subcatid, staid, plaid, pcid)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;

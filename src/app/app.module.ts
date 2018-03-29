@@ -80,22 +80,15 @@ import { ContactlDetailsComponent } from './views/trader/contactdetails/contactd
 
 import { ControlMessages } from './views/controls/controlmessages/control-messages.component';
 import { ProcessMessagesComponent } from './views/controls/processmessages/process-messages.component';
-
 import { CategoriesComponent } from './views/categories/categories.component';
-import { AddPhoneTypeComponent } from './views/phone/addphonetype/addphonetype.component';
-import { PhoneTypeListComponent } from './views/phone/phonetypelist/phonetypelist.component';
-import { AddressTypeListComponent } from './views/address/addresstypelist/addresstypelist.component';
-import { AddAddressTypeComponent } from './views/address/addaddresstype/addaddresstype.component';
-import { AddSocialNetworkTypeComponent } from './views/socialnetwork/addsocialnetworktype/addsocialnetworktype.component';
-import { SocialNetworkTypeListComponent } from './views/socialnetwork/socialnetworktypelist/socialnetworktypelist.component';
-
+import { PlacesComponent } from './views/places/places.component';
+import { ProcessMessagesAdminComponent } from './views/processmessagesadmin/processmessagesadmin.component';
 
 import { CorrespondenceListComponent } from './views/correspondence/correspondencelist/correspondencelist.component';
 import { CorrespondenceDetailsComponent } from './views/correspondence/correspondencedetails/correspondencedetails.component';
 import { AddCorrespondenceComponent } from './views/correspondence/addcorrespondence/addcorrespondence.component';
 import { ResetPasswordComponent } from './views/trader/resetpassword/resetpassword.component';
-import { PlacesComponent } from './views/places/places.component';
-import { ProcessMessagesAdminComponent } from './views/processmessagesadmin/processmessagesadmin.component';
+import { TypesComponent } from './views/types/types.component';
 
 
 //initialises the process message service to get all process messages on start of the application
@@ -117,13 +110,10 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
  
     TradersListComponent, TraderDetailsComponent, TraderHomeComponent,
     AddTradeComponent, TradesListComponent, MyTradesListComponent, TradeDetailsComponent,   
-    CategoriesComponent, ProcessMessagesAdminComponent,
-    AddPhoneTypeComponent, PhoneTypeListComponent,   
-    AddressTypeListComponent, AddAddressTypeComponent,
-    PersonalDetailsComponent, LoginDetailsComponent, ContactlDetailsComponent,
-    AddSocialNetworkTypeComponent, SocialNetworkTypeListComponent, ProcessMessagesComponent,
+    CategoriesComponent, ProcessMessagesAdminComponent,      
+    PersonalDetailsComponent, LoginDetailsComponent, ContactlDetailsComponent, ProcessMessagesComponent,
     CorrespondenceListComponent, CorrespondenceDetailsComponent, AddCorrespondenceComponent,  
-    ForgotPasswordComponent, ResetPasswordComponent, PlacesComponent,
+    ForgotPasswordComponent, ResetPasswordComponent, PlacesComponent, TypesComponent,
   
     //TokenInterceptor,
   ],  

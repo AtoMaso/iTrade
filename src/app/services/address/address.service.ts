@@ -171,4 +171,63 @@ export class AddressService {
   }
 
 
+
+  //******************************************************
+  // ADD ADDRESS TYPE
+  //******************************************************
+  public addAddressType(type: AddressType): Observable<AddressType> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${addAddressTypeUrl}`;
+    return this.httpClientService.post<AddressType>(localUrl, type, httpOptions).retry(1);
+  }
+
+
+
+  //******************************************************
+  // UPDATE ADDRESS TYPE
+  //******************************************************
+  public updateAddressType(id: number): Observable<AddressType> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updateAddressTypeUrl}?addressTypeid=${id}`;
+    return this.httpClientService.put<AddressType>(localUrl, httpOptions).retry(1);
+  }
+
+
+  //******************************************************
+  // DELETE ADDRESS TYPE
+  //******************************************************
+  public deleteAddressType(id: number): Observable<AddressType> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${deleteAddressTypeUrl}?addressTypeId = ${id}`;
+    return this.httpClientService.delete<AddressType>(localUrl, httpOptions).retry(1);
+  }
 }
+
+

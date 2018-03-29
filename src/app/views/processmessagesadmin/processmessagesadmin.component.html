@@ -14,8 +14,8 @@
               Message Code:
               <select id="message" name="message" class="smalltextbold" style="background-color:moccasin;" (change)="onViewMessageChange($event)">
                 <option></option>
-                <option *ngFor="let mess of messages" [ngValue]="mess">
-                  {{ mess.messageCode }}
+                <option *ngFor="let message of messages" [ngValue]="message">
+                  {{ message.messageCode }}
                 </option>
               </select>
             </div>
@@ -52,7 +52,7 @@
                                   </div>
 
                                   <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                                    Type Description:<span class="text-info"> {{ messageInView.messageTypeDescription}}</span>
+                                    Type Description:<span class="text-info"> {{ messageInView.messageTypeDescription }}</span>
                                   </div>
                                 </div>
                               </div>
@@ -134,8 +134,8 @@
                 Message Type:
                 <select id="type" name="type" class="smalltextbold" style="background-color:moccasin;" (change)="onViewTypeChange($event)">
                   <option></option>
-                  <option *ngFor="let messtype of types" [ngValue]="messtype">
-                    {{ messtype.messageTypeDescription }}
+                  <option *ngFor="let type of types" [ngValue]="type">
+                    {{ type.messageTypeDescription }}
                   </option>
                 </select>
               </div>

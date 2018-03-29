@@ -162,5 +162,61 @@ export class EmailsService {
 
   }
 
+  //******************************************************
+  // ADD EMAIL TYPE
+  //******************************************************
+  public addEmailType(type: EmailType): Observable<EmailType> {
 
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${addEmailTypeUrl}`;
+    return this.httpClientService.post<EmailType>(localUrl, type, httpOptions).retry(1);
+  }
+
+
+
+  //******************************************************
+  // UPDATE EMAIL TYPE
+  //******************************************************
+  public updateEmailType(id: number): Observable<EmailType> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updateEmailTypeUrl}?emailTypeid=${id}`;
+    return this.httpClientService.put<EmailType>(localUrl, httpOptions).retry(1);
+  }
+
+
+  //******************************************************
+  // DELETE EMAIL TYPE
+  //******************************************************
+  public deleteEmailType(id: number): Observable<EmailType> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${deleteEmailTypeUrl}?emailTypeId = ${id}`;
+    return this.httpClientService.delete<EmailType>(localUrl, httpOptions).retry(1);
+  }
 }
+
