@@ -31,6 +31,8 @@ import { ResetPasswordComponent } from './views/trader/resetpassword/resetpasswo
 import { CategoriesComponent } from './views/categories/categories.component';
 import { PlacesComponent } from './views/places/places.component';
 import {ProcessMessagesAdminComponent} from './views/processmessagesadmin/processmessagesadmin.component';
+import {TypesComponent} from './views/types/types.component';
+
 
 // cmport the AuthGuard helper
 import { AuthGuard } from './helpers/auth.guard';
@@ -66,9 +68,10 @@ const routes: Routes = [
   { path: 'addcorrespondence', component: AddCorrespondenceComponent, canActivate: [AuthGuard] }, // correspondence should available only when authenticated , canActivate: [AuthGuard]
 
   { path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard] },
-  { path: 'places', component:PlacesComponent, canActivate: [AuthGuard] },
-  { path: 'message', component: ProcessMessagesAdminComponent, canActivate: [AuthGuard] },
-  
+  { path: 'places', component: PlacesComponent, canActivate: [AuthGuard] },
+  { path: 'messages', component: ProcessMessagesAdminComponent, canActivate: [AuthGuard] },
+  { path: 'types', component: TypesComponent, canActivate: [AuthGuard] },
+
 ];
 
 

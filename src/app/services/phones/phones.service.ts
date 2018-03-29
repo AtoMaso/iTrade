@@ -26,8 +26,6 @@ let deletePhoneTypeUrl = CONFIG.baseUrls.deletephonetype;
 @Injectable()
 export class PhonesService {
 
-  private localUrl: string;
-
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
@@ -45,8 +43,8 @@ export class PhonesService {
       })
     };
 
-    this.localUrl = `${phonesUrl}`;
-    return this.httpClientService.get<Phone[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${phonesUrl}`;
+    return this.httpClientService.get<Phone[]>(localUrl, httpOptions).retry(1);
 
   }
 
@@ -65,8 +63,8 @@ export class PhonesService {
       })
     };
 
-    this.localUrl = `${phonesbytraderid}?traderId=${traderId}`;
-    return this.httpClientService.get<Phone[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${phonesbytraderid}?traderId=${traderId}`;
+    return this.httpClientService.get<Phone[]>(localUrl, httpOptions).retry(1);
   }
 
 
@@ -84,9 +82,9 @@ export class PhonesService {
     //  })
     //};
 
-    this.localUrl = `${preferedphone}?traderId=${traderId}&preferredFlag=${flag}`;
+    const localUrl = `${preferedphone}?traderId=${traderId}&preferredFlag=${flag}`;
    // return this.httpClientService.get<Phone>(this.localUrl, httpOptions).retry(1);
-    return this.httpClientService.get<Phone>(this.localUrl).retry(1);
+    return this.httpClientService.get<Phone>(localUrl).retry(1);
   }
 
 
@@ -103,8 +101,8 @@ export class PhonesService {
       })
     };
 
-    this.localUrl = `${addPhoneUrl}`;
-    return this.httpClientService.post<Phone>(this.localUrl, phone, httpOptions).retry(1);
+    const localUrl = `${addPhoneUrl}`;
+    return this.httpClientService.post<Phone>(localUrl, phone, httpOptions).retry(1);
   }
 
 
@@ -121,8 +119,8 @@ export class PhonesService {
       })
     };
 
-    this.localUrl = `${updatePhoneUrl}?id=${phone.id}`;
-    return this.httpClientService.put<Phone>(this.localUrl, phone, httpOptions).retry(1);
+    const localUrl = `${updatePhoneUrl}?id=${phone.id}`;
+    return this.httpClientService.put<Phone>(localUrl, phone, httpOptions).retry(1);
   }
 
 
@@ -139,8 +137,8 @@ export class PhonesService {
       })
     };
 
-    this.localUrl = `${deletePhoneUrl}?id=${phone.id}`;
-    return this.httpClientService.delete<Phone>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${deletePhoneUrl}?id=${phone.id}`;
+    return this.httpClientService.delete<Phone>(localUrl, httpOptions).retry(1);
   }
 
 
@@ -158,8 +156,8 @@ export class PhonesService {
       })
     };
 
-    this.localUrl = `${phoneTypesUrl}`;
-    return this.httpClientService.get<PhoneType[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${phoneTypesUrl}`;
+    return this.httpClientService.get<PhoneType[]>(localUrl, httpOptions).retry(1);
 
   }
 

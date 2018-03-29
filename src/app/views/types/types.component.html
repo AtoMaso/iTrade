@@ -1,3 +1,464 @@
-<p>
-  types works!
-</p>
+<div class="container col-md-12">
+
+  <div class="row">
+
+    <!-- Phones -->
+    <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">
+
+      <div class="phonetypes collapsed col-md-6" data-toggle="collapse" data-target="#collapsePhones">
+        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Phone Types</span>
+      </div>
+
+      <!-- drop down -->
+      <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
+        Type:
+        <select id="phonetype" name="phonetype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPhoneTypeChange($event)">
+          <option></option>
+          <option *ngFor="let phonetype of phonetypes" [ngValue]="phonetype">
+            {{ phonetype.phoneType }}
+          </option>
+        </select>
+      </div>
+
+
+      <div class="colapse in col-md-12" id="collapsePhones" style="margin-top:20px;">
+
+        <div *ngIf="!isPhoneTypeAddOn && !isPhoneTypeEditOn" class="col-md-12">
+
+          <div class="col-md-12">
+            <div class="col-md-4"><a (click)="onPhoneTypeAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+            <div class="col-md-4"><a (click)="onPhoneTypeEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+            <div class="col-md-4"><a data-target="#removePhoneType" data-toggle="modal" (click)="onPhoneTypeDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
+          </div>
+
+
+          <div *ngIf="phonetypes !== null" class="col-md-12" style="margin-top:20px;">
+
+            <div class="row">
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Phone Type Id:<span class="text-info"> {{ phoneTypeInView.phoneTypeId}}</span>
+              </div>           
+
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Phone Type Description:<span class="text-info"> {{ phoneTypeInView.phoneType }}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="isPhoneTypeAddOn || isPhoneTypeEditOn" class="row col-md-12">
+
+
+          <form novalidate [formGroup]="phoneTypesForm" (submit)="onSubmitPhoneTypeAddUpdate()">
+                         
+
+            <div class="col-md-10 col-md-offset-1">
+              <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                Phone Type Description:
+                <input type="text" formControlName="phonetypedescription" id="phonetypedescription" name="phonetypedescription" required class="form-control smalltextbold" style="background-color:moccasin" />
+                <control-messages [control]="phoneTypesForm.controls.phonetypedescription"></control-messages>
+              </div>
+            </div>
+
+            <div class="col-md-8 col-md-offset-2 panel panel-heading" style="height:70px;margin-top:10px;">
+              <div class="col-md-6">
+                <button id="phonetypecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onPhoneTypeAddEditCancel()">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                </button>
+              </div>
+
+              <div class="col-md-6" style="text-align:left;">
+                <button id="phonetypesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!phoneTypesForm.valid" style="width:auto; height:30px;">
+                  <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                  Save
+                </button>
+              </div>
+            </div>
+
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!--  Address Types-->
+    <div class="col-md-5 col-md-offset-1 panel panel-heading footerdiv">
+
+      <div class="addresstypes collapsed col-md-6" data-toggle="collapse" data-target="#collapseAddressTypes">
+        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Address Types</span>
+      </div>
+
+      <!-- drop down -->
+      <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
+        Address Type:
+        <select id="addresstype" name="addresstype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewAddressTypeChange($event)">
+          <option></option>
+          <option *ngFor="let addresstype of addresstypes" [ngValue]="addresstype">
+            {{ addresstype.addressType }}
+          </option>
+        </select>
+      </div>
+
+
+      <div class="colapse in col-md-12" id="collapseAddressTypes" style="margin-top:20px;">
+
+        <div *ngIf="!isAddressTypeAddOn && !isAddressTypeEditOn" class="col-md-12">
+
+          <div class="col-md-12">
+            <div class="col-md-4"><a (click)="onAddressTypeAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+            <div class="col-md-4"><a (click)="onAddressTypeEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+            <div class="col-md-4"><a data-target="#removeAddressType" data-toggle="modal" (click)="onAddressTypeDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
+          </div>
+
+          <div *ngIf="addresstypes  !== null" class="col-md-12" style="margin-top:20px;">
+
+            <div class="row">
+
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Address Type Id: <span class="text-info"> {{ addressTypeInView.addressTypeId }}</span>
+              </div>
+
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Address Type Description:<span class="text-info"> {{ addressTypeInView.addressType }}</span>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div *ngIf="isAddressTypeAddOn || isAddressTypeEditOn" class="row col-md-12">
+
+          <form novalidate [formGroup]="addressTypesForm" (submit)="onSubmitAddressTypeAddUpdate()">
+
+            <div class="col-md-6 col-md-offset-3">
+              <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                Address Type Description:
+                <input type="text" formControlName="addresstypedescription" id="addresstypedescription" name="addresstypedescription" required class="form-control smalltext" style="background-color:moccasin" />
+                <control-messages [control]="addressTypesForm.controls.addresstypedescription"></control-messages>
+              </div>
+            </div>
+
+
+            <div class="col-md-6 col-md-offset-3 panel panel-heading" style="height:70px;margin-top:10px;">
+              <div class="col-md-6">
+                <button id="addresstypecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onAddressTypeAddEditCancel()">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                </button>
+              </div>
+
+              <div class="col-md-6" style="text-align:left;">
+                <button id="addresstypesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!addressTypesForm.valid" style="width:auto; height:30px;">
+                  <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                  Save
+                </button>
+              </div>
+            </div>
+
+
+          </form>
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="row">
+
+    <!-- Email Types -->
+    <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">
+
+      <div class="emailtypes collapsed col-md-6" data-toggle="collapse" data-target="#collapseEmails">
+        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Email Types</span>
+      </div>
+
+      <!-- drop down -->
+      <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
+        Type:
+        <select id="emailtype" name="emailtype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewEmailTypeChange($event)">
+          <option></option>
+          <option *ngFor="let emailtype of emailtypes" [ngValue]="emailtype">
+            {{ emailtype.emailType }}
+          </option>
+        </select>
+      </div>
+
+
+      <div class="colapse in col-md-12" id="collapseEmails" style="margin-top:20px;">
+
+        <div *ngIf="!isEmailTypeAddOn && !isEmailTypeEditOn" class="col-md-12">
+
+          <div class="col-md-12">
+            <div class="col-md-4"><a (click)="onEmailTypeAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+            <div class="col-md-4"><a (click)="onEmailTypeEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+            <div class="col-md-4"><a data-target="#removeEmailType" data-toggle="modal" (click)="onEmailTypeDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
+          </div>
+
+
+          <div *ngIf="emailtypes !== null" class="col-md-12" style="margin-top:20px;">
+
+            <div class="row">
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Email Type Id:<span class="text-info"> {{ emailTypeInView.emailTypeId}}</span>
+              </div>
+
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Email Type Description:<span class="text-info"> {{ emailTypeInView.emailType }}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="isEmailTypeAddOn || isEmailTypeEditOn" class="row col-md-12">
+
+
+          <form novalidate [formGroup]="emailTypesForm" (submit)="onSubmitEmailTypeAddUpdate()">
+
+
+            <div class="col-md-10 col-md-offset-1">
+              <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                Email Type Description:
+                <input type="text" formControlName="emailtypedescription" id="emailtypedescription" name="emailtypedescription" required class="form-control smalltextbold" style="background-color:moccasin" />
+                <control-messages [control]="emailTypesForm.controls.emailtypedescription"></control-messages>
+              </div>
+            </div>
+
+            <div class="col-md-8 col-md-offset-2 panel panel-heading" style="height:70px;margin-top:10px;">
+              <div class="col-md-6">
+                <button id="emailtypecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onEmailTypeAddEditCancel()">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                </button>
+              </div>
+
+              <div class="col-md-6" style="text-align:left;">
+                <button id="emailtypesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!emailTypesForm.valid" style="width:auto; height:30px;">
+                  <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                  Save
+                </button>
+              </div>
+            </div>
+
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!--  Social Types-->
+    <div class="col-md-5 col-md-offset-1 panel panel-heading footerdiv">
+
+      <div class="socialtypes collapsed col-md-6" data-toggle="collapse" data-target="#collapseSocialTypes">
+        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Social Network Types</span>
+      </div>
+
+      <!-- drop down -->
+      <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
+         Type:
+        <select id="socialtype" name="socialtype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewSocialTypeChange($event)">
+          <option></option>
+          <option *ngFor="let socialtype of socialtypes" [ngValue]="socialtype">
+            {{ socialtype.socialType }}
+          </option>
+        </select>
+      </div>
+
+
+      <div class="colapse in col-md-12" id="collapseSocialTypes" style="margin-top:20px;">
+
+        <div *ngIf="!isSocialTypeAddOn && !isSocialTypeEditOn" class="col-md-12">
+
+          <div class="col-md-12">
+            <div class="col-md-4"><a (click)="onSocialTypeAddClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-plus-sign"></i> Add </a></div>
+            <div class="col-md-4"><a (click)="onSocialTypeEditClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-edit"></i> Edit </a></div>
+            <div class="col-md-4"><a data-target="#removeSocialType" data-toggle="modal" (click)="onSocialTypeDeleteClick()" class="textoker smalltext text-uppercase"><i class="glyphicon glyphicon-erase"></i> Delete </a></div>
+          </div>
+
+          <div *ngIf="socialtypes  !== null" class="col-md-12" style="margin-top:20px;">
+
+            <div class="row">
+
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Social Type Id: <span class="text-info"> {{ socialTypeInView.socialTypeId }}</span>
+              </div>
+
+              <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                Social Type Description:<span class="text-info"> {{ socialTypeInView.socialType }}</span>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div *ngIf="isSocialTypeAddOn || isSocialTypeEditOn" class="row col-md-12">
+
+          <form novalidate [formGroup]="socialTypesForm" (submit)="onSubmitSocialTypeAddUpdate()">
+
+            <div class="col-md-6 col-md-offset-3">
+              <div class="form-group smalltextbold col-md-12" style="height:70px;">
+                Social Type Description:
+                <input type="text" formControlName="socialtypedescription" id="socialtypedescription" name="socialtypedescription" required class="form-control smalltext" style="background-color:moccasin" />
+                <control-messages [control]="socialTypesForm.controls.socialtypedescription"></control-messages>
+              </div>
+            </div>
+
+
+            <div class="col-md-6 col-md-offset-3 panel panel-heading" style="height:70px;margin-top:10px;">
+              <div class="col-md-6">
+                <button id="socialtypecancel" class="btn btn-warning text-uppercase smalltext" style="width:auto; height:30px;" (click)="onSocialTypeAddEditCancel()">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Cancel
+                </button>
+              </div>
+
+              <div class="col-md-6" style="text-align:left;">
+                <button id="socialtypesave" class="btn btn-success text-uppercase smalltext" type="submit" [disabled]="!socialTypesForm.valid" style="width:auto; height:30px;">
+                  <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                  Save
+                </button>
+              </div>
+            </div>
+
+
+          </form>
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<my-spinner [isRunning]="isRequesting"></my-spinner>
+
+
+<!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+<!-- Message Remove-->
+<div class="modal fade" id="removePhoneType" tabindex="-1" role="dialog" aria-labelledby="RemovePhoneTYpe" style="z-index:1800;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to delete this phone type?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="onSubmitDeletePhoneType(phoneTypeToRemove)" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+<!-- Message Type Remove-->
+<div class="modal fade" id="removeAddressType" tabindex="-1" role="dialog" aria-labelledby="RemoveAddressType" style="z-index:1801;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to delete this address type?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="onSubmitDeleteAddressType(addressTypeToRemove)" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+<!-- Message Remove-->
+<div class="modal fade" id="removeEmailType" tabindex="-1" role="dialog" aria-labelledby="RemoveEmaiklType" style="z-index:1800;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to delete this email type?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="onSubmitDeleteEmailType(emailTypeToRemove)" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+<!-- Message Type Remove-->
+<div class="modal fade" id="removeSocialType" tabindex="-1" role="dialog" aria-labelledby="RemoveSocialType" style="z-index:1801;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Remove Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>Are you sure you want to delete this social network type?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" (click)="onSubmitDeleteSocialType(socialTypeToRemove)" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+

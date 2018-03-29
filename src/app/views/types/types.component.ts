@@ -338,7 +338,7 @@ export class TypesComponent implements OnInit {
 
   private setEmailTypesForm() {
     this.emailTypesForm = this.formBuilder.group({
-      emailphonetypedescription: new FormControl('', [Validators.required, ValidationService.messageTypeDescriptionValidator]),
+      emailtypedescription: new FormControl('', [Validators.required, ValidationService.messageTypeDescriptionValidator]),
     });
   }
 
@@ -361,7 +361,7 @@ export class TypesComponent implements OnInit {
   private setAddressTypesFormDefaults() {
     setTimeout(() => {
       this.addressTypesForm.setValue({
-        typedescription: this.addressTypeInView.addressType,
+        addresstypedescription: this.addressTypeInView.addressType,
       });
     }, 30);
   }
@@ -393,7 +393,7 @@ export class TypesComponent implements OnInit {
     let m: number = 0;
     for (m = 0; m < this.phonetypes.length; m++) {
 
-      if (this.phonetypes[m].phoneTypeId === state.target.value) {
+      if (this.phonetypes[m].phoneType === state.target.value) {
         // reset types    
         this.isPhoneTypeAddOn = false;
         this.isPhoneTypeEditOn = false;
@@ -504,7 +504,7 @@ export class TypesComponent implements OnInit {
     let newAddUpdatePhoneType: PhoneType = new PhoneType();
 
     if (this.isPhoneTypeEditOn) { newAddUpdatePhoneType.phoneTypeId = this.phoneTypeInView.phoneTypeId; }      
-    newAddUpdatePhoneType.phoneType = formModel.phonetype.phonetype;
+    newAddUpdatePhoneType.phoneType = formModel.phonetypedescription;
 
 
     // has anything beeing changed in the form and we are updating
@@ -568,7 +568,7 @@ export class TypesComponent implements OnInit {
     let m: number = 0;
     for (m = 0; m < this.addresstypes.length; m++) {
 
-      if (this.addresstypes[m].addressTypeId === state.target.value) {
+      if (this.addresstypes[m].addressType === state.target.value) {
         // reset types    
         this.isAddressTypeAddOn = false;
         this.isAddressTypeEditOn = false;
@@ -646,7 +646,6 @@ export class TypesComponent implements OnInit {
     }
 
 
-
     if (this.isAddressTypeEditOn && addresstype) {
 
       // update state
@@ -678,8 +677,8 @@ export class TypesComponent implements OnInit {
 
     let newAddUpdateAddressType: AddressType = new AddressType();
 
-    if (this.isPhoneTypeEditOn) { newAddUpdateAddressType.addressTypeId = this.addressTypeInView.addressTypeId; }
-    newAddUpdateAddressType.addressType = formModel.addresstype.addresstype;
+    if (this.isAddressTypeEditOn) { newAddUpdateAddressType.addressTypeId = this.addressTypeInView.addressTypeId; }
+    newAddUpdateAddressType.addressType = formModel.addrestypedescription;
 
 
     // has anything beeing changed in the form and we are updating
@@ -743,7 +742,7 @@ export class TypesComponent implements OnInit {
     let m: number = 0;
     for (m = 0; m < this.emailtypes.length; m++) {
 
-      if (this.emailtypes[m].emailTypeId === state.target.value) {
+      if (this.emailtypes[m].emailType === state.target.value) {
         // reset types    
         this.isEmailTypeAddOn = false;
         this.isEmailTypeEditOn = false;
@@ -854,7 +853,7 @@ export class TypesComponent implements OnInit {
     let newAddUpdateEmailType: EmailType = new EmailType();
 
     if (this.isEmailTypeEditOn) { newAddUpdateEmailType.emailTypeId = this.emailTypeInView.emailTypeId; }
-    newAddUpdateEmailType.emailType = formModel.emailtype.emailtype;
+    newAddUpdateEmailType.emailType = formModel.emailtypedescription;
 
 
     // has anything beeing changed in the form and we are updating
@@ -919,7 +918,7 @@ export class TypesComponent implements OnInit {
     let m: number = 0;
     for (m = 0; m < this.socialtypes.length; m++) {
 
-      if (this.socialtypes[m].socialTypeId === state.target.value) {
+      if (this.socialtypes[m].socialType === state.target.value) {
         // reset types    
         this.isSocialTypeAddOn = false;
         this.isSocialTypeEditOn = false;
@@ -933,7 +932,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onSocailTypeAddClick() {
+  private onSocialTypeAddClick() {
     this.messagesService.emitRoute("nill");
     this.isSocialTypeAddOn = true;
     this.isSocialTypeEditOn = false;
@@ -1030,7 +1029,7 @@ export class TypesComponent implements OnInit {
     let newAddUpdateSocialType: SocialNetworkType = new SocialNetworkType();
 
     if (this.isSocialTypeEditOn) { newAddUpdateSocialType.socialTypeId = this.socialTypeInView.socialTypeId; }
-    newAddUpdateSocialType.socialType = formModel.socialtype.socialtype;
+    newAddUpdateSocialType.socialType = formModel.socialtypedescription;
 
 
     // has anything beeing changed in the form and we are updating

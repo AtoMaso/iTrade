@@ -26,8 +26,6 @@ let deleteEmailTypeUrl = CONFIG.baseUrls.deleteemailtype;
 @Injectable()
 export class EmailsService {
 
-  private localUrl: string;
-
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
@@ -45,8 +43,8 @@ export class EmailsService {
       })
     };
 
-    this.localUrl = `${emailUrl}`;
-    return this.httpClientService.get<Email[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${emailUrl}`;
+    return this.httpClientService.get<Email[]>(localUrl, httpOptions).retry(1);
 
   }
 
@@ -65,29 +63,21 @@ export class EmailsService {
       })
     };
 
-    this.localUrl = `${emailsbytraderid}?traderId=${traderId}`;
-    return this.httpClientService.get<Email[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${emailsbytraderid}?traderId=${traderId}`;
+    return this.httpClientService.get<Email[]>(localUrl, httpOptions).retry(1);
   }
 
 
   //******************************************************
   // GET PREFERRED EMAIL
   //******************************************************
-  public getPreferredEmail(traderId: string, flag: string): Observable<Email> {
-
-    //// prepare the headesrs
-    //const httpOptions = {
-    //  headers: new HttpHeaders({
-    //    'Accept': 'application/json',
-    //    'Content-Type': 'application/json',
-    //    'Authorization': `Bearer ${this.session.userIdentity.accessToken}`
-    //  })
-    //};
-
-    this.localUrl = `${preferredemail}?traderId=${traderId}&preferredFlag=${flag}`;
-    //return this.httpClientService.get<Email>(this.localUrl, httpOptions).retry(1);
-    return this.httpClientService.get<Email>(this.localUrl).retry(1);
+  public getPreferredEmail(traderId: string, flag: string): Observable<Email> { 
+    // annonimous
+    const localUrl = `${preferredemail}?traderId=${traderId}&preferredFlag=${flag}`;   
+    return this.httpClientService.get<Email>(localUrl).retry(1);
   }
+
+
 
   //******************************************************
   // ADD EMAIL
@@ -102,8 +92,8 @@ export class EmailsService {
       })
     };
 
-    this.localUrl = `${addEmailUrl}`;
-    return this.httpClientService.post<Email>(this.localUrl, email, httpOptions).retry(1);
+    const localUrl = `${addEmailUrl}`;
+    return this.httpClientService.post<Email>(localUrl, email, httpOptions).retry(1);
   }
 
 
@@ -120,9 +110,10 @@ export class EmailsService {
       })
     };
 
-    this.localUrl = `${updateEmailUrl}?id=${emails.id}`;
-    return this.httpClientService.put<Email>(this.localUrl, emails, httpOptions).retry(1);
+    const localUrl = `${updateEmailUrl}?id=${emails.id}`;
+    return this.httpClientService.put<Email>(localUrl, emails, httpOptions).retry(1);
   }
+
 
   //******************************************************
   // DELETE EMAIL
@@ -137,8 +128,8 @@ export class EmailsService {
       })
     };
 
-    this.localUrl = `${deleteEmailUrl}?id=${emails.id}`;
-    return this.httpClientService.delete<Email>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${deleteEmailUrl}?id=${emails.id}`;
+    return this.httpClientService.delete<Email>(localUrl, httpOptions).retry(1);
   }
 
 
@@ -157,8 +148,8 @@ export class EmailsService {
       })
     };
 
-    this.localUrl = `${emailTypesUrl}`;
-    return this.httpClientService.get<EmailType []>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${emailTypesUrl}`;
+    return this.httpClientService.get<EmailType []>(localUrl, httpOptions).retry(1);
 
   }
 

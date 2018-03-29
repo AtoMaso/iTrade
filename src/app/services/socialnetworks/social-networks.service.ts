@@ -26,8 +26,6 @@ let deleteSocialNetworkTypeUrl = CONFIG.baseUrls.deletesocialnetworktype;
 @Injectable()
 export class SocialNetworksService {
 
-  private localUrl: string;
-
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
@@ -45,8 +43,8 @@ export class SocialNetworksService {
       })
     };
 
-    this.localUrl = `${socialnetworksUrl}`;
-    return this.httpClientService.get<SocialNetwork[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${socialnetworksUrl}`;
+    return this.httpClientService.get<SocialNetwork[]>(localUrl, httpOptions).retry(1);
 
   }
 
@@ -65,8 +63,8 @@ export class SocialNetworksService {
       })
     };
 
-    this.localUrl = `${socialnetworksbytraderid}?traderId=${traderId}`;
-    return this.httpClientService.get<SocialNetwork[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${socialnetworksbytraderid}?traderId=${traderId}`;
+    return this.httpClientService.get<SocialNetwork[]>(localUrl, httpOptions).retry(1);
   }
 
 
@@ -85,9 +83,9 @@ export class SocialNetworksService {
     //  })
     //};
 
-    this.localUrl = `${preferredsocialnetwork}?traderId=${traderId}&preferredFlag=${flag}`;
+    const localUrl = `${preferredsocialnetwork}?traderId=${traderId}&preferredFlag=${flag}`;
     //return this.httpClientService.get<SocialNetwork>(this.localUrl, httpOptions).retry(1);
-    return this.httpClientService.get<SocialNetwork>(this.localUrl).retry(1);
+    return this.httpClientService.get<SocialNetwork>(localUrl).retry(1);
   }
 
   //******************************************************
@@ -103,8 +101,8 @@ export class SocialNetworksService {
       })
     };
 
-    this.localUrl = `${addSocialNetworkUrl}`;
-    return this.httpClientService.post<SocialNetwork>(this.localUrl, socialnetwork, httpOptions).retry(1);
+    const localUrl = `${addSocialNetworkUrl}`;
+    return this.httpClientService.post<SocialNetwork>(localUrl, socialnetwork, httpOptions).retry(1);
   }
 
 
@@ -121,8 +119,8 @@ export class SocialNetworksService {
       })
     };
 
-    this.localUrl = `${updateSocialNetworkUrl}?id=${socialnetwork.id}`;
-    return this.httpClientService.put<SocialNetwork>(this.localUrl, socialnetwork, httpOptions).retry(1);
+    const localUrl = `${updateSocialNetworkUrl}?id=${socialnetwork.id}`;
+    return this.httpClientService.put<SocialNetwork>(localUrl, socialnetwork, httpOptions).retry(1);
   }
 
 
@@ -139,8 +137,8 @@ export class SocialNetworksService {
       })
     };
 
-    this.localUrl = `${deleteSocialNetworkUrl}?id=${socialnetwork.id}`;
-    return this.httpClientService.delete<SocialNetwork>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${deleteSocialNetworkUrl}?id=${socialnetwork.id}`;
+    return this.httpClientService.delete<SocialNetwork>(localUrl, httpOptions).retry(1);
   }
 
 
@@ -160,7 +158,7 @@ export class SocialNetworksService {
     };
 
     const localUrl = `${socialnetworkTypesUrl}`;
-    return this.httpClientService.get<SocialNetworkType[]>(this.localUrl, httpOptions).retry(1);
+    return this.httpClientService.get<SocialNetworkType[]>(localUrl, httpOptions).retry(1);
 
   }
 

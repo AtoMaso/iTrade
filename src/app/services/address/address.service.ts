@@ -32,10 +32,6 @@ let deleteAddressTypeUrl = CONFIG.baseUrls.deleteaddresstype;
 @Injectable()
 export class AddressService {
 
-  private localUrl: string;
-  private args: RequestOptionsArgs;
-
-
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
 
@@ -53,8 +49,8 @@ export class AddressService {
       })
     };
 
-    this.localUrl = `${addressesUrl}`;
-    return this.httpClientService.get<Address[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${addressesUrl}`;
+    return this.httpClientService.get<Address[]>(localUrl, httpOptions).retry(1);
    
     }
 
@@ -73,8 +69,8 @@ export class AddressService {
       })
     };
 
-    this.localUrl = `${addressesbytraderid}?traderId=${traderId}`;
-    return this.httpClientService.get<Address[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${addressesbytraderid}?traderId=${traderId}`;
+    return this.httpClientService.get<Address[]>(localUrl, httpOptions).retry(1);
   }
 
 
@@ -82,19 +78,9 @@ export class AddressService {
   // GET PREFERRED ADDRESS
   //******************************************************
   public getPreferredAddress(traderId: string, flag: string) {
-
-    //// prepare the headesrs
-    //const httpOptions = {
-    //  headers: new HttpHeaders({
-    //    'Accept': 'application/json',
-    //    'Content-Type': 'application/json',
-    //    'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-    //  })
-    //};
-
-    this.localUrl = `${preferredaddress}?traderId=${traderId}&preferredFlag=${flag}`;
-    //return this.httpClientService.get<Address>(this.localUrl, httpOptions).retry(1);
-    return this.httpClientService.get<Address>(this.localUrl).retry(1);
+    // annonimous
+    const localUrl = `${preferredaddress}?traderId=${traderId}&preferredFlag=${flag}`; 
+    return this.httpClientService.get<Address>(localUrl).retry(1);
   }
 
     //******************************************************
@@ -110,8 +96,8 @@ export class AddressService {
       })
     };
 
-    this.localUrl = `${addAddressUrl}`;
-    return this.httpClientService.post<Address>(this.localUrl, address, httpOptions).retry(1);
+    const localUrl = `${addAddressUrl}`;
+    return this.httpClientService.post<Address>(localUrl, address, httpOptions).retry(1);
   }
 
     //******************************************************
@@ -127,8 +113,8 @@ export class AddressService {
       })
     };
 
-    this.localUrl = `${deleteAddressUrl}?id=${address.id}`;
-    return this.httpClientService.delete<Address>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${deleteAddressUrl}?id=${address.id}`;
+    return this.httpClientService.delete<Address>(localUrl, httpOptions).retry(1);
   }
 
 
@@ -145,8 +131,8 @@ export class AddressService {
         })
       };
 
-      this.localUrl = `${updateAddressUrl}?id=${address.id}`;
-      return this.httpClientService.put<Address>(this.localUrl, address,  httpOptions).retry(1);
+      const localUrl = `${updateAddressUrl}?id=${address.id}`;
+      return this.httpClientService.put<Address>(localUrl, address,  httpOptions).retry(1);
     }
 
 
@@ -165,8 +151,8 @@ export class AddressService {
       })
     };
 
-    this.localUrl = `${addressTypesUrl}`;
-    return this.httpClientService.get<AddressType[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${addressTypesUrl}`;
+    return this.httpClientService.get<AddressType[]>(localUrl, httpOptions).retry(1);
 
   }
 
