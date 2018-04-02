@@ -68,7 +68,7 @@ export class ValidationService {
  /**************************************************/
  //trade list view and add trade view validation 
 /**************************************************/ 
-  static tradeNameValidator(control) {
+  static tradeNameTradeValidator(control) {
     // {10}-Assert trade name can be up to is 10 characters
     if (control.value) {
       if (control.value.match(/^([a-zA-Z\s]){3,20}$/)) {
@@ -79,7 +79,7 @@ export class ValidationService {
     }
   }
 
-  static tradeDescriptionValidator(control) {
+  static tradeDescriptionTradeValidator(control) {
     // {10}-Assert trade description can be up to 200 characters
     if (control.value) {
       if (control.value.match(/^([a-zA-Z\s]){10,200}$/)) {
@@ -90,7 +90,7 @@ export class ValidationService {
     }
   }
 
-  static tradeForValidator(control) {
+  static tradeForTradeValidator(control) {
     // {10}-Assert trade for name can be up to 10 characters
     if (control.value) {
       if (control.value.match(/^([a-zA-Z\s]){3,20}$/)) {
@@ -101,7 +101,7 @@ export class ValidationService {
     }
   }
 
-  static publishDateValidator(control) {
+  static publishDateTradeValidator(control) {
 
     // {10}-Assert date can no be in the past
     if (control.value)  {
@@ -119,7 +119,7 @@ export class ValidationService {
     }
 }
 
-  static categoryValidator(control) {
+  static categoryTradeValidator(control) {
 
   // {10}-Assert date can no be in the past
   if (control.value) {
@@ -133,7 +133,7 @@ export class ValidationService {
   }
   }
 
-  static subcategoryValidator(control) {
+  static subcategoryTradeValidator(control) {
 
     // {10}-Assert date can no be in the past
     if (control.value) {
@@ -147,7 +147,7 @@ export class ValidationService {
     }
   }
 
-  static stateValidator(control) {
+  static stateTradeValidator(control) {
 
     // {10}-Assert date can no be in the past
     if (control.value) {
@@ -161,7 +161,7 @@ export class ValidationService {
     }
   }
 
-  static placeValidator(control) {
+  static placeTradeValidator(control) {
 
     // {10}-Assert date can no be in the past
     if (control.value) {
@@ -175,7 +175,7 @@ export class ValidationService {
     }
   }
 
-  static postcodeValidator(control: any) {
+  static postcodeTradeValidator(control: any) {
 
         // postcode must be selected
     if (control.value) {
@@ -188,7 +188,17 @@ export class ValidationService {
       }
     }
   }
-  
+
+
+  static suburbTradeValidator(control) {
+    if (control.value) {
+      if (control.value.name !== "") {
+        return null;
+      } else {
+        return { 'invalidSuburb': true };
+      }
+    }
+  }
 
 
  /**************************************************/

@@ -1,17 +1,16 @@
 ﻿import {
   IChangePasswordBindingModel, IRegisterBindingModel, IResetPasswordBindingModel,
   ISetPasswordBindingModel, ILoginModel, IForgotPasswordBindingModel,
-  ITraderList, IPostTrade,ISuburb,
+  ITraderList, IPostTrade, ISuburb, IPlace, IStatePlacePostcodeSuburb,
   IPersonalDetails, ISecurityDetails,
-  IAddress, IAddressType, IState, IPlace, IPostcode,
+  IAddress, IAddressType, IState,  IPostcode,
   IPhone, IPhoneType, ISubcategory,
-  ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType, ICorrespondence,
   ITrade, IImage, ICategory, ITradeHistory,  
   IUserSession, IAuthentication, IUserIdentity,
   IProcessMessage, IProcessMessageType,
-  IPageTitle, IAttachement, IUserInfoViewModel,
+  IPageTitle, IAttachement, IUserInfoViewModel, // IPlace,
 } from './interfaces';
 
 
@@ -179,7 +178,7 @@ class Address implements IAddress {
   street: string;
   suburb: string;
   postcode: string;
-  city: string;
+  place: string;
   state: string;
   country: string;
   preferredFlag: string;
@@ -195,7 +194,7 @@ class Address implements IAddress {
     this.unit = "";
     this.street = "";
     this.suburb = "";
-    this.city = "";
+    this.place = "";
     this.postcode = "";
     this.state = "";
     this.country = "";
@@ -284,36 +283,6 @@ class SocialNetworkType implements ISocialNetworkType {
 }
 
 
-class SecurityAnswer implements ISecurityAnswer {
-  answerId: number;
-  questionAnswer: string;
-  questionId: number;
-  questionText: string;
-  traderId: string;
-
-  constructor() {
-    this.answerId = 0;
-    this.questionAnswer = "";
-    this.questionId = 0;
-    this.questionText = "";
-    this.traderId = "";
-  }
-  
-}
-
-
-class SecurityQuestion implements ISecurityQuestions {
-  questionId: number;
-  questionText: string;
-
-  constructor() {
-    this.questionId = 0;
-    this.questionText = "";
-  }
-
-}
-
-
 class Email implements IEmail {
   id: number;
   account: string;
@@ -348,11 +317,12 @@ class State implements IState {
   id: number;
   name: string;
   places: Place[];
+ 
 
   constructor() {
     this.id = 0;
     this.name = "";
-    this.places = [];
+    this.places = []; 
   }
 }
 
@@ -379,7 +349,7 @@ class Postcode implements IPostcode {
   constructor() {
     this.id = 0;
     this.number = "";
-    this.placeId = 0;
+    this.placeId = 0; 
     this.suburbs = [];
   }
 }
@@ -397,6 +367,22 @@ class Suburb implements ISuburb {
 }
 
 
+class StatePlacePostcodeSuburb implements IStatePlacePostcodeSuburb {
+  id: number;
+  state: string;
+  place: string;
+  postcode: string;
+  suburb: string;
+
+  constructor() {
+    this.id = 0;
+    this.state = "";
+    this.place = "";
+    this.postcode = "";
+    this.suburb = "";
+  }
+}
+
 
 class Trade implements ITrade {
   addsflag: boolean;
@@ -408,12 +394,14 @@ class Trade implements ITrade {
   tradeFor: string;
   datePublished: Date;
   status: string;
+  stateId: number;
+  state: string;
   placeId: number;
   place: string;
   postcodeId: number;
-  postcodeNumber: string;
-  stateId: number;
-  state: string;
+  postcodeNumber: string;  
+  suburbId: number;
+  suburbName: string;
   categoryId: number;
   categoryDescription: string;
   subcategoryId: number;
@@ -437,12 +425,14 @@ class Trade implements ITrade {
     this.tradeFor = "";    
     this.datePublished = new Date(1900, 1, 1); 
     this.status = "";
+    this.stateId = 0;
+    this.state = "";
     this.placeId = 0;
     this.place = "";
     this.postcodeId = 0;
-    this.postcodeNumber = "";
-    this.stateId = 0;
-    this.state = "";
+    this.postcodeNumber = "";   
+    this.suburbId = 0;
+    this.suburbName = "";
     this.categoryId = 0;
     this.categoryDescription = "";
     this.subcategoryId = 0;
@@ -467,16 +457,12 @@ class PostTrade implements IPostTrade {
   tradeFor: string;
   datePublished: Date;
   status: string; 
-  placeId: number;
-  //place: string;
-  postcodeId: number;
-  //postcodeNumber: string;
   stateId: number;
-  //state: string;
+  placeId: number;
+  postcodeId: number; 
+  suburbId: number; 
   categoryId: number;
-  //categoryDescription: string;
   subcategoryId: number;
-  //subcategoryDescription: string;
   traderId: string;
   Images: Image[];
 
@@ -487,16 +473,12 @@ class PostTrade implements IPostTrade {
     this.tradeFor = "";
     this.datePublished = new Date(1900, 1, 1);
     this.status = "";
-    this.placeId = 0;
-    //this.place = "";
-    this.postcodeId = 0;
-    //this.postcodeNumber = "";
     this.stateId = 0;
-    //this.state = "";
-    this.categoryId = 0;
-    //this.categoryDescription = "";
-    this.subcategoryId = 0;
-    //this.subcategoryDescription = "";
+    this.placeId = 0;
+    this.postcodeId = 0;
+    this.suburbId = 0;
+    this.categoryId = 0;   
+    this.subcategoryId = 0;  
     this.traderId = "";
     this.Images = [];
   }
@@ -733,12 +715,11 @@ export {
   ChangePasswordBindingModel, RegisterBindingModel,
   UserInfoViewModel, ForgotPasswordBindingModel, ResetPasswordBindingModel,
   SetPasswordBindingModel, LoginModel, Subcategory, 
-  Trader, PostTrade, State, Place, Postcode,Suburb,
+  Trader, PostTrade, State, Postcode, Suburb, Place, StatePlacePostcodeSuburb,
   PersonalDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
-  SocialNetwork, SocialNetworkType, Email, EmailType,
-  SecurityAnswer, SecurityQuestion, Correspondence,
+  SocialNetwork, SocialNetworkType, Email, EmailType,Correspondence,
   Trade, Image, Category, TradeHistory,
   UserSession, Authentication, UserIdentity,
-  ProcessMessage,ProcessMessageType, PageTitle, Attachement, PreferredType
+  ProcessMessage,ProcessMessageType, PageTitle, Attachement, PreferredType 
 };

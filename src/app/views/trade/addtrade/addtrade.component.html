@@ -6,122 +6,114 @@
       <div class="row">
 
                 <!-- fields -->
-                <div class="col-md-4 col-md-offset-1 panel panel-heading footerdiv">
+                <div class="col-md-5 panel panel-heading footerdiv">
 
                   <div class="row col-md-12">
                     <span class="textlightcoral smaltet text-uppercase"> Trade Details</span>
                   </div>
 
-                    <div class="row mediumtext col-md-12" style="margin-top:20px;">
-                      <div class="panel panel-heading col-md-4"><span>Name:</span></div>
+                  <div class="row col-md-12 container" style="margin-top:10px;">
 
-                      <div class="form-group col-md-8 smalltextbold">
-                        <input type="text" formControlName="trading" id="trading" required class="form-control" style="background-color:moccasin;">
-                        <control-messages [control]="addForm.controls.trading"></control-messages>
-                      </div>
+                    <div class="col-md-5 col-md-offset-1">
+                                        
+                        <div class="row form-group col-md-12 smalltextbold">
+                          Name:
+                          <input type="text" formControlName="trading" id="trading" required class="form-control" style="background-color:moccasin;">
+                          <control-messages [control]="addForm.controls.trading"></control-messages>
+                        </div>                     
+
+                   
+                        <div class="row form-group col-md-12 smalltextbold">
+                          Description:
+                          <textarea formControlName="description" id="description" class="form-control text-comment" required autoGrow style="background-color:moccasin; height:40px"></textarea> <!--  [(ngModel)]="taskDescription"> -->
+                          <control-messages [control]="addForm.controls.description"></control-messages>
+                        </div>                   
+
+                           
+                        <div class="row form-group col-md-12 smalltextbold">
+                          Category:
+                          <select formControlName="category" id="category" name="category" class="form-control" style="background-color:moccasin;" (ngModelChange)="onCategoryChange($event)">                         
+                            <option *ngFor="let category of categories" [ngValue]="category"> {{ category.categoryDescription }}</option>
+                          </select>
+                          <control-messages [control]="addForm.controls.category"></control-messages>
+                        </div>              
+
+                        
+                        <div class="row form-group col-md-12 smalltextbold">
+                          Subcategory:
+                          <select formControlName="subcategory" id="category" name="subcategory" class="form-control" style="background-color:moccasin;">
+                            <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory">{{ subcategory.subcategoryDescription }}</option>
+                          </select>
+                          <control-messages [control]="addForm.controls.subcategory"></control-messages>
+                        </div>                   
+
+                     
+                        <div class="row form-group col-md-12 smalltextbold">
+                          Trading For:
+                          <input type="text" formControlName="tradingfor" id="tradingfor" required class="form-control" style="background-color:moccasin;">
+                          <control-messages [control]="addForm.controls.tradingfor"></control-messages>
+                        </div>         
+
                     </div>
 
 
-                    <div class="row mediumtext col-md-12">
-                      <div class="panel panel-heading col-md-4"><span>Description:</span></div>
-                      <div class="form-group col-md-8 smalltextbold">
-                        <textarea formControlName="description" id="description" class="form-control text-comment" required autoGrow style="background-color:moccasin; height:40px"></textarea> <!--  [(ngModel)]="taskDescription"> -->
-                        <control-messages [control]="addForm.controls.description"></control-messages>
-                      </div>
+                    <div class="col-md-5 col-md-offset-1">
+                   
+                        <div class="row form-group col-md-12 smalltextbold">
+                          State:
+                          <select formControlName="state" id="state" name="state" class="form-control" style="background-color:moccasin;" (ngModelChange)="onStateChange($event)">
+                            <option *ngFor="let state of states" [ngValue]="state"> {{ state.name }}</option>
+                          </select>
+                          <control-messages [control]="addForm.controls.state"></control-messages>
+                        </div>                   
+
+                     
+                        <div class="row form-group col-md-12 smalltextbold">
+                          Place:
+                          <select formControlName="place" id="place" name="place" class="form-control" style="background-color:moccasin;" (ngModelChange)="onPlaceChange($event)">
+                            <option *ngFor="let place of places" [ngValue]="place">{{ place.name }}</option>
+                          </select>
+                          <control-messages [control]="addForm.controls.place"></control-messages>
+                        </div>                   
+
+                      
+                        <div class="row form-group col-md-12 smalltextbold">
+                          Postcode:
+                          <select formControlName="postcode" id="postcode" name="postcode" class="form-control" style="background-color:moccasin;" (ngModelChange)="onPostcodeChange($event)">
+                            <option *ngFor="let postcode of postcodes" [ngValue]="postcode">{{ postcode.number }}</option>
+                          </select>
+                          <control-messages [control]="addForm.controls.postcode"></control-messages>
+                        </div>                   
+
+
+                         
+                        <div class="row form-group col-md-12 smalltextbold">
+                          Suburb:
+                          <select formControlName="suburb" id="suburb" name="suburb" class="form-control" style="background-color:moccasin;">
+                            <option *ngFor="let suburb of suburbs" [ngValue]="suburb">{{ suburb.name }}</option>
+                          </select>
+                          <control-messages [control]="addForm.controls.suburb"></control-messages>
+                        </div>                      
+
+                     
+                        <div class="row form-group col-md-12 smalltextbold">
+                          Publish Date:
+                          <my-date-picker name="publishDate" formControlName="publishDate"
+                                          visibleMonth.monthTxt=""
+                                          #publishDate
+                                          placeholder="Select a date..."
+                                          [options]="datePickerOptions"
+                                          (dateChanged)="onDateChanged($event)"
+                                          [locale]="currentLocale"
+                                          [selDate]="selectDate">
+                          </my-date-picker>
+                          <control-messages [control]="addForm.controls.publishDate"></control-messages>
+                        </div>                  
+
                     </div>
-
-
-                    <div class="row mediumtext col-md-12">
-                      <div class="panel panel-heading col-md-4"><span>Category:</span></div>
-
-                      <div class="form-group col-md-8 smalltextbold">
-                        <select formControlName="category" id="category" name="category" class="form-control" style="background-color:moccasin;" (ngModelChange)="onCategoryChange($event)">
-                          <!--(change)="onCategoryChange($event.target.value)">-->
-                          <option *ngFor="let category of categories" [ngValue]="category"> {{ category.categoryDescription }}</option>
-                        </select>
-                        <control-messages [control]="addForm.controls.category"></control-messages>
-                      </div>
-                    </div>
-
-
-                    <div class="row mediumtext col-md-12">
-                      <div class="panel panel-heading col-md-4"><span>Subcategory:</span></div>
-
-                      <div class="form-group col-md-8 smalltextbold">
-                        <select formControlName="subcategory" id="category" name="subcategory" class="form-control" style="background-color:moccasin;">
-                          <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory">{{ subcategory.subcategoryDescription }}</option>
-                        </select>
-                        <control-messages [control]="addForm.controls.subcategory"></control-messages>
-                      </div>
-                    </div>
-
-
-                    <div class="row mediumtext col-md-12">
-                      <div class="panel panel-heading col-md-4"><span>State:</span></div>
-
-                      <div class="form-group col-md-8 smalltextbold">
-                        <select formControlName="state" id="state" name="state" class="form-control" style="background-color:moccasin;" (ngModelChange)="onStateChange($event)">
-                          <option *ngFor="let state of states" [ngValue]="state"> {{ state.name }}</option>
-                        </select>
-                        <control-messages [control]="addForm.controls.state"></control-messages>
-                      </div>
-                    </div>
-
-
-                    <div class="row mediumtext col-md-12">
-                      <div class="panel panel-heading col-md-4"><span>Place:</span></div>
-
-                      <div class="form-group col-md-8 smalltextbold">
-                        <select formControlName="place" id="place" name="place" class="form-control" style="background-color:moccasin;" (ngModelChange)="onPlaceChange($event)">
-                          <option *ngFor="let place of places" [ngValue]="place">{{ place.name }}</option>
-                        </select>
-                        <control-messages [control]="addForm.controls.place"></control-messages>
-                      </div>
-                    </div>
-
-                    <div class="row mediumtext col-md-12">
-                      <div class="panel panel-heading col-md-4"><span>Postcode:</span></div>
-
-                      <div class="form-group col-md-8 smalltextbold">
-                        <select formControlName="postcode" id="postcode" name="postcode" class="form-control" style="background-color:moccasin;">
-                          <option *ngFor="let postcode of postcodes" [ngValue]="postcode">{{ postcode.number }}</option>
-                        </select>
-                        <control-messages [control]="addForm.controls.postcode"></control-messages>
-                      </div>
-                    </div>
-
-
-
-                    <div class="row mediumtext col-md-12">
-                      <div class="panel panel-heading col-md-4"><span>Trading For:</span></div>
-
-                      <div class="form-group col-md-8 smalltextbold">
-                        <input type="text" formControlName="tradingfor" id="tradingfor" required class="form-control" style="background-color:moccasin;">
-                        <control-messages [control]="addForm.controls.tradingfor"></control-messages>
-                      </div>
-                    </div>
-
-
-                    <div class="row mediumtext col-md-12">
-
-                      <div class="panel panel-heading col-md-4"><span>Publish Date:</span></div>
-
-                      <div class="form-group col-md-8 smalltextbold">
-                        <my-date-picker name="publishDate" formControlName="publishDate"
-                                        visibleMonth.monthTxt=""
-                                        #publishDate
-                                        placeholder="Select a date..."
-                                        [options]="datePickerOptions"
-                                        (dateChanged)="onDateChanged($event)"
-                                        [locale]="currentLocale"
-                                        [selDate]="selectDate">
-                        </my-date-picker>
-                        <control-messages [control]="addForm.controls.publishDate"></control-messages>
-                      </div>
-                    </div>
-
-
                   </div>
+
+               </div>
 
 
                 <!-- file uploads -->
@@ -132,7 +124,7 @@
                               <div class="row panel panel-heading footerdiv">
                                 <span class="smalltext"><span class="textlightcoral medium text-uppercase">Trade Images </span>(3 images - max 10MB each - file types: .png .gif .tif .jpeg .bmp):</span>
                               </div>                                   
-                              <br/>
+                              
                               <div class="row smalltext">
                                     <!--<input type="file" ng2FileSelect [uploader]="uploader"  style="color:transparent;"  multiple  (change)="onChange($event)"/>-->                       
                                     <div id="upload_button">
@@ -146,10 +138,8 @@
                         </div>
 
 
-
                         <div class="row col-md-12 mediumtext">
-
-                                <br />
+                             
                                 <div *ngIf="isMessageVisible" class="row panel panel-heading textoker" >{{ fileErrorMessage }}</div>
                                 <br />
                                 <div class="row">
@@ -224,8 +214,7 @@
                                         <!--<button type="button" class="btn btn-success btn-s"
                                           (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                                         <span class="glyphicon glyphicon-upload"></span> Upload all
-                                        </button>-->        
-                                        <br/>                    
+                                        </button>-->                                                   
                                         <button type="button" class="btn btn-warning btn-s smalltext" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
                                               <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
                                         </button>
@@ -235,7 +224,6 @@
                                 </div>
 
                         </div>
-
               
                         <!-- Submit button -->
                         <div class="row col-md-12 smalltext" style="margin-top:20px;">
@@ -245,7 +233,6 @@
                         </div>
 
                 </div>
-
 
       </div>       
 

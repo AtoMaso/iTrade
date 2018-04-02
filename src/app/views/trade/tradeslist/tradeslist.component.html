@@ -44,13 +44,15 @@
                                    <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('traderFullName')">Trader</a></li>
                                    <li role="presentation" class="divider"></li>
-                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('categoryDescription')">Category</a></li>       
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('categoryDescription')">Category</a></li>      
+                                   <li role="presentation" class="divider"></li>
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('state')">State</a></li>       
                                    <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('place')">Place</a></li>       
                                    <li role="presentation" class="divider"></li>
-                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('postcodeNumber')">Postcode</a></li>
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('postcodeNumber')">Postcode</a></li>                                       
                                    <li role="presentation" class="divider"></li>
-                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('state')">State</a></li>                                   
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('suburb')">Suburb</a></li>                          
                                  </ul>
                                </div>
 
@@ -150,13 +152,26 @@
                                               </select>
                                             </div>
                                           </div>
-                                          <br />                                          
 
+                                          <br />                                                                                  
+                                          <div class="row smalltextbold">
+                                            <div class="col-md-12">
+                                              <span>Suburb:</span>
+                                              <select id="suburb" name="suburb" class="form-control" style="background-color:moccasin;" (change)="SuburbClicked($event)">
+                                                <option></option>
+                                                <option *ngFor="let suburb of suburbs" [ngValue]="suburb.id">
+                                                  {{ suburb.name }}
+                                                </option>
+                                              </select>
+                                            </div>
+                                          </div>
+                                          <br />            
                                           
                                           <div class="row container col-md-12" style="height:90px;">
                                                   
                                                   <div class="row container" style="height:45px;">
-                                                    <button class="btn btn-primary btn-sm smalltext" (click)="getSetOfTradesWithSetFilters()" [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null ">Search</button>
+                                                    <button class="btn btn-primary btn-sm smalltext" (click)="getSetOfTradesWithSetFilters()" 
+                                                            [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null && selectedPostcode == null">Search</button>
                                                     <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
                                                   </div>
                                                                                                                        
@@ -187,13 +202,14 @@
 
                    <table class="table  table-hover table-responsive">
 
-                     <tr *ngFor="let trade of rows  | paginate:config">
+                     <tr *ngFor="let trade of rows  | paginate:config" >
 
                         <td class="row col-md-12" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}">
 
                                <div class="col-md-4 container">
                                  <carousel id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>
                                </div>
+
 
                                <div class="col-md-4 smalltextbold text-capitalize textgray">
                                  <div class="row" style="height:32px;">Trading:<a class="text-capitalize textlightcoral" style="text-decoration:underline;" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}">{{ trade.name  }}</a></div>                               
@@ -207,10 +223,11 @@
                                </div>
                                 
 
-                               <div class="col-md-4 smalltextbold text-capitalize textgray">                                                                                 
-                                 <div class="row" style="height:32px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span></div>
-                                 <div class="row" style="height:32px;">Postcode:<span class="text-capitalize text-info"> {{ trade.postcodeNumber }}</span></div>
+                               <div class="col-md-4 smalltextbold text-capitalize textgray">         
                                  <div class="row" style="height:32px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>
+                                 <div class="row" style="height:32px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span></div>                                                                                                                       
+                                 <div class="row" style="height:32px;">Postcode:<span class="text-capitalize text-info"> {{ trade.postcodeNumber }}</span></div>
+                                 <div class="row" style="height:32px;">Suburb:<span class="text-capitalize text-info"> {{ trade.suburbName  }}</span></div>            
                                  <div class="row" style="height:160px;">Description:<span class="text-info"><br /> {{ trade.description  }}</span></div>     
                                </div>
 

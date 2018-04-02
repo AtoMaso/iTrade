@@ -18,7 +18,9 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 
-import { UserSession, UserIdentity, Authentication, Trade,PostTrade, PageTitle, Category, Subcategory, Image, State, Place, Postcode } from '../../../helpers/classes';
+import {
+  UserSession, UserIdentity, Authentication, Trade, PostTrade, PageTitle, Category,
+  Subcategory, Image, State, Place, Postcode, Suburb } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 let uploadFileUrl = CONFIG.baseUrls.uploadFileUrl;
@@ -53,6 +55,7 @@ export class AddTradeComponent implements OnInit {
   private states: State[] = [];
   private places: Place[] = [];
   private postcodes: Postcode[] = [];
+  private suburbs: Suburb[] = [];
   
   private response: string;
   private hasImages: boolean = false;
@@ -137,6 +140,10 @@ export class AddTradeComponent implements OnInit {
     this.postcodes = place.postcodes;
   }
 
+  private onPostcodeChange(postcode: Postcode) {
+    this.suburbs = postcode.suburbs;
+  }
+
 
 
   //*****************************************************
@@ -167,6 +174,7 @@ export class AddTradeComponent implements OnInit {
       this.newTrade.placeId = this.addForm.controls.place.value.id;
       this.newTrade.stateId = this.addForm.controls.state.value.id;       
       this.newTrade.postcodeId = this.addForm.controls.postcode.value.id;
+      this.newTrade.suburbId = this.addForm.controls.suburb.value.id;
       this.newTrade.traderId = this.identity.userId;
 
       // set the image array here, the imageid and real url will be created 
@@ -300,15 +308,16 @@ private  delay(ms: number) {
   private setupForm() {
    
      this.addForm = this.formBuilder.group({   
-       trading: new FormControl('', [Validators.required, ValidationService.tradeNameValidator]),
-       description: new FormControl('', [Validators.required, ValidationService.tradeDescriptionValidator]),          
-       category: new FormControl('', [Validators.required, ValidationService.categoryValidator]),
-       subcategory: new FormControl('', [Validators.required, ValidationService.subcategoryValidator]),    
-       state: new FormControl('', [Validators.required, ValidationService.stateValidator]),
-       place: new FormControl('', [Validators.required, ValidationService.placeValidator]),
-       postcode: new FormControl('', [Validators.required, ValidationService.postcodeValidator]),
-       tradingfor: new FormControl('', [Validators.required, ValidationService.tradeForValidator]),  
-       publishDate: new FormControl('', [Validators.required, ValidationService.publishDateValidator]),
+       trading: new FormControl('', [Validators.required, ValidationService.tradeNameTradeValidator]),
+       description: new FormControl('', [Validators.required, ValidationService.tradeDescriptionTradeValidator]),          
+       category: new FormControl('', [Validators.required, ValidationService.categoryTradeValidator]),
+       subcategory: new FormControl('', [Validators.required, ValidationService.subcategoryTradeValidator]),    
+       state: new FormControl('', [Validators.required, ValidationService.stateTradeValidator]),
+       place: new FormControl('', [Validators.required, ValidationService.placeTradeValidator]),
+       postcode: new FormControl('', [Validators.required, ValidationService.postcodeTradeValidator]),
+       suburb: new FormControl('', [Validators.required, ValidationService.suburbTradeValidator]),
+       tradingfor: new FormControl('', [Validators.required, ValidationService.tradeForTradeValidator]),  
+       publishDate: new FormControl('', [Validators.required, ValidationService.publishDateTradeValidator]),
     });
 
     this.currentLocale = 'eu';

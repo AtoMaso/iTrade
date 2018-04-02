@@ -18,7 +18,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 //import { CapsPipe } from '../../../helpers/pipes';
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, State, Place, Postcode} from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, State, Place, Postcode, Suburb} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -48,18 +48,21 @@ export class TradesListComponent implements OnInit {
   private states: State[] = [];
   private places: Place[] = [];
   private postcodes: Postcode[] = [];
+  private suburbs: Suburb[] = [];
 
   private selectedCategory: string = null;
   private selectedSubcategory: string = null;
   private selectedState: string = null;
   private selectedPlace: string = null;
   private selectedPostcode: string = null;
+  private selectedSuburb: string = null;
 
   private selectedCategoryId: number = 0;
   private selectedSubcategoryId: number = 0;
   private selectedStateId: number = 0;
   private selectedPlaceId: number = 0;
   private selectedPostcodeId: number = 0;
+  private selectedSuburbId: number = 0;
 
   private filters: string = null;
   private filters1: string = null;
@@ -127,12 +130,58 @@ export class TradesListComponent implements OnInit {
     }); // end of document function
 
 
+
+    //setTimeout(function () {
+
+    //  // this will set the first item from of the select phone type dropdown
+    //  var counter: number = 0;
+    //  if (jQuery('#category option')) {
+    //    jQuery('#category option').each(function () {
+    //      if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+    //      counter = counter + 1;
+    //    });
+    //  }
+
+    //  counter = 0
+    //  // this will set the first item from of the select email type dropdown     
+    //  if (jQuery('#subcategory option')) {
+    //    jQuery('#subcategory option').each(function () {
+    //      if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+    //      counter = counter + 1;
+    //    });
+    //  }
+    
+    //  // this will set the first item from of the select email type dropdown
+    //  counter = 0
+    //  if (jQuery('#state option')) {
+    //    jQuery('#state option').each(function () {
+    //      if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+    //      counter = counter + 1;
+    //    });
+    //  }
+
+    //  // this will set the first item from of the select phone type dropdown
+    //  counter = 0
+    //  if (jQuery('#place option')) {
+    //    jQuery('#place option').each(function () {
+    //      if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+    //      counter = counter + 1;
+    //    });
+    //  }
+
+    //  // this will set the first item from of the select phone type dropdown
+    //  counter = 0
+    //  if (jQuery('#postcode option')) {
+    //    jQuery('#postcode option').each(function () {
+    //      if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
+    //      counter = counter + 1;
+    //    });
+    //  }
+
+    //}, 100);
+
   }
 
-
-  private PostTrade() {
-    this.router.navigate(['/addtrade']);
-  }
 
   //*********************************************************************************************
   // GET TRADES - this will get open trades, if there are no any open trades will get all or will show message - no trades
@@ -173,15 +222,17 @@ export class TradesListComponent implements OnInit {
     let plaid: number = 0
     let staid: number = 0;
     let pcid: number = 0;
+    let subid: number = 0;
 
     if (this.selectedCategory != null) { catid = this.selectedCategoryId; }
     if (this.selectedSubcategory != null) { subcatid = this.selectedSubcategoryId; }
     if (this.selectedState != null) { staid = this.selectedStateId; }
     if (this.selectedPlace != null) { plaid = this.selectedPlaceId; }
     if (this.selectedPostcode != null) { pcid = this.selectedPostcodeId; }
+    if (this.selectedSuburb != null) { subid = this.selectedSuburbId; }
 
     // get set of records with set filters
-    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, catid, subcatid, staid, plaid, pcid)
+    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, catid, subcatid, staid, plaid, pcid, subid)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
@@ -241,21 +292,23 @@ export class TradesListComponent implements OnInit {
     let plaid: number = 0
     let staid: number = 0;
     let pcid: number = 0;
+    let subid: number = 0;
 
     if (this.selectedCategory != null) { catid = this.selectedCategoryId; }
     if (this.selectedSubcategory != null) { subcatid = this.selectedSubcategoryId; }
     if (this.selectedState != null) { staid = this.selectedStateId; }
     if (this.selectedPlace != null) { plaid = this.selectedPlaceId; }
     if (this.selectedPostcode != null) { pcid = this.selectedPostcodeId; }
+    if (this.selectedSuburb != null) { subid = this.selectedSuburbId; }
 
-    this.tradeApiService.getAllTradesWithSetFilters(catid, subcatid, staid, plaid, pcid)
+    this.tradeApiService.getAllTradesWithSetFilters(catid, subcatid, staid, plaid, pcid, subid)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
           this.isRequesting = false;
           this.data = returnedTrades;          // pass zero records  
           this.onChangeTable(this.config),   // show 0 from 0 on the top        
-            this.messagesService.emitProcessMessage("PMENTrs");
+          this.messagesService.emitProcessMessage("PMENTrs");
         }
         else {
           this.messagesService.emitRoute("nill");
@@ -304,12 +357,14 @@ export class TradesListComponent implements OnInit {
     this.selectedState = null;
     this.selectedPlace = null;
     this.selectedPostcode = null;
+    this.selectedSuburb = null;
 
     this.categories = null;
     this.subcategories = null;
     this.states = null;
     this.places = null;
     this.postcodes = null;
+    this.suburbs = null;
 
     this.filters = null;
     this.filters1 = null;
@@ -361,6 +416,12 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
   }
 
+  private SuburbClicked(event: any) {
+    this.selectedSuburb = event.target.value;
+    this.getSuburbId(event.target.value);
+    this.setupFilterString();
+  }
+
 
   //*****************************************************
   //GET THE INPUT IDS
@@ -404,6 +465,7 @@ export class TradesListComponent implements OnInit {
           this.selectedStateId = this.states[m].id;
           this.places = this.states[m].places;
           this.postcodes = null;
+          this.suburbs = null;
         }
       }
     }
@@ -411,6 +473,7 @@ export class TradesListComponent implements OnInit {
       this.selectedState = null;
       this.places = null;
       this.postcodes = null;
+      this.suburbs = null;
       this.filters2 = null;
     }
   }
@@ -421,13 +484,15 @@ export class TradesListComponent implements OnInit {
       for (m = 0; m < this.places.length; m++) {
         if (this.places[m].name == placename) {
           this.selectedPlaceId = this.places[m].id;
-          this.postcodes = this.places[m].postcodes;         
+          this.postcodes = this.places[m].postcodes;      
+          this.suburbs = null;   
         }
       }
     }
     else {
       this.selectedPlace = null;
       this.postcodes = null;      
+      this.suburbs = null;
     }
   }
 
@@ -437,12 +502,27 @@ export class TradesListComponent implements OnInit {
       for (m = 0; m < this.postcodes.length; m++) {
         if (this.postcodes[m].number == postcode) {
           this.selectedPostcodeId = this.postcodes[m].id;
+          this.suburbs = this.postcodes[m].suburbs;
         }
       }
     }
-    else { this.selectedPostcode = null;}  
+    else {
+      this.selectedPostcode = null;
+      this.suburbs = null;
+    }  
   }
 
+  private getSuburbId(suburb: string) {
+    if (suburb != "") {
+      let m: number = 0;
+      for (m = 0; m < this.suburbs.length; m++) {
+        if (this.suburbs[m].name == suburb) {
+          this.selectedSuburbId = this.suburbs[m].id;
+        }
+      }
+    }
+    else { this.selectedSuburb = null; }
+  }
 
   //*****************************************************
   //SETUP FILTER STRING
@@ -470,6 +550,11 @@ export class TradesListComponent implements OnInit {
     if (this.selectedPostcode) {
       if (this.filters2 == null) { this.filters2 = "State = " + this.selectedState + " & Place =" + this.selectedPlace + " & Postcode = " + this.selectedPostcode; }
       else if (this.filters2.indexOf(this.selectedPostcode) == -1 ) { this.filters2 = this.filters2 + " & Postcode = " + this.selectedPostcode; }
+    }
+
+    if (this.selectedSuburb) {
+      if (this.filters2 == null) { this.filters2 = "State = " + this.selectedState + " & Place =" + this.selectedPlace + " & Postcode = " + this.selectedPostcode + " & Suburb = " + this.selectedSuburb; }
+      else if (this.filters2.indexOf(this.selectedSuburb) == -1) { this.filters2 = this.filters2 + " & Suburb = " + this.selectedSuburb; }
     }
 
     if (this.filters1 && this.filters2) { this.filters = this.filters1 + " & " + this.filters2; }
@@ -532,6 +617,8 @@ export class TradesListComponent implements OnInit {
       trd.state = value.state;
       trd.postcodeId = value.postcodeId;
       trd.postcodeNumber = value.postcodeNumber;
+      trd.suburbId = value.suburbId;
+      trd.suburbName = value.suburbName;
       trd.categoryId = value.categoryId;
       trd.categoryDescription = value.categoryDescription;
       trd.subcategoryId = value.subcategoryId;
@@ -598,18 +685,20 @@ export class TradesListComponent implements OnInit {
   private isCategoryAsc:boolean = true;
   private isNameAsc: boolean = true;
   private isDateAsc: boolean = true;
+  private isStateAsc: boolean = true;
   private isPlaceAsc: boolean = true;
   private isPlostcodeAsc: boolean = true;
-  private isStateAsc: boolean = true;
+  private isSuburbAsc: boolean = true;
 
   private sortTrader: string = 'desc';
   private sortTradeFor: string = 'desc';
   private sortCategory: string = 'desc';
   private sortName: string = 'desc';
   private sortDate: string = 'desc';
+  private sortState: string = 'desc';
   private sortPlace: string = 'desc';
   private sortPostcode: string = 'desc';
-  private sortState: string = 'desc';
+  private sortSuburb: string = 'desc';
 
   private data: Array<any> = [];     // full data from the server
   public rows: Array<any> = [];      // rows passed to the table
@@ -629,10 +718,11 @@ export class TradesListComponent implements OnInit {
       { title: 'For', name: 'tradeFor', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade for name' } },
       { title: 'Category', name: 'categoryDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by  category' } },
       { title: 'Trader', name: 'traderFullName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader full name.' } },
-      { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by date.' } } ,    
+      { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by date.' } },    
+      { title: 'State', name: 'state', sort: true, filtering: { filterString: '', placeholder: 'Filter by state.' } } ,   
       { title: 'Place', name: 'place', sort: true, filtering: { filterString: '', placeholder: 'Filter by place.' } },
       { title: 'Postcode', name: 'postcodeNumber', sort: true, filtering: { filterString: '', placeholder: 'Filter by postcode number.' } },
-      { title: 'State', name: 'state', sort: true, filtering: { filterString: '', placeholder: 'Filter by state.' } }     
+      { title: 'Suburb', name: 'suburb', sort: true, filtering: { filterString: '', placeholder: 'Filter by suburb.' } }         
   ];
 
 
@@ -813,6 +903,15 @@ export class TradesListComponent implements OnInit {
         this.sortDate = this.isDateAsc ? 'desc' : 'asc';
         break;
 
+      case 'state':
+        this.selectedItem = "State";
+        this.config.sorting.columns = [{ name: 'state', sort: this.sortState }];
+        this.onChangeTable(this.config);
+        this.isAsc = !this.isStateAsc;
+        this.isStateAsc = !this.isStateAsc;
+        this.sortState = this.isStateAsc ? 'desc' : 'asc';
+        break;
+
       case 'place':
         this.selectedItem = "Place";
         this.config.sorting.columns = [{ name: 'place', sort: this.sortPlace }];
@@ -831,13 +930,13 @@ export class TradesListComponent implements OnInit {
         this.sortPostcode = this.isPlostcodeAsc ? 'desc' : 'asc';
         break;
 
-      case 'state':
-        this.selectedItem = "State";
-        this.config.sorting.columns = [{ name: 'state', sort: this.sortState }];
+      case 'suburb':
+        this.selectedItem = "Suburb";
+        this.config.sorting.columns = [{ name: 'suburb', sort: this.sortSuburb }];
         this.onChangeTable(this.config);
-        this.isAsc = !this.isStateAsc;
-        this.isStateAsc = !this.isStateAsc;
-        this.sortState = this.isStateAsc ? 'desc' : 'asc';
+        this.isAsc = !this.isSuburbAsc;
+        this.isSuburbAsc = !this.isSuburbAsc;
+        this.sortSuburb = this.isSuburbAsc ? 'desc' : 'asc';
         break;
       default:
     }

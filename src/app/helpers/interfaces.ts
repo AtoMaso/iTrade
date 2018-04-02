@@ -82,7 +82,7 @@ interface IAddress {
   pobox: string;
   street: string;
   suburb: string;
-  city: string;
+  place: string;
   postcode: string;
   state: string;
   country: string;
@@ -126,20 +126,6 @@ interface ISocialNetwork {
 interface ISocialNetworkType {
   socialTypeId: number;
   socialType: string;
-}
-
-
-interface ISecurityAnswer {
-  answerId: number;
-  questionAnswer: string;
-  questionId: number;
-  questionText: string; 
-  traderId: string;
-}
-
-interface ISecurityQuestions {
-  questionId: number;
-  questionText: string;
 }
 
 
@@ -199,8 +185,10 @@ interface ITrade {
   state: string;
   placeId: number;
   place: string;
-  postcodeId: number;
+  postcodeId: number;  
   postcodeNumber: string;
+  suburbId: number;
+  suburbName: string;
   categoryId: number; 
   categoryDescription: string
   subcategoryId: number;
@@ -227,6 +215,7 @@ interface IPostTrade {
   stateId: number;
   placeId: number;
   postcodeId: number;
+  suburbId: number;
   subcategoryId: number; 
   traderId: string;
   Images: IImage[];
@@ -275,6 +264,15 @@ interface ICorrespondence {
   traderIdSender: string;
   sender: string;   // this is the trader sending the correspondence
   receiver: string; // this is the trader receiving the correspondence
+}
+
+
+interface IStatePlacePostcodeSuburb {
+  id: number;
+  state: string;
+  place: string;
+  postcode: string;
+  suburb: string;
 }
 
 
@@ -337,10 +335,9 @@ interface IProcessMessageType {
 export {
 IChangePasswordBindingModel, IRegisterBindingModel, IUserInfoViewModel,
   ISetPasswordBindingModel, ILoginModel, IForgotPasswordBindingModel, IResetPasswordBindingModel,
-  ITraderList, IPostTrade, IPlace, IState, ISubcategory, IPostcode, ISuburb,
+  ITraderList, IPostTrade, IPlace, IState, ISubcategory, IPostcode, ISuburb, IStatePlacePostcodeSuburb,
   IPersonalDetails, ISecurityDetails,
   IAddress, IAddressType, IPhone, IPhoneType,
-  ISecurityAnswer, ISecurityQuestions,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType, ICorrespondence,
   ITrade, IImage, ICategory, ITradeHistory,

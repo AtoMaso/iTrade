@@ -15,7 +15,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 import {UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, SecurityDetails } from '../../../helpers/classes';
-import { Address, State, Place, Postcode, Email, Phone, SocialNetwork, AddressType, PreferredType } from '../../../helpers/classes';
+import { Address, State, Place, Postcode, Suburb, Email, Phone, SocialNetwork, AddressType, PreferredType } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -43,8 +43,9 @@ export class PersonalDetailsComponent implements OnInit {
   private tempAddUpdateAddress: Address;
 
   private states: State[] = [];
-  private cities: Place[] = [];
+  private places: Place[] = [];
   private postcodes: Postcode[] = [];
+  private suburbs: Suburb[] = [];
 
   private alladdresstypes: AddressType[] = [];
   private existingaddresstypes: AddressType[] = [];
@@ -61,14 +62,16 @@ export class PersonalDetailsComponent implements OnInit {
   private addressToRemove: Address;
 
   private selectedState: State = null;
-  private selectedCity: Place = null;
+  private selectedPlace: Place = null;
   private selectedPostcode: Postcode = null;
+  private selectedSuburb: Suburb = null;
   private selectedAddressType: AddressType = null;
   private selectedPreferredType: PreferredType = null;
 
   private defaultState: State = null;
-  private defaultCity: Place = null;
+  private defaultPlace: Place = null;
   private defaultPostcode: Postcode = null;
+  private defaultSuburb: Suburb = null;
   private defaultPreferredType: PreferredType = null;
   private defaultAddressType: AddressType = null;
   private updatedAddress: Address = null;
@@ -360,11 +363,11 @@ export class PersonalDetailsComponent implements OnInit {
       number: new FormControl('', [Validators.required, ValidationService.numberValidator]),
       unit: new FormControl('', [ValidationService.unitValidator]),
       street: new FormControl('', [Validators.required, ValidationService.streetValidator]),
-      suburb: new FormControl('', [Validators.required, ValidationService.suburbValidator]),
-      postcode: new FormControl('', [Validators.required, ValidationService.postcodeValidator]),
-      city: new FormControl(this.cities[0], [Validators.required, ValidationService.placeValidator]),
-      state: new FormControl('', [Validators.required, ValidationService.stateValidator]),
-
+      state: new FormControl('', [Validators.required, ValidationService.stateTradeValidator]),
+      place: new FormControl('', [Validators.required, ValidationService.placeTradeValidator]),    
+      postcode: new FormControl('', [Validators.required, ValidationService.postcodeTradeValidator]),
+      suburb: new FormControl('', [Validators.required, ValidationService.suburbTradeValidator]),
+          
     });
   }
 
@@ -401,21 +404,26 @@ export class PersonalDetailsComponent implements OnInit {
 
     let m: number = 0;
     let localStates: State[] = [];
-    let localCities: Place[] = [];
+    let localPlaces: Place[] = [];
     let localPostcodes: Postcode[] = [];
+    let localSuburbs: Suburb[] = [];
 
     for (m = 0; m < this.states.length; m++) {
       if (this.states[m].name == this.addressInView.state) { this.defaultState = this.states[m]; }
     }
-    localCities = this.defaultState.places;
+    localPlaces = this.defaultState.places;
 
-    for (m = 0; m < localCities.length; m++) {
-      if (localCities[m].name == this.addressInView.city) { this.defaultCity = localCities[m]; }
+    for (m = 0; m < localPlaces.length; m++) {
+      if (localPlaces[m].name == this.addressInView.place) { this.defaultPlace = localPlaces[m]; }
     }
-    localPostcodes = this.defaultCity.postcodes;
+    localPostcodes = this.defaultPlace.postcodes;
 
     for (m = 0; m < localPostcodes.length; m++) {
       if (localPostcodes[m].number == this.addressInView.postcode) { this.defaultPostcode = localPostcodes[m]; }
+    }
+    localSuburbs = this.defaultPostcode.suburbs;
+    for (m = 0; m < localSuburbs.length; m++) {
+      if (localSuburbs[m].name == this.addressInView.suburb) { this.defaultSuburb = localSuburbs[m]; }
     }
 
     for (m = 0; m < this.alladdresstypes.length; m++) {
@@ -431,11 +439,11 @@ export class PersonalDetailsComponent implements OnInit {
       this.addressForm.setValue({
         number: this.addressInView.number,
         unit: this.addressInView.unit || "",
-        street: this.addressInView.street,
-        suburb: this.addressInView.suburb,
+        street: this.addressInView.street,     
         state: this.defaultState,
-        city: this.defaultCity,
+        place: this.defaultPlace,
         postcode: this.defaultPostcode,
+        suburb: this.defaultSuburb,
         addresstype: this.defaultAddressType,
         preferredtype: this.defaultPreferredType
       });
@@ -475,15 +483,23 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onStateChange(state: State) {
+  private onStateChange(state: State) {  
+    this.places = state.places;
     this.postcodes = null;
-    this.cities = state.places;
+    this.suburbs = null;
   }
 
 
-  private onCityChange(city: Place) {
-    this.postcodes = city.postcodes;
+  private onPlaceChange(place: Place) { 
+    this.postcodes = place.postcodes;
+    this.suburbs = null;
   }
+
+
+  private onPostcodeChange(postcode: Postcode) {
+    this.suburbs = postcode.suburbs;
+  }
+
 
 
   private onPreferredTypeChange(preferredtype: PreferredType) {
@@ -706,7 +722,7 @@ export class PersonalDetailsComponent implements OnInit {
     this.messagesService.emitRoute("nill");
     this.isAddressAddOn = true;
     this.setAddressForm();
-    this.cities = [];
+    this.places = [];
     this.postcodes = [];
 
     // if address in view take it as temp so we can go back if adding has been cancelled
@@ -763,7 +779,7 @@ export class PersonalDetailsComponent implements OnInit {
 
       // add new address
       this.addressService.addAddress(address).subscribe((res: Address) => {
-
+        this.updatedAddress = null;
         this.addedAddress = res;
         // show success
         this.messagesService.emitProcessMessage("PMSAAd");
@@ -783,7 +799,7 @@ export class PersonalDetailsComponent implements OnInit {
 
         // update address
         this.addressService.updateAddress(address).subscribe((res: Address) => {
-
+          this.addedAddress = null;
           // get the saved address so when we 
           this.updatedAddress = res;
           // show success
@@ -806,8 +822,9 @@ export class PersonalDetailsComponent implements OnInit {
     const formModel = this.addressForm.value;
 
     let state: State = formModel.state;
-    let city: Place = formModel.city;
+    let place: Place = formModel.place;
     let postcode: Postcode = formModel.postcode;
+    let suburb: Suburb = formModel.suburb;
     let preferredflag: PreferredType = formModel.preferredtype;
     let addresstype: AddressType = formModel.addresstype;
 
@@ -815,15 +832,15 @@ export class PersonalDetailsComponent implements OnInit {
 
     if (this.isAddressEditOn) { newAddUpdateAddress.id = this.addressInView.id; }
     newAddUpdateAddress.traderId = this.traderId as string,
-      newAddUpdateAddress.addressTypeId = addresstype.addressTypeId;
+    newAddUpdateAddress.addressTypeId = addresstype.addressTypeId;
     newAddUpdateAddress.country = "";
     newAddUpdateAddress.number = formModel.number as string;
     newAddUpdateAddress.unit = formModel.unit as string;
     newAddUpdateAddress.street = formModel.street as string;
-    newAddUpdateAddress.suburb = formModel.suburb as string;
-    newAddUpdateAddress.city = city.name;
+    newAddUpdateAddress.state = state.name as string;
+    newAddUpdateAddress.place = place.name as string;
+    newAddUpdateAddress.suburb = suburb.name as string;  
     newAddUpdateAddress.postcode = postcode.number;
-    newAddUpdateAddress.state = state.name;
     newAddUpdateAddress.preferredFlag = preferredflag.value;
 
     // has anything beeing changed in the form and we are updating
@@ -837,16 +854,16 @@ export class PersonalDetailsComponent implements OnInit {
   // we have custom method to compare the new and old
   private compareAddresses(newAddress: Address, oldAddress: Address): boolean {
 
-    if (newAddress.addressTypeId == oldAddress.addressTypeId &&
-      newAddress.city == oldAddress.city &&
+    if (newAddress.addressTypeId == oldAddress.addressTypeId &&    
       newAddress.number == oldAddress.number &&
       newAddress.unit == oldAddress.unit &&
-      newAddress.postcode == oldAddress.postcode &&
-      newAddress.addressTypeId == oldAddress.addressTypeId &&
-      newAddress.preferredFlag == oldAddress.preferredFlag &&
-      newAddress.state == oldAddress.state &&
       newAddress.street == oldAddress.street &&
-      newAddress.suburb == oldAddress.suburb) {
+      newAddress.state == oldAddress.state &&
+      newAddress.place == oldAddress.place &&
+      newAddress.postcode == oldAddress.postcode &&
+      newAddress.suburb === oldAddress.suburb &&
+      newAddress.addressTypeId == oldAddress.addressTypeId &&
+      newAddress.preferredFlag == oldAddress.preferredFlag ) {
       return true;
     }
 
