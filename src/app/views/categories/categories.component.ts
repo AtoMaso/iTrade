@@ -167,13 +167,13 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private getSubcategoriesByCategoryId(id: number) {
+  private getSubcategoriesByCategoryId(categoryId: number) {
    
-    this.subcategoriesService.getSubcategoriesByCategoryId(id)
+    this.subcategoriesService.getSubcategoriesByCategoryId(categoryId)
       .subscribe((res: Subcategory[]) => {
         this.onSuccessSubCategories(res);
       }
-      , (error: Response) => this.onError(error, "geSubcategories"));
+      , (error: Response) => this.onError(error, "getSubcategoriesByCategory"));
   }
 
 
@@ -222,7 +222,7 @@ export class CategoriesComponent implements OnInit {
 
     setTimeout(() => {
       this.categoryForm.setValue({
-        categorydescription: this.categoryInView.categoryDescription, 
+        categorydescription: this.categoryInView.category, 
       });
     }, 30);
   }
@@ -231,7 +231,7 @@ export class CategoriesComponent implements OnInit {
   private setSubCategoryFormDefaults() {
     setTimeout(() => {
       this.subcategoryForm.setValue({
-        subcategorydescription: this.subcategoryInView.subcategoryDescription,
+        subcategorydescription: this.subcategoryInView.subcategory,
       });
     }, 30);
   }
@@ -244,7 +244,7 @@ export class CategoriesComponent implements OnInit {
     let m: number = 0;
     for (m = 0; m < this.categories.length; m++) {
 
-      if (this.categories[m].categoryDescription === category.target.value) {
+      if (this.categories[m].category === category.target.value) {
         // set categories
         this.categoryInView = this.categories[m];
         this.tempAddUpdateCategory = this.categories[m];
@@ -359,7 +359,7 @@ export class CategoriesComponent implements OnInit {
     let newAddUpdateCategory: Category = new Category();
 
     if (this.isCategoryEditOn) { newAddUpdateCategory.categoryId = this.categoryInView.categoryId; }
-    newAddUpdateCategory.categoryDescription= formModel.categorydescription as string;
+    newAddUpdateCategory.category = formModel.categorydescription as string;
    
 
     // has anything beeing changed in the form and we are updating
@@ -378,7 +378,7 @@ export class CategoriesComponent implements OnInit {
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
   private isCategoryChanged(newCategory: Category, oldCategory: Category): boolean {
-    if (newCategory.categoryDescription === oldCategory.categoryDescription) {  return false; }
+    if (newCategory.category === oldCategory.category) {  return false; }
     return true;
   }
 
@@ -386,7 +386,7 @@ export class CategoriesComponent implements OnInit {
   private catExists(cat: Category): boolean {
     let m: number = 0;
     for (m = 0; m < this.categories.length; m++) {
-      if (cat.categoryDescription === this.categories[m].categoryDescription) { return true; }
+      if (cat.category === this.categories[m].category) { return true; }
     }
     return false;
   }
@@ -421,7 +421,7 @@ export class CategoriesComponent implements OnInit {
   private onViewSubcategoryChange(subcategory: any) {
     let m: number = 0;
     for (m = 0; m < this.subcategories.length; m++) {
-      if (this.subcategories[m].subcategoryDescription === subcategory.target.value) {
+      if (this.subcategories[m].subcategory === subcategory.target.value) {
         this.subcategoryInView = this.subcategories[m];
         this.tempAddUpdateSubCategory = this.subcategories[m];
         this.setSubCategoryFormDefaults();
@@ -515,7 +515,7 @@ export class CategoriesComponent implements OnInit {
               // show success
               this.messagesService.emitProcessMessage("PMSUSCa"); 
               // get the new data from the server
-              this.getSubcategoriesByCategoryId(this.categoryInView.categoryId);
+              this.getSubcategoriesByCategoryId(this.categoryInView.categoryId
 
             }, (serviceError: Response) => this.onError(serviceError, "onSubmitSubCategoryAddUpdate"));
 
@@ -534,7 +534,7 @@ export class CategoriesComponent implements OnInit {
     let newAddUpdateSubCategory: Subcategory = new Subcategory();
 
     if (this.isSubCategoryEditOn) { newAddUpdateSubCategory.subcategoryId = this.subcategoryInView.subcategoryId; }
-    newAddUpdateSubCategory.subcategoryDescription = formModel.subcategorydescription as string;
+    newAddUpdateSubCategory.subcategory = formModel.subcategorydescription as string;
     newAddUpdateSubCategory.categoryId = this.categoryInView.categoryId;
 
     // has anything beeing changed in the form and we are updating
@@ -555,7 +555,7 @@ export class CategoriesComponent implements OnInit {
   // we have custom method to compare the new and old
   private isSubcategoryChanged(newSubCategory: Subcategory, oldSubCategory: Subcategory): boolean {
 
-    if (newSubCategory.subcategoryDescription === oldSubCategory.subcategoryDescription) { return false; }
+    if (newSubCategory.subcategory === oldSubCategory.subcategory) { return false; }
     return true;
   }
 
@@ -563,7 +563,7 @@ export class CategoriesComponent implements OnInit {
   private subcatExists(subcat: Subcategory): boolean {
     let m: number = 0;
     for (m = 0; m < this.subcategories.length; m++) {
-      if (subcat.subcategoryDescription === this.subcategories[m].subcategoryDescription) {  return true; }
+      if (subcat.subcategory === this.subcategories[m].subcategory) {  return true; }
     }
     return false;
   }

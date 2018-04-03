@@ -394,18 +394,18 @@ class Trade implements ITrade {
   tradeFor: string;
   datePublished: Date;
   status: string;
-  stateId: number;
+  //stateId: number;
   state: string;
-  placeId: number;
+  //placeId: number;
   place: string;
-  postcodeId: number;
-  postcodeNumber: string;  
-  suburbId: number;
-  suburbName: string;
-  categoryId: number;
-  categoryDescription: string;
-  subcategoryId: number;
-  subcategoryDescription: string;
+  //postcodeId: number;
+  postcode: string;  
+  //suburbId: number;
+  suburb: string;
+  category: string;
+ // categoryDescription: string;
+  subcategory: string;
+  //subcategoryDescription: string;
 
   traderId: string;
   traderFirstName: string;
@@ -425,18 +425,18 @@ class Trade implements ITrade {
     this.tradeFor = "";    
     this.datePublished = new Date(1900, 1, 1); 
     this.status = "";
-    this.stateId = 0;
+    //this.stateId = 0;
     this.state = "";
-    this.placeId = 0;
+    //this.placeId = 0;
     this.place = "";
-    this.postcodeId = 0;
-    this.postcodeNumber = "";   
-    this.suburbId = 0;
-    this.suburbName = "";
-    this.categoryId = 0;
-    this.categoryDescription = "";
-    this.subcategoryId = 0;
-    this.subcategoryDescription = "";
+    //this.postcodeId = 0;
+    this.postcode = "";   
+    //this.suburbId = 0;
+    this.suburb = "";
+    this.category = "";
+    //this.categoryDescription = "";
+    this.subcategory = "";
+    //this.subcategoryDescription = "";
 
     this.traderId = "";
     this.traderFirstName = "";   
@@ -457,12 +457,12 @@ class PostTrade implements IPostTrade {
   tradeFor: string;
   datePublished: Date;
   status: string; 
-  stateId: number;
-  placeId: number;
-  postcodeId: number; 
-  suburbId: number; 
-  categoryId: number;
-  subcategoryId: number;
+  state: string;
+  place: string;
+  postcode: string; 
+  suburb: string; 
+  category: string;
+  subcategory: string;
   traderId: string;
   Images: Image[];
 
@@ -473,12 +473,12 @@ class PostTrade implements IPostTrade {
     this.tradeFor = "";
     this.datePublished = new Date(1900, 1, 1);
     this.status = "";
-    this.stateId = 0;
-    this.placeId = 0;
-    this.postcodeId = 0;
-    this.suburbId = 0;
-    this.categoryId = 0;   
-    this.subcategoryId = 0;  
+    this.state = "";
+    this.place = "";
+    this.postcode = "";
+    this.suburb = "";
+    this.category = "";   
+    this.subcategory = "";  
     this.traderId = "";
     this.Images = [];
   }
@@ -519,12 +519,12 @@ class Image implements IImage {
 
 class Category implements ICategory {
   categoryId: number;
-  categoryDescription: string;
+  category: string;
   subcategories: Subcategory[];
 
   constructor() {
     this.categoryId = 0;
-    this.categoryDescription = "";
+    this.category = "";
     this.subcategories = [];
   }
 }
@@ -532,12 +532,12 @@ class Category implements ICategory {
 
 class Subcategory implements ISubcategory {
   subcategoryId: number;
-  subcategoryDescription: string;
+  subcategory: string;
   categoryId: number;
 
   constructor() {
     this.subcategoryId = 0;
-    this.subcategoryDescription = "";
+    this.subcategory = "";
     this.categoryId = 0;
   }
 }

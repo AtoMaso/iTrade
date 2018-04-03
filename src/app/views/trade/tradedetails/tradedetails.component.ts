@@ -273,10 +273,8 @@ export class TradeDetailsComponent implements OnInit {
 
     trd.place = returnedTrade.place;
     trd.state = returnedTrade.state;
-    trd.postcodeId = returnedTrade.postcodeId;
-    trd.postcodeNumber = returnedTrade.postcodeNumber;
-    trd.categoryDescription = returnedTrade.categoryDescription;
-    trd.subcategoryDescription = returnedTrade.subcategoryDescription;
+    trd.postcode = returnedTrade.postcode;    
+    trd.category = returnedTrade.category; 
 
     trd.traderId = returnedTrade.traderId; 
     trd.traderFullName = returnedTrade.traderFirstName + " " + returnedTrade.traderMiddleName + " " + returnedTrade.traderLastName;

@@ -181,18 +181,16 @@ interface ITrade {
   tradeFor: string;
   status: string;
   datePublished: Date;
-  stateId: number;
+  //stateId: number;
   state: string;
-  placeId: number;
+  //placeId: number;
   place: string;
-  postcodeId: number;  
-  postcodeNumber: string;
-  suburbId: number;
-  suburbName: string;
-  categoryId: number; 
-  categoryDescription: string
-  subcategoryId: number;
-  subcategoryDescription: string;
+  //postcodeId: number;  
+  postcode: string;
+  //suburbId: number;
+  suburb: string;
+  category: string; 
+  subcategory: string;
 
   traderId: string;
   traderFirstName: string;
@@ -210,13 +208,13 @@ interface IPostTrade {
   description: string;
   tradeFor: string;
   status: string;
-  datePublished: Date;
-  categoryId: number;
-  stateId: number;
-  placeId: number;
-  postcodeId: number;
-  suburbId: number;
-  subcategoryId: number; 
+  datePublished: Date; 
+  state: string;
+  place: string;
+  postcode: string;
+  suburb: string;
+  category: string;
+  subcategory: string; 
   traderId: string;
   Images: IImage[];
 }
@@ -240,14 +238,15 @@ interface IImage {
 
 interface ICategory {
   categoryId: number;
-  categoryDescription: string;
+  category: string;
   subcategories: ISubcategory[];
 }
 
 
 interface ISubcategory {
   subcategoryId: number;
-  subcategoryDescription: string;
+  subcategory: string;
+  categoryId: number;
 }
 
 

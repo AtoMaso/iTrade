@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit {
       trd.status = value.status;
       trd.name = value.name;
       trd.description = value.description;
-      trd.categoryDescription = value.categoryDescription;
+      trd.category = value.category;
       trd.tradeFor = value.tradeFor;        
 
       trd.traderId = value.traderId;

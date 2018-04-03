@@ -92,11 +92,11 @@
     addplace: 'http://localhost:5700/api/places/PostPlace',
     deleteplace: 'http://localhost:5700/api/places/DeletePlace',
 
-    geodataStates : 'http://localhost:5700/api/statesplacespostcodessubirbs/GetStates',
-    geodataPlacesByStateCodeUrl: 'http://localhost:5700/api/statesplacespostcodessubirbs/GetPlacesByStateCode',
-    geodataPostcodesByPlaceNameUrl: 'http://localhost:5700/api/statesplacespostcodessubirbs/GetPostcodesByPlaceName',
-    geodataSuburbsByPostcodeNumberUrl: 'http://localhost:5700/api/statesplacespostcodessubirbs/GetSuburbsByPostcodeNumber',
-    geodataSuburbsByPostcodeNumberAndPlaceNameUrl: 'http://localhost:5700/api/statesplacespostcodessubirbs/GetSuburbsByPostcodeNumberAndPlaceName',
+    geodataStates: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetStates',
+    geodataPlacesByStateCodeUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetPlacesByStateCode',
+    geodataPostcodesByPlaceNameUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetPostcodesByPlaceName',
+    geodataSuburbsByPostcodeNumberUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetSuburbsByPostcodeNumber',
+    geodataSuburbsByPostcodeNumberAndPlaceNameUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetSuburbsByPostcodeNumberAndPlaceName',
 
     // postcode
     postcodes: 'http://localhost:5700/api/postcodes',

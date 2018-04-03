@@ -42,16 +42,16 @@ class SortTradesByCategoryPipe implements PipeTransform {
             if (args === 'A') {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.categoryDescription < b.categoryDescription) { return -1; }
-                if (a.categoryDescription > b.categoryDescription) { return 1; }
+                if (a.category < b.category) { return -1; }
+                if (a.category> b.category) { return 1; }
                     return 0;
                 });
             }
             else {
 
               return value.sort((a: Trade, b: Trade) => {
-                if (a.categoryDescription > b.categoryDescription) { return -1; }
-                if (a.categoryDescription < b.categoryDescription) { return 1; }
+                if (a.category > b.category) { return -1; }
+                if (a.category < b.category) { return 1; }
                     return 0;
                 });
             }

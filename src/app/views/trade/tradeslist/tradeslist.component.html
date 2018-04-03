@@ -44,7 +44,7 @@
                                    <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('traderFullName')">Trader</a></li>
                                    <li role="presentation" class="divider"></li>
-                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('categoryDescription')">Category</a></li>      
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('category')">Category</a></li>      
                                    <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('state')">State</a></li>       
                                    <li role="presentation" class="divider"></li>
@@ -95,7 +95,7 @@
                                               <select id="category" name="category" class="form-control" style="background-color:moccasin;" (change)="CategoryClicked($event)">
                                                 <option></option>
                                                 <option *ngFor="let category of categories" [ngValue]="category.categoryId">
-                                                  {{ category.categoryDescription }}
+                                                  {{ category.category }}
                                                 </option>
                                               </select>
                                             </div>
@@ -108,7 +108,7 @@
                                               <select id="subcategory" name="subcategory" class="form-control" style="background-color:moccasin;" (change)="SubcategoryClicked($event)">
                                                 <option></option>
                                                 <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.subcategoryId">
-                                                  {{ subcategory.subcategoryDescription }}
+                                                  {{ subcategory.subcategory }}
                                                 </option>
                                               </select>
                                             </div>
@@ -213,8 +213,8 @@
 
                                <div class="col-md-4 smalltextbold text-capitalize textgray">
                                  <div class="row" style="height:32px;">Trading:<a class="text-capitalize textlightcoral" style="text-decoration:underline;" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}">{{ trade.name  }}</a></div>                               
-                                 <div class="row" style="height:32px;">Category: <span><span class="text-capitalize text-info"> {{ trade.categoryDescription  }}</span></span></div>
-                                 <div class="row" style="height:32px;">Subcategory: <span><span class="text-capitalize text-info"> {{ trade.subcategoryDescription  }}</span></span></div>
+                                 <div class="row" style="height:32px;">Category: <span><span class="text-capitalize text-info"> {{ trade.category  }}</span></span></div>
+                                 <div class="row" style="height:32px;">Subcategory: <span><span class="text-capitalize text-info"> {{ trade.subcategory  }}</span></span></div>
                                  <div class="row" style="height:32px;">Trading for: <span class="text-capitalize text-info"> {{ trade.tradeFor  }}</span></div>
                                  <div class="row" style="height:32px;">Reference Id:<span class="text-capitalize text-info"> {{ trade.tradeId  }}</span></div>
                                  <div class="row" style="height:32px;">Published on:<span class="text-capitalize text-info"> {{ trade.datePublished | date }}</span></div>     
@@ -226,8 +226,8 @@
                                <div class="col-md-4 smalltextbold text-capitalize textgray">         
                                  <div class="row" style="height:32px;">State:<span class="text-capitalize text-info"> {{ trade.state  }}</span></div>
                                  <div class="row" style="height:32px;">Place:<span class="text-capitalize text-info"> {{ trade.place  }}</span></div>                                                                                                                       
-                                 <div class="row" style="height:32px;">Postcode:<span class="text-capitalize text-info"> {{ trade.postcodeNumber }}</span></div>
-                                 <div class="row" style="height:32px;">Suburb:<span class="text-capitalize text-info"> {{ trade.suburbName  }}</span></div>            
+                                 <div class="row" style="height:32px;">Postcode:<span class="text-capitalize text-info"> {{ trade.postcode }}</span></div>
+                                 <div class="row" style="height:32px;">Suburb:<span class="text-capitalize text-info"> {{ trade.suburb  }}</span></div>            
                                  <div class="row" style="height:160px;">Description:<span class="text-info"><br /> {{ trade.description  }}</span></div>     
                                </div>
 

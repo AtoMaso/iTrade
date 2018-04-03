@@ -40,6 +40,7 @@ import { PersonalDetailsService } from './services/personaldetails/personaldetai
 import { LoginDetailsService } from './services/logindetails/logindetails.service';
 import { CategoryService } from './services/categories/category.service';
 import { SubcategoriesService } from './services/subcategories/subcategories.service';
+import { GeoDataService } from './services/geodata/geodata.service';
 import { StatesService } from './services/states/states.service';
 import { PlacesService } from './services/places/places.service';
 import { PostcodesService } from './services/postcodes/postcodes.service';
@@ -140,7 +141,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     AuthenticationService, ProcessMessageService, CorrespondenceService, PlacesService,
     PersonalDetailsService, LoginDetailsService, SubcategoriesService, SocialNetworksService, EmailsService, PhonesService,
     PageTitleService, LoggerService, AuthGuard, TraderApiService, CategoryService, AddressService,
-    PostcodesService, SuburbsService,
+    PostcodesService, SuburbsService, GeoDataService,
     // to inercept every request for authentication purposes
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 

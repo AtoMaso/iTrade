@@ -430,7 +430,7 @@ export class TradesListComponent implements OnInit {
     if (categoryname != "") {
       let m: number = 0;
       for (m = 0; m < this.categories.length; m++) {
-        if (this.categories[m].categoryDescription == categoryname) {
+        if (this.categories[m].category == categoryname) {
           this.selectedCategoryId = this.categories[m].categoryId;
           this.subcategories = this.categories[m].subcategories;
         }
@@ -447,7 +447,7 @@ export class TradesListComponent implements OnInit {
     if (subcategoryname != "") {
       let m: number = 0;
       for (m = 0; m < this.subcategories.length; m++) {
-        if (this.subcategories[m].subcategoryDescription == subcategoryname) {
+        if (this.subcategories[m].subcategory == subcategoryname) {
           this.selectedSubcategoryId = this.subcategories[m].subcategoryId;
         }
       }
@@ -611,18 +611,14 @@ export class TradesListComponent implements OnInit {
       trd.tradeFor = value.tradeFor;        
       trd.status = value.status;     
 
-      trd.placeId = value.placeId;
+    
       trd.place = value.place;
-      trd.stateId = value.stateId;
+    
       trd.state = value.state;
-      trd.postcodeId = value.postcodeId;
-      trd.postcodeNumber = value.postcodeNumber;
-      trd.suburbId = value.suburbId;
-      trd.suburbName = value.suburbName;
-      trd.categoryId = value.categoryId;
-      trd.categoryDescription = value.categoryDescription;
-      trd.subcategoryId = value.subcategoryId;
-      trd.subcategoryDescription = value.subcategoryDescription;
+      trd.postcode = value.postcode;      
+      trd.suburb = value.suburb;     
+      trd.category = value.category;
+      trd.subcategory = value.subcategory;     
 
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;

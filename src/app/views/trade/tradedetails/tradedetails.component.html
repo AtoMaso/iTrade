@@ -15,7 +15,7 @@
             <div *ngIf="trade != null">
 
               <div class="row mediumtext panel panel-heading col-md-12">
-                Status:<span class="smalltext  text-uppercase text-info"> {{ traderName }}</span>
+                Status:<span class="smalltext  text-uppercase text-info"> {{ trade.status }}</span>
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12">
@@ -31,7 +31,7 @@
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12">
-                Category: <span class="smalltext  text-uppercase text-info"> {{ trade.categoryDescription }}</span>
+                Category: <span class="smalltext  text-uppercase text-info"> {{ trade.category }}</span>
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12">

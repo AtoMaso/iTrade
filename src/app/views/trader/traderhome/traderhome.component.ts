@@ -176,11 +176,10 @@ export class TraderHomeComponent implements OnInit {
       trd.datePublished = value.datePublished;
       trd.status = value.status;
       trd.tradeFor = value.tradeFor; 
-      trd.categoryDescription = value.categoryDescription;
+      trd.category = value.category;
       trd.place = value.place;
-      trd.state = value.state;
-      trd.postcodeId = value.postcodeId;
-      trd.postcodeNumber = value.postcodeNumber;
+      trd.state = value.state;    
+      trd.postcode = value.postcode;
             
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;

@@ -205,15 +205,13 @@ export class MyTradesListComponent implements OnInit {
       trd.datePublished = value.datePublished;
       trd.status = value.status;
       trd.tradeFor = value.tradeFor;   
-
-      trd.placeId = value.placeId;
-      trd.place = value.place;
-      trd.stateId = value.stateId;
-      trd.state = value.state;
-      trd.postcodeId = value.postcodeId;
-      trd.postcodeNumber = value.postcodeNumber;
-      trd.categoryId = value.categoryId;
-      trd.categoryDescription = value.categoryDescription;       
+    
+      trd.place = value.place;  
+      trd.state = value.state;   
+      trd.postcode = value.postcode;
+      trd.suburb = value.suburb;
+      trd.category = value.category;   
+      trd.subcategory = value.subcategory
 
       trd.traderId = value.traderId;
       trd.traderFirstName = value.traderFirstName;
@@ -334,7 +332,7 @@ export class MyTradesListComponent implements OnInit {
     { title: 'Status', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status' } },
     { title: 'Trading',    name: 'name',              sort: true,   filtering: { filterString: '', placeholder: 'Filter by trade object name' } },
     { title: 'For', name: 'tradeFor',                 sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade for object name' } },
-    { title: 'Category',  name: 'categoryDescription', sort: true,  filtering: { filterString: '', placeholder:  'Filter by trade category' }},   
+    { title: 'Category',  name: 'category', sort: true,  filtering: { filterString: '', placeholder:  'Filter by trade category' }},   
     { title: 'Published', name: 'datePublished',                   sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade date.' }} 
     ];
 
@@ -484,8 +482,8 @@ export class MyTradesListComponent implements OnInit {
         this.sortFor = this.isForAsc ? 'desc' : 'asc';
         break;
 
-        case 'categoryDescription':
-          this.config.sorting.columns = [{ name: 'categoryDescription', sort: this.sortCategory }];
+        case 'category':
+          this.config.sorting.columns = [{ name: 'category', sort: this.sortCategory }];
           this.onChangeTable(this.config);
           this.isCategoryAsc = !this.isCategoryAsc;
           this.sortCategory = this.isCategoryAsc ? 'desc' : 'asc';

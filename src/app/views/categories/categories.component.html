@@ -14,7 +14,7 @@
                         <select id="category" name="category" class="smalltextbold" style="background-color:moccasin;" (change)="onViewCategoryChange($event)">
                           <option></option>
                           <option *ngFor="let category of categories" [ngValue]="category">
-                            {{ category.categoryDescription }}
+                            {{ category.category }}
                           </option>
                         </select>
                       </div>
@@ -38,7 +38,7 @@
                                                   </div>
 
                                                   <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                                                    Description:<span class="text-info"> {{ categoryInView.categoryDescription}}</span>
+                                                    Description:<span class="text-info"> {{ categoryInView.category}}</span>
                                                   </div>                                               
                                            </div>
                                     </div>
@@ -98,7 +98,7 @@
                           <select id="subcategory" name="subcategory" class="smalltextbold" style="background-color:moccasin;" (change)="onViewSubcategoryChange($event)">
                             <option></option>
                             <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory">
-                              {{ subcategory.subcategoryDescription }}
+                              {{ subcategory.subcategory }}
                             </option>
                           </select>
                         </div>
@@ -123,7 +123,7 @@
                                                 </div>
                                                    
                                                 <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                                                        Description:<span class="text-info"> {{ subcategoryInView.subcategoryDescription}}</span>
+                                                        Description:<span class="text-info"> {{ subcategoryInView.subcategory}}</span>
                                                 </div>
 
                                              

@@ -33,7 +33,7 @@
                         <div class="row form-group col-md-12 smalltextbold">
                           Category:
                           <select formControlName="category" id="category" name="category" class="form-control" style="background-color:moccasin;" (ngModelChange)="onCategoryChange($event)">                         
-                            <option *ngFor="let category of categories" [ngValue]="category"> {{ category.categoryDescription }}</option>
+                            <option *ngFor="let cat of categories" [ngValue]="cat"> {{ cat.category }}</option>
                           </select>
                           <control-messages [control]="addForm.controls.category"></control-messages>
                         </div>              
@@ -42,7 +42,7 @@
                         <div class="row form-group col-md-12 smalltextbold">
                           Subcategory:
                           <select formControlName="subcategory" id="category" name="subcategory" class="form-control" style="background-color:moccasin;">
-                            <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory">{{ subcategory.subcategoryDescription }}</option>
+                            <option *ngFor="let subcat of subcategories" [ngValue]="subcat">{{ subcat.subcategory }}</option>
                           </select>
                           <control-messages [control]="addForm.controls.subcategory"></control-messages>
                         </div>                   
@@ -68,33 +68,56 @@
                         </div>                   
 
                      
-                        <div class="row form-group col-md-12 smalltextbold">
+                        <!--<div class="row form-group col-md-12 smalltextbold">
                           Place:
                           <select formControlName="place" id="place" name="place" class="form-control" style="background-color:moccasin;" (ngModelChange)="onPlaceChange($event)">
                             <option *ngFor="let place of places" [ngValue]="place">{{ place.name }}</option>
                           </select>
                           <control-messages [control]="addForm.controls.place"></control-messages>
-                        </div>                   
+                        </div>-->                   
+
+                      <div class="row form-group col-md-12 smalltextbold">
+                        Place:
+                        <select formControlName="place" id="place" name="place" class="form-control" style="background-color:moccasin;" (ngModelChange)="onPlaceChange($event)">
+                          <option *ngFor="let geoplace of geoplaces" [ngValue]="geoplace">{{ geoplace.place }}</option>
+                        </select>
+                        <control-messages [control]="addForm.controls.place"></control-messages>
+                      </div>               
 
                       
-                        <div class="row form-group col-md-12 smalltextbold">
+                        <!--<div class="row form-group col-md-12 smalltextbold">
                           Postcode:
                           <select formControlName="postcode" id="postcode" name="postcode" class="form-control" style="background-color:moccasin;" (ngModelChange)="onPostcodeChange($event)">
                             <option *ngFor="let postcode of postcodes" [ngValue]="postcode">{{ postcode.number }}</option>
                           </select>
                           <control-messages [control]="addForm.controls.postcode"></control-messages>
-                        </div>                   
+                        </div>-->                   
 
+                      <div class="row form-group col-md-12 smalltextbold">
+                        Postcode:
+                        <select formControlName="postcode" id="postcode" name="postcode" class="form-control" style="background-color:moccasin;" (ngModelChange)="onPostcodeChange($event)">
+                          <option *ngFor="let geopostcode of geopostcodes" [ngValue]="geopostcode">{{ geopostcode.postcode }}</option>
+                        </select>
+                        <control-messages [control]="addForm.controls.postcode"></control-messages>
+                      </div>
 
                          
-                        <div class="row form-group col-md-12 smalltextbold">
+                        <!--<div class="row form-group col-md-12 smalltextbold">
                           Suburb:
                           <select formControlName="suburb" id="suburb" name="suburb" class="form-control" style="background-color:moccasin;">
                             <option *ngFor="let suburb of suburbs" [ngValue]="suburb">{{ suburb.name }}</option>
                           </select>
                           <control-messages [control]="addForm.controls.suburb"></control-messages>
-                        </div>                      
+                        </div>-->                      
 
+
+                      <div class="row form-group col-md-12 smalltextbold">
+                        Suburb:
+                        <select formControlName="suburb" id="suburb" name="suburb" class="form-control" style="background-color:moccasin;">
+                          <option *ngFor="let geosuburb of geosuburbs" [ngValue]="geosuburb">{{ geosuburb.suburb }}</option>
+                        </select>
+                        <control-messages [control]="addForm.controls.suburb"></control-messages>
+                      </div>               
                      
                         <div class="row form-group col-md-12 smalltextbold">
                           Publish Date:
