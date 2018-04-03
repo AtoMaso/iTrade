@@ -61,7 +61,7 @@
 </div>
  
 
-<span *ngIf="hasNoTrades" class="textoker smalltext text-uppercase"> - The system can not find any trades!</span>
+<span *ngIf="!hasTrades" class="textoker smalltext text-uppercase"> - The system can not find any open or closed trades!</span>
 
 <my-spinner [isRunning]="isRequesting"></my-spinner>
 

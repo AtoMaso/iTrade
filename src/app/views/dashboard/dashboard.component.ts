@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
   private trades: Array<any> = [];
   public isRequesting: boolean;
   private hasTrades: boolean = true;  
-  private hasNoTrades: boolean = false;
+  private hasClosedTrades: boolean = false;
 
   constructor(private tradeApiService: TradeApiService,
                     private titleService: PageTitleService,
@@ -54,23 +54,36 @@ export class DashboardComponent implements OnInit {
         if (returnedTrades.length === 0) {
               this.hasTrades = false;
               this.isRequesting = false;
-          if (!this.hasTrades && !this.hasNoTrades) { this.getLimitedNumberOfTrades(number, "All"); }     // there are no open trades so get the latest closed ones
-              else {
-                    this.hasTrades = false;
-                    this.hasNoTrades = true;
-              }
+              if (!this.hasTrades) { this.getLimitedNumberOfTradesClosed(number, "All"); }     // there are no open trades so get the latest closed ones         
         }
         else {
           this.trades = this.TransformData(returnedTrades);
-          this.hasTrades = true;
-          this.hasNoTrades = false;
+          this.hasTrades = true;        
           this.isRequesting = false;             
         }
       },
       (res: Response) => this.onError(res, "getTradesApi method"));
   } 
 
+  // get the closed ones if there no opened ones
+  public getLimitedNumberOfTradesClosed(number: number, status: string)
+  {
+  // call the service to get the data  
+  this.tradeApiService.getLimitedNumberOfTradesTradesWithStatusOrAll(number, status)
+    .subscribe((returnedTrades: Trade[]) => {
+      if (returnedTrades.length === 0) {
+        this.hasTrades = false;    
+        this.isRequesting = false;
+      }
+      else {
+        this.trades = this.TransformData(returnedTrades);
+        this.hasTrades = true;   
+        this.isRequesting = false;
+      }
+    },
+    (res: Response) => this.onError(res, "getLimitedNumberOfTradesClosed method"));
 
+ }
   //*****************************************************
   //  HELPER METHODS
   //*****************************************************

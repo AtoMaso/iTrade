@@ -92,6 +92,11 @@
     addplace: 'http://localhost:5700/api/places/PostPlace',
     deleteplace: 'http://localhost:5700/api/places/DeletePlace',
 
+    geodataStates : 'http://localhost:5700/api/statesplacespostcodessubirbs/GetStates',
+    geodataPlacesByStateCodeUrl: 'http://localhost:5700/api/statesplacespostcodessubirbs/GetPlacesByStateCode',
+    geodataPostcodesByPlaceNameUrl: 'http://localhost:5700/api/statesplacespostcodessubirbs/GetPostcodesByPlaceName',
+    geodataSuburbsByPostcodeNumberUrl: 'http://localhost:5700/api/statesplacespostcodessubirbs/GetSuburbsByPostcodeNumber',
+    geodataSuburbsByPostcodeNumberAndPlaceNameUrl: 'http://localhost:5700/api/statesplacespostcodessubirbs/GetSuburbsByPostcodeNumberAndPlaceName',
 
     // postcode
     postcodes: 'http://localhost:5700/api/postcodes',

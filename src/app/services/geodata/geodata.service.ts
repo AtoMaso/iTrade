@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/retry';
 
 import {AuthenticationService } from '../authentication/authentication.service';
-import { Place } from '../../helpers/classes';
+import { Place, StatePlacePostcodeSuburb } from '../../helpers/classes';
 
 
 let placesUrl = CONFIG.baseUrls.places;
@@ -15,8 +15,14 @@ let updatePlaceUrl = CONFIG.baseUrls.updateplace;
 let addPlaceUrl = CONFIG.baseUrls.addplace;
 let deletePlaceUrl = CONFIG.baseUrls.deleteplace;
 
+let geodataStates = CONFIG.baseUrls.geodataStates;
+let geodataPlacesByStateCodeUrl = CONFIG.baseUrls.geodataPlacesByStateCodeUrl;
+let geodataPostcodesByPlaceNameUrl = CONFIG.baseUrls.geodataPostcodesByPlaceNameUrl;
+let geodataSuburbsByPostcodeNumberUrl = CONFIG.baseUrls.geodataSuburbsByPostcodeNumberUrl;
+let geodataSuburbsByPostcodeNumberAndPlaceNameUrl = CONFIG.baseUrls.geodataSuburbsByPostcodeNumberAndPlaceNameUrl;
+
 @Injectable()
-export class PlacesService {
+export class GeoDataService {
 
   constructor(private httpClientService: HttpClient, private authenticationService: AuthenticationService) { };
 
@@ -24,7 +30,7 @@ export class PlacesService {
   //******************************************************
   // GET places METHODS
   //******************************************************
-  public getPlaces(): Observable<Place[]> {
+  public getStates(): Observable<StatePlacePostcodeSuburb[]> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -33,26 +39,12 @@ export class PlacesService {
         'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
-    return this.httpClientService.get<Place[]>(placesUrl, httpOptions).retry(1);
+    return this.httpClientService.get<StatePlacePostcodeSuburb[]>(geodataStatesUrl, httpOptions).retry(1);
   }
 
 
-  public getPlacesByStateId(stateId: number): Observable<Place[]> {
+  public getPlacesByStateCode(statecode: string): Observable<StatePlacePostcodeSuburb[]> {
 
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
-
-    return this.httpClientService.get<Place[]>(placesByStateIdUrl +`?stateId=${stateId}`, httpOptions).retry(1);
-  }
-
-
-  public getPlace(id: number): Observable<Place> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -62,13 +54,57 @@ export class PlacesService {
       })
     };
 
-    return this.httpClientService.get<Place>(placeUrl + `${id}`, httpOptions).retry(1);
+    return this.httpClientService.get<StatePlacePostcodeSuburb[]>(geodataPlacesByStateCodeUrl + `?statecode=${statecode}`, httpOptions).retry(1);
   }
 
+
+  public getPostcodesByPlaceName(placename: string): Observable<StatePlacePostcodeSuburb> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.get<StatePlacePostcodeSuburb>(geodataPostcodesByPlaceNameUrl + `?placename=${placename}`, httpOptions).retry(1);
+  }
+
+
+
+  public getSuburbssByPostcodeNumber(postcodenumber: string): Observable<StatePlacePostcodeSuburb> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.get<StatePlacePostcodeSuburb>(geodataSuburbsByPostcodeNumberUrl + `?postcodenumber=${postcodenumber}`, httpOptions).retry(1);
+  }
+
+
+
+
+  public getSuburbssByPostcodeNumberAndPlaceName(postcodenumber: string, placename:string): Observable<StatePlacePostcodeSuburb> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.get<StatePlacePostcodeSuburb>(geodataSuburbsByPostcodeNumberAndPlaceNameUrl + `?postcodenumber=${postcodenumber}&placename=${placename}`, httpOptions).retry(1);
+  }
 
 
   //******************************************************
-  // ADD PLACE
+  // ADD GEO PLACE
   //******************************************************
   public addPlace(place: Place): Observable<Place> {
     // prepare the headesrs
@@ -85,7 +121,7 @@ export class PlacesService {
 
 
   //******************************************************
-  // UPDATE PLACE
+  // UPDATE GEO PLACE
   //******************************************************
   public updatePlace(place: Place): Observable<Place> {
     // prepare the headesrs
@@ -103,7 +139,7 @@ export class PlacesService {
 
 
   //******************************************************
-  // DELETE PLACE
+  // DELETE GEO PLACE
   //******************************************************
   public deletePlace(id: number): Observable<Place> {
 
@@ -119,8 +155,6 @@ export class PlacesService {
     const localUrl = `${deletePlaceUrl}?id=${id}`; // DELETE api/places/DeletePlace?id=1
     return this.httpClientService.delete<Place>(localUrl, httpOptions);
   }
-
-
 
 
 }
