@@ -69,7 +69,7 @@ export class TradesListComponent implements OnInit {
   private filters1: string = null;
   private filters2: string = null;
   private isNewLoad: boolean = false;
-
+  private checked: boolean = false;
 
   // constructor which injects the services
   constructor(
@@ -92,7 +92,7 @@ export class TradesListComponent implements OnInit {
     this.initialiseComponent();     
 
     //this.getTrades("Open");
-    this.getSetOfTrades(this.setsCounter, this.recordsPerSet, this.status);
+    this.getSetOfTradesWithStatus(this.setsCounter, this.recordsPerSet, this.status);
     this.getCategories();   
     this.getStates();   
   }
@@ -133,25 +133,22 @@ export class TradesListComponent implements OnInit {
 
 
   }
-
+  public PostTrade() {
+    this.router.navigate(["/addtrade"]);
+  }
 
   //*********************************************************************************************
   // GET TRADES - this will get open trades, if there are no any open trades will get all or will show message - no trades
   //*********************************************************************************************
   //gets set of trades 
-  private getSetOfTrades(setsCounter: number, recordsPerSet: number, status: string) {
+  private getSetOfTradesWithStatus(setsCounter: number, recordsPerSet: number, status: string) {
 
     this.tradeApiService.getSetOfTradesWithStatus(setsCounter, recordsPerSet, status)
         .subscribe((returnedTrades: Trade[]) => {      
             if (returnedTrades.length === 0) {
                   this.hasTrades = false;
                   this.isRequesting = false;            
-                   if (!this.hasTrades ) { this.getSetOfTrades(setsCounter, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones
-                  else {
-                    this.hasTrades = false;
-                    // if there are no records at all than show the message no trades at all
-                     this.messagesService.emitProcessMessage("PMENTrs");
-                  }
+                  if (!this.hasTrades) { this.getSetOfTradesWithStatusClosed(setsCounter, recordsPerSet, "All"); }    // there are no open trades so get the latest closed ones           
             }
             else {
                     this.data = this.TransformData(returnedTrades),
@@ -165,6 +162,32 @@ export class TradesListComponent implements OnInit {
            }              
       }, (serviceError: Response) => this.onError(serviceError, "getSetOfTrades"));
   }
+
+
+
+  private getSetOfTradesWithStatusClosed(setsCounter:number, recordsPerSet:number, status: string) {
+
+    this.tradeApiService.getSetOfTradesWithStatus(setsCounter, recordsPerSet, status)
+      .subscribe((returnedTrades: Trade[]) => {
+        if (returnedTrades.length === 0) {
+          this.hasTrades = false;
+          this.isRequesting = false;
+          this.messagesService.emitProcessMessage("PMENTrs");
+        }
+        else {
+             this.data = this.TransformData(returnedTrades),
+             this.totalNumberOfRecords = this.data[0].total,
+             this.hasTrades = true;
+             this.isRequesting = false,
+             this.isNewLoad = true;
+             this.calculateTotalNumberOfSets(),
+             this.onChangeTable(this.config),
+             this.onPageChange(1)
+        }
+      }, (serviceError: Response) => this.onError(serviceError, "getSetOfTradesWithStatusClosed"));
+
+  }
+
 
   // get set of trades with set filters
   private getSetOfTradesWithSetFilters() {
@@ -208,6 +231,7 @@ export class TradesListComponent implements OnInit {
       (res: Response) => this.onError(res, "getSetOfTradesWithSetFilter"));
   }
 
+
   // get all trades - not in use
   private getTrades(status: string) {
 
@@ -236,6 +260,7 @@ export class TradesListComponent implements OnInit {
       (res: Response) => this.onError(res, "getTrades"));
 
   }
+
 
   // get trades with set filters  - not in use
   private getTradesWithSetFilters() {

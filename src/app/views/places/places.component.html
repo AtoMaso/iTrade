@@ -89,12 +89,12 @@
     <div class="col-md-5 col-md-offset-1 panel panel-heading footerdiv">
 
       <div class="places collapsed col-md-5" data-toggle="collapse" data-target="#collapsePlaces">
-        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Cities</span>
+        <span class="glyphicon glyphicon-minus"></span><span class="textlightcoral smalltext text-uppercase"> Places</span>
       </div>
 
       <!-- drop down -->
       <div class="smalltextbold col-md-7" style="text-align:right;z-index:1100;">
-        Cities:
+        Places:
         <select id="place" name="place" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPlaceChange($event)">
           <option></option>
           <option *ngFor="let geodata of places" [ngValue]="geodata">

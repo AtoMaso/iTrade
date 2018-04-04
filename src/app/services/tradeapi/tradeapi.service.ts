@@ -10,6 +10,7 @@ import { Trade, PostTrade } from '../../helpers/classes';
 let allTrades = CONFIG.baseUrls.alltrades;
 let tradesWithStatus = CONFIG.baseUrls.tradeswithstatus;
 
+
 let tradesWithSetFilters = CONFIG.baseUrls.tradeswithsetfilters;
 let setOfTradesWithSetFilters = CONFIG.baseUrls.setoftradeswithsetfilters;
 
@@ -20,9 +21,9 @@ let tradesByTraderIdNoStatus = CONFIG.baseUrls.tradesbytraderidnostatus;
 let tradesByTraderIdWithStatus = CONFIG.baseUrls.tradesbytraderidwithstatus;
 
 let setOfTradesWithStatus = CONFIG.baseUrls.setoftradeswithstatus;
-let setOfTradesWithStatusForTrader = CONFIG.baseUrls.setoftradeswithstatusfortrader
 let setOfTradesNoStatus = CONFIG.baseUrls.setoftradesnostatus;
-
+let setOfTradesWithStatusForTrader = CONFIG.baseUrls.setoftradeswithstatusfortrader;
+let setOfTradesNoStatusForTrader = CONFIG.baseUrls.setoftradesnostatusfortrader;
 
 let trade = CONFIG.baseUrls.trade;
 let updateTrade = CONFIG.baseUrls.updatetrade;
@@ -68,7 +69,7 @@ export class TradeApiService {
   // gets set of trades, number of pages and number of records per page with status OPEN
   public getSetOfTradesWithStatusForTrader(traderId: string, setCounter: number, recordsPerSet: number, status: string) {
 
-    if (status === "All") { this.localUrl = `${setOfTradesNoStatus}?traderId=${traderId}&setCounter=${setCounter}&recordsPerSet=${recordsPerSet}`; }
+    if (status === "All") { this.localUrl = `${setOfTradesNoStatusForTrader}?traderId=${traderId}&setCounter=${setCounter}&recordsPerSet=${recordsPerSet}`; }
     else { this.localUrl = `${setOfTradesWithStatusForTrader}?traderId=${traderId}&setCounter=${setCounter}&recordsPerSet=${recordsPerSet}&status=${status}`; }
                                                
     return this.httpClientService.get(this.localUrl).retry(3);

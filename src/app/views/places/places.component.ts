@@ -417,6 +417,7 @@ export class PlacesComponent implements OnInit {
   // SCREEN CHANGE STATES 
   //*****************************************************
   private onViewStateChange(state: any) {
+    this.messagesService.emitRoute("nill");
     let m: number = 0;
     for (m = 0; m < this.states.length; m++) {
 
@@ -598,6 +599,7 @@ export class PlacesComponent implements OnInit {
   // SCREEN CHANGE PLACES 
   //*****************************************************
   private onViewPlaceChange(place: any) {
+    this.messagesService.emitRoute("nill");
     let m: number = 0;
     for (m = 0; m < this.places.length; m++) {
       if (this.places[m].place === place.target.value) {
@@ -786,10 +788,11 @@ export class PlacesComponent implements OnInit {
   // SCREEN CHANGE POSTCODE 
   //*****************************************************
   private onViewPostcodeChange(postcode: any) {
+    this.messagesService.emitRoute("nill");
     let m: number = 0;
     for (m = 0; m < this.postcodes.length; m++) {
 
-      if (this.postcodes[m].place === postcode.target.value) {
+      if (this.postcodes[m].postcode === postcode.target.value) {
         // set postcodes
         this.postcodeInView = this.postcodes[m];
         this.tempAddUpdatePostcode = this.postcodes[m];
@@ -798,7 +801,7 @@ export class PlacesComponent implements OnInit {
         // reset set places
         this.isSuburbAddOn = false;
         this.isSuburbEditOn = false;
-        this.getSuburbsByPostcodeNumberAndPlaceName(this.postcodeInView.place, this.placeInView.place);
+        this.getSuburbsByPostcodeNumberAndPlaceName(this.postcodeInView.postcode, this.placeInView.place);
         this.setSuburbsFormDefaults();
       }
     }
@@ -972,6 +975,7 @@ export class PlacesComponent implements OnInit {
   // SCREEN CHANGE SUBURBS 
   //*****************************************************
   private onViewSuburbChange(suburb: any) {
+    this.messagesService.emitRoute("nill");
     let m: number = 0;
     for (m = 0; m < this.suburbs.length; m++) {
       if (this.suburbs[m].suburb === suburb.target.value) {

@@ -467,7 +467,7 @@ static firstNameValidator(control: any) {
   static stateInputValidator(control) {
 
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
+      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){2,3}$/)) {
         return null;
       } else {
         return { 'invalidInputState': true };
@@ -479,7 +479,7 @@ static firstNameValidator(control: any) {
   static placeInputValidator(control) {
 
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
+      if (control.value.match(/^([a-zA-Z0-9\s\_\-\(\)\,\.]){2,30}$/)) {
         return null;
       } else {
         return { 'invalidInputPlace': true };
@@ -491,7 +491,7 @@ static firstNameValidator(control: any) {
   static postcodeInputValidator(control) {
 
     if (control.value) {
-      if (control.value.match(/^([0-9\s]){4}$/)) {
+      if (control.value.match(/^([0-9]){3,4}$/)) {
         return null;
       } else {
         return { 'invalidInputPostcode': true };
@@ -502,7 +502,7 @@ static firstNameValidator(control: any) {
   static suburbInputValidator(control) {
 
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
+      if (control.value.match(/^([a-zA-Z0-9\s\_\-\(\)\,\.]){3,30}$/)) {
         return null;
       } else {
         return { 'invalidInputSuburb': true };
