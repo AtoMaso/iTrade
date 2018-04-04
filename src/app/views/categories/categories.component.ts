@@ -515,7 +515,7 @@ export class CategoriesComponent implements OnInit {
               // show success
               this.messagesService.emitProcessMessage("PMSUSCa"); 
               // get the new data from the server
-              this.getSubcategoriesByCategoryId(this.categoryInView.categoryId
+              this.getSubcategoriesByCategoryId(this.categoryInView.categoryId);
 
             }, (serviceError: Response) => this.onError(serviceError, "onSubmitSubCategoryAddUpdate"));
 

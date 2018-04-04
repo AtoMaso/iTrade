@@ -97,8 +97,8 @@
         Cities:
         <select id="place" name="place" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPlaceChange($event)">
           <option></option>
-          <option *ngFor="let place of places" [ngValue]="place">
-            {{ place.name }}
+          <option *ngFor="let geodata of places" [ngValue]="geodata">
+            {{ geodata.place }}
           </option>
         </select>
       </div>
@@ -123,7 +123,7 @@
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Name:<span class="text-info"> {{ placeInView.name}}</span>
+                Place:<span class="text-info"> {{ placeInView.place}}</span>
               </div>
 
 
@@ -181,11 +181,11 @@
       </div>
 
       <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
-        Postcode:
+        Number:
         <select id="postcode" name="postcode" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPostcodeChange($event)">
           <option></option>
-          <option *ngFor="let postcode of postcodes" [ngValue]="postcode">
-            {{ postcode.number }}
+          <option *ngFor="let geodata of postcodes" [ngValue]="geodata">
+            {{ geodata.postcode }}
           </option>
         </select>
       </div>
@@ -209,7 +209,7 @@
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Number:<span class="text-info"> {{ postcodeInView.number}}</span>
+                Number:<span class="text-info"> {{ postcodeInView.postcode}}</span>
               </div>
             </div>
           </div>
@@ -268,8 +268,8 @@
         Suburb:
         <select id="suburb" name="suburb" class="smalltextbold" style="background-color:moccasin;" (change)="onViewSuburbChange($event)">
           <option></option>
-          <option *ngFor="let suburb of suburbs" [ngValue]="suburb">
-            {{ suburb.name }}
+          <option *ngFor="let geodata of suburbs" [ngValue]="geodata">
+            {{ geodata.suburb }}
           </option>
         </select>
       </div>
@@ -294,7 +294,7 @@
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Name:<span class="text-info"> {{ suburbInView.name}}</span>
+                Name:<span class="text-info"> {{ suburbInView.suburb}}</span>
               </div>
 
 

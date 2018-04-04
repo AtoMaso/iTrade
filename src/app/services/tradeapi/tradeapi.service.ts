@@ -104,16 +104,16 @@ export class TradeApiService {
   //******************************************************
   // SET FILTERS - SET or ALL
   //******************************************************
-  public getAllTradesWithSetFilters(catIdClicked?: number, subcatIdClicked?: number, stateIdClicked?: number, placeIdClicked?: number, postcodeid?:number, suburbid?:number) {
+  public getAllTradesWithSetFilters(catClicked?: string, subcatClicked?: string, stateClicked?: string, placeClicked?: string, postcodeClicked?:string, suburbClicked?:string) {
 
-    this.localUrl = `${tradesWithSetFilters}?categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}&postcodeid=${postcodeid}&suburbid=${suburbid}`; 
+    this.localUrl = `${tradesWithSetFilters}?category=${catClicked}&subcategory=${subcatClicked}&state=${stateClicked}&place=${placeClicked}&postcode=${postcodeClicked}&suburbid=${suburbClicked}`; 
     // errors are handled in the component
     return this.httpClientService.get(this.localUrl).retry(1);
 }
 
-  public getSetOfTradesWithSetFilters(setCounter: number, recordsPerSet: number, status: string, catIdClicked?: number, subcatIdClicked?: number, stateIdClicked?: number, placeIdClicked?: number, postcodeidClicked?: number, suburbidClicked?: number)  {
+  public getSetOfTradesWithSetFilters(setCounter: number, recordsPerSet: number, status: string, catClicked?: string, subcatClicked?: string, stateClicked?: string, placeClicked?: string, postcodeClicked?: string, suburbClicked?: string)  {
 
-    this.localUrl = `${setOfTradesWithSetFilters}?setCounter=${setCounter}&recordsPerSet=${recordsPerSet}&status=${status}&categoryId=${catIdClicked}&subcategoryId=${subcatIdClicked}&stateId=${stateIdClicked}&placeid=${placeIdClicked}&postcodeId=${postcodeidClicked}&suburbId=${suburbidClicked}`;
+    this.localUrl = `${setOfTradesWithSetFilters}?setCounter=${setCounter}&recordsPerSet=${recordsPerSet}&status=${status}&category=${catClicked}&subcategory=${subcatClicked}&state=${stateClicked}&place=${placeClicked}&postcode=${postcodeClicked}&suburb=${suburbClicked}`;
     // errors are handled in the component
     return this.httpClientService.get(this.localUrl).retry(1);
   }

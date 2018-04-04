@@ -10,6 +10,7 @@ import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { CategoryService } from '../../../services/categories/category.service';
 //import { SubcategoriesService } from '../../../services/subcategories/subcategories.service';
 import { StatesService } from '../../../services/states/states.service';
+import {GeoDataService } from '../../../services/geodata/geodata.service';
 //import { PlacesService } from '../../../services/places/places.service';
 import { ValidationService } from '../../../services/validation/validation.service';
 
@@ -18,7 +19,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 //import { CapsPipe } from '../../../helpers/pipes';
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, State, Place, Postcode, Suburb} from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, State, Place, Postcode, Suburb, StatePlacePostcodeSuburb} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -46,9 +47,9 @@ export class TradesListComponent implements OnInit {
   private categories: Category[] = [];
   private subcategories: Subcategory[] = [];
   private states: State[] = [];
-  private places: Place[] = [];
-  private postcodes: Postcode[] = [];
-  private suburbs: Suburb[] = [];
+  private places: StatePlacePostcodeSuburb[] = [];
+  private postcodes: StatePlacePostcodeSuburb[] = [];
+  private suburbs: StatePlacePostcodeSuburb[] = [];
 
   private selectedCategory: string = null;
   private selectedSubcategory: string = null;
@@ -76,6 +77,7 @@ export class TradesListComponent implements OnInit {
     private tradeApiService: TradeApiService,
     private categoryService: CategoryService,
     private statesService: StatesService,
+    private goedataService: GeoDataService,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private router: Router,
@@ -130,56 +132,6 @@ export class TradesListComponent implements OnInit {
     }); // end of document function
 
 
-
-    //setTimeout(function () {
-
-    //  // this will set the first item from of the select phone type dropdown
-    //  var counter: number = 0;
-    //  if (jQuery('#category option')) {
-    //    jQuery('#category option').each(function () {
-    //      if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
-    //      counter = counter + 1;
-    //    });
-    //  }
-
-    //  counter = 0
-    //  // this will set the first item from of the select email type dropdown     
-    //  if (jQuery('#subcategory option')) {
-    //    jQuery('#subcategory option').each(function () {
-    //      if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
-    //      counter = counter + 1;
-    //    });
-    //  }
-    
-    //  // this will set the first item from of the select email type dropdown
-    //  counter = 0
-    //  if (jQuery('#state option')) {
-    //    jQuery('#state option').each(function () {
-    //      if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
-    //      counter = counter + 1;
-    //    });
-    //  }
-
-    //  // this will set the first item from of the select phone type dropdown
-    //  counter = 0
-    //  if (jQuery('#place option')) {
-    //    jQuery('#place option').each(function () {
-    //      if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
-    //      counter = counter + 1;
-    //    });
-    //  }
-
-    //  // this will set the first item from of the select phone type dropdown
-    //  counter = 0
-    //  if (jQuery('#postcode option')) {
-    //    jQuery('#postcode option').each(function () {
-    //      if (this.text != "" && counter == 1) { jQuery(this).attr("selected", "selected"); }
-    //      counter = counter + 1;
-    //    });
-    //  }
-
-    //}, 100);
-
   }
 
 
@@ -217,22 +169,22 @@ export class TradesListComponent implements OnInit {
   // get set of trades with set filters
   private getSetOfTradesWithSetFilters() {
 
-    let catid: number = 0
-    let subcatid: number = 0
-    let plaid: number = 0
-    let staid: number = 0;
-    let pcid: number = 0;
-    let subid: number = 0;
+    let cat: string = null;
+    let subcat: string = null;
+    let pla: string = null;
+    let sta: string = null;;
+    let pc: string = null;
+    let sub: string = null;
 
-    if (this.selectedCategory != null) { catid = this.selectedCategoryId; }
-    if (this.selectedSubcategory != null) { subcatid = this.selectedSubcategoryId; }
-    if (this.selectedState != null) { staid = this.selectedStateId; }
-    if (this.selectedPlace != null) { plaid = this.selectedPlaceId; }
-    if (this.selectedPostcode != null) { pcid = this.selectedPostcodeId; }
-    if (this.selectedSuburb != null) { subid = this.selectedSuburbId; }
+    if (this.selectedCategory != null) { cat = this.selectedCategory; }
+    if (this.selectedSubcategory != null) { subcat = this.selectedSubcategory; }
+    if (this.selectedState != null) { sta = this.selectedState; }
+    if (this.selectedPlace != null) { pla = this.selectedPlace; }
+    if (this.selectedPostcode != null) { pc = this.selectedPostcode; }
+    if (this.selectedSuburb != null) { sub = this.selectedSuburb; }
 
     // get set of records with set filters
-    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, catid, subcatid, staid, plaid, pcid, subid)
+    this.tradeApiService.getSetOfTradesWithSetFilters(this.setsCounter, this.recordsPerSet, this.status, cat, subcat, sta, pla, pc, sub)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
@@ -287,21 +239,21 @@ export class TradesListComponent implements OnInit {
 
   // get trades with set filters  - not in use
   private getTradesWithSetFilters() {
-    let catid: number = 0
-    let subcatid: number = 0
-    let plaid: number = 0
-    let staid: number = 0;
-    let pcid: number = 0;
-    let subid: number = 0;
+    let cat: string = null;;
+    let subcat: string = null;
+    let pla: string = null;
+    let sta: string = null;;
+    let pc: string = null;
+    let sub: string = null;
 
-    if (this.selectedCategory != null) { catid = this.selectedCategoryId; }
-    if (this.selectedSubcategory != null) { subcatid = this.selectedSubcategoryId; }
-    if (this.selectedState != null) { staid = this.selectedStateId; }
-    if (this.selectedPlace != null) { plaid = this.selectedPlaceId; }
-    if (this.selectedPostcode != null) { pcid = this.selectedPostcodeId; }
-    if (this.selectedSuburb != null) { subid = this.selectedSuburbId; }
+    if (this.selectedCategory != null) { cat = this.selectedCategory; }
+    if (this.selectedSubcategory != null) { subcat = this.selectedSubcategory; }
+    if (this.selectedState != null) { sta = this.selectedState; }
+    if (this.selectedPlace != null) { pla = this.selectedPlace; }
+    if (this.selectedPostcode != null) { pc = this.selectedPostcode; }
+    if (this.selectedSuburb != null) { sub = this.selectedSuburb; }
 
-    this.tradeApiService.getAllTradesWithSetFilters(catid, subcatid, staid, plaid, pcid, subid)
+    this.tradeApiService.getAllTradesWithSetFilters(cat, subcat, sta, pla, pc, sub)
       .subscribe((returnedTrades: Trade[]) => {
         if (returnedTrades.length === 0) {
           this.hasTrades = false;
@@ -323,6 +275,9 @@ export class TradesListComponent implements OnInit {
       },
       (res: Response) => this.onError(res, "getTradesWithSetFilters"));
   }
+
+
+
 
   //*****************************************************
   // GET CATEGORIES
@@ -347,6 +302,34 @@ export class TradesListComponent implements OnInit {
       , (error: Response) => this.onError(error, "getStates"));
   }
 
+
+  public getPlacesByStateCode(statecode: string) {
+    this.goedataService.getPlacesByStateCode(statecode)
+      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+        this.places = res;
+
+      }
+      , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
+  }
+
+
+  public getPostcodesByPlaceName(placename: string) {
+
+    this.goedataService.getPostcodesByPlaceName(placename)
+      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+        this.postcodes = res;
+      }
+      , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
+  }
+
+
+  public getSuburbsByPostcodeNumberAndPlaceName(postcodenumber: string, placename: string) {
+    this.goedataService.getSuburbssByPostcodeNumberAndPlaceName(postcodenumber, placename)
+      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+        this.suburbs = res;
+      }
+      , (error: Response) => this.onError(error, "getSuburbssByPostcodeNumberAndPlaceName"));
+  }
 
   //*****************************************************
   //CLEANING SCREEN
@@ -399,26 +382,60 @@ export class TradesListComponent implements OnInit {
     this.selectedState = event.target.value;
     this.selectedPlace = null;  
     this.selectedPostcode = null;  
-    this.getStateId(event.target.value);  
+    this.selectedSuburb = null;
+  
+    if (this.selectedState != null) {
+      this.getPlacesByStateCode(this.selectedState);
+      this.postcodes = null;
+      this.suburbs = null;
+    }
+    else {
+      this.selectedState = null;
+      this.places = null;
+      this.postcodes = null;
+      this.suburbs = null;
+      this.filters2 = null;
+    }
     this.setupFilterString();
   }
 
   private PlaceClicked(event:any) {   
     this.selectedPlace = event.target.value;    
-    this.selectedPostcode = null;  
-    this.getPlaceId(event.target.value); 
+    this.selectedPostcode = null;    
+    this.selectedSuburb = null; 
+    if (this.selectedPlace != null) {
+      this.getPostcodesByPlaceName(this.selectedPlace);   
+      this.suburbs = null;
+    }
+    else {
+      this.selectedPlace = null;    
+      this.postcodes = null;
+      this.suburbs = null;
+    }
     this.setupFilterString();
   }
 
   private PostcodeClicked(event: any) {
-    this.selectedPostcode = event.target.value;
-    this.getPostcodeId(event.target.value);
+    this.selectedPostcode = event.target.value;  
+    this.selectedSuburb = null; 
+
+    if (this.selectedPostcode != null) {
+      this.getSuburbsByPostcodeNumberAndPlaceName(this.selectedPostcode, this.selectedPlace);    
+      this.suburbs = null;
+    }
+    else {
+      this.selectedPostcode = null;
+      this.postcodes = null;
+      this.suburbs = null;
+    }
     this.setupFilterString();
   }
 
   private SuburbClicked(event: any) {
     this.selectedSuburb = event.target.value;
-    this.getSuburbId(event.target.value);
+    if (this.selectedSuburb === null) {
+      this.suburbs = null;
+    }
     this.setupFilterString();
   }
 
@@ -457,73 +474,7 @@ export class TradesListComponent implements OnInit {
     }
   }
 
-  private getStateId(statename: string) {   
-    if (statename != "") {
-      let m: number = 0;
-      for (m = 0; m < this.states.length; m++) {
-        if (this.states[m].name == statename) {
-          this.selectedStateId = this.states[m].id;
-          this.places = this.states[m].places;
-          this.postcodes = null;
-          this.suburbs = null;
-        }
-      }
-    }
-    else {
-      this.selectedState = null;
-      this.places = null;
-      this.postcodes = null;
-      this.suburbs = null;
-      this.filters2 = null;
-    }
-  }
-
-  private getPlaceId(placename: string) {
-    if (placename != "") {
-      let m: number = 0;
-      for (m = 0; m < this.places.length; m++) {
-        if (this.places[m].name == placename) {
-          this.selectedPlaceId = this.places[m].id;
-          this.postcodes = this.places[m].postcodes;      
-          this.suburbs = null;   
-        }
-      }
-    }
-    else {
-      this.selectedPlace = null;
-      this.postcodes = null;      
-      this.suburbs = null;
-    }
-  }
-
-  private getPostcodeId(postcode: string) {
-    if (postcode != "") {
-      let m: number = 0;
-      for (m = 0; m < this.postcodes.length; m++) {
-        if (this.postcodes[m].number == postcode) {
-          this.selectedPostcodeId = this.postcodes[m].id;
-          this.suburbs = this.postcodes[m].suburbs;
-        }
-      }
-    }
-    else {
-      this.selectedPostcode = null;
-      this.suburbs = null;
-    }  
-  }
-
-  private getSuburbId(suburb: string) {
-    if (suburb != "") {
-      let m: number = 0;
-      for (m = 0; m < this.suburbs.length; m++) {
-        if (this.suburbs[m].name == suburb) {
-          this.selectedSuburbId = this.suburbs[m].id;
-        }
-      }
-    }
-    else { this.selectedSuburb = null; }
-  }
-
+ 
   //*****************************************************
   //SETUP FILTER STRING
   //*****************************************************
@@ -712,12 +663,12 @@ export class TradesListComponent implements OnInit {
     [    
       { title: 'Trading', name: 'name', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade name' } },
       { title: 'For', name: 'tradeFor', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade for name' } },
-      { title: 'Category', name: 'categoryDescription', sort: true, filtering: { filterString: '', placeholder: 'Filter by  category' } },
+      { title: 'Category', name: 'category', sort: true, filtering: { filterString: '', placeholder: 'Filter by  category' } },
       { title: 'Trader', name: 'traderFullName', sort: true, filtering: { filterString: '', placeholder: 'Filter by trader full name.' } },
       { title: 'Published', name: 'datePublished', sort: true, filtering: { filterString: '', placeholder: 'Filter by date.' } },    
       { title: 'State', name: 'state', sort: true, filtering: { filterString: '', placeholder: 'Filter by state.' } } ,   
       { title: 'Place', name: 'place', sort: true, filtering: { filterString: '', placeholder: 'Filter by place.' } },
-      { title: 'Postcode', name: 'postcodeNumber', sort: true, filtering: { filterString: '', placeholder: 'Filter by postcode number.' } },
+      { title: 'Postcode', name: 'postcode', sort: true, filtering: { filterString: '', placeholder: 'Filter by postcode number.' } },
       { title: 'Suburb', name: 'suburb', sort: true, filtering: { filterString: '', placeholder: 'Filter by suburb.' } }         
   ];
 
@@ -872,9 +823,9 @@ export class TradesListComponent implements OnInit {
         this.sortTradeFor = this.isTradeForAsc ? 'desc' : 'asc';
         break;
 
-      case 'categoryDescription':
+      case 'category':
         this.selectedItem = "Category";
-        this.config.sorting.columns = [{ name: 'categoryDescription', sort: this.sortCategory }];
+        this.config.sorting.columns = [{ name: 'category', sort: this.sortCategory }];
         this.onChangeTable(this.config);
         this.isAsc = !this.isCategoryAsc;
         this.isCategoryAsc = !this.isCategoryAsc;
@@ -917,9 +868,9 @@ export class TradesListComponent implements OnInit {
         this.sortPlace = this.isPlaceAsc ? 'desc' : 'asc';
         break;
 
-      case 'postcodeNumber':
+      case 'postcode':
         this.selectedItem = "Postcode";
-        this.config.sorting.columns = [{ name: 'postcodeNumber', sort: this.sortPostcode }];
+        this.config.sorting.columns = [{ name: 'postcode', sort: this.sortPostcode }];
         this.onChangeTable(this.config);
         this.isAsc = !this.isPlostcodeAsc;
         this.isPlostcodeAsc = !this.isPlostcodeAsc;
@@ -1003,99 +954,4 @@ export class TradesListComponent implements OnInit {
   }
 
 }
-
-
-//public getSubcategoriesByCategoryId(categoryId: number) {
-  //  this.subcategoriesService.getSubcategoriesByCategoryId(categoryId)
-  //    .subscribe((res: Subcategory[]) => {
-  //      this.subcategories = res;
-  //    }
-  //    , (error: Response) => this.onError(error, "getSubcategories"));
-  //}
-
-  //public getPlacesByStateId(stateid: number) {
-  //  this.placesService.getPlacesByStateId(stateid)
-  //    .subscribe((res: Place[]) => {
-  //      this.places = res;
-  //    }
-  //    , (error: Response) => this.onError(error, "getPlaces"));
-  //}
-
-  //public getPostcodeByPlaceId(placeid: number) {
-  //  this.postcodesService.getPostcodesByPlaceId(placeid)
-  //    .subscribe((res: Postcode[]) => {
-  //      this.postcodes = res;
-  //    }
-  //    , (error: Response) => this.onError(error, "getPostcodes"));
-  //}
-
-
-//  private ClearCategories() {
-//  this.selectedCategory = null;
-//  this.selectedSubcategory = null;
-//  this.filters1 = null;
-//  this.filters = null;
-//  this.setupFilterString();
-//}
-
-//  private ClearPlaces() {
-//  this.selectedState = null;
-//  this.selectedPlace = null;
-//  this.selectedPostcode = null;
-//  this.filters2 = null;
-//  this.filters = null;
-//  this.setupFilterString();
-//}
-
-  //setTimeout((function () {
-
-      //  // opening and closing the  items
-      //  jQuery(".inactiveli").on("click", (function () {
-
-      //    if (jQuery(this).hasClass('inactiveli')) {
-
-      //      //jQuery(this).slideDown();
-      //      var subul = jQuery(this).find(".subul");
-      //      subul.find(".inactivesubli").slideDown();
-      //      subul.slideDown();
-
-      //      // find the other siblings
-      //      //var notActiveLi= jQuery(this).parents('ul').find('.inactive').next('li');             
-      //      var activeLi = jQuery(this).parents('ul').find('.activeli');
-
-      //      var ind, len, sibling;
-      //      for (ind = 0, len = activeLi.length; ind < len; ind++) {
-      //        var liactive = jQuery(activeLi[ind]);
-      //        liactive.toggleClass("activeli inactiveli");
-      //        liactive.removeClass("activeli");
-      //        liactive.addClass("inactiveli");
-
-      //        var subul = liactive.find(".subul")
-      //        subul.find(".inactivesubli").slideUp();
-      //        subul.slideUp();
-      //      }
-
-      //      // manipulate the clicked one   
-      //      jQuery(this).toggleClass("inactiveli activeli");
-      //      jQuery(this).removeClass("inactiveli");
-      //      jQuery(this).addClass("activeli");
-      //    }
-      //    else {
-
-      //      var subul = jQuery(this).find(".subul");
-      //      subul.find(".inactivesubli").slideUp();
-      //      subul.slideUp();
-
-      //      jQuery(this).toggleClass("activeli inactiveli");
-      //      jQuery(this).removeClass("activeli");
-      //      jQuery(this).addClass("inactiveli");
-
-      //      //jQuery("#filterstring").text("");          
-      //    }
-
-      //  }));
-
-      //}), 50);
-
-
 

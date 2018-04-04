@@ -21,6 +21,10 @@ let geodataPostcodesByPlaceNameUrl = CONFIG.baseUrls.geodataPostcodesByPlaceName
 let geodataSuburbsByPostcodeNumberUrl = CONFIG.baseUrls.geodataSuburbsByPostcodeNumberUrl;
 let geodataSuburbsByPostcodeNumberAndPlaceNameUrl = CONFIG.baseUrls.geodataSuburbsByPostcodeNumberAndPlaceNameUrl;
 
+let addGeoRecordUrl = CONFIG.baseUrls.addGeoRecord;
+let updateGeoRecordUrl = CONFIG.baseUrls.updateGeoRecord;
+let deleteGeoRecordUrl = CONFIG.baseUrls.deleteGeoRecord;
+
 @Injectable()
 export class GeoDataService {
 
@@ -106,7 +110,7 @@ export class GeoDataService {
   //******************************************************
   // ADD GEO PLACE
   //******************************************************
-  public addPlace(place: Place): Observable<Place> {
+  public addGeoRecord(place: StatePlacePostcodeSuburb): Observable<StatePlacePostcodeSuburb> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -116,14 +120,14 @@ export class GeoDataService {
       })
     };
 
-    return this.httpClientService.post<Place>(addPlaceUrl, place, httpOptions).retry(1);
+    return this.httpClientService.post<StatePlacePostcodeSuburb>(addGeoRecordUrl, place, httpOptions).retry(1);
   }
 
 
   //******************************************************
   // UPDATE GEO PLACE
   //******************************************************
-  public updatePlace(place: Place): Observable<Place> {
+  public updateGeoRecord(place: StatePlacePostcodeSuburb): Observable<StatePlacePostcodeSuburb> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -133,15 +137,15 @@ export class GeoDataService {
       })
     };
 
-    const localUrl = `${updatePlaceUrl}?id=${place.id}`;
-    return this.httpClientService.put<Place>(localUrl, place, httpOptions).retry(1);
+    const localUrl = `${updateGeoRecordUrl}?geoid=${place.id}`;
+    return this.httpClientService.put<StatePlacePostcodeSuburb>(localUrl, place, httpOptions).retry(1);
   }
 
 
   //******************************************************
   // DELETE GEO PLACE
   //******************************************************
-  public deletePlace(id: number): Observable<Place> {
+  public deleteGeoRecord(id: number): Observable<StatePlacePostcodeSuburb> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -152,8 +156,8 @@ export class GeoDataService {
       })
     };
 
-    const localUrl = `${deletePlaceUrl}?id=${id}`; // DELETE api/places/DeletePlace?id=1
-    return this.httpClientService.delete<Place>(localUrl, httpOptions);
+    const localUrl = `${deleteGeoRecordUrl}?geoid=${id}`; // DELETE api/statesplacespostcodessuburbs/Delete?id=1
+    return this.httpClientService.delete<StatePlacePostcodeSuburb>(localUrl, httpOptions);
   }
 
 

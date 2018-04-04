@@ -50,7 +50,7 @@
                                    <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('place')">Place</a></li>       
                                    <li role="presentation" class="divider"></li>
-                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('postcodeNumber')">Postcode</a></li>                                       
+                                   <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('postcode')">Postcode</a></li>                                       
                                    <li role="presentation" class="divider"></li>
                                    <li role="presentation"><a role="menuitem" tabindex="-1" (click)="sortTable('suburb')">Suburb</a></li>                          
                                  </ul>
@@ -120,7 +120,7 @@
                                               <span>State:</span>
                                               <select id="state" name="state" class="form-control" style="background-color:moccasin;" (change)="StateClicked($event)">
                                                 <option></option>
-                                                <option *ngFor="let state of states" [ngValue]="state.id">
+                                                <option *ngFor="let state of states" [ngValue]="state">
                                                   {{ state.name }}
                                                 </option>
                                               </select>
@@ -133,8 +133,8 @@
                                               <span>Place:</span>
                                               <select id="place" name="place" class="form-control" style="background-color:moccasin;" (change)="PlaceClicked($event)">
                                                 <option></option>
-                                                <option *ngFor="let place of places" [ngValue]="place.id">
-                                                  {{ place.name }}
+                                                <option *ngFor="let geodata of places" [ngValue]="geodata">
+                                                  {{ geodata.place }}
                                                 </option>
                                               </select>
                                             </div>
@@ -146,8 +146,8 @@
                                               <span>Postcode:</span>
                                               <select id="postcode" name="postcode" class="form-control" style="background-color:moccasin;" (change)="PostcodeClicked($event)">
                                                 <option></option>
-                                                <option *ngFor="let postcode of postcodes" [ngValue]="postcode.id">
-                                                  {{ postcode.number }}
+                                                <option *ngFor="let geodata of postcodes" [ngValue]="geodata">
+                                                  {{ geodata.postcode }}
                                                 </option>
                                               </select>
                                             </div>
@@ -159,8 +159,8 @@
                                               <span>Suburb:</span>
                                               <select id="suburb" name="suburb" class="form-control" style="background-color:moccasin;" (change)="SuburbClicked($event)">
                                                 <option></option>
-                                                <option *ngFor="let suburb of suburbs" [ngValue]="suburb.id">
-                                                  {{ suburb.name }}
+                                                <option *ngFor="let geodata of suburbs" [ngValue]="geodata">
+                                                  {{ geodata.suburb }}
                                                 </option>
                                               </select>
                                             </div>
@@ -288,8 +288,6 @@
              
  </div>             
 
-
-<span *ngIf="!hasTrades" class="textoker"> The system can not find any trades!</span>
 
 <my-spinner [isRunning]="isRequesting"></my-spinner>
 
