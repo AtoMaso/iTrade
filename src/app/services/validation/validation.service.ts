@@ -69,7 +69,6 @@ export class ValidationService {
  //trade list view and add trade view validation 
 /**************************************************/ 
   static tradeNameTradeValidator(control) {
-    // {10}-Assert trade name can be up to is 10 characters
     if (control.value) {
       if (control.value.match(/^([a-zA-Z\s]){3,20}$/)) {
         return null;
@@ -80,7 +79,6 @@ export class ValidationService {
   }
 
   static tradeDescriptionTradeValidator(control) {
-    // {10}-Assert trade description can be up to 200 characters
     if (control.value) {
       if (control.value.match(/^([a-zA-Z\s]){10,200}$/)) {
         return null;
@@ -91,7 +89,6 @@ export class ValidationService {
   }
 
   static tradeForTradeValidator(control) {
-    // {10}-Assert trade for name can be up to 10 characters
     if (control.value) {
       if (control.value.match(/^([a-zA-Z\s]){3,20}$/)) {
         return null;
@@ -102,8 +99,6 @@ export class ValidationService {
   }
 
   static publishDateTradeValidator(control) {
-
-    // {10}-Assert date can no be in the past
     if (control.value)  {
         let today = new Date()
         let now = new Date(today.getFullYear(), today.getMonth(), today.getDate())
@@ -120,10 +115,7 @@ export class ValidationService {
 }
 
   static categoryTradeValidator(control) {
-
-  // {10}-Assert date can no be in the past
-  if (control.value) {
- 
+  if (control.value) { 
     if (control.value.categoryDescription  !== "") {
       return null;
     }
@@ -134,10 +126,7 @@ export class ValidationService {
   }
 
   static subcategoryTradeValidator(control) {
-
-    // {10}-Assert date can no be in the past
     if (control.value) {
-
       if (control.value.subcategoryDescription !== "") {
         return null;
       }
@@ -148,11 +137,8 @@ export class ValidationService {
   }
 
   static stateTradeValidator(control) {
-
-    // {10}-Assert date can no be in the past
     if (control.value) {
-
-      if (control.value.name !== "") {
+      if (control.value !== "") {
         return null;
       }
       else {
@@ -162,11 +148,8 @@ export class ValidationService {
   }
 
   static placeTradeValidator(control) {
-
-    // {10}-Assert date can no be in the past
     if (control.value) {
-
-      if (control.value.name !== "") {
+      if (control.value !== "") {
         return null;
       }
       else {
@@ -176,11 +159,8 @@ export class ValidationService {
   }
 
   static postcodeTradeValidator(control: any) {
-
-        // postcode must be selected
     if (control.value) {
-
-      if (control.value.number !== "") {
+      if (control.value !== "") {
         return null;
       }
       else {
@@ -192,7 +172,7 @@ export class ValidationService {
 
   static suburbTradeValidator(control) {
     if (control.value) {
-      if (control.value.name !== "") {
+      if (control.value !== "") {
         return null;
       } else {
         return { 'invalidSuburb': true };
@@ -225,8 +205,6 @@ export class ValidationService {
   }
 
   static passwordValidator(control) {
-    // {6,100}           - Assert password is between 6 and 10 characters
-    // (?=.*[0-9])       - Assert a string has at least one number
     if (control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,10}$/)) {
       return null;
     } else {
@@ -236,8 +214,6 @@ export class ValidationService {
 
   // GOOD
   static confirmPasswordValidator(control: any) {   
-      // {6,100}-Assert password is between 6 and 100 characters
-      // (?=.*[0-9])-Assert a string has at least one number
       if (control.value) {
           if (control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,10}$/)) {
               return null;
@@ -249,7 +225,6 @@ export class ValidationService {
 
 // GOOD
 static firstNameValidator(control: any) {
-    // Name should be any character set separated with minimum one space
     if (control.value) {
         if (control.value.match(/^(\w{1,15})$/)) {
             return null;
@@ -260,7 +235,6 @@ static firstNameValidator(control: any) {
   }
 
   static middleNameValidator(control: any) {
-    // Name should be any character set separated with minimum one space
     if (control.value) {
       if (control.value.match(/^(\w{1,15})$/)) {
         return null;
@@ -271,7 +245,6 @@ static firstNameValidator(control: any) {
   }
 
   static lastNameValidator(control: any) {
-    // Name should be any character set separated with minimum one space
     if (control.value) {
       if (control.value.match(/^(\w{1,20})$/)) {
         return null;
@@ -282,14 +255,7 @@ static firstNameValidator(control: any) {
   }
 
   static dateValidator(control) {
-
-    // {10}-Assert date can no be in the past
     if (control.value) {
-      //let today = new Date()
-      //let now = new Date(today.getFullYear(), today.getMonth(), today.getDate())
-      //now = moment().toDate();
-      //now.setDate(now.getDate() - 1);
-      //if (moment(now).isBefore(moment(control.value.jsdate))) {\
       if (control.value != null) {
         return null;
       }
@@ -305,9 +271,8 @@ static firstNameValidator(control: any) {
   // address details validations
   //********************************************************
   static preferredValidator(control) {
-
     if (control.value) {
-      if (control.value.number !== "") {
+      if (control.value.value !== "") {
         return null;
       }
       else {
@@ -319,7 +284,7 @@ static firstNameValidator(control: any) {
 
   static addresstypeValidator(control) {
     if (control.value) {
-      if (control.value.number !== "") {
+      if (control.value.addressType !== "") {
         return null;
       }
       else {
@@ -341,7 +306,6 @@ static firstNameValidator(control: any) {
   }
 
   static suburbValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([a-zA-Z\s]){3,30}$/)) {
         return null;
@@ -351,8 +315,8 @@ static firstNameValidator(control: any) {
     }
   }
 
-  static numberValidator(control) {
 
+  static numberValidator(control) {
     if (control.value) {
       if (control.value.match(/^([0-9]){1,5}$/)) {
         return null;
@@ -362,8 +326,8 @@ static firstNameValidator(control: any) {
     }
   }
 
-  static unitValidator(control) {
 
+  static unitValidator(control) {
     if (control.value) {
       if (control.value.match(/^([0-9]){1,5}$/)) {
         return null;
@@ -379,7 +343,6 @@ static firstNameValidator(control: any) {
   //*******************************************************
   // GOOD
   static phoneValidator(control: any) {
-    // {1-10}-Assert phone is numeric only
     if (control.value) {
       if (control.value.match(/^([0-9]){7,10}$/)) {
         return null;
@@ -390,7 +353,6 @@ static firstNameValidator(control: any) {
   }
 
   static citycodeValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([0-9]){2,4}$/)) {
         return null;
@@ -401,7 +363,6 @@ static firstNameValidator(control: any) {
   }
 
   static countrycodeValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([0-9]){3,5}$/)) {
         return null;
@@ -441,7 +402,6 @@ static firstNameValidator(control: any) {
 
 
   static categoryInputValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
         return null;
@@ -453,7 +413,6 @@ static firstNameValidator(control: any) {
 
 
   static subcategoryInputValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
         return null;
@@ -465,7 +424,6 @@ static firstNameValidator(control: any) {
 
 
   static stateInputValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){2,5}$/)) {
         return null;
@@ -489,7 +447,6 @@ static firstNameValidator(control: any) {
 
 
   static postcodeInputValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([0-9]){3,4}$/)) {
         return null;
@@ -500,7 +457,6 @@ static firstNameValidator(control: any) {
   }
 
   static suburbInputValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([a-zA-Z0-9\s\_\-\(\)\,\.]){3,30}$/)) {
         return null;
@@ -509,6 +465,7 @@ static firstNameValidator(control: any) {
       }
     }
   }
+
 
   //*******************************************************
   //  EMAILS
@@ -526,7 +483,6 @@ static firstNameValidator(control: any) {
 
   
   static messageValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){10,500}$/)) {
         return null;
@@ -537,7 +493,6 @@ static firstNameValidator(control: any) {
   }
 
   static contentValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){10,500}$/)) {
         return null;
@@ -549,7 +504,6 @@ static firstNameValidator(control: any) {
 
 
   static messageCodeValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){2,10}$/)) {
         return null;
@@ -561,7 +515,6 @@ static firstNameValidator(control: any) {
 
 
   static messageTextValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){5,150}$/)) {
         return null;
@@ -583,7 +536,6 @@ static firstNameValidator(control: any) {
   }
 
   static messageDescriptionTypeValidator(control) {
-
     if (control.value) {
       if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){3,30}$/)) {
         return null;

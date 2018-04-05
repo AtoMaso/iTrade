@@ -114,15 +114,13 @@ export class PersonalDetailsComponent implements OnInit {
 
     jQuery(document).ready(function () {
 
-      // toggling the chevrons up and down of the colapsable panel   
       jQuery("#collapsePersonal").on("hide.bs.collapse", function () {
         jQuery(".personal").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Personal Details</span>  ');
       });
       jQuery("#collapsePersonal").on("show.bs.collapse", function () {
         jQuery(".personal").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Personal Details</span>');
       });
-
-      // toggling the chevrons up and down of the colapsable panel   
+  
       jQuery("#collapseAddress").on("hide.bs.collapse", function () {
         jQuery(".address").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Address Details</span>  ');
       });
@@ -130,12 +128,10 @@ export class PersonalDetailsComponent implements OnInit {
         jQuery(".address").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Address Details</span>');
       });
 
-      // this will remove the selected address type which is not allowed
       jQuery("#addressTypeModal").on("click", function () {
         jQuery("#addresstype").val("").attr("selected", "selected");
       });
 
-      // this will remove the selected preferred type which is not allowed
       jQuery("#preferredTypeModal").on("click", function () {
         jQuery("#preferredtype").val("").attr("selected", "selected");
       });
@@ -195,7 +191,6 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  // get addresses for the trader from the server
   private getAddressesByTraderId(traderId: string) {
 
     this.availableAddresses = [];
@@ -220,7 +215,6 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  // get all address types from the server
   private getAddressTypes() {
 
     this.alladdresstypes = [];
@@ -259,7 +253,6 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  // get preferred types
   private getPreferredTypes() {
 
     let pre1: PreferredType = new PreferredType();
@@ -426,74 +419,61 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private setAddressFormDefaults() {
+  private async setAddressFormDefaults() {
 
-    let m: number = 0;
-    let localStates: StatePlacePostcodeSuburb[] = [];
-    let localPlaces: StatePlacePostcodeSuburb[] = [];
-    let localPostcodes: StatePlacePostcodeSuburb[] = [];
-    let localSuburbs: StatePlacePostcodeSuburb[] = [];
+      let m: number = 0;
+      for (m = 0; m < this.states.length; m++) {
+        if (this.states[m].state == this.addressInView.state) { this.defaultState = this.states[m]; }
+      }
 
-    for (m = 0; m < this.states.length; m++) {
-      if (this.states[m].state == this.addressInView.state) { this.defaultState = this.states[m]; }
-    }
-
-    setTimeout(() => {
       this.getPlacesByStateCode(this.defaultState.state);
-    }, 50);
-    //await this.delay(500);      
-    localPlaces = this.places;
-    for (m = 0; m < localPlaces.length; m++) {
-      if (localPlaces[m].place == this.addressInView.place) { this.defaultPlace = localPlaces[m]; }
-    }
+      await this.delay(50);            
+      for (m = 0; m < this.places.length; m++) {
+        if (this.places[m].place == this.addressInView.place) { this.defaultPlace = this.places[m]; break;}
+      }
+  
+      this.getPostcodesByPlaceNameAndStateCode(this.defaultPlace.place, this.defaultState.state); 
+      await this.delay(50);           
+      for (m = 0; m < this.postcodes.length; m++) {
+        if (this.postcodes[m].postcode == this.addressInView.postcode) { this.defaultPostcode = this.postcodes[m]; break;}
+      }
 
-    setTimeout(() => {
-      this.getPostcodesByPlaceNameAndStateCode(this.defaultPlace.place, this.defaultState.state);
-    }, 50);
-    //await this.delay(500);      
-    localPostcodes = this.postcodes;
-    for (m = 0; m < localPostcodes.length; m++) {
-      if (localPostcodes[m].postcode == this.addressInView.postcode) { this.defaultPostcode = localPostcodes[m]; }
-    }
-
-    setTimeout(() => {
       this.getSuburbsByPostcodeNumberAndPlaceName(this.defaultPostcode.postcode, this.defaultPlace.place);
-    }, 50);
-    //await this.delay(500);      
-    localSuburbs = this.suburbs;
-    for (m = 0; m < localSuburbs.length; m++) {
-      if (localSuburbs[m].suburb == this.addressInView.suburb) { this.defaultSuburb = localSuburbs[m]; }
-    }
+      await this.delay(50);          
+      for (m = 0; m < this.suburbs.length; m++) {
+        if (this.suburbs[m].suburb == this.addressInView.suburb) { this.defaultSuburb = this.suburbs[m]; break; }
+      }
 
 
-    for (m = 0; m < this.alladdresstypes.length; m++) {
-      if (this.alladdresstypes[m].addressType == this.addressInView.addressType) { this.defaultAddressType = this.alladdresstypes[m]; }
-    }
+      for (m = 0; m < this.alladdresstypes.length; m++) {
+        if (this.alladdresstypes[m].addressType == this.addressInView.addressType) { this.defaultAddressType = this.alladdresstypes[m]; break;}
+      }
 
-    for (m = 0; m < this.allpreferredtypes.length; m++) {
-      if (this.allpreferredtypes[m].value == this.addressInView.preferredFlag) { this.defaultPreferredType = this.allpreferredtypes[m]; }
-    }
+      for (m = 0; m < this.allpreferredtypes.length; m++) {
+        if (this.allpreferredtypes[m].value == this.addressInView.preferredFlag) { this.defaultPreferredType = this.allpreferredtypes[m]; break;}
+      }
 
+    
     setTimeout(() => {
 
       this.addressForm.setValue({
+        preferredtype: this.defaultPreferredType,
+        addresstype: this.defaultAddressType,       
         number: this.addressInView.number,
         unit: this.addressInView.unit || "",
         street: this.addressInView.street,     
         state: this.defaultState,
         place: this.defaultPlace,
         postcode: this.defaultPostcode,
-        suburb: this.defaultSuburb,
-        addresstype: this.defaultAddressType,
-        preferredtype: this.defaultPreferredType
+        suburb: this.defaultSuburb     
       });
 
     }, 30);
   }
 
-  //private delay(ms: number) {
-  //  return new Promise(resolve => setTimeout(resolve, ms));
-  //}
+  private delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
 
   private setDate(datetoset: string) {
@@ -516,13 +496,11 @@ export class PersonalDetailsComponent implements OnInit {
   //GET THE SCREEN INPUT
   //*****************************************************
   private onDateChanged(event: IMyDateModel) {
-    // Update value of selDate variable
     this.selectDate = event.date;
   }
 
 
   private clearDate(): void {
-    // Clear the date using the patchValue function
     this.personalForm.patchValue({ dbirth: null });
   }
 
@@ -543,14 +521,13 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   private onPostcodeChange(geodata: StatePlacePostcodeSuburb) {
-    this.selectedSuburb = geodata.suburb;
+    this.selectedPostcode = geodata.postcode;
     this.getSuburbsByPostcodeNumberAndPlaceName(this.selectedPostcode, this.selectedPlace);
   }
 
 
 
   private onPreferredTypeChange(preferredtype: PreferredType) {
-    // only check it when we are adding address
     if (this.isAddressEditOn) {
       if (preferredtype.value == "Yes" && this.tempAddUpdateAddress.preferredFlag != "Yes") {
         let m: number = 0;
@@ -622,15 +599,12 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   private onSubmitDeletePersonal(personalToRemove: PersonalDetails) {
-    //delete personal here   
     this.personalService.deletePersonaDetails(personalToRemove)
       .subscribe((personalResult: PersonalDetails) => {
         if (personalResult) {
           this.messagesService.emitProcessMessage("PMSDPD");
         }
-
         this.getPersonalDetailsByTraderId(this.traderId);
-
       }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeletePersonal"));
 
   }
@@ -696,8 +670,6 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  // as the update has alredy dirty the form we can not use the form dirty of changed
-  // custom method to compare th new and old
   private comparePersonal(newPersonal: PersonalDetails, oldPersonal: PersonalDetails) {
 
     if (oldPersonal.firstName == newPersonal.firstName &&
@@ -808,7 +780,6 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   private onSubmitDeleteAddress(addressToRemove: Address) {
-    // delete addres here 
     this.addressService.deleteAddress(addressToRemove)
       .subscribe((addressResult: Address) => {
 

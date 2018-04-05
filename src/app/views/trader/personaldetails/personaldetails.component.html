@@ -266,6 +266,8 @@
                                                                 
                                                         </div>
 
+
+
                                                         <div class="col-md-6">                                                          
 
                                                           <div class="form-group smalltextbold col-md-12" style="height:70px;">                                       
@@ -274,8 +276,8 @@
                                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"></i></span>
                                                                 <select formControlName="state" id="state" name="state" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onStateChange($event)">
                                                                   <option></option>
-                                                                  <option *ngFor="let geodata of states" [ngValue]="geodata">
-                                                                    {{ geodata.state }}
+                                                                  <option *ngFor="let georecord of states" [ngValue]="georecord">
+                                                                    {{ georecord.state }}
                                                                   </option>
                                                                 </select>
                                                               </div>
@@ -288,8 +290,8 @@
                                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-object-align-left" aria-hidden="true"></i></span>
                                                                 <select formControlName="place" id="place" name="place" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPlaceChange($event)">
                                                                   <option></option>
-                                                                  <option *ngFor="let geodata of places" [ngValue]="geodata">
-                                                                    {{ geodata.place }}
+                                                                  <option *ngFor="let georecord of places" [ngValue]="georecord">
+                                                                    {{ georecord.place }}
                                                                   </option>
                                                                 </select>
                                                               </div>
@@ -302,15 +304,13 @@
                                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
                                                                 <select formControlName="postcode" id="postcode" name="postcode" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onPostcodeChange($event)">
                                                                   <option></option>
-                                                                  <option *ngFor="let geodata of postcodes" [ngValue]="geodata">
-                                                                    {{ geodata.postcode }}
+                                                                  <option *ngFor="let georecord of postcodes" [ngValue]="georecord">
+                                                                    {{ georecord.postcode }}
                                                                   </option>
                                                                 </select>
                                                               </div>
                                                               <control-messages [control]="addressForm.controls.postcode"></control-messages>                                     
                                                           </div>
-
-
 
                                                           <div class="form-group smalltextbold col-md-12" style="height:70px;">
                                                             Suburb
@@ -318,8 +318,8 @@
                                                               <span class="input-group-addon"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
                                                               <select formControlName="suburb" id="suburb" name="suburb" class="form-control smalltext" style="background-color:moccasin;" (ngModelChange)="onSuburbChange($event)">
                                                                 <option></option>
-                                                                <option *ngFor="let geodata of suburbs" [ngValue]="geodata">
-                                                                  {{ geodata.suburb }}
+                                                                <option *ngFor="let georecord of suburbs" [ngValue]="georecord">
+                                                                  {{ georecord.suburb }}
                                                                 </option>
                                                               </select>
                                                             </div>
