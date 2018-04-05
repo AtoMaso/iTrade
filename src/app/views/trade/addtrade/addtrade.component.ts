@@ -12,8 +12,6 @@ import { CategoryService } from '../../../services/categories/category.service';
 import { SubcategoriesService } from '../../../services/subcategories/subcategories.service';
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { GeoDataService } from '../../../services/geodata/geodata.service';
-import { PlacesService } from '../../../services/places/places.service';
-import { StatesService } from '../../../services/states/states.service';
 import { ValidationService } from '../../../services/validation/validation.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
@@ -57,11 +55,7 @@ export class AddTradeComponent implements OnInit {
   private geoplaces: StatePlacePostcodeSuburb[] = [];    
   private geopostcodes: StatePlacePostcodeSuburb[] = [];    
   private geosuburbs: StatePlacePostcodeSuburb[] = [];    
-  private states: State[] = [];
-  private places: Place[] = [];
-  private postcodes: Postcode[] = [];
-  private suburbs: Suburb[] = [];
-  
+ 
   private response: string;
   private hasImages: boolean = false;
   private newTrade = new PostTrade();
@@ -73,10 +67,8 @@ export class AddTradeComponent implements OnInit {
     private router: Router,
     private categoryService: CategoryService,
     private subcategoriesService: SubcategoriesService,
-    private goedataService: GeoDataService,
-    private tradeService: TradeApiService,
-    private statesService: StatesService,
-    private placesService: PlacesService,
+    private geodataService: GeoDataService,
+    private tradeService: TradeApiService,  
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private loggerService: LoggerService) {
@@ -122,25 +114,28 @@ export class AddTradeComponent implements OnInit {
 
 
   public getStates() {
-    this.statesService.getStates()
-      .subscribe((res: State[]) => {
-        this.states = res;
+
+    this.geodataService.getStates()
+      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+        this.geostates = res;
       }
       , (error: Response) => this.onError(error, "getStates"));
   }
 
 
   public getPlacesByStateCode(statecode: string) {
-    this.goedataService.getPlacesByStateCode(statecode)
+
+    this.geodataService.getPlacesByStateCode(statecode)
       .subscribe((res: StatePlacePostcodeSuburb[]) => {
         this.geoplaces = res;
       }
       , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
   }
 
-  public getPostcodesByPlaceName(placename: string) {
 
-    this.goedataService.getPostcodesByPlaceName(placename)
+  public getPostcodesByPlaceNameAndStateCode(placename: string, statecode: string) {
+
+    this.geodataService.getPostcodesByPlaceNameAndStateCode(placename, statecode)
       .subscribe((res: StatePlacePostcodeSuburb[]) => {
         this.geopostcodes = res;
       }
@@ -148,18 +143,10 @@ export class AddTradeComponent implements OnInit {
   }
 
 
-  public getSuburbsByPostcodeNumber(postcodenumber: string) {
-
-    this.goedataService.getSuburbsByPostcodeNumber(postcodenumber)
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
-        this.geosuburbs = res;
-      }
-      , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
-  }
-
 
   public getSuburbssByPostcodeNumberAndPlaceName(postcodenumber: string, placename: string) {
-    this.goedataService.getSuburbssByPostcodeNumberAndPlaceName(postcodenumber, placename)
+
+    this.geodataService.getSuburbssByPostcodeNumberAndPlaceName(postcodenumber, placename)
       .subscribe((res: StatePlacePostcodeSuburb[]) => {
         this.geosuburbs = res;
       }
@@ -173,25 +160,24 @@ export class AddTradeComponent implements OnInit {
     this.subcategories = category.subcategories;
   }
 
-  private onStateChange(state: State) {  
+  private onStateChange(geodata: StatePlacePostcodeSuburb) {  
     this.geoplaces = null;
-    this.suburbs = null;
-    this.postcodes = null;
-    this.getPlacesByStateCode(state.name);
-    //this.places = state.places;
+    this.geosuburbs = null;
+    this.geopostcodes = null;
+    this.getPlacesByStateCode(geodata.state);
+
   }
 
   private onPlaceChange(geodata: StatePlacePostcodeSuburb) { 
     this.geopostcodes = null;
     this.geosuburbs = null;
-    this.getPostcodesByPlaceName(geodata.place);
-    //this.postcodes = place.postcodes;
+    this.getPostcodesByPlaceNameAndStateCode(geodata.place, geodata.state);
+
   }
 
   private onPostcodeChange(geodata: StatePlacePostcodeSuburb) {
     this.geosuburbs = null;    
     this.getSuburbssByPostcodeNumberAndPlaceName(geodata.postcode, geodata.place);
-    //this.suburbs = postcode.suburbs;
 
   }
 
@@ -222,7 +208,7 @@ export class AddTradeComponent implements OnInit {
      
       this.newTrade.category = this.addForm.controls.category.value.category;
       this.newTrade.subcategory = this.addForm.controls.subcategory.value.subcategory;
-      this.newTrade.state = this.addForm.controls.state.value.name;       
+      this.newTrade.state = this.addForm.controls.state.value.state;       
       this.newTrade.place = this.addForm.controls.place.value.place;   
       this.newTrade.postcode = this.addForm.controls.postcode.value.postcode;
       this.newTrade.suburb = this.addForm.controls.suburb.value.suburb;

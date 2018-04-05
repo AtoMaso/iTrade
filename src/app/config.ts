@@ -113,7 +113,7 @@
     // geo data
     geodataStates: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetStates',
     geodataPlacesByStateCodeUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetPlacesByStateCode',
-    geodataPostcodesByPlaceNameUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetPostcodesByPlaceName',
+    geodataPostcodesByPlaceNameAndStateCodeUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetPostcodesByPlaceNameAndStateCode',
     geodataSuburbsByPostcodeNumberUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetSuburbsByPostcodeNumber',
     geodataSuburbsByPostcodeNumberAndPlaceNameUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetSuburbsByPostcodeNumberAndPlaceName',
     addGeoRecord: 'http://localhost:5700/api/statesplacespostcodessuburbs/PostStatePlacePostcodeSuburb',

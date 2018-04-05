@@ -17,7 +17,7 @@ let deletePlaceUrl = CONFIG.baseUrls.deleteplace;
 
 let geodataStatesUrl = CONFIG.baseUrls.geodataStates;
 let geodataPlacesByStateCodeUrl = CONFIG.baseUrls.geodataPlacesByStateCodeUrl;
-let geodataPostcodesByPlaceNameUrl = CONFIG.baseUrls.geodataPostcodesByPlaceNameUrl;
+let geodataPostcodesByPlaceNameAndStateCodeUrl = CONFIG.baseUrls.geodataPostcodesByPlaceNameAndStateCodeUrl;
 let geodataSuburbsByPostcodeNumberUrl = CONFIG.baseUrls.geodataSuburbsByPostcodeNumberUrl;
 let geodataSuburbsByPostcodeNumberAndPlaceNameUrl = CONFIG.baseUrls.geodataSuburbsByPostcodeNumberAndPlaceNameUrl;
 
@@ -62,7 +62,7 @@ export class GeoDataService {
   }
 
 
-  public getPostcodesByPlaceName(placename: string): Observable<StatePlacePostcodeSuburb[]> {
+  public getPostcodesByPlaceNameAndStateCode(placename: string, statecode: string): Observable<StatePlacePostcodeSuburb[]> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -72,23 +72,9 @@ export class GeoDataService {
       })
     };
 
-    return this.httpClientService.get<StatePlacePostcodeSuburb[]>(geodataPostcodesByPlaceNameUrl + `?placename=${placename}`, httpOptions).retry(1);
+    return this.httpClientService.get<StatePlacePostcodeSuburb[]>(geodataPostcodesByPlaceNameAndStateCodeUrl + `?placename=${placename}&statecode=${statecode}`, httpOptions).retry(1);
   }
 
-
-
-  public getSuburbsByPostcodeNumber(postcodenumber: string): Observable<StatePlacePostcodeSuburb[]> {
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
-
-    return this.httpClientService.get<StatePlacePostcodeSuburb[]>(geodataSuburbsByPostcodeNumberUrl + `?postcodenumber=${postcodenumber}`, httpOptions).retry(1);
-  }
 
 
 

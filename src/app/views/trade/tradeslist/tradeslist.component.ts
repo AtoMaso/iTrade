@@ -8,18 +8,14 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder, F
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { CategoryService } from '../../../services/categories/category.service';
-//import { SubcategoriesService } from '../../../services/subcategories/subcategories.service';
-import { StatesService } from '../../../services/states/states.service';
 import {GeoDataService } from '../../../services/geodata/geodata.service';
-//import { PlacesService } from '../../../services/places/places.service';
 import { ValidationService } from '../../../services/validation/validation.service';
-
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 //import { CapsPipe } from '../../../helpers/pipes';
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, State, Place, Postcode, Suburb, StatePlacePostcodeSuburb} from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, StatePlacePostcodeSuburb} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -46,7 +42,7 @@ export class TradesListComponent implements OnInit {
  
   private categories: Category[] = [];
   private subcategories: Subcategory[] = [];
-  private states: State[] = [];
+  private states: StatePlacePostcodeSuburb[] = [];
   private places: StatePlacePostcodeSuburb[] = [];
   private postcodes: StatePlacePostcodeSuburb[] = [];
   private suburbs: StatePlacePostcodeSuburb[] = [];
@@ -76,8 +72,7 @@ export class TradesListComponent implements OnInit {
     private route: ActivatedRoute,
     private tradeApiService: TradeApiService,
     private categoryService: CategoryService,
-    private statesService: StatesService,
-    private goedataService: GeoDataService,
+    private geodataService: GeoDataService,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private router: Router,
@@ -320,8 +315,8 @@ export class TradesListComponent implements OnInit {
   // GET STATES
   //*****************************************************
   public getStates() {
-    this.statesService.getStates()
-      .subscribe((res: State[]) => {
+    this.geodataService.getStates()
+      .subscribe((res: StatePlacePostcodeSuburb[]) => {
         this.states = res;
       }
       , (error: Response) => this.onError(error, "getStates"));
@@ -329,7 +324,7 @@ export class TradesListComponent implements OnInit {
 
 
   public getPlacesByStateCode(statecode: string) {
-    this.goedataService.getPlacesByStateCode(statecode)
+    this.geodataService.getPlacesByStateCode(statecode)
       .subscribe((res: StatePlacePostcodeSuburb[]) => {
         this.places = res;
 
@@ -338,9 +333,9 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  public getPostcodesByPlaceName(placename: string) {
+  public getPostcodesByPlaceNameAndStateCode(placename: string, statecode:string) {
 
-    this.goedataService.getPostcodesByPlaceName(placename)
+    this.geodataService.getPostcodesByPlaceNameAndStateCode(placename, statecode)
       .subscribe((res: StatePlacePostcodeSuburb[]) => {
         this.postcodes = res;
       }
@@ -349,7 +344,7 @@ export class TradesListComponent implements OnInit {
 
 
   public getSuburbsByPostcodeNumberAndPlaceName(postcodenumber: string, placename: string) {
-    this.goedataService.getSuburbssByPostcodeNumberAndPlaceName(postcodenumber, placename)
+    this.geodataService.getSuburbssByPostcodeNumberAndPlaceName(postcodenumber, placename)
       .subscribe((res: StatePlacePostcodeSuburb[]) => {
         this.suburbs = res;
       }
@@ -380,7 +375,7 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
 
     //this.getTrades("Open");
-    this.getSetOfTrades(this.setsCounter, this.recordsPerSet, this.status);
+    this.getSetOfTradesWithStatus(this.setsCounter, this.recordsPerSet, this.status);
     this.getCategories();
     this.getStates();
     this.messagesService.emitRoute("nill");
@@ -429,7 +424,7 @@ export class TradesListComponent implements OnInit {
     this.selectedPostcode = null;    
     this.selectedSuburb = null; 
     if (this.selectedPlace != null) {
-      this.getPostcodesByPlaceName(this.selectedPlace);   
+      this.getPostcodesByPlaceNameAndStateCode(this.selectedPlace, this.selectedState);   
       this.suburbs = null;
     }
     else {
@@ -774,7 +769,7 @@ export class TradesListComponent implements OnInit {
 
       // get the next set of records
       if (this.filters) { this.getSetOfTradesWithSetFilters(); }
-      else { this.getSetOfTrades(this.setsCounter, this.recordsPerSet, this.status); }
+      else { this.getSetOfTradesWithStatus(this.setsCounter, this.recordsPerSet, this.status); }
 
       // set the current page to 1
       this.config.currentPage = 1;
@@ -795,7 +790,7 @@ export class TradesListComponent implements OnInit {
 
       // get the previous set of records
       if (this.filters) { this.getSetOfTradesWithSetFilters(); }
-      else { this.getSetOfTrades(this.setsCounter, this.recordsPerSet, this.status); }
+      else { this.getSetOfTradesWithStatus(this.setsCounter, this.recordsPerSet, this.status); }
 
       // set the current page to 1
       this.config.currentPage = 1;

@@ -120,8 +120,8 @@
                                               <span>State:</span>
                                               <select id="state" name="state" class="form-control" style="background-color:moccasin;" (change)="StateClicked($event)">
                                                 <option></option>
-                                                <option *ngFor="let state of states" [ngValue]="state">
-                                                  {{ state.name }}
+                                                <option *ngFor="let geodata of states" [ngValue]="geodata">
+                                                  {{ geodata.state }}
                                                 </option>
                                               </select>
                                             </div>

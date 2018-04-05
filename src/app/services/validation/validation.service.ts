@@ -53,8 +53,8 @@ export class ValidationService {
       'invalidInputCategory': 'Please provide max 30 alphanumeric characters.',
       'invalidInputSubcategory': 'Please provide max 30 alphanumeric characters.',
 
-      'invalidInputState': 'Please provide max 30 alphanumeric characters.',
-      'invalidInputPlace': 'Please provide max 30 alphamueric characters.',
+      'invalidInputState': 'Please provide max 3 alphanumeric characters.',
+      'invalidInputPlace': 'Please provide max 30 alphanumeric characters.',
       'invalidInputPostcode': 'Please provide 4 numeric characters.',
       'invalidInputSuburb': 'Plase provide max 30 alphanumeric characters.',
 
@@ -467,7 +467,7 @@ static firstNameValidator(control: any) {
   static stateInputValidator(control) {
 
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){2,3}$/)) {
+      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){2,5}$/)) {
         return null;
       } else {
         return { 'invalidInputState': true };

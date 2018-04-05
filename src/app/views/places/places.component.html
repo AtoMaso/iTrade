@@ -13,8 +13,8 @@
         State:
         <select id="state" name="state" class="smalltextbold" style="background-color:moccasin;" (change)="onViewStateChange($event)">
           <option></option>
-          <option *ngFor="let state of states" [ngValue]="state">
-            {{ state.name }}
+          <option *ngFor="let geodata of states" [ngValue]="geodata">
+            {{ geodata.state }}
           </option>
         </select>
       </div>
@@ -38,7 +38,7 @@
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Name:<span class="text-info"> {{ stateInView.name}}</span>
+                Name:<span class="text-info"> {{ stateInView.state}}</span>
               </div>
             </div>
           </div>
