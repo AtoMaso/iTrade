@@ -77,7 +77,7 @@ export class ProcessMessageService {
     if (code === "PME") {
       this.localProcessMessage = new ProcessMessage();
       this.localProcessMessage.messageText = message;
-      this.localProcessMessage.messageTypeDescription = "error";
+      this.localProcessMessage.messageType = "Error";
     }
     else {
       try {
@@ -88,7 +88,7 @@ export class ProcessMessageService {
 
           this.localProcessMessage = new ProcessMessage();
           this.localProcessMessage.messageText = "Unexprected error has occured. Please contact the application administration!";
-          this.localProcessMessage.messageTypeDescription = "error";
+        this.localProcessMessage.messageType = "Error";
       }     
   }
 
@@ -96,12 +96,12 @@ export class ProcessMessageService {
       if (message) {
         this.localProcessMessage = new ProcessMessage();
         this.localProcessMessage.messageText = message;
-        this.localProcessMessage.messageTypeDescription = "error";
+        this.localProcessMessage.messageType = "Error";
       }
       else {
         this.localProcessMessage = new ProcessMessage();
         this.localProcessMessage.messageText = "Unexprected error has occured. Please contact the application administration!";
-        this.localProcessMessage.messageTypeDescription = "error";
+        this.localProcessMessage.messageType = "Error";
       }
     }
   
@@ -139,7 +139,7 @@ export class ProcessMessageService {
 
   //******************************************************
   // UPDATE MESSAGE
-  //******************************************************
+  //*****************************************************
   public updateProcessMessage(message: ProcessMessage): Observable<ProcessMessage> {
     // prepare the headesrs
     const httpOptions = {

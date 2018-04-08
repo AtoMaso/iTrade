@@ -11,7 +11,7 @@ import { LoggerService } from '../../services/logger/logger.service';
 import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 // components
-import { UserSession, PageTitle, StatePlacePostcodeSuburb} from '../../helpers/classes';
+import { UserSession, PageTitle, GeoData, State, Place, Postcode, Suburb} from '../../helpers/classes';
 import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
 
 @Component({
@@ -26,56 +26,56 @@ export class PlacesComponent implements OnInit {
   private session: UserSession;
 
   private stateForm: FormGroup;
-  private states: StatePlacePostcodeSuburb[] = [];
-  private stateInView: StatePlacePostcodeSuburb;
-  private tempAddUpdateState: StatePlacePostcodeSuburb;
-  private defaultState: StatePlacePostcodeSuburb;
+  private states: GeoData[] = [];
+  private stateInView: GeoData;
+  private tempAddUpdateState: GeoData;
+  private defaultState: GeoData;
   private isStateAddOn: boolean = false;
   private isStateEditOn: boolean = false;
-  private updatedState: StatePlacePostcodeSuburb;
-  private addedState: StatePlacePostcodeSuburb;
-  private removedState: StatePlacePostcodeSuburb;
-  private stateToRemove: StatePlacePostcodeSuburb;
+  private updatedState: GeoData;
+  private addedState: GeoData;
+  private removedState: GeoData;
+  private stateToRemove: GeoData;
  
 
   private placeForm: FormGroup;
-  private places: StatePlacePostcodeSuburb[] = [];
-  private placeInView: StatePlacePostcodeSuburb;
-  private tempAddUpdatePlace: StatePlacePostcodeSuburb;
-  private defaultPlace: StatePlacePostcodeSuburb;
+  private places: GeoData[] = [];
+  private placeInView: GeoData;
+  private tempAddUpdatePlace: GeoData;
+  private defaultPlace: GeoData;
   private isPlaceAddOn: boolean = false;
   private isPlaceEditOn: boolean = false;
-  private updatedPlace: StatePlacePostcodeSuburb;
-  private addedPlace: StatePlacePostcodeSuburb;
-  private removedPlace: StatePlacePostcodeSuburb;
-  private placeToRemove: StatePlacePostcodeSuburb;
+  private updatedPlace: GeoData;
+  private addedPlace: GeoData;
+  private removedPlace: GeoData;
+  private placeToRemove: GeoData;
 
 
 
   private postcodeForm: FormGroup;
-  private postcodes: StatePlacePostcodeSuburb[] = [];
-  private postcodeInView: StatePlacePostcodeSuburb;
-  private tempAddUpdatePostcode: StatePlacePostcodeSuburb;
-  private defaultPostcode: StatePlacePostcodeSuburb;
+  private postcodes: GeoData[] = [];
+  private postcodeInView: GeoData;
+  private tempAddUpdatePostcode: GeoData;
+  private defaultPostcode: GeoData;
   private isPostcodeAddOn: boolean = false;
   private isPostcodeEditOn: boolean = false;
-  private updatedPostcode: StatePlacePostcodeSuburb;
-  private addedPostcode: StatePlacePostcodeSuburb;
-  private removedPostcode: StatePlacePostcodeSuburb;
-  private postcodeToRemove: StatePlacePostcodeSuburb;
+  private updatedPostcode: GeoData;
+  private addedPostcode: GeoData;
+  private removedPostcode: GeoData;
+  private postcodeToRemove: GeoData;
 
 
   private suburbForm: FormGroup;
-  private suburbs: StatePlacePostcodeSuburb[] = [];
-  private suburbInView: StatePlacePostcodeSuburb;
-  private tempAddUpdateSuburb: StatePlacePostcodeSuburb;
-  private defaultSuburb: StatePlacePostcodeSuburb;
+  private suburbs: GeoData[] = [];
+  private suburbInView: GeoData;
+  private tempAddUpdateSuburb: GeoData;
+  private defaultSuburb: GeoData;
   private isSuburbAddOn: boolean = false;
   private isSuburbEditOn: boolean = false;
-  private updatedSuburb: StatePlacePostcodeSuburb;
-  private addedSuburb: StatePlacePostcodeSuburb;
-  private removedSuburb: StatePlacePostcodeSuburb;
-  private suburbToRemove: StatePlacePostcodeSuburb;
+  private updatedSuburb: GeoData;
+  private addedSuburb: GeoData;
+  private removedSuburb: GeoData;
+  private suburbToRemove: GeoData;
 
 
   constructor(
@@ -93,7 +93,8 @@ export class PlacesComponent implements OnInit {
     this.getUserSession();
     this.initialiseComponent();
 
-    this.getStates();
+    this.getGeoStates();
+    //this.getStatesWithData();
 
     this.setStatesForm();
     this.setPlacesForm();
@@ -186,15 +187,15 @@ export class PlacesComponent implements OnInit {
   //************************************************************
   // GET DATA METHODS
   //************************************************************
-  public getStates() {
+  public getGeoStates() {
     this.geodataService.getStates()
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+      .subscribe((res: GeoData[]) => {
         this.onSuccessStates(res);
       }
       , (error: Response) => this.onError(error, "getStates"));
   }
 
-  private onSuccessStates(states: StatePlacePostcodeSuburb[]) {
+  private onSuccessStates(states: GeoData[]) {
     this.states = null;
     // collections return zero length when no record found as it is initialised
     if (states.length == 0) {
@@ -230,13 +231,13 @@ export class PlacesComponent implements OnInit {
 
   public getPlacesByStateCode(statecode: string) {
     this.geodataService.getPlacesByStateCode(statecode)
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+      .subscribe((res: GeoData[]) => {
         this.onSuccessPlaces(res);
       }
       , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
   }
 
-  private onSuccessPlaces(passedplaces: StatePlacePostcodeSuburb[]) {
+  private onSuccessPlaces(passedplaces: GeoData[]) {
 
     this.places = null;
     // collections return zero length when no record found as it is initialised
@@ -270,13 +271,13 @@ export class PlacesComponent implements OnInit {
   public getPostcodesByPlaceNameAndStateCode(placename: string, statecode: string) {
 
     this.geodataService.getPostcodesByPlaceNameAndStateCode(placename, statecode)
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+      .subscribe((res: GeoData[]) => {
         this.onSuccessPostcodes(res);
       }
       , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
   }
 
-  private onSuccessPostcodes(passedpostcodes: StatePlacePostcodeSuburb[]) {
+  private onSuccessPostcodes(passedpostcodes: GeoData[]) {
 
     this.postcodes = null;
     // collections return zero length when no record found as it is initialised
@@ -310,13 +311,13 @@ export class PlacesComponent implements OnInit {
 
   public getSuburbsByPostcodeNumberAndPlaceName(postcodenumber: string, placename: string) {
     this.geodataService.getSuburbssByPostcodeNumberAndPlaceName(postcodenumber, placename)
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+      .subscribe((res: GeoData[]) => {
         this.onSuccessSuburbs(res);
       }
       , (error: Response) => this.onError(error, "getSuburbssByPostcodeNumberAndPlaceName"));
   }
 
-  private onSuccessSuburbs(passedsuburbs: StatePlacePostcodeSuburb[]) {
+  private onSuccessSuburbs(passedsuburbs: GeoData[]) {
 
     this.suburbs = null;
     // collections return zero length when no record found as it is initialised
@@ -472,13 +473,13 @@ export class PlacesComponent implements OnInit {
 
     this.removedState = null;
     this.messagesService.emitRoute("nill");
-    let state: StatePlacePostcodeSuburb = this.prepareAddUpdateState();
+    let geostate: GeoData = this.prepareAddUpdateState();
 
-    if (this.isStateAddOn && state) {
+    if (this.isStateAddOn && geostate) {
 
         // add new state
-        this.geodataService.addGeoRecord(state)
-          .subscribe((response: StatePlacePostcodeSuburb) => {
+        this.geodataService.addGeoRecord(geostate)
+          .subscribe((response: GeoData) => {
             // reset the others
             this.updatedState = null;
             this.removedState = null;
@@ -487,7 +488,7 @@ export class PlacesComponent implements OnInit {
             // show success
             this.messagesService.emitProcessMessage("PMSASt");
             // get the new data from the server
-            this.getStates();
+            this.getGeoStates();
 
           }, (serviceError: Response) => this.onError(serviceError, "onSubmitStateAdd"));
 
@@ -497,11 +498,11 @@ export class PlacesComponent implements OnInit {
     }
 
 
-    if (this.isStateEditOn && state) {
+    if (this.isStateEditOn && geostate) {
   
         // update state
-        this.geodataService.updateGeoRecord(state)
-          .subscribe((response: StatePlacePostcodeSuburb) => {
+        this.geodataService.updateGeoRecord(geostate)
+          .subscribe((response: GeoData) => {
             // reset the others
             this.addedState = null;
             this.removedState = null;
@@ -510,7 +511,7 @@ export class PlacesComponent implements OnInit {
             // show success
             this.messagesService.emitProcessMessage("PMSUSt"); 
             // get the new data from the server
-            this.getStates();
+            this.getGeoStates();
 
           }, (serviceError: Response) => this.onError(serviceError, "onSubmitStateUpdate"));
 
@@ -522,13 +523,13 @@ export class PlacesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateState(): StatePlacePostcodeSuburb {
+  private prepareAddUpdateState(): GeoData {
 
     const formModel = this.stateForm.value;
 
-    let newAddUpdateState: StatePlacePostcodeSuburb = new StatePlacePostcodeSuburb();
+    let newAddUpdateState: GeoData = new GeoData();
 
-    if (this.isStateEditOn) { newAddUpdateState.id = this.stateInView.id; }
+    //if (this.isStateEditOn) { newAddUpdateState.id = this.stateInView.id; }
     newAddUpdateState.state = formModel.name as string;
 
 
@@ -547,13 +548,13 @@ export class PlacesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isStateChanged(newState: StatePlacePostcodeSuburb, oldState: StatePlacePostcodeSuburb): boolean {
+  private isStateChanged(newState: GeoData, oldState: GeoData): boolean {
     if (newState.state === oldState.state) { return false; }
     return true;
   }
 
 
-  private stateExists(state: StatePlacePostcodeSuburb): boolean {
+  private stateExists(state: GeoData): boolean {
     // is this the first state??
     if (this.states === null) { return false; }
     let m: number = 0;
@@ -569,17 +570,17 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubmitDeleteState(stateToRemove: StatePlacePostcodeSuburb) {
+  private onSubmitDeleteState(stateToRemove: GeoData) {
 
     this.geodataService.deleteGeoRecord(stateToRemove.id)
-      .subscribe((response: StatePlacePostcodeSuburb) => {
+      .subscribe((response: GeoData) => {
         // reset the update and add
         this.addedState = null;
         this.updatedState = null;
         // show success
         this.messagesService.emitProcessMessage("PMSDSt");
         // get the new data from the server and start again
-        this.getStates();
+        this.getGeoStates();
 
       }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeleteState"));
   }
@@ -651,13 +652,13 @@ export class PlacesComponent implements OnInit {
   private onSubmitPlaceAddUpdate() {
 
     this.messagesService.emitRoute("nill");
-    let place: StatePlacePostcodeSuburb = this.prepareAddUpdatePlace();
+    let place: GeoData = this.prepareAddUpdatePlace();
 
     if (this.isPlaceAddOn && place) {
 
         // add new phone
         this.geodataService.addGeoRecord(place)
-          .subscribe((response: StatePlacePostcodeSuburb) => {
+          .subscribe((response: GeoData) => {
             // reset the athers
             this.updatedPlace = null;
             this.removedPlace = null;
@@ -680,7 +681,7 @@ export class PlacesComponent implements OnInit {
              
         // update place
         this.geodataService.updateGeoRecord(place)
-          .subscribe((response: StatePlacePostcodeSuburb) => {
+          .subscribe((response: GeoData) => {
             // reset the athers
             this.addedPlace = null;
             this.removedPlace = null;
@@ -701,11 +702,11 @@ export class PlacesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdatePlace(): StatePlacePostcodeSuburb {
+  private prepareAddUpdatePlace(): GeoData {
 
     const formModel = this.placeForm.value;
 
-    let newAddUpdatePlace: StatePlacePostcodeSuburb = new StatePlacePostcodeSuburb();
+    let newAddUpdatePlace: GeoData = new GeoData();
 
     if (this.isPlaceEditOn) { newAddUpdatePlace.id = this.placeInView.id; }
     newAddUpdatePlace.place = formModel.name as string;
@@ -727,14 +728,14 @@ export class PlacesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isPlaceChanged(newPlace: StatePlacePostcodeSuburb, oldPlace: StatePlacePostcodeSuburb): boolean {
+  private isPlaceChanged(newPlace: GeoData, oldPlace: GeoData): boolean {
 
     if (newPlace.place === oldPlace.place) { return false; }
     return true;
   }
 
 
-  private placeExists(place: StatePlacePostcodeSuburb): boolean {
+  private placeExists(place: GeoData): boolean {
     // is this the first place??
     if (this.places === null) { return false; }
     let m: number = 0;
@@ -750,10 +751,10 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubmitDeletePlace(placeToRemove: StatePlacePostcodeSuburb) {
+  private onSubmitDeletePlace(placeToRemove: GeoData) {
   
     this.geodataService.deleteGeoRecord(placeToRemove.id)
-      .subscribe((response: StatePlacePostcodeSuburb) => {
+      .subscribe((response: GeoData) => {
         // reset the update and add
         this.addedPlace = null;
         this.updatedPlace = null;
@@ -764,7 +765,7 @@ export class PlacesComponent implements OnInit {
         // show success
         this.messagesService.emitProcessMessage("PMSDPl");
         // get the new data from the server
-        this.getStates();
+        this.getGeoStates();
 
       }, (serviceError: Response) => this.onError(serviceError, "onSubmitDeletePlace"));
   }
@@ -839,13 +840,13 @@ export class PlacesComponent implements OnInit {
 
     this.removedPostcode = null;
     this.messagesService.emitRoute("nill");
-    let postcode: StatePlacePostcodeSuburb = this.prepareAddUpdatePostcode();
+    let postcode: GeoData = this.prepareAddUpdatePostcode();
 
     if (this.isPostcodeAddOn && postcode) {
 
         // add new state
         this.geodataService.addGeoRecord(postcode)
-          .subscribe((response: StatePlacePostcodeSuburb) => {
+          .subscribe((response: GeoData) => {
             // reset the others
             this.updatedPostcode = null;
             this.removedPostcode = null;
@@ -868,7 +869,7 @@ export class PlacesComponent implements OnInit {
 
         // update state
         this.geodataService.updateGeoRecord(postcode)
-          .subscribe((response: StatePlacePostcodeSuburb) => {
+          .subscribe((response: GeoData) => {
             // reset the others
             this.addedPostcode = null;
             this.removedPostcode = null;
@@ -890,11 +891,11 @@ export class PlacesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdatePostcode(): StatePlacePostcodeSuburb {
+  private prepareAddUpdatePostcode(): GeoData {
 
     const formModel = this.postcodeForm.value;
 
-    let newAddUpdatePostcode: StatePlacePostcodeSuburb = new StatePlacePostcodeSuburb();
+    let newAddUpdatePostcode: GeoData = new GeoData();
 
     if (this.isPostcodeEditOn) { newAddUpdatePostcode.id = this.postcodeInView.id; }
     newAddUpdatePostcode.postcode = formModel.number as string;
@@ -903,7 +904,7 @@ export class PlacesComponent implements OnInit {
 
 
     // has anything beeing changed in the form and we are updating
-    if (this.isStateEditOn && !this.isPostcodeChanged(newAddUpdatePostcode, this.tempAddUpdatePostcode)) {
+    if (this.isPostcodeEditOn && !this.isPostcodeChanged(newAddUpdatePostcode, this.tempAddUpdatePostcode)) {
       this.messagesService.emitProcessMessage("PMEUPc");
       return null;
     }
@@ -917,13 +918,13 @@ export class PlacesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isPostcodeChanged(newPostcode: StatePlacePostcodeSuburb, oldPostcode: StatePlacePostcodeSuburb): boolean {
+  private isPostcodeChanged(newPostcode: GeoData, oldPostcode: GeoData): boolean {
     if (newPostcode.postcode === oldPostcode.postcode ) { return false; }
     return true;
   }
 
 
-  private postcodeExists(postcode: StatePlacePostcodeSuburb): boolean {
+  private postcodeExists(postcode: GeoData): boolean {
     // is this the first postcode??
     if (this.postcodes === null) { return false; }
     let m: number = 0;
@@ -939,10 +940,10 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubmitDeletePostcode(postcodeToRemove: StatePlacePostcodeSuburb) {
+  private onSubmitDeletePostcode(postcodeToRemove: GeoData) {
 
     this.geodataService.deleteGeoRecord(postcodeToRemove.id)
-      .subscribe((response: StatePlacePostcodeSuburb) => {
+      .subscribe((response: GeoData) => {
         // reset the update and add
         this.addedPostcode= null;
         this.updatedPostcode = null;       
@@ -1019,13 +1020,13 @@ export class PlacesComponent implements OnInit {
   private onSubmitSuburbAddUpdate() {
 
     this.messagesService.emitRoute("nill");
-    let suburb: StatePlacePostcodeSuburb = this.prepareAddUpdateSuburb();
+    let suburb: GeoData = this.prepareAddUpdateSuburb();
 
     if (this.isSuburbAddOn && suburb) {  
 
         // add new phone
         this.geodataService.addGeoRecord(suburb)
-          .subscribe((response: StatePlacePostcodeSuburb) => {
+          .subscribe((response: GeoData) => {
             // reset the other
             this.updatedSuburb = null;
             this.removedSuburb = null;
@@ -1048,7 +1049,7 @@ export class PlacesComponent implements OnInit {
 
         // update place
         this.geodataService.updateGeoRecord(suburb)
-          .subscribe((response: StatePlacePostcodeSuburb) => {
+          .subscribe((response: GeoData) => {
             // reset the athers
             this.addedSuburb = null;
             this.removedSuburb = null;
@@ -1069,11 +1070,11 @@ export class PlacesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateSuburb(): StatePlacePostcodeSuburb {
+  private prepareAddUpdateSuburb(): GeoData {
 
     const formModel = this.suburbForm.value;
 
-    let newAddUpdateSuburb: StatePlacePostcodeSuburb = new StatePlacePostcodeSuburb();
+    let newAddUpdateSuburb: GeoData = new GeoData();
 
     if (this.isSuburbEditOn) { newAddUpdateSuburb.id = this.suburbInView.id; }
     newAddUpdateSuburb.suburb = formModel.name as string;
@@ -1097,14 +1098,14 @@ export class PlacesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isSuburbChanged(newSuburb: StatePlacePostcodeSuburb, oldSuburb: StatePlacePostcodeSuburb): boolean {
+  private isSuburbChanged(newSuburb: GeoData, oldSuburb: GeoData): boolean {
 
     if (newSuburb.suburb === oldSuburb.suburb) { return false; }
     return true;
   }
 
 
-  private suburbExists(suburb: StatePlacePostcodeSuburb): boolean {
+  private suburbExists(suburb: GeoData): boolean {
     // is this the first suburb??
     if (this.suburbs === null) { return false; }
     let m: number = 0;
@@ -1120,10 +1121,10 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubmitDeleteSuburb(suburbToRemove: StatePlacePostcodeSuburb) {
+  private onSubmitDeleteSuburb(suburbToRemove: GeoData) {
 
     this.geodataService.deleteGeoRecord(suburbToRemove.id)
-      .subscribe((response: StatePlacePostcodeSuburb) => {
+      .subscribe((response: GeoData) => {
         // reset the update and add
         this.addedSuburb = null;
         this.updatedSuburb = null;

@@ -11,7 +11,7 @@
 
       <!-- drop down -->
       <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
-        Type:
+        Phone Type:
         <select id="phonetype" name="phonetype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewPhoneTypeChange($event)">
           <option></option>
           <option *ngFor="let phonetype of phonetypes" [ngValue]="phonetype">
@@ -40,7 +40,7 @@
               </div>           
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Phone Type Description:<span class="text-info"> {{ phoneTypeInView.phoneType }}</span>
+                Phone Type:<span class="text-info"> {{ phoneTypeInView.phoneType }}</span>
               </div>
             </div>
           </div>
@@ -56,7 +56,7 @@
 
             <div class="col-md-10 col-md-offset-1">
               <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                Phone Type Description:
+                Phone Type:
                 <input type="text" formControlName="phonetypedescription" id="phonetypedescription" name="phonetypedescription" required class="form-control smalltextbold" style="background-color:moccasin" />
                 <control-messages [control]="phoneTypesForm.controls.phonetypedescription"></control-messages>
               </div>
@@ -125,7 +125,7 @@
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Address Type Description:<span class="text-info"> {{ addressTypeInView.addressType }}</span>
+                Address Type:<span class="text-info"> {{ addressTypeInView.addressType }}</span>
               </div>
 
 
@@ -140,7 +140,7 @@
 
             <div class="col-md-6 col-md-offset-3">
               <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                Address Type Description:
+                Address Type:
                 <input type="text" formControlName="addresstypedescription" id="addresstypedescription" name="addresstypedescription" required class="form-control smalltext" style="background-color:moccasin" />
                 <control-messages [control]="addressTypesForm.controls.addresstypedescription"></control-messages>
               </div>
@@ -189,7 +189,7 @@
 
       <!-- drop down -->
       <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
-        Type:
+        Email Type:
         <select id="emailtype" name="emailtype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewEmailTypeChange($event)">
           <option></option>
           <option *ngFor="let emailtype of emailtypes" [ngValue]="emailtype">
@@ -218,7 +218,7 @@
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Email Type Description:<span class="text-info"> {{ emailTypeInView.emailType }}</span>
+                Email Type:<span class="text-info"> {{ emailTypeInView.emailType }}</span>
               </div>
             </div>
           </div>
@@ -234,7 +234,7 @@
 
             <div class="col-md-10 col-md-offset-1">
               <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                Email Type Description:
+                Email Type:
                 <input type="text" formControlName="emailtypedescription" id="emailtypedescription" name="emailtypedescription" required class="form-control smalltextbold" style="background-color:moccasin" />
                 <control-messages [control]="emailTypesForm.controls.emailtypedescription"></control-messages>
               </div>
@@ -274,7 +274,7 @@
 
       <!-- drop down -->
       <div class="smalltextbold col-md-6" style="text-align:right;z-index:1100;">
-         Type:
+         Sicial Network Type:
         <select id="socialtype" name="socialtype" class="smalltextbold" style="background-color:moccasin;" (change)="onViewSocialTypeChange($event)">
           <option></option>
           <option *ngFor="let socialtype of socialtypes" [ngValue]="socialtype">
@@ -299,11 +299,11 @@
             <div class="row">
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Social Type Id: <span class="text-info"> {{ socialTypeInView.socialTypeId }}</span>
+                Social Network Type Id: <span class="text-info"> {{ socialTypeInView.socialTypeId }}</span>
               </div>
 
               <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                Social Type Description:<span class="text-info"> {{ socialTypeInView.socialType }}</span>
+                Social Network Type:<span class="text-info"> {{ socialTypeInView.socialType }}</span>
               </div>
 
 
@@ -318,7 +318,7 @@
 
             <div class="col-md-6 col-md-offset-3">
               <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                Social Type Description:
+                Social Network Type:
                 <input type="text" formControlName="socialtypedescription" id="socialtypedescription" name="socialtypedescription" required class="form-control smalltext" style="background-color:moccasin" />
                 <control-messages [control]="socialTypesForm.controls.socialtypedescription"></control-messages>
               </div>

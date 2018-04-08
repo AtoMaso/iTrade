@@ -31,7 +31,7 @@
     setoftradeswithstatus: 'http://localhost:5700/api/trades/GetSetOfTradesWithStatus',
     setoftradeswithstatusfortrader: 'http://localhost:5700/api/trades/GetSetOfTradesWithStatusForTrader',
     setoftradesnostatusfortrader: 'http://localhost:5700/api/trades/GetSetOfTradesNoStatusForTrader',
-    setoftradesnostatus: 'http://localhost:5700/api/trades/GetSetOfTradesNoStatus',
+    setoftradesclosed: 'http://localhost:5700/api/trades/GetSetOfTradesClosed',
 
     trade: 'http://localhost:5700/api/trades/',
     updatetrade: 'http://localhost:5700/api/trades/',
@@ -76,49 +76,16 @@
     deletecorres: 'http://localhost:5700/api/correspondences/DeleteCorrespondence',
 
 
-
-    //states
-    states: 'http://localhost:5700/api/states',
-    state: 'http://localhost:5700/api/states/',
-    updatestate: 'http://localhost:5700/api/states/PutState',
-    addstate: 'http://localhost:5700/api/states/PostState',
-    deletestate: 'http://localhost:5700/api/states/DeleteState',
-
-    // places
-    places: 'http://localhost:5700/api/places',
-    getplacesbystateid: 'http://localhost:5700/api/places/GetPlacesByStateId',
-    place: 'http://localhost:5700/api/places/',
-    updateplace: 'http://localhost:5700/api/places/PutPlace',
-    addplace: 'http://localhost:5700/api/places/PostPlace',
-    deleteplace: 'http://localhost:5700/api/places/DeletePlace',
-
-    // postcode
-    postcodes: 'http://localhost:5700/api/postcodes',
-    getpostcodesbyplaceid: 'http://localhost:5700/api/postcodes/GetPostcodesByPlaceId',
-    postcode: 'http://localhost:5700/api/postcodes/',
-    updatepostcode: 'http://localhost:5700/api/postcodes/PutPostcode',
-    addpostcode: 'http://localhost:5700/api/postcodes/PostPostcode',
-    deletepostcode: 'http://localhost:5700/api/postcodes/DeletePostcode',
-
-
-    //suburbs
-    suburbs: 'http://localhost:5700/api/suburbs',
-    getsuburbsbypostcodeid: 'http://localhost:5700/api/suburbs/GetSuburbsByPostcodeId',
-    suburb: 'http://localhost:5700/api/suburbs/',
-    updatesuburb: 'http://localhost:5700/api/suburbs/PutSuburb',
-    addsuburb: 'http://localhost:5700/api/suburbs/PostSuburb',
-    deletesuburb: 'http://localhost:5700/api/suburbs/DeleteSuburb',
-
-
     // geo data
-    geodataStates: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetStates',
-    geodataPlacesByStateCodeUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetPlacesByStateCode',
-    geodataPostcodesByPlaceNameAndStateCodeUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetPostcodesByPlaceNameAndStateCode',
-    geodataSuburbsByPostcodeNumberUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetSuburbsByPostcodeNumber',
-    geodataSuburbsByPostcodeNumberAndPlaceNameUrl: 'http://localhost:5700/api/statesplacespostcodessuburbs/GetSuburbsByPostcodeNumberAndPlaceName',
-    addGeoRecord: 'http://localhost:5700/api/statesplacespostcodessuburbs/PostStatePlacePostcodeSuburb',
-    updateGeoRecord: 'http://localhost:5700/api/statesplacespostcodessuburbs/PutStatePlacePostcodeSuburb',
-    deleteGeoRecord: 'http://localhost:5700/api/statesplacespostcodessuburbs/DeleteStatePlacePostcodeSuburb',
+    geodataStatesWthData: 'http://localhost:5700/api/geodatas/GetStatesWithData',
+    geodataStates: 'http://localhost:5700/api/geodatas/GetStates',
+    geodataPlacesByStateCodeUrl: 'http://localhost:5700/api/geodatas/GetPlacesByStateCode',
+    geodataPostcodesByPlaceNameAndStateCodeUrl: 'http://localhost:5700/api/geodatas/GetPostcodesByPlaceNameAndStateCode',
+    geodataSuburbsByPostcodeNumberUrl: 'http://localhost:5700/api/geodatas/GetSuburbsByPostcodeNumber',
+    geodataSuburbsByPostcodeNumberAndPlaceNameUrl: 'http://localhost:5700/api/geodatas/GetSuburbsByPostcodeNumberAndPlaceName',
+    addGeoRecord: 'http://localhost:5700/api/geodatas/PostGeoData',
+    updateGeoRecord: 'http://localhost:5700/api/geodatas/PutGeoData',
+    deleteGeoRecord: 'http://localhost:5700/api/geodatas/DeleteGeoData',
 
 
     // category
@@ -174,7 +141,7 @@
     addresstypes: 'http://localhost:5700/api/addresstypes',    
     addresstype: 'http://localhost:5700/api/addresstypes/',
     updateaddresstype: 'http://localhost:5700/api/addresstypes/PutAddressType',
-    addaddresstype: 'http://localhost:5700/api/addrestypes/PostAddressType',
+    addaddresstype: 'http://localhost:5700/api/addresstypes/PostAddressType',
     deleteaddresstype: 'http://localhost:5700/api/addresstypes/DeleteAddressType',
   
     // process message
@@ -235,23 +202,9 @@
     // socila network type
     socialnetworktypes: 'http://localhost:5700/api/socialnetworktypes',
     socialnetworktype: 'http://localhost:5700/api/socialnetworktypes/',
-    updatesocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/PutSocialNetworktype',
-    addsocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/PostSocialNetworktype',
-    deletesocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/DeleteSocialNetworktype',
-
-    //// security answers
-    //securityanswers: 'http://localhost:5700/api/securityanswers',
-    //securityanswer: 'http://localhost:5700/api/securityanswers/',
-    //updatesecurityanswer: 'http://localhost:5700/api/securityanswers/putsecurityanswer',
-    //addsecurityanswer: 'http://localhost:5700/api/securityanswers/postsecurityanswer',
-    //deletesecurityanswer: 'http://localhost:5700/api/securityanswers/deletesecurityanswer',
-
-    //// security questions
-    //securityquestions: 'http://localhost:5700/api/securityquestions',
-    //securityquestion: 'http://localhost:5700/api/securityquestions/',
-    //updatesecurityquestion: 'http://localhost:5700/api/securityquestions/putsecurityquestion',
-    //addsecurityquestion: 'http://localhost:5700/api/securityquestions/postsecurityquestion',
-    //deletesecurityquestion: 'http://localhost:5700/api/securityquestions/deletesecurityquestion',
+    updatesocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/PutSocialNetworkType',
+    addsocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/PostSocialNetworkType',
+    deletesocialnetworktype: 'http://localhost:5700/api/socialnetworktypes/DeleteSocialNetworkType',
 
     // uploads
     uploadFileUrl: 'http://localhost:5700/api/uploads/UploadFile',

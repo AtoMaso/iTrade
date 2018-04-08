@@ -10,7 +10,7 @@ import { LoggerService } from '../../services/logger/logger.service';
 import { ProcessMessageService } from '../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 // components
-import { UserSession, PageTitle, State, ProcessMessage, ProcessMessageType} from '../../helpers/classes';
+import { UserSession, PageTitle, ProcessMessage, ProcessMessageType} from '../../helpers/classes';
 import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
 
 @Component({
@@ -236,7 +236,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
 
     setTimeout(() => {
       this.typesForm.setValue({
-        typedescription: this.typeInView.messageTypeDescription,
+        typedescription: this.typeInView.messageType,
       });
     }, 30);
   }
@@ -282,7 +282,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   private onMessageEditClick() {
     this.processMessagesService.emitRoute("nill");
     this.isMessageEditOn = true;
-    this.isMessageAddOn = true;
+    this.isMessageAddOn = false;
 
     // if phone in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdateMessage = this.messageInView;
@@ -339,7 +339,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
           this.addedMessage = null;
           this.removedMessage = null;
           // get the saved state to pass it when we get the date from the server 
-          this.updatedMessage = response;
+          this.updatedMessage = message;
           // show success
           this.processMessagesService.emitProcessMessage("PMSUPm");
           // get the new data from the server
@@ -364,9 +364,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
     if (this.isMessageEditOn) { newAddUpdateMessage.messageId = this.messageInView.messageId; }
     newAddUpdateMessage.messageCode = formModel.messagecode;
     newAddUpdateMessage.messageText = formModel.messagetext as string;
-    newAddUpdateMessage.messageTypeId = formModel.messagetype.messageTypeId;
-    newAddUpdateMessage.messageTypeDescription = formModel.messagetype.messageTypeDescription;
-
+    newAddUpdateMessage.messageTypeId = formModel.messagetype.messageTypeId;    
 
     // has anything beeing changed in the form and we are updating
     if (this.isMessageEditOn && !this.isMessageChanged(newAddUpdateMessage, this.tempAddUpdateMessage)) {
@@ -395,7 +393,9 @@ export class ProcessMessagesAdminComponent implements OnInit {
   private messageExists(message: ProcessMessage): boolean {
     let m: number = 0;
     for (m = 0; m < this.messages.length; m++) {
-      if (message.messageCode === this.messages[m].messageCode) { return true; }
+      if (message.messageCode === this.messages[m].messageCode &&
+          message.messageText === this.messages[m].messageText &&
+          message.messageTypeId === this.messages[m].messageTypeId ) { return true; }
     }
     return false;
   }
@@ -431,7 +431,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   private onViewTypeChange(type: any) {
     let m: number = 0;
     for (m = 0; m < this.types.length; m++) {
-      if (this.types[m].messageTypeDescription === type.target.value) {
+      if (this.types[m].messageType === type.target.value) {
         // reset postcodes and suburbs       
         this.isMessageAddOn = false;
         this.isMessageEditOn = false;
@@ -518,7 +518,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
           this.addedType = null;
           this.removedType = null;
           // get the saved ty[e so when we can put it in view when we come back from the server
-          this.updatedType = response;
+          this.updatedType = type;
           // show success
           this.processMessagesService.emitProcessMessage("PMSUPmt");
           // get the new data from the server
@@ -541,7 +541,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
     let newAddUpdateType: ProcessMessageType = new ProcessMessageType();
 
     if (this.isTypeEditOn) { newAddUpdateType.messageTypeId = this.typeInView.messageTypeId; }
-    newAddUpdateType.messageTypeDescription = formModel.typedescription as string;
+    newAddUpdateType.messageType = formModel.typedescription as string;
    
 
     // has anything beeing changed in the form and we are updating
@@ -561,7 +561,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
   private isTypeChanged(newType: ProcessMessageType, oldType: ProcessMessageType): boolean {
-    if (newType.messageTypeDescription === oldType.messageTypeDescription) { return false; }
+    if (newType.messageType === oldType.messageType) { return false; }
     return true;
   }
 
@@ -569,7 +569,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   private typeExists(type: ProcessMessageType): boolean {
     let m: number = 0;
     for (m = 0; m < this.types.length; m++) {
-      if (type.messageTypeDescription === this.types[m].messageTypeDescription) { return true; }
+      if (type.messageType === this.types[m].messageType) { return true; }
     }
     return false;
   }

@@ -1,16 +1,16 @@
 ﻿import {
   IChangePasswordBindingModel, IRegisterBindingModel, IResetPasswordBindingModel,
   ISetPasswordBindingModel, ILoginModel, IForgotPasswordBindingModel,
-  ITraderList, IPostTrade, ISuburb, IPlace, IStatePlacePostcodeSuburb,
+  ITraderList, IPostTrade, IGeoData,
   IPersonalDetails, ISecurityDetails,
-  IAddress, IAddressType, IState,  IPostcode,
+  IAddress, IAddressType,
   IPhone, IPhoneType, ISubcategory,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType, ICorrespondence,
   ITrade, IImage, ICategory, ITradeHistory,  
   IUserSession, IAuthentication, IUserIdentity,
   IProcessMessage, IProcessMessageType,
-  IPageTitle, IAttachement, IUserInfoViewModel, // IPlace,
+  IPageTitle, IAttachement, IUserInfoViewModel, IPlace, IState, ISuburb, IPostcode,
 } from './interfaces';
 
 
@@ -313,61 +313,9 @@ class EmailType implements IEmailType {
   }
 }
 
-class State implements IState {
-  id: number;
-  name: string;
-  places: Place[];
- 
-
-  constructor() {
-    this.id = 0;
-    this.name = "";
-    this.places = []; 
-  }
-}
-
-class Place implements IPlace {
-  id: number;
-  name: string;
-  stateId: number;
-  postcodes: Postcode[];
-
-  constructor() {
-    this.id = 0;
-    this.name = "";
-    this.stateId = 0;
-    this.postcodes = [];
-  }
-}
-
-class Postcode implements IPostcode {
-  id: number;
-  number: string;
-  placeId: number;
-  suburbs: Suburb[];
-
-  constructor() {
-    this.id = 0;
-    this.number = "";
-    this.placeId = 0; 
-    this.suburbs = [];
-  }
-}
-
-class Suburb implements ISuburb {
-  id: number;
-  name: string;
-  postcodeId: number;
-
-  constructor() {
-    this.id = 0;
-    this.name = "";
-    this.postcodeId = 0;    
-  }
-}
 
 
-class StatePlacePostcodeSuburb implements IStatePlacePostcodeSuburb {
+class GeoData implements IGeoData {
   id: number;
   state: string;
   place: string;
@@ -394,18 +342,12 @@ class Trade implements ITrade {
   tradeFor: string;
   datePublished: Date;
   status: string;
-  //stateId: number;
   state: string;
-  //placeId: number;
   place: string;
-  //postcodeId: number;
   postcode: string;  
-  //suburbId: number;
   suburb: string;
   category: string;
- // categoryDescription: string;
   subcategory: string;
-  //subcategoryDescription: string;
 
   traderId: string;
   traderFirstName: string;
@@ -425,18 +367,12 @@ class Trade implements ITrade {
     this.tradeFor = "";    
     this.datePublished = new Date(1900, 1, 1); 
     this.status = "";
-    //this.stateId = 0;
     this.state = "";
-    //this.placeId = 0;
     this.place = "";
-    //this.postcodeId = 0;
     this.postcode = "";   
-    //this.suburbId = 0;
     this.suburb = "";
     this.category = "";
-    //this.categoryDescription = "";
     this.subcategory = "";
-    //this.subcategoryDescription = "";
 
     this.traderId = "";
     this.traderFirstName = "";   
@@ -644,7 +580,7 @@ class ProcessMessage implements IProcessMessage {
   messageCode: string;
   messageText: string;
   messageTypeId: number;
-  messageTypeDescription: string;
+  messageType: string;
   
 
   constructor() {
@@ -652,18 +588,18 @@ class ProcessMessage implements IProcessMessage {
     this.messageCode = "";
     this.messageText = "";
     this.messageTypeId = 0;
-    this.messageTypeDescription = "";  
+    this.messageType = "";  
   }
 }
 
 
 class ProcessMessageType implements IProcessMessageType { 
   messageTypeId: number;
-  messageTypeDescription: string;
+  messageType: string;
 
   constructor() { 
     this.messageTypeId = 0;
-    this.messageTypeDescription = "Undefined";
+    this.messageType = "Undefined";
   }
 }
 
@@ -711,15 +647,65 @@ class PreferredType {
   }
 }
 
+
+
+
+
+class State implements IState {
+  state: string;
+  places: IPlace[];
+
+  constructor() {
+    this.state="";
+    this.places = [];
+  }
+}
+
+class Place implements IPlace {
+  place: string;
+  parentstate: string;
+  postcodes: IPostcode[];
+
+  constructor() {
+    this.place = "";
+    this.parentstate = "";
+    this.postcodes = [];
+  }
+}
+
+
+class Postcode implements IPostcode {
+  postcode: string;
+  parentplace: string;
+  suburbs: ISuburb[];
+
+  constructor() {
+    this.postcode = "";
+    this.parentplace = "";
+    this.suburbs = [];
+  }
+}
+
+class Suburb implements ISuburb {
+  suburb: string;
+  parentpostcode: string;
+
+  constructor() {
+    this.suburb = "";
+    this.parentpostcode = "";
+  }
+}
+
 export {
   ChangePasswordBindingModel, RegisterBindingModel,
   UserInfoViewModel, ForgotPasswordBindingModel, ResetPasswordBindingModel,
   SetPasswordBindingModel, LoginModel, Subcategory, 
-  Trader, PostTrade, State, Postcode, Suburb, Place, StatePlacePostcodeSuburb,
+  Trader, PostTrade, GeoData,    
   PersonalDetails, SecurityDetails,
   Address, AddressType, Phone, PhoneType,
   SocialNetwork, SocialNetworkType, Email, EmailType,Correspondence,
   Trade, Image, Category, TradeHistory,
   UserSession, Authentication, UserIdentity,
-  ProcessMessage,ProcessMessageType, PageTitle, Attachement, PreferredType 
+  ProcessMessage, ProcessMessageType, PageTitle, Attachement, PreferredType,
+  State, Place, Postcode, Suburb
 };

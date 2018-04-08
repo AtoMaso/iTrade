@@ -37,14 +37,13 @@ import { ImageService } from './services/image/image.service';
 import { TradeHistoryService } from './services/tradehistory/trade-history.service';
 import { CorrespondenceService } from './services/correspondence/correspondence.service';
 import { PersonalDetailsService } from './services/personaldetails/personaldetails.service';
-import { LoginDetailsService } from './services/logindetails/logindetails.service';
 import { CategoryService } from './services/categories/category.service';
 import { SubcategoriesService } from './services/subcategories/subcategories.service';
 import { GeoDataService } from './services/geodata/geodata.service';
-import { StatesService } from './services/states/states.service';
-import { PlacesService } from './services/places/places.service';
-import { PostcodesService } from './services/postcodes/postcodes.service';
-import { SuburbsService } from './services/suburbs/suburbs.service';
+//import { StatesService } from './services/states/states.service';
+//import { PlacesService } from './services/places/places.service';
+//import { PostcodesService } from './services/postcodes/postcodes.service';
+//import { SuburbsService } from './services/suburbs/suburbs.service';
 
 import { AddressService } from './services/address/address.service';
 import { EmailsService } from './services/emails/emails.service';
@@ -137,11 +136,10 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
   ],
 
   providers: [
-    TradeApiService, ValidationService, ImageService, TradeHistoryService, StatesService,
-    AuthenticationService, ProcessMessageService, CorrespondenceService, PlacesService,
-    PersonalDetailsService, LoginDetailsService, SubcategoriesService, SocialNetworksService, EmailsService, PhonesService,
-    PageTitleService, LoggerService, AuthGuard, TraderApiService, CategoryService, AddressService,
-    PostcodesService, SuburbsService, GeoDataService,
+    TradeApiService, ValidationService, ImageService, TradeHistoryService, 
+    AuthenticationService, ProcessMessageService, CorrespondenceService,
+    PersonalDetailsService, SubcategoriesService, SocialNetworksService, EmailsService, PhonesService,
+    PageTitleService, LoggerService, AuthGuard, TraderApiService, CategoryService, AddressService, GeoDataService,
     // to inercept every request for authentication purposes
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 

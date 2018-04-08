@@ -186,7 +186,7 @@ export class SocialNetworksService {
  //******************************************************
   // UPDATE SOCIAL TYPE
   //******************************************************
-  public updateSocialNetworkType(id: number): Observable<SocialNetworkType>{
+  public updateSocialNetworkType(socialtype: SocialNetworkType): Observable<SocialNetworkType>{
 
     // prepare the headesrs
     const httpOptions = {
@@ -197,8 +197,8 @@ export class SocialNetworksService {
       })
     };
 
-    const localUrl = `${updateSocialNetworkTypeUrl}?socialTypeid=${id}`;
-    return this.httpClientService.put<SocialNetworkType>(localUrl, httpOptions).retry(1);
+    const localUrl = `${updateSocialNetworkTypeUrl}?socialTypeid=${socialtype.socialTypeId}`;
+    return this.httpClientService.put<SocialNetworkType>(localUrl, socialtype, httpOptions).retry(1);
   }
 
 

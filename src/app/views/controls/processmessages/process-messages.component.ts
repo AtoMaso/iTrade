@@ -32,8 +32,8 @@ export class ProcessMessagesComponent {
       else {                 
           this.style = "container panel panel-default col-md-12";
           this.stylespan = "messagespan "
-          this.getControlStyle(message.messageTypeDescription);
-           this.errorMessage = this.getThePrefix(message.messageTypeDescription)  + message.messageText ;           
+          this.getControlStyle(message.messageType);
+           this.errorMessage = this.getThePrefix(message.messageType)  + message.messageText ;           
       }
     }
     catch (error) {

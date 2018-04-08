@@ -100,7 +100,7 @@ export class EmailsService {
   //******************************************************
   // UPDATE EMAIL
   //******************************************************
-  public updateEmail(emails: Email): Observable<Email> {
+  public updateEmail(email: Email): Observable<Email> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -110,8 +110,8 @@ export class EmailsService {
       })
     };
 
-    const localUrl = `${updateEmailUrl}?id=${emails.id}`;
-    return this.httpClientService.put<Email>(localUrl, emails, httpOptions).retry(1);
+    const localUrl = `${updateEmailUrl}?id=${email.id}`;
+    return this.httpClientService.put<Email>(localUrl, email, httpOptions).retry(1);
   }
 
 
@@ -176,7 +176,7 @@ export class EmailsService {
   //******************************************************
   // UPDATE EMAIL TYPE
   //******************************************************
-  public updateEmailType(id: number): Observable<EmailType> {
+  public updateEmailType(emailtype: EmailType): Observable<EmailType> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -187,8 +187,8 @@ export class EmailsService {
       })
     };
 
-    const localUrl = `${updateEmailTypeUrl}?emailTypeid=${id}`;
-    return this.httpClientService.put<EmailType>(localUrl, httpOptions).retry(1);
+    const localUrl = `${updateEmailTypeUrl}?emailTypeid=${emailtype.emailTypeId}`;
+    return this.httpClientService.put<EmailType>(localUrl, emailtype, httpOptions).retry(1);
   }
 
 

@@ -331,7 +331,7 @@ export class TypesComponent implements OnInit {
 
   private setAddressTypesForm() {
     this.addressTypesForm = this.formBuilder.group({
-     addresstypedescription: new FormControl('', [Validators.required, ValidationService.messageTypeDescriptionValidator]),
+      addresstypedescription: new FormControl('', [Validators.required, ValidationService.messageTypeDescriptionValidator]),
     });
   }
 
@@ -424,7 +424,7 @@ export class TypesComponent implements OnInit {
   private onPhoneTypeEditClick() {
     this.messagesService.emitRoute("nill");
     this.isPhoneTypeEditOn = true;
-    this.isPhoneTypeAddOn = true;
+    this.isPhoneTypeAddOn = false;
 
     // if phone in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdatePhoneType = this.phoneTypeInView;
@@ -475,7 +475,7 @@ export class TypesComponent implements OnInit {
     if (this.isPhoneTypeEditOn && phonetype) {
 
       // update state
-      this.phonesService.updatePhoneType(phonetype.phoneTypeId)
+      this.phonesService.updatePhoneType(phonetype)
         .subscribe((response: PhoneType) => {
           // reset the others
           this.addedPhoneType = null;
@@ -599,7 +599,7 @@ export class TypesComponent implements OnInit {
   private onAddressTypeEditClick() {
     this.messagesService.emitRoute("nill");
     this.isAddressTypeEditOn = true;
-    this.isAddressTypeAddOn = true;
+    this.isAddressTypeAddOn = false;
 
     // if phone in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdateAddressType = this.addressTypeInView;
@@ -649,7 +649,7 @@ export class TypesComponent implements OnInit {
     if (this.isAddressTypeEditOn && addresstype) {
 
       // update state
-      this.addressService.updateAddressType(addresstype.addressTypeId)
+      this.addressService.updateAddressType(addresstype)
         .subscribe((response: AddressType) => {
           // reset the others
           this.addedAddressType = null;
@@ -678,7 +678,7 @@ export class TypesComponent implements OnInit {
     let newAddUpdateAddressType: AddressType = new AddressType();
 
     if (this.isAddressTypeEditOn) { newAddUpdateAddressType.addressTypeId = this.addressTypeInView.addressTypeId; }
-    newAddUpdateAddressType.addressType = formModel.addrestypedescription;
+    newAddUpdateAddressType.addressType = formModel.addresstypedescription;
 
 
     // has anything beeing changed in the form and we are updating
@@ -773,7 +773,7 @@ export class TypesComponent implements OnInit {
   private onEmailTypeEditClick() {
     this.messagesService.emitRoute("nill");
     this.isEmailTypeEditOn = true;
-    this.isEmailTypeAddOn = true;
+    this.isEmailTypeAddOn = false;
 
     // if phone in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdateEmailType = this.emailTypeInView;
@@ -824,7 +824,7 @@ export class TypesComponent implements OnInit {
     if (this.isEmailTypeEditOn && emailtype) {
 
       // update state
-      this.emailsService.updateEmailType(emailtype.emailTypeId)
+      this.emailsService.updateEmailType(emailtype)
         .subscribe((response: EmailType) => {
           // reset the others
           this.addedEmailType = null;
@@ -949,7 +949,7 @@ export class TypesComponent implements OnInit {
   private onSocialTypeEditClick() {
     this.messagesService.emitRoute("nill");
     this.isSocialTypeEditOn = true;
-    this.isSocialTypeAddOn = true;
+    this.isSocialTypeAddOn = false;
 
     // if phone in view take it as temp so we can go back if editing has been cancelled
     this.tempAddUpdateSocialType = this.socialTypeInView;
@@ -1000,7 +1000,7 @@ export class TypesComponent implements OnInit {
     if (this.isSocialTypeEditOn && socialtype) {
 
       // update state
-      this.socialsService.updateSocialNetworkType(socialtype.socialTypeId)
+      this.socialsService.updateSocialNetworkType(socialtype)
         .subscribe((response: SocialNetworkType) => {
           // reset the others
           this.addedSocialType = null;

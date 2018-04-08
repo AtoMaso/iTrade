@@ -51,9 +51,9 @@
                                     Type Id:<span class="text-info"> {{ messageInView.messageTypeId }}</span>
                                   </div>
 
-                                  <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                                    Type Description:<span class="text-info"> {{ messageInView.messageTypeDescription }}</span>
-                                  </div>
+                                  <!--<div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
+                                    Type:<span class="text-info"> {{ messageInView.messageType }}</span>
+                                  </div>-->
                                 </div>
                               </div>
 
@@ -71,7 +71,7 @@
                                 <select formControlName="messagetype" id="messagetype" name="messagetype" class="form-control smalltextbold" style="background-color:moccasin;" (ngModelChange)="onMessageTypeChange($event)">
                                   <option></option>
                                   <option *ngFor="let type of types" [ngValue]="type">
-                                    {{ type.messageTypeDescription }}
+                                    {{ type.messageType }}
                                   </option>
                                 </select>
                                 <control-messages [control]="messagesForm.controls.messagetype"></control-messages>
@@ -135,7 +135,7 @@
                 <select id="type" name="type" class="smalltextbold" style="background-color:moccasin;" (change)="onViewTypeChange($event)">
                   <option></option>
                   <option *ngFor="let type of types" [ngValue]="type">
-                    {{ type.messageTypeDescription }}
+                    {{ type.messageType }}
                   </option>
                 </select>
               </div>
@@ -160,7 +160,7 @@
                             </div>
 
                             <div class="row mediumtext panel panel-heading col-md-12" style="height:50px;">
-                              Type Description:<span class="text-info"> {{ typeInView.messageTypeDescription }}</span>
+                              Type:<span class="text-info"> {{ typeInView.messageType }}</span>
                             </div>
 
 
@@ -175,7 +175,7 @@
 
                           <div class="col-md-6 col-md-offset-3">
                             <div class="form-group smalltextbold col-md-12" style="height:70px;">
-                              Type Description:                                       
+                              Type:                                       
                               <input type="text" formControlName="typedescription" id="typedescription" name="typedescription" required class="form-control smalltext" style="background-color:moccasin" />                                                          
                               <control-messages [control]="typesForm.controls.typedescription"></control-messages>
                             </div>

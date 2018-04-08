@@ -14,7 +14,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 import {UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDetails, SecurityDetails } from '../../../helpers/classes';
-import { Address, Email, Phone, SocialNetwork, AddressType, PreferredType, StatePlacePostcodeSuburb } from '../../../helpers/classes';
+import { Address, Email, Phone, SocialNetwork, AddressType, PreferredType, GeoData, State, Place, Postcode, Suburb } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -41,10 +41,15 @@ export class PersonalDetailsComponent implements OnInit {
   private addressInView: Address;
   private tempAddUpdateAddress: Address;
 
-  private states: StatePlacePostcodeSuburb[] = [];
-  private places: StatePlacePostcodeSuburb[] = [];
-  private postcodes: StatePlacePostcodeSuburb[] = [];
-  private suburbs: StatePlacePostcodeSuburb[] = [];
+  //private geostates: GeoData[] = [];
+  //private geoplaces: GeoData[] = [];
+  //private geopostcodes: GeoData[] = [];
+  //private geosuburbs: GeoData[] = [];
+
+  private states: State[] = [];
+  private places: Place[] = [];
+  private postcodes: Postcode[] = [];
+  private suburbs: Suburb[] = [];
 
   private alladdresstypes: AddressType[] = [];
   private existingaddresstypes: AddressType[] = [];
@@ -66,11 +71,11 @@ export class PersonalDetailsComponent implements OnInit {
   private selectedSuburb: string = null;
   private selectedAddressType: AddressType = null;
   private selectedPreferredType: PreferredType = null;
+  private defaultState: State = null;
+  private defaultPlace: Place = null;
+  private defaultPostcode: Postcode = null;
+  private defaultSuburb: Suburb = null;
 
-  private defaultState: StatePlacePostcodeSuburb = null;
-  private defaultPlace: StatePlacePostcodeSuburb = null;
-  private defaultPostcode: StatePlacePostcodeSuburb = null;
-  private defaultSuburb: StatePlacePostcodeSuburb = null;
   private defaultPreferredType: PreferredType = null;
   private defaultAddressType: AddressType = null;
   private updatedAddress: Address = null;
@@ -103,10 +108,10 @@ export class PersonalDetailsComponent implements OnInit {
     this.getUserSession();
     this.initialiseComponent();
 
-    this.getStates();
    
-    this.setAddressForm();
-    this.setPersonalForm();  
+    this.getStatesWithData();
+    //this.setAddressForm();
+    //this.setPersonalForm();  
    
   }
 
@@ -154,27 +159,6 @@ export class PersonalDetailsComponent implements OnInit {
   //************************************************************
   // GET DATA FOR THE FORMS
   //************************************************************
-  // all states from the server
-  public getStates() {
-    this.isRequesting = true;
-    this.states = [];
-
-    this.geodataService.getStates()
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
-        this.onSuccessStates(res);
-      }
-      , (error: Response) => this.onError(error, "getStates"));
-  }
-
-
-  private onSuccessStates(res: StatePlacePostcodeSuburb[]) {
-    // collections return zero length when no record found as it is initialised
-    if (res.length == 0) { this.states = null; }
-    else { this.states = res; }
-    this.getPersonalDetailsByTraderId(this.traderId);
-  }
-
-
   private getPersonalDetailsByTraderId(traderId: string) {
 
     this.personalService.getPersonalDetailsByTraderId(traderId)
@@ -331,34 +315,30 @@ export class PersonalDetailsComponent implements OnInit {
       exist = false;
     }
 
+    // get the states data
+    //this.getStatesWithData();
+ 
   }
 
 
-  public getPlacesByStateCode(statecode: string) {
-    this.geodataService.getPlacesByStateCode(statecode)
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
-        this.places = res;
+  public getStatesWithData() {
+    this.isRequesting = true;
+    this.states = [];
+
+    this.geodataService.getStatesWithData()
+      .subscribe((res: State[]) => {
+        this.onSuccessStates(res);
       }
-      , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
+      , (error: Response) => this.onError(error, "getStates"));
   }
 
 
-  public getPostcodesByPlaceNameAndStateCode(placename: string, statecode: string) {
+  private onSuccessStates(res: State[]) {
+    // collections return zero length when no record found as it is initialised
+    if (res.length == 0) { this.states = null; }
+    else { this.states = res; }  
 
-    this.geodataService.getPostcodesByPlaceNameAndStateCode(placename, statecode)
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
-        this.postcodes = res;
-      }
-      , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
-  }
-
-
-  public getSuburbsByPostcodeNumberAndPlaceName(postcodenumber: string, placename: string) {
-    this.geodataService.getSuburbssByPostcodeNumberAndPlaceName(postcodenumber, placename)
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
-        this.suburbs = res;
-      }
-      , (error: Response) => this.onError(error, "getSuburbssByPostcodeNumberAndPlaceName"));
+    this.getPersonalDetailsByTraderId(this.traderId);
   }
 
 
@@ -373,7 +353,6 @@ export class PersonalDetailsComponent implements OnInit {
       dbirth: new FormControl('', [ValidationService.dateValidator])
     });
   }
-
 
   private setAddressForm() {
     this.addressForm = this.formBuilder.group({
@@ -391,10 +370,9 @@ export class PersonalDetailsComponent implements OnInit {
     });
   }
 
-
   private setPersonalFormDefaults() {
 
-    setTimeout(() => {
+  
       this.personalForm.setValue({
         fname: this.personalDetails.firstName,
         mname: this.personalDetails.middleName,
@@ -416,9 +394,21 @@ export class PersonalDetailsComponent implements OnInit {
 
       this.setDate(this.personalDetails.dateOfBirth);
 
-    }, 0);
   }
 
+  private setDate(datetoset: string) {
+
+    var value = new Date(datetoset);
+    this.personalForm.patchValue({
+      dbirth: { value: { year: value.getFullYear(), month: value.getMonth() + 1, day: value.getDate() } }
+    });
+
+    this.selectDate = {
+      year: value.getFullYear(),
+      month: value.getMonth() + 1,
+      day: value.getDate()
+    }
+  }
 
   private setAddressFormDefaults() {
 
@@ -435,98 +425,41 @@ export class PersonalDetailsComponent implements OnInit {
     for (m = 0; m < this.states.length; m++) {
       if (this.states[m].state == this.addressInView.state) { this.defaultState = this.states[m]; }
     }
-    // this is done this way to be able to make sure that data needed is received first
-    this.getAllOtherSetupData(this.defaultState.state);  
+
+    this.places = this.defaultState.places;
+    for (m = 0; m < this.places.length; m++) {
+      if (this.places[m].place == this.addressInView.place) { this.defaultPlace = this.places[m]; break; }
+    }
+
+    this.postcodes = this.defaultPlace.postcodes;
+    for (m = 0; m < this.postcodes.length; m++) {
+      if (this.postcodes[m].postcode == this.addressInView.postcode) { this.defaultPostcode = this.postcodes[m]; break; }
+    }
+
+    this.suburbs = this.defaultPostcode.suburbs;
+    for (m = 0; m < this.suburbs.length; m++) {
+      if (this.suburbs[m].suburb == this.addressInView.suburb) { this.defaultSuburb = this.suburbs[m]; break; }
+    }
+
+
+    // set the default valuse
+    setTimeout(() => {
+
+      this.addressForm.setValue({
+        preferredtype: this.defaultPreferredType,
+        addresstype: this.defaultAddressType,
+        number: this.addressInView.number,
+        unit: this.addressInView.unit || "",
+        street: this.addressInView.street,
+        state: this.defaultState,
+        place: this.defaultPlace,
+        postcode: this.defaultPostcode,
+        suburb: this.defaultSuburb
+      });
+
+    }, 50);
   }
-
-
-  private getAllOtherSetupData(statecode:string) {
-
-    // get the placess for selected state
-  this.geodataService.getPlacesByStateCode(statecode)
-    .subscribe((res: StatePlacePostcodeSuburb[]) => {
-      this.places = res;
-      this.onSuccessPlaces(this.places);
-
-    }
-    , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
-    }
-
-
-  private onSuccessPlaces(places: StatePlacePostcodeSuburb[]) {
-     // find the one which is viewed
-     let m: number = 0;
-     for (m = 0; m < places.length; m++) {
-       if (places[m].place == this.addressInView.place) { this.defaultPlace = places[m]; break; }
-     }
-     // get the postcodes for the selceted place and state
-     this.geodataService.getPostcodesByPlaceNameAndStateCode(this.defaultPlace.place, this.defaultState.state)
-       .subscribe((res: StatePlacePostcodeSuburb[]) => {
-         this.postcodes = res;
-         this.onSuccessPostcodes(this.postcodes);
-       }
-       , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
-
-   }
-
-
-   private onSuccessPostcodes(postcodes: StatePlacePostcodeSuburb[]) {
-     // find the one which is viewed
-     let m: number = 0;
-     for (m = 0; m < postcodes.length; m++) {
-       if (postcodes[m].postcode == this.addressInView.postcode) { this.defaultPostcode = postcodes[m]; break; }
-     }
-     // get the suburbs for the selceted postcode and state
-     this.geodataService.getSuburbssByPostcodeNumberAndPlaceName(this.defaultPostcode.postcode, this.defaultPlace.place)
-       .subscribe((res: StatePlacePostcodeSuburb[]) => {
-         this.suburbs = res;
-         this.onSuccessSuburbs(this.suburbs);
-       }
-       , (error: Response) => this.onError(error, "getSuburbssByPostcodeNumberAndPlaceName"));
-   }
-
-
-   private onSuccessSuburbs(suburbs: StatePlacePostcodeSuburb[]) {
-     // find the one which is viewed
-     let m: number = 0;
-     for (m = 0; m < suburbs.length; m++) {
-       if (suburbs[m].suburb == this.addressInView.suburb) { this.defaultSuburb = suburbs[m]; break; }
-     }
-
-     // set the default valuse
-     setTimeout(() => {
-
-       this.addressForm.setValue({
-         preferredtype: this.defaultPreferredType,
-         addresstype: this.defaultAddressType,
-         number: this.addressInView.number,
-         unit: this.addressInView.unit || "",
-         street: this.addressInView.street,
-         state: this.defaultState,
-         place: this.defaultPlace,
-         postcode: this.defaultPostcode,
-         suburb: this.defaultSuburb
-       });
-
-     }, 30);
-   }
-
-
-  private setDate(datetoset: string) {
-
-    var value = new Date(datetoset);
-    this.personalForm.patchValue({
-      dbirth: { value: { year: value.getFullYear(), month: value.getMonth() + 1, day: value.getDate() } }
-    });
-
-    this.selectDate = {
-      year: value.getFullYear(),
-      month: value.getMonth() + 1,
-      day: value.getDate()
-    }
-  }
-
-
+ 
 
   //*****************************************************
   //GET THE SCREEN INPUT
@@ -541,31 +474,30 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onStateChange(geodata: StatePlacePostcodeSuburb) {  
-      this.selectedState = geodata.state;
-      this.getPlacesByStateCode(this.selectedState);      
+  private onStateChange(singlestate: State) {  
+      this.selectedState = singlestate.state;
+      this.places = singlestate.places;
       this.postcodes = null;
       this.suburbs = null;
   }
 
 
-  private onPlaceChange(geodata: StatePlacePostcodeSuburb) {  
-      this.selectedPlace = geodata.place;
-      this.getPostcodesByPlaceNameAndStateCode(this.selectedPlace, this.selectedState);     
-      this.suburbs = null;   
+  private onPlaceChange(singleplace: Place) {  
+    this.selectedPlace = singleplace.place; 
+    this.postcodes = singleplace.postcodes;
+    this.suburbs = null;   
   }
 
 
-  private onPostcodeChange(geodata: StatePlacePostcodeSuburb) {   
-      this.selectedPostcode = geodata.postcode;
-      this.getSuburbsByPostcodeNumberAndPlaceName(this.selectedPostcode, this.selectedPlace);   
+  private onPostcodeChange(singleopostcode: Postcode) {   
+    this.selectedPostcode = singleopostcode.postcode;      
+    this.suburbs = singleopostcode.suburbs;
   }
 
 
-  private onSuburbChange(geodata: StatePlacePostcodeSuburb) {  
-      this.selectedSuburb = geodata.suburb;   
+  private onSuburbChange(singlesuburb: Suburb) {  
+    this.selectedSuburb = singlesuburb.suburb;      
   }
-
 
 
   private onPreferredTypeChange(preferredtype: PreferredType) {
@@ -778,10 +710,11 @@ export class PersonalDetailsComponent implements OnInit {
 
   private onAddressAddClick() {
     this.messagesService.emitRoute("nill");
-    this.isAddressAddOn = true;
-    this.setAddressForm();
+    this.isAddressAddOn = true;  
     this.places = [];
     this.postcodes = [];
+    this.suburbs = [];
+    this.setAddressForm();
 
     // if address in view take it as temp so we can go back if adding has been cancelled
     if (this.addressInView) {
@@ -794,12 +727,15 @@ export class PersonalDetailsComponent implements OnInit {
   private onAddressEditClick() {
 
     this.messagesService.emitRoute("nill");
-    this.isAddressEditOn = true;
-    this.setAddressForm();
-    this.setAddressFormDefaults();
-    // if address in view take it as temp so we can go back if editing has been cancelled
-    this.tempAddUpdateAddress = this.addressInView;
-   
+
+    setTimeout(() => {
+      this.isAddressEditOn = true;
+      // if address in view take it as temp so we can go back if editing has been cancelled
+      this.tempAddUpdateAddress = this.addressInView;
+
+      this.setAddressForm();
+      this.setAddressFormDefaults();
+    }, 100);
   }
 
 
@@ -878,10 +814,10 @@ export class PersonalDetailsComponent implements OnInit {
 
     const formModel = this.addressForm.value;
 
-    let geostate: StatePlacePostcodeSuburb = formModel.state;
-    let geoplace: StatePlacePostcodeSuburb = formModel.place;
-    let geopostcode: StatePlacePostcodeSuburb = formModel.postcode;
-    let geosuburb: StatePlacePostcodeSuburb = formModel.suburb;
+    let geostate: GeoData = formModel.state;
+    let geoplace: GeoData = formModel.place;
+    let geopostcode: GeoData = formModel.postcode;
+    let geosuburb: GeoData = formModel.suburb;
     let preferredflag: PreferredType = formModel.preferredtype;
     let addresstype: AddressType = formModel.addresstype;
 

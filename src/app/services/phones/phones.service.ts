@@ -185,7 +185,7 @@ export class PhonesService {
  //******************************************************
   // UPDATE PHONE TYPE
   //******************************************************
-  public updatePhoneType(id: number): Observable<PhoneType>{
+  public updatePhoneType(phonetype:PhoneType): Observable<PhoneType>{
 
     // prepare the headesrs
     const httpOptions = {
@@ -196,8 +196,8 @@ export class PhonesService {
       })
     };
 
-    const localUrl = `${updatePhoneTypeUrl}?phoneTypeid=${id}`;
-    return this.httpClientService.put<PhoneType>(localUrl, httpOptions).retry(1);
+    const localUrl = `${updatePhoneTypeUrl}?phoneTypeid=${phonetype.phoneTypeId}`;
+    return this.httpClientService.put<PhoneType>(localUrl, phonetype, httpOptions).retry(1);
   }
 
 

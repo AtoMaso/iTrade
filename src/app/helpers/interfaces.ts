@@ -144,32 +144,6 @@ interface IEmailType {
 }
 
 
-interface IState {
-  id: number;
-  name: string;
-  places: IPlace[];
-}
-
-interface IPlace {
-  id: number;
-  name: string;
-  stateId: number;
-  postcodes: IPostcode[];
-}
-
-interface IPostcode {
-  id: number;
-  number: string;
-  placeId: number;
-  suburbs: ISuburb[];
-}
-
-interface ISuburb {
-  id: number;
-  name: string;
-  postcodeId: number;
-}
-
 
 interface ITrade {
   total: number; 
@@ -181,13 +155,9 @@ interface ITrade {
   tradeFor: string;
   status: string;
   datePublished: Date;
-  //stateId: number;
   state: string;
-  //placeId: number;
   place: string;
-  //postcodeId: number;  
   postcode: string;
-  //suburbId: number;
   suburb: string;
   category: string; 
   subcategory: string;
@@ -266,7 +236,7 @@ interface ICorrespondence {
 }
 
 
-interface IStatePlacePostcodeSuburb {
+interface IGeoData {
   id: number;
   state: string;
   place: string;
@@ -306,14 +276,14 @@ interface IUserIdentity {
 interface IProcessMessage {
   messageId: number;
   messageCode: string;
-  messageTypeDescription: string;
+  messageType: string;
   messageText: string;
   messageTypeId: number;
 }
 
 interface IProcessMessageType {
   messageTypeId: number; 
-  messageTypeDescription: string;
+  messageType: string;
 
 }
 
@@ -331,14 +301,42 @@ interface IProcessMessageType {
  }
 
 
+
+
+interface IState {
+  state: string;
+  places: IPlace[];
+}
+
+interface IPlace {
+  place: string;
+  parentstate: string;
+  postcodes: IPostcode[];
+}
+
+
+interface IPostcode {
+  postcode: string;
+  parentplace: string;
+  suburbs: ISuburb[];
+}
+
+interface ISuburb {
+  suburb: string;
+  parentpostcode: string;
+}
+
+
+
 export {
 IChangePasswordBindingModel, IRegisterBindingModel, IUserInfoViewModel,
   ISetPasswordBindingModel, ILoginModel, IForgotPasswordBindingModel, IResetPasswordBindingModel,
-  ITraderList, IPostTrade, IPlace, IState, ISubcategory, IPostcode, ISuburb, IStatePlacePostcodeSuburb,
+  ITraderList, IPostTrade, ISubcategory, IGeoData,
   IPersonalDetails, ISecurityDetails,
   IAddress, IAddressType, IPhone, IPhoneType,
   ISocialNetwork, ISocialNetworkType,
   IEmail, IEmailType, ICorrespondence,
   ITrade, IImage, ICategory, ITradeHistory,
   IUserSession, IAuthentication, IUserIdentity, 
+  IPlace, IState, ISuburb, IPostcode,
   IProcessMessage, IProcessMessageType, IPageTitle, IAttachement };

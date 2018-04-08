@@ -100,6 +100,25 @@ export class AddressService {
     return this.httpClientService.post<Address>(localUrl, address, httpOptions).retry(1);
   }
 
+
+  //******************************************************
+  // UPDATE ADDRESS
+  //******************************************************
+  public updateAddress(address: Address): Observable<Address> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${updateAddressUrl}?id=${address.id}`;
+    return this.httpClientService.put<Address>(localUrl, address,  httpOptions).retry(1);
+  }
+
+
     //******************************************************
     // DELETE ADDRESS
     //******************************************************
@@ -118,22 +137,8 @@ export class AddressService {
   }
 
 
-    //******************************************************
-    // UPDATE ADDRESS
-    //******************************************************
-  public updateAddress(address: Address): Observable<Address> {
-      // prepare the headesrs
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-        })
-      };
+   
 
-      const localUrl = `${updateAddressUrl}?id=${address.id}`;
-      return this.httpClientService.put<Address>(localUrl, address,  httpOptions).retry(1);
-    }
 
 
 
@@ -153,7 +158,6 @@ export class AddressService {
 
     const localUrl = `${addressTypesUrl}`;
     return this.httpClientService.get<AddressType[]>(localUrl, httpOptions).retry(1);
-
   }
 
 
@@ -181,7 +185,7 @@ export class AddressService {
   //******************************************************
   // UPDATE ADDRESS TYPE
   //******************************************************
-  public updateAddressType(id: number): Observable<AddressType> {
+  public updateAddressType(addresstype: AddressType): Observable<AddressType> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -192,8 +196,8 @@ export class AddressService {
       })
     };
 
-    const localUrl = `${updateAddressTypeUrl}?addressTypeid=${id}`;
-    return this.httpClientService.put<AddressType>(localUrl, httpOptions).retry(1);
+    const localUrl = `${updateAddressTypeUrl}?addressTypeId=${addresstype.addressTypeId}`;
+    return this.httpClientService.put<AddressType>(localUrl, addresstype, httpOptions).retry(1);
   }
 
 

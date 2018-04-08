@@ -19,7 +19,7 @@ import { PageTitleService } from '../../../services/pagetitle/pagetitle.service'
 
 import {
   UserSession, UserIdentity, Authentication, Trade, PostTrade, PageTitle, Category,
-  Subcategory, Image, State, Place, Postcode, Suburb, StatePlacePostcodeSuburb} from '../../../helpers/classes';
+  Subcategory, Image, GeoData} from '../../../helpers/classes';   // State, Place, Postcode, Suburb
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 let uploadFileUrl = CONFIG.baseUrls.uploadFileUrl;
@@ -51,10 +51,10 @@ export class AddTradeComponent implements OnInit {
 
   private categories: Category[] = [];
   private subcategories: Subcategory[] = [];
-  private geostates: StatePlacePostcodeSuburb[] = [];    
-  private geoplaces: StatePlacePostcodeSuburb[] = [];    
-  private geopostcodes: StatePlacePostcodeSuburb[] = [];    
-  private geosuburbs: StatePlacePostcodeSuburb[] = [];    
+  private geostates: GeoData[] = [];    
+  private geoplaces: GeoData[] = [];    
+  private geopostcodes: GeoData[] = [];    
+  private geosuburbs: GeoData[] = [];    
  
   private response: string;
   private hasImages: boolean = false;
@@ -116,7 +116,7 @@ export class AddTradeComponent implements OnInit {
   public getStates() {
 
     this.geodataService.getStates()
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+      .subscribe((res: GeoData[]) => {
         this.geostates = res;
       }
       , (error: Response) => this.onError(error, "getStates"));
@@ -126,7 +126,7 @@ export class AddTradeComponent implements OnInit {
   public getPlacesByStateCode(statecode: string) {
 
     this.geodataService.getPlacesByStateCode(statecode)
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+      .subscribe((res: GeoData[]) => {
         this.geoplaces = res;
       }
       , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
@@ -136,7 +136,7 @@ export class AddTradeComponent implements OnInit {
   public getPostcodesByPlaceNameAndStateCode(placename: string, statecode: string) {
 
     this.geodataService.getPostcodesByPlaceNameAndStateCode(placename, statecode)
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+      .subscribe((res: GeoData[]) => {
         this.geopostcodes = res;
       }
       , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
@@ -147,7 +147,7 @@ export class AddTradeComponent implements OnInit {
   public getSuburbssByPostcodeNumberAndPlaceName(postcodenumber: string, placename: string) {
 
     this.geodataService.getSuburbssByPostcodeNumberAndPlaceName(postcodenumber, placename)
-      .subscribe((res: StatePlacePostcodeSuburb[]) => {
+      .subscribe((res: GeoData[]) => {
         this.geosuburbs = res;
       }
       , (error: Response) => this.onError(error, "getSuburbssByPostcodeNumberAndPlaceName"));
@@ -160,7 +160,7 @@ export class AddTradeComponent implements OnInit {
     this.subcategories = category.subcategories;
   }
 
-  private onStateChange(geodata: StatePlacePostcodeSuburb) {  
+  private onStateChange(geodata: GeoData) {  
     this.geoplaces = null;
     this.geosuburbs = null;
     this.geopostcodes = null;
@@ -168,14 +168,14 @@ export class AddTradeComponent implements OnInit {
 
   }
 
-  private onPlaceChange(geodata: StatePlacePostcodeSuburb) { 
+  private onPlaceChange(geodata: GeoData) { 
     this.geopostcodes = null;
     this.geosuburbs = null;
     this.getPostcodesByPlaceNameAndStateCode(geodata.place, geodata.state);
 
   }
 
-  private onPostcodeChange(geodata: StatePlacePostcodeSuburb) {
+  private onPostcodeChange(geodata: GeoData) {
     this.geosuburbs = null;    
     this.getSuburbssByPostcodeNumberAndPlaceName(geodata.postcode, geodata.place);
 

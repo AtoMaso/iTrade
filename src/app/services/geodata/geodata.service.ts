@@ -5,16 +5,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/retry';
 
 import {AuthenticationService } from '../authentication/authentication.service';
-import { Place, StatePlacePostcodeSuburb } from '../../helpers/classes';
+import { GeoData, State } from '../../helpers/classes';
 
-
-let placesUrl = CONFIG.baseUrls.places;
-let placesByStateIdUrl = CONFIG.baseUrls.getplacesbystateid;
-let placeUrl = CONFIG.baseUrls.place;
-let updatePlaceUrl = CONFIG.baseUrls.updateplace;
-let addPlaceUrl = CONFIG.baseUrls.addplace;
-let deletePlaceUrl = CONFIG.baseUrls.deleteplace;
-
+let geodataStatesWithDataUrl = CONFIG.baseUrls.geodataStatesWthData;
 let geodataStatesUrl = CONFIG.baseUrls.geodataStates;
 let geodataPlacesByStateCodeUrl = CONFIG.baseUrls.geodataPlacesByStateCodeUrl;
 let geodataPostcodesByPlaceNameAndStateCodeUrl = CONFIG.baseUrls.geodataPostcodesByPlaceNameAndStateCodeUrl;
@@ -34,7 +27,7 @@ export class GeoDataService {
   //******************************************************
   // GET places METHODS
   //******************************************************
-  public getStates(): Observable<StatePlacePostcodeSuburb[]> {
+  public getStatesWithData(): Observable<State[]> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -43,43 +36,26 @@ export class GeoDataService {
         'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
       })
     };
-    return this.httpClientService.get<StatePlacePostcodeSuburb[]>(geodataStatesUrl, httpOptions).retry(1);
-  }
-
-
-  public getPlacesByStateCode(statecode: string): Observable<StatePlacePostcodeSuburb[]> {
-
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
-
-    return this.httpClientService.get<StatePlacePostcodeSuburb[]>(geodataPlacesByStateCodeUrl + `?statecode=${statecode}`, httpOptions).retry(1);
-  }
-
-
-  public getPostcodesByPlaceNameAndStateCode(placename: string, statecode: string): Observable<StatePlacePostcodeSuburb[]> {
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
-
-    return this.httpClientService.get<StatePlacePostcodeSuburb[]>(geodataPostcodesByPlaceNameAndStateCodeUrl + `?placename=${placename}&statecode=${statecode}`, httpOptions).retry(1);
+    return this.httpClientService.get<State[]>(geodataStatesWithDataUrl, httpOptions).retry(1);
   }
 
 
 
+  public getStates(): Observable<GeoData[]> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+    return this.httpClientService.get<GeoData[]>(geodataStatesUrl, httpOptions).retry(1);
+  }
 
 
-  public getSuburbssByPostcodeNumberAndPlaceName(postcodenumber: string, placename:string): Observable<StatePlacePostcodeSuburb[]> {
+  public getPlacesByStateCode(statecode: string): Observable<GeoData[]> {
+
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -89,14 +65,45 @@ export class GeoDataService {
       })
     };
 
-    return this.httpClientService.get<StatePlacePostcodeSuburb[]>(geodataSuburbsByPostcodeNumberAndPlaceNameUrl + `?postcodenumber=${postcodenumber}&placename=${placename}`, httpOptions).retry(1);
+    return this.httpClientService.get<GeoData[]>(geodataPlacesByStateCodeUrl + `?statecode=${statecode}`, httpOptions).retry(1);
+  }
+
+
+  public getPostcodesByPlaceNameAndStateCode(placename: string, statecode: string): Observable<GeoData[]> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.get<GeoData[]>(geodataPostcodesByPlaceNameAndStateCodeUrl + `?placename=${placename}&statecode=${statecode}`, httpOptions).retry(1);
+  }
+
+
+
+
+
+  public getSuburbssByPostcodeNumberAndPlaceName(postcodenumber: string, placename: string): Observable<GeoData[]> {
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    return this.httpClientService.get<GeoData[]>(geodataSuburbsByPostcodeNumberAndPlaceNameUrl + `?postcodenumber=${postcodenumber}&placename=${placename}`, httpOptions).retry(1);
   }
 
 
   //******************************************************
   // ADD GEO PLACE
   //******************************************************
-  public addGeoRecord(place: StatePlacePostcodeSuburb): Observable<StatePlacePostcodeSuburb> {
+  public addGeoRecord(georecord: GeoData): Observable<GeoData> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -106,14 +113,14 @@ export class GeoDataService {
       })
     };
 
-    return this.httpClientService.post<StatePlacePostcodeSuburb>(addGeoRecordUrl, place, httpOptions).retry(1);
+    return this.httpClientService.post<GeoData>(addGeoRecordUrl, georecord, httpOptions).retry(1);
   }
 
 
   //******************************************************
   // UPDATE GEO PLACE
   //******************************************************
-  public updateGeoRecord(place: StatePlacePostcodeSuburb): Observable<StatePlacePostcodeSuburb> {
+  public updateGeoRecord(georecord: GeoData): Observable<GeoData> {
     // prepare the headesrs
     const httpOptions = {
       headers: new HttpHeaders({
@@ -123,15 +130,15 @@ export class GeoDataService {
       })
     };
 
-    const localUrl = `${updateGeoRecordUrl}?geoid=${place.id}`;
-    return this.httpClientService.put<StatePlacePostcodeSuburb>(localUrl, place, httpOptions).retry(1);
+    const localUrl = `${updateGeoRecordUrl}?geoid=${georecord.id}`;
+    return this.httpClientService.put<GeoData>(localUrl, georecord, httpOptions).retry(1);
   }
 
 
   //******************************************************
   // DELETE GEO PLACE
   //******************************************************
-  public deleteGeoRecord(id: number): Observable<StatePlacePostcodeSuburb> {
+  public deleteGeoRecord(id: number): Observable<GeoData> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -142,8 +149,8 @@ export class GeoDataService {
       })
     };
 
-    const localUrl = `${deleteGeoRecordUrl}?geoid=${id}`; // DELETE api/statesplacespostcodessuburbs/Delete?id=1
-    return this.httpClientService.delete<StatePlacePostcodeSuburb>(localUrl, httpOptions);
+    const localUrl = `${deleteGeoRecordUrl}?geoid=${id}`; // DELETE api/geodatas/Delete?id=1
+    return this.httpClientService.delete<GeoData>(localUrl, httpOptions);
   }
 
 
