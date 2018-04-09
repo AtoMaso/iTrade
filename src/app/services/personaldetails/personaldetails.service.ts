@@ -1,11 +1,11 @@
 import { Inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CONFIG } from '../../config';
-import { Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/retry';
 
-import {AuthenticationService } from '../authentication/authentication.service';
-import { PersonalDetails} from '../../helpers/classes';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { PersonalDetails } from '../../helpers/classes';
 
 let personaldetailsbytraderid = CONFIG.baseUrls.personaldetailsbytraderid;
 let updatepersonaldetails = CONFIG.baseUrls.updatepersonaldetail;
@@ -22,7 +22,7 @@ export class PersonalDetailsService {
   //*****************************************************
   // GET PERSONAL BY TRADER ID
   //*****************************************************
-  public getPersonalDetailsByTraderId(traderId: string): Observable<PersonalDetails>{
+  public getPersonalDetailsByTraderId(traderId: string): Observable<PersonalDetails> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -33,8 +33,8 @@ export class PersonalDetailsService {
       })
     };
 
-    const localUrl = `${personaldetailsbytraderid}?traderId=${traderId}`; 
-    return this.httpClientService.get<PersonalDetails>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${personaldetailsbytraderid}?traderId=${traderId}`;
+    return this.httpClientService.get<PersonalDetails>(localUrl, httpOptions).retry(1);
     //return this.httpClientService.get<PersonalDetails>(localUrl).retry(1);
   }
 
@@ -92,5 +92,5 @@ export class PersonalDetailsService {
     return this.httpClientService.delete<PersonalDetails>(localUrl, httpOptions).retry(1);
   }
 
- 
+
 }
