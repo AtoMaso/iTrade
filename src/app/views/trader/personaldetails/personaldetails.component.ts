@@ -91,7 +91,7 @@ export class PersonalDetailsComponent implements OnInit {
   private displayAddressTypeModal: string;
   private displayPreferredTypeModal: string;
 
-  constructor(   
+  constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -108,11 +108,11 @@ export class PersonalDetailsComponent implements OnInit {
     this.getUserSession();
     this.initialiseComponent();
 
-   
+
     this.getStatesWithData();
     //this.setAddressForm();
     //this.setPersonalForm();  
-   
+
   }
 
   // toggling done with jquery
@@ -126,7 +126,7 @@ export class PersonalDetailsComponent implements OnInit {
       jQuery("#collapsePersonal").on("show.bs.collapse", function () {
         jQuery(".personal").html('<span class="glyphicon glyphicon-minus"></span>  <span class="textlightcoral medium text-uppercase"> Personal Details</span>');
       });
-  
+
       jQuery("#collapseAddress").on("hide.bs.collapse", function () {
         jQuery(".address").html('<span class="glyphicon glyphicon-plus"></span> <span class="textlightcoral medium text-uppercase"> Address Details</span>  ');
       });
@@ -317,7 +317,7 @@ export class PersonalDetailsComponent implements OnInit {
 
     // get the states data
     //this.getStatesWithData();
- 
+
   }
 
 
@@ -336,7 +336,7 @@ export class PersonalDetailsComponent implements OnInit {
   private onSuccessStates(res: State[]) {
     // collections return zero length when no record found as it is initialised
     if (res.length == 0) { this.states = null; }
-    else { this.states = res; }  
+    else { this.states = res; }
 
     this.getPersonalDetailsByTraderId(this.traderId);
   }
@@ -363,36 +363,36 @@ export class PersonalDetailsComponent implements OnInit {
       unit: new FormControl('', [ValidationService.unitValidator]),
       street: new FormControl('', [Validators.required, ValidationService.streetValidator]),
       state: new FormControl('', [Validators.required, ValidationService.stateTradeValidator]),
-      place: new FormControl('', [Validators.required, ValidationService.placeTradeValidator]),    
+      place: new FormControl('', [Validators.required, ValidationService.placeTradeValidator]),
       postcode: new FormControl('', [Validators.required, ValidationService.postcodeTradeValidator]),
       suburb: new FormControl('', [Validators.required, ValidationService.suburbTradeValidator]),
-          
+
     });
   }
 
   private setPersonalFormDefaults() {
 
-  
-      this.personalForm.setValue({
-        fname: this.personalDetails.firstName,
-        mname: this.personalDetails.middleName,
-        lname: this.personalDetails.lastName,
-        dbirth: new Date(this.personalDetails.dateOfBirth)
-      });
+
+    this.personalForm.setValue({
+      fname: this.personalDetails.firstName,
+      mname: this.personalDetails.middleName,
+      lname: this.personalDetails.lastName,
+      dbirth: new Date(this.personalDetails.dateOfBirth)
+    });
 
 
-      this.currentLocale = 'au';
-      this.datePickerOptions = {
-        dateFormat: 'dd/mm/yyyy',
-        firstDayOfWeek: 'mo',
-        selectorWidth: 'auto',
-        width: 'auto',
-        minYear: 1900,
-        maxYear: 2100,
-        editableDateField: false
-      };
+    this.currentLocale = 'au';
+    this.datePickerOptions = {
+      dateFormat: 'dd/mm/yyyy',
+      firstDayOfWeek: 'mo',
+      selectorWidth: 'auto',
+      width: 'auto',
+      minYear: 1900,
+      maxYear: 2100,
+      editableDateField: false
+    };
 
-      this.setDate(this.personalDetails.dateOfBirth);
+    this.setDate(this.personalDetails.dateOfBirth);
 
   }
 
@@ -459,7 +459,7 @@ export class PersonalDetailsComponent implements OnInit {
 
     }, 50);
   }
- 
+
 
   //*****************************************************
   //GET THE SCREEN INPUT
@@ -474,29 +474,29 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onStateChange(singlestate: State) {  
-      this.selectedState = singlestate.state;
-      this.places = singlestate.places;
-      this.postcodes = null;
-      this.suburbs = null;
+  private onStateChange(singlestate: State) {
+    this.selectedState = singlestate.state;
+    this.places = singlestate.places;
+    this.postcodes = null;
+    this.suburbs = null;
   }
 
 
-  private onPlaceChange(singleplace: Place) {  
-    this.selectedPlace = singleplace.place; 
+  private onPlaceChange(singleplace: Place) {
+    this.selectedPlace = singleplace.place;
     this.postcodes = singleplace.postcodes;
-    this.suburbs = null;   
+    this.suburbs = null;
   }
 
 
-  private onPostcodeChange(singleopostcode: Postcode) {   
-    this.selectedPostcode = singleopostcode.postcode;      
+  private onPostcodeChange(singleopostcode: Postcode) {
+    this.selectedPostcode = singleopostcode.postcode;
     this.suburbs = singleopostcode.suburbs;
   }
 
 
-  private onSuburbChange(singlesuburb: Suburb) {  
-    this.selectedSuburb = singlesuburb.suburb;      
+  private onSuburbChange(singlesuburb: Suburb) {
+    this.selectedSuburb = singlesuburb.suburb;
   }
 
 
@@ -507,7 +507,7 @@ export class PersonalDetailsComponent implements OnInit {
         for (m = 0; m < this.existingpreferredtypes.length; m++) {
           if (this.existingpreferredtypes[m].value == preferredtype.value) {
             this.openPreferredTypeModal();
-            break;     
+            break;
           }
         }
       }
@@ -519,7 +519,7 @@ export class PersonalDetailsComponent implements OnInit {
         for (m = 0; m < this.existingpreferredtypes.length; m++) {
           if (this.existingpreferredtypes[m].value == preferredtype.value) {
             this.openPreferredTypeModal();
-            break;     
+            break;
           }
         }
       }
@@ -665,7 +665,7 @@ export class PersonalDetailsComponent implements OnInit {
         for (m = 0; m < this.existingaddresstypes.length; m++) {
           if (this.existingaddresstypes[m].addressType == type.addressType) {
             this.openAddressTypeModal();
-            break;     
+            break;
           }
         }
       }
@@ -676,7 +676,7 @@ export class PersonalDetailsComponent implements OnInit {
       for (m = 0; m < this.existingaddresstypes.length; m++) {
         if (this.existingaddresstypes[m].addressType == type.addressType) {
           this.openAddressTypeModal();
-          break;     
+          break;
         }
       }
     }
@@ -702,7 +702,7 @@ export class PersonalDetailsComponent implements OnInit {
         this.addressInView = this.availableAddresses[m];
         this.tempAddUpdateAddress = this.availableAddresses[m];
         this.setAddressFormDefaults();
-        break;     
+        break;
       }
     }
   }
@@ -710,7 +710,7 @@ export class PersonalDetailsComponent implements OnInit {
 
   private onAddressAddClick() {
     this.messagesService.emitRoute("nill");
-    this.isAddressAddOn = true;  
+    this.isAddressAddOn = true;
     this.places = [];
     this.postcodes = [];
     this.suburbs = [];
@@ -825,14 +825,14 @@ export class PersonalDetailsComponent implements OnInit {
 
     if (this.isAddressEditOn) { newAddUpdateAddress.id = this.addressInView.id; }
     newAddUpdateAddress.traderId = this.traderId as string,
-    newAddUpdateAddress.addressTypeId = addresstype.addressTypeId;
+      newAddUpdateAddress.addressTypeId = addresstype.addressTypeId;
     newAddUpdateAddress.country = "";
     newAddUpdateAddress.number = formModel.number as string;
     newAddUpdateAddress.unit = formModel.unit as string;
     newAddUpdateAddress.street = formModel.street as string;
     newAddUpdateAddress.state = geostate.state as string;
     newAddUpdateAddress.place = geoplace.place as string;
-    newAddUpdateAddress.suburb = geosuburb.suburb as string;  
+    newAddUpdateAddress.suburb = geosuburb.suburb as string;
     newAddUpdateAddress.postcode = geopostcode.postcode as string;
     newAddUpdateAddress.preferredFlag = preferredflag.value;
 
@@ -847,7 +847,7 @@ export class PersonalDetailsComponent implements OnInit {
   // we have custom method to compare the new and old
   private compareAddresses(newAddress: Address, oldAddress: Address): boolean {
 
-    if (newAddress.addressTypeId == oldAddress.addressTypeId &&    
+    if (newAddress.addressTypeId == oldAddress.addressTypeId &&
       newAddress.number == oldAddress.number &&
       newAddress.unit == oldAddress.unit &&
       newAddress.street == oldAddress.street &&
@@ -856,7 +856,7 @@ export class PersonalDetailsComponent implements OnInit {
       newAddress.postcode == oldAddress.postcode &&
       newAddress.suburb === oldAddress.suburb &&
       newAddress.addressTypeId == oldAddress.addressTypeId &&
-      newAddress.preferredFlag == oldAddress.preferredFlag ) {
+      newAddress.preferredFlag == oldAddress.preferredFlag) {
       return true;
     }
 
