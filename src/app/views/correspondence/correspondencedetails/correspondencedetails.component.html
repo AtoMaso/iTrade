@@ -8,61 +8,60 @@
 
            <div class="col-md-3 col-md-offset-1 panel panel-heading footerdiv">
 
-                 <div class="smalltext text-uppercase">
+                 <div class="corresdetails collapsed  smalltext text-uppercase">
                     <span class="textlightcoral"> Correspondence Details</span>
                    <span *ngIf="!hasCorres == null" class="textoker">- The system can not find any details for the correspondence!</span>
                  </div>
 
-           
+
              <div id="corresDetails" style="margin-top:20px;">
-           
-                   <div *ngIf="isReceiver" class="row">
-                     <div class="panel panel-heading col-md-12 mediumtext">
-                       Status:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.statusReceiver }}</span>
-                     </div>
-                   </div>
+               <div *ngIf="isReceiver" class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Status:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.statusReceiver }}</span>
+                 </div>
+               </div>
 
-                   <div *ngIf="isSender" class="row">
-                     <div class="panel panel-heading col-md-12 mediumtext">
-                       Status:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.statusSender }}</span>
-                     </div>
-                   </div>
+               <div *ngIf="isSender" class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Status:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.statusSender }}</span>
+                 </div>
+               </div>
 
-                   <div class="row">                   
-                     <div class="panel panel-heading col-md-12 mediumtext">
-                       Subject:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.message }}</span>
-                     </div>
-                   </div> 
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Subject:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.message }}</span>
+                 </div>
+               </div> 
 
-                   <div class="row">
-                     <div class="panel panel-heading col-md-12 mediumtext">
-                       About Trade:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.subject }}</span>
-                     </div>
-                   </div>
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   About Trade:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.subject }}</span>
+                 </div>
+               </div>
 
-                   <div class="row">
-                     <div class="panel panel-heading col-md-12 mediumtext">
-                       With Id:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.tradeId }}</span>
-                     </div>
-                   </div>
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   With Id:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.tradeId }}</span>
+                 </div>
+               </div>
 
-                   <div *ngIf="isReceiver" class="row">
-                     <div class="panel panel-heading col-md-12 mediumtext">
-                       From Trader:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.sender }}</span>
-                     </div>
-                   </div>
+               <div *ngIf="isReceiver" class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   From Trader:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.sender }}</span>
+                 </div>
+               </div>
 
-                   <div *ngIf="isSender" class="row">
-                     <div class="panel panel-heading col-md-12 mediumtext">
-                       Sent To:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.receiver }}</span>
-                     </div>
-                   </div>
+               <div *ngIf="isSender" class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Send To:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.receiver }}</span>
+                 </div>
+               </div>
 
-                   <div class="row">
-                     <div class="panel panel-heading col-md-12 mediumtext">
-                       Sent on:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.dateSent | date }}</span>
-                     </div>
-                   </div>
+               <div class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Sent on:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.dateSent | date }}</span>
+                 </div>
+               </div>
                                       
              </div>
 
@@ -88,9 +87,9 @@
                   </div>
 
                   <!-- BUTTONS -->
-                  <div *ngIf="isReceiver" class="row">
+                  <div *ngIf="isReceiver " class="row">
                         <div class="col-md-3">
-                            <button class="btn btn-success mediumtext" style="width:auto; height:auto;" id="Reply"  (click)="Reply()"
+                            <button class="btn btn-success mediumtext" style="width:auto; height:auto;" id="Reply" (click)="CanWeReply()"  
                                 data-target="#writeMessage" data-toggle="collapse">Reply</button>
                         </div>              
                   </div>
@@ -99,9 +98,9 @@
 
            
                   <!-- REPLY -->
-                 <div id="writeMessage" class="row collapse footerdiv" *ngIf="canSend">
+                 <div id="writeMessage" class="row collapse footerdiv">
 
-                         <form [formGroup]="sendCorresGroup" (submit)="sendCorres()">
+                         <form [formGroup]="sendCorresGroup" (submit)="startReply()">
 
                              <div class="panel panel-heading col-md-12">
                                <textarea formControlName="content" id="content" class="form-control smalltext" style="width:inherit;" rows="7" 
@@ -113,7 +112,7 @@
                              </div>
 
                              <div class="col-md-5">
-                               <button id="Send" class="btn btn-success smalltext" type="submit" style="width:auto; height:auto;" value="Send"  [disabled]="!sendCorresGroup.valid">Send</button>
+                               <button id="Send" class="btn btn-success smalltext" type="submit" style="width:auto; height:auto;" value="Send" [disabled]="!canReply">Send</button>
                              </div>
 
                          </form>

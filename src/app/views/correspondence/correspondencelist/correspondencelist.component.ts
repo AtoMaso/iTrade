@@ -23,7 +23,7 @@ export class CorrespondenceListComponent implements OnInit {
   private isRequesting: boolean = false;
 
   private statusInbox: string = "New";
-  private statusSent: string = "New";
+  private statusSent: string = "Sent";
   private statusArchivedInbox: string = "Archived";
   private statusArchivedSent: string = "Archived"; 
 
@@ -77,7 +77,7 @@ export class CorrespondenceListComponent implements OnInit {
     this.getUserSession();
     this.initialiseComponent();
     this.getInbox(this.traderId, this.statusInbox);    
-    this.getSent(this.traderId, this.statusInbox);    
+    this.getSent(this.traderId, this.statusSent);    
     this.getArchivedInbox(this.traderId, this.statusArchivedInbox);
     this.getArchivedSent(this.traderId, this.statusArchivedSent);
     this.getRemovedCorrespondence(this.traderId);
@@ -444,7 +444,7 @@ export class CorrespondenceListComponent implements OnInit {
   private activateRemoved(removedToActivate: Correspondence) {
     // update the status of the correspondence to archived
     if (removedToActivate.traderIdReceiver === this.traderId) { removedToActivate.statusReceiver = "New"; }
-    else { removedToActivate.statusSender = "New"; }
+    else { removedToActivate.statusSender = "Sent"; }
 
     this.corresService.updateCorrespondence(removedToActivate)
       .subscribe((response: Correspondence) => {
