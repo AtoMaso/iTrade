@@ -216,7 +216,7 @@ export class SocialNetworksService {
       })
     };
 
-    const localUrl = `${deleteSocialNetworkTypeUrl}?socialTypeId = ${id}`;
+    const localUrl = `${deleteSocialNetworkTypeUrl}?socialTypeId=${id}`;
     return this.httpClientService.delete<SocialNetworkType>(localUrl, httpOptions).retry(1);
   }
 }

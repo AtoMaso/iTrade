@@ -82,15 +82,16 @@ export class AddCorrespondenceComponent implements OnInit {
       // on input key up event update the counter
       input.keyup(function (e) {
 
-        count = jQuery(this).val().length;
-        remaining = limit - count;
+            count = jQuery(this).val().length;
+            remaining = limit - count;
 
-        update(remaining);
+            update(remaining);
 
-        // change the button to enabled when chararcter is entered or disbaled it when no char in it
-        if (jQuery(this).val() != '') { jQuery('#Send').removeAttr('disabled'); }
-        else { jQuery('#Send').attr('disabled', 'disabled'); }
-      });
+            // change the button to enabled when chararcter is entered or disbaled it when no char in it
+            if (jQuery(this).val() != '') { jQuery('#Send').removeAttr('disabled'); }
+            else { jQuery('#Send').attr('disabled', 'disabled'); }
+
+          });
 
 
       // update the character counter

@@ -21,17 +21,18 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 
 export class CorrespondenceDetailsComponent implements OnInit {
 
-  private receivedCorres: Correspondence = new Correspondence();
+  private receivedCorres: Correspondence;
   private isSender: boolean = false;
   private isReceiver: boolean = false;
   private corresId: number;
   private hasCorres: boolean = false;  
-  private session: UserSession = new UserSession();
+  private session: UserSession;
   private isRequesting: boolean = false;
   private content: string = "";
   private sendCorresGroup: any;
   private loggedOnTrader: string;
   private senderId: string;
+  private canSend: boolean = false;
 
   constructor(      
     private corresService: CorrespondenceService,
@@ -48,21 +49,17 @@ export class CorrespondenceDetailsComponent implements OnInit {
   /*******************************************************/
   ngOnInit() {
 
-    this.sendCorresGroup = this.formBuilder.group({
-      content: new FormControl('', [Validators.required, ValidationService.contentValidator]),  
-    });
+    this.getUserSession();
+    this.initialiseComponent();
 
     this.route.queryParams.subscribe(params => {
       this.corresId = params['id'];       
+      this.getACorrespondenceByTraderIdAndId(this.loggedOnTrader, this.corresId);
     });
 
-    this.getUserSession();   
-
-    this.initialiseComponent();
-
-    //this.getACorrespondence(this.corresId);
-
-    this.getACorrespondenceByTraderIdAndId(this.loggedOnTrader, this.corresId);
+    this.sendCorresGroup = this.formBuilder.group({
+      content: new FormControl('', [Validators.required, ValidationService.contentValidator]),
+    });
   }
 
 
@@ -78,9 +75,7 @@ export class CorrespondenceDetailsComponent implements OnInit {
           var html = jQuery.parseHTML(hid);
           var inp = jQuery('#receivedContent');
           inp.append(html);
-        }), 500);
-
-
+        }), 300);
 
         // set the text of the counter 
         var input = jQuery('#content'), display = jQuery('#characterCount'), count = 0, limit = 500;
@@ -92,16 +87,15 @@ export class CorrespondenceDetailsComponent implements OnInit {
         // on input key up event update the counter
         input.keyup(function (e) {
 
-          count = jQuery(this).val().length;
-          remaining = limit - count;
+                count = jQuery(this).val().length;
+                remaining = limit - count;
 
-          update(remaining);
+                update(remaining);
 
-          // change the button to enabled when chararcter is entered or disbaled it when no char in it
-          if (jQuery(this).val() != '') { jQuery('#Send').removeAttr('disabled'); }
-          else { jQuery('#Send').attr('disabled', 'disabled'); }
-      });
-
+                // change the button to enabled when chararcter is entered or disbaled it when no char in it
+                if (jQuery(this).val() != '') { jQuery('#Send').removeAttr('disabled'); }
+                else { jQuery('#Send').attr('disabled', 'disabled'); }
+          });
 
 
       // update the character counter
@@ -118,18 +112,6 @@ export class CorrespondenceDetailsComponent implements OnInit {
   /*******************************************************/
   // GET A TRADE
   /*******************************************************/
-  private getACorrespondence(corresId: number) {
-
-    this.corresService.getSingleCorres(corresId)
-      .subscribe((corresResult: Correspondence) => {
-        this.hasCorres = true;
-        this.receivedCorres = corresResult;
-        if (this.receivedCorres.traderIdReceiver === this.loggedOnTrader) { this.isReceiver = true; }
-        else { this.isSender = true;  }
-
-      }, (serviceError: Response) => this.onError(serviceError, "getACorrespondence"));
-  }
-
   // by ids
   private getACorrespondenceByTraderIdAndId(loggedOnTrader: string, corresId: number) {
 
@@ -139,7 +121,22 @@ export class CorrespondenceDetailsComponent implements OnInit {
             this.receivedCorres = corresResult;
             if (this.receivedCorres.traderIdReceiver === this.loggedOnTrader) { this.isReceiver = true; }
             else { this.isSender = true; }
-      }, (serviceError: Response) => this.onError(serviceError, "getACorrespondence"));
+      },
+      (serviceError: Response) => this.onError(serviceError, "getACorrespondence"));
+  }
+
+
+  private Reply() {
+    // prepare the form if status of the correspondence is New
+    if (this.receivedCorres.statusReceiver === "Responded") {
+         // show message that the user has already reponded on this email
+      this.canSend = false;
+      this.messagesService.emitProcessMessage("PMERCo");
+    }
+    else {
+      this.canSend = true;
+    }
+
   }
 
 
@@ -175,7 +172,7 @@ export class CorrespondenceDetailsComponent implements OnInit {
   private getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
-        this.session = JSON.parse(sessionStorage["UserSession"])      
+        this.session = JSON.parse(sessionStorage["UserSession"])              
         this.loggedOnTrader = this.session.userIdentity.userId;
       }
       catch (ex) {

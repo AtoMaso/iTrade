@@ -77,7 +77,7 @@ export class TraderHomeComponent implements OnInit {
   // GET CORRESPONDENCE - -- this wil get all correspondence, if there are no any will show the message
   //****************************************************************************************
   private getCorres(traderId: string, statusCorres: string = "All") {
-
+    this.isRequesting = true;
     this.corresService.getInboxByTraderIdWithStatus(traderId, statusCorres)
       .subscribe((returnedCorres: Correspondence[]) => {
         if (returnedCorres.length === 0) { this.hasCorres = false; }
@@ -90,6 +90,7 @@ export class TraderHomeComponent implements OnInit {
   }
 
   private onSuccessCorres(corres) {   
+      this.isRequesting = false;
       this.dataCorr = corres;
       this.hasCorres = true;
       this.isFirstLoadCorr = true;
@@ -102,14 +103,14 @@ export class TraderHomeComponent implements OnInit {
   // GET TRADES -- this will get all trades for the trader closed and open, if there are no any will show message
   //**************************************************************************************
   private getTrades(traderId: string, status: string) {
-    this.isRequesting = true;  
-    this.tradeService.getTradesWithStatusOrAll(traderId, status)
+      this.isRequesting = true;  
+      this.tradeService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
+      
         if (returnedTrades.length === 0) { this.hasTrades = false; }
         else { this.onSuccessTrades(returnedTrades); }
       },
       (res: Response) => this.onError(res, "getTrades"));
-
   }
 
 

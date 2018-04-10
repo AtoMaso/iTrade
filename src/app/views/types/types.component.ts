@@ -858,7 +858,7 @@ export class TypesComponent implements OnInit {
 
     // has anything beeing changed in the form and we are updating
     if (this.isEmailTypeEditOn && !this.isEmailTypeChanged(newAddUpdateEmailType, this.tempAddUpdateEmailType)) {
-      this.messagesService.emitProcessMessage("PMEEmt");
+      this.messagesService.emitProcessMessage("PMEUEmt");
       return null;
     }
     if (this.emailTypeExists(newAddUpdateEmailType)) {
@@ -1034,7 +1034,7 @@ export class TypesComponent implements OnInit {
 
     // has anything beeing changed in the form and we are updating
     if (this.isSocialTypeEditOn && !this.isSocialypeChanged(newAddUpdateSocialType, this.tempAddUpdateSocialType)) {
-      this.messagesService.emitProcessMessage("PMESot");
+      this.messagesService.emitProcessMessage("PMEUSot");
       return null;
     }
     if (this.socialTypeExists(newAddUpdateSocialType)) {

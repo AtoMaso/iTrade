@@ -8,14 +8,15 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder, F
 // services
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
 import { CategoryService } from '../../../services/categories/category.service';
-import {GeoDataService } from '../../../services/geodata/geodata.service';
+import { GeoDataService } from '../../../services/geodata/geodata.service';
+import { PersonalDetailsService } from '../../../services/personaldetails/personaldetails.service';
 import { ValidationService } from '../../../services/validation/validation.service';
 import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
 //import { CapsPipe } from '../../../helpers/pipes';
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, GeoData} from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Category, Subcategory, GeoData, PersonalDetails} from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -67,12 +68,15 @@ export class TradesListComponent implements OnInit {
   private isNewLoad: boolean = false;
   private checked: boolean = false;
 
+  private hasPersonal: boolean = false;
+
   // constructor which injects the services
   constructor(
     private route: ActivatedRoute,
     private tradeApiService: TradeApiService,
     private categoryService: CategoryService,
     private geodataService: GeoDataService,
+    private personalService: PersonalDetailsService,
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
     private router: Router,
@@ -85,12 +89,11 @@ export class TradesListComponent implements OnInit {
      
     this.getUseridentity();
     this.initialiseComponent();     
-
-    //this.getTrades("Open");
+  
     this.getCategories();
     this.getStates();   
     this.getSetOfTradesWithStatus(this.setsCounter, this.recordsPerSet, this.status);
- 
+    if (this.isAuthenticated) { this.getPersonalDetails(this.session.userIdentity.userId); }
   }
 
 
@@ -296,7 +299,20 @@ export class TradesListComponent implements OnInit {
       (res: Response) => this.onError(res, "getTradesWithSetFilters"));
   }
 
+  //*****************************************************
+  // GET PERSONAL DETAILS
+  //*****************************************************
+  private getPersonalDetails(traderId) {
+    this.isRequesting = true;
 
+    this.personalService.getPersonalDetailsByTraderId(traderId)
+      .subscribe((returnedPersonalDetails: PersonalDetails) => {
+        this.isRequesting = false;
+        if (returnedPersonalDetails.id === 0) { this.hasPersonal = false; }
+        else { this.hasPersonal = true; }
+      },
+      (res: Response) => this.onError(res, "getPersonalDetails"));
+  }
 
 
   //*****************************************************
@@ -554,8 +570,7 @@ export class TradesListComponent implements OnInit {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
-        this.isAuthenticated = this.session.authentication.isAuthenticated;
-        this.identity.roles = this.session.userIdentity.roles;       
+        this.isAuthenticated = this.session.authentication.isAuthenticated;                  
       }
       catch (ex) {
         this.messagesService.emitProcessMessage("PMG");

@@ -215,7 +215,7 @@ export class AddressService {
       })
     };
 
-    const localUrl = `${deleteAddressTypeUrl}?addressTypeId = ${id}`;
+    const localUrl = `${deleteAddressTypeUrl}?addressTypeId=${id}`;
     return this.httpClientService.delete<AddressType>(localUrl, httpOptions).retry(1);
   }
 }

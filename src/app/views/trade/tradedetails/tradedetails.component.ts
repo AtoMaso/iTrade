@@ -8,10 +8,11 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 import { TradeApiService } from '../../../services/tradeapi/tradeapi.service';
+import { PersonalDetailsService } from '../../../services/personaldetails/personaldetails.service';
 import { ImageService } from '../../../services/image/image.service';
 import { TradeHistoryService } from '../../../services/tradehistory/trade-history.service';
 
-import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Image, TradeHistory } from '../../../helpers/classes';
+import { UserSession, UserIdentity, Authentication, Trade, PageTitle, Image, TradeHistory, PersonalDetails } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
 
@@ -24,6 +25,7 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 
 export class TradeDetailsComponent implements OnInit {
 
+  private traderId: string;
   private tradeId: number = 0;
   private trade: Trade;
   private images: Image[];
@@ -39,13 +41,14 @@ export class TradeDetailsComponent implements OnInit {
   private canTrade: boolean = false;
   private flagnew: boolean = false;
   private isFirstLoad: boolean = false;
-
+  private hasPersonal: boolean = false;
 
   constructor(  
     private cd: ChangeDetectorRef,
     private tradeApiService: TradeApiService,
     private imageServise: ImageService, 
     private tradeHistoryService: TradeHistoryService,
+    private personalService: PersonalDetailsService,
     private route: ActivatedRoute,    
     private messagesService: ProcessMessageService,
     private pageTitleService: PageTitleService,
@@ -70,7 +73,8 @@ export class TradeDetailsComponent implements OnInit {
 
         // starts with gettrade end up with get images separatelly
         this.getATrade(this.tradeId);
-     
+
+        if (this.isAuthenticated) { this.getPersonalDetails(this.traderId); }
     });
    
   }
@@ -232,8 +236,24 @@ export class TradeDetailsComponent implements OnInit {
     else if (this.images.length == 2) {
       this.hasImage3 = false;
     }    
+
   }
 
+
+  //*****************************************************
+  // GET PERSONAL DETAILS
+  //*****************************************************
+  private getPersonalDetails(traderId) {
+    this.isRequesting = true;
+
+    this.personalService.getPersonalDetailsByTraderId(traderId)
+      .subscribe((returnedPersonalDetails: PersonalDetails) => {
+        this.isRequesting = false;
+        if (returnedPersonalDetails.id === 0) { this.hasPersonal = false; }
+        else { this.hasPersonal = true; }
+      },
+      (res: Response) => this.onError(res, "getPersonalDetails"));
+  }
 
 
   //*****************************************************
@@ -244,6 +264,7 @@ export class TradeDetailsComponent implements OnInit {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
         this.isAuthenticated = this.session.authentication.isAuthenticated;
+        this.traderId = this.session.userIdentity.userId;
       }
       catch (ex) {
         this.messagesService.emitProcessMessage("PMG");

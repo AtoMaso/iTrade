@@ -34,8 +34,7 @@ export class PersonalDetailsService {
     };
 
     const localUrl = `${personaldetailsbytraderid}?traderId=${traderId}`;
-    return this.httpClientService.get<PersonalDetails>(localUrl, httpOptions).retry(1);
-    //return this.httpClientService.get<PersonalDetails>(localUrl).retry(1);
+    return this.httpClientService.get<PersonalDetails>(localUrl, httpOptions).retry(1);  
   }
 
 

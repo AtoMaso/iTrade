@@ -206,7 +206,7 @@ export class EmailsService {
       })
     };
 
-    const localUrl = `${deleteEmailTypeUrl}?emailTypeId = ${id}`;
+    const localUrl = `${deleteEmailTypeUrl}?emailTypeId=${id}`;
     return this.httpClientService.delete<EmailType>(localUrl, httpOptions).retry(1);
   }
 }

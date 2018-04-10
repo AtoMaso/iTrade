@@ -58,8 +58,11 @@
 
                 <div *ngIf="isAuthenticated">
 
-                  <div *ngIf="canTrade">
+                  <div *ngIf="canTrade && hasPersonal">
                     <button type="button" [routerLink]="['/addcorrespondence']" [queryParams]="{id: trade.tradeId }" class="btn btn-success btn-sm smalltext" style="width:auto;"> Send a Request</button>
+                  </div>
+                  <div *ngIf="!hasPersonal">
+                    <button type="button"data-target="#noPersonalNoTrade" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:auto;"> Send a Request</button>
                   </div>
                   <div *ngIf="!canTrade">
                     <button type="button" data-target="#canNotTrade" data-toggle="modal" class="btn btn-success btn-sm smalltext" style="width:auto;"> Send a Request</button>
@@ -264,3 +267,28 @@
     </div>
   </div>
 </div>
+
+<!-- MODAL form to show when user viewing hist tarde and is logged in-->
+<div class="modal fade" id="noPersonalNoTrade" tabindex="-1" role="dialog" aria-labelledby="noPersonalNoTrade">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content ">
+
+      <div class="modal-header">
+        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>You have to provide your personal details to start trading. Do you want to go to you account?!</p>
+      </div>
+     
+        <div class="modal-footer">
+          <button class="btn btn-danger" data-dismiss="modal">No</button>
+          <button class="btn btn-success" [routerLink]="['/personaldetails']" data-dismiss="modal">Yes</button>
+        </div>
+    
+    </div>
+  </div>
+</div>
+

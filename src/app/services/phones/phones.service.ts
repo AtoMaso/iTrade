@@ -215,7 +215,7 @@ export class PhonesService {
       })
     };
 
-    const localUrl = `${deletePhoneTypeUrl}?phoneTypeId = ${id}`;
+    const localUrl = `${deletePhoneTypeUrl}?phoneTypeId=${id}`;
     return this.httpClientService.delete<PhoneType>(localUrl, httpOptions).retry(1);
   }
 }

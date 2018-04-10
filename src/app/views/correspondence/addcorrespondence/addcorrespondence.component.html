@@ -25,33 +25,40 @@
     
     </div>
 
+
+
     <div id="writeMessage" class="row col-md-8 col-md-offset-1">
 
-      <form [formGroup]="addCorresForm" (submit)="sendRequest()">
+          <form [formGroup]="addCorresForm" (submit)="sendRequest()">
 
-        <div class="panel panel-heading col-md-12 footerdiv">
-          <input type="text" formControlName="message" id="message" name="message" required class="form-control smalltextbold" style="background-color:moccasin;width:inherit;" spellcheck="true" maxlength="70" placeholder="Write your subject here..." />
-          <control-messages [control]="addCorresForm.controls.message"></control-messages>
-        </div>
+                    <div class="panel panel-heading col-md-12 footerdiv">
+                      <input type="text" formControlName="message" id="message" name="message" required class="form-control smalltextbold" style="background-color:moccasin;width:inherit;" spellcheck="true" maxlength="70" placeholder="Write your subject here..." />
+                      <control-messages [control]="addCorresForm.controls.message"></control-messages>
+                    </div>
 
-        <div class="panel panel-heading col-md-12 footerdiv">            
-            <textarea formControlName="content" id="content" required class="form-control smalltextbold" style="background-color:moccasin;width:inherit;" rows="7" spellcheck="true" maxlength="500" placeholder="Write your message here..."></textarea>
-            <control-messages [control]="addCorresForm.controls.content"></control-messages>       
-           <span id="characterCount" class="smalltext textgray"></span>       
-        </div>
+                    <div class="panel panel-heading col-md-12 footerdiv">            
+                        <textarea formControlName="content" id="content" required class="form-control smalltextbold" style="background-color:moccasin;width:inherit;"
+                                            rows="7" spellcheck="true" maxlength="500" placeholder="Write your message here..."></textarea>
+                        <control-messages [control]="addCorresForm.controls.content"></control-messages>       
+                       <span id="characterCount" class="smalltext textgray"></span>       
+                    </div>
 
-        <div class="col-md-5">
-          <button id="Send" class="btn btn-success smalltext" type="submit" style="width:auto; height:auto;" value="Send" [disabled]="!addCorresForm.valid">Send</button>
-        </div>
+                    <div class="col-md-5">
+                      <button id="Send" class="btn btn-success smalltext" type="submit" style="width:auto; height:auto;" value="Send" [disabled]="!addCorresForm.valid">Send</button>
+                    </div>
 
-      </form>
+          </form>
 
     </div>
   </div>
 
 </div>
 
+
+
 <my-spinner [isRunning]="isRequesting"></my-spinner>
+
+
 
 <!-- submitted section -->
 <div  *ngIf="isSubmited">

@@ -181,11 +181,17 @@
                                                   </button>
                                                 </div>
 
-                                                <div *ngIf="isAuthenticated" class="row container" style="height:45px;" (click)="PostTrade();">
-                                                  <button type="button" class="btn btn-sm btn-success smalltext">
+                                                <div *ngIf="isAuthenticated && !hasPersonal" class="row container" style="height:45px;">
+                                                  <button type="button" data-target="#personalWarning" data-toggle="modal" class="btn btn-sm btn-success smalltext">
                                                     <span class="glyphicon glyphicon-plus"></span>&nbsp; Post Trade
                                                   </button>
                                                 </div>
+
+                                              <div *ngIf="isAuthenticated && hasPersonal" class="row container" style="height:45px;" (click)="PostTrade();">
+                                                <button type="button" class="btn btn-sm btn-success smalltext">
+                                                  <span class="glyphicon glyphicon-plus"></span>&nbsp; Post Trade
+                                                </button>
+                                              </div>
 
                                             </div>
 
@@ -204,7 +210,7 @@
 
                      <tr *ngFor="let trade of rows  | paginate:config" >
 
-                        <td class="row col-md-12" [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}">
+                        <td class="row col-md-12">
 
                                <div class="col-md-4 container">
                                  <carousel id="{{ trade.tradeId }}" [tradeId]="trade.tradeId" (onErrorPicked)="ChangeIsRequesting($event)"></carousel>
@@ -310,6 +316,31 @@
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">No</button>
         <button class="btn btn-success" [routerLink]="['/login']" data-dismiss="modal">Yes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!--End of modal form -->
+
+<!-- MODAL form to show when POST trade is clicked and user is NOT LOGGED IN -->
+<div class="modal fade" id="personalWarning" tabindex="-1" role="dialog" aria-labelledby="personalWarning">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <!-- this will introduce a x button in the corner of the modal dialog which can be used to close the dialog box -->
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h4 class="text-warning"><span><i class="glyphicon glyphicon-exclamation-sign"></i></span>&nbsp;Warning!</h4>
+      </div>
+
+      <div class="modal-body text-warning">
+        <p>You will need to provide your personal details before posting a trade. Do you want to go your account?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">No</button>
+        <button class="btn btn-success" [routerLink]="['/personaldetails']" data-dismiss="modal">Yes</button>
       </div>
 
     </div>

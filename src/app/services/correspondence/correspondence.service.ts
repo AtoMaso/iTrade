@@ -71,9 +71,9 @@ export class CorrespondenceService {
       })
     };
    
-    this.localUrl = `${singlecorres}${corresId}`; 
+    const localUrl = `${singlecorres}${corresId}`; 
 
-    return this.httpClientService.get<Correspondence>(this.localUrl, httpOptions).retry(1);
+    return this.httpClientService.get<Correspondence>(localUrl, httpOptions).retry(1);
   }
 
   // get single correspondence by corres id and sender id
@@ -88,9 +88,9 @@ export class CorrespondenceService {
       })
     };
 
-    this.localUrl = `${corresbysenderidandid}?loggedOnTrader=${loggedonTrader}&id=${corresId}`;
+    const localUrl = `${corresbysenderidandid}?loggedOnTrader=${loggedonTrader}&id=${corresId}`;
 
-    return this.httpClientService.get<Correspondence>(this.localUrl, httpOptions).retry(1);
+    return this.httpClientService.get<Correspondence>(localUrl, httpOptions).retry(1);
   }
 
    //**********************************************************
@@ -109,8 +109,8 @@ export class CorrespondenceService {
     };
   
    
-    this.localUrl = `${corresbytradeidwithstatus}?traderId=${tradeId}&status=${status}`; 
-    return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${corresbytradeidwithstatus}?traderId=${tradeId}&status=${status}`; 
+    return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
   }
 
 
@@ -128,8 +128,8 @@ export class CorrespondenceService {
       })
     };
     
-    this.localUrl = `${removedcorrespondencebytraderid}?traderId=${traderId}`;
-    return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
+    const localUrl = `${removedcorrespondencebytraderid}?traderId=${traderId}`;
+    return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
   }
 
 
@@ -150,8 +150,8 @@ export class CorrespondenceService {
     };
 
 
-   this.localUrl = `${corresbytraderidwithstatusinbox}?traderId=${traderId}&status=${status}`; 
-    return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
+   const localUrl = `${corresbytraderidwithstatusinbox}?traderId=${traderId}&status=${status}`; 
+    return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
   }
 
 
@@ -171,8 +171,8 @@ export class CorrespondenceService {
     };
 
    
-   this.localUrl = `${corresbytraderidwithstatussent}?traderId=${traderId}&status=${status}`; 
-    return this.httpClientService.get<Correspondence[]>(this.localUrl, httpOptions).retry(1);
+   const localUrl = `${corresbytraderidwithstatussent}?traderId=${traderId}&status=${status}`; 
+    return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
   }
 
   //**********************************************************
