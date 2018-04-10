@@ -24,43 +24,50 @@
                                    <!-- Table Header -->
                                    <thead>
                                      <tr>
-                                       <th class="col-md-1" style="background-color:#FF223A3A">                                        
-                                           <span class="textgray smalltext  text-uppercase" style="width:auto">Trade </span>                                        
-                                       </th>
+                                     
+
 
                                        <th class="col-md-2" style="background-color:#FF223A3A">                                         
                                            <span class="textgray smalltext text-uppercase" style="width:auto">Message</span>                                        
                                        </th>
 
-                                       <th class="col-md-2" style="background-color:#FF223A3A">                                     
-                                           <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent</span>                                       
-                                       </th>                                 
-
-                                       <th class="col-md-2" style="background-color:#FF223A3A">                                         
-                                           <span class="textgray  smalltext  text-uppercase" style="width:auto">Sender</span>                                        
+                                       <th class="col-md-2" style="background-color:#FF223A3A">
+                                         <span class="textgray  smalltext  text-uppercase" style="width:auto">From</span>
                                        </th>
+
+                                       <th class="col-md-1" style="background-color:#FF223A3A">
+                                         <span class="textgray smalltext  text-uppercase" style="width:auto">About </span>
+                                       </th>
+
+                                       <th class="col-md-2" style="background-color:#FF223A3A">                                     
+                                           <span class="textgray  smalltext  text-uppercase" style="width:auto">Received On</span>                                       
+                                       </th>                                 
 
                                        <th class="col-md-1" style="background-color:#FF223A3A">                                         
                                            <span class="textgray  smalltext  text-uppercase" style="width:auto">Status</span>                                     
                                        </th>
+
+                                      
                                      </tr>
                                    </thead>
 
                                    <!-- Table Rows -->
                                    <tr *ngFor="let corres of rowsCorr |  paginate:configCorr ">
 
-                                     <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
+                                    
 
                                       <td class="col-md-2">
                                        <a [routerLink]="['/correspondencedetails']" [queryParams]="{id: corres.id}" class="smalltext text-uppercase textlightcoral restriction"><i>{{ corres.message  }}</i></a>
                                      </td>
 
-                                     <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
-
                                      <td class="col-md-2">
                                        <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.sender  }}</i></a>
                                      </td>        
 
+                                     <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
+
+                                     <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
+                                   
                                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusReceiver }}</td>    
                                                                                    
                                    </tr>
