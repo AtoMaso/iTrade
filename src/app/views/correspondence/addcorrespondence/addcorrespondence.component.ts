@@ -62,7 +62,6 @@ export class AddCorrespondenceComponent implements OnInit {
         message: new FormControl("", [Validators.required, ValidationService.messageValidator]),
         content: new FormControl('', [Validators.required, ValidationService.contentValidator]),
       });
-
   }
 
 
@@ -173,7 +172,7 @@ export class AddCorrespondenceComponent implements OnInit {
     let request = new Correspondence();
         
     request.traderIdReceiver = this.actualTrade.traderId; 
-    request.statusSender = "New";     
+    request.statusSender = "Sent";     
 
     request.tradeId = this.actualTrade.tradeId;
     request.traderIdSender = this.traderId
