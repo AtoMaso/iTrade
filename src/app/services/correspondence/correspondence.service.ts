@@ -149,7 +149,6 @@ export class CorrespondenceService {
       })
     };
 
-
    const localUrl = `${corresbytraderidwithstatusinbox}?traderId=${traderId}&status=${status}`; 
     return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
   }
