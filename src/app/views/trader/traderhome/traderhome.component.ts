@@ -40,7 +40,6 @@ export class TraderHomeComponent implements OnInit {
     private pageTitleService: PageTitleService,
     private loggerService: LoggerService) {}
 
-
   ngOnInit() {
     
     this.getUserSession();
