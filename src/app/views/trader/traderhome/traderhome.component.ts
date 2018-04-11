@@ -14,7 +14,6 @@ import { PageTitleService } from '../../../services/pagetitle/pagetitle.service'
 import { UserSession, Trade, PageTitle, Correspondence, PersonalDetails } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
-
 @Component({
   selector: 'app-traderhome',
   templateUrl: './traderhome.component.html',
