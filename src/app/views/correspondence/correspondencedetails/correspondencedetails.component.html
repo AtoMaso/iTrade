@@ -11,27 +11,37 @@
                  <div class="corresdetails collapsed  smalltext text-uppercase">
                     <span class="textlightcoral"> Correspondence Details</span>
                    <span *ngIf="!hasCorres == null" class="textoker">- The system can not find any details for the correspondence!</span>
+                 </div>        
+
+               <div class="row" style="margin-top:20px;">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Correspondence:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.message }}</span>
                  </div>
+               </div> 
 
-
-             <div id="corresDetails" style="margin-top:20px;">
                <div *ngIf="isReceiver" class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
-                   Status:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.statusReceiver }}</span>
+                   From:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.sender }}</span>
                  </div>
                </div>
 
                <div *ngIf="isSender" class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
-                   Status:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.statusSender }}</span>
+                   To:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.receiver }}</span>
                  </div>
                </div>
 
-               <div class="row">
+               <div *ngIf="isReceiver" class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
-                   Subject:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.message }}</span>
+                   Received on:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.dateSent | date }}</span>
                  </div>
-               </div> 
+               </div>
+
+               <div *ngIf="isSender" class="row">
+                 <div class="panel panel-heading col-md-12 mediumtext">
+                   Sent on:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.dateSent | date }}</span>
+                 </div>
+               </div>
 
                <div class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
@@ -44,25 +54,20 @@
                    With Id:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.tradeId }}</span>
                  </div>
                </div>
-
+             
+             <div id="corresDetails">
                <div *ngIf="isReceiver" class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
-                   From Trader:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.sender }}</span>
+                   Correspondence Status:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.statusReceiver }}</span>
                  </div>
                </div>
 
                <div *ngIf="isSender" class="row">
                  <div class="panel panel-heading col-md-12 mediumtext">
-                   Send To:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.receiver }}</span>
+                   Correspondence Status:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.statusSender }}</span>
                  </div>
                </div>
 
-               <div class="row">
-                 <div class="panel panel-heading col-md-12 mediumtext">
-                   Sent on:<span class="text-uppercase text-info smalltext"> {{ receivedCorres.dateSent | date }}</span>
-                 </div>
-               </div>
-                                      
              </div>
 
           </div>
@@ -88,7 +93,7 @@
                   <!-- BUTTONS -->
                   <div *ngIf="isReceiver " class="row">
                         <div class="col-md-3">
-                            <button class="btn btn-success mediumtext" style="width:auto; height:auto;" id="Reply" (click)="CanWeReply()"  
+                            <button class="btn btn-success mediumtext" style="width:auto; height:auto;" id="Reply"   [disabled]="!canReply"
                                 data-target="#writeMessage" data-toggle="collapse">Reply</button>
                         </div>              
                   </div>

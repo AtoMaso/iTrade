@@ -15,11 +15,10 @@ let corresbytradeidwithstatus = CONFIG.baseUrls.corresbytradeidwithstatus;
 let corresbysenderidandid = CONFIG.baseUrls.corresbysenderidandid;
   
 let corresbytraderidinbox = CONFIG.baseUrls.corresbytraderidinbox;
-let corresbytraderidwithstatusinbox = CONFIG.baseUrls.corresbytraderidwithstatusinbox;
-
 let corresbytraderidsent = CONFIG.baseUrls.corresbytraderidsent;
-let corresbytraderidwithstatussent = CONFIG.baseUrls.corresbytraderidwithstatussent;
-let removedcorrespondencebytraderid = CONFIG.baseUrls.removedcorrespondencebytraderid;
+let corresbytraderidarchivedinbox = CONFIG.baseUrls.corresbytraderidarchivedinbox;
+let corresbytraderidarchivedsent = CONFIG.baseUrls.corresbytraderidarchivedsent;
+let removedcorresbytraderid = CONFIG.baseUrls.removedcorrespondencebytraderid;
 
 let singlecorres = CONFIG.baseUrls.singlecorres
 let updatecorres = CONFIG.baseUrls.updatecorres;
@@ -97,7 +96,7 @@ export class CorrespondenceService {
   // GET CORRES BY TRADE ID
   //***********************************************************
   // get corres by trade id with or without status
-  public getCorresByTradeIdWithStatus(tradeId: number, status: string): Observable<Correspondence[]> {
+  public getCorresByTradeId(tradeId: number): Observable<Correspondence[]> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -109,36 +108,17 @@ export class CorrespondenceService {
     };
   
    
-    const localUrl = `${corresbytradeidwithstatus}?traderId=${tradeId}&status=${status}`; 
+    const localUrl = `${corresbytradeid}?traderId=${tradeId}`; 
     return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
   }
 
 
-  //**********************************************************
-  // GET DELETED CORRESPONDENCE BY TRADER ID
-  //***********************************************************
-  public getRemovedCorresByTraderId(traderId:string): Observable<Correspondence[]> {
-
-    // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
-    
-    const localUrl = `${removedcorrespondencebytraderid}?traderId=${traderId}`;
-    return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
-  }
-
-
-
+  
 
   //**********************************************************
-  // GET INBOX or ARCHIVED INBOX CORRESPONDENCE BY TRADER ID
+  // GET INBOX/ARCHIVED BY TRADER ID
   //***********************************************************
-  public getInboxByTraderIdWithStatus(traderId: string, status: string): Observable<Correspondence[]> {
+  public getInboxByTraderId(traderId: string): Observable<Correspondence[]> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -149,16 +129,30 @@ export class CorrespondenceService {
       })
     };
 
-   const localUrl = `${corresbytraderidwithstatusinbox}?traderId=${traderId}&status=${status}`; 
+   const localUrl = `${corresbytraderidinbox}?traderId=${traderId}`; 
     return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
   }
 
 
+  public getArchivedInboxByTraderId(traderId: string): Observable<Correspondence[]> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${corresbytraderidarchivedinbox}?traderId=${traderId}`;
+    return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
+  }
 
   //**********************************************************
-  // GET SENT or SENT ARHIVED CORRESPONDENCE BY TRADER ID
+  // GET SENT/ARCHIVED BY TRADER ID
   //***********************************************************
-  public getSentByTraderIdWithStatus(traderId: string, status: string): Observable<Correspondence[]> {
+  public getSentByTraderId(traderId: string): Observable<Correspondence[]> {
 
     // prepare the headesrs
     const httpOptions = {
@@ -170,9 +164,46 @@ export class CorrespondenceService {
     };
 
    
-   const localUrl = `${corresbytraderidwithstatussent}?traderId=${traderId}&status=${status}`; 
+   const localUrl = `${corresbytraderidsent}?traderId=${traderId}`; 
     return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
   }
+
+
+  public getArchivedSentByTraderId(traderId: string): Observable<Correspondence[]> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+    const localUrl = `${corresbytraderidarchivedsent}?traderId=${traderId}`;
+    return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
+  }
+
+  //**********************************************************
+  // GET DELETED BY TRADER ID
+  //***********************************************************
+  public getRemovedByTraderId(traderId: string): Observable<Correspondence[]> {
+
+    // prepare the headesrs
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+      })
+    };
+
+    const localUrl = `${removedcorresbytraderid}?traderId=${traderId}`;
+    return this.httpClientService.get<Correspondence[]>(localUrl, httpOptions).retry(1);
+  }
+
+
+
+
 
   //**********************************************************
   // ADD SINGLE CORRES

@@ -26,6 +26,7 @@ export class CorrespondenceListComponent implements OnInit {
   private statusSent: string = "Sent";
   private statusArchivedInbox: string = "Archived";
   private statusArchivedSent: string = "Archived"; 
+  private statusRemovedSent: string = "Removed"; 
 
   private hasInbox: boolean = true;
   private hasSent: boolean = true;
@@ -76,11 +77,11 @@ export class CorrespondenceListComponent implements OnInit {
 
     this.getUserSession();
     this.initialiseComponent();
-    this.getInbox(this.traderId, this.statusInbox);    
-    this.getSent(this.traderId, this.statusSent);    
-    this.getArchivedInbox(this.traderId, this.statusArchivedInbox);
-    this.getArchivedSent(this.traderId, this.statusArchivedSent);
-    this.getRemovedCorrespondence(this.traderId);
+    this.getInbox(this.traderId);    
+    this.getSent(this.traderId);    
+    this.getArchivedInbox(this.traderId);
+    this.getArchivedSent(this.traderId);
+    this.getRemoved(this.traderId);
   }
 
 
@@ -131,9 +132,9 @@ export class CorrespondenceListComponent implements OnInit {
   //****************************************************************************************
   // GET CORRESPONDENCE - -- this wil get all correspondence, if there are no any will show the message
   //****************************************************************************************
-  private getInbox(traderId: string, statusInboxes: string) {
+  private getInbox(traderId: string) {
 
-    this.corresService.getInboxByTraderIdWithStatus(traderId, statusInboxes)
+    this.corresService.getInboxByTraderId(traderId)
       .subscribe((returnedInboxes: Correspondence[]) => {
         if (returnedInboxes.length === 0) { this.hasInbox = false; }
         else {
@@ -154,9 +155,9 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-  private getSent(traderId: string, statusSent: string) {
+  private getSent(traderId: string) {
 
-    this.corresService.getSentByTraderIdWithStatus(traderId, statusSent)
+    this.corresService.getSentByTraderId(traderId)
       .subscribe((returnedSent: Correspondence[]) => {
         if (returnedSent.length === 0) { this.hasSent = false; }
         else {
@@ -177,9 +178,9 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-  private getArchivedInbox(traderId: string, statusArchivedInboxes: string = "Archived") {
+  private getArchivedInbox(traderId: string) {
 
-    this.corresService.getInboxByTraderIdWithStatus(traderId, statusArchivedInboxes)
+    this.corresService.getArchivedInboxByTraderId(traderId)
       .subscribe((returnedArchivedInboxes: Correspondence[]) => {
         if (returnedArchivedInboxes.length === 0) { this.hasArchivedInbox = false; }
         else {
@@ -200,9 +201,9 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-  private getArchivedSent(traderId: string, statusArchivedSent: string = "Archived") {
+  private getArchivedSent(traderId: string) {
 
-    this.corresService.getSentByTraderIdWithStatus(traderId, statusArchivedSent)
+    this.corresService.getArchivedSentByTraderId(traderId)
       .subscribe((returnedArchivedSent: Correspondence[]) => {
         if (returnedArchivedSent.length === 0) { this.hasArchivedSent = false; }
         else {
@@ -223,9 +224,9 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-  private getRemovedCorrespondence(traderId: string) {
+  private getRemoved(traderId: string) {
 
-    this.corresService.getRemovedCorresByTraderId(traderId)
+    this.corresService.getRemovedByTraderId(traderId)
       .subscribe((returnedRemoved: Correspondence[]) => {
         if (returnedRemoved.length === 0) { this.hasRemoved = false; }
         else {
@@ -341,8 +342,8 @@ export class CorrespondenceListComponent implements OnInit {
 
         this.messagesService.emitProcessMessage("PMSUCo");  
         // get the inbox and archived inbox
-        this.getInbox(this.traderId, this.statusInbox);  
-        this.getArchivedInbox(this.traderId, this.statusArchivedInbox);
+        this.getInbox(this.traderId);  
+        this.getArchivedInbox(this.traderId);
 
     }, (serviceError: Response) => this.onError(serviceError, "archiveInbox"));
   }
@@ -356,8 +357,8 @@ export class CorrespondenceListComponent implements OnInit {
 
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the inbox
-        this.getInbox(this.traderId, this.statusInbox);
-        this.getRemovedCorrespondence(this.traderId);
+        this.getInbox(this.traderId);
+        this.getRemoved(this.traderId);
 
       }, (serviceError: Response) => this.onError(serviceError, "removeInbox"));
   }
@@ -371,8 +372,8 @@ export class CorrespondenceListComponent implements OnInit {
 
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the sent and archived sent
-        this.getSent(this.traderId, this.statusSent);
-        this.getArchivedSent(this.traderId, this.statusArchivedSent);
+        this.getSent(this.traderId);
+        this.getArchivedSent(this.traderId);
 
       }, (serviceError: Response) => this.onError(serviceError, "archiveSent"));
   }
@@ -386,8 +387,8 @@ export class CorrespondenceListComponent implements OnInit {
 
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the sent
-        this.getSent(this.traderId, this.statusSent);
-        this.getRemovedCorrespondence(this.traderId);
+        this.getSent(this.traderId);
+        this.getRemoved(this.traderId);
 
       }, (serviceError: Response) => this.onError(serviceError, "deleteSent"));
   }
@@ -401,8 +402,8 @@ export class CorrespondenceListComponent implements OnInit {
 
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the archived inbox
-        this.getArchivedInbox(this.traderId, this.statusArchivedInbox);    
-        this.getRemovedCorrespondence(this.traderId);  
+        this.getArchivedInbox(this.traderId);    
+        this.getRemoved(this.traderId);  
       }, (serviceError: Response) => this.onError(serviceError, "deleteArchivedInbox"));
   }
 
@@ -415,8 +416,8 @@ export class CorrespondenceListComponent implements OnInit {
 
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the archived sent
-        this.getArchivedSent(this.traderId, this.statusArchivedSent);
-        this.getRemovedCorrespondence(this.traderId);
+        this.getArchivedSent(this.traderId);
+        this.getRemoved(this.traderId);
       }, (serviceError: Response) => this.onError(serviceError, "deleteArchivedSent"));
   }
 
@@ -432,9 +433,9 @@ export class CorrespondenceListComponent implements OnInit {
 
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the inbox and archived inbox       
-        this.getArchivedInbox(this.traderId, this.statusArchivedInbox);
-        this.getArchivedSent(this.traderId, this.statusArchivedSent);
-        this.getRemovedCorrespondence(this.traderId);
+        this.getArchivedInbox(this.traderId);
+        this.getArchivedSent(this.traderId);
+        this.getRemoved(this.traderId);
 
       }, (serviceError: Response) => this.onError(serviceError, "archiveRemoved"));
 
@@ -451,9 +452,9 @@ export class CorrespondenceListComponent implements OnInit {
 
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the inbox and archived inbox       
-        this.getInbox(this.traderId, this.statusInbox);
-        this.getSent(this.traderId, this.statusSent);
-        this.getRemovedCorrespondence(this.traderId);
+        this.getInbox(this.traderId);
+        this.getSent(this.traderId);
+        this.getRemoved(this.traderId);
 
       }, (serviceError: Response) => this.onError(serviceError, "activateRemoved"));
   }
@@ -470,7 +471,7 @@ export class CorrespondenceListComponent implements OnInit {
 
         this.messagesService.emitProcessMessage("PMSUCo");
         // get the inbox and archived inbox             
-        this.getRemovedCorrespondence(this.traderId);
+        this.getRemoved(this.traderId);
 
       }, (serviceError: Response) => this.onError(serviceError, "activateRemoved"));
   }

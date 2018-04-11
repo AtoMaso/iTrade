@@ -64,10 +64,10 @@
     corresbytradeidwithstatus: 'http://localhost:5700/api/correspondences/GetCorrespondencesByTradeIdWithStatus',
     corresbysenderidandid: 'http://localhost:5700/api/correspondences/GetCorrespondenceByTradeIdAndId',
 
-    corresbytraderidinbox: 'http://localhost:5700/api/correspondences/GetInboxByTraderId',
-    corresbytraderidwithstatusinbox: 'http://localhost:5700/api/correspondences/GetInboxByTraderIdWithStatus',
+    corresbytraderidinbox: 'http://localhost:5700/api/correspondences/GetInboxByTraderId', 
     corresbytraderidsent: 'http://localhost:5700/api/correspondences/GetSentByTraderId',
-    corresbytraderidwithstatussent: 'http://localhost:5700/api/correspondences/GetSentByTraderIdWithStatus',
+    corresbytraderidarchivedinbox: 'http://localhost:5700/api/correspondences/GetArchivedInboxByTraderId',
+    corresbytraderidarchivedsent: 'http://localhost:5700/api/correspondences/GetArchivedSentByTraderId',
     removedcorrespondencebytraderid: 'http://localhost:5700/api/correspondences/GetRemovedCorrespondenceByTraderId',
 
     singlecorres: 'http://localhost:5700/api/correspondences/',

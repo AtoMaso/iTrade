@@ -43,18 +43,17 @@
                               <span class="textgray  smalltext  text-uppercase" style="width:auto">From</span>
                             </th>
 
-                            <th class="col-md-1" style="background-color:#FF223A3A">
-                              <span class="textgray smalltext  text-uppercase" style="width:auto">About </span>
-                            </th>           
-
                             <th class="col-md-2" style="background-color:#FF223A3A">
                               <span class="textgray  smalltext  text-uppercase" style="width:auto">Received On</span>
                             </th>
 
                             <th class="col-md-1" style="background-color:#FF223A3A">
+                              <span class="textgray smalltext  text-uppercase" style="width:auto">About </span>
+                            </th>           
+                           
+                            <th class="col-md-1" style="background-color:#FF223A3A">
                               <span class="textgray  smalltext  text-uppercase" style="width:auto">Status</span>
                             </th>
-
                                                                                           
                             <th class="col-md-3" style="background-color:#FF223A3A">
                               <span class="textgray  smalltext  text-uppercase" style="width:auto">Actions</span>
@@ -73,9 +72,10 @@
                           <td class="col-md-2">
                             <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.sender  }}</i></a>
                           </td>
-                          <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
-
+                         
                           <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
+
+                          <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
                          
                           <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusReceiver }}</td>
 
@@ -158,14 +158,14 @@
 
                     <th class="col-md-2" style="background-color:#FF223A3A">
                       <span class="textgray  smalltext  text-uppercase" style="width:auto">To</span>
+                    </th>                  
+
+                    <th class="col-md-2" style="background-color:#FF223A3A">
+                      <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent On</span>
                     </th>
 
                     <th class="col-md-1" style="background-color:#FF223A3A">
                       <span class="textgray smalltext  text-uppercase" style="width:auto">About </span>
-                    </th>
-
-                    <th class="col-md-2" style="background-color:#FF223A3A">
-                      <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent On</span>
                     </th>
 
                     <th class="col-md-1" style="background-color:#FF223A3A">
@@ -190,10 +190,10 @@
                   <td class="col-md-2">
                     <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdReceiver}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver  }}</i></a>
                   </td>
+               
+                  <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
 
                   <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
-
-                  <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
                 
                   <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusSender }}</td>
 
@@ -278,14 +278,14 @@
 
                         <th class="col-md-2" style="background-color:#FF223A3A">
                           <span class="textgray  smalltext  text-uppercase" style="width:auto">From</span>
+                        </th>                     
+
+                        <th class="col-md-2" style="background-color:#FF223A3A">
+                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Received On</span>
                         </th>
 
                         <th class="col-md-1" style="background-color:#FF223A3A">
                           <span class="textgray smalltext  text-uppercase" style="width:auto">About </span>
-                        </th>
-
-                        <th class="col-md-2" style="background-color:#FF223A3A">
-                          <span class="textgray  smalltext  text-uppercase" style="width:auto">Received On</span>
                         </th>
 
                         <th class="col-md-1" style="background-color:#FF223A3A">
@@ -307,11 +307,11 @@
 
                       <td class="col-md-2">
                         <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdSender}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.sender  }}</i></a>
-                      </td>
-
-                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
+                      </td>                    
 
                       <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
+
+                      <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
 
                       <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.statusReceiver }}</td>
                    
@@ -384,14 +384,14 @@
 
                           <th class="col-md-2" style="background-color:#FF223A3A">
                             <span class="textgray  smalltext  text-uppercase" style="width:auto">To</span>
+                          </th>                        
+
+                          <th class="col-md-2" style="background-color:#FF223A3A">
+                            <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent On</span>
                           </th>
 
                           <th class="col-md-1" style="background-color:#FF223A3A">
                             <span class="textgray smalltext  text-uppercase" style="width:auto">About </span>
-                          </th>
-
-                          <th class="col-md-2" style="background-color:#FF223A3A">
-                            <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent On</span>
                           </th>
 
                           <th class="col-md-1" style="background-color:#FF223A3A">
@@ -494,16 +494,16 @@
 
                                 <th class="col-md-2" style="background-color:#FF223A3A">
                                   <span class="textgray  smalltext  text-uppercase" style="width:auto">To</span>
-                                </th>
-
-                                <th class="col-md-1" style="background-color:#FF223A3A">
-                                  <span class="textgray smalltext  text-uppercase" style="width:auto">About </span>
-                                </th>
+                                </th>                              
 
                                 <th class="col-md-2" style="background-color:#FF223A3A">
                                   <span class="textgray  smalltext  text-uppercase" style="width:auto">Sent On</span>
                                 </th>                               
                               
+                                <th class="col-md-1" style="background-color:#FF223A3A">
+                                  <span class="textgray smalltext  text-uppercase" style="width:auto">About </span>
+                                </th>
+
                                 <th class="col-md-3" style="background-color:#FF223A3A">
                                   <span class="textgray  smalltext  text-uppercase" style="width:auto">Actions</span>
                                 </th>
@@ -524,11 +524,11 @@
 
                               <td class="col-md-2">
                                 <a [routerLink]="['/traderdetails']" [queryParams]="{id: corres.traderIdReceiver}" class="smalltext text-uppercase textlightcoral"><i>{{ corres.receiver  }}</i></a>
-                              </td>
-
-                              <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
+                              </td>                            
 
                               <td class="col-md-2 smalltextbold text-capitalize textgray">{{ corres.dateSent | date:'medium' }}</td>
+
+                              <td class="col-md-1 smalltextbold text-capitalize textgray">{{ corres.subject  }}</td>
 
                                                                            
                               <td class="col-md-3">

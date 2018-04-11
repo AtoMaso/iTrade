@@ -53,23 +53,7 @@
                 <!-- Table Header -->
                 <thead>
                   <tr style="height:35px;">
-
-                        <!--<th class="col-md-1" style="background-color:#FF223A3A;">
-                          <a (click)="sortTable('tradeIdStr')" class="textgray text-uppercase smalltextbold" style="width:auto">
-                            Id
-                            <span *ngIf="isIdAsc" class="glyphicon glyphicon-chevron-down"></span>
-                            <span *ngIf="!isIdAsc" class="glyphicon glyphicon-chevron-up"></span>
-                          </a>
-                        </th>-->
-
-                    <th class="col-md-1" style="background-color:#FF223A3A;">
-                      <a (click)="sortTable('status')" class="textgray text-uppercase smalltextbold" style="width:auto">
-                        Status
-                        <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
-                        <span *ngIf="!isStatusAsc" class="glyphicon glyphicon-chevron-up"></span>
-                      </a>
-                    </th>
-
+                  
                     <th class="col-md-2" style="background-color:#FF223A3A;">
                       <a (click)="sortTable('name')" class="textgray text-uppercase smalltextbold" style="width:auto">
                         Trading
@@ -102,17 +86,23 @@
                       </a>
                     </th>
 
+                    <th class="col-md-1" style="background-color:#FF223A3A;">
+                      <a (click)="sortTable('status')" class="textgray text-uppercase smalltextbold" style="width:auto">
+                        Status
+                        <span *ngIf="isStatusAsc" class="glyphicon glyphicon-chevron-down"></span>
+                        <span *ngIf="!isStatusAsc" class="glyphicon glyphicon-chevron-up"></span>
+                      </a>
+                    </th>
+
                     <th class="col-md-3  textgray text-uppercase smalltextbold text-center" style="vertical-align:middle;background-color:#FF223A3A">Actions</th>
                   </tr>
                 </thead>
 
 
                 <!-- Table Rows -->
-                <tr *ngFor="let trade of rows  | paginate:config ">
+                <tr *ngFor="let trade of rows  | paginate:config ">             
 
-                  <!--<td class="col-md-1 smalltext text-capitalize textgray">{{ trade.tradeIdStr  }}</td>-->
-
-                  <td class="col-md-1 smalltextbold text-capitalize textgray">{{ trade.status  }}</td>
+                 
 
                   <td class="col-md-2">
                     <a [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" class="smalltext text-uppercase textlightcoral"><i>{{ trade.name  }}</i></a>
@@ -123,6 +113,8 @@
                   <td class="col-md-2 smalltextbold text-capitalize textgray">{{ trade.category  }}</td>
 
                   <td class="col-md-2 smalltextbold text-capitalize textgray">{{ trade.datePublished | date }}</td>
+
+                  <td class="col-md-1 smalltextbold text-capitalize textgray">{{ trade.status  }}</td>
 
                   <td class="col-md-4">
 

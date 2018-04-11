@@ -124,6 +124,14 @@ export class CorrespondenceDetailsComponent implements OnInit {
         this.receivedCorres = corresResult;
         if (this.receivedCorres.traderIdReceiver === this.loggedOnTrader) { this.isReceiver = true; }
         else { this.isSender = true; }
+        if (this.receivedCorres.statusReceiver === "Replied") {
+          // show message that the user has already reponded on this email
+          this.messagesService.emitProcessMessage("PMERCo");
+          this.canReply = false;
+        }
+        else {
+          this.canReply = true;
+        }
       }, (serviceError: Response) => this.onError(serviceError, "getACorrespondence"));
   }
 
@@ -133,8 +141,8 @@ export class CorrespondenceDetailsComponent implements OnInit {
     // prepare the form if status of the correspondence is New
     if (this.receivedCorres.statusReceiver === "Replied") {
       // show message that the user has already reponded on this email
-      this.canReply = false;
       this.messagesService.emitProcessMessage("PMERCo");
+      this.canReply = false;     
     }
     else {
       this.canReply = true;

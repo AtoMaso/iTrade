@@ -23,8 +23,7 @@ export class TraderHomeComponent implements OnInit {
   private traderId: string;
   private session: UserSession;
   private isRequesting: boolean = false;
-  private status: string = "Open";
-  private statusCorr: string = "New";
+  private status: string = "Open";  
   private hasTrades: boolean = true;
   private hasCorres: boolean = true;
   private hasPersonal: boolean = false;
@@ -44,7 +43,7 @@ export class TraderHomeComponent implements OnInit {
     this.getUserSession();
     this.initialiseComponent();
     this.getTrades(this.traderId, this.status);
-    this.getCorres(this.traderId, this.statusCorr);    
+    this.getCorres(this.traderId);    
     this.getPersonalDetails(this.traderId);
   }
 
@@ -74,9 +73,9 @@ export class TraderHomeComponent implements OnInit {
   //****************************************************************************************
   // GET CORRESPONDENCE - -- this wil get all correspondence, if there are no any will show the message
   //****************************************************************************************
-  private getCorres(traderId: string, statusCorres: string = "All") {
+  private getCorres(traderId: string) {
     this.isRequesting = true;
-    this.corresService.getInboxByTraderIdWithStatus(traderId, statusCorres)
+    this.corresService.getInboxByTraderId(traderId)
       .subscribe((returnedCorres: Correspondence[]) => {
         if (returnedCorres.length === 0) { this.hasCorres = false; }
         else {
