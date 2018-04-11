@@ -102,8 +102,7 @@ export class AddCorrespondenceComponent implements OnInit {
     });
   }
 
-  
-
+ 
   //*****************************************************
   // TRADE DETAIL
   //*****************************************************

@@ -177,8 +177,7 @@ export class CorrespondenceDetailsComponent implements OnInit {
 
       this.corresService.addCorres(sendCorres)
         .subscribe(returnedCorres => this.onCorresSuccess(returnedCorres)
-        , (error: Response) => this.onError(error, "sendCorres"));
-
+       , (error: Response) => this.onError(error, "sendCorres"));
     }  
   }
 

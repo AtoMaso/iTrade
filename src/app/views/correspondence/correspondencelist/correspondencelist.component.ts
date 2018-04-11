@@ -477,7 +477,6 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-
   //*****************************************************
   // HELPER METHODS 
   //*****************************************************
