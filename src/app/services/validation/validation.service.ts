@@ -70,7 +70,7 @@ export class ValidationService {
 /**************************************************/ 
   static tradeNameTradeValidator(control) {
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z\s]){3,20}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){3,20}$/)) {
         return null;
       } else {
         return { 'invalidTradeName': true };
@@ -80,7 +80,7 @@ export class ValidationService {
 
   static tradeDescriptionTradeValidator(control) {
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z\s]){10,200}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){10,200}$/)) {
         return null;
       } else {
         return { 'invalidTradeDescription': true };
@@ -90,7 +90,7 @@ export class ValidationService {
 
   static tradeForTradeValidator(control) {
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z\s]){3,20}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){3,20}$/)) {
         return null;
       } else {
         return { 'invalidTradeTradeFor': true };
@@ -297,7 +297,7 @@ static firstNameValidator(control: any) {
   static streetValidator(control) {
     
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z\s]){3,30}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){3,30}$/)) {
         return null;
       } else {
         return { 'invalidStreet': true };
@@ -307,7 +307,7 @@ static firstNameValidator(control: any) {
 
   static suburbValidator(control) {
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z\s]){3,30}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){3,30}$/)) {
         return null;
       } else {
         return { 'invalidSuburb': true };
@@ -403,7 +403,7 @@ static firstNameValidator(control: any) {
 
   static categoryInputValidator(control) {
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){3,30}$/)) {
         return null;
       } else {
         return { 'invalidInputCategory': true };
@@ -414,7 +414,7 @@ static firstNameValidator(control: any) {
 
   static subcategoryInputValidator(control) {
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){3,30}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){3,30}$/)) {
         return null;
       } else {
         return { 'invalidInputSubcategory': true };
@@ -425,7 +425,7 @@ static firstNameValidator(control: any) {
 
   static stateInputValidator(control) {
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z0-9\s\_\-\,\.]){2,5}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){2,5}$/)) {
         return null;
       } else {
         return { 'invalidInputState': true };
@@ -437,7 +437,7 @@ static firstNameValidator(control: any) {
   static placeInputValidator(control) {
 
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z0-9\s\_\-\(\)\,\.]){2,30}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){2,30}$/)) {
         return null;
       } else {
         return { 'invalidInputPlace': true };
@@ -458,7 +458,7 @@ static firstNameValidator(control: any) {
 
   static suburbInputValidator(control) {
     if (control.value) {
-      if (control.value.match(/^([a-zA-Z0-9\s\_\-\(\)\,\.]){3,30}$/)) {
+      if (control.value.match(/^([\\\-\0-9a-zA-Z\s\`\?\<\>\/\:\;\"\'\[\]\{\}\.\,\@\!\~\#\$\%\^\&\*\(\)\_\+\=\|]){3,30}$/)) {
         return null;
       } else {
         return { 'invalidInputSuburb': true };

@@ -36,12 +36,14 @@ export class TradeDetailsComponent implements OnInit {
   private hasImage2: boolean = true;
   private hasImage3: boolean = true;
   private session: UserSession;
+
   private isAuthenticated: boolean = false;
   private isRequesting: boolean = false;
-  private canTrade: boolean = false;
-  private flagnew: boolean = false;
+  private canUserTrade: boolean = false;
+  private isNewTrade: boolean = false;
   private isFirstLoad: boolean = false;
   private hasPersonal: boolean = false;
+  private isTradeOpen: boolean = false;
 
   constructor(  
     private cd: ChangeDetectorRef,
@@ -64,19 +66,20 @@ export class TradeDetailsComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
         this.tradeId = params['id'];
-        this.flagnew = params['flagnew'];      
+      this.isNewTrade = params['isNewTrade'];      
               
         this.getUserSession();
         this.initialiseComponent();
 
-        if (this.flagnew) { this.messagesService.emitProcessMessage("PMSAT"); }
+      if (this.isNewTrade) {
+        this.messagesService.emitProcessMessage("PMSAT");              
+      }
 
         // starts with gettrade end up with get images separatelly
         this.getATrade(this.tradeId);
 
         if (this.isAuthenticated) { this.getPersonalDetails(this.traderId); }
     });
-   
   }
 
 
@@ -125,8 +128,7 @@ export class TradeDetailsComponent implements OnInit {
     this.isRequesting = true;
 
     this.tradeApiService.getSingleTrade(tradeId)
-      .subscribe((tradeResult: Trade) => {
-        this.hasImages = true;
+      .subscribe((tradeResult: Trade) => {       
         this.onSuccessTrade(tradeResult);
 
       }, (serviceError: Response) => this.onError(serviceError, "getATrade"));
@@ -138,19 +140,25 @@ export class TradeDetailsComponent implements OnInit {
 
     this.trade = this.TransformData(trade); 
 
+    if (this.trade.status === "Open") { this.isTradeOpen = true; }
+
+    this.hasImages = true;
+
     // business rule: trader viewing his trade can not add history
     if (sessionStorage["UserSession"] != "null") {
       // logged in
-      if (this.trade.traderId !== this.session.userIdentity.userId) { this.canTrade = true; }
+      if (this.trade.traderId !== this.session.userIdentity.userId) { this.canUserTrade = true; }
       
-      if (this.flagnew) { this.getTradeHistory(this.tradeId); }
+      if (this.isNewTrade) { this.getTradeHistory(this.tradeId); }
       else { this.addHistoryRecord(trade, "Internal"); }
     }
     else {   
       // if not logged on, the viewer is an "External"
       this.addHistoryRecord(trade, "External"); 
     }
-  
+
+    // reset the flag here so the history is not written twice when the trade is created
+    this.isNewTrade = false;
   }
 
 

@@ -28,74 +28,75 @@ export class PersonalDetailsComponent implements OnInit {
   private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
   private currentLocale: string = "au";
   private datePickerOptions: IMyOptions;
-
   private traderId: string;
   private isRequesting: boolean;
   private session: UserSession;
 
+  // personal details ection
+  private personalForm: FormGroup;
+  private addressForm: FormGroup;
   private personalDetails: PersonalDetails;
   private tempAddUpdatePersonal: PersonalDetails;
+  private personalToRemove: PersonalDetails;
+  private isPersonalAddOn: boolean = false;
+  private isPersonalEditOn: boolean = false;
 
+
+  // address section
   private availableAddresses: Address[] = [];
   private availableAddressesCount: number = 0;
   private addressInView: Address;
   private tempAddUpdateAddress: Address;
+  private addressToRemove: Address;
+  private isAddressAddOn: boolean = false;
+  private isAddressEditOn: boolean = false;
+  private isSaveAddressOn: boolean = false;
+  private displayAddressTypeModal: string;
 
-  private states: GeoData[] = [];
-  private places: GeoData[] = [];
-  private postcodes: GeoData[] = [];
-  private suburbs: GeoData[] = [];
-
-  //private states: State[] = [];
-  //private places: Place[] = [];
-  //private postcodes: Postcode[] = [];
-  //private suburbs: Suburb[] = [];
-
+  // address types section
+  private defaultAddressType: AddressType = null;
+  private updatedAddress: Address = null;
+  private addedAddress: Address = null;
+  private selectedAddressType: AddressType = null;
   private alladdresstypes: AddressType[] = [];
   private existingaddresstypes: AddressType[] = [];
   private addresstypescanbeadded: AddressType[] = [];
 
+  // preferred types section
+  private defaultPreferredType: PreferredType = null;
+  private selectedPreferredType: PreferredType = null;
   private allpreferredtypes: PreferredType[] = [];
   private existingpreferredtypes: PreferredType[] = [];
   private preferredtypestobeadded: PreferredType[] = [];
+  private displayPreferredTypeModal: string;
 
-  private personalForm: FormGroup;
-  private addressForm: FormGroup;
-
-  private personalToRemove: PersonalDetails;
-  private addressToRemove: Address;
-
-  private selectedState: string = null;
-  private selectedPlace: string = null;
-  private selectedPostcode: string = null;
-  private selectedSuburb: string = null;
-
-  private selectedAddressType: AddressType = null;
-  private selectedPreferredType: PreferredType = null;
-  //private defaultState: State = null;
-  //private defaultPlace: Place = null;
-  //private defaultPostcode: Postcode = null;
-  //private defaultSuburb: Suburb = null;
+  // geo data complete section
+  private states: GeoData[] = [];
+  private places: GeoData[] = [];
+  private postcodes: GeoData[] = [];
+  private suburbs: GeoData[] = [];
 
   private defaultState: GeoData = null;
   private defaultPlace: GeoData = null;
   private defaultPostcode: GeoData = null;
   private defaultSuburb: GeoData = null;
 
-  private defaultPreferredType: PreferredType = null;
-  private defaultAddressType: AddressType = null;
-  private updatedAddress: Address = null;
-  private addedAddress: Address = null;
+  private selectedState: string = null;
+  private selectedPlace: string = null;
+  private selectedPostcode: string = null;
+  private selectedSuburb: string = null;
 
-  private isPersonalAddOn: boolean = false;
-  private isPersonalEditOn: boolean = false;
-  private isAddressAddOn: boolean = false;
-  private isAddressEditOn: boolean = false;
-  private isSaveAddressOn: boolean = false;
+  // separate goe data independent section
+  //private states: State[] = [];
+  //private places: Place[] = [];
+  //private postcodes: Postcode[] = [];
+  //private suburbs: Suburb[] = [];
+  //private defaultState: State = null;
+  //private defaultPlace: Place = null;
+  //private defaultPostcode: Postcode = null;
+  //private defaultSuburb: Suburb = null;
 
 
-  private displayAddressTypeModal: string;
-  private displayPreferredTypeModal: string;
 
   constructor(   
     private formBuilder: FormBuilder,
@@ -114,11 +115,8 @@ export class PersonalDetailsComponent implements OnInit {
     this.getUserSession();
     this.initialiseComponent();
 
-   
     this.getStates();
-    //this.setAddressForm();
-    //this.setPersonalForm();  
-   
+    //this.getStatesWithData();   
   }
 
   // toggling done with jquery
@@ -326,21 +324,21 @@ export class PersonalDetailsComponent implements OnInit {
  
   }
 
-
+    // GEODATA COMPLETE
   //public getStatesWithData() {
   //  this.isRequesting = true;
   //  this.states = [];
 
   //  this.geodataService.getStatesWithData()
   //    .subscribe((res: State[]) => {
-  //      this.onSuccessStates(res);
+  //      this.onSuccessStatesWithData(res);
   //    }
   //    , (error: Response) => this.onError(error, "getStates"));
   //}
 
 
 
-  //private onSuccessStates(res: State[]) {
+  //private onSuccessStatesWithData(res: State[]) {
   //  // collections return zero length when no record found as it is initialised
   //  if (res.length == 0) { this.states = null; }
   //  else { this.states = res; }  
@@ -349,6 +347,7 @@ export class PersonalDetailsComponent implements OnInit {
   //}
 
 
+  // GEODATA INDPENDNT
   public getStates() {
     this.isRequesting = true;
     this.states = [];
@@ -496,7 +495,23 @@ export class PersonalDetailsComponent implements OnInit {
     }
    
     this.getPlacesByStateCode(this.defaultState.state);
-  
+
+    // section used for complete goe data
+    //this.places = this.defaultState.places;
+    //for (m = 0; m < this.places.length; m++) {
+    //  if (this.places[m].place == this.addressInView.place) { this.defaultPlace = this.places[m]; }
+    //}
+
+    //this.postcodes = this.defaultPlace.postcodes;
+    //for (m = 0; m < this.postcodes.length; m++) {
+    //  if (this.postcodes[m].postcode == this.addressInView.postcode) { this.defaultPostcode = this.postcodes[m]; }
+    //}
+
+    //this.suburbs = this.defaultPostcode.suburbs;
+    //for (m = 0; m < this.suburbs.length; m++) {
+    //  if (this.suburbs[m].suburb == this.addressInView.suburb) { this.defaultSuburb = this.suburbs[m]; }
+    //}
+
 
     // set the default valuse
     setTimeout(() => {
@@ -530,7 +545,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onStateChange(singlestate: GeoData) {  
+  private onStateChange(singlestate: GeoData) {  // State
       this.selectedState = singlestate.state;
       //this.places = singlestate.places;
       this.getPlacesByStateCode(this.selectedState);
@@ -539,7 +554,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onPlaceChange(singleplace: GeoData) {  
+  private onPlaceChange(singleplace: GeoData) {  // Place
     this.selectedPlace = singleplace.place; 
     //this.postcodes = singleplace.postcodes;
     this.getPostcodesByPlaceNameAndStateCode(this.selectedPlace, this.selectedState);
@@ -547,7 +562,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onPostcodeChange(singleopostcode: Postcode) {   
+  private onPostcodeChange(singleopostcode:GeoData) {   // Postcode
     this.selectedPostcode = singleopostcode.postcode;      
     //this.suburbs = singleopostcode.suburbs;
     this.getSuburbsByPostcodeNumberAndPlaceName(this.selectedPostcode, this.selectedPlace);
@@ -555,7 +570,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onSuburbChange(singlesuburb: Suburb) {  
+  private onSuburbChange(singlesuburb: GeoData) {  // Suburb
     this.selectedSuburb = singlesuburb.suburb;      
   }
 

@@ -273,7 +273,7 @@ export class AddTradeComponent implements OnInit {
   // 
 private async wait(trade:PostTrade) {   
     await this.delay(500);         
-    this.router.navigate(['/tradedetails'], { queryParams: { id: trade.tradeId, flagnew: true } });   
+  this.router.navigate(['/tradedetails'], { queryParams: { id: trade.tradeId, isNewTrade: true } });   
 }
 
 private  delay(ms: number) {

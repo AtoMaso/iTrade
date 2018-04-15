@@ -51,6 +51,8 @@ export class AppComponent implements OnDestroy, OnInit {
   private isUserAuthenticated: boolean = false;
   private isUserAllowed: boolean = false;
   private isAdmin: boolean = false;
+  
+
 
   //******************************************************
   //CONSTRUCTOR AND CICLE METHODS

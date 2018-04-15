@@ -146,6 +146,7 @@ export class MyTradesListComponent implements OnInit {
     trhis.createdDate = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
     trhis.status = "Closed";
     trhis.tradeId = trade.tradeId;
+    trhis.viewer = "Owner";
 
     // add new history record
     this.tradeHistoryService.addTradeHistory(trhis)
@@ -327,8 +328,7 @@ export class MyTradesListComponent implements OnInit {
 
 
   public columns: Array<any> =
-    [
-    { title: 'Id', name: 'tradeIdStr', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade id.' } },
+    [   
     { title: 'Status', name: 'status', sort: true, filtering: { filterString: '', placeholder: 'Filter by trade status' } },
     { title: 'Trading',    name: 'name',              sort: true,   filtering: { filterString: '', placeholder: 'Filter by trade object name' } },
     { title: 'For', name: 'tradeFor',                 sort: true,   filtering: { filterString: '', placeholder:  'Filter by trade for object name' } },
@@ -453,13 +453,6 @@ export class MyTradesListComponent implements OnInit {
     // reset the array of columns
     this.config.sorting.columns = [];
     switch (column) {
-
-      case 'tradeIdStr':
-        this.config.sorting.columns = [{ name: 'tradeIdStr', sort: this.sortId }];
-        this.onChangeTable(this.config);
-        this.isIdAsc = !this.isIdAsc;
-        this.sortId = this.isIdAsc ? 'desc' : 'asc';
-        break;
 
       case 'status':
         this.config.sorting.columns = [{ name: 'status', sort: this.sortStatus }];

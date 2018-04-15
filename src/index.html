@@ -26,7 +26,16 @@
 
 </head>
 
-<body>
+<body >
+
+  <script type="text/javascript">
+    $(function () {
+        $(document).keydown(function (e) {
+            return (e.which || e.keyCode) != 116;
+        }); 
+    }); 
+  </script>
+
   <app-root></app-root>
 </body>
 
