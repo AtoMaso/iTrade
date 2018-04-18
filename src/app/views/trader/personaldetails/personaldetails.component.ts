@@ -25,76 +25,76 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 })
 export class PersonalDetailsComponent implements OnInit {
 
-  private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
-  private currentLocale: string = "au";
-  private datePickerOptions: IMyOptions;
-  private traderId: string;
-  private isRequesting: boolean;
-  private session: UserSession;
+  public selectDate: IMyDate = { year: 0, month: 0, day: 0 };
+  public currentLocale: string = "au";
+  public datePickerOptions: IMyOptions;
+  public traderId: string;
+  public isRequesting: boolean;
+  public session: UserSession;
 
   // personal details ection
-  private personalForm: FormGroup;
-  private addressForm: FormGroup;
-  private personalDetails: PersonalDetails;
-  private tempAddUpdatePersonal: PersonalDetails;
-  private personalToRemove: PersonalDetails;
-  private isPersonalAddOn: boolean = false;
-  private isPersonalEditOn: boolean = false;
+  public personalForm: FormGroup;
+  public addressForm: FormGroup;
+  public personalDetails: PersonalDetails;
+  public tempAddUpdatePersonal: PersonalDetails;
+  public personalToRemove: PersonalDetails;
+  public isPersonalAddOn: boolean = false;
+  public isPersonalEditOn: boolean = false;
 
 
   // address section
-  private availableAddresses: Address[] = [];
-  private availableAddressesCount: number = 0;
-  private addressInView: Address;
-  private tempAddUpdateAddress: Address;
-  private addressToRemove: Address;
-  private isAddressAddOn: boolean = false;
-  private isAddressEditOn: boolean = false;
-  private isSaveAddressOn: boolean = false;
-  private displayAddressTypeModal: string;
+  public availableAddresses: Address[] = [];
+  public availableAddressesCount: number = 0;
+  public addressInView: Address;
+  public tempAddUpdateAddress: Address;
+  public addressToRemove: Address;
+  public isAddressAddOn: boolean = false;
+  public isAddressEditOn: boolean = false;
+  public isSaveAddressOn: boolean = false;
+  public displayAddressTypeModal: string;
 
   // address types section
-  private defaultAddressType: AddressType = null;
-  private updatedAddress: Address = null;
-  private addedAddress: Address = null;
-  private selectedAddressType: AddressType = null;
-  private alladdresstypes: AddressType[] = [];
-  private existingaddresstypes: AddressType[] = [];
-  private addresstypescanbeadded: AddressType[] = [];
+  public defaultAddressType: AddressType = null;
+  public updatedAddress: Address = null;
+  public addedAddress: Address = null;
+  public selectedAddressType: AddressType = null;
+  public alladdresstypes: AddressType[] = [];
+  public existingaddresstypes: AddressType[] = [];
+  public addresstypescanbeadded: AddressType[] = [];
 
   // preferred types section
-  private defaultPreferredType: PreferredType = null;
-  private selectedPreferredType: PreferredType = null;
-  private allpreferredtypes: PreferredType[] = [];
-  private existingpreferredtypes: PreferredType[] = [];
-  private preferredtypestobeadded: PreferredType[] = [];
-  private displayPreferredTypeModal: string;
+  public defaultPreferredType: PreferredType = null;
+  public selectedPreferredType: PreferredType = null;
+  public allpreferredtypes: PreferredType[] = [];
+  public existingpreferredtypes: PreferredType[] = [];
+  public preferredtypestobeadded: PreferredType[] = [];
+  public displayPreferredTypeModal: string;
 
   // geo data complete section
-  private states: GeoData[] = [];
-  private places: GeoData[] = [];
-  private postcodes: GeoData[] = [];
-  private suburbs: GeoData[] = [];
+  public states: GeoData[] = [];
+  public places: GeoData[] = [];
+  public postcodes: GeoData[] = [];
+  public suburbs: GeoData[] = [];
 
-  private defaultState: GeoData = null;
-  private defaultPlace: GeoData = null;
-  private defaultPostcode: GeoData = null;
-  private defaultSuburb: GeoData = null;
+  public defaultState: GeoData = null;
+  public defaultPlace: GeoData = null;
+  public defaultPostcode: GeoData = null;
+  public defaultSuburb: GeoData = null;
 
-  private selectedState: string = null;
-  private selectedPlace: string = null;
-  private selectedPostcode: string = null;
-  private selectedSuburb: string = null;
+  public selectedState: string = null;
+  public selectedPlace: string = null;
+  public selectedPostcode: string = null;
+  public selectedSuburb: string = null;
 
   // separate goe data independent section
-  //private states: State[] = [];
-  //private places: Place[] = [];
-  //private postcodes: Postcode[] = [];
-  //private suburbs: Suburb[] = [];
-  //private defaultState: State = null;
-  //private defaultPlace: Place = null;
-  //private defaultPostcode: Postcode = null;
-  //private defaultSuburb: Suburb = null;
+  //public states: State[] = [];
+  //public places: Place[] = [];
+  //public postcodes: Postcode[] = [];
+  //public suburbs: Suburb[] = [];
+  //public defaultState: State = null;
+  //public defaultPlace: Place = null;
+  //public defaultPostcode: Postcode = null;
+  //public defaultSuburb: Suburb = null;
 
 
 
@@ -163,7 +163,7 @@ export class PersonalDetailsComponent implements OnInit {
   //************************************************************
   // GET DATA FOR THE FORMS
   //************************************************************
-  private getPersonalDetailsByTraderId(traderId: string) {
+  public getPersonalDetailsByTraderId(traderId: string) {
 
     this.personalService.getPersonalDetailsByTraderId(traderId)
       .subscribe((personalResult: PersonalDetails) => {
@@ -172,7 +172,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessPersonal(pd: PersonalDetails) {
+  public onSuccessPersonal(pd: PersonalDetails) {
     // empty records returned 
     if (pd.id != 0) { this.personalDetails = pd; }
 
@@ -180,7 +180,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private getAddressesByTraderId(traderId: string) {
+  public getAddressesByTraderId(traderId: string) {
 
     this.availableAddresses = [];
     this.availableAddressesCount = 0;
@@ -192,7 +192,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessAddresses(addresses: Address[]) {
+  public onSuccessAddresses(addresses: Address[]) {
     // collections return zero length when no record found as it is initialised
     if (addresses.length == 0) {
       this.availableAddresses = null;
@@ -204,7 +204,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private getAddressTypes() {
+  public getAddressTypes() {
 
     this.alladdresstypes = [];
 
@@ -216,7 +216,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessAddressTypes(types: AddressType[]) {
+  public onSuccessAddressTypes(types: AddressType[]) {
     this.isRequesting = false;
 
     // collections return zero length when no record found as it is initialised
@@ -242,7 +242,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private getPreferredTypes() {
+  public getPreferredTypes() {
 
     let pre1: PreferredType = new PreferredType();
     pre1.id = 1;
@@ -255,7 +255,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private setAddressInViewAnAddressTypesAndPreferredTypes() {
+  public setAddressInViewAnAddressTypesAndPreferredTypes() {
 
     if (this.updatedAddress) { this.addressInView = this.updatedAddress }
     else if (this.addedAddress) { this.addressInView = this.addedAddress; }
@@ -338,7 +338,7 @@ export class PersonalDetailsComponent implements OnInit {
 
 
 
-  //private onSuccessStatesWithData(res: State[]) {
+  //public onSuccessStatesWithData(res: State[]) {
   //  // collections return zero length when no record found as it is initialised
   //  if (res.length == 0) { this.states = null; }
   //  else { this.states = res; }  
@@ -360,7 +360,7 @@ export class PersonalDetailsComponent implements OnInit {
 
   }
 
-  private onSuccessStates(res: GeoData[]) {
+  public onSuccessStates(res: GeoData[]) {
     // collections return zero length when no record found as it is initialised
     if (res.length == 0) { this.states = null; }
     else { this.states = res; }
@@ -369,7 +369,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private getPlacesByStateCode(state: string) {
+  public getPlacesByStateCode(state: string) {
     this.geodataService.getPlacesByStateCode(state)
       .subscribe((res: GeoData[]) => {
             this.places = res;
@@ -385,7 +385,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private getPostcodesByPlaceNameAndStateCode(place: string, state: string) {
+  public getPostcodesByPlaceNameAndStateCode(place: string, state: string) {
     this.geodataService.getPostcodesByPlaceNameAndStateCode(place,state)
       .subscribe((res: GeoData[]) => {
             this.postcodes = res;
@@ -400,7 +400,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private getSuburbsByPostcodeNumberAndPlaceName(postcode: string, place: string) {
+  public getSuburbsByPostcodeNumberAndPlaceName(postcode: string, place: string) {
     this.geodataService.getSuburbssByPostcodeNumberAndPlaceName(postcode, place)
       .subscribe((res: GeoData[]) => {
         this.suburbs = res;
@@ -413,7 +413,7 @@ export class PersonalDetailsComponent implements OnInit {
   //*****************************************************
   //SET FORMS and DEFAULTS
   //*****************************************************
-  private setPersonalForm() {
+  public setPersonalForm() {
     this.personalForm = this.formBuilder.group({
       fname: new FormControl('', [Validators.required, ValidationService.firstNameValidator]),
       mname: new FormControl('', [ValidationService.middleNameValidator]),
@@ -422,7 +422,7 @@ export class PersonalDetailsComponent implements OnInit {
     });
   }
 
-  private setAddressForm() {
+  public setAddressForm() {
     this.addressForm = this.formBuilder.group({
 
       preferredtype: new FormControl('', [Validators.required, ValidationService.preferredValidator]),
@@ -438,7 +438,7 @@ export class PersonalDetailsComponent implements OnInit {
     });
   }
 
-  private setPersonalFormDefaults() {
+  public setPersonalFormDefaults() {
 
   
       this.personalForm.setValue({
@@ -464,7 +464,7 @@ export class PersonalDetailsComponent implements OnInit {
 
   }
 
-  private setDate(datetoset: string) {
+  public setDate(datetoset: string) {
 
     var value = new Date(datetoset);
     this.personalForm.patchValue({
@@ -478,7 +478,7 @@ export class PersonalDetailsComponent implements OnInit {
     }
   }
 
-  private setAddressFormDefaults() {
+  public setAddressFormDefaults() {
 
     let m: number = 0;
 
@@ -535,17 +535,17 @@ export class PersonalDetailsComponent implements OnInit {
   //*****************************************************
   //GET THE SCREEN INPUT
   //*****************************************************
-  private onDateChanged(event: IMyDateModel) {
+  public onDateChanged(event: IMyDateModel) {
     this.selectDate = event.date;
   }
 
 
-  private clearDate(): void {
+  public clearDate(): void {
     this.personalForm.patchValue({ dbirth: null });
   }
 
 
-  private onStateChange(singlestate: GeoData) {  // State
+  public onStateChange(singlestate: GeoData) {  // State
       this.selectedState = singlestate.state;
       //this.places = singlestate.places;
       this.getPlacesByStateCode(this.selectedState);
@@ -554,7 +554,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onPlaceChange(singleplace: GeoData) {  // Place
+  public onPlaceChange(singleplace: GeoData) {  // Place
     this.selectedPlace = singleplace.place; 
     //this.postcodes = singleplace.postcodes;
     this.getPostcodesByPlaceNameAndStateCode(this.selectedPlace, this.selectedState);
@@ -562,7 +562,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onPostcodeChange(singleopostcode:GeoData) {   // Postcode
+  public onPostcodeChange(singleopostcode:GeoData) {   // Postcode
     this.selectedPostcode = singleopostcode.postcode;      
     //this.suburbs = singleopostcode.suburbs;
     this.getSuburbsByPostcodeNumberAndPlaceName(this.selectedPostcode, this.selectedPlace);
@@ -570,12 +570,12 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onSuburbChange(singlesuburb: GeoData) {  // Suburb
+  public onSuburbChange(singlesuburb: GeoData) {  // Suburb
     this.selectedSuburb = singlesuburb.suburb;      
   }
 
 
-  private onPreferredTypeChange(preferredtype: PreferredType) {
+  public onPreferredTypeChange(preferredtype: PreferredType) {
     if (this.isAddressEditOn) {
       if (preferredtype.value == "Yes" && this.tempAddUpdateAddress.preferredFlag != "Yes") {
         let m: number = 0;
@@ -602,12 +602,12 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private openPreferredTypeModal() {
+  public openPreferredTypeModal() {
     this.displayPreferredTypeModal = "block";
   }
 
 
-  private onClosePreferredHandled() {
+  public onClosePreferredHandled() {
     this.displayPreferredTypeModal = "none";
     this.addressForm.patchValue({ preferredtype: null });
   }
@@ -617,14 +617,14 @@ export class PersonalDetailsComponent implements OnInit {
   //*****************************************************
   // PERSONAL ADD UPDATE AND  PERSONAL SCREEN SECTION
   //*****************************************************
-  private onPersonalAddClick() {
+  public onPersonalAddClick() {
     this.messagesService.emitRoute("nill");
     this.isPersonalAddOn = true;
     this.setPersonalForm();
   }
 
 
-  private onPersonalEditClick() {
+  public onPersonalEditClick() {
     this.messagesService.emitRoute("nill");
     this.isPersonalEditOn = true;
     this.setPersonalForm();
@@ -633,19 +633,19 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onPersonalAddEditCancel() {
+  public onPersonalAddEditCancel() {
     this.messagesService.emitRoute(null);
     if (this.isPersonalAddOn == true) { this.isPersonalAddOn = false; }
     if (this.isPersonalEditOn == true) { this.isPersonalEditOn = false; }
   }
 
 
-  private onPersonalDeleteClick(personalDetails: PersonalDetails) {
+  public onPersonalDeleteClick(personalDetails: PersonalDetails) {
     this.personalToRemove = personalDetails
   }
 
 
-  private onSubmitDeletePersonal(personalToRemove: PersonalDetails) {
+  public onSubmitDeletePersonal(personalToRemove: PersonalDetails) {
     this.personalService.deletePersonaDetails(personalToRemove)
       .subscribe((personalResult: PersonalDetails) => {
         if (personalResult) {
@@ -657,7 +657,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onSubmitPersonalAddUpdate() {
+  public onSubmitPersonalAddUpdate() {
 
     this.messagesService.emitRoute("nill");
     let pd = this.prepareAddUpdatePersonal();
@@ -697,7 +697,7 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   // prepare for add or update - get the data from the form
-  private prepareAddUpdatePersonal(): PersonalDetails {
+  public prepareAddUpdatePersonal(): PersonalDetails {
 
     const formModel = this.personalForm.value;
     let addUpdatePersonal: PersonalDetails = new PersonalDetails();
@@ -716,7 +716,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private comparePersonal(newPersonal: PersonalDetails, oldPersonal: PersonalDetails) {
+  public comparePersonal(newPersonal: PersonalDetails, oldPersonal: PersonalDetails) {
 
     if (oldPersonal.firstName == newPersonal.firstName &&
       oldPersonal.middleName == newPersonal.middleName &&
@@ -731,7 +731,7 @@ export class PersonalDetailsComponent implements OnInit {
   //********************************************************************
   // ADDRESS ADD UPDATE AND  ADDRESS SCREEN SECTION
   //********************************************************************
-  private onAddressTypeChange(type: AddressType) {
+  public onAddressTypeChange(type: AddressType) {
 
     if (this.isAddressEditOn) {
       // check when we adding or when updating is there already existing addres
@@ -759,18 +759,18 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private openAddressTypeModal() {
+  public openAddressTypeModal() {
     this.displayAddressTypeModal = "block";
   }
 
 
-  private onCloseAddressHandled() {
+  public onCloseAddressHandled() {
     this.displayAddressTypeModal = "none";
     this.addressForm.patchValue({ addresstype: null });
   }
 
 
-  private onViewAddressTypeChange(type: any) {
+  public onViewAddressTypeChange(type: any) {
     let m: number = 0;
     for (m = 0; m < this.availableAddresses.length; m++) {
       if (this.availableAddresses[m].addressType === type.target.value) {
@@ -783,7 +783,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onAddressAddClick() {
+  public onAddressAddClick() {
     this.messagesService.emitRoute("nill");
     this.isAddressAddOn = true;  
     this.places = [];
@@ -799,7 +799,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onAddressEditClick() {
+  public onAddressEditClick() {
 
     this.messagesService.emitRoute("nill");
 
@@ -814,7 +814,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onAddressAddEditCancel() {
+  public onAddressAddEditCancel() {
     this.messagesService.emitRoute(null);
     if (this.isAddressAddOn == true) { this.isAddressAddOn = false; }
     if (this.isAddressEditOn == true) { this.isAddressEditOn = false; }
@@ -824,12 +824,12 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onAddressDeleteClick(addressInView: Address) {
+  public onAddressDeleteClick(addressInView: Address) {
     this.addressToRemove = addressInView;
   }
 
 
-  private onSubmitDeleteAddress(addressToRemove: Address) {
+  public onSubmitDeleteAddress(addressToRemove: Address) {
     this.addressService.deleteAddress(addressToRemove)
       .subscribe((addressResult: Address) => {
 
@@ -838,7 +838,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private onSubmitAddressAddUpdate() {
+  public onSubmitAddressAddUpdate() {
 
     this.messagesService.emitRoute("nill");
     let address: Address = this.prepareAddUpdateAddress();
@@ -885,7 +885,7 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateAddress(): Address {
+  public prepareAddUpdateAddress(): Address {
 
     const formModel = this.addressForm.value;
 
@@ -920,7 +920,7 @@ export class PersonalDetailsComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private compareAddresses(newAddress: Address, oldAddress: Address): boolean {
+  public compareAddresses(newAddress: Address, oldAddress: Address): boolean {
 
     if (newAddress.addressTypeId == oldAddress.addressTypeId &&    
       newAddress.number == oldAddress.number &&
@@ -943,7 +943,7 @@ export class PersonalDetailsComponent implements OnInit {
   //************************************************************
   // HELPER METHODS
   //************************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -956,7 +956,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.pageTitleService.emitPageTitle(new PageTitle("Personal & Address Details"));
   }
@@ -965,7 +965,7 @@ export class PersonalDetailsComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";

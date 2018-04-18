@@ -33,33 +33,33 @@ let imagesPathUrl = CONFIG.baseUrls.imagesPathUrl;
 
 export class AddTradeComponent implements OnInit {
 
-  private selectDate: IMyDate = { year: 0, month: 0, day: 0 };
-  private currentLocale: string = "en";  
-  private datePickerOptions: IMyOptions;
-  private addForm: FormGroup;
-  private uploader: FileUploader;
-  private hasBaseDropZoneOver: boolean;
-  private hasAnotherDropZoneOver: boolean;
+  public selectDate: IMyDate = { year: 0, month: 0, day: 0 };
+  public currentLocale: string = "en";  
+  public datePickerOptions: IMyOptions;
+  public addForm: FormGroup;
+  public uploader: FileUploader;
+  public hasBaseDropZoneOver: boolean;
+  public hasAnotherDropZoneOver: boolean;
 
-  private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
-  private isRequesting: boolean = false;
-  private isAuthenticated: boolean = false;
+  public session: UserSession;
+  public identity: UserIdentity = new UserIdentity;
+  public isRequesting: boolean = false;
+  public isAuthenticated: boolean = false;
 
-  private isSubmitted: boolean = false; 
-  private isMessageVisible: boolean = false;
+  public isSubmitted: boolean = false; 
+  public isMessageVisible: boolean = false;
 
-  private categories: Category[] = [];
-  private subcategories: Subcategory[] = [];
-  private geostates: GeoData[] = [];    
-  private geoplaces: GeoData[] = [];    
-  private geopostcodes: GeoData[] = [];    
-  private geosuburbs: GeoData[] = [];    
+  public categories: Category[] = [];
+  public subcategories: Subcategory[] = [];
+  public geostates: GeoData[] = [];    
+  public geoplaces: GeoData[] = [];    
+  public geopostcodes: GeoData[] = [];    
+  public geosuburbs: GeoData[] = [];    
  
-  private response: string;
-  private hasImages: boolean = false;
-  private newTrade = new PostTrade();
-  private addedTrade: PostTrade = new PostTrade();
+  public response: string;
+  public hasImages: boolean = false;
+  public newTrade = new PostTrade();
+  public addedTrade: PostTrade = new PostTrade();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -156,11 +156,11 @@ export class AddTradeComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE SELECTION 
   //*****************************************************
-  private onCategoryChange(category: Category) {        
+  public onCategoryChange(category: Category) {        
     this.subcategories = category.subcategories;
   }
 
-  private onStateChange(geodata: GeoData) {  
+  public onStateChange(geodata: GeoData) {  
     this.geoplaces = null;
     this.geosuburbs = null;
     this.geopostcodes = null;
@@ -168,14 +168,14 @@ export class AddTradeComponent implements OnInit {
 
   }
 
-  private onPlaceChange(geodata: GeoData) { 
+  public onPlaceChange(geodata: GeoData) { 
     this.geopostcodes = null;
     this.geosuburbs = null;
     this.getPostcodesByPlaceNameAndStateCode(geodata.place, geodata.state);
 
   }
 
-  private onPostcodeChange(geodata: GeoData) {
+  public onPostcodeChange(geodata: GeoData) {
     this.geosuburbs = null;    
     this.getSuburbssByPostcodeNumberAndPlaceName(geodata.postcode, geodata.place);
 
@@ -186,7 +186,7 @@ export class AddTradeComponent implements OnInit {
   //*****************************************************
   // ADD TRADE
   //*****************************************************
-  private saveTrade() {
+  public saveTrade() {
 
     // remove previous error messages
     this.messagesService.emitRoute("nill");
@@ -242,7 +242,7 @@ export class AddTradeComponent implements OnInit {
 
 
   // on success to the following
-  private onAddTradeSuccess(trade: PostTrade) {
+  public onAddTradeSuccess(trade: PostTrade) {
 
     this.addedTrade = trade;
     let m: number = 0;
@@ -264,25 +264,25 @@ export class AddTradeComponent implements OnInit {
 
 
   // upload each file- maybe we should go with mutliple
-  private uploadSingleFile(item: any) {
+  public uploadSingleFile(item: any) {
     item.withCredentials = false;
     // we are making the name unique even if the file is the same and does exist on the server upload side
     item.upload();
   }
 
   // 
-private async wait(trade:PostTrade) {   
+public async wait(trade:PostTrade) {   
     await this.delay(500);         
   this.router.navigate(['/tradedetails'], { queryParams: { id: trade.tradeId, isNewTrade: true } });   
 }
 
-private  delay(ms: number) {
+public  delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 
   // when files selected change the status
-  private onChange(event: any) {
+  public onChange(event: any) {
     let m: number = 0;
     let fileItems: FileItem[] = this.uploader.queue;
     for (m = 0; m < fileItems.length; m++) {
@@ -292,25 +292,25 @@ private  delay(ms: number) {
   }
 
 
-  private fileOverBase(e: any) {
+  public fileOverBase(e: any) {
     this.hasBaseDropZoneOver = e;
   }
 
 
-  private fileOverAnother(e: any) {
+  public fileOverAnother(e: any) {
     this.hasAnotherDropZoneOver = e;
   }
 
 
   // called when remove file button is clicked
-  private removeFile(item: any) {
+  public removeFile(item: any) {
     this.isMessageVisible = false;
     item.remove();
   }
 
 
   // called when remove all files button is clicked
-  private removeAllFiles() {
+  public removeAllFiles() {
     this.isMessageVisible = false;
     this.uploader.clearQueue();
   }
@@ -320,7 +320,7 @@ private  delay(ms: number) {
   //*****************************************************
   // HELPER METHODS
   //*****************************************************
-  private getUseridentity() {
+  public getUseridentity() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -335,14 +335,14 @@ private  delay(ms: number) {
   }
 
 
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.pageTitleService.emitPageTitle(new PageTitle("Post Trade"));
     this.messagesService.emitRoute("nill");   
     this.isRequesting = false;
   }
 
 
-  private setupForm() {
+  public setupForm() {
    
      this.addForm = this.formBuilder.group({   
        trading: new FormControl('', [Validators.required, ValidationService.tradeNameTradeValidator]),
@@ -373,7 +373,7 @@ private  delay(ms: number) {
   }
 
 
-  private setDate(): void {
+  public setDate(): void {
     // Set today date using the patchValue function
     let date = new Date();
     
@@ -389,13 +389,13 @@ private  delay(ms: number) {
   }
 
 
-  private onDateChanged(event: IMyDateModel) {
+  public onDateChanged(event: IMyDateModel) {
     // Update value of selDate variable
     this.selectDate = event.date;
   }
 
 
-  private clearDate(): void {
+  public clearDate(): void {
     // Clear the date using the patchValue function
     this.addForm.patchValue({ publishDate: null });
   }
@@ -405,7 +405,7 @@ private  delay(ms: number) {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
 

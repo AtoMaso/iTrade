@@ -9,7 +9,7 @@ export class ModalComponent {
       
       constructor( ) { }
 
-      private modalMessage: string;
+      public modalMessage: string;
       public modalIsVisible: boolean;      
 
       public showModalDialog(msg: string) {     

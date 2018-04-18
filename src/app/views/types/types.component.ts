@@ -25,60 +25,60 @@ import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
 })
 export class TypesComponent implements OnInit {
 
-  private traderId: string;
-  private isRequesting: boolean;
-  private session: UserSession;
+  public traderId: string;
+  public isRequesting: boolean;
+  public session: UserSession;
 
-  private phoneTypesForm: FormGroup;
-  private phonetypes: PhoneType[] = [];
-  private phoneTypeInView: PhoneType;
-  private tempAddUpdatePhoneType: PhoneType;
-  private defaultPhoneType: PhoneType;
-  private isPhoneTypeAddOn: boolean = false;
-  private isPhoneTypeEditOn: boolean = false;
-  private updatedPhoneType: PhoneType;
-  private addedPhoneType: PhoneType;
-  private removedPhoneType: PhoneType;
-  private phoneTypeToRemove: PhoneType;
-
-
-  private addressTypesForm: FormGroup;
-  private addresstypes: AddressType[] = [];
-  private addressTypeInView: AddressType;
-  private tempAddUpdateAddressType: AddressType;
-  private defaultAddressType: AddressType;
-  private isAddressTypeAddOn: boolean = false;
-  private isAddressTypeEditOn: boolean = false;
-  private updatedAddressType: AddressType;
-  private addedAddressType: AddressType;
-  private removedAddressType: AddressType;
-  private addressTypeToRemove: AddressType;
+  public phoneTypesForm: FormGroup;
+  public phonetypes: PhoneType[] = [];
+  public phoneTypeInView: PhoneType;
+  public tempAddUpdatePhoneType: PhoneType;
+  public defaultPhoneType: PhoneType;
+  public isPhoneTypeAddOn: boolean = false;
+  public isPhoneTypeEditOn: boolean = false;
+  public updatedPhoneType: PhoneType;
+  public addedPhoneType: PhoneType;
+  public removedPhoneType: PhoneType;
+  public phoneTypeToRemove: PhoneType;
 
 
-  private emailTypesForm: FormGroup;
-  private emailtypes: EmailType[] = [];
-  private emailTypeInView: EmailType;
-  private tempAddUpdateEmailType: EmailType;
-  private emailPhoneType: EmailType;
-  private isEmailTypeAddOn: boolean = false;
-  private isEmailTypeEditOn: boolean = false;
-  private updatedEmailType: EmailType;
-  private addedEmailType: EmailType;
-  private removedEmailType: EmailType;
-  private emailTypeToRemove: EmailType;
+  public addressTypesForm: FormGroup;
+  public addresstypes: AddressType[] = [];
+  public addressTypeInView: AddressType;
+  public tempAddUpdateAddressType: AddressType;
+  public defaultAddressType: AddressType;
+  public isAddressTypeAddOn: boolean = false;
+  public isAddressTypeEditOn: boolean = false;
+  public updatedAddressType: AddressType;
+  public addedAddressType: AddressType;
+  public removedAddressType: AddressType;
+  public addressTypeToRemove: AddressType;
 
 
-  private socialTypesForm: FormGroup;
-  private socialtypes: SocialNetworkType[] = [];
-  private socialTypeInView: SocialNetworkType;
-  private tempAddUpdateSocialType: SocialNetworkType;
-  private defaultSocialType: SocialNetworkType;
-  private isSocialTypeAddOn: boolean = false;
-  private isSocialTypeEditOn: boolean = false;
-  private updatedSocialType: SocialNetworkType;
-  private addedSocialType: SocialNetworkType;
-  private removedSocialType: SocialNetworkType;
-  private socialTypeToRemove: SocialNetworkType;
+  public emailTypesForm: FormGroup;
+  public emailtypes: EmailType[] = [];
+  public emailTypeInView: EmailType;
+  public tempAddUpdateEmailType: EmailType;
+  public emailPhoneType: EmailType;
+  public isEmailTypeAddOn: boolean = false;
+  public isEmailTypeEditOn: boolean = false;
+  public updatedEmailType: EmailType;
+  public addedEmailType: EmailType;
+  public removedEmailType: EmailType;
+  public emailTypeToRemove: EmailType;
+
+
+  public socialTypesForm: FormGroup;
+  public socialtypes: SocialNetworkType[] = [];
+  public socialTypeInView: SocialNetworkType;
+  public tempAddUpdateSocialType: SocialNetworkType;
+  public defaultSocialType: SocialNetworkType;
+  public isSocialTypeAddOn: boolean = false;
+  public isSocialTypeEditOn: boolean = false;
+  public updatedSocialType: SocialNetworkType;
+  public addedSocialType: SocialNetworkType;
+  public removedSocialType: SocialNetworkType;
+  public socialTypeToRemove: SocialNetworkType;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -200,7 +200,7 @@ export class TypesComponent implements OnInit {
       , (error: Response) => this.onError(error, "getPhonesTypes"));
   }
 
-  private onSuccessPhoneTypes(phonetypes: PhoneType[]) {
+  public onSuccessPhoneTypes(phonetypes: PhoneType[]) {
     this.phonetypes = null;
     // collections return zero length when no record found as it is initialised
     if (phonetypes.length == 0) {
@@ -223,7 +223,7 @@ export class TypesComponent implements OnInit {
 
 
 
-  private getAddressTypes() {
+  public getAddressTypes() {
     this.addressService.getAddressTypes()
       .subscribe((res: AddressType[]) => {
         this.onSuccessAddressTypes(res);
@@ -231,7 +231,7 @@ export class TypesComponent implements OnInit {
       , (error: Response) => this.onError(error, "getMessageTypes"));
   }
 
-  private onSuccessAddressTypes(passedaddresstypes: AddressType[]) {
+  public onSuccessAddressTypes(passedaddresstypes: AddressType[]) {
 
     this.addresstypes = null;
     // collections return zero length when no record found as it is initialised
@@ -255,7 +255,7 @@ export class TypesComponent implements OnInit {
 
 
 
-  private getEmailTypes() {
+  public getEmailTypes() {
     this.emailsService.getEmailTypes()
       .subscribe((res: EmailType[]) => {
         this.onSuccessEmailTypes(res);
@@ -263,7 +263,7 @@ export class TypesComponent implements OnInit {
       , (error: Response) => this.onError(error, "getEmailTypes"));
   }
 
-  private onSuccessEmailTypes(passedemailtypes: EmailType[]) {
+  public onSuccessEmailTypes(passedemailtypes: EmailType[]) {
 
     this.emailtypes = null;
     // collections return zero length when no record found as it is initialised
@@ -287,7 +287,7 @@ export class TypesComponent implements OnInit {
 
 
 
-  private getSocialTypes() {
+  public getSocialTypes() {
     this.socialsService.getSocialNetworkTypes()
       .subscribe((res: SocialNetworkType[]) => {
         this.onSuccessSocailTypes(res);
@@ -295,7 +295,7 @@ export class TypesComponent implements OnInit {
       , (error: Response) => this.onError(error, "getSocialTypes"));
   }
 
-  private onSuccessSocailTypes(passedsocialtypes: SocialNetworkType[]) {
+  public onSuccessSocailTypes(passedsocialtypes: SocialNetworkType[]) {
 
     this.socialtypes = null;
     // collections return zero length when no record found as it is initialised
@@ -323,26 +323,26 @@ export class TypesComponent implements OnInit {
   //************************************************************
   // SETUP FORM METHODS
   //************************************************************
-  private setPhoneTypesForm() {
+  public setPhoneTypesForm() {
     this.phoneTypesForm = this.formBuilder.group({
       phonetypedescription: new FormControl('', [Validators.required, ValidationService.messageTypeDescriptionValidator]),
     });
   }
 
-  private setAddressTypesForm() {
+  public setAddressTypesForm() {
     this.addressTypesForm = this.formBuilder.group({
       addresstypedescription: new FormControl('', [Validators.required, ValidationService.messageTypeDescriptionValidator]),
     });
   }
 
 
-  private setEmailTypesForm() {
+  public setEmailTypesForm() {
     this.emailTypesForm = this.formBuilder.group({
       emailtypedescription: new FormControl('', [Validators.required, ValidationService.messageTypeDescriptionValidator]),
     });
   }
 
-  private setSocialTypesForm() {
+  public setSocialTypesForm() {
     this.socialTypesForm = this.formBuilder.group({
       socialtypedescription: new FormControl('', [Validators.required, ValidationService.messageTypeDescriptionValidator]),
     });
@@ -350,7 +350,7 @@ export class TypesComponent implements OnInit {
 
 
 
-  private setPhoneTypesFormDefaults() {
+  public setPhoneTypesFormDefaults() {
     setTimeout(() => {
       this.phoneTypesForm.setValue({
         phonetypedescription: this.phoneTypeInView.phoneType,
@@ -358,7 +358,7 @@ export class TypesComponent implements OnInit {
     }, 30);
   }
 
-  private setAddressTypesFormDefaults() {
+  public setAddressTypesFormDefaults() {
     setTimeout(() => {
       this.addressTypesForm.setValue({
         addresstypedescription: this.addressTypeInView.addressType,
@@ -368,7 +368,7 @@ export class TypesComponent implements OnInit {
 
 
 
-  private setEmailTypesFormDefaults() {
+  public setEmailTypesFormDefaults() {
     setTimeout(() => {
       this.emailTypesForm.setValue({
         emailtypedescription: this.emailTypeInView.emailType,
@@ -376,7 +376,7 @@ export class TypesComponent implements OnInit {
     }, 30);
   }
 
-  private setSocialTypesFormDefaults() {
+  public setSocialTypesFormDefaults() {
     setTimeout(() => {
       this.socialTypesForm.setValue({
         socialtypedescription: this.socialTypeInView.socialType,
@@ -389,7 +389,7 @@ export class TypesComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE PHONE TYPES 
   //*****************************************************
-  private onViewPhoneTypeChange(state: any) {
+  public onViewPhoneTypeChange(state: any) {
     let m: number = 0;
     for (m = 0; m < this.phonetypes.length; m++) {
 
@@ -407,7 +407,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onPhoneTypeAddClick() {
+  public onPhoneTypeAddClick() {
     this.messagesService.emitRoute("nill");
     this.isPhoneTypeAddOn = true;
     this.isPhoneTypeEditOn = false;
@@ -421,7 +421,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onPhoneTypeEditClick() {
+  public onPhoneTypeEditClick() {
     this.messagesService.emitRoute("nill");
     this.isPhoneTypeEditOn = true;
     this.isPhoneTypeAddOn = false;
@@ -433,7 +433,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onPhoneTypeAddEditCancel() {
+  public onPhoneTypeAddEditCancel() {
     this.messagesService.emitRoute("nill");
     if (this.isPhoneTypeAddOn == true) { this.isPhoneTypeAddOn = false; }
     if (this.isPhoneTypeEditOn == true) { this.isPhoneTypeEditOn = false; }
@@ -442,7 +442,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onSubmitPhoneTypeAddUpdate() {
+  public onSubmitPhoneTypeAddUpdate() {
 
     this.removedPhoneType = null;
     this.messagesService.emitRoute("nill");
@@ -497,7 +497,7 @@ export class TypesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdatePhoneType(): PhoneType {
+  public prepareAddUpdatePhoneType(): PhoneType {
 
     const formModel = this.phoneTypesForm.value;
 
@@ -522,13 +522,13 @@ export class TypesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isPhoneTypeChanged(newPhoneType: PhoneType, oldPhoneType: PhoneType): boolean {
+  public isPhoneTypeChanged(newPhoneType: PhoneType, oldPhoneType: PhoneType): boolean {
     if (newPhoneType.phoneType === oldPhoneType.phoneType) { return false; }
     return true;
   }
 
 
-  private phoneTypeExists(phonetype: PhoneType): boolean {
+  public phoneTypeExists(phonetype: PhoneType): boolean {
     let m: number = 0;
     for (m = 0; m < this.phonetypes.length; m++) {
       if (phonetype.phoneType === this.phonetypes[m].phoneType) { return true; }
@@ -537,12 +537,12 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onPhoneTypeDeleteClick() {
+  public onPhoneTypeDeleteClick() {
     this.phoneTypeToRemove = this.phoneTypeInView;
   }
 
 
-  private onSubmitDeletePhoneType(phoneTypeToRemove: PhoneType) {
+  public onSubmitDeletePhoneType(phoneTypeToRemove: PhoneType) {
 
     this.phonesService.deletePhoneType(phoneTypeToRemove.phoneTypeId)
       .subscribe((response: PhoneType) => {
@@ -564,7 +564,7 @@ export class TypesComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE ADDRESS TYPES 
   //*****************************************************
-  private onViewAddressTypeChange(state: any) {
+  public onViewAddressTypeChange(state: any) {
     let m: number = 0;
     for (m = 0; m < this.addresstypes.length; m++) {
 
@@ -582,7 +582,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onAddressTypeAddClick() {
+  public onAddressTypeAddClick() {
     this.messagesService.emitRoute("nill");
     this.isAddressTypeAddOn = true;
     this.isAddressTypeEditOn = false;
@@ -596,7 +596,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onAddressTypeEditClick() {
+  public onAddressTypeEditClick() {
     this.messagesService.emitRoute("nill");
     this.isAddressTypeEditOn = true;
     this.isAddressTypeAddOn = false;
@@ -608,7 +608,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onAddressTypeAddEditCancel() {
+  public onAddressTypeAddEditCancel() {
     this.messagesService.emitRoute("nill");
     if (this.isAddressTypeAddOn == true) { this.isAddressTypeAddOn = false; }
     if (this.isAddressTypeEditOn == true) { this.isAddressTypeEditOn = false; }
@@ -617,7 +617,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onSubmitAddressTypeAddUpdate() {
+  public onSubmitAddressTypeAddUpdate() {
 
     this.removedAddressType = null;
     this.messagesService.emitRoute("nill");
@@ -671,7 +671,7 @@ export class TypesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateAddressType(): AddressType {
+  public prepareAddUpdateAddressType(): AddressType {
 
     const formModel = this.addressTypesForm.value;
 
@@ -696,13 +696,13 @@ export class TypesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isAddressTypeChanged(newAddressType: AddressType, oldAddressType: AddressType): boolean {
+  public isAddressTypeChanged(newAddressType: AddressType, oldAddressType: AddressType): boolean {
     if (newAddressType.addressType === oldAddressType.addressType) { return false; }
     return true;
   }
 
 
-  private addressTypeExists(addresstype: AddressType): boolean {
+  public addressTypeExists(addresstype: AddressType): boolean {
     let m: number = 0;
     for (m = 0; m < this.addresstypes.length; m++) {
       if (addresstype.addressType === this.addresstypes[m].addressType) { return true; }
@@ -711,12 +711,12 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onAddressTypeDeleteClick() {
+  public onAddressTypeDeleteClick() {
     this.addressTypeToRemove = this.addressTypeInView;
   }
 
 
-  private onSubmitDeleteAddressType(addressTypeToRemove: AddressType) {
+  public onSubmitDeleteAddressType(addressTypeToRemove: AddressType) {
 
     this.addressService.deleteAddressType(addressTypeToRemove.addressTypeId)
       .subscribe((response: AddressType) => {
@@ -738,7 +738,7 @@ export class TypesComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE EMAIL TYPES 
   //*****************************************************
-  private onViewEmailTypeChange(state: any) {
+  public onViewEmailTypeChange(state: any) {
     let m: number = 0;
     for (m = 0; m < this.emailtypes.length; m++) {
 
@@ -756,7 +756,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onEmailTypeAddClick() {
+  public onEmailTypeAddClick() {
     this.messagesService.emitRoute("nill");
     this.isEmailTypeAddOn = true;
     this.isEmailTypeEditOn = false;
@@ -770,7 +770,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onEmailTypeEditClick() {
+  public onEmailTypeEditClick() {
     this.messagesService.emitRoute("nill");
     this.isEmailTypeEditOn = true;
     this.isEmailTypeAddOn = false;
@@ -782,7 +782,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onEmailTypeAddEditCancel() {
+  public onEmailTypeAddEditCancel() {
     this.messagesService.emitRoute("nill");
     if (this.isEmailTypeAddOn == true) { this.isEmailTypeAddOn = false; }
     if (this.isEmailTypeEditOn == true) { this.isEmailTypeEditOn = false; }
@@ -791,7 +791,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onSubmitEmailTypeAddUpdate() {
+  public onSubmitEmailTypeAddUpdate() {
 
     this.removedEmailType = null;
     this.messagesService.emitRoute("nill");
@@ -846,7 +846,7 @@ export class TypesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateEmailType(): EmailType {
+  public prepareAddUpdateEmailType(): EmailType {
 
     const formModel = this.emailTypesForm.value;
 
@@ -871,13 +871,13 @@ export class TypesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isEmailTypeChanged(newEmailType: EmailType, oldEmailType: EmailType): boolean {
+  public isEmailTypeChanged(newEmailType: EmailType, oldEmailType: EmailType): boolean {
     if (newEmailType.emailType === oldEmailType.emailType) { return false; }
     return true;
   }
 
 
-  private emailTypeExists(emailtype: EmailType): boolean {
+  public emailTypeExists(emailtype: EmailType): boolean {
     let m: number = 0;
     for (m = 0; m < this.emailtypes.length; m++) {
       if (emailtype.emailType === this.emailtypes[m].emailType) { return true; }
@@ -886,12 +886,12 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onEmailTypeDeleteClick() {
+  public onEmailTypeDeleteClick() {
     this.emailTypeToRemove = this.emailTypeInView;
   }
 
 
-  private onSubmitDeleteEmailType(emailTypeToRemove: EmailType) {
+  public onSubmitDeleteEmailType(emailTypeToRemove: EmailType) {
 
     this.emailsService.deleteEmailType(emailTypeToRemove.emailTypeId)
       .subscribe((response: EmailType) => {
@@ -914,7 +914,7 @@ export class TypesComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE SOCIAL TYPES 
   //*****************************************************
-  private onViewSocialTypeChange(state: any) {
+  public onViewSocialTypeChange(state: any) {
     let m: number = 0;
     for (m = 0; m < this.socialtypes.length; m++) {
 
@@ -932,7 +932,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onSocialTypeAddClick() {
+  public onSocialTypeAddClick() {
     this.messagesService.emitRoute("nill");
     this.isSocialTypeAddOn = true;
     this.isSocialTypeEditOn = false;
@@ -946,7 +946,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onSocialTypeEditClick() {
+  public onSocialTypeEditClick() {
     this.messagesService.emitRoute("nill");
     this.isSocialTypeEditOn = true;
     this.isSocialTypeAddOn = false;
@@ -958,7 +958,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onSocialTypeAddEditCancel() {
+  public onSocialTypeAddEditCancel() {
     this.messagesService.emitRoute("nill");
     if (this.isSocialTypeAddOn == true) { this.isSocialTypeAddOn = false; }
     if (this.isSocialTypeEditOn == true) { this.isSocialTypeEditOn = false; }
@@ -967,7 +967,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onSubmitSocialTypeAddUpdate() {
+  public onSubmitSocialTypeAddUpdate() {
 
     this.removedSocialType = null;
     this.messagesService.emitRoute("nill");
@@ -1022,7 +1022,7 @@ export class TypesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateSocialType(): SocialNetworkType {
+  public prepareAddUpdateSocialType(): SocialNetworkType {
 
     const formModel = this.socialTypesForm.value;
 
@@ -1047,13 +1047,13 @@ export class TypesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isSocialypeChanged(newSocialType: SocialNetworkType, oldSocialType: SocialNetworkType): boolean {
+  public isSocialypeChanged(newSocialType: SocialNetworkType, oldSocialType: SocialNetworkType): boolean {
     if (newSocialType.socialType === oldSocialType.socialType) { return false; }
     return true;
   }
 
 
-  private socialTypeExists(socialtype: SocialNetworkType): boolean {
+  public socialTypeExists(socialtype: SocialNetworkType): boolean {
     let m: number = 0;
     for (m = 0; m < this.socialtypes.length; m++) {
       if (socialtype.socialType === this.socialtypes[m].socialType) { return true; }
@@ -1062,12 +1062,12 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private onSocialTypeDeleteClick() {
+  public onSocialTypeDeleteClick() {
     this.socialTypeToRemove = this.socialTypeInView;
   }
 
 
-  private onSubmitDeleteSocialType(socialTypeToRemove: SocialNetworkType) {
+  public onSubmitDeleteSocialType(socialTypeToRemove: SocialNetworkType) {
 
     this.socialsService.deleteSocialNetworkType(socialTypeToRemove.socialTypeId)
       .subscribe((response: SocialNetworkType) => {
@@ -1092,7 +1092,7 @@ export class TypesComponent implements OnInit {
   //************************************************************
   // HELPER METHODS
   //************************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -1105,7 +1105,7 @@ export class TypesComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.pageTitleService.emitPageTitle(new PageTitle("Process Messages"));
   }
@@ -1116,7 +1116,7 @@ export class TypesComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";

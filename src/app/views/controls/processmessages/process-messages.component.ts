@@ -16,7 +16,7 @@ export class ProcessMessagesComponent {
 
   public style: string;
   public stylespan = "messagespan;"
-  private errorMessage: string;
+  public errorMessage: string;
 
   // this is the host where this message control is used
   constructor() {}
@@ -44,7 +44,7 @@ export class ProcessMessagesComponent {
   }
 
 
-  private getThePrefix(type: string): string {    
+  public getThePrefix(type: string): string {    
          switch (type) {
           case "Error":
               return "ERROR: ";            

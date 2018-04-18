@@ -22,7 +22,7 @@ import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 
 //helpers
 import { AuthGuard } from './helpers/auth.guard';
-import { TopTradesPipe, SortTradesByDatePipe } from './helpers/pipes';
+//import { TopTradesPipe, SortTradesByDatePipe } from './helpers/pipes';
 
 //services
 import { AuthenticationService } from './services/authentication/authentication.service';
@@ -104,7 +104,7 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
 
     ControlMessages,ProcessMessagesComponent, 
     PageTitleComponent, ModalComponent, SpinnerOneComponent, CarouselComponent,
-    TopTradesPipe, SortTradesByDatePipe,
+    //TopTradesPipe, SortTradesByDatePipe,
 
     DashboardComponent, AboutComponent, ContactComponent, LoginComponent, RegisterComponent,   
  

@@ -6,7 +6,7 @@ import { ProcessMessageService } from '../../../services/processmessage/processm
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 
 // components
-import { CapsPipe } from '../../../helpers/pipes';
+//import { CapsPipe } from '../../../helpers/pipes';
 import { UserSession, UserIdentity, Authentication, Trade, PageTitle } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 

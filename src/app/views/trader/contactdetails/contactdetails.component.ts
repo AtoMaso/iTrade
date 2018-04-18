@@ -26,97 +26,97 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 })
 export class ContactlDetailsComponent implements OnInit {
 
-  private traderId: string;
-  private isRequesting: boolean;
-  private session: UserSession;
-  private phoneForm: FormGroup;
-  private emailForm: FormGroup;
-  private socialForm: FormGroup;
+  public traderId: string;
+  public isRequesting: boolean;
+  public session: UserSession;
+  public phoneForm: FormGroup;
+  public emailForm: FormGroup;
+  public socialForm: FormGroup;
 
-  private isPhoneAddOn: boolean = false;
-  private isPhoneEditOn: boolean = false;
-  private isSavePhoneOn: boolean = false;
+  public isPhoneAddOn: boolean = false;
+  public isPhoneEditOn: boolean = false;
+  public isSavePhoneOn: boolean = false;
 
-  private availablephones: Phone[] = [];
-  private phoneInView: Phone;
-  private tempAddUpdatePhone: Phone;
-  private availablePhonesCount: number = 0;
+  public availablephones: Phone[] = [];
+  public phoneInView: Phone;
+  public tempAddUpdatePhone: Phone;
+  public availablePhonesCount: number = 0;
 
-  private allphonetypes: PhoneType[] = [];
-  private existingphonetypes: PhoneType[] = [];
-  private phonetypescanbeadded: PhoneType[] = [];
+  public allphonetypes: PhoneType[] = [];
+  public existingphonetypes: PhoneType[] = [];
+  public phonetypescanbeadded: PhoneType[] = [];
 
-  private allpreferredphonetypes: PreferredType[] = [];
-  private existingpreferredphonetypes: PreferredType[] = [];
-  private preferredphonetypestobeadded: PreferredType[] = [];
+  public allpreferredphonetypes: PreferredType[] = [];
+  public existingpreferredphonetypes: PreferredType[] = [];
+  public preferredphonetypestobeadded: PreferredType[] = [];
 
-  private updatedPhone: Phone;
-  private addedPhone: Phone;
-  private phoneToRemove: Phone;
+  public updatedPhone: Phone;
+  public addedPhone: Phone;
+  public phoneToRemove: Phone;
 
-  private defaultPhoneType: PhoneType;
-  private defaultPreferredPhoneType: PreferredType;
-  private displayPhoneTypeModal: string;
-  private displayPreferredPhoneTypeModal: string;
+  public defaultPhoneType: PhoneType;
+  public defaultPreferredPhoneType: PreferredType;
+  public displayPhoneTypeModal: string;
+  public displayPreferredPhoneTypeModal: string;
 
 
 
 
   //EMAIL
-  private isEmailAddOn: boolean = false;
-  private isEmailEditOn: boolean = false;
-  private isSaveEmailOn: boolean = false;
+  public isEmailAddOn: boolean = false;
+  public isEmailEditOn: boolean = false;
+  public isSaveEmailOn: boolean = false;
 
-  private availableemails: Email[] = [];
-  private emailInView: Email;
-  private tempAddUpdateEmail: Email;
-  private availableEmailsCount: number = 0;
+  public availableemails: Email[] = [];
+  public emailInView: Email;
+  public tempAddUpdateEmail: Email;
+  public availableEmailsCount: number = 0;
 
-  private allemailtypes: EmailType[] = [];
-  private existingemailtypes: EmailType[] = [];
-  private emailtypescanbeadded: EmailType[] = [];
+  public allemailtypes: EmailType[] = [];
+  public existingemailtypes: EmailType[] = [];
+  public emailtypescanbeadded: EmailType[] = [];
 
-  private allpreferredemailtypes: PreferredType[] = [];
-  private existingpreferredemailtypes: PreferredType[] = [];
-  private preferredemailtypestobeadded: PreferredType[] = [];
+  public allpreferredemailtypes: PreferredType[] = [];
+  public existingpreferredemailtypes: PreferredType[] = [];
+  public preferredemailtypestobeadded: PreferredType[] = [];
 
-  private updatedEmail: Email;
-  private addedEmail: Email;
-  private emailToRemove: Email;
+  public updatedEmail: Email;
+  public addedEmail: Email;
+  public emailToRemove: Email;
 
-  private defaultEmailType: EmailType;
-  private defaultPreferredEmailType: PreferredType;
-  private displayEmailTypeModal: string;
-  private displayPreferredEmailTypeModal: string;
+  public defaultEmailType: EmailType;
+  public defaultPreferredEmailType: PreferredType;
+  public displayEmailTypeModal: string;
+  public displayPreferredEmailTypeModal: string;
 
 
 
   // SOCIAL
-  private isSocialAddOn: boolean = false;
-  private isSocialEditOn: boolean = false;
-  private isSaveSocialOn: boolean = false;
+  public isSocialAddOn: boolean = false;
+  public isSocialEditOn: boolean = false;
+  public isSaveSocialOn: boolean = false;
 
-  private availablesocials: SocialNetwork[] = [];
-  private socialInView: SocialNetwork;
-  private tempAddUpdateSocial: SocialNetwork;
-  private availableSocialCount: number = 0;
+  public availablesocials: SocialNetwork[] = [];
+  public socialInView: SocialNetwork;
+  public tempAddUpdateSocial: SocialNetwork;
+  public availableSocialCount: number = 0;
 
-  private allsocialtypes: SocialNetworkType[] = [];
-  private existingsocialtypes: SocialNetworkType[] = [];
-  private socialtypescanbeadded: SocialNetworkType[] = [];
+  public allsocialtypes: SocialNetworkType[] = [];
+  public existingsocialtypes: SocialNetworkType[] = [];
+  public socialtypescanbeadded: SocialNetworkType[] = [];
 
-  private allpreferredsocialtypes: PreferredType[] = [];
-  private existingpreferredsocialtypes: PreferredType[] = [];
-  private preferredsocialtypestobeadded: PreferredType[] = [];
+  public allpreferredsocialtypes: PreferredType[] = [];
+  public existingpreferredsocialtypes: PreferredType[] = [];
+  public preferredsocialtypestobeadded: PreferredType[] = [];
 
-  private updatedSocial: SocialNetwork;
-  private addedSocial: SocialNetwork;
-  private socialToRemove: SocialNetwork;
+  public updatedSocial: SocialNetwork;
+  public addedSocial: SocialNetwork;
+  public socialToRemove: SocialNetwork;
 
-  private defaultSocialType: SocialNetworkType;
-  private defaultPreferredSocialType: PreferredType;
-  private displaySocialTypeModal: string;
-  private displayPreferredSocialTypeModal: string;
+  public defaultSocialType: SocialNetworkType;
+  public defaultPreferredSocialType: PreferredType;
+  public displaySocialTypeModal: string;
+  public displayPreferredSocialTypeModal: string;
 
 
 
@@ -249,7 +249,7 @@ export class ContactlDetailsComponent implements OnInit {
   //********************************************************************
   //  PHONES SECTION
   //********************************************************************
-  private getPhonesByTraderId(traderId: string) {
+  public getPhonesByTraderId(traderId: string) {
     this.phonesService.getPhonesByTraderId(traderId)
       .subscribe((phonesResult: Phone[]) => {
         this.onSuccessPhones(phonesResult);
@@ -258,7 +258,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessPhones(phones: Phone[]) {
+  public onSuccessPhones(phones: Phone[]) {
     // collections return zero length when no record found as it is initialised
     if (phones.length == 0) {
       this.availablephones = null;
@@ -270,7 +270,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
   // get all address types from the server
-  private getPhoneTypes() {
+  public getPhoneTypes() {
 
     this.allphonetypes = [];
 
@@ -282,7 +282,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessPhoneTypes(types: PhoneType[]) {
+  public onSuccessPhoneTypes(types: PhoneType[]) {
     this.isRequesting = false;
 
     // collections return zero length when no record found as it is initialised
@@ -308,7 +308,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
   // get preferred types
-  private getPreferredPhoneTypes() {
+  public getPreferredPhoneTypes() {
 
     let pre1: PreferredType = new PreferredType();
     pre1.id = 1;
@@ -321,7 +321,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private setPhoneInViewPhoneTypesAndPreferredPhoneTypes() {
+  public setPhoneInViewPhoneTypesAndPreferredPhoneTypes() {
 
     if (this.updatedPhone) { this.phoneInView = this.updatedPhone;   }
     else if (this.addedPhone) { this.phoneInView = this.addedPhone;   }
@@ -386,7 +386,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private setPhoneForm() {
+  public setPhoneForm() {
     this.phoneForm = this.formBuilder.group({
       preferredphone: new FormControl('', [Validators.required, ValidationService.preferredValidator]),
       phonetype: new FormControl('', [Validators.required,ValidationService.phonetypeValidator]),
@@ -398,7 +398,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private setPhoneFormDefaults() {
+  public setPhoneFormDefaults() {
 
     let m: number = 0;
 
@@ -426,7 +426,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onViewPhoneTypeChange(type:any) {
+  public onViewPhoneTypeChange(type:any) {
     let m: number = 0;
     for (m = 0; m < this.availablephones.length; m++) {
       if (this.availablephones[m].phoneType === type.target.value) {
@@ -439,7 +439,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onPreferredPhoneTypeChange(preferredphonetype: PreferredType) {
+  public onPreferredPhoneTypeChange(preferredphonetype: PreferredType) {
     // only check it when we are adding address
     if (this.isPhoneEditOn && !this.isSavePhoneOn) {
       if (preferredphonetype.value == "Yes" && this.tempAddUpdatePhone.preferredFlag != "Yes") {
@@ -467,18 +467,18 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private openPreferredPhoneTypeModal() {
+  public openPreferredPhoneTypeModal() {
     this.displayPreferredPhoneTypeModal = "block";
   }
 
 
-  private onClosePreferredPhoneHandled() {
+  public onClosePreferredPhoneHandled() {
     this.displayPreferredPhoneTypeModal = "none";
     this.phoneForm.patchValue({ preferredphone: null });
   }
 
 
-  private onPhoneTypeChange(type: PhoneType) {
+  public onPhoneTypeChange(type: PhoneType) {
     if (this.isPhoneEditOn) {
       // check when we adding or when updating is there already existing addres
       if (this.phoneInView.phoneType != type.phoneType) {
@@ -504,18 +504,18 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private openPhoneTypeModal() {
+  public openPhoneTypeModal() {
     this.displayPhoneTypeModal = "block";
   }
 
 
-  private onClosePhoneHandled() {
+  public onClosePhoneHandled() {
     this.displayPhoneTypeModal = "none";
     this.phoneForm.patchValue({ phonetype: null });
   }
 
 
-  private onPhoneAddClick() {
+  public onPhoneAddClick() {
     this.messagesService.emitRoute("nill");
     this.isPhoneAddOn = true;
     this.isPhoneEditOn = false;
@@ -529,7 +529,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onPhoneEditClick() {
+  public onPhoneEditClick() {
     this.messagesService.emitRoute("nill");
     this.isPhoneEditOn = true;
     this.isPhoneAddOn = false;
@@ -541,7 +541,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onPhoneAddEditCancel() {
+  public onPhoneAddEditCancel() {
     this.messagesService.emitRoute(null);
     if (this.isPhoneAddOn == true) { this.isPhoneAddOn = false; }
     if (this.isPhoneEditOn == true) { this.isPhoneEditOn = false; }
@@ -550,12 +550,12 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onPhoneDeleteClick() {
+  public onPhoneDeleteClick() {
     this.phoneToRemove = this.phoneInView;
   }
 
 
-  private onSubmitDeletePhone(phoneToRemove: Phone) {
+  public onSubmitDeletePhone(phoneToRemove: Phone) {
     // delete phone here 
     this.phonesService.deletePhone(phoneToRemove)
       .subscribe((phoneResult: Phone) => {
@@ -566,7 +566,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSubmitPhoneAddUpdate() {
+  public onSubmitPhoneAddUpdate() {
 
     this.messagesService.emitRoute("nill");
     let phone: Phone = this.prepareAddUpdatePhone();
@@ -616,7 +616,7 @@ export class ContactlDetailsComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdatePhone(): Phone {
+  public prepareAddUpdatePhone(): Phone {
 
     const formModel = this.phoneForm.value;
 
@@ -645,7 +645,7 @@ export class ContactlDetailsComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private comparePhones(newPhone: Phone, oldPhone: Phone): boolean {
+  public comparePhones(newPhone: Phone, oldPhone: Phone): boolean {
 
     if (newPhone.phoneTypeId === oldPhone.phoneTypeId &&   
       newPhone.cityCode === oldPhone.cityCode &&
@@ -666,7 +666,7 @@ export class ContactlDetailsComponent implements OnInit {
   //************************************************************
   // EMAILS SECTION
   //************************************************************
-  private getEmailsByTraderId(traderId: string) {
+  public getEmailsByTraderId(traderId: string) {
     this.emailsService.getEmailsByTraderId(traderId)
       .subscribe((emailsResult: Email[]) => {
         this.onSuccessEmails(emailsResult);
@@ -675,7 +675,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessEmails(emails: Email[]) {
+  public onSuccessEmails(emails: Email[]) {
     // collections return zero length when no record found as it is initialised
     if (emails.length == 0) {
       this.availableemails = null;
@@ -688,7 +688,7 @@ export class ContactlDetailsComponent implements OnInit {
 
 
   // get all address types from the server
-  private getEmailTypes() {
+  public getEmailTypes() {
 
     this.allemailtypes = [];
 
@@ -700,7 +700,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessEmailTypes(types: EmailType[]) {
+  public onSuccessEmailTypes(types: EmailType[]) {
     this.isRequesting = false;
 
     // collections return zero length when no record found as it is initialised
@@ -726,7 +726,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
   // get preferred types
-  private getPreferredEmailTypes() {
+  public getPreferredEmailTypes() {
 
     let pre1: PreferredType = new PreferredType();
     pre1.id = 1;
@@ -739,7 +739,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private setEmailInViewEmailTypesAndPreferredEmailTypes() {
+  public setEmailInViewEmailTypesAndPreferredEmailTypes() {
 
     if (this.updatedEmail) { this.emailInView = this.updatedEmail }
     else if (this.addedEmail) { this.emailInView = this.addedEmail; }
@@ -805,7 +805,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private setEmailForm() {
+  public setEmailForm() {
     this.emailForm = this.formBuilder.group({
       emailaccount: new FormControl('', [Validators.required, ValidationService.emailValidator]),       
       emailtype: new FormControl('', [Validators.required, ValidationService.emailtypeValidator]),
@@ -815,7 +815,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private setEmailFormDefaults() {
+  public setEmailFormDefaults() {
 
     let m: number = 0;
 
@@ -839,7 +839,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onViewEmailTypeChange(type:any) {
+  public onViewEmailTypeChange(type:any) {
     let m: number = 0;
     for (m = 0; m < this.availableemails.length; m++) {
       if (this.availableemails[m].emailType === type.target.value) {
@@ -852,7 +852,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onPreferredEmailTypeChange(preferredemailtype: PreferredType) {
+  public onPreferredEmailTypeChange(preferredemailtype: PreferredType) {
     // only check it when we are adding address
     if (this.isEmailEditOn) {
       if (preferredemailtype.value == "Yes" && this.tempAddUpdateEmail.preferredFlag != "Yes") {
@@ -880,18 +880,18 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private openPreferredEmailTypeModal() {
+  public openPreferredEmailTypeModal() {
     this.displayPreferredEmailTypeModal = "block";
   }
 
 
-  private onClosePreferredEmailHandled() {
+  public onClosePreferredEmailHandled() {
     this.displayPreferredEmailTypeModal = "none";
     this.emailForm.patchValue({ preferredemail: null });
   }
 
 
-  private onEmailTypeChange(type: EmailType) {
+  public onEmailTypeChange(type: EmailType) {
     if (this.isEmailEditOn) {
       // check when we adding or when updating is there already existing addres
       if (this.emailInView.emailType != type.emailType) {
@@ -917,18 +917,18 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private openEmailTypeModal() {
+  public openEmailTypeModal() {
     this.displayEmailTypeModal = "block";
   }
 
 
-  private onCloseEmailHandled() {
+  public onCloseEmailHandled() {
     this.displayEmailTypeModal = "none";
     this.emailForm.patchValue({ emailtype: null });
   }
 
 
-  private onEmailAddClick() {
+  public onEmailAddClick() {
     this.messagesService.emitRoute("nill");
     this.isEmailAddOn = true;
     this.isEmailEditOn = false;
@@ -942,7 +942,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onEmailEditClick() {
+  public onEmailEditClick() {
     this.messagesService.emitRoute("nill");
     this.isEmailEditOn = true;
     this.isEmailAddOn = false;
@@ -954,7 +954,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onEmailAddEditCancel() {
+  public onEmailAddEditCancel() {
     this.messagesService.emitRoute(null);
     if (this.isEmailAddOn == true) { this.isEmailAddOn = false; }
     if (this.isEmailEditOn == true) { this.isEmailEditOn = false; }
@@ -963,12 +963,12 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onEmailDeleteClick() {
+  public onEmailDeleteClick() {
     this.emailToRemove =this.emailInView;
   }
 
 
-  private onSubmitDeleteEmail(emailToRemove: Email) {
+  public onSubmitDeleteEmail(emailToRemove: Email) {
     // delete phone here 
     this.emailsService.deleteEmail(emailToRemove)
       .subscribe((emailResult: Email) => {
@@ -980,7 +980,7 @@ export class ContactlDetailsComponent implements OnInit {
 
 
 
-  private onSubmitEmailAddUpdate() {
+  public onSubmitEmailAddUpdate() {
     this.messagesService.emitRoute("nill");
     let email: Email = this.prepareAddUpdateEmail();
 
@@ -1026,7 +1026,7 @@ export class ContactlDetailsComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateEmail(): Email {
+  public prepareAddUpdateEmail(): Email {
 
     const formModel = this.emailForm.value;
 
@@ -1053,7 +1053,7 @@ export class ContactlDetailsComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private compareEmails(newEmail: Email, oldEmail: Email): boolean {
+  public compareEmails(newEmail: Email, oldEmail: Email): boolean {
 
     if (newEmail.emailTypeId === oldEmail.emailTypeId &&    
       newEmail.traderId === oldEmail.traderId &&
@@ -1072,7 +1072,7 @@ export class ContactlDetailsComponent implements OnInit {
   //************************************************************
   // SOCIALS
   //************************************************************
-  private getSocialsByTraderId(traderId: string) {
+  public getSocialsByTraderId(traderId: string) {
     this.socialsService.getSocialNetworksByTraderId(traderId)
       .subscribe((socialsResult: SocialNetwork[]) => {
         this.onSuccessSocials(socialsResult);
@@ -1081,7 +1081,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessSocials(socials: SocialNetwork[]) {
+  public onSuccessSocials(socials: SocialNetwork[]) {
     // collections return zero length when no record found as it is initialised
     if (socials.length == 0) {
       this.availablesocials = null;
@@ -1094,7 +1094,7 @@ export class ContactlDetailsComponent implements OnInit {
 
 
   // get all address types from the server
-  private getSocialNetworkTypes() {
+  public getSocialNetworkTypes() {
 
     this.allsocialtypes = [];
 
@@ -1106,7 +1106,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessSocialNetworkTypes(types: SocialNetworkType[]) {
+  public onSuccessSocialNetworkTypes(types: SocialNetworkType[]) {
     this.isRequesting = false;
 
     // collections return zero length when no record found as it is initialised
@@ -1132,7 +1132,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
   // get preferred types
-  private getPreferredSocialTypes() {
+  public getPreferredSocialTypes() {
 
     let pre1: PreferredType = new PreferredType();
     pre1.id = 1;
@@ -1145,7 +1145,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private setSocialInViewSocialTypesAndPreferredSocialTypes() {
+  public setSocialInViewSocialTypesAndPreferredSocialTypes() {
 
     if (this.updatedSocial) { this.socialInView = this.updatedSocial }
     else if (this.addedSocial) { this.socialInView = this.addedSocial; }
@@ -1211,7 +1211,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private setSocialForm() {
+  public setSocialForm() {
     this.socialForm = this.formBuilder.group({
   
       socialaccount: new FormControl('', [Validators.required, ValidationService.emailValidator]),    
@@ -1222,7 +1222,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private setSocialFormDefaults() {
+  public setSocialFormDefaults() {
 
     let m: number = 0;
 
@@ -1246,7 +1246,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onViewSocialTypeChange(type: any) {
+  public onViewSocialTypeChange(type: any) {
     let m: number = 0;
     for (m = 0; m < this.availablesocials.length; m++) {
       if (this.availablesocials[m].socialType === type.target.value) {
@@ -1259,7 +1259,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onPreferredSocialTypeChange(preferredsocialtype: PreferredType) {
+  public onPreferredSocialTypeChange(preferredsocialtype: PreferredType) {
     // only check it when we are adding address
     if (this.isSocialEditOn && !this.isSaveSocialOn) {
       if (preferredsocialtype.value == "Yes" && this.tempAddUpdateSocial.preferredFlag != "Yes") {
@@ -1287,18 +1287,18 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private openPreferredSocialTypeModal() {
+  public openPreferredSocialTypeModal() {
     this.displayPreferredSocialTypeModal = "block";
   }
 
 
-  private onClosePreferredSocialHandled() {
+  public onClosePreferredSocialHandled() {
     this.displayPreferredSocialTypeModal = "none";
     this.socialForm.patchValue({ preferredsocial: null });
   }
 
 
-  private onSocialTypeChange(type: SocialNetworkType) {
+  public onSocialTypeChange(type: SocialNetworkType) {
     if (this.isSocialEditOn) {
       // check when we adding or when updating is there already existing addres
       if (this.socialInView.socialType != type.socialType) {
@@ -1324,18 +1324,18 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private openSocialTypeModal() {
+  public openSocialTypeModal() {
     this.displaySocialTypeModal = "block";
   }
 
 
-  private onCloseSocialHandled() {
+  public onCloseSocialHandled() {
     this.displaySocialTypeModal = "none";
     this.socialForm.patchValue({ socialltype: null });
   }
 
 
-  private onSocialAddClick() {
+  public onSocialAddClick() {
     this.messagesService.emitRoute("nill");
     this.isSocialAddOn = true;
     this.isSocialEditOn = false;
@@ -1349,7 +1349,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSocialEditClick() {
+  public onSocialEditClick() {
     this.messagesService.emitRoute("nill");
     this.isSocialEditOn = true;
     this.isSocialAddOn = false;
@@ -1361,7 +1361,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSocialAddEditCancel() {
+  public onSocialAddEditCancel() {
     this.messagesService.emitRoute(null);
     if (this.isSocialAddOn == true) { this.isSocialAddOn = false; }
     if (this.isSocialEditOn == true) { this.isSocialEditOn = false; }
@@ -1370,12 +1370,12 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSocialDeleteClick() {
+  public onSocialDeleteClick() {
     this.socialToRemove = this.socialInView;
   }
 
 
-  private onSubmitDeleteSocial(socialToRemove: SocialNetwork) {
+  public onSubmitDeleteSocial(socialToRemove: SocialNetwork) {
     // delete phone here 
     this.socialsService.deleteSocialNetwork(socialToRemove)
       .subscribe((socialResult: SocialNetwork) => {
@@ -1387,7 +1387,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private onSubmitSocialAddUpdate() {
+  public onSubmitSocialAddUpdate() {
     this.messagesService.emitRoute("nill");
     let social: SocialNetwork = this.prepareAddUpdateSocial();
 
@@ -1433,7 +1433,7 @@ export class ContactlDetailsComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateSocial(): SocialNetwork {
+  public prepareAddUpdateSocial(): SocialNetwork {
 
     const formModel = this.socialForm.value;
 
@@ -1460,7 +1460,7 @@ export class ContactlDetailsComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private compareSocials(newSocial: SocialNetwork, oldSocial: SocialNetwork): boolean {
+  public compareSocials(newSocial: SocialNetwork, oldSocial: SocialNetwork): boolean {
 
     if (newSocial.socialTypeId === oldSocial.socialTypeId &&
       newSocial.socialType === oldSocial.socialType &&
@@ -1479,7 +1479,7 @@ export class ContactlDetailsComponent implements OnInit {
   //************************************************************
   // HELPER METHODS
   //************************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -1492,7 +1492,7 @@ export class ContactlDetailsComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill");   
     this.pageTitleService.emitPageTitle(new PageTitle("My Contact Details"));
   }
@@ -1503,7 +1503,7 @@ export class ContactlDetailsComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";

@@ -25,25 +25,25 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 
 export class TradeDetailsComponent implements OnInit {
 
-  private traderId: string;
-  private tradeId: number = 0;
-  private trade: Trade;
-  private images: Image[];
-  private histories: TradeHistory[];
-  private hasHistory: boolean = false;
-  private hasImages: boolean = false; 
-  private hasImage1: boolean = true;
-  private hasImage2: boolean = true;
-  private hasImage3: boolean = true;
-  private session: UserSession;
+  public traderId: string;
+  public tradeId: number = 0;
+  public trade: Trade;
+  public images: Image[];
+  public histories: TradeHistory[];
+  public hasHistory: boolean = false;
+  public hasImages: boolean = false; 
+  public hasImage1: boolean = true;
+  public hasImage2: boolean = true;
+  public hasImage3: boolean = true;
+  public session: UserSession;
 
-  private isAuthenticated: boolean = false;
-  private isRequesting: boolean = false;
-  private canUserTrade: boolean = false;
-  private isNewTrade: boolean = false;
-  private isFirstLoad: boolean = false;
-  private hasPersonal: boolean = false;
-  private isTradeOpen: boolean = false;
+  public isAuthenticated: boolean = false;
+  public isRequesting: boolean = false;
+  public canUserTrade: boolean = false;
+  public isNewTrade: boolean = false;
+  public isFirstLoad: boolean = false;
+  public hasPersonal: boolean = false;
+  public isTradeOpen: boolean = false;
 
   constructor(  
     private cd: ChangeDetectorRef,
@@ -124,7 +124,7 @@ export class TradeDetailsComponent implements OnInit {
   /*******************************************************/
   // GET A TRADE
   /*******************************************************/
-  private getATrade(tradeId: number) {
+  public getATrade(tradeId: number) {
     this.isRequesting = true;
 
     this.tradeApiService.getSingleTrade(tradeId)
@@ -136,7 +136,7 @@ export class TradeDetailsComponent implements OnInit {
 
 
 
-  private onSuccessTrade(trade: Trade) {
+  public onSuccessTrade(trade: Trade) {
 
     this.trade = this.TransformData(trade); 
 
@@ -166,7 +166,7 @@ export class TradeDetailsComponent implements OnInit {
 /*******************************************************/
 // ADD HISTORY RECORD
 /*******************************************************/
-  private addHistoryRecord(trade:Trade, viewer:string) {
+  public addHistoryRecord(trade:Trade, viewer:string) {
 
     // create new trdae history
     let trhis: TradeHistory = new TradeHistory();
@@ -189,7 +189,7 @@ export class TradeDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessAddHistory(history: TradeHistory) {    
+  public onSuccessAddHistory(history: TradeHistory) {    
     // now get the new history as it is limited to 10 per trade
     this.getTradeHistory(this.tradeId); 
   }
@@ -199,7 +199,7 @@ export class TradeDetailsComponent implements OnInit {
 /*******************************************************
 // GET TRADE HISTORY
 /*******************************************************/
-  private getTradeHistory(tradeId: number) {
+  public getTradeHistory(tradeId: number) {
     this.tradeHistoryService.getTradeHistoriesByTradeId(tradeId)
       .subscribe((returnedHistories: TradeHistory[]) => {
         this.hasHistory = true;
@@ -219,7 +219,7 @@ export class TradeDetailsComponent implements OnInit {
 /*******************************************************
   // GET IMAGES 
   /*******************************************************/
-  private getTradeImages(tradeId: number) {
+  public getTradeImages(tradeId: number) {
   this.imageServise.getImagesByTradeId(tradeId)
     .subscribe((returnedImages: Image[]) => {    
       this.onSuccessGetImages(returnedImages);
@@ -230,7 +230,7 @@ export class TradeDetailsComponent implements OnInit {
 }
 
 
-  private onSuccessGetImages(images: Image[]) {
+  public onSuccessGetImages(images: Image[]) {
     this.isRequesting = false;
 
     this.images = images;
@@ -251,7 +251,7 @@ export class TradeDetailsComponent implements OnInit {
   //*****************************************************
   // GET PERSONAL DETAILS
   //*****************************************************
-  private getPersonalDetails(traderId) {
+  public getPersonalDetails(traderId) {
     this.isRequesting = true;
 
     this.personalService.getPersonalDetailsByTraderId(traderId)
@@ -267,7 +267,7 @@ export class TradeDetailsComponent implements OnInit {
   //*****************************************************
   // HELPER METHODS
   //*****************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -282,14 +282,14 @@ export class TradeDetailsComponent implements OnInit {
 
 
   // initialise component
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.pageTitleService.emitPageTitle(new PageTitle("Trade Details"));
     this.messagesService.emitRoute("nill");
   }
 
 
   // transform the data in fom we need
-  private TransformData(returnedTrade: Trade): Trade {     
+  public TransformData(returnedTrade: Trade): Trade {     
 
     let trd = new Trade;
       
@@ -316,7 +316,7 @@ export class TradeDetailsComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;  
     let message: string = "";
@@ -351,10 +351,10 @@ export class TradeDetailsComponent implements OnInit {
   /**********************************************/
   //ngx-pagination section
   /***********************************************/
-  private isDateAsc = true;
-  private sortDate: string = 'desc';
+  public isDateAsc = true;
+  public sortDate: string = 'desc';
 
-  private data: Array<any> = [];              // full data from the server
+  public data: Array<any> = [];              // full data from the server
   public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
   public numPages: number = 1;
@@ -377,13 +377,13 @@ export class TradeDetailsComponent implements OnInit {
   };
 
 
-  private onPageChange(passedpage: number) {
+  public onPageChange(passedpage: number) {
 
     this.config.currentPage = passedpage;
   }
 
 
-  private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
+  public onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.config.filtering, config.filtering);
     }
@@ -404,7 +404,7 @@ export class TradeDetailsComponent implements OnInit {
   }
 
 
-  private sortTable(column: string) {
+  public sortTable(column: string) {
     // reset the array of columns
     this.config.sorting.columns = [];
 
@@ -460,7 +460,7 @@ export class TradeDetailsComponent implements OnInit {
   }
 
 
-  private changeSort(data: any, config: any) {
+  public changeSort(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }

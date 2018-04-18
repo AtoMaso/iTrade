@@ -24,20 +24,20 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 })
 export class LoginDetailsComponent implements OnInit {
 
-  private traderId: string;
-  private isRequesting: boolean;
-  private session: UserSession;
+  public traderId: string;
+  public isRequesting: boolean;
+  public session: UserSession;
 
-  private changePasswordForm: FormGroup;
+  public changePasswordForm: FormGroup;
 
-  private isChangePasswordOn: boolean = false;
-  private isSavePasswordOn: boolean = false;
+  public isChangePasswordOn: boolean = false;
+  public isSavePasswordOn: boolean = false;
 
-  private trader: Trader;
-  private updatedTrader: Trader;
-  private traderToRemove: Trader;
+  public trader: Trader;
+  public updatedTrader: Trader;
+  public traderToRemove: Trader;
 
-  private changePasswordInfo: ChangePasswordBindingModel;
+  public changePasswordInfo: ChangePasswordBindingModel;
 
 
   constructor(
@@ -79,7 +79,7 @@ export class LoginDetailsComponent implements OnInit {
   //************************************************************
   // GET DATA SECTION
   //************************************************************
-  private getTraderInfo() {
+  public getTraderInfo() {
     this.traderService.getTraderByTraderId(this.traderId)
       .subscribe((response: Trader) => {       
         this.onSuccessUserInfo(response); 
@@ -87,12 +87,12 @@ export class LoginDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessUserInfo(response: Trader) {
+  public onSuccessUserInfo(response: Trader) {
     this.trader = response;       
     this.trader.password = "***************";     
   }
 
-  private setChangePasswordForm() {
+  public setChangePasswordForm() {
     this.changePasswordForm = this.formBuilder.group({
       oldpassword: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
       newpassword: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
@@ -104,15 +104,15 @@ export class LoginDetailsComponent implements OnInit {
   //************************************************************
   // SCREEN INPUT SECTION
   //************************************************************
-  private onChangePasswordClick() {
+  public onChangePasswordClick() {
     this.isChangePasswordOn = true;
   }
 
-  private onChangePasswordCancel() {
+  public onChangePasswordCancel() {
     this.isChangePasswordOn = false;
   }
 
-  private onChangePasswordSubmit() {
+  public onChangePasswordSubmit() {
     this.changePasswordInfo = new ChangePasswordBindingModel();
     this.changePasswordInfo.OldPassword = this.changePasswordForm.controls.oldpassword.value;
     this.changePasswordInfo.NewPassword = this.changePasswordForm.controls.newpassword.value;
@@ -139,7 +139,7 @@ export class LoginDetailsComponent implements OnInit {
   }
 
 
-  private ComparePasswords(passedtrader: ChangePasswordBindingModel): boolean {
+  public ComparePasswords(passedtrader: ChangePasswordBindingModel): boolean {
     if (passedtrader.NewPassword === passedtrader.ConfirmPassword) { return true; }
     else {
       this.messagesService.emitProcessMessage("PMEPNM");
@@ -151,7 +151,7 @@ export class LoginDetailsComponent implements OnInit {
   //************************************************************
   // HELPER METHODS SECTION
   //************************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -164,7 +164,7 @@ export class LoginDetailsComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill"); 
     this.pageTitleService.emitPageTitle(new PageTitle("My Security Details"));
   }
@@ -174,7 +174,7 @@ export class LoginDetailsComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";

@@ -22,10 +22,10 @@ import { ControlMessages } from '../controls/controlmessages/control-messages.co
 
 export class RegisterComponent implements OnInit {
 
-  private registerModel = new RegisterBindingModel();
-  private submitted = false;
-  private registerGroup: any;
-  private isRequesting: boolean = false;
+  public registerModel = new RegisterBindingModel();
+  public submitted = false;
+  public registerGroup: any;
+  public isRequesting: boolean = false;
 
 
   //*****************************************************
@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
   //****************************************************
   // GET ACCOUNT
   //****************************************************
-  private register() {
+  public register() {
 
     this.registerModel.Email = this.registerGroup.controls.email.value;
     this.registerModel.Password = this.registerGroup.controls.password.value;
@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  private ComparePasswords(passedtrader: RegisterBindingModel): boolean {
+  public ComparePasswords(passedtrader: RegisterBindingModel): boolean {
     if (passedtrader.Password === passedtrader.ConfirmPassword) { return true; }
     else {
       this.messagesService.emitProcessMessage("PMEPCP");
@@ -81,7 +81,7 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  private onSucessRegistering(res: any) {
+  public onSucessRegistering(res: any) {
     this.isRequesting = false;
     this.submitted = true;
     this.messagesService.emitProcessMessage("PMSCTr");
@@ -90,13 +90,13 @@ export class RegisterComponent implements OnInit {
 
 
   // toggles the submitted flag which should disable the form and show the succes small form
-  private onSubmit() { this.submitted = true; }
+  public onSubmit() { this.submitted = true; }
 
 
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
 

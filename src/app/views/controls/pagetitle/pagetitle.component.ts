@@ -12,11 +12,11 @@ import { UserSession, ProcessMessage, PageTitle } from '../../../helpers/classes
 
 export class PageTitleComponent implements OnInit {
 
-  private pageTitle: string = "";
-  private pageValue: string = "";
-  private isAuthenticated: boolean = false;
-  private userSession: UserSession;
-  private subscriptionSession: Subscription;
+  public pageTitle: string = "";
+  public pageValue: string = "";
+  public isAuthenticated: boolean = false;
+  public userSession: UserSession;
+  public subscriptionSession: Subscription;
 
   constructor(private messagesService: ProcessMessageService, private authenticationService: AuthenticationService) { }
 

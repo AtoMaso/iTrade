@@ -21,38 +21,38 @@ import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-  private traderId: string;
-  private isRequesting: boolean;
-  private session: UserSession;
+  public traderId: string;
+  public isRequesting: boolean;
+  public session: UserSession;
 
-  private categoryForm: FormGroup;
-  private categories: Category[] = [];
-  private categoryInView: Category;
-  private tempAddUpdateCategory: Category;
-  private defaultCategory: Category;
+  public categoryForm: FormGroup;
+  public categories: Category[] = [];
+  public categoryInView: Category;
+  public tempAddUpdateCategory: Category;
+  public defaultCategory: Category;
 
-  private isCategoryAddOn: boolean = false;
-  private isCategoryEditOn: boolean = false; 
+  public isCategoryAddOn: boolean = false;
+  public isCategoryEditOn: boolean = false; 
 
-  private updatedCategory: Category;
-  private addedCategory: Category;
-  private removedCategory: Category;
-  private categoryToRemove: Category;
+  public updatedCategory: Category;
+  public addedCategory: Category;
+  public removedCategory: Category;
+  public categoryToRemove: Category;
 
 
-  private subcategoryForm: FormGroup;
-  private subcategories: Subcategory[] = [];
-  private subcategoryInView: Subcategory;
-  private tempAddUpdateSubCategory: Subcategory;
-  private defaultSubcategory: Subcategory;
+  public subcategoryForm: FormGroup;
+  public subcategories: Subcategory[] = [];
+  public subcategoryInView: Subcategory;
+  public tempAddUpdateSubCategory: Subcategory;
+  public defaultSubcategory: Subcategory;
 
-  private isSubCategoryAddOn: boolean = false;
-  private isSubCategoryEditOn: boolean = false;
+  public isSubCategoryAddOn: boolean = false;
+  public isSubCategoryEditOn: boolean = false;
 
-  private updatedSubCategory: Subcategory;
-  private addedSubCategory: Subcategory;
-  private removedSubCategory: Subcategory;
-  private subcategoryToRemove: Subcategory;
+  public updatedSubCategory: Subcategory;
+  public addedSubCategory: Subcategory;
+  public removedSubCategory: Subcategory;
+  public subcategoryToRemove: Subcategory;
  
 
   constructor(
@@ -138,7 +138,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onSuccessCategories(categories: Category[]) {
+  public onSuccessCategories(categories: Category[]) {
     this.categories = null;
     // collections return zero length when no record found as it is initialised
     if (categories.length == 0) {
@@ -167,7 +167,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private getSubcategoriesByCategoryId(categoryId: number) {
+  public getSubcategoriesByCategoryId(categoryId: number) {
    
     this.subcategoriesService.getSubcategoriesByCategoryId(categoryId)
       .subscribe((res: Subcategory[]) => {
@@ -177,7 +177,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onSuccessSubCategories(subcategories: Subcategory[]) {
+  public onSuccessSubCategories(subcategories: Subcategory[]) {
 
     this.subcategories = null;    
     // collections return zero length when no record found as it is initialised
@@ -204,21 +204,21 @@ export class CategoriesComponent implements OnInit {
   //************************************************************
   // SETUP FORM METHODS
   //************************************************************
-  private setCategoryForm() {
+  public setCategoryForm() {
     this.categoryForm = this.formBuilder.group({
       categorydescription: new FormControl('', [Validators.required, ValidationService.categoryInputValidator]),
     });
   }
 
 
-  private setSubCategoryForm() {
+  public setSubCategoryForm() {
     this.subcategoryForm = this.formBuilder.group({
       subcategorydescription: new FormControl('', [Validators.required, ValidationService.subcategoryInputValidator]),
     });
   }
 
 
-  private setCategoryFormDefaults() {
+  public setCategoryFormDefaults() {
 
     setTimeout(() => {
       this.categoryForm.setValue({
@@ -228,7 +228,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private setSubCategoryFormDefaults() {
+  public setSubCategoryFormDefaults() {
     setTimeout(() => {
       this.subcategoryForm.setValue({
         subcategorydescription: this.subcategoryInView.subcategory,
@@ -240,7 +240,7 @@ export class CategoriesComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE CATEGORIES 
   //*****************************************************
-  private onViewCategoryChange(category: any) {
+  public onViewCategoryChange(category: any) {
     let m: number = 0;
     for (m = 0; m < this.categories.length; m++) {
 
@@ -260,7 +260,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onCategoryAddClick() {
+  public onCategoryAddClick() {
     this.messagesService.emitRoute("nill");
     this.isCategoryAddOn = true;
     this.setCategoryForm();
@@ -273,7 +273,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onCategoryEditClick() {
+  public onCategoryEditClick() {
     this.messagesService.emitRoute("nill");
     this.isCategoryEditOn = true;
 
@@ -284,7 +284,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onCategoryAddEditCancel() {
+  public onCategoryAddEditCancel() {
     this.messagesService.emitRoute("nill");
     if (this.isCategoryAddOn == true) { this.isCategoryAddOn = false; }
     if (this.isCategoryEditOn == true) { this.isCategoryEditOn = false; }
@@ -293,7 +293,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onSubmitCategoryAddUpdate() {
+  public onSubmitCategoryAddUpdate() {
 
     this.removedCategory = null;
     this.messagesService.emitRoute("nill");
@@ -352,7 +352,7 @@ export class CategoriesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateCategory(): Category {
+  public prepareAddUpdateCategory(): Category {
 
     const formModel = this.categoryForm.value;
 
@@ -377,13 +377,13 @@ export class CategoriesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isCategoryChanged(newCategory: Category, oldCategory: Category): boolean {
+  public isCategoryChanged(newCategory: Category, oldCategory: Category): boolean {
     if (newCategory.category === oldCategory.category) {  return false; }
     return true;
   }
 
 
-  private catExists(cat: Category): boolean {
+  public catExists(cat: Category): boolean {
     let m: number = 0;
     for (m = 0; m < this.categories.length; m++) {
       if (cat.category === this.categories[m].category) { return true; }
@@ -392,12 +392,12 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onCategoryDeleteClick() {
+  public onCategoryDeleteClick() {
     this.categoryToRemove = this.categoryInView;
   }
 
 
-  private onSubmitDeleteCategory(categoryToRemove) {
+  public onSubmitDeleteCategory(categoryToRemove) {
  
     this.categoriesService.deleteCategory(categoryToRemove.categoryId)
       .subscribe((response: Category) => {
@@ -418,7 +418,7 @@ export class CategoriesComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE SUBCATEGORIES 
   //*****************************************************
-  private onViewSubcategoryChange(subcategory: any) {
+  public onViewSubcategoryChange(subcategory: any) {
     let m: number = 0;
     for (m = 0; m < this.subcategories.length; m++) {
       if (this.subcategories[m].subcategory === subcategory.target.value) {
@@ -430,7 +430,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onSubCategoryAddClick() {
+  public onSubCategoryAddClick() {
     this.messagesService.emitRoute("nill");
     this.isSubCategoryAddOn = true;
     this.isSubCategoryEditOn = false;
@@ -445,7 +445,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onSubCategoryEditClick() {
+  public onSubCategoryEditClick() {
     this.messagesService.emitRoute("nill");
     this.isSubCategoryEditOn = true;
     this.isSubCategoryAddOn = false;
@@ -457,7 +457,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onSubCategoryAddEditCancel() {
+  public onSubCategoryAddEditCancel() {
     this.messagesService.emitRoute("nill");
     if (this.isSubCategoryAddOn == true) { this.isSubCategoryAddOn = false; }
     if (this.isSubCategoryEditOn == true) { this.isSubCategoryEditOn = false; }
@@ -466,7 +466,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onSubmitSubCategoryAddUpdate() {
+  public onSubmitSubCategoryAddUpdate() {
   
     this.messagesService.emitRoute("nill");
     let subcategory: Subcategory = this.prepareAddUpdateSubCategory();
@@ -527,7 +527,7 @@ export class CategoriesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateSubCategory():Subcategory {
+  public prepareAddUpdateSubCategory():Subcategory {
 
     const formModel = this.subcategoryForm.value;
 
@@ -553,14 +553,14 @@ export class CategoriesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isSubcategoryChanged(newSubCategory: Subcategory, oldSubCategory: Subcategory): boolean {
+  public isSubcategoryChanged(newSubCategory: Subcategory, oldSubCategory: Subcategory): boolean {
 
     if (newSubCategory.subcategory === oldSubCategory.subcategory) { return false; }
     return true;
   }
 
 
-  private subcatExists(subcat: Subcategory): boolean {
+  public subcatExists(subcat: Subcategory): boolean {
     let m: number = 0;
     for (m = 0; m < this.subcategories.length; m++) {
       if (subcat.subcategory === this.subcategories[m].subcategory) {  return true; }
@@ -569,12 +569,12 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private onSubCategoryDeleteClick() {
+  public onSubCategoryDeleteClick() {
     this.subcategoryToRemove = this.subcategoryInView;
   }
 
 
-  private onSubmitDeleteSubCategory(subcategoryToRemove) {
+  public onSubmitDeleteSubCategory(subcategoryToRemove) {
     this.addedSubCategory = null;
     this.updatedSubCategory = null;
 
@@ -601,7 +601,7 @@ export class CategoriesComponent implements OnInit {
   //************************************************************
   // HELPER METHODS
   //************************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -614,7 +614,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.pageTitleService.emitPageTitle(new PageTitle("Categories"));
   }
@@ -625,7 +625,7 @@ export class CategoriesComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";

@@ -21,10 +21,10 @@ import { ControlMessages } from '../controls/controlmessages/control-messages.co
 
 
 export class LoginComponent implements OnInit {
-  private trader: LoginModel;
-  private keeplogin: boolean;
-  private loginGroup: any;
-  private isRequesting: boolean = false;
+  public trader: LoginModel;
+  public keeplogin: boolean;
+  public loginGroup: any;
+  public isRequesting: boolean = false;
  
   //*****************************************************
   // CONSTRUCTOR IMPLEMENTAION
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
   //****************************************************
   // GET ACCOUNT
   //****************************************************
-  private login() {
+  public login() {
     this.trader = new LoginModel();
     this.trader.UserName = this.loginGroup.controls.email.value;
     this.trader.Password = this.loginGroup.controls.password.value;
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
   }
 
 
-  private onLoginSuccess(res:any) {    
+  public onLoginSuccess(res:any) {    
     if (sessionStorage["UserSession"] !== "null") {   
       this.emitUserSession(res);
       this.isRequesting = false;
@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
 
 
   // get the next session from the session observable
-  private emitUserSession(res:any) {
+  public emitUserSession(res:any) {
         this.authenticationService.emitUserSession(this.authenticationService.getUserSession());
   }
 
@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
  //****************************************************
   // HELPER METHODS
   //****************************************************
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill");  
     this.pageTitleService.emitPageTitle(new PageTitle("Login"));
   }
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {   
+  public onError(serviceError: any, operation: string) {   
 
     this.isRequesting = false;
 

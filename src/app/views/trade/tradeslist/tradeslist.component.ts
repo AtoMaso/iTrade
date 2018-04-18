@@ -27,48 +27,48 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 })
 export class TradesListComponent implements OnInit {
 
-  private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
-  private isRequesting: boolean = false;
-  private isAuthenticated: boolean = false;
-  private isAllowedToAddTrade: boolean = false;
-  private status: string = "Open";
+  public session: UserSession;
+  public identity: UserIdentity = new UserIdentity;
+  public isRequesting: boolean = false;
+  public isAuthenticated: boolean = false;
+  public isAllowedToAddTrade: boolean = false;
+  public status: string = "Open";
 
-  private totalNumberOfRecords: number = 0; 
-  private totalNumberOfSets: number = 0;
-  private setsCounter: number = 1;
-  private recordsPerSet: number = 100;
-  private hasTrades: boolean = true;
-  private selectedItem: string = "Published";
+  public totalNumberOfRecords: number = 0; 
+  public totalNumberOfSets: number = 0;
+  public setsCounter: number = 1;
+  public recordsPerSet: number = 100;
+  public hasTrades: boolean = true;
+  public selectedItem: string = "Published";
  
-  private categories: Category[] = [];
-  private subcategories: Subcategory[] = [];
-  private states: GeoData[] = [];
-  private places: GeoData[] = [];
-  private postcodes: GeoData[] = [];
-  private suburbs: GeoData[] = [];
+  public categories: Category[] = [];
+  public subcategories: Subcategory[] = [];
+  public states: GeoData[] = [];
+  public places: GeoData[] = [];
+  public postcodes: GeoData[] = [];
+  public suburbs: GeoData[] = [];
 
-  private selectedCategory: string = null;
-  private selectedSubcategory: string = null;
-  private selectedState: string = null;
-  private selectedPlace: string = null;
-  private selectedPostcode: string = null;
-  private selectedSuburb: string = null;
+  public selectedCategory: string = null;
+  public selectedSubcategory: string = null;
+  public selectedState: string = null;
+  public selectedPlace: string = null;
+  public selectedPostcode: string = null;
+  public selectedSuburb: string = null;
 
-  private selectedCategoryId: number = 0;
-  private selectedSubcategoryId: number = 0;
-  private selectedStateId: number = 0;
-  private selectedPlaceId: number = 0;
-  private selectedPostcodeId: number = 0;
-  private selectedSuburbId: number = 0;
+  public selectedCategoryId: number = 0;
+  public selectedSubcategoryId: number = 0;
+  public selectedStateId: number = 0;
+  public selectedPlaceId: number = 0;
+  public selectedPostcodeId: number = 0;
+  public selectedSuburbId: number = 0;
 
-  private filters: string = null;
-  private filters1: string = null;
-  private filters2: string = null;
-  private isNewLoad: boolean = false;
-  private checked: boolean = false;
+  public filters: string = null;
+  public filters1: string = null;
+  public filters2: string = null;
+  public isNewLoad: boolean = false;
+  public checked: boolean = false;
 
-  private hasPersonal: boolean = false;
+  public hasPersonal: boolean = false;
 
   // constructor which injects the services
   constructor(
@@ -140,7 +140,7 @@ export class TradesListComponent implements OnInit {
   // GET TRADES - this will get open trades, if there are no any open trades will get all or will show message - no trades
   //*********************************************************************************************
   //gets set of trades 
-  private getSetOfTradesWithStatus(setsCounter: number, recordsPerSet: number, status: string) {
+  public getSetOfTradesWithStatus(setsCounter: number, recordsPerSet: number, status: string) {
 
     this.tradeApiService.getSetOfTradesWithStatus(setsCounter, recordsPerSet, status)
         .subscribe((returnedTrades: Trade[]) => {      
@@ -163,7 +163,7 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  private getSetOfTradesWithStatusClosed(setsCounter:number, recordsPerSet:number, status: string) {
+  public getSetOfTradesWithStatusClosed(setsCounter:number, recordsPerSet:number, status: string) {
 
     this.tradeApiService.getSetOfTradesWithStatus(setsCounter, recordsPerSet, status)
       .subscribe((returnedTrades: Trade[]) => {
@@ -188,7 +188,7 @@ export class TradesListComponent implements OnInit {
 
 
   // get set of trades with set filters
-  private getSetOfTradesWithSetFilters() {
+  public getSetOfTradesWithSetFilters() {
 
     let cat: string = null;
     let subcat: string = null;
@@ -231,7 +231,7 @@ export class TradesListComponent implements OnInit {
 
 
   // get all trades - not in use
-  private getTrades(status: string) {
+  public getTrades(status: string) {
 
     this.tradeApiService.getTradesWithStatusOrAll("", status)
       .subscribe((returnedTrades: Trade[]) => {
@@ -261,7 +261,7 @@ export class TradesListComponent implements OnInit {
 
 
   // get trades with set filters  - not in use
-  private getTradesWithSetFilters() {
+  public getTradesWithSetFilters() {
     let cat: string = null;;
     let subcat: string = null;
     let pla: string = null;
@@ -302,7 +302,7 @@ export class TradesListComponent implements OnInit {
   //*****************************************************
   // GET PERSONAL DETAILS
   //*****************************************************
-  private getPersonalDetails(traderId) {
+  public getPersonalDetails(traderId) {
     this.isRequesting = true;
 
     this.personalService.getPersonalDetailsByTraderId(traderId)
@@ -370,7 +370,7 @@ export class TradesListComponent implements OnInit {
   //*****************************************************
   //CLEANING SCREEN
   //*****************************************************
-  private ClearAllFiltersAndGoBack() {
+  public ClearAllFiltersAndGoBack() {
     this.selectedCategory = null;
     this.selectedSubcategory = null;
     this.selectedState = null;
@@ -401,7 +401,7 @@ export class TradesListComponent implements OnInit {
   //*****************************************************
   //FILTER INPUTS
   //*****************************************************
-  private CategoryClicked(event: any) {     
+  public CategoryClicked(event: any) {     
     this.messagesService.emitRoute("nill");
 
     this.selectedCategory = event.target.value;
@@ -410,13 +410,13 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
   }
 
-  private SubcategoryClicked(event:any) {    
+  public SubcategoryClicked(event:any) {    
     this.selectedSubcategory = event.target.value;
     this.getSubcategoryId(event.target.value);
     this.setupFilterString();
   }
  
-  private StateClicked(event: any) { 
+  public StateClicked(event: any) { 
     this.messagesService.emitRoute("nill");
 
     this.selectedState = event.target.value;
@@ -439,7 +439,7 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
   }
 
-  private PlaceClicked(event: any) {   
+  public PlaceClicked(event: any) {   
     this.messagesService.emitRoute("nill");
 
     this.selectedPlace = event.target.value;    
@@ -457,7 +457,7 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
   }
 
-  private PostcodeClicked(event: any) {
+  public PostcodeClicked(event: any) {
     this.messagesService.emitRoute("nill");
 
     this.selectedPostcode = event.target.value;  
@@ -475,7 +475,7 @@ export class TradesListComponent implements OnInit {
     this.setupFilterString();
   }
 
-  private SuburbClicked(event: any) {
+  public SuburbClicked(event: any) {
     this.messagesService.emitRoute("nill");
 
     this.selectedSuburb = event.target.value;
@@ -489,7 +489,7 @@ export class TradesListComponent implements OnInit {
   //*****************************************************
   //GET THE INPUT IDS
   //*****************************************************
-  private getCategoryId(categoryname: string) {
+  public getCategoryId(categoryname: string) {
     if (categoryname != "") {
       let m: number = 0;
       for (m = 0; m < this.categories.length; m++) {
@@ -506,7 +506,7 @@ export class TradesListComponent implements OnInit {
     }
   }
 
-  private getSubcategoryId(subcategoryname: string) {
+  public getSubcategoryId(subcategoryname: string) {
     if (subcategoryname != "") {
       let m: number = 0;
       for (m = 0; m < this.subcategories.length; m++) {
@@ -524,7 +524,7 @@ export class TradesListComponent implements OnInit {
   //*****************************************************
   //SETUP FILTER STRING
   //*****************************************************
-  private setupFilterString() {
+  public setupFilterString() {
    
       if (this.selectedCategory) {     
         this.filters1 = " Category = " + this.selectedCategory;
@@ -566,7 +566,7 @@ export class TradesListComponent implements OnInit {
   //*****************************************************
   // HELPER METHODS
   //*****************************************************
-  private getUseridentity() {
+  public getUseridentity() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -579,14 +579,14 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.isRequesting = true;
     this.pageTitleService.emitPageTitle(new PageTitle("Trades"));
   }
 
 
-  private TransformData(returnedTrades: Trade[]): Array<any> {
+  public TransformData(returnedTrades: Trade[]): Array<any> {
 
     let counter: number = 1;
 
@@ -633,7 +633,7 @@ export class TradesListComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     let message: string = "";
 
@@ -666,43 +666,43 @@ export class TradesListComponent implements OnInit {
 
 
   // an event from the child carousel component saying that encountered an error
-  private ChangeIsRequesting(bool) { this.isRequesting = false; }
+  public ChangeIsRequesting(bool) { this.isRequesting = false; }
 
   /**********************************************/
   //ngx-pagination section
   /***********************************************/
-  private isAsc: boolean = true;
-  private isTraderAsc:boolean = true;
-  private isTradeForAsc:boolean = true;
-  private isCategoryAsc:boolean = true;
-  private isNameAsc: boolean = true;
-  private isDateAsc: boolean = true;
-  private isStateAsc: boolean = true;
-  private isPlaceAsc: boolean = true;
-  private isPlostcodeAsc: boolean = true;
-  private isSuburbAsc: boolean = true;
+  public isAsc: boolean = true;
+  public isTraderAsc:boolean = true;
+  public isTradeForAsc:boolean = true;
+  public isCategoryAsc:boolean = true;
+  public isNameAsc: boolean = true;
+  public isDateAsc: boolean = true;
+  public isStateAsc: boolean = true;
+  public isPlaceAsc: boolean = true;
+  public isPlostcodeAsc: boolean = true;
+  public isSuburbAsc: boolean = true;
 
-  private sortTrader: string = 'desc';
-  private sortTradeFor: string = 'desc';
-  private sortCategory: string = 'desc';
-  private sortName: string = 'desc';
-  private sortDate: string = 'desc';
-  private sortState: string = 'desc';
-  private sortPlace: string = 'desc';
-  private sortPostcode: string = 'desc';
-  private sortSuburb: string = 'desc';
+  public sortTrader: string = 'desc';
+  public sortTradeFor: string = 'desc';
+  public sortCategory: string = 'desc';
+  public sortName: string = 'desc';
+  public sortDate: string = 'desc';
+  public sortState: string = 'desc';
+  public sortPlace: string = 'desc';
+  public sortPostcode: string = 'desc';
+  public sortSuburb: string = 'desc';
 
-  private data: Array<any> = [];     // full data from the server
+  public data: Array<any> = [];     // full data from the server
   public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;        // number of pages in the navigation
   public numPages: number = 1;     
   
-  private isNextButton: boolean = false;
-  private isPrevButton: boolean = false;
-  private lastPageOfTheCurrentSet: number = 0; 
+  public isNextButton: boolean = false;
+  public isPrevButton: boolean = false;
+  public lastPageOfTheCurrentSet: number = 0; 
 
-  private fromNumber: number = 0;
-  private toNumber: number = 0;
+  public fromNumber: number = 0;
+  public toNumber: number = 0;
 
   public columns: Array<any> =
     [    
@@ -730,7 +730,7 @@ export class TradesListComponent implements OnInit {
   };
 
 
-  private calculateTotalNumberOfSets() {
+  public calculateTotalNumberOfSets() {
    
     let rem = this.totalNumberOfRecords % this.recordsPerSet;
     let mainpart = ~~(this.totalNumberOfRecords / this.recordsPerSet);
@@ -744,7 +744,7 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  private onPageChange(passedpage: number) {
+  public onPageChange(passedpage: number) {
 
     this.config.currentPage = passedpage;
 
@@ -784,7 +784,7 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  private nextSetOfRecords() {
+  public nextSetOfRecords() {
 
     this.messagesService.emitRoute("nill");
     if (this.totalNumberOfSets > this.setsCounter) {
@@ -804,7 +804,7 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  private previousSetOfRecords() {
+  public previousSetOfRecords() {
 
     this.messagesService.emitRoute("nill");
 
@@ -824,7 +824,7 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
+  public onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.config.filtering, config.filtering);
     }
@@ -846,7 +846,7 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  private sortTable(column: string) {
+  public sortTable(column: string) {
     // reset the array of columns
     this.config.sorting.columns = [];
     switch (column) {
@@ -969,7 +969,7 @@ export class TradesListComponent implements OnInit {
   }
 
 
-  private changeSort(data: any, config: any) {
+  public changeSort(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }

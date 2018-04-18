@@ -12,7 +12,7 @@ import { PageTitleService } from '../../services/pagetitle/pagetitle.service';
 
 import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
 import { CarouselComponent } from '../controls/carousel//carousel.component';
-import { TopTradesPipe, SortTradesByDatePipe } from '../../helpers/pipes';
+//import { TopTradesPipe, SortTradesByDatePipe } from '../../helpers/pipes';
 import { PageTitle, Trade } from '../../helpers/classes';
 
 @Component({
@@ -23,10 +23,10 @@ import { PageTitle, Trade } from '../../helpers/classes';
 
 export class DashboardComponent implements OnInit {
 
-  private trades: Array<any> = [];
+  public trades: Array<any> = [];
   public isRequesting: boolean;
-  private hasTrades: boolean = true;  
-  private hasClosedTrades: boolean = false;
+  public hasTrades: boolean = true;  
+  public hasClosedTrades: boolean = false;
 
   constructor(private tradeApiService: TradeApiService,
                     private titleService: PageTitleService,
@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
   //*****************************************************
   //  HELPER METHODS
   //*****************************************************
-  private TransformData(returnedTrades: Trade[]): Array<any> {
+  public TransformData(returnedTrades: Trade[]): Array<any> {
 
     let transformedData = new Array<Trade>();
 
@@ -121,7 +121,7 @@ export class DashboardComponent implements OnInit {
  //****************************************************
  // LOGGING METHODS
  //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
     // stop the spinner if running
     this.isRequesting = false;
 
@@ -154,6 +154,6 @@ export class DashboardComponent implements OnInit {
   }
 
   // an event from the child carousel component saying that encountered an error
-  private ChangeIsRequesting(bool) { this.isRequesting = false;}
+  public ChangeIsRequesting(bool) { this.isRequesting = false;}
 
 }

@@ -22,17 +22,17 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
   styleUrls: ['./addcorrespondence.component.scss']
 })
 export class AddCorrespondenceComponent implements OnInit {
-  private actualTrade: Trade; 
-  private tradeId: number;
-  private traderName: string; 
-  private traderIdReceiver: string;
+  public actualTrade: Trade; 
+  public tradeId: number;
+  public traderName: string; 
+  public traderIdReceiver: string;
 
-  private loggedOnTraderPersonal: PersonalDetails;
-  private traderId: string;
-  private addCorresForm: any;
-  private session: UserSession;
-  private isRequesting: boolean = false; 
-  private isSubmited: boolean = false;
+  public loggedOnTraderPersonal: PersonalDetails;
+  public traderId: string;
+  public addCorresForm: any;
+  public session: UserSession;
+  public isRequesting: boolean = false; 
+  public isSubmited: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,

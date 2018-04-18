@@ -23,31 +23,31 @@ import { UserSession, UserIdentity, Authentication, Trade, PageTitle, PersonalDe
 })
 export class TraderDetailsComponent implements OnInit {
 
-  private traderId: string;
-  private session: UserSession;
-  private isRequesting: boolean = false;
+  public traderId: string;
+  public session: UserSession;
+  public isRequesting: boolean = false;
  
-  private personal: PersonalDetails = new PersonalDetails();
-  private emails: Email[] = [];
-  private phones: Phone[] = [];
-  private socialnetworks: SocialNetwork[] = [];
-  private addresses: Address[] = [];
+  public personal: PersonalDetails = new PersonalDetails();
+  public emails: Email[] = [];
+  public phones: Phone[] = [];
+  public socialnetworks: SocialNetwork[] = [];
+  public addresses: Address[] = [];
 
-  private hasPersonal: boolean = false;
-  private hasEmails: boolean = false;
-  private hasPhones: boolean = false;
-  private hasSocial: boolean = false;
-  private hasTrades: boolean = false;
-  private hasHistory: boolean = false;
-  private hasAddress: boolean = false;
-  private hasMiddleName: boolean = false;
-  private isNewLoad: boolean = false;
-  private isNewLoadHis: boolean = false;
+  public hasPersonal: boolean = false;
+  public hasEmails: boolean = false;
+  public hasPhones: boolean = false;
+  public hasSocials: boolean = false;
+  public hasTrades: boolean = false;
+  public hasHistory: boolean = false;
+  public hasAddress: boolean = false;
+  public hasMiddleName: boolean = false;
+  public isNewLoad: boolean = false;
+  public isNewLoadHis: boolean = false;
 
-  private prefEmail: Email= new Email();
-  private prefPhone: Phone = new Phone();
-  private prefSocial: SocialNetwork = new SocialNetwork();
-  private prefAddress: Address = new Address();
+  public prefEmail: Email= new Email();
+  public prefPhone: Phone = new Phone();
+  public prefSocial: SocialNetwork = new SocialNetwork();
+  public prefAddress: Address = new Address();
 
   constructor(    
     private personalService: PersonalDetailsService,
@@ -121,7 +121,7 @@ export class TraderDetailsComponent implements OnInit {
   //***********************************************************
   // GET Personal Details
   //***********************************************************
-  private getPersonalDetails(traderId) {
+  public getPersonalDetails(traderId) {
     this.isRequesting = true;  
 
     this.personalService.getPersonalDetailsByTraderId(traderId)
@@ -132,7 +132,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessPersonal(personal: PersonalDetails) {
+  public onSuccessPersonal(personal: PersonalDetails) {
     if (personal.id === 0) { this.hasPersonal = false; }
     else {
       this.personal = this.TransformDataPersonal(personal);
@@ -143,7 +143,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private gePreferredAddress(traderId: string) {
+  public gePreferredAddress(traderId: string) {
 
     this.addressService.getPreferredAddress(traderId, "Yes")
       .subscribe((addressResult: Address) => {
@@ -153,7 +153,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessAddresses(address: Address) {
+  public onSuccessAddresses(address: Address) {
      // handles the zero record
     if (address.id == 0 ) { this.hasAddress = false; }
     else {
@@ -169,7 +169,7 @@ export class TraderDetailsComponent implements OnInit {
   //***********************************************************
   // GET Contact Details 
   //***********************************************************
-  private getPreferredEmails(traderId) {
+  public getPreferredEmails(traderId) {
 
     this.emailsService.getPreferredEmail(traderId, "Yes")
       .subscribe((returnedEmail:Email) => {
@@ -179,7 +179,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessEmail(email: Email) {
+  public onSuccessEmail(email: Email) {
     // new phone is returned when there is no record in a webapi
     if (email.id == 0) { this.hasEmails = false; }
     else {
@@ -192,7 +192,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private getPreferredPhone(traderId) {
+  public getPreferredPhone(traderId) {
     this.phonesService.getPreferredPhone(traderId, "Yes")
       .subscribe((returnedPhone: Phone) => {
         this.onSuccessPhones(returnedPhone);
@@ -201,7 +201,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessPhones(phone: Phone) {
+  public onSuccessPhones(phone: Phone) {
       // handles the zero record
     if (phone.id == 0) { this.hasPhones = false; }
     else {
@@ -214,7 +214,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private getPreferredSocial(traderId) {
+  public getPreferredSocial(traderId) {
     this.socialslNetworksService.getPreferredSocialNetwork(traderId, "Yes")
       .subscribe((returnedSocial: SocialNetwork) => {
         this.onSuccessSocial(returnedSocial);
@@ -223,13 +223,13 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessSocial(social: SocialNetwork) {
+  public onSuccessSocial(social: SocialNetwork) {
   
     // handles the zero record
-    if (social.id == 0) { this.hasSocial = false; }
+    if (social.id == 0) { this.hasSocials = false; }
     else {
       this.prefSocial = social;     
-      this.hasSocial = true;
+      this.hasSocials = true;
       }  
 
     // now call the get trades
@@ -240,7 +240,7 @@ export class TraderDetailsComponent implements OnInit {
  //***********************************************************
  // GET Trades 
  //***********************************************************
-  private getTradesCurrent(traderId: string, status: string = "Open") {
+  public getTradesCurrent(traderId: string, status: string = "Open") {
 
     this.tradeService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
@@ -251,7 +251,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private onSuccessTrades(trades: Trade[]) {
+  public onSuccessTrades(trades: Trade[]) {
    
     if (trades.length === 0) { this.hasTrades = false; }
     else {
@@ -271,7 +271,7 @@ export class TraderDetailsComponent implements OnInit {
  //***********************************************************
  // GET Trade History
  //***********************************************************
-  private getTradesHistory(traderId: string, status: string = "Closed") {
+  public getTradesHistory(traderId: string, status: string = "Closed") {
 
     this.isRequesting = false; // finish requesting
 
@@ -294,7 +294,7 @@ export class TraderDetailsComponent implements OnInit {
   //*****************************************************
   // HELPER METHODS 
   //*****************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])        
@@ -306,13 +306,13 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private initialiseComponent() { 
+  public initialiseComponent() { 
     this.pageTitleService.emitPageTitle(new PageTitle("Trader Details"));    
     this.messagesService.emitRoute("nill");
   }
 
 
-  private TransformData(returnedTrades: Trade[]): Array<any> {
+  public TransformData(returnedTrades: Trade[]): Array<any> {
 
     let transformedData = new Array<Trade>();
 
@@ -344,7 +344,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private TransformDataPersonal(returnedPersonalDetails: PersonalDetails): PersonalDetails {
+  public TransformDataPersonal(returnedPersonalDetails: PersonalDetails): PersonalDetails {
 
     let pd = new PersonalDetails;  
 
@@ -365,7 +365,7 @@ export class TraderDetailsComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";
@@ -401,17 +401,17 @@ export class TraderDetailsComponent implements OnInit {
   /**********************************************/
   //trade section
   /***********************************************/
-  private isIdAsc = true;
-  private isTradeIdAsc = true;
-  private isDateAsc = true;
-  private isStatusAsc = true;
+  public isIdAsc = true;
+  public isTradeIdAsc = true;
+  public isDateAsc = true;
+  public isStatusAsc = true;
 
-  private sortId: string = 'desc'
-  private sortTradeId: string = 'desc';
-  private sortStatus: string = 'desc';
-  private sortDate: string = 'desc';
+  public sortId: string = 'desc'
+  public sortTradeId: string = 'desc';
+  public sortStatus: string = 'desc';
+  public sortDate: string = 'desc';
 
-  private data: Array<any> = [];     // full data from the server
+  public data: Array<any> = [];     // full data from the server
   public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
   public numPages: number = 1;
@@ -435,13 +435,13 @@ export class TraderDetailsComponent implements OnInit {
   };
 
 
-  private onPageChange(passedpage: number) {
+  public onPageChange(passedpage: number) {
 
     this.config.currentPage = passedpage;
   }
 
 
-  private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
+  public onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.config.filtering, config.filtering);
     }
@@ -462,7 +462,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private sortTable(column: string) {
+  public sortTable(column: string) {
     // reset the array of columns
     this.config.sorting.columns = [];
 
@@ -525,7 +525,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private changeSort(data: any, config: any) {
+  public changeSort(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }
@@ -561,17 +561,17 @@ export class TraderDetailsComponent implements OnInit {
   /**********************************************/
   //trade history section
   /***********************************************/
-  private isIdHisAsc = true;
-  private isTradeIdHisAsc = true;
-  private isDateHisAsc = true;
-  private isStatusHisAsc = true;
+  public isIdHisAsc = true;
+  public isTradeIdHisAsc = true;
+  public isDateHisAsc = true;
+  public isStatusHisAsc = true;
 
-  private sortIdHis: string = 'desc'
-  private sortTradeIdHis: string = 'desc';
-  private sortStatusHis: string = 'desc';
-  private sortDateHis: string = 'desc';
+  public sortIdHis: string = 'desc'
+  public sortTradeIdHis: string = 'desc';
+  public sortStatusHis: string = 'desc';
+  public sortDateHis: string = 'desc';
 
-  private dataHis: Array<any> = [];     // full data from the server
+  public dataHis: Array<any> = [];     // full data from the server
   public rowsHis: Array<any> = [];      // rows passed to the table
   public maxSizeHis: number = 5;
   public numPagesHis: number = 1;
@@ -595,13 +595,13 @@ export class TraderDetailsComponent implements OnInit {
   };
 
 
-  private onPageChangeHis(passedpage: number) {
+  public onPageChangeHis(passedpage: number) {
 
     this.configHis.currentPage = passedpage;
   }
 
 
-  private onChangeTableHis(config: any, page: any = { page: this.configHis.currentPage, itemsPerPage: this.configHis.itemsPerPage }) {
+  public onChangeTableHis(config: any, page: any = { page: this.configHis.currentPage, itemsPerPage: this.configHis.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.configHis.filtering, config.filtering);
     }
@@ -623,7 +623,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private sortTableHis(column: string) {
+  public sortTableHis(column: string) {
     // reset the array of columns
     this.configHis.sorting.columns = [];
 
@@ -687,7 +687,7 @@ export class TraderDetailsComponent implements OnInit {
   }
 
 
-  private changeSortHis(data: any, config: any) {
+  public changeSortHis(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }

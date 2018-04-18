@@ -21,18 +21,18 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 
 export class CorrespondenceDetailsComponent implements OnInit {
 
-  private receivedCorres: Correspondence = new Correspondence();
-  private isSender: boolean = false;
-  private isReceiver: boolean = false;
-  private corresId: number;
-  private hasCorres: boolean = false;
-  private session: UserSession = new UserSession();
-  private isRequesting: boolean = false;
-  private content: string = "";
-  private sendCorresGroup: any;
-  private loggedOnTrader: string;
-  private senderId: string;
-  private canReply: boolean = false;
+  public receivedCorres: Correspondence = new Correspondence();
+  public isSender: boolean = false;
+  public isReceiver: boolean = false;
+  public corresId: number;
+  public hasCorres: boolean = false;
+  public session: UserSession = new UserSession();
+  public isRequesting: boolean = false;
+  public content: string = "";
+  public sendCorresGroup: any;
+  public loggedOnTrader: string;
+  public senderId: string;
+  public canReply: boolean = false;
 
   constructor(
     private corresService: CorrespondenceService,

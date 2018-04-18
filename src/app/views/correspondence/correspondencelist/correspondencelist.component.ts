@@ -18,50 +18,50 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
   styleUrls: ['./correspondencelist.component.scss']
 })
 export class CorrespondenceListComponent implements OnInit {
-  private traderId: string;
-  private session: UserSession;
-  private isRequesting: boolean = false;
+  public traderId: string;
+  public session: UserSession;
+  public isRequesting: boolean = false;
 
-  private statusInbox: string = "New";
-  private statusSent: string = "Sent";
-  private statusArchivedInbox: string = "Archived";
-  private statusArchivedSent: string = "Archived"; 
-  private statusRemovedSent: string = "Removed"; 
+  public statusInbox: string = "New";
+  public statusSent: string = "Sent";
+  public statusArchivedInbox: string = "Archived";
+  public statusArchivedSent: string = "Archived"; 
+  public statusRemovedSent: string = "Removed"; 
 
-  private hasInbox: boolean = true;
-  private hasSent: boolean = true;
-  private hasArchivedInbox: boolean = true;
-  private hasArchivedSent: boolean = true;
-  private hasRemoved: boolean = true;
+  public hasInbox: boolean = true;
+  public hasSent: boolean = true;
+  public hasArchivedInbox: boolean = true;
+  public hasArchivedSent: boolean = true;
+  public hasRemoved: boolean = true;
 
-  private isFirstLoadInbox: boolean = false;
-  private isFirstLoadSent: boolean = false;
-  private isFirstLoadArchivedInbox: boolean = false;
-  private isFirstLoadArchivedSent: boolean = false;
-  private isFirstLoadRemoved: boolean = false;
+  public isFirstLoadInbox: boolean = false;
+  public isFirstLoadSent: boolean = false;
+  public isFirstLoadArchivedInbox: boolean = false;
+  public isFirstLoadArchivedSent: boolean = false;
+  public isFirstLoadRemoved: boolean = false;
 
-  private removedInboxId: number = 0;
-  private removedSentId: number = 0;
-  private removedArchivedInboxId: number = 0;
-  private removedArchivedSentId: number = 0
-  private deletedRemovedId: number = 0;
+  public removedInboxId: number = 0;
+  public removedSentId: number = 0;
+  public removedArchivedInboxId: number = 0;
+  public removedArchivedSentId: number = 0
+  public deletedRemovedId: number = 0;
 
 
-  private inboxToArchive: Correspondence;
-  private inboxToRemove: Correspondence;
-  private sentToArchive: Correspondence;
-  private sentToRemove: Correspondence;
-  private archivedInboxToRemove: Correspondence;
-  private archivedSentToRemove: Correspondence;
-  private removedToArchive: Correspondence;
-  private removedToActivate: Correspondence;
-  private removedToDelete: Correspondence;
+  public inboxToArchive: Correspondence;
+  public inboxToRemove: Correspondence;
+  public sentToArchive: Correspondence;
+  public sentToRemove: Correspondence;
+  public archivedInboxToRemove: Correspondence;
+  public archivedSentToRemove: Correspondence;
+  public removedToArchive: Correspondence;
+  public removedToActivate: Correspondence;
+  public removedToDelete: Correspondence;
 
-  private toggleInbox: boolean = true;
-  private toggleSent: boolean = false;
-  private toggleArchivedInbox: boolean = false;
-  private toggleArchivedSent: boolean = false;
-  private toggleRemoved: boolean = false;
+  public toggleInbox: boolean = true;
+  public toggleSent: boolean = false;
+  public toggleArchivedInbox: boolean = false;
+  public toggleArchivedSent: boolean = false;
+  public toggleRemoved: boolean = false;
 
 
   constructor(  
@@ -132,7 +132,7 @@ export class CorrespondenceListComponent implements OnInit {
   //****************************************************************************************
   // GET CORRESPONDENCE - -- this wil get all correspondence, if there are no any will show the message
   //****************************************************************************************
-  private getInbox(traderId: string) {
+  public getInbox(traderId: string) {
 
     this.corresService.getInboxByTraderId(traderId)
       .subscribe((returnedInboxes: Correspondence[]) => {
@@ -145,7 +145,7 @@ export class CorrespondenceListComponent implements OnInit {
 
   }
 
-  private onSuccessInbox(inboxes:Correspondence[]) {
+  public onSuccessInbox(inboxes:Correspondence[]) {
     this.dataInbox = inboxes;
     this.hasInbox = true;
     this.isFirstLoadInbox = true;
@@ -155,7 +155,7 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-  private getSent(traderId: string) {
+  public getSent(traderId: string) {
 
     this.corresService.getSentByTraderId(traderId)
       .subscribe((returnedSent: Correspondence[]) => {
@@ -168,7 +168,7 @@ export class CorrespondenceListComponent implements OnInit {
 
   }
 
-  private onSuccessSent(sent: Correspondence[]) {
+  public onSuccessSent(sent: Correspondence[]) {
     this.dataSent = sent;
     this.hasSent = true;
     this.isFirstLoadSent = true;
@@ -178,7 +178,7 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-  private getArchivedInbox(traderId: string) {
+  public getArchivedInbox(traderId: string) {
 
     this.corresService.getArchivedInboxByTraderId(traderId)
       .subscribe((returnedArchivedInboxes: Correspondence[]) => {
@@ -191,7 +191,7 @@ export class CorrespondenceListComponent implements OnInit {
 
   }
 
-  private onSuccessArchivedInbox(archivedinboxes: Correspondence[]) {
+  public onSuccessArchivedInbox(archivedinboxes: Correspondence[]) {
     this.dataArchivedInbox = archivedinboxes;
     this.hasArchivedInbox = true;
     this.isFirstLoadArchivedInbox = true;
@@ -201,7 +201,7 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-  private getArchivedSent(traderId: string) {
+  public getArchivedSent(traderId: string) {
 
     this.corresService.getArchivedSentByTraderId(traderId)
       .subscribe((returnedArchivedSent: Correspondence[]) => {
@@ -214,7 +214,7 @@ export class CorrespondenceListComponent implements OnInit {
 
   }
 
-  private onSuccessArchivedSent(archivedsent: Correspondence[]) {
+  public onSuccessArchivedSent(archivedsent: Correspondence[]) {
     this.dataArchivedSent = archivedsent;
     this.hasArchivedSent = true;
     this.isFirstLoadArchivedSent = true;
@@ -224,7 +224,7 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-  private getRemoved(traderId: string) {
+  public getRemoved(traderId: string) {
 
     this.corresService.getRemovedByTraderId(traderId)
       .subscribe((returnedRemoved: Correspondence[]) => {
@@ -237,7 +237,7 @@ export class CorrespondenceListComponent implements OnInit {
 
   }
   
-  private onSuccessRemoved(removed: Correspondence[]) {
+  public onSuccessRemoved(removed: Correspondence[]) {
     this.dataRemoved = removed;
     this.hasRemoved = true;
     this.isFirstLoadRemoved = true;
@@ -249,7 +249,7 @@ export class CorrespondenceListComponent implements OnInit {
   //*****************************************************
   // SCREEN ITERACTIONS METHODS 
   //*****************************************************
-  private showInbox() {
+  public showInbox() {
     this.messagesService.emitRoute("nill");
     this.toggleInbox = true;
     this.toggleSent = false;
@@ -258,7 +258,7 @@ export class CorrespondenceListComponent implements OnInit {
     this.toggleRemoved = false;
   }
 
-  private showSent() {
+  public showSent() {
     this.messagesService.emitRoute("nill");
     this.toggleInbox = false;
     this.toggleSent = true;
@@ -267,7 +267,7 @@ export class CorrespondenceListComponent implements OnInit {
     this.toggleRemoved = false;
   }
 
-  private showArchivedInbox() {
+  public showArchivedInbox() {
     this.messagesService.emitRoute("nill");
     this.toggleInbox = false;
     this.toggleSent = false;
@@ -276,7 +276,7 @@ export class CorrespondenceListComponent implements OnInit {
     this.toggleRemoved = false;
   }
 
-  private showArchivedSent() {
+  public showArchivedSent() {
     this.messagesService.emitRoute("nill");
     this.toggleInbox = false;
     this.toggleSent = false;
@@ -285,7 +285,7 @@ export class CorrespondenceListComponent implements OnInit {
     this.toggleRemoved = false;
   }
 
-  private showRemoved() {
+  public showRemoved() {
     this.messagesService.emitRoute("nill");
     this.toggleInbox = false;
     this.toggleSent = false;
@@ -296,45 +296,45 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-  private passToModalArchiveInbox(corres: Correspondence) {
+  public passToModalArchiveInbox(corres: Correspondence) {
     this.inboxToArchive = corres;
   }
 
-  private passToModalRemoveInbox(corres: Correspondence) {
+  public passToModalRemoveInbox(corres: Correspondence) {
     this.inboxToRemove = corres;
   }
 
-  private passToModalArchiveSent(corres: Correspondence) {
+  public passToModalArchiveSent(corres: Correspondence) {
     this.sentToArchive = corres
   }
 
-  private passToModalRemoveSent(corres: Correspondence) {
+  public passToModalRemoveSent(corres: Correspondence) {
     this.sentToRemove = corres
   }
 
-  private passToModalRemoveArchivedInbox(corres: Correspondence) {
+  public passToModalRemoveArchivedInbox(corres: Correspondence) {
     this.archivedInboxToRemove = corres
   }
 
-  private passToModalRemoveArchivedSent(corres: Correspondence) {
+  public passToModalRemoveArchivedSent(corres: Correspondence) {
     this.archivedSentToRemove = corres
   }
 
-  private passToModalArchiveRemoved(corres: Correspondence) {
+  public passToModalArchiveRemoved(corres: Correspondence) {
     this.removedToArchive = corres;
   }
 
-  private passToModalActivateRemoved(corres: Correspondence) {
+  public passToModalActivateRemoved(corres: Correspondence) {
     this.removedToActivate = corres;
   }
 
 
-  private passToModalCompletellyDelete(corres: Correspondence) {
+  public passToModalCompletellyDelete(corres: Correspondence) {
     this.removedToDelete = corres;
   }
 
   
-  private archiveInbox(inboxToArchive: Correspondence) {
+  public archiveInbox(inboxToArchive: Correspondence) {
     // update the status of the correspondence to archived
     inboxToArchive.statusReceiver = "Archived";
     this.corresService.updateCorrespondence(inboxToArchive)
@@ -349,7 +349,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
  
-  private removeInbox(inboxToRemove: Correspondence) {
+  public removeInbox(inboxToRemove: Correspondence) {
     // update the status of the correspondence to deleted 
     inboxToRemove.statusReceiver = "Removed";
     this.corresService.updateCorrespondence(inboxToRemove)
@@ -364,7 +364,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private archiveSent(sentToArchive: Correspondence) {
+  public archiveSent(sentToArchive: Correspondence) {
     // update the status of the correspondence to archived
     sentToArchive.statusSender = "Archived";
     this.corresService.updateCorrespondence(sentToArchive)
@@ -379,7 +379,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private removeSent(sentToRemove: Correspondence) {
+  public removeSent(sentToRemove: Correspondence) {
     // update the status of the correspondence to deleted 
     sentToRemove.statusSender = "Removed";
     this.corresService.updateCorrespondence(sentToRemove)
@@ -394,7 +394,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private removeArchivedInbox(archiveInboxToRemove: Correspondence) {
+  public removeArchivedInbox(archiveInboxToRemove: Correspondence) {
     // update the status of the correspondence to deleted 
     archiveInboxToRemove.statusReceiver = "Removed";
     this.corresService.updateCorrespondence(archiveInboxToRemove)
@@ -408,7 +408,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private removeArchivedSent(archivedSentToDelete: Correspondence) {
+  public removeArchivedSent(archivedSentToDelete: Correspondence) {
     // update the status of the correspondence to deleted 
     archivedSentToDelete.statusSender = "Removed";
     this.corresService.updateCorrespondence(archivedSentToDelete)
@@ -422,7 +422,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private archiveRemoved(removedToArchive: Correspondence) {
+  public archiveRemoved(removedToArchive: Correspondence) {
    
     // update the status of the correspondence to archived
     if (removedToArchive.traderIdReceiver === this.traderId) { removedToArchive.statusReceiver = "Archived"; }
@@ -442,7 +442,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private activateRemoved(removedToActivate: Correspondence) {
+  public activateRemoved(removedToActivate: Correspondence) {
     // update the status of the correspondence to archived
     if (removedToActivate.traderIdReceiver === this.traderId) { removedToActivate.statusReceiver = "New"; }
     else { removedToActivate.statusSender = "Sent"; }
@@ -461,7 +461,7 @@ export class CorrespondenceListComponent implements OnInit {
 
 
 
-  private deleteRemoved(removedToDelete: Correspondence) {
+  public deleteRemoved(removedToDelete: Correspondence) {
     // update the status of the correspondence to archived
     if (removedToDelete.traderIdReceiver === this.traderId) { removedToDelete.statusReceiver = "Deleted"; }
     else { removedToDelete.statusSender = "Deleted"; }
@@ -481,7 +481,7 @@ export class CorrespondenceListComponent implements OnInit {
   //*****************************************************
   // HELPER METHODS 
   //*****************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -494,7 +494,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.pageTitleService.emitPageTitle(new PageTitle("All Correspondence"));
     this.messagesService.emitRoute("nill");
   }
@@ -503,7 +503,7 @@ export class CorrespondenceListComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";
@@ -538,17 +538,17 @@ export class CorrespondenceListComponent implements OnInit {
   /**********************************************/
   //Inbox Correspondence
   /***********************************************/
-  private isDateSentInboxAsc = true;
-  private isSubjectInboxAsc = true;
-  private isStatusInboxAsc = true;
-  private isSenderInboxAsc = true;
+  public isDateSentInboxAsc = true;
+  public isSubjectInboxAsc = true;
+  public isStatusInboxAsc = true;
+  public isSenderInboxAsc = true;
 
-  private sortDateSentInbox: string = 'desc'
-  private sortSubjectInbox: string = 'desc';
-  private sortStatusInbox: string = 'desc';
-  private sortSenderInbox: string = 'desc';
+  public sortDateSentInbox: string = 'desc'
+  public sortSubjectInbox: string = 'desc';
+  public sortStatusInbox: string = 'desc';
+  public sortSenderInbox: string = 'desc';
 
-  private dataInbox: Array<any> = [];     // full data from the server
+  public dataInbox: Array<any> = [];     // full data from the server
   public rowsInbox: Array<any> = [];      // rows passed to the table
   public maxSizeInbox: number = 5;
   public numPagesInbox: number = 1;
@@ -574,13 +574,13 @@ export class CorrespondenceListComponent implements OnInit {
   };
 
 
-  private onPageChangeInbox(passedpage: number) {
+  public onPageChangeInbox(passedpage: number) {
 
     this.configInbox.currentPage = passedpage;
   }
 
 
-  private onChangeTableInbox(config: any, page: any = { page: this.configInbox.currentPage, itemsPerPage: this.configInbox.itemsPerPage }) {
+  public onChangeTableInbox(config: any, page: any = { page: this.configInbox.currentPage, itemsPerPage: this.configInbox.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.configInbox.filtering, config.filtering);
     }
@@ -602,7 +602,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private sortTableInbox(column: string) {
+  public sortTableInbox(column: string) {
     // reset the array of columns
     this.configInbox.sorting.columns = [];
 
@@ -680,7 +680,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private changeSortInbox(data: any, config: any) {
+  public changeSortInbox(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }
@@ -710,7 +710,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private changeRemoveInbox(data: any, config: any): any {
+  public changeRemoveInbox(data: any, config: any): any {
     if (this.removedInboxId == null) { return data; }
 
     let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.removedInboxId);
@@ -724,17 +724,17 @@ export class CorrespondenceListComponent implements OnInit {
   /**********************************************/
   //Archived Inbox Correspondence
   /***********************************************/
-  private isDateSentArchivedInboxAsc = true;
-  private isSubjectArchivedInboxAsc = true;
-  private isStatusArchivedInboxAsc = true;
-  private isSenderArchivedInboxAsc = true;
+  public isDateSentArchivedInboxAsc = true;
+  public isSubjectArchivedInboxAsc = true;
+  public isStatusArchivedInboxAsc = true;
+  public isSenderArchivedInboxAsc = true;
 
-  private sortDateSentArchivedInbox: string = 'desc'
-  private sortSubjectArchivedInbox: string = 'desc';
-  private sortStatusArchivedInbox: string = 'desc';
-  private sortSenderArchivedInbox: string = 'desc';
+  public sortDateSentArchivedInbox: string = 'desc'
+  public sortSubjectArchivedInbox: string = 'desc';
+  public sortStatusArchivedInbox: string = 'desc';
+  public sortSenderArchivedInbox: string = 'desc';
 
-  private dataArchivedInbox: Array<any> = [];     // full data from the server
+  public dataArchivedInbox: Array<any> = [];     // full data from the server
   public rowsArchivedInbox: Array<any> = [];      // rows passed to the table
   public maxSizeArchivedInbox: number = 5;
   public numPagesArchivedInbox: number = 1;
@@ -760,13 +760,13 @@ export class CorrespondenceListComponent implements OnInit {
   };
 
 
-  private onPageChangeArchivedInbox(passedpage: number) {
+  public onPageChangeArchivedInbox(passedpage: number) {
 
     this.configArchivedInbox.currentPage = passedpage;
   }
 
 
-  private onChangeTableArchivedInbox(config: any, page: any = { page: this.configArchivedInbox.currentPage, itemsPerPage: this.configArchivedInbox.itemsPerPage }) {
+  public onChangeTableArchivedInbox(config: any, page: any = { page: this.configArchivedInbox.currentPage, itemsPerPage: this.configArchivedInbox.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.configArchivedInbox.filtering, config.filtering);
     }
@@ -788,7 +788,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private sortTableArchivedInbox(column: string) {
+  public sortTableArchivedInbox(column: string) {
     // reset the array of columns
     this.configArchivedInbox.sorting.columns = [];
 
@@ -866,7 +866,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private changeSortArchivedInbox(data: any, config: any) {
+  public changeSortArchivedInbox(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }
@@ -896,7 +896,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private changeRemoveArchivedInbox(data: any, config: any): any {
+  public changeRemoveArchivedInbox(data: any, config: any): any {
     if (this.removedArchivedInboxId == null) { return data; }
 
     let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.removedArchivedInboxId);
@@ -910,17 +910,17 @@ export class CorrespondenceListComponent implements OnInit {
   /**********************************************/
   //Sent Correspondence
   /***********************************************/
-  private isDateSentSentAsc = true;
-  private isSubjectSentAsc = true;
-  private isStatusSentAsc = true;
-  private isSenderSentAsc = true;
+  public isDateSentSentAsc = true;
+  public isSubjectSentAsc = true;
+  public isStatusSentAsc = true;
+  public isSenderSentAsc = true;
 
-  private sortDateSentSent: string = 'desc'
-  private sortSubjectSent: string = 'desc';
-  private sortStatusSent: string = 'desc';
-  private sortSenderSent: string = 'desc';
+  public sortDateSentSent: string = 'desc'
+  public sortSubjectSent: string = 'desc';
+  public sortStatusSent: string = 'desc';
+  public sortSenderSent: string = 'desc';
 
-  private dataSent: Array<any> = [];     // full data from the server
+  public dataSent: Array<any> = [];     // full data from the server
   public rowsSent: Array<any> = [];      // rows passed to the table
   public maxSizeSent: number = 5;
   public numPagesSent: number = 1;
@@ -946,13 +946,13 @@ export class CorrespondenceListComponent implements OnInit {
   };
 
 
-  private onPageChangeSent(passedpage: number) {
+  public onPageChangeSent(passedpage: number) {
 
     this.configSent.currentPage = passedpage;
   }
 
 
-  private onChangeTableSent(config: any, page: any = { page: this.configSent.currentPage, itemsPerPage: this.configSent.itemsPerPage }) {
+  public onChangeTableSent(config: any, page: any = { page: this.configSent.currentPage, itemsPerPage: this.configSent.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.configSent.filtering, config.filtering);
     }
@@ -974,7 +974,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private sortTableSent(column: string) {
+  public sortTableSent(column: string) {
     // reset the array of columns
     this.configSent.sorting.columns = [];
 
@@ -1052,7 +1052,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private changeSortSent(data: any, config: any) {
+  public changeSortSent(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }
@@ -1082,7 +1082,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private changeRemoveSent(data: any, config: any): any {
+  public changeRemoveSent(data: any, config: any): any {
     if (this.removedSentId == null) { return data; }
 
     let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.removedSentId);
@@ -1096,17 +1096,17 @@ export class CorrespondenceListComponent implements OnInit {
   /**********************************************/
   //Archive Sent Correspondence
   /***********************************************/
-  private isDateSentArchivedSentAsc = true;
-  private isSubjectArchivedSentAsc = true;
-  private isStatusArchivedSentAsc = true;
-  private isSenderArchivedSentAsc = true;
+  public isDateSentArchivedSentAsc = true;
+  public isSubjectArchivedSentAsc = true;
+  public isStatusArchivedSentAsc = true;
+  public isSenderArchivedSentAsc = true;
 
-  private sortDateSentArchivedSent: string = 'desc'
-  private sortSubjectArchivedSent: string = 'desc';
-  private sortStatusArchivedSent: string = 'desc';
-  private sortSenderArchivedSent: string = 'desc';
+  public sortDateSentArchivedSent: string = 'desc'
+  public sortSubjectArchivedSent: string = 'desc';
+  public sortStatusArchivedSent: string = 'desc';
+  public sortSenderArchivedSent: string = 'desc';
 
-  private dataArchivedSent: Array<any> = [];     // full data from the server
+  public dataArchivedSent: Array<any> = [];     // full data from the server
   public rowsArchivedSent: Array<any> = [];      // rows passed to the table
   public maxSizeArchivedSent: number = 5;
   public numPagesArchivedSent: number = 1;
@@ -1132,13 +1132,13 @@ export class CorrespondenceListComponent implements OnInit {
   };
 
 
-  private onPageChangeArchivedSent(passedpage: number) {
+  public onPageChangeArchivedSent(passedpage: number) {
 
     this.configArchivedSent.currentPage = passedpage;
   }
 
 
-  private onChangeTableArchivedSent(config: any, page: any = { page: this.configArchivedSent.currentPage, itemsPerPage: this.configArchivedSent.itemsPerPage }) {
+  public onChangeTableArchivedSent(config: any, page: any = { page: this.configArchivedSent.currentPage, itemsPerPage: this.configArchivedSent.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.configArchivedSent.filtering, config.filtering);
     }
@@ -1160,7 +1160,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private sortTableArchivedSent(column: string) {
+  public sortTableArchivedSent(column: string) {
     // reset the array of columns
     this.configArchivedSent.sorting.columns = [];
 
@@ -1238,7 +1238,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private changeSortArchivedSent(data: any, config: any) {
+  public changeSortArchivedSent(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }
@@ -1268,7 +1268,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private changeRemoveArchivedSent(data: any, config: any): any {
+  public changeRemoveArchivedSent(data: any, config: any): any {
     if (this.removedArchivedSentId == null) { return data; }
 
     let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.removedArchivedSentId);
@@ -1282,17 +1282,17 @@ export class CorrespondenceListComponent implements OnInit {
   /**********************************************/
   //Removed Correspondence
   /***********************************************/
-  private isDateSentRemovedAsc = true;
-  private isSubjectRemovedAsc = true;
-  private isStatusRemovedAsc = true;
-  private isSenderRemovedAsc = true;
+  public isDateSentRemovedAsc = true;
+  public isSubjectRemovedAsc = true;
+  public isStatusRemovedAsc = true;
+  public isSenderRemovedAsc = true;
 
-  private sortDateSentRemoved: string = 'desc'
-  private sortSubjectRemoved: string = 'desc';
-  private sortStatusRemoved: string = 'desc';
-  private sortSenderRemoved: string = 'desc';
+  public sortDateSentRemoved: string = 'desc'
+  public sortSubjectRemoved: string = 'desc';
+  public sortStatusRemoved: string = 'desc';
+  public sortSenderRemoved: string = 'desc';
 
-  private dataRemoved: Array<any> = [];     // full data from the server
+  public dataRemoved: Array<any> = [];     // full data from the server
   public rowsRemoved: Array<any> = [];      // rows passed to the table
   public maxSizeRemoved: number = 5;
   public numPagesRemoved: number = 1;
@@ -1318,13 +1318,13 @@ export class CorrespondenceListComponent implements OnInit {
   };
 
 
-  private onPageChangeRemoved(passedpage: number) {
+  public onPageChangeRemoved(passedpage: number) {
 
     this.configRemoved.currentPage = passedpage;
   }
 
 
-  private onChangeTableRemoved(config: any, page: any = { page: this.configRemoved.currentPage, itemsPerPage: this.configRemoved.itemsPerPage }) {
+  public onChangeTableRemoved(config: any, page: any = { page: this.configRemoved.currentPage, itemsPerPage: this.configRemoved.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.configRemoved.filtering, config.filtering);
     }
@@ -1346,7 +1346,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private sortTableRemoved(column: string) {
+  public sortTableRemoved(column: string) {
     // reset the array of columns
     this.configRemoved.sorting.columns = [];
 
@@ -1424,7 +1424,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private changeSortRemoved(data: any, config: any) {
+  public changeSortRemoved(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }
@@ -1454,7 +1454,7 @@ export class CorrespondenceListComponent implements OnInit {
   }
 
 
-  private changeRemoveRemoved(data: any, config: any): any {
+  public changeRemoveRemoved(data: any, config: any): any {
     if (this.deletedRemovedId == null) { return data; }
 
     let removedData: Array<any> = data.filter((item: Correspondence) => item.id !== this.deletedRemovedId);

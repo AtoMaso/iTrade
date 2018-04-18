@@ -21,61 +21,61 @@ import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
 })
 export class PlacesComponent implements OnInit {
 
-  private traderId: string;
-  private isRequesting: boolean;
-  private session: UserSession;
+  public traderId: string;
+  public isRequesting: boolean;
+  public session: UserSession;
 
-  private stateForm: FormGroup;
-  private states: GeoData[] = [];
-  private stateInView: GeoData;
-  private tempAddUpdateState: GeoData;
-  private defaultState: GeoData;
-  private isStateAddOn: boolean = false;
-  private isStateEditOn: boolean = false;
-  private updatedState: GeoData;
-  private addedState: GeoData;
-  private removedState: GeoData;
-  private stateToRemove: GeoData;
+  public stateForm: FormGroup;
+  public states: GeoData[] = [];
+  public stateInView: GeoData;
+  public tempAddUpdateState: GeoData;
+  public defaultState: GeoData;
+  public isStateAddOn: boolean = false;
+  public isStateEditOn: boolean = false;
+  public updatedState: GeoData;
+  public addedState: GeoData;
+  public removedState: GeoData;
+  public stateToRemove: GeoData;
  
 
-  private placeForm: FormGroup;
-  private places: GeoData[] = [];
-  private placeInView: GeoData;
-  private tempAddUpdatePlace: GeoData;
-  private defaultPlace: GeoData;
-  private isPlaceAddOn: boolean = false;
-  private isPlaceEditOn: boolean = false;
-  private updatedPlace: GeoData;
-  private addedPlace: GeoData;
-  private removedPlace: GeoData;
-  private placeToRemove: GeoData;
+  public placeForm: FormGroup;
+  public places: GeoData[] = [];
+  public placeInView: GeoData;
+  public tempAddUpdatePlace: GeoData;
+  public defaultPlace: GeoData;
+  public isPlaceAddOn: boolean = false;
+  public isPlaceEditOn: boolean = false;
+  public updatedPlace: GeoData;
+  public addedPlace: GeoData;
+  public removedPlace: GeoData;
+  public placeToRemove: GeoData;
 
 
 
-  private postcodeForm: FormGroup;
-  private postcodes: GeoData[] = [];
-  private postcodeInView: GeoData;
-  private tempAddUpdatePostcode: GeoData;
-  private defaultPostcode: GeoData;
-  private isPostcodeAddOn: boolean = false;
-  private isPostcodeEditOn: boolean = false;
-  private updatedPostcode: GeoData;
-  private addedPostcode: GeoData;
-  private removedPostcode: GeoData;
-  private postcodeToRemove: GeoData;
+  public postcodeForm: FormGroup;
+  public postcodes: GeoData[] = [];
+  public postcodeInView: GeoData;
+  public tempAddUpdatePostcode: GeoData;
+  public defaultPostcode: GeoData;
+  public isPostcodeAddOn: boolean = false;
+  public isPostcodeEditOn: boolean = false;
+  public updatedPostcode: GeoData;
+  public addedPostcode: GeoData;
+  public removedPostcode: GeoData;
+  public postcodeToRemove: GeoData;
 
 
-  private suburbForm: FormGroup;
-  private suburbs: GeoData[] = [];
-  private suburbInView: GeoData;
-  private tempAddUpdateSuburb: GeoData;
-  private defaultSuburb: GeoData;
-  private isSuburbAddOn: boolean = false;
-  private isSuburbEditOn: boolean = false;
-  private updatedSuburb: GeoData;
-  private addedSuburb: GeoData;
-  private removedSuburb: GeoData;
-  private suburbToRemove: GeoData;
+  public suburbForm: FormGroup;
+  public suburbs: GeoData[] = [];
+  public suburbInView: GeoData;
+  public tempAddUpdateSuburb: GeoData;
+  public defaultSuburb: GeoData;
+  public isSuburbAddOn: boolean = false;
+  public isSuburbEditOn: boolean = false;
+  public updatedSuburb: GeoData;
+  public addedSuburb: GeoData;
+  public removedSuburb: GeoData;
+  public suburbToRemove: GeoData;
 
 
   constructor(
@@ -195,7 +195,7 @@ export class PlacesComponent implements OnInit {
       , (error: Response) => this.onError(error, "getStates"));
   }
 
-  private onSuccessStates(states: GeoData[]) {
+  public onSuccessStates(states: GeoData[]) {
     this.states = null;
     // collections return zero length when no record found as it is initialised
     if (states.length == 0) {
@@ -237,7 +237,7 @@ export class PlacesComponent implements OnInit {
       , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
   }
 
-  private onSuccessPlaces(passedplaces: GeoData[]) {
+  public onSuccessPlaces(passedplaces: GeoData[]) {
 
     this.places = null;
     // collections return zero length when no record found as it is initialised
@@ -277,7 +277,7 @@ export class PlacesComponent implements OnInit {
       , (error: Response) => this.onError(error, "getGeoPlacesByStateCode"));
   }
 
-  private onSuccessPostcodes(passedpostcodes: GeoData[]) {
+  public onSuccessPostcodes(passedpostcodes: GeoData[]) {
 
     this.postcodes = null;
     // collections return zero length when no record found as it is initialised
@@ -317,7 +317,7 @@ export class PlacesComponent implements OnInit {
       , (error: Response) => this.onError(error, "getSuburbssByPostcodeNumberAndPlaceName"));
   }
 
-  private onSuccessSuburbs(passedsuburbs: GeoData[]) {
+  public onSuccessSuburbs(passedsuburbs: GeoData[]) {
 
     this.suburbs = null;
     // collections return zero length when no record found as it is initialised
@@ -344,31 +344,31 @@ export class PlacesComponent implements OnInit {
   //************************************************************
   // SETUP FORM METHODS
   //************************************************************
-  private setStatesForm() {
+  public setStatesForm() {
     this.stateForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required, ValidationService.stateInputValidator]),
     });
   }
 
-  private setPlacesForm() {
+  public setPlacesForm() {
     this.placeForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required, ValidationService.placeInputValidator]),
     });
   }
 
-  private setPostcodesForm() {
+  public setPostcodesForm() {
     this.postcodeForm = this.formBuilder.group({
       number: new FormControl('', [Validators.required, ValidationService.postcodeInputValidator]),
     });
   }
 
-  private setSuburbsForm() {
+  public setSuburbsForm() {
     this.suburbForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required, ValidationService.suburbInputValidator]),
     });
   }
 
-  private setStatesFormDefaults() {
+  public setStatesFormDefaults() {
 
     setTimeout(() => {
       this.stateForm.setValue({
@@ -377,7 +377,7 @@ export class PlacesComponent implements OnInit {
     }, 30);
   }
 
-  private setPlacesFormDefaults() {
+  public setPlacesFormDefaults() {
 
     setTimeout(() => {
       this.placeForm.setValue({
@@ -386,7 +386,7 @@ export class PlacesComponent implements OnInit {
     }, 30);
   }
 
-  private setPostcodesFormDefaults() {
+  public setPostcodesFormDefaults() {
 
     setTimeout(() => {
       this.postcodeForm.setValue({
@@ -395,7 +395,7 @@ export class PlacesComponent implements OnInit {
     }, 30);
   }
 
-  private setSuburbsFormDefaults() {
+  public setSuburbsFormDefaults() {
 
     setTimeout(() => {
       this.suburbForm.setValue({
@@ -409,7 +409,7 @@ export class PlacesComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE STATES 
   //*****************************************************
-  private onViewStateChange(state: any) {
+  public onViewStateChange(state: any) {
     this.messagesService.emitRoute("nill");
     let m: number = 0;
     for (m = 0; m < this.states.length; m++) {
@@ -434,7 +434,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onStateAddClick() {
+  public onStateAddClick() {
     this.messagesService.emitRoute("nill");
     this.isStateAddOn = true;
     this.isStateEditOn = false;
@@ -448,7 +448,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onStateEditClick() {
+  public onStateEditClick() {
     this.messagesService.emitRoute("nill");
     this.isStateEditOn = true;
     this.isStateAddOn = false;
@@ -460,7 +460,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onStateAddEditCancel() {
+  public onStateAddEditCancel() {
     this.messagesService.emitRoute("nill");
     if (this.isStateAddOn == true) { this.isStateAddOn = false; }
     if (this.isStateEditOn == true) { this.isStateEditOn = false; }
@@ -469,7 +469,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubmitStateAddUpdate() {
+  public onSubmitStateAddUpdate() {
 
     this.removedState = null;
     this.messagesService.emitRoute("nill");
@@ -523,7 +523,7 @@ export class PlacesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateState(): GeoData {
+  public prepareAddUpdateState(): GeoData {
 
     const formModel = this.stateForm.value;
 
@@ -548,13 +548,13 @@ export class PlacesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isStateChanged(newState: GeoData, oldState: GeoData): boolean {
+  public isStateChanged(newState: GeoData, oldState: GeoData): boolean {
     if (newState.state === oldState.state) { return false; }
     return true;
   }
 
 
-  private stateExists(state: GeoData): boolean {
+  public stateExists(state: GeoData): boolean {
     // is this the first state??
     if (this.states === null) { return false; }
     let m: number = 0;
@@ -565,12 +565,12 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onStateDeleteClick() {
+  public onStateDeleteClick() {
     this.stateToRemove = this.stateInView;
   }
 
 
-  private onSubmitDeleteState(stateToRemove: GeoData) {
+  public onSubmitDeleteState(stateToRemove: GeoData) {
 
     this.geodataService.deleteGeoRecord(stateToRemove.id)
       .subscribe((response: GeoData) => {
@@ -591,7 +591,7 @@ export class PlacesComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE PLACES 
   //*****************************************************
-  private onViewPlaceChange(place: any) {
+  public onViewPlaceChange(place: any) {
     this.messagesService.emitRoute("nill");
     let m: number = 0;
     for (m = 0; m < this.places.length; m++) {
@@ -613,7 +613,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onPlaceAddClick() {
+  public onPlaceAddClick() {
     this.messagesService.emitRoute("nill");
     this.isPlaceAddOn = true;
     this.isPlaceEditOn = false;
@@ -628,7 +628,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onPlaceEditClick() {
+  public onPlaceEditClick() {
     this.messagesService.emitRoute("nill");
     this.isPlaceEditOn = true;
     this.isPlaceAddOn = false;
@@ -640,7 +640,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onPlaceAddEditCancel() {
+  public onPlaceAddEditCancel() {
     this.messagesService.emitRoute("nill");
     if (this.isPlaceAddOn == true) { this.isPlaceAddOn = false; }
     if (this.isPlaceEditOn == true) { this.isPlaceEditOn = false; }
@@ -649,7 +649,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubmitPlaceAddUpdate() {
+  public onSubmitPlaceAddUpdate() {
 
     this.messagesService.emitRoute("nill");
     let place: GeoData = this.prepareAddUpdatePlace();
@@ -702,7 +702,7 @@ export class PlacesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdatePlace(): GeoData {
+  public prepareAddUpdatePlace(): GeoData {
 
     const formModel = this.placeForm.value;
 
@@ -728,14 +728,14 @@ export class PlacesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isPlaceChanged(newPlace: GeoData, oldPlace: GeoData): boolean {
+  public isPlaceChanged(newPlace: GeoData, oldPlace: GeoData): boolean {
 
     if (newPlace.place === oldPlace.place) { return false; }
     return true;
   }
 
 
-  private placeExists(place: GeoData): boolean {
+  public placeExists(place: GeoData): boolean {
     // is this the first place??
     if (this.places === null) { return false; }
     let m: number = 0;
@@ -746,12 +746,12 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onPlaceDeleteClick() {
+  public onPlaceDeleteClick() {
     this.placeToRemove = this.placeInView;
   }
 
 
-  private onSubmitDeletePlace(placeToRemove: GeoData) {
+  public onSubmitDeletePlace(placeToRemove: GeoData) {
   
     this.geodataService.deleteGeoRecord(placeToRemove.id)
       .subscribe((response: GeoData) => {
@@ -780,7 +780,7 @@ export class PlacesComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE POSTCODE 
   //*****************************************************
-  private onViewPostcodeChange(postcode: any) {
+  public onViewPostcodeChange(postcode: any) {
     this.messagesService.emitRoute("nill");
     let m: number = 0;
     for (m = 0; m < this.postcodes.length; m++) {
@@ -801,7 +801,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onPostcodeAddClick() {
+  public onPostcodeAddClick() {
     this.messagesService.emitRoute("nill");
     this.isPostcodeAddOn = true;
     this.isPostcodeEditOn = false;
@@ -815,7 +815,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onPostcodeEditClick() {
+  public onPostcodeEditClick() {
     this.messagesService.emitRoute("nill");
     this.isPostcodeEditOn = true;
     this.isPostcodeAddOn = false;
@@ -827,7 +827,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onPostcodeAddEditCancel() {
+  public onPostcodeAddEditCancel() {
     this.messagesService.emitRoute("nill");
     if (this.isPostcodeAddOn == true) { this.isPostcodeAddOn = false; }
     if (this.isPostcodeEditOn == true) { this.isPostcodeEditOn = false; }
@@ -836,7 +836,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubmitPostcodeAddUpdate() {
+  public onSubmitPostcodeAddUpdate() {
 
     this.removedPostcode = null;
     this.messagesService.emitRoute("nill");
@@ -891,7 +891,7 @@ export class PlacesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdatePostcode(): GeoData {
+  public prepareAddUpdatePostcode(): GeoData {
 
     const formModel = this.postcodeForm.value;
 
@@ -918,13 +918,13 @@ export class PlacesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isPostcodeChanged(newPostcode: GeoData, oldPostcode: GeoData): boolean {
+  public isPostcodeChanged(newPostcode: GeoData, oldPostcode: GeoData): boolean {
     if (newPostcode.postcode === oldPostcode.postcode ) { return false; }
     return true;
   }
 
 
-  private postcodeExists(postcode: GeoData): boolean {
+  public postcodeExists(postcode: GeoData): boolean {
     // is this the first postcode??
     if (this.postcodes === null) { return false; }
     let m: number = 0;
@@ -935,12 +935,12 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onPostcodeDeleteClick() {
+  public onPostcodeDeleteClick() {
     this.postcodeToRemove = this.postcodeInView;
   }
 
 
-  private onSubmitDeletePostcode(postcodeToRemove: GeoData) {
+  public onSubmitDeletePostcode(postcodeToRemove: GeoData) {
 
     this.geodataService.deleteGeoRecord(postcodeToRemove.id)
       .subscribe((response: GeoData) => {
@@ -967,7 +967,7 @@ export class PlacesComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE SUBURBS 
   //*****************************************************
-  private onViewSuburbChange(suburb: any) {
+  public onViewSuburbChange(suburb: any) {
     this.messagesService.emitRoute("nill");
     let m: number = 0;
     for (m = 0; m < this.suburbs.length; m++) {
@@ -981,7 +981,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSuburbAddClick() {
+  public onSuburbAddClick() {
     this.messagesService.emitRoute("nill");
     this.isSuburbAddOn = true;
     this.isSuburbEditOn = false;
@@ -996,7 +996,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSuburbEditClick() {
+  public onSuburbEditClick() {
     this.messagesService.emitRoute("nill");
     this.isSuburbEditOn = true;
     this.isSuburbAddOn = false;
@@ -1008,7 +1008,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSuburbAddEditCancel() {
+  public onSuburbAddEditCancel() {
     this.messagesService.emitRoute("nill");
     if (this.isSuburbAddOn == true) { this.isSuburbAddOn = false; }
     if (this.isSuburbEditOn == true) { this.isSuburbEditOn = false; }
@@ -1017,7 +1017,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSubmitSuburbAddUpdate() {
+  public onSubmitSuburbAddUpdate() {
 
     this.messagesService.emitRoute("nill");
     let suburb: GeoData = this.prepareAddUpdateSuburb();
@@ -1070,7 +1070,7 @@ export class PlacesComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateSuburb(): GeoData {
+  public prepareAddUpdateSuburb(): GeoData {
 
     const formModel = this.suburbForm.value;
 
@@ -1098,14 +1098,14 @@ export class PlacesComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isSuburbChanged(newSuburb: GeoData, oldSuburb: GeoData): boolean {
+  public isSuburbChanged(newSuburb: GeoData, oldSuburb: GeoData): boolean {
 
     if (newSuburb.suburb === oldSuburb.suburb) { return false; }
     return true;
   }
 
 
-  private suburbExists(suburb: GeoData): boolean {
+  public suburbExists(suburb: GeoData): boolean {
     // is this the first suburb??
     if (this.suburbs === null) { return false; }
     let m: number = 0;
@@ -1116,12 +1116,12 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private onSuburbDeleteClick() {
+  public onSuburbDeleteClick() {
     this.suburbToRemove = this.suburbInView;
   }
 
 
-  private onSubmitDeleteSuburb(suburbToRemove: GeoData) {
+  public onSubmitDeleteSuburb(suburbToRemove: GeoData) {
 
     this.geodataService.deleteGeoRecord(suburbToRemove.id)
       .subscribe((response: GeoData) => {
@@ -1147,7 +1147,7 @@ export class PlacesComponent implements OnInit {
   //************************************************************
   // HELPER METHODS
   //************************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -1160,7 +1160,7 @@ export class PlacesComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.pageTitleService.emitPageTitle(new PageTitle("Categories"));
   }
@@ -1171,7 +1171,7 @@ export class PlacesComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";

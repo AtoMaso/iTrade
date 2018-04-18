@@ -20,15 +20,15 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
   styleUrls: ['./traderhome.component.scss']
 })
 export class TraderHomeComponent implements OnInit {
-  private traderId: string;
-  private session: UserSession;
-  private isRequesting: boolean = false;
-  private status: string = "Open";  
-  private hasTrades: boolean = true;
-  private hasCorres: boolean = true;
-  private hasPersonal: boolean = false;
-  private isFirstLoad: boolean = false;
-  private isFirstLoadCorr: boolean = false;
+  public traderId: string;
+  public session: UserSession;
+  public isRequesting: boolean = false;
+  public status: string = "Open";  
+  public hasTrades: boolean = true;
+  public hasCorres: boolean = true;
+  public hasPersonal: boolean = false;
+  public isFirstLoad: boolean = false;
+  public isFirstLoadCorr: boolean = false;
 
   constructor(
     private tradeService: TradeApiService,
@@ -73,7 +73,7 @@ export class TraderHomeComponent implements OnInit {
   //****************************************************************************************
   // GET CORRESPONDENCE - -- this wil get all correspondence, if there are no any will show the message
   //****************************************************************************************
-  private getCorres(traderId: string) {
+  public getCorres(traderId: string) {
     this.isRequesting = true;
     this.corresService.getInboxByTraderId(traderId)
       .subscribe((returnedCorres: Correspondence[]) => {
@@ -86,7 +86,7 @@ export class TraderHomeComponent implements OnInit {
 
   }
 
-  private onSuccessCorres(corres) {   
+  public onSuccessCorres(corres) {   
       this.isRequesting = false;
       this.dataCorr = corres;
       this.hasCorres = true;
@@ -99,7 +99,7 @@ export class TraderHomeComponent implements OnInit {
   //**************************************************************************************
   // GET TRADES -- this will get all trades for the trader closed and open, if there are no any will show message
   //**************************************************************************************
-  private getTrades(traderId: string, status: string) {
+  public getTrades(traderId: string, status: string) {
       this.isRequesting = true;  
       this.tradeService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
@@ -111,7 +111,7 @@ export class TraderHomeComponent implements OnInit {
   }
 
 
-  private onSuccessTrades(trades: Trade[]) {  
+  public onSuccessTrades(trades: Trade[]) {  
         this.data = this.TransformData(trades),
         this.isRequesting = false,
         this.hasTrades = true,
@@ -123,7 +123,7 @@ export class TraderHomeComponent implements OnInit {
   //**************************************************************************************
   // GET PERSONAL -- this will get all personal details for the trader, will be used for the post trade link
   //**************************************************************************************
-  private getPersonalDetails(traderId) {
+  public getPersonalDetails(traderId) {
     this.isRequesting = true;
 
     this.personalService.getPersonalDetailsByTraderId(traderId)
@@ -140,7 +140,7 @@ export class TraderHomeComponent implements OnInit {
   //*****************************************************
   // HELPER METHODS 
   //*****************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])         
@@ -153,13 +153,13 @@ export class TraderHomeComponent implements OnInit {
   }
 
 
-  private initialiseComponent() { 
+  public initialiseComponent() { 
     this.pageTitleService.emitPageTitle(new PageTitle("Trader Home"));    
     this.messagesService.emitRoute("nill");   
   }
 
 
-  private TransformData(returnedTrades: Trade[]): Array<any> {
+  public TransformData(returnedTrades: Trade[]): Array<any> {
 
     let transformedData = new Array<Trade>();
 
@@ -198,7 +198,7 @@ export class TraderHomeComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";
@@ -235,17 +235,17 @@ export class TraderHomeComponent implements OnInit {
   /**********************************************/
   //trade status section
   /***********************************************/
-  private isIdAsc = true;
-  private isTradeIdAsc = true;
-  private isDateAsc = true;
-  private isStatusAsc = true;
+  public isIdAsc = true;
+  public isTradeIdAsc = true;
+  public isDateAsc = true;
+  public isStatusAsc = true;
 
-  private sortId: string = 'desc'
-  private sortTradeId: string = 'desc';
-  private sortStatus: string = 'desc';
-  private sortDate: string = 'desc';
+  public sortId: string = 'desc'
+  public sortTradeId: string = 'desc';
+  public sortStatus: string = 'desc';
+  public sortDate: string = 'desc';
 
-  private data: Array<any> = [];     // full data from the server
+  public data: Array<any> = [];     // full data from the server
   public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
   public numPages: number = 1;
@@ -269,13 +269,13 @@ export class TraderHomeComponent implements OnInit {
   };
 
 
-  private onPageChange(passedpage: number) {
+  public onPageChange(passedpage: number) {
 
     this.config.currentPage = passedpage;
   }
 
 
-  private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
+  public onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.config.filtering, config.filtering);
     }
@@ -296,7 +296,7 @@ export class TraderHomeComponent implements OnInit {
   }
 
 
-  private sortTable(column: string) {
+  public sortTable(column: string) {
     // reset the array of columns
     this.config.sorting.columns = [];
 
@@ -360,7 +360,7 @@ export class TraderHomeComponent implements OnInit {
   }
 
 
-  private changeSort(data: any, config: any) {
+  public changeSort(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }
@@ -395,17 +395,17 @@ export class TraderHomeComponent implements OnInit {
   /**********************************************/
   //Correspondence
   /***********************************************/
-  private isDateSentAsc = true;
-  private isSubjectAsc = true;
-  private isCorrStatusAsc = true;
-  private isSenderAsc = true;
+  public isDateSentAsc = true;
+  public isSubjectAsc = true;
+  public isCorrStatusAsc = true;
+  public isSenderAsc = true;
 
-  private sortDateSent: string = 'desc'
-  private sortSubject: string = 'desc';
-  private sortCorrStatus: string = 'desc';
-  private sortSender: string = 'desc';
+  public sortDateSent: string = 'desc'
+  public sortSubject: string = 'desc';
+  public sortCorrStatus: string = 'desc';
+  public sortSender: string = 'desc';
 
-  private dataCorr: Array<any> = [];     // full data from the server
+  public dataCorr: Array<any> = [];     // full data from the server
   public rowsCorr: Array<any> = [];      // rows passed to the table
   public maxSizeCorr: number = 5;
   public numPagesCorr: number = 1;
@@ -431,13 +431,13 @@ export class TraderHomeComponent implements OnInit {
   };
 
 
-  private onPageChangeCorr(passedpage: number) {
+  public onPageChangeCorr(passedpage: number) {
 
     this.configCorr.currentPage = passedpage;
   }
 
 
-  private onChangeTableCorr(config: any, page: any = { page: this.configCorr.currentPage, itemsPerPage: this.configCorr.itemsPerPage }) {
+  public onChangeTableCorr(config: any, page: any = { page: this.configCorr.currentPage, itemsPerPage: this.configCorr.itemsPerPage }) {
     if (config.filtering) {
       Object.apply(this.configCorr.filtering, config.filtering);
     }
@@ -458,7 +458,7 @@ export class TraderHomeComponent implements OnInit {
   }
 
 
-  private sortTableCorr(column: string) {
+  public sortTableCorr(column: string) {
     // reset the array of columns
     this.configCorr.sorting.columns = [];
 
@@ -536,7 +536,7 @@ export class TraderHomeComponent implements OnInit {
   }
 
 
-  private changeSortCorr(data: any, config: any) {
+  public changeSortCorr(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }

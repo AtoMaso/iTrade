@@ -38,19 +38,19 @@ export class AppComponent implements OnDestroy, OnInit {
   @ViewChild(ModalComponent) modalComponent: ModalComponent;
 
   // this is a reference to itself passed to the child ModalDialog
-  private itself: AppComponent = this;
+  public itself: AppComponent = this;
 
-  private subscriptionSession: Subscription;
-  private subscriptionMessages: Subscription;
-  private subscriptionTitle: Subscription;
-  private subscriptionRouter: Subscription;
+  public subscriptionSession: Subscription;
+  public subscriptionMessages: Subscription;
+  public subscriptionTitle: Subscription;
+  public subscriptionRouter: Subscription;
 
-  private authentication: Authentication  = new Authentication();
-  private userSession: UserSession= new UserSession();
-  private userIdentity: UserIdentity = new UserIdentity();
-  private isUserAuthenticated: boolean = false;
-  private isUserAllowed: boolean = false;
-  private isAdmin: boolean = false;
+  public authentication: Authentication  = new Authentication();
+  public userSession: UserSession= new UserSession();
+  public userIdentity: UserIdentity = new UserIdentity();
+  public isUserAuthenticated: boolean = false;
+  public isUserAllowed: boolean = false;
+  public isAdmin: boolean = false;
   
 
 

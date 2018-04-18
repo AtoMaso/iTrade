@@ -22,10 +22,10 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  private isRequesting: boolean = false;
-  private isSubmited: boolean = false;
-  private forgotForm: FormGroup;
-  private model: ForgotPasswordBindingModel = new ForgotPasswordBindingModel();
+  public isRequesting: boolean = false;
+  public isSubmited: boolean = false;
+  public forgotForm: FormGroup;
+  public model: ForgotPasswordBindingModel = new ForgotPasswordBindingModel();
 
   constructor(
         private formBuilder: FormBuilder,
@@ -41,13 +41,13 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
 
-  private setForgotForm() {
+  public setForgotForm() {
     this.forgotForm = this.formBuilder.group({
       emailaccount: new FormControl('', [Validators.required, ValidationService.emailValidator]),    
     });
   }
 
-  private onForgotPasswordRequest() {
+  public onForgotPasswordRequest() {
 
     this.model.Email = this.forgotForm.controls.emailaccount.value;
     this.isRequesting = true;
@@ -61,7 +61,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
 
-  private onSucessSednRequest(res: any) {
+  public onSucessSednRequest(res: any) {
     this.isRequesting = false; 
     this.isSubmited = true; 
   }
@@ -70,7 +70,7 @@ export class ForgotPasswordComponent implements OnInit {
   //************************************************************
   // HELPER METHODS
   //************************************************************
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.pageTitleService.emitPageTitle(new PageTitle("Forgot Password"));
   }
@@ -81,7 +81,7 @@ export class ForgotPasswordComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";

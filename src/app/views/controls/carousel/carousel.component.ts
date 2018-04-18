@@ -24,9 +24,9 @@ export class CarouselComponent implements OnInit {
   public hasImage1: boolean = true;
   public hasImage2: boolean = true;
   public hasImage3: boolean = true;
-  private isVisible: boolean = true;
-  private hasImages: boolean = false;
-  private images: Image[];
+  public isVisible: boolean = true;
+  public hasImages: boolean = false;
+  public images: Image[];
 
   @Input() tradeId: number;
   @Output() onErrorPicked: EventEmitter<any> = new EventEmitter<any>();
@@ -66,7 +66,7 @@ export class CarouselComponent implements OnInit {
 
 
   // visibility of the images
-  private handleVisibility() {
+  public handleVisibility() {
     if (this.images.length == 0) {
       this.hasImages = false;
     }
@@ -91,7 +91,7 @@ export class CarouselComponent implements OnInit {
   //**************************************************************
   // HANDLE ERRORS  
   //**************************************************************  
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     let message: string = "";
 

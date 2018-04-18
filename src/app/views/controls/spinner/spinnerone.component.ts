@@ -10,9 +10,9 @@ import {Component, Input, OnDestroy} from '@angular/core';
 
 export class SpinnerOneComponent implements OnDestroy {
 
-  private str: string;
-  private currentTimeout: any;
-  private isDelayedRunning: boolean = false;
+  public str: string;
+  public currentTimeout: any;
+  public isDelayedRunning: boolean = false;
 
  @Input() public delay: number = 300;    
 
@@ -33,7 +33,7 @@ export class SpinnerOneComponent implements OnDestroy {
 
  }
 
-  private cancelTimeout(): void {
+  public cancelTimeout(): void {
       clearTimeout(this.currentTimeout);
       this.currentTimeout = undefined;     
   }

@@ -11,7 +11,7 @@ import { LoggerService } from '../../../services/logger/logger.service';
 import { ProcessMessageService } from '../../../services/processmessage/processmessage.service';
 import { PageTitleService } from '../../../services/pagetitle/pagetitle.service';
 // components
-import { CapsPipe } from '../../../helpers/pipes';
+//import { CapsPipe } from '../../../helpers/pipes';
 import {UserSession, UserIdentity, Authentication, Trade, TradeHistory, PageTitle } from '../../../helpers/classes';
 import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component';
 
@@ -23,27 +23,27 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 })
 export class MyTradesListComponent implements OnInit {
 
-  private traderId: string;
-  private removedTradeId: number;
-  private tradeIdToBeRemoved: number;
-  private tradeIdToBeClosed: number;
-  private tradeToRemove: Trade;
-  private tradeToClose: Trade;
-  private isOwner: boolean = false;
+  public traderId: string;
+  public removedTradeId: number;
+  public tradeIdToBeRemoved: number;
+  public tradeIdToBeClosed: number;
+  public tradeToRemove: Trade;
+  public tradeToClose: Trade;
+  public isOwner: boolean = false;
 
-  private session: UserSession;
-  private identity: UserIdentity = new UserIdentity;
-  private isRequesting: boolean = false;
-  private isAuthenticated: boolean = false;
+  public session: UserSession;
+  public identity: UserIdentity = new UserIdentity;
+  public isRequesting: boolean = false;
+  public isAuthenticated: boolean = false;
 
-  private totalNumberOfRecords: number = 0;
-  private setsCounter: number = 1;
-  private recordsPerSet: number = 50;
-  private totalNumberOfSets: number = 0;
-  private status: string = "All";
-  private hasTrades: boolean = true;
-  private hasNoTrades: boolean = false;
-  private isFirstLoad: boolean = false;
+  public totalNumberOfRecords: number = 0;
+  public setsCounter: number = 1;
+  public recordsPerSet: number = 50;
+  public totalNumberOfSets: number = 0;
+  public status: string = "All";
+  public hasTrades: boolean = true;
+  public hasNoTrades: boolean = false;
+  public isFirstLoad: boolean = false;
 
   // constructor which injects the services
   constructor(
@@ -68,7 +68,7 @@ export class MyTradesListComponent implements OnInit {
   //*********************************************************************************************
   // GET TRADES - this will get open trades, if there are no any open trades will get all or will show message - no trades
   //*********************************************************************************************
-  private getTrades(traderId: string, status: string) {
+  public getTrades(traderId: string, status: string) {
 
     this.tradeApiService.getTradesWithStatusOrAll(traderId, status)
       .subscribe((returnedTrades: Trade[]) => {
@@ -94,7 +94,7 @@ export class MyTradesListComponent implements OnInit {
 
 
   //gets page of trades 
-  private getSetOfTrades(traderId: string, setCounter: number, recordsPerSet: number, status:string) {
+  public getSetOfTrades(traderId: string, setCounter: number, recordsPerSet: number, status:string) {
 
     this.tradeApiService.getSetOfTradesWithStatusForTrader(traderId, setCounter, recordsPerSet, status)
       .subscribe((returnedTrades: Trade[]) => {
@@ -121,7 +121,7 @@ export class MyTradesListComponent implements OnInit {
   // ADD TRADE
   //****************************************************
   // navigate to the AddTrade view
-  private addTrade() {
+  public addTrade() {
     this.router.navigate(['/addtrade']);
   }
 
@@ -129,7 +129,7 @@ export class MyTradesListComponent implements OnInit {
   //****************************************************
   // REMOVE TRADE
   //****************************************************
-  private deleteTrade(tradeId: number) {
+  public deleteTrade(tradeId: number) {
     this.tradeApiService.DeleteTrade(tradeId)
       .subscribe((removedTrade: Trade) => this.onSuccessRemoveTrade(removedTrade)
       , error => this.onError(error, "removeArticle"));
@@ -139,7 +139,7 @@ export class MyTradesListComponent implements OnInit {
   //****************************************************
   // CLOSE TRADE
   //****************************************************
-  private closeTrade(trade:Trade) {
+  public closeTrade(trade:Trade) {
     // create trade history to be written
     let trhis: TradeHistory = new TradeHistory();
     let dt: Date = new Date();
@@ -167,7 +167,7 @@ export class MyTradesListComponent implements OnInit {
   // HELPER METHODS 
   //*****************************************************
   // this one should be the authentication service
-  private getUseridentity() {
+  public getUseridentity() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -183,7 +183,7 @@ export class MyTradesListComponent implements OnInit {
 
 
   // initialise componanet method
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.isRequesting = true;
     this.pageTitleService.emitPageTitle(new PageTitle("My Trades"));
@@ -191,7 +191,7 @@ export class MyTradesListComponent implements OnInit {
 
 
   // tansformation of the data in fromat we need
-  private TransformData(returnedTrades: Trade[]): Array<any> {
+  public TransformData(returnedTrades: Trade[]): Array<any> {
 
     let transformedData = new Array<Trade>();
 
@@ -228,7 +228,7 @@ export class MyTradesListComponent implements OnInit {
 
 
   // passing data to the modal form
-  private passToModal(trade: Trade) {
+  public passToModal(trade: Trade) {
 
       if (trade.traderId === this.session.userIdentity.userId) {
         this.isOwner = true;
@@ -248,7 +248,7 @@ export class MyTradesListComponent implements OnInit {
 
 
   // when removing of the trade is successful
-  private onSuccessRemoveTrade(trade: Trade) {
+  public onSuccessRemoveTrade(trade: Trade) {
     if (trade) {
       this.removedTradeId = trade.tradeId;
       this.onChangeTable(this.config);
@@ -268,7 +268,7 @@ export class MyTradesListComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     let message: string = "";
 
@@ -303,28 +303,28 @@ export class MyTradesListComponent implements OnInit {
   /**********************************************/
   //ngx-pagination section
   /***********************************************/
-  private isIdAsc = true;
-  private isStatusAsc = true;
-  private isNameAsc = true;
-  private isForAsc = true;
-  private isCategoryAsc = true;
-  private isPublishedAsc = true;
+  public isIdAsc = true;
+  public isStatusAsc = true;
+  public isNameAsc = true;
+  public isForAsc = true;
+  public isCategoryAsc = true;
+  public isPublishedAsc = true;
 
-  private sortId: string = 'desc';
-  private sortStatus: string = 'des'
-  private sortName: string = 'desc';
-  private sortFor: string = 'desc';
-  private sortCategory: string = 'desc';
-  private sortDate: string = 'desc';
+  public sortId: string = 'desc';
+  public sortStatus: string = 'des'
+  public sortName: string = 'desc';
+  public sortFor: string = 'desc';
+  public sortCategory: string = 'desc';
+  public sortDate: string = 'desc';
 
-  private data: Array<any> = [];     // full data from the server
+  public data: Array<any> = [];     // full data from the server
   public rows: Array<any> = [];      // rows passed to the table
   public maxSize: number = 5;
   public numPages: number = 1;
   
-  private isNextButton: boolean = false;
-  private isPrevButton: boolean = false;
-  private lastPageOfTheCurrentSet: number = 0;
+  public isNextButton: boolean = false;
+  public isPrevButton: boolean = false;
+  public lastPageOfTheCurrentSet: number = 0;
 
 
   public columns: Array<any> =
@@ -349,7 +349,7 @@ export class MyTradesListComponent implements OnInit {
   };
 
 
-  private calculateTotalNumberOfSets() {
+  public calculateTotalNumberOfSets() {
 
     let rem = this.totalNumberOfRecords % this.recordsPerSet;
     let mainpart = ~~(this.totalNumberOfRecords / this.recordsPerSet);
@@ -362,7 +362,7 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
-  private onPageChange(passedpage: number) {
+  public onPageChange(passedpage: number) {
 
     this.config.currentPage = passedpage;
 
@@ -389,7 +389,7 @@ export class MyTradesListComponent implements OnInit {
 
 
   // next page of records method
-  private nextSetOfRecords() {
+  public nextSetOfRecords() {
 
     this.messagesService.emitRoute("nill");
     if (this.totalNumberOfSets > this.setsCounter) {
@@ -408,7 +408,7 @@ export class MyTradesListComponent implements OnInit {
 
 
   // previous page of records method
-  private previousSetOfRecords() {
+  public previousSetOfRecords() {
 
     this.messagesService.emitRoute("nill");
 
@@ -427,7 +427,7 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
-  private onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
+  public onChangeTable(config: any, page: any = { page: this.config.currentPage, itemsPerPage: this.config.itemsPerPage }) {
         if (config.filtering) {
           Object.apply(this.config.filtering, config.filtering);
         }
@@ -449,7 +449,7 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
-  private sortTable(column: string) {
+  public sortTable(column: string) {
     // reset the array of columns
     this.config.sorting.columns = [];
     switch (column) {
@@ -493,7 +493,7 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
-  private changeRemove(data: any, config: any): any {
+  public changeRemove(data: any, config: any): any {
     if (this.removedTradeId == null) { return data; }
 
     let removedData: Array<any> = data.filter((item: Trade) => item.tradeId !== this.removedTradeId);
@@ -540,7 +540,7 @@ export class MyTradesListComponent implements OnInit {
   }
 
 
-  private changeSort(data: any, config: any) {
+  public changeSort(data: any, config: any) {
     if (!config.sorting) {
       return data;
     }

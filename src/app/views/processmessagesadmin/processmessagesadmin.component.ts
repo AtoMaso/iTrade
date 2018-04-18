@@ -20,35 +20,35 @@ import { SpinnerOneComponent } from '../controls/spinner/spinnerone.component';
 })
 export class ProcessMessagesAdminComponent implements OnInit {
 
-  private traderId: string;
-  private isRequesting: boolean;
-  private session: UserSession;
+  public traderId: string;
+  public isRequesting: boolean;
+  public session: UserSession;
 
-  private messagesForm: FormGroup;
-  private messages: ProcessMessage[] = [];
-  private messageInView: ProcessMessage;
-  private tempAddUpdateMessage: ProcessMessage;
-  private defaultMessage: ProcessMessage;
-  private isMessageAddOn: boolean = false;
-  private isMessageEditOn: boolean = false;
-  private updatedMessage: ProcessMessage;
-  private addedMessage: ProcessMessage;
-  private removedMessage: ProcessMessage;
-  private messageToRemove: ProcessMessage;
+  public messagesForm: FormGroup;
+  public messages: ProcessMessage[] = [];
+  public messageInView: ProcessMessage;
+  public tempAddUpdateMessage: ProcessMessage;
+  public defaultMessage: ProcessMessage;
+  public isMessageAddOn: boolean = false;
+  public isMessageEditOn: boolean = false;
+  public updatedMessage: ProcessMessage;
+  public addedMessage: ProcessMessage;
+  public removedMessage: ProcessMessage;
+  public messageToRemove: ProcessMessage;
  
 
 
-  private typesForm: FormGroup;
-  private types: ProcessMessageType[] = [];
-  private typeInView: ProcessMessageType;
-  private tempAddUpdateType: ProcessMessageType;
-  private defaultType: ProcessMessageType;
-  private isTypeAddOn: boolean = false;
-  private isTypeEditOn: boolean = false;
-  private updatedType: ProcessMessageType;
-  private addedType: ProcessMessageType;
-  private removedType: ProcessMessageType;
-  private typeToRemove: ProcessMessageType;
+  public typesForm: FormGroup;
+  public types: ProcessMessageType[] = [];
+  public typeInView: ProcessMessageType;
+  public tempAddUpdateType: ProcessMessageType;
+  public defaultType: ProcessMessageType;
+  public isTypeAddOn: boolean = false;
+  public isTypeEditOn: boolean = false;
+  public updatedType: ProcessMessageType;
+  public addedType: ProcessMessageType;
+  public removedType: ProcessMessageType;
+  public typeToRemove: ProcessMessageType;
 
 
 
@@ -131,7 +131,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
       , (error: Response) => this.onError(error, "getProcessMessages"));
   }
 
-  private onSuccessMessages(messages: ProcessMessage[]) {
+  public onSuccessMessages(messages: ProcessMessage[]) {
     this.messages = null;
     // collections return zero length when no record found as it is initialised
     if (messages.length == 0) {
@@ -161,7 +161,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
 
 
 
-  private getMessageTypes() {
+  public getMessageTypes() {
     this.processMessagesService.getMessageTypes()
       .subscribe((res: ProcessMessageType[]) => {
         this.onSuccessTypes(res);
@@ -169,7 +169,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
       , (error: Response) => this.onError(error, "getMessageTypes"));
   }
 
-  private onSuccessTypes(passedtypes: ProcessMessageType[]) {
+  public onSuccessTypes(passedtypes: ProcessMessageType[]) {
 
     this.types = null;
     // collections return zero length when no record found as it is initialised
@@ -197,7 +197,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   //************************************************************
   // SETUP FORM METHODS
   //************************************************************
-  private setMessagesForm() {
+  public setMessagesForm() {
     this.messagesForm = this.formBuilder.group({
       messagetype: new FormControl('', [Validators.required ]),
       messagecode: new FormControl('', [Validators.required, ValidationService.messageCodeValidator]),
@@ -205,7 +205,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
     });
   }
 
-  private setMessageTypesForm() {
+  public setMessageTypesForm() {
     this.typesForm = this.formBuilder.group({
       typedescription: new FormControl('', [Validators.required, ValidationService.messageTypeDescriptionValidator]),
     });
@@ -213,7 +213,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
 
 
 
-  private setMessagesFormDefaults() {
+  public setMessagesFormDefaults() {
 
     let m: number = 0;
     for (m = 0; m < this.types.length; m++) {
@@ -232,7 +232,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
     }, 30);
   }
 
-  private setMessageTypesFormDefaults() {
+  public setMessageTypesFormDefaults() {
 
     setTimeout(() => {
       this.typesForm.setValue({
@@ -247,7 +247,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE STATES 
   //*****************************************************
-  private onViewMessageChange(state: any) {
+  public onViewMessageChange(state: any) {
     let m: number = 0;
     for (m = 0; m < this.messages.length; m++) {
 
@@ -265,7 +265,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private onMessageAddClick() {
+  public onMessageAddClick() {
     this.processMessagesService.emitRoute("nill");
     this.isMessageAddOn = true;
     this.isMessageEditOn = false;
@@ -279,7 +279,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private onMessageEditClick() {
+  public onMessageEditClick() {
     this.processMessagesService.emitRoute("nill");
     this.isMessageEditOn = true;
     this.isMessageAddOn = false;
@@ -291,7 +291,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private onMessageAddEditCancel() {
+  public onMessageAddEditCancel() {
     this.processMessagesService.emitRoute("nill");
     if (this.isMessageAddOn == true) { this.isMessageAddOn = false; }
     if (this.isMessageEditOn == true) { this.isMessageEditOn = false; }
@@ -300,7 +300,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private onSubmitMessageAddUpdate() {
+  public onSubmitMessageAddUpdate() {
 
     this.removedMessage = null;
     this.processMessagesService.emitRoute("nill");
@@ -355,7 +355,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateMessage(): ProcessMessage {
+  public prepareAddUpdateMessage(): ProcessMessage {
 
     const formModel = this.messagesForm.value;
 
@@ -381,7 +381,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isMessageChanged(newMessage: ProcessMessage, oldMessage: ProcessMessage): boolean {
+  public isMessageChanged(newMessage: ProcessMessage, oldMessage: ProcessMessage): boolean {
     if (newMessage.messageCode === oldMessage.messageCode && 
         newMessage.messageText === oldMessage.messageText &&
         newMessage.messageTypeId=== oldMessage.messageTypeId
@@ -390,7 +390,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private messageExists(message: ProcessMessage): boolean {
+  public messageExists(message: ProcessMessage): boolean {
     let m: number = 0;
     for (m = 0; m < this.messages.length; m++) {
       if (message.messageCode === this.messages[m].messageCode &&
@@ -401,12 +401,12 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private onMessageDeleteClick() {
+  public onMessageDeleteClick() {
     this.messageToRemove = this.messageInView;
   }
 
 
-  private onSubmitDeleteMessage(messageToRemove:ProcessMessage) {
+  public onSubmitDeleteMessage(messageToRemove:ProcessMessage) {
 
     this.processMessagesService.deleteProcessMessage(messageToRemove.messageId)
       .subscribe((response: ProcessMessage) => {
@@ -428,7 +428,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   //*****************************************************
   // SCREEN CHANGE TYPES 
   //*****************************************************
-  private onViewTypeChange(type: any) {
+  public onViewTypeChange(type: any) {
     let m: number = 0;
     for (m = 0; m < this.types.length; m++) {
       if (this.types[m].messageType === type.target.value) {
@@ -445,7 +445,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private onTypeAddClick() {
+  public onTypeAddClick() {
     this.processMessagesService.emitRoute("nill");
     this.isTypeAddOn = true;
     this.isTypeEditOn = false;
@@ -460,7 +460,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private onTypeEditClick() {
+  public onTypeEditClick() {
     this.processMessagesService.emitRoute("nill");
     this.isTypeEditOn = true;
     this.isTypeAddOn = false;
@@ -472,7 +472,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private onTypeAddEditCancel() {
+  public onTypeAddEditCancel() {
     this.processMessagesService.emitRoute("nill");
     if (this.isTypeAddOn == true) { this.isTypeAddOn = false; }
     if (this.isTypeEditOn == true) { this.isTypeEditOn = false; }
@@ -481,7 +481,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private onSubmitTypeAddUpdate() {
+  public onSubmitTypeAddUpdate() {
 
     this.processMessagesService.emitRoute("nill");
     let type: ProcessMessageType = this.prepareAddUpdateType();
@@ -534,7 +534,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
 
 
   // prepare the new add or update data - get it from the form
-  private prepareAddUpdateType(): ProcessMessageType {
+  public prepareAddUpdateType(): ProcessMessageType {
 
     const formModel = this.typesForm.value;
 
@@ -560,13 +560,13 @@ export class ProcessMessagesAdminComponent implements OnInit {
 
   // as the form has been prepopulated when updating we can not use the form dirty on changed
   // we have custom method to compare the new and old
-  private isTypeChanged(newType: ProcessMessageType, oldType: ProcessMessageType): boolean {
+  public isTypeChanged(newType: ProcessMessageType, oldType: ProcessMessageType): boolean {
     if (newType.messageType === oldType.messageType) { return false; }
     return true;
   }
 
 
-  private typeExists(type: ProcessMessageType): boolean {
+  public typeExists(type: ProcessMessageType): boolean {
     let m: number = 0;
     for (m = 0; m < this.types.length; m++) {
       if (type.messageType === this.types[m].messageType) { return true; }
@@ -575,12 +575,12 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private onTypeDeleteClick() {
+  public onTypeDeleteClick() {
     this.typeToRemove = this.typeInView;
   }
 
 
-  private onSubmitDeleteType(typeToRemove: ProcessMessageType) {
+  public onSubmitDeleteType(typeToRemove: ProcessMessageType) {
 
     this.processMessagesService.deleteMessageType(typeToRemove.messageTypeId)
       .subscribe((response: ProcessMessageType) => {
@@ -604,7 +604,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   //************************************************************
   // HELPER METHODS
   //************************************************************
-  private getUserSession() {
+  public getUserSession() {
     if (sessionStorage["UserSession"] != "null") {
       try {
         this.session = JSON.parse(sessionStorage["UserSession"])
@@ -617,7 +617,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   }
 
 
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.processMessagesService.emitRoute("nill");
     this.pageTitleService.emitPageTitle(new PageTitle("Process Messages"));
   }
@@ -628,7 +628,7 @@ export class ProcessMessagesAdminComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";

@@ -20,11 +20,11 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
   styleUrls: ['./resetpassword.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
-  private isRequesting: boolean = false;
-  private isSubmitted: boolean = false;
-  private code: string = "";
-  private resetPasswordForm: FormGroup;
-  private model: ResetPasswordBindingModel = new ResetPasswordBindingModel();
+  public isRequesting: boolean = false;
+  public isSubmitted: boolean = false;
+  public code: string = "";
+  public resetPasswordForm: FormGroup;
+  public model: ResetPasswordBindingModel = new ResetPasswordBindingModel();
 
   constructor(
     private route: ActivatedRoute,
@@ -46,7 +46,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
 
-  private setResetPasswordForm() {
+  public setResetPasswordForm() {
     this.resetPasswordForm = this.formBuilder.group({     
       email: new FormControl('', [Validators.required, ValidationService.emailValidator]),
       newpassword: new FormControl('', [Validators.required, ValidationService.passwordValidator]),
@@ -55,7 +55,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
 
-  private onResetPasswordSubmit() {
+  public onResetPasswordSubmit() {
     this.isRequesting = true;
     this.model.Email = this.resetPasswordForm.controls.email.value;
     this.model.NewPassword = this.resetPasswordForm.controls.newpassword.value;
@@ -72,7 +72,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
 
-  private onSucessSendRequest(res: any) {
+  public onSucessSendRequest(res: any) {
     this.isRequesting = false;
     this.isSubmitted = true;
     //this.messagesService.emitProcessMessage("PMSCPa");
@@ -83,7 +83,7 @@ export class ResetPasswordComponent implements OnInit {
   //************************************************************
   // HELPER METHODS SECTION
   //************************************************************
-  private initialiseComponent() {
+  public initialiseComponent() {
     this.messagesService.emitRoute("nill");
     this.pageTitleService.emitPageTitle(new PageTitle("Reset Password"));
   }
@@ -93,7 +93,7 @@ export class ResetPasswordComponent implements OnInit {
   //****************************************************
   // LOGGING METHODS
   //****************************************************
-  private onError(serviceError: any, operation: string) {
+  public onError(serviceError: any, operation: string) {
 
     this.isRequesting = false;
     let message: string = "";
