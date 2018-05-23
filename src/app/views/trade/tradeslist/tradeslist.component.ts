@@ -62,6 +62,7 @@ export class TradesListComponent implements OnInit {
   public selectedPostcodeId: number = 0;
   public selectedSuburbId: number = 0;
 
+  public tempFilters: string = null;
   public filters: string = null;
   public filters1: string = null;
   public filters2: string = null;
@@ -561,6 +562,12 @@ export class TradesListComponent implements OnInit {
     else { this.filters = null;}
 
     this.setsCounter = 1;
+
+    if (this.tempFilters == null) { this.tempFilters = this.filters;}
+    else {
+      this.getSetOfTradesWithStatus(this.setsCounter, this.recordsPerSet, this.status);   
+      this.messagesService.emitRoute("nill");
+    }
   }
 
 
