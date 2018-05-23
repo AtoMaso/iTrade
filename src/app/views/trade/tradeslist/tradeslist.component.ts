@@ -93,6 +93,7 @@ export class TradesListComponent implements OnInit {
     this.getCategories();
     this.getStates();   
     this.getSetOfTradesWithStatus(this.setsCounter, this.recordsPerSet, this.status);
+    //this.getTradesWithSetFilters();
     if (this.isAuthenticated) { this.getPersonalDetails(this.session.userIdentity.userId); }
   }
 
@@ -559,7 +560,7 @@ export class TradesListComponent implements OnInit {
     else if (this.filters2 && this.filters1 == null) { this.filters = this.filters2;}
     else { this.filters = null;}
 
-    // TODO add the postcode here
+    this.setsCounter = 1;
   }
 
 
