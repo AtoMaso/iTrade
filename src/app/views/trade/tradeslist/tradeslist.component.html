@@ -171,7 +171,7 @@
                                                   
                                                   <div class="row container" style="height:45px;">
                                                     <button class="btn btn-primary btn-sm smalltext" (click)="getSetOfTradesWithSetFilters()" 
-                                                            [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null && selectedPostcode == null">Search</button>
+                                                            [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null && selectedPostcode == null && selectedSuburb == null">Search</button>
                                                     <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
                                                   </div>
                                                                                                                        
@@ -208,7 +208,7 @@
 
                    <table class="table  table-hover table-responsive">
 
-                     <tr *ngFor="let trade of rows  | paginate:config"  [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" >
+                     <tr *ngFor="let trade of rows  | paginate:config">
 
                         <td class="row col-md-12">
 
