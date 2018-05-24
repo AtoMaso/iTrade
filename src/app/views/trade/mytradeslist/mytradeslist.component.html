@@ -71,7 +71,7 @@
                     </th>
 
                     <th class="col-md-2" style="background-color:#FF223A3A;">
-                      <a (click)="sortTable('categoryDescription')" class="textgray text-uppercase smalltextbold" style="width:auto">
+                      <a (click)="sortTable('category')" class="textgray text-uppercase smalltextbold" style="width:auto">
                         Category
                         <span *ngIf="isCategoryAsc" class="glyphicon glyphicon-chevron-down"></span>
                         <span *ngIf="!isCategoryAsc" class="glyphicon glyphicon-chevron-up"></span>
@@ -152,7 +152,7 @@
                 <pagination-controls id="pagination" *ngIf="config.paging"
                                      (pageChange)="onPageChange($event)" ngDefaultControl
                                      maxSize="5"
-                                     directionLinks="false"
+                                     directionLinks="true"
                                      autoHide="true"
                                      previousLabel="Previous"
                                      nextLabel="Next"
