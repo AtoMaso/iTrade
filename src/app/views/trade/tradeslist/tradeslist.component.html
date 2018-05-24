@@ -208,7 +208,7 @@
 
                    <table class="table  table-hover table-responsive">
 
-                     <tr *ngFor="let trade of rows  | paginate:config" >
+                     <tr *ngFor="let trade of rows  | paginate:config"  [routerLink]="['/tradedetails']" [queryParams]="{id: trade.tradeId}" >
 
                         <td class="row col-md-12">
 
@@ -254,7 +254,7 @@
                       <div class="col-md-10 col-md-offset-2 panel panel-heading" style="height:50px;vertical-align:middle;">
 
                         <div class="container col-md-4  textsmall" style="height:50px;vertical-align:middle;">
-                          <!-- the ngDefaultControl is needed because the pagination control needs a default acceessor -->
+                          <!-- the ngDefaultControl is needed because the pagination control needs a default accessor -->
                           <pagination-controls id="pagination" *ngIf="config.paging" ngDefaultControl
                                                (pageChange)="onPageChange($event)"
                                                maxSize="5"
