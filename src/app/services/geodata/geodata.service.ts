@@ -43,43 +43,43 @@ export class GeoDataService {
 
   public getStates(): Observable<GeoData[]> {
     // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
-    return this.httpClientService.get<GeoData[]>(geodataStatesUrl, httpOptions).retry(1);
+    //const httpOptions = {
+    //  headers: new HttpHeaders({
+    //    'Accept': 'application/json',
+    //    'Content-Type': 'application/json',
+    //    'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+    //  })
+    //};
+    return this.httpClientService.get<GeoData[]>(geodataStatesUrl).retry(1);
   }
 
 
   public getPlacesByStateCode(statecode: string): Observable<GeoData[]> {
 
     // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
+    //const httpOptions = {
+    //  headers: new HttpHeaders({
+    //    'Accept': 'application/json',
+    //    'Content-Type': 'application/json',
+    //    'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+    //  })
+    //};
 
-    return this.httpClientService.get<GeoData[]>(geodataPlacesByStateCodeUrl + `?statecode=${statecode}`, httpOptions).retry(1);
+    return this.httpClientService.get<GeoData[]>(geodataPlacesByStateCodeUrl + `?statecode=${statecode}`).retry(1);
   }
 
 
   public getPostcodesByPlaceNameAndStateCode(placename: string, statecode: string): Observable<GeoData[]> {
     // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
+    //const httpOptions = {
+    //  headers: new HttpHeaders({
+    //    'Accept': 'application/json',
+    //    'Content-Type': 'application/json',
+    //    'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+    //  })
+    //};
 
-    return this.httpClientService.get<GeoData[]>(geodataPostcodesByPlaceNameAndStateCodeUrl + `?placename=${placename}&statecode=${statecode}`, httpOptions).retry(1);
+    return this.httpClientService.get<GeoData[]>(geodataPostcodesByPlaceNameAndStateCodeUrl + `?placename=${placename}&statecode=${statecode}`).retry(1);
   }
 
 
@@ -88,15 +88,15 @@ export class GeoDataService {
 
   public getSuburbssByPostcodeNumberAndPlaceName(postcodenumber: string, placename: string): Observable<GeoData[]> {
     // prepare the headesrs
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
-      })
-    };
+    //const httpOptions = {
+    //  headers: new HttpHeaders({
+    //    'Accept': 'application/json',
+    //    'Content-Type': 'application/json',
+    //    'Authorization': `Bearer ${this.authenticationService.userSession.userIdentity.accessToken}`
+    //  })
+    //};
 
-    return this.httpClientService.get<GeoData[]>(geodataSuburbsByPostcodeNumberAndPlaceNameUrl + `?postcodenumber=${postcodenumber}&placename=${placename}`, httpOptions).retry(1);
+    return this.httpClientService.get<GeoData[]>(geodataSuburbsByPostcodeNumberAndPlaceNameUrl + `?postcodenumber=${postcodenumber}&placename=${placename}`).retry(1);
   }
 
 
