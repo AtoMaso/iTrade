@@ -170,9 +170,13 @@
                                           <div class="row container col-md-12" style="height:90px;">
                                                   
                                                   <div class="row container" style="height:45px;">
-                                                    <button class="btn btn-primary btn-sm smalltext" (click)="getSetOfTradesWithSetFilters()" 
-                                                            [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null && selectedPostcode == null && selectedSuburb == null">Search</button>
-                                                    <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">Clear</button>
+                                                    <button class="btn btn-primary btn-sm smalltext" (click)="getSetOfTradesWithSetFilters()"
+                                                            [disabled]="selectedCategory == null && selectedSubcategory ==null  && selectedState == null && selectedPlace == null && selectedPostcode == null && selectedSuburb == null">
+                                                        <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+                                                    </button>
+                                                    <button class="btn btn-primary btn-sm smalltext" (click)="ClearAllFiltersAndGoBack()" [disabled]="filters == null">
+                                                      <span class="glyphicon glyphicon-erase"></span>&nbsp;Clear
+                                                    </button>
                                                   </div>
                                                                                                                        
                                                 <div *ngIf="!isAuthenticated" class="row container" style="height:45px;">
@@ -275,8 +279,8 @@
                         <div class="container col-md-4" style="text-align:center;">
 
                           <span class="smalltextbold textgray">Set of records: {{ setsCounter }} of  &nbsp;{{  totalNumberOfSets }}</span>
-                          <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Next Set</button>
-                          <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-success btn-sm smalltextbold">Previous Set</button>
+                          <button *ngIf="isNextButton" (click)="nextSetOfRecords()" class="btn btn-primary btn-sm smalltextbold">Next Set</button>
+                          <button *ngIf="isPrevButton" (click)="previousSetOfRecords()" class="btn btn-primary btn-sm smalltextbold">Previous Set</button>
 
                         </div>
 
