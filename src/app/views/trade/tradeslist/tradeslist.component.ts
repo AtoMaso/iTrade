@@ -27,7 +27,7 @@ import { SpinnerOneComponent } from '../../controls/spinner/spinnerone.component
 })
 export class TradesListComponent implements OnInit {
 
-
+  //Mirko
   public session: UserSession;
   public identity: UserIdentity = new UserIdentity;
   public isRequesting: boolean = false;
