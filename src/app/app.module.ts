@@ -18,11 +18,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 
-//import { TokenInterceptor } from './services/authentication/tokeninterceptor/tokeninterceptor.component';
-
 //helpers
 import { AuthGuard } from './helpers/auth.guard';
-//import { TopTradesPipe, SortTradesByDatePipe } from './helpers/pipes';
 
 //services
 import { AuthenticationService } from './services/authentication/authentication.service';
@@ -40,11 +37,6 @@ import { PersonalDetailsService } from './services/personaldetails/personaldetai
 import { CategoryService } from './services/categories/category.service';
 import { SubcategoriesService } from './services/subcategories/subcategories.service';
 import { GeoDataService } from './services/geodata/geodata.service';
-//import { StatesService } from './services/states/states.service';
-//import { PlacesService } from './services/places/places.service';
-//import { PostcodesService } from './services/postcodes/postcodes.service';
-//import { SuburbsService } from './services/suburbs/suburbs.service';
-
 import { AddressService } from './services/address/address.service';
 import { EmailsService } from './services/emails/emails.service';
 import { PhonesService } from './services/phones/phones.service';
@@ -103,19 +95,15 @@ export function getprocessmessages(processMessageService: ProcessMessageService)
     AppComponent,         
 
     ControlMessages,ProcessMessagesComponent, 
-    PageTitleComponent, ModalComponent, SpinnerOneComponent, CarouselComponent,
-    //TopTradesPipe, SortTradesByDatePipe,
-
-    DashboardComponent, AboutComponent, ContactComponent, LoginComponent, RegisterComponent,   
- 
+    PageTitleComponent, ModalComponent, SpinnerOneComponent, CarouselComponent, 
+    DashboardComponent, AboutComponent, ContactComponent, LoginComponent, RegisterComponent,    
     TradersListComponent, TraderDetailsComponent, TraderHomeComponent,
     AddTradeComponent, TradesListComponent, MyTradesListComponent, TradeDetailsComponent,   
     CategoriesComponent, ProcessMessagesAdminComponent,      
     PersonalDetailsComponent, LoginDetailsComponent, ContactlDetailsComponent, ProcessMessagesComponent,
     CorrespondenceListComponent, CorrespondenceDetailsComponent, AddCorrespondenceComponent,  
     ForgotPasswordComponent, ResetPasswordComponent, PlacesComponent, TypesComponent,
-  
-    //TokenInterceptor,
+ 
   ],  
 
   imports: [    

@@ -63,9 +63,9 @@ const routes: Routes = [
   { path: 'resetpassword', component: ResetPasswordComponent },
 
   // correspondence
-  { path: 'correspondencelist', component: CorrespondenceListComponent, canActivate: [AuthGuard]}, // correspondence should available only when authenticated , canActivate: [AuthGuard]
-  { path: 'correspondencedetails', component: CorrespondenceDetailsComponent, canActivate: [AuthGuard] }, // correspondence should available only when authenticated , canActivate: [AuthGuard]
-  { path: 'addcorrespondence', component: AddCorrespondenceComponent, canActivate: [AuthGuard] }, // correspondence should available only when authenticated , canActivate: [AuthGuard]
+  { path: 'correspondencelist', component: CorrespondenceListComponent, canActivate: [AuthGuard]}, // correspondence should available only when authenticated 
+  { path: 'correspondencedetails', component: CorrespondenceDetailsComponent, canActivate: [AuthGuard] }, // correspondence should available only when authenticated 
+  { path: 'addcorrespondence', component: AddCorrespondenceComponent, canActivate: [AuthGuard] }, // correspondence should available only when authenticated 
 
   { path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard] },
   { path: 'places', component: PlacesComponent, canActivate: [AuthGuard] },
