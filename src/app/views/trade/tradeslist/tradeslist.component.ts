@@ -102,6 +102,7 @@ export class TradesListComponent implements OnInit {
 
   public ngAfterViewInit() {
 
+
     jQuery(document).ready(function () {
 
       // toggling the chevrons up and down    
