@@ -5,7 +5,7 @@
     },
 
   baseUrls: {
-  
+
     servicebase: 'http://localhost:5700/',
     accounts: 'http://localhost:5700/api/account/',
     getUserInfo: 'http://localhost:5700/api/account/UserInfo',
