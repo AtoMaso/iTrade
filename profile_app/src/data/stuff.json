@@ -1,0 +1,44 @@
+{
+    "stuff": [
+        {
+            "id": 1,
+            "first_name": "Mirko",
+            "last_name": "Srbinovski",
+            "position_held": "IT Architect", 
+            "what_does": "I architect stuff",
+            "image_name": "src/img/mirko_srbinovski.png"
+        },
+        {
+            "id": 2,
+            "first_name": "Jane",
+            "last_name": "Neil Rel",   
+            "position_held": "Support Production Manager",
+            "what_does": "I manage stuff",
+            "image_name": "src/img/jane_neil_rel.png" 
+        },
+        {
+            "id": 3,
+            "first_name": "Jason",
+            "last_name": "Writer",
+            "position_held": "Application Developer",
+            "what_does": "I develop stuff",
+            "image_name": "src/img/jason_writer.png"
+        },
+        {
+            "id": 4,
+            "first_name": "Joe",
+            "last_name": "Smitt",
+            "position_held": "Application Developer",
+            "what_does": "I develop stuff",
+            "image_name": "src/img/joe_smitt.png"
+        },
+        {
+            "id": 5,
+            "first_name": "Carter",
+            "last_name": "Snaper",
+            "position_held": "Designer",
+            "what_does": "I design stuff",
+            "image_name": "src/img/carter_snaper.png"
+        }
+    ]
+}
